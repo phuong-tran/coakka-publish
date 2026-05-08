@@ -19,8 +19,7 @@ Current published lanes:
 - `logger/go`
 - `logger/native`
 - static Maven repo under `maven/`
-  - `coakka.spring:coakka-spring-boot-starter`
-  - `coakka.quarkus:coakka-quarkus-extension`
+  - `coakka.logger:coakka-jvm-native-logger`
 - sanitized direct runtime v2 `C` ABI files under `include/` and `native/`
 
 ## Runtime v2 Public Artifacts
@@ -37,6 +36,12 @@ Package contents:
 
 The staged native libraries are local/runtime-only public builds. Remote
 transport implementation providers remain excluded from this artifact surface.
+
+Runtime language package lanes are paused until their public package contents
+are rebuilt against the sanitized runtime surface. Do not publish or consume
+runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, or Quarkus artifacts
+from this repository until those lanes have a release directory with its own
+manifest and checksums.
 
 Validation gates run before publishing:
 
@@ -61,6 +66,6 @@ The logger lanes keep their own release manifests and checksums.
 
 ## Maven Artifacts
 
-The static Maven repository lives under `maven/`. It includes published JVM
-runtime, logger, Spring Boot starter, and Quarkus extension/starter artifacts
-with Maven metadata and per-file checksums.
+The static Maven repository lives under `maven/`. At the moment it only exposes
+the logger JVM artifact. Runtime JVM and framework adapter Maven artifacts are
+paused until their package contents pass the public artifact surface gate.

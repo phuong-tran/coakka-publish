@@ -3,6 +3,18 @@
 This document defines the public boundary for artifacts released from this
 repository.
 
+## Current Surface
+
+The current public release surface contains:
+
+- logger packages and logger Maven artifacts
+- sanitized direct runtime v2 C ABI files under `include/` and `native/`
+
+Runtime JVM, language connector, Spring Boot, and Quarkus package lanes are
+paused until they are rebuilt against the sanitized runtime surface and pass
+the gates below. The rules in this document remain the contract for reopening
+those lanes.
+
 ## Consumer Shape
 
 Public runtime artifacts must be directly consumable in their target ecosystem.
