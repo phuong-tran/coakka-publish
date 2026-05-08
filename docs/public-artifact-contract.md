@@ -21,6 +21,10 @@ Candidate runtime language artifacts must pass
 release directory. That intake gate checks the bundled native package version,
 rejects workspace/demo/test path leakage, rejects stale native library names,
 and runs the recursive public surface scanner against the candidate archive.
+Auxiliary artifacts that intentionally omit native libraries, such as JVM
+sources jars, may pass the same gate with `--allow-no-native`; main runtime
+connector packages must embed or resolve exactly one platform runtime library
+for the current platform.
 
 ## Consumer Shape
 

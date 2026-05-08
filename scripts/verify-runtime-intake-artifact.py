@@ -69,7 +69,7 @@ def is_native_runtime_entry(entry: str) -> bool:
     )
 
 
-def require_native_entries_clean(entries: list[str], expected_native_version: str) -> None:
+def require_native_entries_clean(entries: list[str], expected_native_version: str, require_native: bool) -> None:
     allowed_names = {
         f"{RUNTIME_NATIVE_PREFIX}.dylib",
         f"{RUNTIME_NATIVE_PREFIX}.so",
@@ -89,7 +89,7 @@ def require_native_entries_clean(entries: list[str], expected_native_version: st
                 bad.append(entry)
     if bad:
         report_bad_entries("stale or forbidden native library entry", bad)
-    if native_count == 0:
+    if require_native and native_count == 0:
         fail("package does not include any runtime native library entries")
 
 
@@ -200,6 +200,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--artifact", required=True, help="Path to the package artifact to validate.")
     parser.add_argument("--expected-native-version", required=True)
     parser.add_argument("--scanner", default=str(DEFAULT_SCANNER))
+    parser.add_argument(
+        "--allow-no-native",
+        action="store_true",
+        help="Allow auxiliary artifacts such as JVM sources jars to omit runtime native library entries.",
+    )
     return parser.parse_args()
 
 
@@ -217,7 +222,7 @@ def main() -> int:
             f"expected {args.expected_native_version!r}"
         )
     require_no_forbidden_components(entries)
-    require_native_entries_clean(entries, args.expected_native_version)
+    require_native_entries_clean(entries, args.expected_native_version, require_native=not args.allow_no_native)
     run_scanner(scanner, artifact)
     print(f"[runtime-intake] ok lane={args.lane} artifact={artifact.name}")
     return 0

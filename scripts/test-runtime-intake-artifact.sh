@@ -136,6 +136,33 @@ good_jvm="${tmp_root}/coakka-jvm-native-runtime-v2-0.1.0.jar"
 make_jvm_jar "${good_jvm}" "0.1.0+63c346e" "public runtime binary placeholder"
 verify_intake "clean JVM jar" jvm "${good_jvm}"
 
+jvm_sources="${tmp_root}/coakka-jvm-native-runtime-v2-0.1.0-sources.jar"
+jvm_sources_root="${tmp_root}/jvm-sources-root"
+rm -rf "${jvm_sources_root}"
+mkdir -p "${jvm_sources_root}/META-INF" "${jvm_sources_root}/coakka/v2/connector"
+cat >"${jvm_sources_root}/META-INF/MANIFEST.MF" <<'EOF'
+Manifest-Version: 1.0
+Coakka-V2-Native-Package-Version: 0.1.0+63c346e
+
+EOF
+printf 'package coakka.v2.connector;\n' >"${jvm_sources_root}/coakka/v2/connector/RuntimeHost.java"
+(cd "${jvm_sources_root}" && zip -qr "${jvm_sources}" .)
+expect_success \
+  "clean JVM sources jar" \
+  "${repo_root}/scripts/verify-runtime-intake-artifact.py" \
+  --lane jvm \
+  --artifact "${jvm_sources}" \
+  --expected-native-version "0.1.0+63c346e" \
+  --allow-no-native
+
+expect_failure \
+  "main JVM jar without native" \
+  "${repo_root}/scripts/verify-runtime-intake-artifact.py" \
+  --lane jvm \
+  --artifact "${jvm_sources}" \
+  --expected-native-version "0.1.0+63c346e"
+grep -Fq "does not include any runtime native library entries" "${test_output}"
+
 good_wheel="${tmp_root}/coakka_v2_connector-0.1.0-py3-none-any.whl"
 make_python_wheel "${good_wheel}" "0.1.0+63c346e" "public runtime binary placeholder"
 verify_intake "clean Python wheel" python "${good_wheel}"

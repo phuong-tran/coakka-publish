@@ -85,6 +85,10 @@ the bundled native package version, rejects workspace/demo/test paths, rejects
 stale native library names, and runs the recursive public surface scanner over
 the full artifact contents.
 
+For auxiliary artifacts that intentionally do not embed a native library, such
+as a JVM sources jar, add `--allow-no-native`. Main runtime connector packages
+must not use that flag.
+
 ## Logger Artifacts
 
 Logger packages are published under:
