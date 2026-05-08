@@ -81,6 +81,8 @@ verify_public_artifact_manifest() {
   local manifest="${repo_root}/artifacts/public-artifacts.tsv"
   local line_no=0
   local public_rows=0
+  local seen_paths=$'\n'
+  local seen_labels=$'\n'
   local status label relative_path expected_sha extra actual_sha
 
   while IFS=$'\t' read -r status label relative_path expected_sha extra || [[ -n "${status:-}" ]]; do
@@ -96,6 +98,19 @@ verify_public_artifact_manifest() {
     if [[ "${relative_path}" == /* || "${relative_path}" == *".."* ]]; then
       fail "unsafe artifact path in manifest row ${line_no}: ${relative_path}"
     fi
+    case "${relative_path}" in
+      logger/*/releases/*|runtime/native/releases/*)
+        ;;
+      *)
+        fail "artifact path is outside the current public manifest surface in row ${line_no}: ${relative_path}"
+        ;;
+    esac
+    if [[ "${seen_paths}" == *$'\n'"${relative_path}"$'\n'* ]]; then
+      fail "duplicate artifact path in manifest row ${line_no}: ${relative_path}"
+    fi
+    if [[ "${seen_labels}" == *$'\n'"${label}"$'\n'* ]]; then
+      fail "duplicate artifact label in manifest row ${line_no}: ${label}"
+    fi
     if [[ ! "${expected_sha}" =~ ^[0-9a-f]{64}$ ]]; then
       fail "invalid sha256 in artifacts/public-artifacts.tsv row ${line_no}"
     fi
@@ -107,6 +122,8 @@ verify_public_artifact_manifest() {
     if [[ "${actual_sha}" != "${expected_sha}" ]]; then
       fail "manifest sha256 mismatch for ${relative_path}"
     fi
+    seen_paths+="${relative_path}"$'\n'
+    seen_labels+="${label}"$'\n'
     public_rows=$((public_rows + 1))
   done <"${manifest}"
 
