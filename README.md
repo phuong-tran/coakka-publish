@@ -70,6 +70,21 @@ file, the native runtime archive checksum, the absence of paused runtime
 language/framework package lanes, and the optional content scanner when the
 scanner path is provided.
 
+Before adding a runtime JVM, Python, Node.js, Go, C#, or Rust package release,
+run the intake gate on the candidate artifact:
+
+```bash
+scripts/verify-runtime-intake-artifact.py \
+  --lane python \
+  --artifact /path/to/coakka_v2_connector-0.1.0-py3-none-any.whl \
+  --expected-native-version 0.1.0+63c346e
+```
+
+Use the matching `--lane` value for the candidate package. The gate verifies
+the bundled native package version, rejects workspace/demo/test paths, rejects
+stale native library names, and runs the recursive public surface scanner over
+the full artifact contents.
+
 ## Logger Artifacts
 
 Logger packages are published under:

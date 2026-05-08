@@ -16,6 +16,12 @@ paused until they are rebuilt against the sanitized runtime surface and pass the
 gates below. The rules in this document remain the contract for reopening those
 lanes.
 
+Candidate runtime language artifacts must pass
+`scripts/verify-runtime-intake-artifact.py` before they are copied into a
+release directory. That intake gate checks the bundled native package version,
+rejects workspace/demo/test path leakage, rejects stale native library names,
+and runs the recursive public surface scanner against the candidate archive.
+
 ## Consumer Shape
 
 Public runtime artifacts must be directly consumable in their target ecosystem.
