@@ -112,10 +112,10 @@ expect_success "clean public manifest" "${good_fixture}/scripts/verify-public-su
 
 bad_path_fixture="$(make_fixture bad-path)"
 cat >>"${bad_path_fixture}/artifacts/public-artifacts.tsv" <<'EOF'
-public	runtime JVM jar	runtime/jvm/releases/test/coakka-jvm-native-runtime-v2-test.jar	0000000000000000000000000000000000000000000000000000000000000000
+public	unsafe path	../outside.tar.gz	0000000000000000000000000000000000000000000000000000000000000000
 EOF
 expect_failure "path outside public manifest surface" "${bad_path_fixture}/scripts/verify-public-surface.sh"
-grep -Fq "outside the current public manifest surface" "${test_output}"
+grep -Fq "unsafe artifact path" "${test_output}"
 
 duplicate_path_fixture="$(make_fixture duplicate-path)"
 runtime_sha="$(sha256_file "${duplicate_path_fixture}/runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz")"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>coakka.quarkus</groupId>
+  <artifactId>coakka-quarkus-extension</artifactId>
+  <versioning>
+    <latest>0.1.0-g63c346e</latest>
+    <release>0.1.0-g63c346e</release>
+    <versions>
+      <version>0.1.0-g63c346e</version>
+    </versions>
+    <lastUpdated>20260508184513</lastUpdated>
+  </versioning>
+</metadata>

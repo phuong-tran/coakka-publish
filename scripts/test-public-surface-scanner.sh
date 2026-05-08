@@ -19,7 +19,7 @@ printf 'public runtime package\n' >"${clean_dir}/pkg/README.txt"
 
 blocked_dir="${tmp_root}/blocked"
 mkdir -p "${blocked_dir}/pkg"
-printf '%s backend marker\n' "C""AF" >"${blocked_dir}/pkg/README.txt"
+printf '%s source marker\n' "private" >"${blocked_dir}/pkg/README.txt"
 (cd "${blocked_dir}" && tar -czf "${tmp_root}/blocked.tar.gz" pkg)
 if "${scanner}" "${tmp_root}/blocked.tar.gz" >/tmp/coakka-surface-test.out 2>/tmp/coakka-surface-test.err; then
   echo "[test-public-surface-scanner] expected archive payload marker to fail" >&2
@@ -27,7 +27,7 @@ if "${scanner}" "${tmp_root}/blocked.tar.gz" >/tmp/coakka-surface-test.out 2>/tm
 fi
 grep -q "forbidden marker" /tmp/coakka-surface-test.err
 
-printf '%s marker\n' "lib""uv" >"${tmp_root}/not-an-archive.tar.gz"
+printf '%s/%s/workspace marker\n' "/Users" "phuongnamtran" >"${tmp_root}/not-an-archive.tar.gz"
 if "${scanner}" "${tmp_root}/not-an-archive.tar.gz" >/tmp/coakka-surface-test.out 2>/tmp/coakka-surface-test.err; then
   echo "[test-public-surface-scanner] expected invalid archive blob marker to fail" >&2
   exit 1

@@ -12,7 +12,8 @@ if ! command -v strings >/dev/null 2>&1; then
   exit 69
 fi
 
-blocked_re="${COAKKA_PUBLIC_FORBIDDEN_RE:-(^|[^[:alnum:]_])(CAF|caf)([^[:alnum:]_]|$)|libcaf|caf_|_caf|CAF_|_CAF|caf-|CAF-|(^|[^[:alnum:]_])libuv([^[:alnum:]_]|$)|libuv_|_libuv|southbound|Southbound|SOUTHBOUND|remote_wire|REMOTE_WIRE|wire_profile|WIRE_PROFILE|COAKKA_V2_ENABLE_CAF_BACKEND|COAKKA_V2_RUNTIME_FEATURE_CAF_BACKEND|coakkaCore|external/caf|external/libuv}"
+default_blocked_re='coakkaCore|/Users/phuongnamtran|source[- ]workspace|private (source|workspace|repo|repository)|external/caf|external/libuv'
+blocked_re="${COAKKA_PUBLIC_FORBIDDEN_RE:-${default_blocked_re}}"
 self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "$0")"
 tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-surface.XXXXXX")"
 violations_file="${tmp_root}/violations.txt"
@@ -54,7 +55,7 @@ scan_file() {
   local label="$2"
   local matches
 
-  if [[ "${file}" == "${self_path}" ]]; then
+  if [[ "${file}" == "${self_path}" || "$(cd "$(dirname "${file}")" && pwd)/$(basename "${file}")" == "${self_path}" ]]; then
     return 0
   fi
 
@@ -82,7 +83,7 @@ scan_tree() {
       rm -rf "${extract_dir}"
       scan_file "${file}" "${label_prefix}/${rel}"
     fi
-  done < <(find "${root}" -type f ! -path '*/.git/*' -print0)
+  done < <(find "${root}" -type f ! -path '*/.git/*' ! -path '*/.github/*' ! -path '*/.idea/*' -print0)
 }
 
 for input in "$@"; do

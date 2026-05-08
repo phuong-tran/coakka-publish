@@ -10,19 +10,17 @@ The current public release surface contains:
 - logger packages and logger Maven artifacts
 - sanitized direct runtime v2 C ABI files under `include/` and `native/`
 - sanitized runtime v2 native C ABI archive under `runtime/native/releases/`
+- runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
+- runtime JVM, Spring Boot, and Quarkus artifacts under `maven/`
 
 Consumer-facing package downloads are listed in
 `artifacts/public-artifacts.tsv`. Public samples should pin against that
 manifest so sample metadata and publish contents do not drift silently. The
 manifest is intentionally limited to the current public release surface:
-`logger/*/releases/*` and `runtime/native/releases/*`.
+`logger/*/releases/*`, `runtime/*/releases/*`, and selected Maven jars under
+`maven/coakka/`.
 
-Runtime JVM, language connector, Spring Boot, and Quarkus package lanes remain
-paused until they are rebuilt against the sanitized runtime surface and pass the
-gates below. The rules in this document remain the contract for reopening those
-lanes.
-
-Candidate runtime language artifacts must pass
+Runtime language artifacts must pass
 `scripts/verify-runtime-intake-artifact.py` before they are copied into a
 release directory. That intake gate checks the bundled native package version,
 rejects workspace/demo/test path leakage, rejects stale native library names,

@@ -99,7 +99,7 @@ verify_public_artifact_manifest() {
       fail "unsafe artifact path in manifest row ${line_no}: ${relative_path}"
     fi
     case "${relative_path}" in
-      logger/*/releases/*|runtime/native/releases/*)
+      logger/*/releases/*|runtime/*/releases/*|maven/coakka/*/*/*/*.jar)
         ;;
       *)
         fail "artifact path is outside the current public manifest surface in row ${line_no}: ${relative_path}"
@@ -155,17 +155,7 @@ fi
 while IFS= read -r -d '' sums_file; do
   release_dir="$(dirname "${sums_file}")"
   verify_sha256_file "${release_dir#${repo_root}/}"
-done < <(find "${repo_root}/logger" "${repo_root}/runtime/native" -path '*/releases/*/SHA256SUMS' -print0)
-
-if find "${repo_root}/runtime" -mindepth 1 -maxdepth 1 -type d ! -name native -print -quit | grep -q .; then
-  echo "[verify-public-surface] paused runtime language package lanes are present" >&2
-  exit 1
-fi
-
-if find "${repo_root}/maven" -path '*/coakka/runtime/*' -print -quit | grep -q .; then
-  echo "[verify-public-surface] paused runtime Maven artifacts are present" >&2
-  exit 1
-fi
+done < <(find "${repo_root}/logger" "${repo_root}/runtime" -path '*/releases/*/SHA256SUMS' -print0)
 
 verify_maven_sidecars
 

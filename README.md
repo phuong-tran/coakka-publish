@@ -20,8 +20,12 @@ Current published lanes:
 - `logger/native`
 - static Maven repo under `maven/`
   - `coakka.logger:coakka-jvm-native-logger`
+  - `coakka.v2:coakka-jvm-native-runtime-v2`
+  - `coakka.spring:coakka-spring-boot-starter`
+  - `coakka.quarkus:coakka-quarkus-extension`
 - sanitized direct runtime v2 `C` ABI files under `include/` and `native/`
 - sanitized runtime v2 native C ABI archive under `runtime/native/releases/`
+- runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
 
 ## Runtime v2 Public Artifacts
 
@@ -43,11 +47,9 @@ Package contents:
 The staged native libraries are local/runtime-only public builds. Remote
 transport implementation providers remain excluded from this artifact surface.
 
-Runtime language and framework package lanes are paused until their public
-package contents are rebuilt against the sanitized runtime surface. Do not
-publish or consume runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, or
-Quarkus artifacts from this repository until those lanes have a release
-directory with its own manifest and checksums.
+Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, and Quarkus artifacts
+are published against the same native package version. Each release directory
+has its own manifest and checksums.
 
 Validation gates run before publishing:
 
@@ -65,10 +67,9 @@ COAKKA_PUBLIC_SURFACE_SCANNER=/path/to/scan_public_artifact_surface.sh \
   scripts/verify-public-surface.sh
 ```
 
-The script verifies the root runtime checksums, every logger release checksum
-file, the native runtime archive checksum, `artifacts/public-artifacts.tsv`,
-the absence of paused runtime language/framework package lanes, and the
-optional content scanner when the scanner path is provided.
+The script verifies the root runtime checksums, every logger/runtime release
+checksum file, Maven checksum sidecars, `artifacts/public-artifacts.tsv`, and
+the optional content scanner when the scanner path is provided.
 
 `artifacts/public-artifacts.tsv` is the consumer-facing package manifest. Each
 row is status, label, relative path, and SHA256. The public surface gate rejects
@@ -108,6 +109,5 @@ The logger lanes keep their own release manifests and checksums.
 
 ## Maven Artifacts
 
-The static Maven repository lives under `maven/`. At the moment it only exposes
-the logger JVM artifact. Runtime JVM and framework adapter Maven artifacts are
-paused until their package contents pass the public artifact surface gate.
+The static Maven repository lives under `maven/`. It exposes the logger JVM
+artifact, runtime JVM artifact, Spring Boot starter, and Quarkus extension.
