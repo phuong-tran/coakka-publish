@@ -21,5 +21,10 @@ jobs:
 
       - name: Verify public surface
         run: |
-          bash -n scripts/scan-public-surface.sh scripts/verify-public-surface.sh
+          bash -n \
+            scripts/scan-public-surface.sh \
+            scripts/test-runtime-intake-artifact.sh \
+            scripts/verify-public-surface.sh
+          python3 -m py_compile scripts/verify-runtime-intake-artifact.py
+          scripts/test-runtime-intake-artifact.sh
           scripts/verify-public-surface.sh
