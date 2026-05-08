@@ -10,9 +10,6 @@ on:
 permissions:
   contents: read
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 jobs:
   verify:
     name: verify public artifacts
@@ -20,7 +17,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Check out artifacts
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Verify public surface
         run: |
