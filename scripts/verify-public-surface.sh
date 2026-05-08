@@ -37,17 +37,15 @@ require_file "SHA256SUMS"
 
 (cd "${repo_root}" && shasum -a 256 -c SHA256SUMS >/dev/null)
 
-while IFS= read -r -d '' sums_file; do
-  release_dir="$(dirname "${sums_file}")"
-  verify_sha256_file "${release_dir#${repo_root}/}"
-done < <(find "${repo_root}/logger" -path '*/releases/*/SHA256SUMS' -print0)
-
-if [[ -f "${repo_root}/runtime/native/releases/0.1.0+63c346e/SHA256SUMS" ]]; then
-  verify_sha256_file "runtime/native/releases/0.1.0+63c346e"
-else
+if [[ ! -f "${repo_root}/runtime/native/releases/0.1.0+63c346e/SHA256SUMS" ]]; then
   echo "[verify-public-surface] missing runtime native release checksum file" >&2
   exit 1
 fi
+
+while IFS= read -r -d '' sums_file; do
+  release_dir="$(dirname "${sums_file}")"
+  verify_sha256_file "${release_dir#${repo_root}/}"
+done < <(find "${repo_root}/logger" "${repo_root}/runtime/native" -path '*/releases/*/SHA256SUMS' -print0)
 
 if find "${repo_root}/runtime" -mindepth 1 -maxdepth 1 -type d ! -name native -print -quit | grep -q .; then
   echo "[verify-public-surface] paused runtime language package lanes are present" >&2
