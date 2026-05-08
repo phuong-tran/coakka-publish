@@ -1,0 +1,21 @@
+{
+  "name": "coakka-runtime-native-v2",
+  "version": "0.1.0",
+  "release": "0.1.0+63c346e",
+  "sourceSnapshot": "63c346e",
+  "profile": "local-runtime-only",
+  "archive": "coakka-runtime-native-v2-0.1.0.tar.gz",
+  "sha256": "79c646bad9eb47fcd7c937bdab3b2f18350f5e57521bc30b3e3e302d1ea657fa",
+  "platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "headers": [
+    "include/coakka/v2/runtime.h",
+    "include/coakka/v2/control.h",
+    "include/coakka/v2/client.h",
+    "include/coakka/v2/transport.h",
+    "include/coakka/v2/utils.h"
+  ]
+}

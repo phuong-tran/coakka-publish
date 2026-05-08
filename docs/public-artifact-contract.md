@@ -9,11 +9,12 @@ The current public release surface contains:
 
 - logger packages and logger Maven artifacts
 - sanitized direct runtime v2 C ABI files under `include/` and `native/`
+- sanitized runtime v2 native C ABI archive under `runtime/native/releases/`
 
-Runtime JVM, language connector, Spring Boot, and Quarkus package lanes are
-paused until they are rebuilt against the sanitized runtime surface and pass
-the gates below. The rules in this document remain the contract for reopening
-those lanes.
+Runtime JVM, language connector, Spring Boot, and Quarkus package lanes remain
+paused until they are rebuilt against the sanitized runtime surface and pass the
+gates below. The rules in this document remain the contract for reopening those
+lanes.
 
 ## Consumer Shape
 

@@ -24,7 +24,11 @@ verify_sha256_file() {
 
 require_file "README.md"
 require_file "docs/public-artifact-contract.md"
+require_file "include/coakka/v2/client.h"
+require_file "include/coakka/v2/control.h"
 require_file "include/coakka/v2/runtime.h"
+require_file "include/coakka/v2/transport.h"
+require_file "include/coakka/v2/utils.h"
 require_file "native/linux-aarch64/libcoakka_runtime_v2.so"
 require_file "native/linux-x86_64/libcoakka_runtime_v2.so"
 require_file "native/macos-aarch64/libcoakka_runtime_v2.dylib"
@@ -37,8 +41,15 @@ while IFS= read -r -d '' sums_file; do
   verify_sha256_file "${release_dir#${repo_root}/}"
 done < <(find "${repo_root}/logger" -path '*/releases/*/SHA256SUMS' -print0)
 
-if [[ -d "${repo_root}/runtime" ]]; then
-  echo "[verify-public-surface] runtime package lane must stay absent until republished" >&2
+if [[ -f "${repo_root}/runtime/native/releases/0.1.0+63c346e/SHA256SUMS" ]]; then
+  verify_sha256_file "runtime/native/releases/0.1.0+63c346e"
+else
+  echo "[verify-public-surface] missing runtime native release checksum file" >&2
+  exit 1
+fi
+
+if find "${repo_root}/runtime" -mindepth 1 -maxdepth 1 -type d ! -name native -print -quit | grep -q .; then
+  echo "[verify-public-surface] paused runtime language package lanes are present" >&2
   exit 1
 fi
 

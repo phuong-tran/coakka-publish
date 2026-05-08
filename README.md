@@ -21,6 +21,7 @@ Current published lanes:
 - static Maven repo under `maven/`
   - `coakka.logger:coakka-jvm-native-logger`
 - sanitized direct runtime v2 `C` ABI files under `include/` and `native/`
+- sanitized runtime v2 native C ABI archive under `runtime/native/releases/`
 
 ## Runtime v2 Public Artifacts
 
@@ -29,19 +30,24 @@ Core source snapshot: `63c346e`
 Package contents:
 
 - `include/coakka/v2/runtime.h`
+- `include/coakka/v2/control.h`
+- `include/coakka/v2/client.h`
+- `include/coakka/v2/transport.h`
+- `include/coakka/v2/utils.h`
 - `native/linux-aarch64/libcoakka_runtime_v2.so`
 - `native/linux-x86_64/libcoakka_runtime_v2.so`
 - `native/macos-aarch64/libcoakka_runtime_v2.dylib`
 - `SHA256SUMS`
+- `runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz`
 
 The staged native libraries are local/runtime-only public builds. Remote
 transport implementation providers remain excluded from this artifact surface.
 
-Runtime language package lanes are paused until their public package contents
-are rebuilt against the sanitized runtime surface. Do not publish or consume
-runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, or Quarkus artifacts
-from this repository until those lanes have a release directory with its own
-manifest and checksums.
+Runtime language and framework package lanes are paused until their public
+package contents are rebuilt against the sanitized runtime surface. Do not
+publish or consume runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, or
+Quarkus artifacts from this repository until those lanes have a release
+directory with its own manifest and checksums.
 
 Validation gates run before publishing:
 
@@ -60,8 +66,9 @@ COAKKA_PUBLIC_SURFACE_SCANNER=/path/to/scan_public_artifact_surface.sh \
 ```
 
 The script verifies the root runtime checksums, every logger release checksum
-file, the absence of paused runtime package lanes, and the optional content
-scanner when the scanner path is provided.
+file, the native runtime archive checksum, the absence of paused runtime
+language/framework package lanes, and the optional content scanner when the
+scanner path is provided.
 
 ## Logger Artifacts
 
