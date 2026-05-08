@@ -23,10 +23,12 @@ jobs:
         run: |
           bash -n \
             scripts/scan-public-surface.sh \
+            scripts/test-public-surface-scanner.sh \
             scripts/test-public-artifact-manifest.sh \
             scripts/test-runtime-intake-artifact.sh \
             scripts/verify-public-surface.sh
           python3 -m py_compile scripts/verify-runtime-intake-artifact.py
+          scripts/test-public-surface-scanner.sh
           scripts/test-public-artifact-manifest.sh
           scripts/test-runtime-intake-artifact.sh
           scripts/verify-public-surface.sh

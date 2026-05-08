@@ -74,13 +74,13 @@ scan_tree() {
 
   while IFS= read -r -d '' file; do
     rel="${file#${root}/}"
-    scan_file "${file}" "${label_prefix}/${rel}"
     extract_dir="${tmp_root}/nested-${extract_counter}"
     extract_counter=$((extract_counter + 1))
     if extract_archive "${file}" "${extract_dir}"; then
       scan_tree "${extract_dir}" "${label_prefix}/${rel}"
     else
       rm -rf "${extract_dir}"
+      scan_file "${file}" "${label_prefix}/${rel}"
     fi
   done < <(find "${root}" -type f ! -path '*/.git/*' -print0)
 }
@@ -94,13 +94,13 @@ for input in "$@"; do
   if [[ -d "${input}" ]]; then
     scan_tree "${input}" "${input}"
   else
-    scan_file "${input}" "${input}"
     extract_dir="${tmp_root}/top-${extract_counter}"
     extract_counter=$((extract_counter + 1))
     if extract_archive "${input}" "${extract_dir}"; then
       scan_tree "${extract_dir}" "${input}"
     else
       rm -rf "${extract_dir}"
+      scan_file "${input}" "${input}"
     fi
   fi
 done
