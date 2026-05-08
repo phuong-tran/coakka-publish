@@ -32,3 +32,19 @@ jobs:
           scripts/test-public-artifact-manifest.sh
           scripts/test-runtime-intake-artifact.sh
           scripts/verify-public-surface.sh
+          for pattern in \
+            "private artifact" \
+            "private publish" \
+            "private source" \
+            "private repo" \
+            "private repository" \
+            "local/private" \
+            "private-publish" \
+            "source-workspace" \
+            "source workspace"
+          do
+            if git grep -n -I -i -E -- "$pattern" README.md docs logger runtime scripts artifacts; then
+              echo "forbidden public wording found: $pattern" >&2
+              exit 1
+            fi
+          done

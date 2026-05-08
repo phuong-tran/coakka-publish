@@ -102,7 +102,7 @@ For native C/C++ packages:
 - any C++ connector must be a thin wrapper over the C ABI, not a separate
   runtime contract
 - supported platform native libraries must be included in the archive
-- CMake examples must build against the archive without a private source
+- CMake examples must build against the archive without a separate source
   checkout
 - C++ examples or wrappers must not require consumers to install implementation
   schema/transport dependencies; when in doubt, expose the C ABI only
@@ -110,20 +110,18 @@ For native C/C++ packages:
 
 ## Public Source Identity
 
-Public artifacts and public samples must not mention private source workspace
-names or private repository paths.
+Public artifacts and public samples must not mention unpublished source
+checkout names or developer-machine paths.
 
 Allowed wording:
 
-- source workspace
 - packaging source
 - release input directory
 - generated package directory
 
 Not allowed in public docs, manifests, consuming guides, or sample imports:
 
-- local private checkout names
-- private repository names
+- unpublished checkout names
 - absolute developer-machine paths
 
 Go packages need special care because the module path is public identity. A Go

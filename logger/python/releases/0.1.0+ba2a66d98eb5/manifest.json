@@ -16,8 +16,8 @@
     "macos-aarch64"
   ],
   "source": {
-    "wheelhouse_dir": "source-workspace/logger/python/build/wheelhouse",
-    "docs_dir": "source-workspace/logger/python",
+    "wheelhouse_dir": "release-input/logger/python/build/wheelhouse",
+    "docs_dir": "release-input/logger/python",
     "generated_at_utc": "2026-05-05T03:07:58Z"
   },
   "files": [

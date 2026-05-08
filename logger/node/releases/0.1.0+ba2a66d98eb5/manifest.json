@@ -16,8 +16,8 @@
     "macos-aarch64"
   ],
   "source": {
-    "package_dir": "source-workspace/logger/node",
-    "docs_dir": "source-workspace/logger/node",
+    "package_dir": "release-input/logger/node",
+    "docs_dir": "release-input/logger/node",
     "generated_at_utc": "2026-05-05T03:07:59Z"
   },
   "files": [

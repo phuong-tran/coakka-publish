@@ -193,16 +193,16 @@ expect_failure \
   --expected-native-version "0.1.0+63c346e"
 grep -Fq "expected '0.1.0+63c346e'" "${test_output}"
 
-private_marker_wheel="${tmp_root}/coakka_v2_connector-0.1.0-private.whl"
-private_marker="coakka""Core"
-make_python_wheel "${private_marker_wheel}" "0.1.0+63c346e" "private ${private_marker} marker"
+blocked_marker_wheel="${tmp_root}/coakka_v2_connector-0.1.0-blocked-marker.whl"
+blocked_marker="coakka""Core"
+make_python_wheel "${blocked_marker_wheel}" "0.1.0+63c346e" "blocked ${blocked_marker} marker"
 expect_failure \
-  "private marker" \
+  "blocked marker" \
   "${repo_root}/scripts/verify-runtime-intake-artifact.py" \
   --lane python \
-  --artifact "${private_marker_wheel}" \
+  --artifact "${blocked_marker_wheel}" \
   --expected-native-version "0.1.0+63c346e"
-grep -Fq "${private_marker}" "${test_output}"
+grep -Fq "${blocked_marker}" "${test_output}"
 
 bad_component_wheel="${tmp_root}/coakka_v2_connector-0.1.0-test-path.whl"
 bad_component_root="${tmp_root}/bad-component-root"
