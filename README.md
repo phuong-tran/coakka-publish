@@ -52,6 +52,17 @@ Validation gates run before publishing:
 - public runtime header render test
 - public artifact surface scan
 
+Local repository verification:
+
+```bash
+COAKKA_PUBLIC_SURFACE_SCANNER=/path/to/scan_public_artifact_surface.sh \
+  scripts/verify-public-surface.sh
+```
+
+The script verifies the root runtime checksums, every logger release checksum
+file, the absence of paused runtime package lanes, and the optional content
+scanner when the scanner path is provided.
+
 ## Logger Artifacts
 
 Logger packages are published under:
