@@ -11,6 +11,10 @@ The current public release surface contains:
 - sanitized direct runtime v2 C ABI files under `include/` and `native/`
 - sanitized runtime v2 native C ABI archive under `runtime/native/releases/`
 
+Consumer-facing package downloads are listed in
+`artifacts/public-artifacts.tsv`. Public samples should pin against that
+manifest so sample metadata and publish contents do not drift silently.
+
 Runtime JVM, language connector, Spring Boot, and Quarkus package lanes remain
 paused until they are rebuilt against the sanitized runtime surface and pass the
 gates below. The rules in this document remain the contract for reopening those

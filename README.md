@@ -66,9 +66,9 @@ COAKKA_PUBLIC_SURFACE_SCANNER=/path/to/scan_public_artifact_surface.sh \
 ```
 
 The script verifies the root runtime checksums, every logger release checksum
-file, the native runtime archive checksum, the absence of paused runtime
-language/framework package lanes, and the optional content scanner when the
-scanner path is provided.
+file, the native runtime archive checksum, `artifacts/public-artifacts.tsv`,
+the absence of paused runtime language/framework package lanes, and the
+optional content scanner when the scanner path is provided.
 
 Before adding a runtime JVM, Python, Node.js, Go, C#, or Rust package release,
 run the intake gate on the candidate artifact:

@@ -5,11 +5,15 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 default_scanner="${repo_root}/scripts/scan-public-surface.sh"
 
+fail() {
+  echo "[verify-public-surface] $*" >&2
+  exit 1
+}
+
 require_file() {
   local path="$1"
   if [[ ! -f "${repo_root}/${path}" ]]; then
-    echo "[verify-public-surface] missing required file: ${path}" >&2
-    exit 1
+    fail "missing required file: ${path}"
   fi
 }
 
@@ -39,13 +43,11 @@ file_digest() {
       elif command -v md5 >/dev/null 2>&1; then
         md5 -q "${path}"
       else
-        echo "[verify-public-surface] md5sum or md5 is required for Maven md5 sidecars" >&2
-        exit 69
+        fail "md5sum or md5 is required for Maven md5 sidecars"
       fi
       ;;
     *)
-      echo "[verify-public-surface] unsupported digest algorithm: ${algorithm}" >&2
-      exit 70
+      fail "unsupported digest algorithm: ${algorithm}"
       ;;
   esac
 }
@@ -59,8 +61,7 @@ verify_digest_sidecar() {
   expected="$(awk '{print $1}' "${sidecar}")"
   actual="$(file_digest "${algorithm}" "${file}")"
   if [[ "${actual}" != "${expected}" ]]; then
-    echo "[verify-public-surface] ${algorithm} mismatch for ${file#${repo_root}/}" >&2
-    exit 1
+    fail "${algorithm} mismatch for ${file#${repo_root}/}"
   fi
 }
 
@@ -76,8 +77,47 @@ verify_maven_sidecars() {
   done < <(find "${repo_root}/maven" -type f -print0)
 }
 
+verify_public_artifact_manifest() {
+  local manifest="${repo_root}/artifacts/public-artifacts.tsv"
+  local line_no=0
+  local public_rows=0
+  local status label relative_path expected_sha extra actual_sha
+
+  while IFS=$'\t' read -r status label relative_path expected_sha extra || [[ -n "${status:-}" ]]; do
+    line_no=$((line_no + 1))
+    [[ -z "${status:-}" || "${status}" == \#* ]] && continue
+
+    if [[ -n "${extra:-}" || -z "${label:-}" || -z "${relative_path:-}" || -z "${expected_sha:-}" ]]; then
+      fail "invalid artifacts/public-artifacts.tsv row ${line_no}"
+    fi
+    if [[ "${status}" != "public" ]]; then
+      fail "unsupported artifact status '${status}' in artifacts/public-artifacts.tsv row ${line_no}"
+    fi
+    if [[ "${relative_path}" == /* || "${relative_path}" == *".."* ]]; then
+      fail "unsafe artifact path in manifest row ${line_no}: ${relative_path}"
+    fi
+    if [[ ! "${expected_sha}" =~ ^[0-9a-f]{64}$ ]]; then
+      fail "invalid sha256 in artifacts/public-artifacts.tsv row ${line_no}"
+    fi
+    if [[ ! -f "${repo_root}/${relative_path}" ]]; then
+      fail "manifest artifact is missing: ${relative_path}"
+    fi
+
+    actual_sha="$(file_digest sha256 "${repo_root}/${relative_path}")"
+    if [[ "${actual_sha}" != "${expected_sha}" ]]; then
+      fail "manifest sha256 mismatch for ${relative_path}"
+    fi
+    public_rows=$((public_rows + 1))
+  done <"${manifest}"
+
+  if [[ "${public_rows}" -eq 0 ]]; then
+    fail "artifacts/public-artifacts.tsv has no public artifact rows"
+  fi
+}
+
 require_file "README.md"
 require_file "docs/public-artifact-contract.md"
+require_file "artifacts/public-artifacts.tsv"
 require_file "include/coakka/v2/client.h"
 require_file "include/coakka/v2/control.h"
 require_file "include/coakka/v2/runtime.h"
@@ -111,6 +151,8 @@ if find "${repo_root}/maven" -path '*/coakka/runtime/*' -print -quit | grep -q .
 fi
 
 verify_maven_sidecars
+
+verify_public_artifact_manifest
 
 if [[ -n "${COAKKA_PUBLIC_SURFACE_SCANNER:-}" ]]; then
   "${COAKKA_PUBLIC_SURFACE_SCANNER}" "${repo_root}"
