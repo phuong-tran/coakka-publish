@@ -1,0 +1,107 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "coakka.v2",
+    "module": "coakka-jvm-native-runtime-v2",
+    "version": "0.1.0-g0cb644340467",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "coakka-jvm-native-runtime-v2-0.1.0-g0cb644340467.jar",
+          "url": "coakka-jvm-native-runtime-v2-0.1.0-g0cb644340467.jar",
+          "size": 16404150,
+          "sha512": "8dbe040b46687ddb498442bcf09e5ced1b7b6ff6c8d6bcd69c47f663c7f00f6eb6c8c4cebf067d09328d9e5ff58fc4bce9df568c7d071b0c2aaa338f0b7275d0",
+          "sha256": "49f03049285bcfe5d570bd5e5dd76340dab9225bbd627988c1a7ad94ad93baa9",
+          "sha1": "2ccd1e9866ef058fb8c9a33b800d1646d7f7dc3e",
+          "md5": "629ab68461216b6842cdc4cc38923b11"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib"
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-jdk8",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "net.java.dev.jna",
+          "module": "jna",
+          "version": {
+            "requires": "5.17.0"
+          }
+        },
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-java",
+          "version": {
+            "requires": "4.31.1"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-jvm-native-runtime-v2-0.1.0-g0cb644340467.jar",
+          "url": "coakka-jvm-native-runtime-v2-0.1.0-g0cb644340467.jar",
+          "size": 16404150,
+          "sha512": "8dbe040b46687ddb498442bcf09e5ced1b7b6ff6c8d6bcd69c47f663c7f00f6eb6c8c4cebf067d09328d9e5ff58fc4bce9df568c7d071b0c2aaa338f0b7275d0",
+          "sha256": "49f03049285bcfe5d570bd5e5dd76340dab9225bbd627988c1a7ad94ad93baa9",
+          "sha1": "2ccd1e9866ef058fb8c9a33b800d1646d7f7dc3e",
+          "md5": "629ab68461216b6842cdc4cc38923b11"
+        }
+      ]
+    }
+  ]
+}

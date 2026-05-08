@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "jvm",
+  "release_directory": "0.1.0+ba2a66d98eb5",
+  "artifact": {
+    "group_id": "coakka.logger",
+    "artifact_id": "coakka-jvm-native-logger",
+    "artifact_version": "0.1.0",
+    "maven_repository_version": "0.1.0-gba2a66d98eb5",
+    "bundled_native_core_version": "0.1.0",
+    "bundled_native_package_version": "0.1.0+ba2a66d98eb5",
+    "bundled_native_git_commit": "ba2a66d98eb5"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "dist_dir": "coakka-jvm-native-logger",
+    "docs_dir": "jvm",
+    "generated_at_utc": "2026-05-05T13:36:42Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 1706,
+      "sha256": "f40d8e7856abd4f87543e5f4604c250ffa296e5e61fbe4752a61276138c9a80e"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 645,
+      "sha256": "49e198e096a607b6c15b7e43c31e3eb27481af592a14d2f1c42d727fc11305e3"
+    },
+    {
+      "name": "coakka-jvm-native-logger-0.1.0-sources.jar",
+      "size_bytes": 261,
+      "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3"
+    },
+    {
+      "name": "coakka-jvm-native-logger-0.1.0.jar",
+      "size_bytes": 237966,
+      "sha256": "68aeca8c5526b47b0db083b45e6f34d8f77768d5bab2db79e4ea311c3016ed54"
+    }
+  ]
+}

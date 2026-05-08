@@ -1,7 +1,25 @@
 # CoAkka Publish
 
-This branch stages the sanitized public CoAkka runtime artifacts before they
-are promoted to the public publish channel.
+This repository is the public binary-only publish surface for CoAkka artifacts.
+
+Repository rules:
+
+- keep this as a plain artifact repository, not a source-build repository
+- store released drops under product lane, then language lane
+- keep `manifest.json`, `SHA256SUMS`, and one short release `README.md` with
+  each drop
+- keep public artifacts aligned with
+  [`docs/public-artifact-contract.md`](docs/public-artifact-contract.md)
+
+Current published lanes:
+
+- `logger/jvm`
+- `logger/python`
+- `logger/node`
+- `logger/go`
+- `logger/native`
+- static Maven repo under `maven/`
+- sanitized direct runtime v2 `C` ABI files under `include/` and `native/`
 
 ## Runtime v2 Public Artifacts
 
@@ -17,10 +35,28 @@ Package contents:
 The staged native libraries are local/runtime-only public builds. Remote
 transport implementation providers remain excluded from this artifact surface.
 
-Validation gates run before staging:
+Validation gates run before publishing:
 
 - Linux `aarch64` build and runtime tests
 - Linux `x86_64` build and runtime tests
 - native dependency scan
 - public runtime header render test
 - public artifact surface scan
+
+## Logger Artifacts
+
+Logger packages are published under:
+
+- `logger/jvm/releases/`
+- `logger/python/releases/`
+- `logger/node/releases/`
+- `logger/go/releases/`
+- `logger/native/releases/`
+
+The logger lanes keep their own release manifests and checksums.
+
+## Maven Artifacts
+
+The static Maven repository lives under `maven/`. It includes published JVM
+runtime, logger, Spring Boot, and Quarkus artifacts with Maven metadata and
+per-file checksums.

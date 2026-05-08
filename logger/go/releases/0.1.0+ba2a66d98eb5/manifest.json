@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "go",
+  "release_directory": "0.1.0+ba2a66d98eb5",
+  "artifact": {
+    "package_name": "coakka-logger-go",
+    "artifact_version": "0.1.0",
+    "bundled_native_core_version": "0.1.0",
+    "bundled_native_package_version": "0.1.0+ba2a66d98eb5",
+    "bundled_native_git_commit": "ba2a66d98eb5"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "package_dir": "go",
+    "docs_dir": "go",
+    "generated_at_utc": "2026-05-05T13:04:52Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 1057,
+      "sha256": "00ae901072af641e95af8e0a8f118f1d7ca2be2462611adc9ac740aba93cd25e"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 544,
+      "sha256": "bae38389ab4c4ed65b54ec1fde7db5be2f14a03e747a13cd708788d238d59d31"
+    },
+    {
+      "name": "coakka-logger-go-0.1.0.tar.gz",
+      "size_bytes": 166373,
+      "sha256": "6ded85a08a5da36ee7c9179a9fa9995a1b5c8090b593d3213fb62f029a96a13b"
+    }
+  ]
+}
