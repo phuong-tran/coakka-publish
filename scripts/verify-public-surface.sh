@@ -23,6 +23,59 @@ verify_sha256_file() {
   (cd "${repo_root}/${dir}" && shasum -a 256 -c SHA256SUMS >/dev/null)
 }
 
+file_digest() {
+  local algorithm="$1"
+  local path="$2"
+  case "${algorithm}" in
+    sha256)
+      shasum -a 256 "${path}" | awk '{print $1}'
+      ;;
+    sha1)
+      shasum -a 1 "${path}" | awk '{print $1}'
+      ;;
+    md5)
+      if command -v md5sum >/dev/null 2>&1; then
+        md5sum "${path}" | awk '{print $1}'
+      elif command -v md5 >/dev/null 2>&1; then
+        md5 -q "${path}"
+      else
+        echo "[verify-public-surface] md5sum or md5 is required for Maven md5 sidecars" >&2
+        exit 69
+      fi
+      ;;
+    *)
+      echo "[verify-public-surface] unsupported digest algorithm: ${algorithm}" >&2
+      exit 70
+      ;;
+  esac
+}
+
+verify_digest_sidecar() {
+  local algorithm="$1"
+  local file="$2"
+  local sidecar="${file}.${algorithm}"
+  local expected actual
+  [[ -f "${sidecar}" ]] || return 0
+  expected="$(awk '{print $1}' "${sidecar}")"
+  actual="$(file_digest "${algorithm}" "${file}")"
+  if [[ "${actual}" != "${expected}" ]]; then
+    echo "[verify-public-surface] ${algorithm} mismatch for ${file#${repo_root}/}" >&2
+    exit 1
+  fi
+}
+
+verify_maven_sidecars() {
+  local file
+  while IFS= read -r -d '' file; do
+    case "${file}" in
+      *.md5|*.sha1|*.sha256) continue ;;
+    esac
+    verify_digest_sidecar sha256 "${file}"
+    verify_digest_sidecar sha1 "${file}"
+    verify_digest_sidecar md5 "${file}"
+  done < <(find "${repo_root}/maven" -type f -print0)
+}
+
 require_file "README.md"
 require_file "docs/public-artifact-contract.md"
 require_file "include/coakka/v2/client.h"
@@ -56,6 +109,8 @@ if find "${repo_root}/maven" -path '*/coakka/runtime/*' -print -quit | grep -q .
   echo "[verify-public-surface] paused runtime Maven artifacts are present" >&2
   exit 1
 fi
+
+verify_maven_sidecars
 
 if [[ -n "${COAKKA_PUBLIC_SURFACE_SCANNER:-}" ]]; then
   "${COAKKA_PUBLIC_SURFACE_SCANNER}" "${repo_root}"
