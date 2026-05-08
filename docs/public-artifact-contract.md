@@ -13,7 +13,9 @@ The current public release surface contains:
 
 Consumer-facing package downloads are listed in
 `artifacts/public-artifacts.tsv`. Public samples should pin against that
-manifest so sample metadata and publish contents do not drift silently.
+manifest so sample metadata and publish contents do not drift silently. The
+manifest is intentionally limited to the current public release surface:
+`logger/*/releases/*` and `runtime/native/releases/*`.
 
 Runtime JVM, language connector, Spring Boot, and Quarkus package lanes remain
 paused until they are rebuilt against the sanitized runtime surface and pass the

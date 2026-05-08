@@ -70,6 +70,11 @@ file, the native runtime archive checksum, `artifacts/public-artifacts.tsv`,
 the absence of paused runtime language/framework package lanes, and the
 optional content scanner when the scanner path is provided.
 
+`artifacts/public-artifacts.tsv` is the consumer-facing package manifest. Each
+row is status, label, relative path, and SHA256. The public surface gate rejects
+rows outside the current public release surface, duplicate labels, duplicate
+paths, missing files, and checksum mismatches.
+
 Before adding a runtime JVM, Python, Node.js, Go, C#, or Rust package release,
 run the intake gate on the candidate artifact:
 
