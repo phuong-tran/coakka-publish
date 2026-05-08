@@ -3,6 +3,7 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+default_scanner="${repo_root}/scripts/scan-public-surface.sh"
 
 require_file() {
   local path="$1"
@@ -60,8 +61,10 @@ fi
 
 if [[ -n "${COAKKA_PUBLIC_SURFACE_SCANNER:-}" ]]; then
   "${COAKKA_PUBLIC_SURFACE_SCANNER}" "${repo_root}"
+elif [[ -x "${default_scanner}" ]]; then
+  "${default_scanner}" "${repo_root}"
 else
-  echo "[verify-public-surface] COAKKA_PUBLIC_SURFACE_SCANNER not set; skipped content scan" >&2
+  echo "[verify-public-surface] no public surface scanner found; skipped content scan" >&2
 fi
 
 echo "[verify-public-surface] ok"

@@ -1,0 +1,25 @@
+name: public-surface
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: verify public artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out artifacts
+        uses: actions/checkout@v4
+
+      - name: Verify public surface
+        run: |
+          bash -n scripts/scan-public-surface.sh scripts/verify-public-surface.sh
+          scripts/verify-public-surface.sh
