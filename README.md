@@ -17,6 +17,8 @@ Current published lanes:
 - `logger/python`
 - `logger/node`
 - `logger/go`
+- `logger/csharp`
+- `logger/rust`
 - `logger/native`
 - static Maven repo under `maven/`
   - `coakka.logger:coakka-jvm-native-logger`
@@ -134,6 +136,8 @@ Logger packages are published under:
 - `logger/python/releases/`
 - `logger/node/releases/`
 - `logger/go/releases/`
+- `logger/csharp/releases/`
+- `logger/rust/releases/`
 - `logger/native/releases/`
 
 The logger lanes keep their own release manifests and checksums.

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "csharp",
+  "release_directory": "0.1.0+ba2a66d98eb5",
+  "artifact": {
+    "package_name": "CoAkka.Logger",
+    "artifact_version": "0.1.0",
+    "bundled_native_core_version": "0.1.0",
+    "bundled_native_package_version": "0.1.0+ba2a66d98eb5",
+    "bundled_native_git_commit": "ba2a66d98eb5",
+    "c_abi_version": 10
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "release_input": "public logger connector package",
+    "generated_at_utc": "2026-05-09T10:50:00Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 517,
+      "sha256": "e24cd87639a2069f7d8bd69c6694d51ba8d706893f14b3d36a525f4f2f6aac18"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 209,
+      "sha256": "cfdd421696451d7734b9e963aa67c3c37b04ef13bac1f2057492d6e038ce4636"
+    },
+    {
+      "name": "CoAkka.Logger.0.1.0.nupkg",
+      "size_bytes": 90853,
+      "sha256": "5d312c57c274358cccff2be268c1ac3cb62160030fb46431f632cac46a624690"
+    }
+  ]
+}
