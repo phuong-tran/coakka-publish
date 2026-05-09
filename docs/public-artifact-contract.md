@@ -38,9 +38,10 @@ compatibility matrix. A new language package version may differ from the native
 package version, but it must not silently drift to another native generation.
 
 Public samples should treat the native package generation as the compatibility
-anchor. If a sample pins `0.1.0+3362b67`, every runtime language/framework lane
-used by that sample must either consume that same native package generation or
-document an explicit compatibility exception.
+anchor. If a sample pins a native package generation such as
+`0.1.0+<git-commit>`, every runtime language/framework lane used by that sample
+must either consume that same native package generation or document an explicit
+compatibility exception.
 
 ## Integrity Metadata
 

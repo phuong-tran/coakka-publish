@@ -6,7 +6,7 @@
   "artifact": {
     "group_id": "coakka.v2",
     "artifact_id": "coakka-jvm-native-runtime-v2",
-    "artifact_version": "0.1.1-g3362b67",
+    "artifact_version": "0.1.1-ga671b3a",
     "bundled_native_core_version": "0.1.0",
     "bundled_native_package_version": "0.1.0+a671b3a",
     "bundled_native_git_commit": "a671b3a"
