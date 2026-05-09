@@ -79,19 +79,55 @@ check_runtime_jvm_jar() {
   check_platform_entries "${jar_path}" "${native_version}" "macos-aarch64" "libcoakka_runtime_v2" "dylib"
 }
 
+current_runtime_jvm_jars() {
+  local manifest="${repo_root}/artifacts/public-artifacts.tsv"
+  local metadata="${repo_root}/maven/coakka/v2/coakka-jvm-native-runtime-v2/maven-metadata.xml"
+  local latest
+
+  if [[ -f "${manifest}" ]]; then
+    awk -F '\t' '$2 == "runtime JVM jar" { print }' "${manifest}" |
+      while IFS=$'\t' read -r _status _label relative_path _sha; do
+        [[ -n "${relative_path}" ]] || continue
+        printf '%s\0' "${repo_root}/${relative_path}"
+      done
+  fi
+
+  if [[ -f "${metadata}" ]]; then
+    latest="$(
+      sed -n 's:.*<latest>\(.*\)</latest>.*:\1:p' "${metadata}" |
+        sed -n '1p'
+    )"
+    if [[ -n "${latest}" ]]; then
+      find \
+        "${repo_root}/maven/coakka/v2/coakka-jvm-native-runtime-v2/${latest}" \
+        -type f \
+        -name 'coakka-jvm-native-runtime-v2-*.jar' \
+        ! -name '*-sources.jar' \
+        -print0 2>/dev/null || true
+    fi
+  fi
+}
+
 jar_count=0
 while IFS= read -r -d '' jar_path; do
   check_runtime_jvm_jar "${jar_path}"
   jar_count=$((jar_count + 1))
-done < <(
-  find \
-    "${repo_root}/runtime/jvm/releases" \
-    "${repo_root}/maven/coakka/v2/coakka-jvm-native-runtime-v2" \
-    -type f \
-    -name 'coakka-jvm-native-runtime-v2-*.jar' \
-    ! -name '*-sources.jar' \
-    -print0
-)
+done < <(current_runtime_jvm_jars)
+
+if [[ "${jar_count}" -eq 0 ]]; then
+  while IFS= read -r -d '' jar_path; do
+    check_runtime_jvm_jar "${jar_path}"
+    jar_count=$((jar_count + 1))
+  done < <(
+    find \
+      "${repo_root}/runtime/jvm/releases" \
+      "${repo_root}/maven/coakka/v2/coakka-jvm-native-runtime-v2" \
+      -type f \
+      -name 'coakka-jvm-native-runtime-v2-*.jar' \
+      ! -name '*-sources.jar' \
+      -print0
+  )
+fi
 
 if [[ "${jar_count}" -eq 0 ]]; then
   fail "no runtime JVM jars found"

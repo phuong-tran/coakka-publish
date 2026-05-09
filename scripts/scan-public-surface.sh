@@ -30,11 +30,11 @@ extract_archive() {
   case "${archive}" in
     *.tar.gz|*.tgz)
       mkdir -p "${dest}"
-      tar -xzf "${archive}" -C "${dest}"
+      COPYFILE_DISABLE=1 tar -xzf "${archive}" -C "${dest}"
       ;;
     *.tar)
       mkdir -p "${dest}"
-      tar -xf "${archive}" -C "${dest}"
+      COPYFILE_DISABLE=1 tar -xf "${archive}" -C "${dest}"
       ;;
     *.zip|*.jar|*.whl|*.nupkg)
       if ! command -v unzip >/dev/null 2>&1; then

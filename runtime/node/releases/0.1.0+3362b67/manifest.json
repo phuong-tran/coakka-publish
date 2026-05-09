@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "node",
+  "release_directory": "0.1.0+3362b67",
+  "artifact": {
+    "package_name": "coakka-v2-connector-node",
+    "artifact_version": "0.1.0",
+    "bundled_native_core_version": "0.1.0",
+    "bundled_native_package_version": "0.1.0+3362b67",
+    "bundled_native_git_commit": "3362b67"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "release_input": "public runtime connector package",
+    "generated_at_utc": "2026-05-09T05:11:00Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 912,
+      "sha256": "b86cf570884d998eb29ce541731bddbef1da7abba8c03ce3073399dae578ed81"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 3402,
+      "sha256": "f479f238c2ec4612e7b9e49fe0d633a3f58286405428d6d69d85ca7bf4a9303f"
+    },
+    {
+      "name": "coakka-v2-connector-node-0.1.0.tgz",
+      "size_bytes": 5997720,
+      "sha256": "97c60ce45d9d5bc5f3cc7fcf6529d5f5748f8f9adb10cfd9f28f8ee5ad537db1"
+    }
+  ]
+}

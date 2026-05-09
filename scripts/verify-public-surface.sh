@@ -147,7 +147,8 @@ require_file "SHA256SUMS"
 
 (cd "${repo_root}" && shasum -a 256 -c SHA256SUMS >/dev/null)
 
-if [[ ! -f "${repo_root}/runtime/native/releases/0.1.0+63c346e/SHA256SUMS" ]]; then
+if ! find "${repo_root}/runtime/native/releases" -mindepth 2 -maxdepth 2 \
+  -name SHA256SUMS -print -quit | grep -q .; then
   echo "[verify-public-surface] missing runtime native release checksum file" >&2
   exit 1
 fi
