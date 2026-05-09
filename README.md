@@ -23,8 +23,8 @@ Current published lanes:
   - `coakka.v2:coakka-jvm-native-runtime-v2`
   - `coakka.spring:coakka-spring-boot-starter`
   - `coakka.quarkus:coakka-quarkus-extension`
-- sanitized direct runtime v2 `C` ABI files under `include/` and `native/`
-- sanitized runtime v2 native C ABI archive under `runtime/native/releases/`
+- runtime v2 public `C` ABI files under `include/` and `native/`
+- runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
 
 ## Runtime v2 Public Artifacts
@@ -44,12 +44,12 @@ Package contents:
 - `SHA256SUMS`
 - `runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz`
 
-The staged native libraries are local/runtime-only public builds. Remote
-transport implementation providers remain excluded from this artifact surface.
-That scope does not change the host-facing routing contract: targets, route
-generations, request/reply, deadletters, and diagnostics stay in the public
-runtime contract. Remote transport provider artifacts should be published as
-separate lanes when they are exposed.
+The staged native libraries are local/runtime-only public builds. Cross-host
+delivery packages are not part of this artifact set yet. That scope does not
+change the host-facing routing contract: targets, route generations,
+request/reply, deadletters, and diagnostics stay in the public runtime
+contract. Cross-host delivery packages should be published as separate lanes
+when they are exposed.
 
 Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, and Quarkus artifacts
 are published against the same native package version. Each release directory

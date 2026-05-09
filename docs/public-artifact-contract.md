@@ -8,8 +8,8 @@ repository.
 The current public release surface contains:
 
 - logger packages and logger Maven artifacts
-- sanitized direct runtime v2 C ABI files under `include/` and `native/`
-- sanitized runtime v2 native C ABI archive under `runtime/native/releases/`
+- runtime v2 public C ABI files under `include/` and `native/`
+- runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
 - runtime JVM, Spring Boot, and Quarkus artifacts under `maven/`
 
