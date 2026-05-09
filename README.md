@@ -46,10 +46,33 @@ Package contents:
 
 The staged native libraries are local/runtime-only public builds. Remote
 transport implementation providers remain excluded from this artifact surface.
+That scope does not change the host-facing routing contract: targets, route
+generations, request/reply, deadletters, and diagnostics stay in the public
+runtime contract. Remote transport provider artifacts should be published as
+separate lanes when they are exposed.
 
 Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, and Quarkus artifacts
 are published against the same native package version. Each release directory
 has its own manifest and checksums.
+
+## Runtime Compatibility Matrix
+
+These artifacts are the currently aligned public runtime set:
+
+| Surface | Artifact | Version | Native package |
+| --- | --- | --- | --- |
+| Native C ABI | `runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz` | `0.1.0+63c346e` | `0.1.0+63c346e` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.1.1-g63c346e` | `0.1.0+63c346e` |
+| Python runtime | `coakka_v2_connector` wheel | `0.1.0` | `0.1.0+63c346e` |
+| Node.js runtime | `coakka-v2-connector-node` package | `0.1.0` | `0.1.0+63c346e` |
+| Go runtime | `coakka-v2-connector-go` source package | `0.1.0` | `0.1.0+63c346e` |
+| C# runtime | `CoAkka.Runtime` NuGet package | `0.1.1` | `0.1.0+63c346e` |
+| Rust runtime | `coakka-runtime-rs` spike package | `0.1.0-spike` | `0.1.0+63c346e` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.1.0-g63c346e` | via JVM runtime `0.1.1-g63c346e` |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.1.0-g63c346e` | via JVM runtime `0.1.1-g63c346e` |
+
+Do not mix runtime language packages from another native package generation
+unless a later release note explicitly declares that combination compatible.
 
 Validation gates run before publishing:
 
@@ -75,6 +98,11 @@ the optional content scanner when the scanner path is provided.
 row is status, label, relative path, and SHA256. The public surface gate rejects
 rows outside the current public release surface, duplicate labels, duplicate
 paths, missing files, and checksum mismatches.
+
+Current integrity metadata is checksum-based: release manifests, `SHA256SUMS`,
+Maven checksum sidecars, and `artifacts/public-artifacts.tsv`. Signature,
+SBOM, and attestation files are not part of this release surface yet; add them
+as explicit release artifacts when the signing flow is introduced.
 
 Before adding a runtime JVM, Python, Node.js, Go, C#, or Rust package release,
 run the intake gate on the candidate artifact:

@@ -30,6 +30,31 @@ sources jars, may pass the same gate with `--allow-no-native`; main runtime
 connector packages must embed or resolve exactly one platform runtime library
 for the current platform.
 
+## Compatibility Rule
+
+Runtime language and framework artifacts must declare which native runtime
+package generation they consume. The publish README keeps the current
+compatibility matrix. A new language package version may differ from the native
+package version, but it must not silently drift to another native generation.
+
+Public samples should treat the native package generation as the compatibility
+anchor. If a sample pins `0.1.0+63c346e`, every runtime language/framework lane
+used by that sample must either consume that same native package generation or
+document an explicit compatibility exception.
+
+## Integrity Metadata
+
+Every release directory must keep checksum metadata close to the artifact:
+
+- `manifest.json`
+- `SHA256SUMS`
+- ecosystem checksum sidecars where applicable
+- the root `artifacts/public-artifacts.tsv` row for consumer-facing downloads
+
+Signature, SBOM, and attestation files are future release artifacts, not implicit
+claims. When introduced, they should be checked by the same public surface gate
+instead of living as separate manual notes.
+
 ## Consumer Shape
 
 Public runtime artifacts must be directly consumable in their target ecosystem.
