@@ -91,8 +91,9 @@ COAKKA_PUBLIC_SURFACE_SCANNER=/path/to/scan_public_artifact_surface.sh \
 ```
 
 The script verifies the root runtime checksums, every logger/runtime release
-checksum file, Maven checksum sidecars, `artifacts/public-artifacts.tsv`, and
-the optional content scanner when the scanner path is provided.
+checksum file, Maven checksum sidecars, runtime JVM release and Maven jars
+against the staged native runtime binaries, `artifacts/public-artifacts.tsv`,
+and the optional content scanner when the scanner path is provided.
 
 `artifacts/public-artifacts.tsv` is the consumer-facing package manifest. Each
 row is status, label, relative path, and SHA256. The public surface gate rejects

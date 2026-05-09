@@ -161,6 +161,10 @@ verify_maven_sidecars
 
 verify_public_artifact_manifest
 
+if [[ -x "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh" ]]; then
+  "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh"
+fi
+
 if [[ -n "${COAKKA_PUBLIC_SURFACE_SCANNER:-}" ]]; then
   "${COAKKA_PUBLIC_SURFACE_SCANNER}" "${repo_root}"
 elif [[ -x "${default_scanner}" ]]; then
