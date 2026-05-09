@@ -54,6 +54,9 @@ Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, and Quarkus artifacts
 are published against the same native package version. Each release directory
 has its own manifest and checksums.
 
+Release note:
+[`docs/releases/2026-05-09-runtime-a671b3a.md`](docs/releases/2026-05-09-runtime-a671b3a.md)
+
 ## Runtime Compatibility Matrix
 
 These artifacts are the currently aligned public runtime set:
