@@ -12,7 +12,7 @@ if ! command -v strings >/dev/null 2>&1; then
   exit 69
 fi
 
-default_blocked_re='coakkaCore|/Users/phuongnamtran|source[- ]workspace|private (source|workspace|repo|repository)|external/caf|external/libuv'
+default_blocked_re='/(Users|home)/[^[:space:]/]+/(misc|study|workspace|src|dev)/|external/(caf|libuv)'
 blocked_re="${COAKKA_PUBLIC_FORBIDDEN_RE:-${default_blocked_re}}"
 self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "$0")"
 tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-surface.XXXXXX")"

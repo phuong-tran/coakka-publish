@@ -17,7 +17,7 @@
     "macos-aarch64"
   ],
   "source": {
-    "release_input": "connectorKotlin logger connector package",
+    "release_input": "logger connector package build output",
     "generated_at_utc": "2026-05-09T11:32:00Z"
   },
   "files": [
