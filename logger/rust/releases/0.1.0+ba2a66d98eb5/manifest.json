@@ -17,8 +17,8 @@
     "macos-aarch64"
   ],
   "source": {
-    "release_input": "public logger connector package",
-    "generated_at_utc": "2026-05-09T10:50:00Z"
+    "release_input": "connectorKotlin logger connector package",
+    "generated_at_utc": "2026-05-09T11:32:00Z"
   },
   "files": [
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "coakka-logger-rs-0.1.0-spike.tar.gz",
-      "size_bytes": 238925,
-      "sha256": "49ca309ad597b92803c8a7f156cae5ca964786cc08144d038f8816a1dbb995b2"
+      "size_bytes": 162700,
+      "sha256": "0979f83ce46efb6927e4a755781b580990f6d84ad82decc6aa83e6d3eed8b04c"
     }
   ]
 }

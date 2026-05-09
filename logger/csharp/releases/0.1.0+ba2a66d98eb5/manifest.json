@@ -17,8 +17,8 @@
     "macos-aarch64"
   ],
   "source": {
-    "release_input": "public logger connector package",
-    "generated_at_utc": "2026-05-09T10:50:00Z"
+    "release_input": "connectorKotlin logger connector package",
+    "generated_at_utc": "2026-05-09T11:32:00Z"
   },
   "files": [
     {
@@ -33,8 +33,8 @@
     },
     {
       "name": "CoAkka.Logger.0.1.0.nupkg",
-      "size_bytes": 90853,
-      "sha256": "5d312c57c274358cccff2be268c1ac3cb62160030fb46431f632cac46a624690"
+      "size_bytes": 90758,
+      "sha256": "28a6ce043dc8fe678c27b749cc7352f10ba5cfb2c76011ca64c06a78a959fd56"
     }
   ]
 }

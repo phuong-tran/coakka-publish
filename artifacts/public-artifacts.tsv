@@ -4,8 +4,8 @@ public	logger JVM jar	logger/jvm/releases/0.1.0+ba2a66d98eb5/coakka-jvm-native-l
 public	logger Python wheel	logger/python/releases/0.1.0+ba2a66d98eb5/coakka_logger-0.1.0-py3-none-any.whl	f2419d3008cb5e62cad03f6a6739942bcc8f8d93fddcc777bef4ea54c73e3ad0
 public	logger Node package	logger/node/releases/0.1.0+ba2a66d98eb5/coakka-logger-node-0.1.0.tgz	d51e7cf0b55309eadb6d0e5eba8410faeeef7c18c04145b130c21b7ec525904e
 public	logger Go package	logger/go/releases/0.1.0+ba2a66d98eb5/coakka-logger-go-0.1.0.tar.gz	6ded85a08a5da36ee7c9179a9fa9995a1b5c8090b593d3213fb62f029a96a13b
-public	logger C# package	logger/csharp/releases/0.1.0+ba2a66d98eb5/CoAkka.Logger.0.1.0.nupkg	5d312c57c274358cccff2be268c1ac3cb62160030fb46431f632cac46a624690
-public	logger Rust package	logger/rust/releases/0.1.0+ba2a66d98eb5/coakka-logger-rs-0.1.0-spike.tar.gz	49ca309ad597b92803c8a7f156cae5ca964786cc08144d038f8816a1dbb995b2
+public	logger C# package	logger/csharp/releases/0.1.0+ba2a66d98eb5/CoAkka.Logger.0.1.0.nupkg	28a6ce043dc8fe678c27b749cc7352f10ba5cfb2c76011ca64c06a78a959fd56
+public	logger Rust package	logger/rust/releases/0.1.0+ba2a66d98eb5/coakka-logger-rs-0.1.0-spike.tar.gz	0979f83ce46efb6927e4a755781b580990f6d84ad82decc6aa83e6d3eed8b04c
 public	logger Native package	logger/native/releases/0.1.0+ba2a66d98eb5/coakka-logger-native-0.1.0.tar.gz	ca75c5addc92ba48efbd6577516cd6bac80da390c2583a51f02a5e412ab5d5ab
 public	runtime Native package	runtime/native/releases/0.1.0+a671b3a/coakka-runtime-native-v2-0.1.0.tar.gz	6198ceab3918cfffea543b222732d9a754e28f3942f8b6989f40e49e28f692c9
 public	runtime JVM jar	runtime/jvm/releases/0.1.0+a671b3a/coakka-jvm-native-runtime-v2-0.1.1-ga671b3a.jar	34a56c91ffaf28476a3bd4643cb53f8ea69a434ec5dd107380a3c03ea0c57b33
