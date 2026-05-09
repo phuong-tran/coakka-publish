@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "jvm",
+  "release_directory": "0.1.0+a671b3a",
+  "artifact": {
+    "group_id": "coakka.v2",
+    "artifact_id": "coakka-jvm-native-runtime-v2",
+    "artifact_version": "0.1.1-g3362b67",
+    "bundled_native_core_version": "0.1.0",
+    "bundled_native_package_version": "0.1.0+a671b3a",
+    "bundled_native_git_commit": "a671b3a"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "release_input": "public runtime connector package",
+    "generated_at_utc": "2026-05-09T09:51:20Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 2273,
+      "sha256": "c4ecc0c67a8e61302415c36e5b72e1e0b48ab98bacca2586227a45513a5b1fcc"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 4051,
+      "sha256": "2485c9a81a584554c0f13987c3ecf3e24dc99c5a2b57b89a52ee55402bfaccf8"
+    },
+    {
+      "name": "coakka-jvm-native-runtime-v2-0.1.1-ga671b3a-sources.jar",
+      "size_bytes": 32285,
+      "sha256": "282da16d838ebb1627b53135438b57211baa49df9e83fdb28126215e2ade3ea8"
+    },
+    {
+      "name": "coakka-jvm-native-runtime-v2-0.1.1-ga671b3a.jar",
+      "size_bytes": 7980537,
+      "sha256": "34a56c91ffaf28476a3bd4643cb53f8ea69a434ec5dd107380a3c03ea0c57b33"
+    }
+  ]
+}

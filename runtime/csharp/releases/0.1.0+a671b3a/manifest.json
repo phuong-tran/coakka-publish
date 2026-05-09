@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "csharp",
+  "release_directory": "0.1.0+a671b3a",
+  "artifact": {
+    "package_name": "CoAkka.Runtime",
+    "artifact_version": "0.1.1",
+    "windows_claimed": false,
+    "bundled_native_core_version": "0.1.0",
+    "bundled_native_package_version": "0.1.0+a671b3a",
+    "bundled_native_git_commit": "a671b3a"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "release_input": "public runtime connector package",
+    "generated_at_utc": "2026-05-09T09:51:20Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 3071,
+      "sha256": "4026c376eb00041de7b852890e1fc0bd3d9d998a67468aeeefeddda8b66bdc40"
+    },
+    {
+      "name": "CoAkka.Runtime.0.1.1.nupkg",
+      "size_bytes": 3863818,
+      "sha256": "f76543a1f5fbf2286335d6d6803899c945fb1ec3b70319fb2e3aa21a61111d86"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 4134,
+      "sha256": "efa2a945140fc17d6b90dcff5d60c5c1abd93adb819a13e0404886b1bef4b9c0"
+    }
+  ]
+}

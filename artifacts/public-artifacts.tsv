@@ -5,12 +5,12 @@ public	logger Python wheel	logger/python/releases/0.1.0+ba2a66d98eb5/coakka_logg
 public	logger Node package	logger/node/releases/0.1.0+ba2a66d98eb5/coakka-logger-node-0.1.0.tgz	d51e7cf0b55309eadb6d0e5eba8410faeeef7c18c04145b130c21b7ec525904e
 public	logger Go package	logger/go/releases/0.1.0+ba2a66d98eb5/coakka-logger-go-0.1.0.tar.gz	6ded85a08a5da36ee7c9179a9fa9995a1b5c8090b593d3213fb62f029a96a13b
 public	logger Native package	logger/native/releases/0.1.0+ba2a66d98eb5/coakka-logger-native-0.1.0.tar.gz	ca75c5addc92ba48efbd6577516cd6bac80da390c2583a51f02a5e412ab5d5ab
-public	runtime Native package	runtime/native/releases/0.1.0+3362b67/coakka-runtime-native-v2-0.1.0.tar.gz	4d7c34fd2372a50b8d7bb3255d36f04a9f2d2920d7aa92313a76347011bf128c
-public	runtime JVM jar	runtime/jvm/releases/0.1.0+3362b67/coakka-jvm-native-runtime-v2-0.1.1-g3362b67.jar	0c4e68bc9e0a213de673f1d9a5357701dfd5d004459b1fafb80be5c0a6ff0a13
-public	runtime Python wheel	runtime/python/releases/0.1.0+3362b67/coakka_v2_connector-0.1.0-py3-none-any.whl	093f4b81147c5d3d690209f5e87d2b9ac528be1f97d0d522ac560c62bdb27f77
-public	runtime Node package	runtime/node/releases/0.1.0+3362b67/coakka-v2-connector-node-0.1.0.tgz	97c60ce45d9d5bc5f3cc7fcf6529d5f5748f8f9adb10cfd9f28f8ee5ad537db1
-public	runtime Go package	runtime/go/releases/0.1.0+3362b67/coakka-v2-connector-go-0.1.0.tar.gz	726a8035c6b295c1ede31a12bc84ca1c76fc295f5c1f779da03fb7a16cce017a
-public	runtime C# package	runtime/csharp/releases/0.1.0+3362b67/CoAkka.Runtime.0.1.1.nupkg	fe0b1c081561e2877819832aca4efcfb7feb9b42c58c911714f542046e3a61c2
-public	runtime Rust package	runtime/rust/releases/0.1.0+3362b67/coakka-runtime-rs-0.1.0-spike.tar.gz	1eb1ec46c96b9da1f364caa172f56320c21201a2cc421cb5cb8d3cd3f65a91ca
-public	Spring Boot starter Maven jar	maven/coakka/spring/coakka-spring-boot-starter/0.1.0-g3362b67/coakka-spring-boot-starter-0.1.0-g3362b67.jar	21e8a3f6a9781babd0fa26eaeb4bdbe9cef750afb3ee4d11e3aeda83a555c1d6
-public	Quarkus extension Maven jar	maven/coakka/quarkus/coakka-quarkus-extension/0.1.0-g3362b67/coakka-quarkus-extension-0.1.0-g3362b67.jar	8d5b1f5f28e52a1019c33689cc8d99b8884016eb0cb07dc3a90eb87299ef8f56
+public	runtime Native package	runtime/native/releases/0.1.0+a671b3a/coakka-runtime-native-v2-0.1.0.tar.gz	6198ceab3918cfffea543b222732d9a754e28f3942f8b6989f40e49e28f692c9
+public	runtime JVM jar	runtime/jvm/releases/0.1.0+a671b3a/coakka-jvm-native-runtime-v2-0.1.1-ga671b3a.jar	34a56c91ffaf28476a3bd4643cb53f8ea69a434ec5dd107380a3c03ea0c57b33
+public	runtime Python wheel	runtime/python/releases/0.1.0+a671b3a/coakka_v2_connector-0.1.0-py3-none-any.whl	97ad6f40edd3d571f11732ac0a6f7c7bb6c1deafacca0abf67c233073ec45bc5
+public	runtime Node package	runtime/node/releases/0.1.0+a671b3a/coakka-v2-connector-node-0.1.0.tgz	1af3e4702c146dc3c75ebb0b54350e907ed1669a37c24d82855883ea0a9c45f7
+public	runtime Go package	runtime/go/releases/0.1.0+a671b3a/coakka-v2-connector-go-0.1.0.tar.gz	4627ded7628d45647cb7ece730567919337295384a3fd143e940861f2ee354cc
+public	runtime C# package	runtime/csharp/releases/0.1.0+a671b3a/CoAkka.Runtime.0.1.1.nupkg	f76543a1f5fbf2286335d6d6803899c945fb1ec3b70319fb2e3aa21a61111d86
+public	runtime Rust package	runtime/rust/releases/0.1.0+a671b3a/coakka-runtime-rs-0.1.0-spike.tar.gz	7d0f20bfe16678268b9b41ad7f1108dfb605d0bd7e83dc6435acd0a1a5423294
+public	Spring Boot starter Maven jar	maven/coakka/spring/coakka-spring-boot-starter/0.1.0-ga671b3a/coakka-spring-boot-starter-0.1.0-ga671b3a.jar	8ed04f1f1ca10c85a0180b108322ba85a1a16874a1fb932e07899afc18507951
+public	Quarkus extension Maven jar	maven/coakka/quarkus/coakka-quarkus-extension/0.1.0-ga671b3a/coakka-quarkus-extension-0.1.0-ga671b3a.jar	0bcbdf6606d7c2dce19977652f923e9960f4fd807f3ffd4452c8befcd3e48042

@@ -3,11 +3,11 @@
   <groupId>coakka.spring</groupId>
   <artifactId>coakka-spring-boot-starter</artifactId>
   <versioning>
-    <latest>0.1.0-g3362b67</latest>
-    <release>0.1.0-g3362b67</release>
+    <latest>0.1.0-ga671b3a</latest>
+    <release>0.1.0-ga671b3a</release>
     <versions>
-      <version>0.1.0-g3362b67</version>
+      <version>0.1.0-ga671b3a</version>
     </versions>
-    <lastUpdated>20260509051100</lastUpdated>
+    <lastUpdated>20260509095120</lastUpdated>
   </versioning>
 </metadata>
