@@ -2,6 +2,29 @@
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
+## Public Status
+
+Current public runtime generation: `0.1.0+a671b3a`.
+
+| Lane | Public status | Public location |
+| --- | --- | --- |
+| Logger JVM, Python, Node.js, Go, C#, Rust | public | `logger/{jvm,python,node,go,csharp,rust}/releases/` |
+| Logger native C/C++ | public | `logger/native/releases/` |
+| Runtime native C ABI | public | `runtime/native/releases/` |
+| Runtime JVM, Python, Node.js, Go, C#, Rust | public | `runtime/{jvm,python,node,go,csharp,rust}/releases/` |
+| Runtime Spring Boot and Quarkus adapters | public | `maven/` |
+| Root runtime headers and native libraries | public | `include/` and `native/` |
+
+The aligned runtime artifact set is anchored on native package generation
+`0.1.0+a671b3a`. Do not mix language or framework runtime packages from another
+native package generation unless a later release note explicitly declares that
+combination compatible.
+
+Consumer-facing downloads are listed in `artifacts/public-artifacts.tsv`.
+Integrity metadata is checksum-based for this surface: release manifests,
+`SHA256SUMS`, Maven checksum sidecars, and the root artifact manifest. Signature,
+SBOM, and attestation files are not part of this release surface yet.
+
 Repository rules:
 
 - keep this as a plain artifact repository, not a source-build repository
