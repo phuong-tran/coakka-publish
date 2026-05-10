@@ -7,7 +7,10 @@ This repository is the public binary-only publish surface for CoAkka artifacts.
 This repository distributes CoAkka artifacts under the preview terms in
 [LICENSE.md](LICENSE.md), unless a specific release artifact includes different
 license terms. The repository is intended for developer evaluation, official
-sample execution, proof-of-concept integrations, and integration testing.
+sample execution, proof-of-concept integrations, and integration testing,
+including internal evaluations inside commercial organizations. Production
+use, hosted service use, customer distribution, and paid redistribution require
+explicit release terms or a separate written agreement.
 
 The separate `coakka-samples` repository contains sample code and documentation
 under its own license. That sample license does not change the terms for the

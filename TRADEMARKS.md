@@ -12,3 +12,20 @@ affiliated with the CoAkka project.
 Forks, derived runtimes, mirrors, and repackaged artifact sets should use their
 own project names. They may state compatibility with CoAkka when that statement
 is accurate and does not create confusion about origin, endorsement, or support.
+
+## Examples
+
+Allowed:
+
+- "This integration uses official CoAkka artifacts."
+- "MyProject is compatible with CoAkka runtime generation 0.1.0+a671b3a."
+- "This mirror contains unmodified CoAkka artifacts from coakka-publish."
+
+Not allowed without written permission:
+
+- naming an unofficial runtime, hosted service, fork, or artifact mirror
+  "CoAkka"
+- publishing modified or repackaged artifacts under names that look like
+  official CoAkka artifacts
+- using the CoAkka name or logo to imply endorsement, certification, support,
+  or project ownership
