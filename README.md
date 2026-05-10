@@ -2,6 +2,23 @@
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
+## License And Trademark
+
+This repository distributes CoAkka artifacts under the preview terms in
+[LICENSE.md](LICENSE.md), unless a specific release artifact includes different
+license terms. The repository is intended for developer evaluation, official
+sample execution, proof-of-concept integrations, and integration testing.
+
+The separate `coakka-samples` repository contains sample code and documentation
+under its own license. That sample license does not change the terms for the
+runtime binaries, connector packages, Maven artifacts, or other released
+artifacts distributed here.
+
+The CoAkka name and `coakka` package, artifact, and image prefixes identify
+the official project surface. See [TRADEMARKS.md](TRADEMARKS.md) before using
+the name for forks, derived runtimes, hosted services, mirrors, or product
+branding.
+
 ## Public Status
 
 Current public runtime generation: `0.1.0+a671b3a`.
