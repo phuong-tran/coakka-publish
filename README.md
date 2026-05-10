@@ -1,6 +1,11 @@
 # CoAkka Publish
 
+[![public-surface](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml/badge.svg)](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml)
+
 This repository is the public binary-only publish surface for CoAkka artifacts.
+
+Current runtime release note:
+[2026-05-09 runtime a671b3a](docs/releases/2026-05-09-runtime-a671b3a.md).
 
 ## License And Trademark
 
