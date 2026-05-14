@@ -114,12 +114,12 @@ These artifacts are the currently aligned public runtime set:
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
 | Native C ABI | `runtime/native/releases/0.1.0+a671b3a/coakka-runtime-native-v2-0.1.0.tar.gz` | `0.1.0+a671b3a` | `0.1.0+a671b3a` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.1.1-ga671b3a` | `0.1.0+a671b3a` |
-| Python runtime | `coakka_v2_connector` wheel | `0.1.0` | `0.1.0+a671b3a` |
-| Node.js runtime | `coakka-v2-connector-node` package | `0.1.0` | `0.1.0+a671b3a` |
-| Go runtime | `coakka-v2-connector-go` source package | `0.1.0` | `0.1.0+a671b3a` |
-| C# runtime | `CoAkka.Runtime` NuGet package | `0.1.1` | `0.1.0+a671b3a` |
-| Rust runtime | `coakka-runtime-rs` spike package | `0.1.0-spike` | `0.1.0+a671b3a` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.1.1-ga671b3a-c20cf7c4` | `0.1.0+a671b3a` |
+| Python runtime | `coakka_v2_connector` wheel | `0.1.0` from `0.1.0+a671b3a-c20cf7c4` | `0.1.0+a671b3a` |
+| Node.js runtime | `coakka-v2-connector-node` package | `0.1.0` from `0.1.0+a671b3a-c20cf7c4` | `0.1.0+a671b3a` |
+| Go runtime | `coakka-v2-connector-go` source package | `0.1.0` from `0.1.0+a671b3a-c20cf7c4` | `0.1.0+a671b3a` |
+| C# runtime | `CoAkka.Runtime` NuGet package | `0.1.1` from `0.1.0+a671b3a-c20cf7c4` | `0.1.0+a671b3a` |
+| Rust runtime | `coakka-runtime-rs` spike package | `0.1.0-spike` from `0.1.0+a671b3a-c20cf7c4` | `0.1.0+a671b3a` |
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.1.0-ga671b3a` | via JVM runtime `0.1.1-ga671b3a` |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.1.0-ga671b3a` | via JVM runtime `0.1.1-ga671b3a` |
 
