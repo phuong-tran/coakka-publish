@@ -1,0 +1,143 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "coakka.v2",
+    "module": "coakka-jvm-native-runtime-v2",
+    "version": "0.1.1-ge2dc43a-9227dc0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib"
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "net.java.dev.jna",
+          "module": "jna",
+          "version": {
+            "requires": "5.17.0"
+          }
+        },
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-java",
+          "version": {
+            "requires": "4.31.1"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-jvm-native-runtime-v2-0.1.1-ge2dc43a-9227dc0.jar",
+          "url": "coakka-jvm-native-runtime-v2-0.1.1-ge2dc43a-9227dc0.jar",
+          "size": 8004181,
+          "sha512": "46da574cd857de963def9cbe00870d92fcc26805c8d5e69b344c671d67e12b0b6bf60c6ee5f4e24211c30ef7d4875302ef08df461d17a07022ea9d849686133a",
+          "sha256": "4a7b4687f2d354158d9a97851975ea9f4ab5605d7a139319331b246bfced9d9d",
+          "sha1": "7b244888f9e8737608211970063bdb238ccef38d",
+          "md5": "82955ccdfd298835e1f40207560a5608"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-jdk8",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib"
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "net.java.dev.jna",
+          "module": "jna",
+          "version": {
+            "requires": "5.17.0"
+          }
+        },
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-java",
+          "version": {
+            "requires": "4.31.1"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-jvm-native-runtime-v2-0.1.1-ge2dc43a-9227dc0.jar",
+          "url": "coakka-jvm-native-runtime-v2-0.1.1-ge2dc43a-9227dc0.jar",
+          "size": 8004181,
+          "sha512": "46da574cd857de963def9cbe00870d92fcc26805c8d5e69b344c671d67e12b0b6bf60c6ee5f4e24211c30ef7d4875302ef08df461d17a07022ea9d849686133a",
+          "sha256": "4a7b4687f2d354158d9a97851975ea9f4ab5605d7a139319331b246bfced9d9d",
+          "sha1": "7b244888f9e8737608211970063bdb238ccef38d",
+          "md5": "82955ccdfd298835e1f40207560a5608"
+        }
+      ]
+    }
+  ]
+}

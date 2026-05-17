@@ -18,7 +18,7 @@ is accurate and does not create confusion about origin, endorsement, or support.
 Allowed:
 
 - "This integration uses official CoAkka artifacts."
-- "MyProject is compatible with CoAkka runtime generation 0.1.0+a671b3a."
+- "MyProject is compatible with CoAkka runtime generation 0.1.0+e2dc43a."
 - "This mirror contains unmodified CoAkka artifacts from coakka-publish."
 
 Not allowed without written permission:

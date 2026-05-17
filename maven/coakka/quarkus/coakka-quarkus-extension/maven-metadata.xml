@@ -3,11 +3,12 @@
   <groupId>coakka.quarkus</groupId>
   <artifactId>coakka-quarkus-extension</artifactId>
   <versioning>
-    <latest>0.1.0-ga671b3a</latest>
-    <release>0.1.0-ga671b3a</release>
+    <latest>0.1.0-ge2dc43a</latest>
+    <release>0.1.0-ge2dc43a</release>
     <versions>
       <version>0.1.0-ga671b3a</version>
+      <version>0.1.0-ge2dc43a</version>
     </versions>
-    <lastUpdated>20260509095120</lastUpdated>
+    <lastUpdated>20260517144325</lastUpdated>
   </versioning>
 </metadata>
