@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "zig",
+  "release_directory": "0.2.0+c124a9e-10dc009",
+  "artifact": {
+    "package_name": "coakka-runtime-zig",
+    "artifact_version": "0.2.0-source",
+    "bundled_native_core_version": "0.2.0",
+    "bundled_native_package_version": "0.2.0+c124a9e",
+    "bundled_native_git_commit": "c124a9e",
+    "connector_source_git_commit": "10dc009",
+    "source_package": true
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "generated_at_utc": "2026-05-18T00:00:00Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 647,
+      "sha256": "df2ed117902976209f71fdb5a860559e3127f6eaa2e295ce127e30101f7156fb"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 700,
+      "sha256": "66b329aa6ee483cd14b5b21a89ee338d32c2c48e66c9c075327fb86cb6c232d1"
+    },
+    {
+      "name": "coakka-runtime-zig-0.2.0-source.tar.gz",
+      "size_bytes": 7699425,
+      "sha256": "394675a6441ed392a56234d172ef1f56d4bcd5d366d0ca8da1962013bd91b33f"
+    }
+  ]
+}

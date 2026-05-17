@@ -11,7 +11,7 @@ The current public release surface contains:
 - runtime v2 public C ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
-- planned runtime connector package lanes under `runtime/{mojo,zig}/releases/`
+- runtime source connector packages under `runtime/{mojo,zig}/releases/`
 - runtime JVM, Spring Boot, and Quarkus artifacts under `maven/`
 
 Consumer-facing package downloads are listed in
@@ -120,6 +120,10 @@ For JVM, Python, Node.js, Go, C#, Rust, Mojo, and Zig:
 - loading the native runtime must not require users to install extra native
   implementation packages
 - public samples must use the language artifact directly
+
+Mojo and Zig are currently published as source connector packages with bundled
+native runtime libraries. They are public evaluation artifacts, not
+package-manager releases yet.
 
 For native C/C++ packages:
 

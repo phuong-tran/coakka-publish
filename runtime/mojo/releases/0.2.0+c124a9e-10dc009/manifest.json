@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "mojo",
+  "release_directory": "0.2.0+c124a9e-10dc009",
+  "artifact": {
+    "package_name": "coakka-runtime-mojo",
+    "artifact_version": "0.2.0-source",
+    "bundled_native_core_version": "0.2.0",
+    "bundled_native_package_version": "0.2.0+c124a9e",
+    "bundled_native_git_commit": "c124a9e",
+    "connector_source_git_commit": "10dc009",
+    "source_package": true
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "generated_at_utc": "2026-05-18T00:00:00Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 670,
+      "sha256": "a19eb8ba0d12aba3c00b9228ad9cbae89cf75e4464991ccd6943151f6e84ac84"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 702,
+      "sha256": "d2fcbaffc54485f1f6bb57f0e8994c58398bf87e8e991b33fbddcd9f8e44e367"
+    },
+    {
+      "name": "coakka-runtime-mojo-0.2.0-source.tar.gz",
+      "size_bytes": 7698416,
+      "sha256": "187eb3eda858fd49183504b128f268ee427b7115c87976d7f947565820f25a93"
+    }
+  ]
+}

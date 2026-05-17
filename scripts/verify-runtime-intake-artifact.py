@@ -176,13 +176,30 @@ def rust_native_version(artifact: Path) -> tuple[str, list[str]]:
     return str(metadata.get("bundled_native_package_version", "")), entries
 
 
+def source_connector_native_version(artifact: Path, metadata_name: str) -> tuple[str, list[str]]:
+    with tarfile.open(artifact, "r:gz") as archive:
+        entries = [member.name for member in archive.getmembers()]
+        metadata = json.loads(read_tar_member_text(archive, f"/{metadata_name}"))
+    return str(metadata.get("bundled_native_package_version", "")), entries
+
+
+def mojo_native_version(artifact: Path) -> tuple[str, list[str]]:
+    return source_connector_native_version(artifact, "coakka-runtime-mojo-package.json")
+
+
+def zig_native_version(artifact: Path) -> tuple[str, list[str]]:
+    return source_connector_native_version(artifact, "coakka-runtime-zig-package.json")
+
+
 LANE_READERS = {
     "jvm": jvm_native_version,
     "python": python_native_version,
     "node": node_native_version,
     "go": go_native_version,
     "csharp": csharp_native_version,
+    "mojo": mojo_native_version,
     "rust": rust_native_version,
+    "zig": zig_native_version,
 }
 
 

@@ -14,5 +14,7 @@ public	runtime Node package	runtime/node/releases/0.2.0+94a5729-6b7a3bf/coakka-v
 public	runtime Go package	runtime/go/releases/0.2.0+94a5729-6b7a3bf/coakka-v2-connector-go-0.2.0.tar.gz	4ee0966bb3bebbccb3e7eb47d1d4074a0f04f4da5716d6a9c9f78211a5ce9a52
 public	runtime C# package	runtime/csharp/releases/0.2.0+94a5729-6b7a3bf/CoAkka.Runtime.0.2.0.nupkg	118f8aa9b00da31c1971fcf5f827a3618d304346356ec2c90f46f99c5c0bf852
 public	runtime Rust package	runtime/rust/releases/0.2.0+94a5729-6b7a3bf/coakka-runtime-rs-0.2.0-spike.tar.gz	9fae36ef2e2f2436b0f0f802fcb17a36b65328d7104a2adcfcb8e645a5c59230
+public	runtime Mojo source package	runtime/mojo/releases/0.2.0+c124a9e-10dc009/coakka-runtime-mojo-0.2.0-source.tar.gz	187eb3eda858fd49183504b128f268ee427b7115c87976d7f947565820f25a93
+public	runtime Zig source package	runtime/zig/releases/0.2.0+c124a9e-10dc009/coakka-runtime-zig-0.2.0-source.tar.gz	394675a6441ed392a56234d172ef1f56d4bcd5d366d0ca8da1962013bd91b33f
 public	Spring Boot starter Maven jar	maven/coakka/spring/coakka-spring-boot-starter/0.2.0-g94a5729/coakka-spring-boot-starter-0.2.0-g94a5729.jar	b0a5bdc1599783c4f501635c1828e65768fb75a6e758e11302f3d51e3fb06bdb
 public	Quarkus extension Maven jar	maven/coakka/quarkus/coakka-quarkus-extension/0.2.0-g94a5729/coakka-quarkus-extension-0.2.0-g94a5729.jar	a40466ac4cef8f1a233450be75727de290917344d7e3d0bf5de3c5bfa9d231e8

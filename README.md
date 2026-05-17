@@ -10,6 +10,9 @@ Current native runtime refresh note:
 Current language connector release note:
 [2026-05-17 runtime 94a5729](docs/releases/2026-05-17-runtime-94a5729.md).
 
+Current source connector release note:
+[2026-05-18 runtime Mojo/Zig source 10dc009](docs/releases/2026-05-18-runtime-zig-mojo-source-10dc009.md).
+
 ## License And Trademark
 
 This repository distributes CoAkka artifacts under the preview terms in
@@ -34,6 +37,7 @@ branding.
 
 Current public native runtime generation: `0.2.0+c124a9e`.
 Current public language connector generation: `0.2.0+94a5729-6b7a3bf`.
+Current public Mojo/Zig source connector generation: `0.2.0+c124a9e-10dc009`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -41,15 +45,16 @@ Current public language connector generation: `0.2.0+94a5729-6b7a3bf`.
 | Logger native C/C++ | public | `logger/native/releases/` |
 | Runtime native C ABI | public | `runtime/native/releases/` |
 | Runtime JVM, Python, Node.js, Go, C#, Rust | public | `runtime/{jvm,python,node,go,csharp,rust}/releases/` |
-| Runtime Mojo and Zig connector lanes | planned | `runtime/{mojo,zig}/releases/` |
+| Runtime Mojo and Zig source connector lanes | public source packages | `runtime/{mojo,zig}/releases/` |
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 
 The current root native runtime package is `0.2.0+c124a9e`. Published language
 and framework runtime packages remain on the `0.2.0+94a5729-6b7a3bf` connector
-set until those lanes are refreshed. Do not mix language or framework runtime
-packages from another native package generation unless a release note explicitly
-declares that combination compatible.
+set until those lanes are refreshed. Mojo and Zig source packages are published
+against `0.2.0+c124a9e`. Do not mix language or framework runtime packages from
+another native package generation unless a release note explicitly declares that
+combination compatible.
 
 Consumer-facing downloads are listed in `artifacts/public-artifacts.tsv`.
 Integrity metadata is checksum-based for this surface: release manifests,
@@ -82,7 +87,7 @@ Current published lanes:
 - runtime v2 public `C` ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
-- planned next runtime connector lanes under `runtime/{mojo,zig}/releases/`
+- runtime source connector packages under `runtime/{mojo,zig}/releases/`
 
 ## Runtime v2 Public Artifacts
 
@@ -108,15 +113,18 @@ request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
 Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, and Quarkus artifacts
-currently remain on the `0.2.0+94a5729-6b7a3bf` connector set. Mojo and Zig are
-planned connector lanes and are not public artifacts yet. Each release
-directory has its own manifest and checksums.
+currently remain on the `0.2.0+94a5729-6b7a3bf` connector set. Mojo and Zig now
+have source connector packages over the `0.2.0+c124a9e` native runtime. Each
+release directory has its own manifest and checksums.
 
 Native refresh note:
 [`docs/releases/2026-05-18-runtime-native-c124a9e.md`](docs/releases/2026-05-18-runtime-native-c124a9e.md)
 
 Language connector release note:
 [`docs/releases/2026-05-17-runtime-94a5729.md`](docs/releases/2026-05-17-runtime-94a5729.md)
+
+Source connector release note:
+[`docs/releases/2026-05-18-runtime-zig-mojo-source-10dc009.md`](docs/releases/2026-05-18-runtime-zig-mojo-source-10dc009.md)
 
 ## Runtime Compatibility Matrix
 
@@ -131,8 +139,8 @@ These artifacts are the current public runtime set:
 | Go runtime | `coakka-v2-connector-go` source package | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
 | C# runtime | `CoAkka.Runtime` NuGet package | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
 | Rust runtime | `coakka-runtime-rs` package | `0.2.0-spike` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
-| Mojo runtime | planned connector lane | not published | not published |
-| Zig runtime | planned connector lane | not published | not published |
+| Mojo runtime | `runtime/mojo/releases/0.2.0+c124a9e-10dc009/coakka-runtime-mojo-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
+| Zig runtime | `runtime/zig/releases/0.2.0+c124a9e-10dc009/coakka-runtime-zig-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.2.0-g94a5729` | via JVM runtime `0.2.0-g94a5729-6b7a3bf` |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.2.0-g94a5729` | via JVM runtime `0.2.0-g94a5729-6b7a3bf` |
 
