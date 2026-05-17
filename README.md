@@ -5,7 +5,7 @@
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
 Current runtime release note:
-[2026-05-17 runtime e2dc43a](docs/releases/2026-05-17-runtime-e2dc43a.md).
+[2026-05-17 runtime 94a5729](docs/releases/2026-05-17-runtime-94a5729.md).
 
 ## License And Trademark
 
@@ -29,7 +29,7 @@ branding.
 
 ## Public Status
 
-Current public runtime generation: `0.1.0+e2dc43a`.
+Current public runtime generation: `0.2.0+94a5729`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -41,7 +41,7 @@ Current public runtime generation: `0.1.0+e2dc43a`.
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 
 The aligned runtime artifact set is anchored on native package generation
-`0.1.0+e2dc43a`. Do not mix language or framework runtime packages from another
+`0.2.0+94a5729`. Do not mix language or framework runtime packages from another
 native package generation unless a later release note explicitly declares that
 combination compatible.
 
@@ -79,7 +79,7 @@ Current published lanes:
 
 ## Runtime v2 Public Artifacts
 
-Core source snapshot: `e2dc43a`
+Core source snapshot: `94a5729`
 
 Package contents:
 
@@ -92,20 +92,20 @@ Package contents:
 - `native/linux-x86_64/libcoakka_runtime_v2.so`
 - `native/macos-aarch64/libcoakka_runtime_v2.dylib`
 - `SHA256SUMS`
-- `runtime/native/releases/0.1.0+e2dc43a/coakka-runtime-native-v2-0.1.0.tar.gz`
+- `runtime/native/releases/0.2.0+94a5729/coakka-runtime-native-v2-0.2.0.tar.gz`
 
-The staged native libraries include the runtime C ABI and the scanner-clean TCP
-frame transport candidate used by the public cross-process samples. The
-host-facing routing contract remains the same across profiles: targets, route
-generations, request/reply, deadletters, and diagnostics stay in the public
-runtime contract.
+The staged native libraries include the runtime C ABI and scanner-clean
+platform libraries for the public artifact surface. The host-facing routing
+contract remains the same across profiles: targets, route generations,
+request/reply, deadletters, and diagnostics stay in the public runtime
+contract.
 
 Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, and Quarkus artifacts
 are published against the same native package version. Each release directory
 has its own manifest and checksums.
 
 Release note:
-[`docs/releases/2026-05-17-runtime-e2dc43a.md`](docs/releases/2026-05-17-runtime-e2dc43a.md)
+[`docs/releases/2026-05-17-runtime-94a5729.md`](docs/releases/2026-05-17-runtime-94a5729.md)
 
 ## Runtime Compatibility Matrix
 
@@ -113,15 +113,15 @@ These artifacts are the currently aligned public runtime set:
 
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/0.1.0+e2dc43a/coakka-runtime-native-v2-0.1.0.tar.gz` | `0.1.0+e2dc43a` | `0.1.0+e2dc43a` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.1.1-ge2dc43a-9227dc0` | `0.1.0+e2dc43a` |
-| Python runtime | `coakka_v2_connector` wheel | `0.1.0` from `0.1.0+e2dc43a-9227dc0` | `0.1.0+e2dc43a` |
-| Node.js runtime | `coakka-v2-connector-node` package | `0.1.0` from `0.1.0+e2dc43a-9227dc0` | `0.1.0+e2dc43a` |
-| Go runtime | `coakka-v2-connector-go` source package | `0.1.0` from `0.1.0+e2dc43a-9227dc0` | `0.1.0+e2dc43a` |
-| C# runtime | `CoAkka.Runtime` NuGet package | `0.1.1` from `0.1.0+e2dc43a-9227dc0` | `0.1.0+e2dc43a` |
-| Rust runtime | `coakka-runtime-rs` spike package | `0.1.0-spike` from `0.1.0+e2dc43a-9227dc0` | `0.1.0+e2dc43a` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.1.0-ge2dc43a` | via JVM runtime `0.1.1-ge2dc43a-9227dc0` |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.1.0-ge2dc43a` | via JVM runtime `0.1.1-ge2dc43a-9227dc0` |
+| Native C ABI | `runtime/native/releases/0.2.0+94a5729/coakka-runtime-native-v2-0.2.0.tar.gz` | `0.2.0+94a5729` | `0.2.0+94a5729` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.2.0-g94a5729-6b7a3bf` | `0.2.0+94a5729` |
+| Python runtime | `coakka_v2_connector` wheel | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
+| Node.js runtime | `coakka-v2-connector-node` package | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
+| Go runtime | `coakka-v2-connector-go` source package | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
+| C# runtime | `CoAkka.Runtime` NuGet package | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
+| Rust runtime | `coakka-runtime-rs` package | `0.2.0-spike` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.2.0-g94a5729` | via JVM runtime `0.2.0-g94a5729-6b7a3bf` |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.2.0-g94a5729` | via JVM runtime `0.2.0-g94a5729-6b7a3bf` |
 
 Do not mix runtime language packages from another native package generation
 unless a later release note explicitly declares that combination compatible.
@@ -163,8 +163,8 @@ run the intake gate on the candidate artifact:
 ```bash
 scripts/verify-runtime-intake-artifact.py \
   --lane python \
-  --artifact /path/to/coakka_v2_connector-0.1.0-py3-none-any.whl \
-  --expected-native-version 0.1.0+e2dc43a
+  --artifact /path/to/coakka_v2_connector-0.2.0-py3-none-any.whl \
+  --expected-native-version 0.2.0+94a5729
 ```
 
 Use the matching `--lane` value for the candidate package. The gate verifies
