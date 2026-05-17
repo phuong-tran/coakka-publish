@@ -4,7 +4,10 @@
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
-Current runtime release note:
+Current native runtime refresh note:
+[2026-05-18 runtime native c124a9e](docs/releases/2026-05-18-runtime-native-c124a9e.md).
+
+Current language connector release note:
 [2026-05-17 runtime 94a5729](docs/releases/2026-05-17-runtime-94a5729.md).
 
 ## License And Trademark
@@ -29,7 +32,8 @@ branding.
 
 ## Public Status
 
-Current public runtime generation: `0.2.0+94a5729`.
+Current public native runtime generation: `0.2.0+c124a9e`.
+Current public language connector generation: `0.2.0+94a5729-6b7a3bf`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -37,13 +41,15 @@ Current public runtime generation: `0.2.0+94a5729`.
 | Logger native C/C++ | public | `logger/native/releases/` |
 | Runtime native C ABI | public | `runtime/native/releases/` |
 | Runtime JVM, Python, Node.js, Go, C#, Rust | public | `runtime/{jvm,python,node,go,csharp,rust}/releases/` |
+| Runtime Mojo and Zig connector lanes | planned | `runtime/{mojo,zig}/releases/` |
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 
-The aligned runtime artifact set is anchored on native package generation
-`0.2.0+94a5729`. Do not mix language or framework runtime packages from another
-native package generation unless a later release note explicitly declares that
-combination compatible.
+The current root native runtime package is `0.2.0+c124a9e`. Published language
+and framework runtime packages remain on the `0.2.0+94a5729-6b7a3bf` connector
+set until those lanes are refreshed. Do not mix language or framework runtime
+packages from another native package generation unless a release note explicitly
+declares that combination compatible.
 
 Consumer-facing downloads are listed in `artifacts/public-artifacts.tsv`.
 Integrity metadata is checksum-based for this surface: release manifests,
@@ -76,10 +82,11 @@ Current published lanes:
 - runtime v2 public `C` ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
+- planned next runtime connector lanes under `runtime/{mojo,zig}/releases/`
 
 ## Runtime v2 Public Artifacts
 
-Core source snapshot: `94a5729`
+Core source snapshot: `c124a9e`
 
 Package contents:
 
@@ -92,7 +99,7 @@ Package contents:
 - `native/linux-x86_64/libcoakka_runtime_v2.so`
 - `native/macos-aarch64/libcoakka_runtime_v2.dylib`
 - `SHA256SUMS`
-- `runtime/native/releases/0.2.0+94a5729/coakka-runtime-native-v2-0.2.0.tar.gz`
+- `runtime/native/releases/0.2.0+c124a9e/coakka-runtime-native-v2-0.2.0.tar.gz`
 
 The staged native libraries include the runtime C ABI and scanner-clean
 platform libraries for the public artifact surface. The host-facing routing
@@ -101,25 +108,31 @@ request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
 Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot, and Quarkus artifacts
-are published against the same native package version. Each release directory
-has its own manifest and checksums.
+currently remain on the `0.2.0+94a5729-6b7a3bf` connector set. Mojo and Zig are
+planned connector lanes and are not public artifacts yet. Each release
+directory has its own manifest and checksums.
 
-Release note:
+Native refresh note:
+[`docs/releases/2026-05-18-runtime-native-c124a9e.md`](docs/releases/2026-05-18-runtime-native-c124a9e.md)
+
+Language connector release note:
 [`docs/releases/2026-05-17-runtime-94a5729.md`](docs/releases/2026-05-17-runtime-94a5729.md)
 
 ## Runtime Compatibility Matrix
 
-These artifacts are the currently aligned public runtime set:
+These artifacts are the current public runtime set:
 
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/0.2.0+94a5729/coakka-runtime-native-v2-0.2.0.tar.gz` | `0.2.0+94a5729` | `0.2.0+94a5729` |
+| Native C ABI | `runtime/native/releases/0.2.0+c124a9e/coakka-runtime-native-v2-0.2.0.tar.gz` | `0.2.0+c124a9e` | `0.2.0+c124a9e` |
 | JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.2.0-g94a5729-6b7a3bf` | `0.2.0+94a5729` |
 | Python runtime | `coakka_v2_connector` wheel | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
 | Node.js runtime | `coakka-v2-connector-node` package | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
 | Go runtime | `coakka-v2-connector-go` source package | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
 | C# runtime | `CoAkka.Runtime` NuGet package | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
 | Rust runtime | `coakka-runtime-rs` package | `0.2.0-spike` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
+| Mojo runtime | planned connector lane | not published | not published |
+| Zig runtime | planned connector lane | not published | not published |
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.2.0-g94a5729` | via JVM runtime `0.2.0-g94a5729-6b7a3bf` |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.2.0-g94a5729` | via JVM runtime `0.2.0-g94a5729-6b7a3bf` |
 
@@ -157,14 +170,14 @@ Maven checksum sidecars, and `artifacts/public-artifacts.tsv`. Signature,
 SBOM, and attestation files are not part of this release surface yet; add them
 as explicit release artifacts when the signing flow is introduced.
 
-Before adding a runtime JVM, Python, Node.js, Go, C#, or Rust package release,
+Before adding a runtime JVM, Python, Node.js, Go, C#, Rust, Mojo, or Zig package release,
 run the intake gate on the candidate artifact:
 
 ```bash
 scripts/verify-runtime-intake-artifact.py \
   --lane python \
   --artifact /path/to/coakka_v2_connector-0.2.0-py3-none-any.whl \
-  --expected-native-version 0.2.0+94a5729
+  --expected-native-version 0.2.0+c124a9e
 ```
 
 Use the matching `--lane` value for the candidate package. The gate verifies
