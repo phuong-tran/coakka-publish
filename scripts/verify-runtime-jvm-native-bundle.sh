@@ -20,35 +20,22 @@ sha256_jar_entry() {
   unzip -p "${jar_path}" "${entry}" | shasum -a 256 | awk '{print $1}'
 }
 
-native_core_version() {
-  local native_version="$1"
-  printf '%s\n' "${native_version%%+*}"
-}
-
-native_release_archive() {
-  local native_version="$1"
-  local core_version
-
-  core_version="$(native_core_version "${native_version}")"
-  printf '%s/runtime/native/releases/%s/coakka-runtime-native-v2-%s.tar.gz\n' \
-    "${repo_root}" \
-    "${native_version}" \
-    "${core_version}"
-}
-
-sha256_native_release_entry() {
+sha256_tar_entry() {
   local archive_path="$1"
-  local native_version="$2"
-  local platform="$3"
-  local filename="$4"
-  local core_version
+  local entry_suffix="$2"
+  local entry
 
-  core_version="$(native_core_version "${native_version}")"
-  tar -xOzf \
-    "${archive_path}" \
-    "coakka-runtime-native-v2-${core_version}/native/${platform}/${filename}" |
-    shasum -a 256 |
-    awk '{print $1}'
+  entry="$(
+    tar -tzf "${archive_path}" |
+      awk -v suffix="${entry_suffix}" '
+        index($0, suffix) > 0 && index($0, suffix) == length($0) - length(suffix) + 1 {
+          print
+          exit
+        }
+      '
+  )"
+  [[ -n "${entry}" ]] || return 1
+  tar -xOzf "${archive_path}" "${entry}" | shasum -a 256 | awk '{print $1}'
 }
 
 jar_native_version() {
@@ -63,12 +50,32 @@ jar_native_version() {
     '
 }
 
-check_entry_matches_expected() {
+native_release_archive() {
+  local native_version="$1"
+  local release_dir="${repo_root}/runtime/native/releases/${native_version}"
+  local archive
+
+  [[ -d "${release_dir}" ]] || return 1
+  archive="$(find "${release_dir}" -maxdepth 1 -type f -name 'coakka-runtime-native-v2-*.tar.gz' -print -quit)"
+  [[ -n "${archive}" ]] || return 1
+  printf '%s\n' "${archive}"
+}
+
+check_entry_matches_native() {
   local jar_path="$1"
   local entry="$2"
-  local expected="$3"
-  local actual
+  local native_version="$3"
+  local root_native="$4"
+  local native_archive="$5"
+  local native_entry="${6:-${entry}}"
+  local expected actual
 
+  if [[ -n "${native_archive}" ]]; then
+    expected="$(sha256_tar_entry "${native_archive}" "${native_entry}")" ||
+      fail "native release ${native_version} is missing ${native_entry}"
+  else
+    expected="$(sha256_file "${root_native}")"
+  fi
   if ! actual="$(sha256_jar_entry "${jar_path}" "${entry}")"; then
     fail "${jar_path#${repo_root}/} is missing native entry ${entry}"
   fi
@@ -83,28 +90,31 @@ check_platform_entries() {
   local platform="$3"
   local basename="$4"
   local extension="$5"
-  local filename="${basename}.${extension}"
-  local native_archive
   local root_native="${repo_root}/native/${platform}/${basename}.${extension}"
-  local expected
+  local native_archive="${6:-}"
 
-  native_archive="$(native_release_archive "${native_version}")"
-  if [[ -f "${native_archive}" ]]; then
-    if ! expected="$(sha256_native_release_entry "${native_archive}" "${native_version}" "${platform}" "${filename}")"; then
-      fail "${native_archive#${repo_root}/} is missing native entry native/${platform}/${filename}"
-    fi
-  else
-    [[ -f "${root_native}" ]] || fail "missing root native library: native/${platform}/${filename}"
-    expected="$(sha256_file "${root_native}")"
+  if [[ -z "${native_archive}" ]]; then
+    [[ -f "${root_native}" ]] || fail "missing root native library: native/${platform}/${basename}.${extension}"
   fi
-
-  check_entry_matches_expected "${jar_path}" "native/${platform}/${filename}" "${expected}"
-  check_entry_matches_expected "${jar_path}" "native/${platform}/${basename}-${native_version}.${extension}" "${expected}"
+  check_entry_matches_native \
+    "${jar_path}" \
+    "native/${platform}/${basename}.${extension}" \
+    "${native_version}" \
+    "${root_native}" \
+    "${native_archive}"
+  check_entry_matches_native \
+    "${jar_path}" \
+    "native/${platform}/${basename}-${native_version}.${extension}" \
+    "${native_version}" \
+    "${root_native}" \
+    "${native_archive}" \
+    "native/${platform}/${basename}.${extension}"
 }
 
 check_runtime_jvm_jar() {
   local jar_path="$1"
   local native_version
+  local native_archive=""
 
   native_version="$(jar_native_version "${jar_path}")"
   [[ -n "${native_version}" ]] || fail "${jar_path#${repo_root}/} is missing Coakka-V2-Native-Package-Version"
@@ -116,9 +126,14 @@ check_runtime_jvm_jar() {
       --expected-native-version "${native_version}" >/dev/null
   fi
 
-  check_platform_entries "${jar_path}" "${native_version}" "linux-aarch64" "libcoakka_runtime_v2" "so"
-  check_platform_entries "${jar_path}" "${native_version}" "linux-x86_64" "libcoakka_runtime_v2" "so"
-  check_platform_entries "${jar_path}" "${native_version}" "macos-aarch64" "libcoakka_runtime_v2" "dylib"
+  native_archive="$(native_release_archive "${native_version}" || true)"
+
+  check_platform_entries \
+    "${jar_path}" "${native_version}" "linux-aarch64" "libcoakka_runtime_v2" "so" "${native_archive}"
+  check_platform_entries \
+    "${jar_path}" "${native_version}" "linux-x86_64" "libcoakka_runtime_v2" "so" "${native_archive}"
+  check_platform_entries \
+    "${jar_path}" "${native_version}" "macos-aarch64" "libcoakka_runtime_v2" "dylib" "${native_archive}"
 }
 
 current_runtime_jvm_jars() {
