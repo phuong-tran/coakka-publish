@@ -20,6 +20,37 @@ sha256_jar_entry() {
   unzip -p "${jar_path}" "${entry}" | shasum -a 256 | awk '{print $1}'
 }
 
+native_core_version() {
+  local native_version="$1"
+  printf '%s\n' "${native_version%%+*}"
+}
+
+native_release_archive() {
+  local native_version="$1"
+  local core_version
+
+  core_version="$(native_core_version "${native_version}")"
+  printf '%s/runtime/native/releases/%s/coakka-runtime-native-v2-%s.tar.gz\n' \
+    "${repo_root}" \
+    "${native_version}" \
+    "${core_version}"
+}
+
+sha256_native_release_entry() {
+  local archive_path="$1"
+  local native_version="$2"
+  local platform="$3"
+  local filename="$4"
+  local core_version
+
+  core_version="$(native_core_version "${native_version}")"
+  tar -xOzf \
+    "${archive_path}" \
+    "coakka-runtime-native-v2-${core_version}/native/${platform}/${filename}" |
+    shasum -a 256 |
+    awk '{print $1}'
+}
+
 jar_native_version() {
   local jar_path="$1"
   unzip -p "${jar_path}" META-INF/MANIFEST.MF |
@@ -32,13 +63,12 @@ jar_native_version() {
     '
 }
 
-check_entry_matches_root() {
+check_entry_matches_expected() {
   local jar_path="$1"
   local entry="$2"
-  local root_native="$3"
-  local expected actual
+  local expected="$3"
+  local actual
 
-  expected="$(sha256_file "${root_native}")"
   if ! actual="$(sha256_jar_entry "${jar_path}" "${entry}")"; then
     fail "${jar_path#${repo_root}/} is missing native entry ${entry}"
   fi
@@ -53,11 +83,23 @@ check_platform_entries() {
   local platform="$3"
   local basename="$4"
   local extension="$5"
+  local filename="${basename}.${extension}"
+  local native_archive
   local root_native="${repo_root}/native/${platform}/${basename}.${extension}"
+  local expected
 
-  [[ -f "${root_native}" ]] || fail "missing root native library: native/${platform}/${basename}.${extension}"
-  check_entry_matches_root "${jar_path}" "native/${platform}/${basename}.${extension}" "${root_native}"
-  check_entry_matches_root "${jar_path}" "native/${platform}/${basename}-${native_version}.${extension}" "${root_native}"
+  native_archive="$(native_release_archive "${native_version}")"
+  if [[ -f "${native_archive}" ]]; then
+    if ! expected="$(sha256_native_release_entry "${native_archive}" "${native_version}" "${platform}" "${filename}")"; then
+      fail "${native_archive#${repo_root}/} is missing native entry native/${platform}/${filename}"
+    fi
+  else
+    [[ -f "${root_native}" ]] || fail "missing root native library: native/${platform}/${filename}"
+    expected="$(sha256_file "${root_native}")"
+  fi
+
+  check_entry_matches_expected "${jar_path}" "native/${platform}/${filename}" "${expected}"
+  check_entry_matches_expected "${jar_path}" "native/${platform}/${basename}-${native_version}.${extension}" "${expected}"
 }
 
 check_runtime_jvm_jar() {

@@ -72,6 +72,28 @@ EOF
   (cd "${root}" && zip -qr "${target}" .)
 }
 
+make_native_archive() {
+  local fixture="$1"
+  local native_version="$2"
+  local core_version="${native_version%%+*}"
+  local archive_root="${tmp_root}/native-archive-root"
+  local package_root="coakka-runtime-native-v2-${core_version}"
+
+  rm -rf "${archive_root}"
+  mkdir -p \
+    "${archive_root}/${package_root}/native" \
+    "${fixture}/runtime/native/releases/${native_version}"
+
+  cp -R "${fixture}/native/." "${archive_root}/${package_root}/native/"
+
+  (
+    cd "${archive_root}"
+    tar -czf \
+      "${fixture}/runtime/native/releases/${native_version}/coakka-runtime-native-v2-${core_version}.tar.gz" \
+      "${package_root}"
+  )
+}
+
 make_fixture() {
   local name="$1"
   local release_marker="${2:-current}"
@@ -83,6 +105,7 @@ make_fixture() {
     "${fixture}/native/linux-aarch64" \
     "${fixture}/native/linux-x86_64" \
     "${fixture}/native/macos-aarch64" \
+    "${fixture}/runtime/native/releases/${native_version}" \
     "${fixture}/runtime/jvm/releases/${native_version}" \
     "${fixture}/maven/coakka/v2/coakka-jvm-native-runtime-v2/0.1.0-test" \
     "${fixture}/scripts"
@@ -94,6 +117,8 @@ make_fixture() {
   printf 'linux-aarch64 current\n' >"${fixture}/native/linux-aarch64/libcoakka_runtime_v2.so"
   printf 'linux-x86_64 current\n' >"${fixture}/native/linux-x86_64/libcoakka_runtime_v2.so"
   printf 'macos-aarch64 current\n' >"${fixture}/native/macos-aarch64/libcoakka_runtime_v2.dylib"
+
+  make_native_archive "${fixture}" "${native_version}"
 
   make_runtime_jar \
     "${fixture}/runtime/jvm/releases/${native_version}/coakka-jvm-native-runtime-v2-0.1.0-test.jar" \
@@ -110,6 +135,9 @@ make_fixture() {
 }
 
 good_fixture="$(make_fixture good)"
+printf 'linux-aarch64 newer root\n' >"${good_fixture}/native/linux-aarch64/libcoakka_runtime_v2.so"
+printf 'linux-x86_64 newer root\n' >"${good_fixture}/native/linux-x86_64/libcoakka_runtime_v2.so"
+printf 'macos-aarch64 newer root\n' >"${good_fixture}/native/macos-aarch64/libcoakka_runtime_v2.dylib"
 expect_success "matching runtime JVM bundle" "${good_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
 
 mismatch_fixture="$(make_fixture mismatch stale)"

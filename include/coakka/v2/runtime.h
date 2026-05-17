@@ -68,7 +68,7 @@ typedef struct coakka_v2_runtime_stats_t {
     uint64_t route_miss_count;
     uint64_t deadletter_count;
     uint64_t delivery_failed_count;
-    uint64_t transport_send_failed_count;
+    uint64_t remote_transport_failed_count;
     uint64_t transport_submit_attempt_count;
     uint64_t transport_probe_connect_success_count;
     uint64_t transport_probe_connect_failure_count;
@@ -118,6 +118,9 @@ typedef struct coakka_v2_runtime_stats_t {
     uint64_t response_outbound_direct_write_count;
     uint64_t deadletter_outbound_direct_write_count;
     uint64_t remote_outbound_one_way_drop_count;
+    uint64_t remote_failover_attempt_count;
+    uint64_t remote_failover_success_count;
+    uint64_t remote_failover_exhausted_count;
 } coakka_v2_runtime_stats_t;
 
 typedef struct coakka_v2_host_handles_t {
