@@ -17,7 +17,7 @@ You may download, copy, and use the artifacts from this repository to:
 - build proof-of-concept integrations
 - run development and test environments for applications that integrate with
   CoAkka
-- run internal company evaluations, proofs of concept, and integration tests,
+- run company evaluations, proofs of concept, and integration tests,
   including evaluations inside commercial organizations
 - redistribute unmodified CoAkka artifacts inside local development, test, or
   sample environments, provided this notice and the included checksums or
@@ -44,7 +44,7 @@ The following uses require a separate written license:
 ## Production Use
 
 These preview terms are intended for developer evaluation, sample execution,
-internal proof-of-concept work, and integration testing. Production use, hosted
+non-production proof-of-concept work, and integration testing. Production use, hosted
 service use, customer distribution, and paid redistribution require explicit
 release terms or a separate written agreement.
 

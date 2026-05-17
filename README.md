@@ -13,7 +13,7 @@ This repository distributes CoAkka artifacts under the preview terms in
 [LICENSE.md](LICENSE.md), unless a specific release artifact includes different
 license terms. The repository is intended for developer evaluation, official
 sample execution, proof-of-concept integrations, and integration testing,
-including internal evaluations inside commercial organizations. Production
+including company evaluations inside commercial organizations. Production
 use, hosted service use, customer distribution, and paid redistribution require
 explicit release terms or a separate written agreement.
 
