@@ -88,6 +88,27 @@ Java baseline metadata is part of the public contract for JVM artifacts:
   `Automatic-Module-Name: coakka.spring.boot.starter` and keep Java 17 as their
   baseline because Spring Boot 3 requires Java 17
 
+## Connector UX Contract
+
+Runtime connector packages must keep the first-run API smaller than the full
+runtime model. The public onboarding progression is defined in
+[`connector-user-experience-levels.md`](connector-user-experience-levels.md):
+
+- Level 1: local handler and ask helpers for application users
+- Level 2: explicit route snapshots for control planes and framework adapters
+- Level 3: custom envelopes, delivery hints, and transport policy for advanced
+  integrations
+
+Release docs, consuming guides, and public samples must not expose route
+snapshots, host/port placeholders, generated envelopes, or payload identity as
+required first-run concepts when a released language helper can hide them.
+Advanced APIs stay public, but beginner docs should not require users to learn
+the runtime ABI before sending a local request.
+
+Do not document a connector helper as released until the corresponding artifact
+in this repository contains it. If a helper exists only in the source connector
+repo, document it as an upcoming contract, not as a current release feature.
+
 ## Native Dependency Gate
 
 Native runtime files are still verified before they are embedded into public

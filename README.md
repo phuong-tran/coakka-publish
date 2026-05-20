@@ -69,6 +69,8 @@ Repository rules:
   each drop
 - keep public artifacts aligned with
   [`docs/public-artifact-contract.md`](docs/public-artifact-contract.md)
+- keep connector onboarding aligned with
+  [`docs/connector-user-experience-levels.md`](docs/connector-user-experience-levels.md)
 
 Current published lanes:
 
@@ -146,6 +148,18 @@ These artifacts are the current public runtime set:
 
 Do not mix runtime language packages from another native package generation
 unless a later release note explicitly declares that combination compatible.
+
+## Connector User Experience
+
+The public connector onboarding contract is
+[`docs/connector-user-experience-levels.md`](docs/connector-user-experience-levels.md).
+It defines the intended progression for upcoming connector releases:
+local handler/ask first, explicit route snapshots second, custom
+envelope/transport policy last.
+
+Release docs and samples must only present a helper as released after the
+published artifact contains it. Until then, the UX levels document is the design
+contract for the next aligned connector drop.
 
 Validation gates run before publishing:
 
