@@ -1,7 +1,7 @@
 # Connector User Experience Levels
 
-This document is the public connector onboarding contract for upcoming CoAkka
-runtime connector releases.
+This document is the public connector onboarding contract for current and
+upcoming CoAkka runtime connector releases.
 
 Most application users should learn connector APIs first, not the native runtime
 core. The runtime still owns route application, routing, deadletters, lifecycle,
