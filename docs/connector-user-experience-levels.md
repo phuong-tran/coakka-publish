@@ -47,6 +47,20 @@ identity := connector.NewTextPayloadIdentity("demo.echo.request.v1")
 routes := []connector.RouteSpec{connector.LocalRouteDefault("svc.echo")}
 ```
 
+C#:
+
+```csharp
+using var runtime = RuntimeHost.StartLocal("csharp-practice", "hello.en");
+runtime.RegisterTextHandler("hello.en", name => $"Hello {name}");
+
+var reply = await runtime.AskTextAsync(
+    source: "csharp-practice",
+    target: "hello.en",
+    payload: "Nam",
+    payloadIdentity: PayloadIdentity.Text("hello.request.v1"),
+    deliveryHint: DeliveryHint.RequireLocal);
+```
+
 Level 1 rules:
 
 - no route snapshot in the first Kotlin local-text sample
@@ -85,6 +99,44 @@ Examples:
 
 Raw APIs must be visibly raw. Typed APIs must reject missing `messageType`,
 invalid schema version, or unspecified payload format.
+
+## Language Mapping
+
+Native C:
+
+- Level 1 is intentionally not a C ABI goal. C callers use explicit runtime,
+  frame, route, and ask-client handles.
+- Public headers carry Doxygen-style ownership docs for fd ownership, buffer
+  release helpers, struct-size compatibility, string lifetime, and monitor
+  doorbell semantics.
+
+C#:
+
+- Level 1: `RuntimeHost.StartLocal`, `RegisterTextHandler`, `AskTextAsync`,
+  and `PayloadIdentity.Text`.
+- Level 2: `RuntimeHost.Start`, `ConnectorStartSpec`,
+  `RuntimeHost.LocalRoute`, `RuntimeRouteSpec`, and `RuntimeEndpointSpec`.
+- Level 3: `TransportEnvelope`, JSON helpers, explicit payload identity,
+  native library resolver, and raw submit paths.
+- Public C# connector APIs publish XML documentation so IntelliSense teaches
+  ownership, local-route metadata, and runtime/no-discovery boundaries.
+
+Zig:
+
+- The current lane is source-first and experimental.
+- Public `pub` structs/functions carry `///` docs for ABI lifetime,
+  host-owned fds, local route metadata, and no hidden Zig event loop.
+- Level 1 stays small until the lane is promoted beyond package smoke.
+
+Mojo:
+
+- The current lane is an FFI smoke through a C shim, not a stable application
+  connector API.
+- Docs say the shim owns lifecycle for package verification only until direct
+  Mojo bindings are stable enough for a real Level 1 API.
+
+Native C++ and Rust connectors should keep the same level split while using
+idiomatic wrappers for each language.
 
 ## Release Rule
 

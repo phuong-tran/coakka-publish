@@ -12,9 +12,9 @@ public	runtime JVM jar	runtime/jvm/releases/0.2.0+94a5729-5ab812f/coakka-jvm-nat
 public	runtime Python wheel	runtime/python/releases/0.2.0+94a5729-5ab812f/coakka_v2_connector-0.2.0-py3-none-any.whl	7a704463261635d909ed2020d116a7658d2bf08433ce92e68fc12a0d92d29408
 public	runtime Node package	runtime/node/releases/0.2.0+94a5729-5ab812f/coakka-v2-connector-node-0.2.0.tgz	b3d3f5bc01ca5cdfe228f12d50484b938af2983bf8fb73d99563d0de28c5c088
 public	runtime Go package	runtime/go/releases/0.2.0+94a5729-5ab812f/coakka-v2-connector-go-0.2.0.tar.gz	939827d1e554eddce4c8379c934b270f112061ff9be4d722117df43a524c0414
-public	runtime C# package	runtime/csharp/releases/0.2.0+94a5729-6b7a3bf/CoAkka.Runtime.0.2.0.nupkg	118f8aa9b00da31c1971fcf5f827a3618d304346356ec2c90f46f99c5c0bf852
+public	runtime C# package	runtime/csharp/releases/0.2.0+94a5729-2bab9ee/CoAkka.Runtime.0.2.0.nupkg	fca95113c8e0655b247f64c13beaf51aba8587899f737b1c0b8e68a4ae25ddd8
 public	runtime Rust package	runtime/rust/releases/0.2.0+94a5729-6b7a3bf/coakka-runtime-rs-0.2.0-spike.tar.gz	9fae36ef2e2f2436b0f0f802fcb17a36b65328d7104a2adcfcb8e645a5c59230
-public	runtime Mojo source package	runtime/mojo/releases/0.2.0+c124a9e-10dc009/coakka-runtime-mojo-0.2.0-source.tar.gz	187eb3eda858fd49183504b128f268ee427b7115c87976d7f947565820f25a93
-public	runtime Zig source package	runtime/zig/releases/0.2.0+c124a9e-10dc009/coakka-runtime-zig-0.2.0-source.tar.gz	394675a6441ed392a56234d172ef1f56d4bcd5d366d0ca8da1962013bd91b33f
+public	runtime Mojo source package	runtime/mojo/releases/0.2.0+c124a9e-2bab9ee/coakka-runtime-mojo-0.2.0-source.tar.gz	0b9c41d135c25d6dbfa74708f16205c69b349e43d5fafe8978a1b30fc4c9748c
+public	runtime Zig source package	runtime/zig/releases/0.2.0+c124a9e-2bab9ee/coakka-runtime-zig-0.2.0-source.tar.gz	6fed30bd47708ae849e62b9c84abde68bdd4af1788c0835d3451223ce489dd2a
 public	Spring Boot starter Maven jar	maven/coakka/spring/coakka-spring-boot-starter/0.2.0-g5ab812f/coakka-spring-boot-starter-0.2.0-g5ab812f.jar	96a42943ed216a2f9ae52f26d48bcacc1ed80cb930f9bd255fe0e58f703dc2ec
 public	Quarkus extension Maven jar	maven/coakka/quarkus/coakka-quarkus-extension/0.2.0-g5ab812f/coakka-quarkus-extension-0.2.0-g5ab812f.jar	b04d766ce484e83bf1ca8c66ef861dd94960ea4a5bb1552bc58444b971c2ffe2

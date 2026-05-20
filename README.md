@@ -8,10 +8,10 @@ Current native runtime refresh note:
 [2026-05-18 runtime native c124a9e](docs/releases/2026-05-18-runtime-native-c124a9e.md).
 
 Current language connector release note:
-[2026-05-17 runtime 94a5729](docs/releases/2026-05-17-runtime-94a5729.md).
+[2026-05-21 runtime connector 5ab812f](docs/releases/2026-05-21-runtime-connector-5ab812f.md).
 
 Current source connector release note:
-[2026-05-18 runtime Mojo/Zig source 10dc009](docs/releases/2026-05-18-runtime-zig-mojo-source-10dc009.md).
+[2026-05-21 runtime native-adjacent docs 2bab9ee](docs/releases/2026-05-21-runtime-native-adjacent-docs-2bab9ee.md).
 
 ## License And Trademark
 
@@ -38,8 +38,9 @@ branding.
 Current public native runtime generation: `0.2.0+c124a9e`.
 Current public JVM, Python, Node.js, Go, Spring Boot, and Quarkus connector
 generation: `0.2.0+94a5729-5ab812f`.
-Current public C# and Rust connector generation: `0.2.0+94a5729-6b7a3bf`.
-Current public Mojo/Zig source connector generation: `0.2.0+c124a9e-10dc009`.
+Current public C# connector generation: `0.2.0+94a5729-2bab9ee`.
+Current public Rust connector generation: `0.2.0+94a5729-6b7a3bf`.
+Current public Mojo/Zig source connector generation: `0.2.0+c124a9e-2bab9ee`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -54,8 +55,9 @@ Current public Mojo/Zig source connector generation: `0.2.0+c124a9e-10dc009`.
 The current root native runtime package is `0.2.0+c124a9e`. Published JVM,
 Python, Node.js, Go, Spring Boot, and Quarkus packages are on the
 `0.2.0+94a5729-5ab812f` connector UX refresh over native package
-`0.2.0+94a5729`. C# and Rust remain on `0.2.0+94a5729-6b7a3bf`. Mojo and Zig
-source packages are published against `0.2.0+c124a9e`. Do not mix language or
+`0.2.0+94a5729`. C# is on the `0.2.0+94a5729-2bab9ee` local-helper and XML-doc
+refresh, while Rust remains on `0.2.0+94a5729-6b7a3bf`. Mojo and Zig source
+packages are published against `0.2.0+c124a9e-2bab9ee`. Do not mix language or
 framework runtime packages from another native package generation unless a
 release note explicitly declares that combination compatible.
 
@@ -119,9 +121,10 @@ contract.
 
 Runtime JVM, Python, Node.js, Go, Spring Boot, and Quarkus artifacts currently
 use the `0.2.0+94a5729-5ab812f` connector UX refresh over native package
-`0.2.0+94a5729`. C# and Rust remain on the `0.2.0+94a5729-6b7a3bf` connector
-set. Mojo and Zig now have source connector packages over the `0.2.0+c124a9e`
-native runtime. Each release directory has its own manifest and checksums.
+`0.2.0+94a5729`. C# now uses the `0.2.0+94a5729-2bab9ee` helper/doc refresh,
+Rust remains on the `0.2.0+94a5729-6b7a3bf` connector set, and Mojo/Zig use
+source connector packages over the `0.2.0+c124a9e` native runtime. Each release
+directory has its own manifest and checksums.
 
 Native refresh note:
 [`docs/releases/2026-05-18-runtime-native-c124a9e.md`](docs/releases/2026-05-18-runtime-native-c124a9e.md)
@@ -132,7 +135,7 @@ and
 [`docs/releases/2026-05-17-runtime-94a5729.md`](docs/releases/2026-05-17-runtime-94a5729.md)
 
 Source connector release note:
-[`docs/releases/2026-05-18-runtime-zig-mojo-source-10dc009.md`](docs/releases/2026-05-18-runtime-zig-mojo-source-10dc009.md)
+[`docs/releases/2026-05-21-runtime-native-adjacent-docs-2bab9ee.md`](docs/releases/2026-05-21-runtime-native-adjacent-docs-2bab9ee.md)
 
 ## Runtime Compatibility Matrix
 
@@ -145,10 +148,10 @@ These artifacts are the current public runtime set:
 | Python runtime | `coakka_v2_connector` wheel | `0.2.0` from `0.2.0+94a5729-5ab812f` | `0.2.0+94a5729` |
 | Node.js runtime | `coakka-v2-connector-node` package | `0.2.0` from `0.2.0+94a5729-5ab812f` | `0.2.0+94a5729` |
 | Go runtime | `coakka-v2-connector-go` source package | `0.2.0` from `0.2.0+94a5729-5ab812f` | `0.2.0+94a5729` |
-| C# runtime | `CoAkka.Runtime` NuGet package | `0.2.0` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
+| C# runtime | `CoAkka.Runtime` NuGet package | `0.2.0` from `0.2.0+94a5729-2bab9ee` | `0.2.0+94a5729` |
 | Rust runtime | `coakka-runtime-rs` package | `0.2.0-spike` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
-| Mojo runtime | `runtime/mojo/releases/0.2.0+c124a9e-10dc009/coakka-runtime-mojo-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
-| Zig runtime | `runtime/zig/releases/0.2.0+c124a9e-10dc009/coakka-runtime-zig-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
+| Mojo runtime | `runtime/mojo/releases/0.2.0+c124a9e-2bab9ee/coakka-runtime-mojo-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
+| Zig runtime | `runtime/zig/releases/0.2.0+c124a9e-2bab9ee/coakka-runtime-zig-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.2.0-g5ab812f` | via JVM runtime `0.2.0-g94a5729-5ab812f` |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.2.0-g5ab812f` | via JVM runtime `0.2.0-g94a5729-5ab812f` |
 
@@ -164,8 +167,10 @@ local handler/ask first, explicit route snapshots second, custom
 envelope/transport policy last.
 
 Release docs and samples must only present a helper as released after the
-published artifact contains it. Until then, the UX levels document is the design
-contract for the next aligned connector drop.
+published artifact contains it. The C# helper/doc refresh and Mojo/Zig source
+doc refresh are released in `2bab9ee`; future connectors should keep matching
+that level split instead of exposing route/endpoint internals in the first
+practice path.
 
 Validation gates run before publishing:
 
