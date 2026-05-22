@@ -21,6 +21,7 @@ Validation covered:
 - Maven checksum sidecar verification
 - public artifact manifest and surface verification
 
-Python, Node.js, Go, C#, Rust, Spring Boot, and Quarkus runtime packages remain
-on their previously declared native package generations until those lanes are
-rebundled.
+Python, Node.js, Go, C#, and Rust runtime packages remain on their previously
+declared native package generations until those lanes are rebundled. Spring Boot
+and Quarkus adapter rebundles are recorded separately in
+`2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md`.

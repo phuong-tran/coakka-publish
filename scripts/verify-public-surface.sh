@@ -77,6 +77,91 @@ verify_maven_sidecars() {
   done < <(find "${repo_root}/maven" -type f -print0)
 }
 
+public_manifest_path_for_label() {
+  local label_to_find="$1"
+  local manifest="${repo_root}/artifacts/public-artifacts.tsv"
+  local matches=()
+  local status label relative_path expected_sha extra
+
+  while IFS=$'\t' read -r status label relative_path expected_sha extra || [[ -n "${status:-}" ]]; do
+    [[ -z "${status:-}" || "${status}" == \#* ]] && continue
+    if [[ "${status}" == "public" && "${label}" == "${label_to_find}" ]]; then
+      matches+=("${relative_path}")
+    fi
+  done <"${manifest}"
+
+  if [[ "${#matches[@]}" -ne 1 ]]; then
+    fail "expected exactly one public manifest row for ${label_to_find}, found ${#matches[@]}"
+  fi
+  printf '%s\n' "${matches[0]}"
+}
+
+maven_metadata_latest() {
+  local metadata="$1"
+  sed -n 's:.*<latest>\(.*\)</latest>.*:\1:p' "${repo_root}/${metadata}" |
+    sed -n '1p'
+}
+
+jar_manifest_attribute() {
+  local jar_path="$1"
+  local attribute="$2"
+  unzip -p "${jar_path}" META-INF/MANIFEST.MF |
+    awk -F': ' -v attribute="${attribute}" '
+      $1 == attribute {
+        gsub(/\r$/, "", $2)
+        print $2
+        exit
+      }
+    '
+}
+
+pom_runtime_jvm_dependency_version() {
+  local pom_path="$1"
+  awk '
+    /<artifactId>coakka-jvm-native-runtime-v2<\/artifactId>/ {
+      in_runtime_dependency = 1
+      next
+    }
+    in_runtime_dependency && /<version>/ {
+      gsub(/.*<version>/, "")
+      gsub(/<\/version>.*/, "")
+      print
+      exit
+    }
+  ' "${pom_path}"
+}
+
+verify_framework_adapter_runtime_dependency() {
+  local label="$1"
+  local expected_runtime_version="$2"
+  local relative_path jar_path pom_path manifest_version pom_version
+
+  relative_path="$(public_manifest_path_for_label "${label}")"
+  jar_path="${repo_root}/${relative_path}"
+  pom_path="${jar_path%.jar}.pom"
+  [[ -f "${jar_path}" ]] || fail "${label} jar is missing: ${relative_path}"
+  [[ -f "${pom_path}" ]] || fail "${label} pom is missing: ${pom_path#${repo_root}/}"
+
+  manifest_version="$(jar_manifest_attribute "${jar_path}" "Coakka-Runtime-Jvm-Dependency")"
+  if [[ "${manifest_version}" != "${expected_runtime_version}" ]]; then
+    fail "${relative_path} declares Coakka-Runtime-Jvm-Dependency=${manifest_version}; expected ${expected_runtime_version}"
+  fi
+
+  pom_version="$(pom_runtime_jvm_dependency_version "${pom_path}")"
+  if [[ "${pom_version}" != "${expected_runtime_version}" ]]; then
+    fail "${pom_path#${repo_root}/} depends on runtime JVM ${pom_version}; expected ${expected_runtime_version}"
+  fi
+}
+
+verify_framework_adapter_dependencies() {
+  local runtime_jvm_latest
+  runtime_jvm_latest="$(maven_metadata_latest "maven/coakka/v2/coakka-jvm-native-runtime-v2/maven-metadata.xml")"
+  [[ -n "${runtime_jvm_latest}" ]] || fail "could not read runtime JVM latest Maven version"
+
+  verify_framework_adapter_runtime_dependency "Spring Boot starter Maven jar" "${runtime_jvm_latest}"
+  verify_framework_adapter_runtime_dependency "Quarkus extension Maven jar" "${runtime_jvm_latest}"
+}
+
 verify_public_artifact_manifest() {
   local manifest="${repo_root}/artifacts/public-artifacts.tsv"
   local line_no=0
@@ -161,6 +246,7 @@ done < <(find "${repo_root}/logger" "${repo_root}/runtime" -path '*/releases/*/S
 verify_maven_sidecars
 
 verify_public_artifact_manifest
+verify_framework_adapter_dependencies
 
 if [[ -x "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh" ]]; then
   "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh"

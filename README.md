@@ -8,6 +8,7 @@ Current native runtime refresh note:
 [2026-05-18 runtime native c124a9e](docs/releases/2026-05-18-runtime-native-c124a9e.md).
 
 Current language connector release notes:
+[2026-05-23 runtime JVM adapters c124a9e](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
 [2026-05-23 runtime JVM c124a9e rebundle](docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md)
 and
 [2026-05-21 runtime connector 5ab812f](docs/releases/2026-05-21-runtime-connector-5ab812f.md).
@@ -39,7 +40,8 @@ branding.
 
 Current public native runtime generation: `0.2.0+c124a9e`.
 Current public JVM connector generation: `0.2.0+c124a9e-2bab9ee`.
-Current public Python, Node.js, Go, Spring Boot, and Quarkus connector
+Current public Spring Boot and Quarkus adapter generation: `0.2.0-g1c2694b`.
+Current public Python, Node.js, and Go connector
 generation: `0.2.0+94a5729-5ab812f`.
 Current public C# connector generation: `0.2.0+94a5729-2bab9ee`.
 Current public Rust connector generation: `0.2.0+94a5729-6b7a3bf`.
@@ -57,9 +59,10 @@ Current public Mojo/Zig source connector generation: `0.2.0+c124a9e-2bab9ee`.
 
 The current root native runtime package is `0.2.0+c124a9e`. The published JVM
 runtime jar is now rebundled over that native package as
-`0.2.0-gc124a9e-2bab9ee`. Published Python, Node.js, Go, Spring Boot, and
-Quarkus packages remain on the `0.2.0+94a5729-5ab812f` connector UX refresh
-over native package `0.2.0+94a5729`. C# is on the
+`0.2.0-gc124a9e-2bab9ee`. Published Spring Boot and Quarkus adapters are
+rebuilt as `0.2.0-g1c2694b` over that JVM runtime. Python, Node.js, and Go
+packages remain on the `0.2.0+94a5729-5ab812f` connector UX refresh over native
+package `0.2.0+94a5729`. C# is on the
 `0.2.0+94a5729-2bab9ee` local-helper and XML-doc refresh, while Rust remains on
 `0.2.0+94a5729-6b7a3bf`. Mojo and Zig source packages are published against
 `0.2.0+c124a9e-2bab9ee`. Do not mix language or framework runtime packages
@@ -125,8 +128,9 @@ request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
 Runtime JVM now uses the `0.2.0-gc124a9e-2bab9ee` connector rebundle over native
-package `0.2.0+c124a9e`. Python, Node.js, Go, Spring Boot, and Quarkus artifacts
-remain on the `0.2.0+94a5729-5ab812f` connector UX refresh over native package
+package `0.2.0+c124a9e`. Spring Boot and Quarkus adapters now use
+`0.2.0-g1c2694b` over that JVM runtime. Python, Node.js, and Go artifacts remain
+on the `0.2.0+94a5729-5ab812f` connector UX refresh over native package
 `0.2.0+94a5729`. C# uses the `0.2.0+94a5729-2bab9ee` helper/doc refresh, Rust
 remains on the `0.2.0+94a5729-6b7a3bf` connector set, and Mojo/Zig use source
 connector packages over the `0.2.0+c124a9e` native runtime. Each release
@@ -136,6 +140,7 @@ Native refresh note:
 [`docs/releases/2026-05-18-runtime-native-c124a9e.md`](docs/releases/2026-05-18-runtime-native-c124a9e.md)
 
 Language connector release notes:
+[`docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md`](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
 [`docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md`](docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md),
 [`docs/releases/2026-05-21-runtime-connector-5ab812f.md`](docs/releases/2026-05-21-runtime-connector-5ab812f.md)
 and
@@ -159,8 +164,8 @@ These artifacts are the current public runtime set:
 | Rust runtime | `coakka-runtime-rs` package | `0.2.0-spike` from `0.2.0+94a5729-6b7a3bf` | `0.2.0+94a5729` |
 | Mojo runtime | `runtime/mojo/releases/0.2.0+c124a9e-2bab9ee/coakka-runtime-mojo-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
 | Zig runtime | `runtime/zig/releases/0.2.0+c124a9e-2bab9ee/coakka-runtime-zig-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.2.0-g5ab812f` | via JVM runtime `0.2.0-g94a5729-5ab812f` |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.2.0-g5ab812f` | via JVM runtime `0.2.0-g94a5729-5ab812f` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.2.0-g1c2694b` | via JVM runtime `0.2.0-gc124a9e-2bab9ee` |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.2.0-g1c2694b` | via JVM runtime `0.2.0-gc124a9e-2bab9ee` |
 
 Do not mix runtime language packages from another native package generation
 unless a later release note explicitly declares that combination compatible.
@@ -197,8 +202,10 @@ COAKKA_PUBLIC_SURFACE_SCANNER=/path/to/scan_public_artifact_surface.sh \
 
 The script verifies the root runtime checksums, every logger/runtime release
 checksum file, Maven checksum sidecars, runtime JVM release and Maven jars
-against the current public native runtime package, `artifacts/public-artifacts.tsv`,
-and the optional content scanner when the scanner path is provided.
+against the current public native runtime package, Spring Boot and Quarkus
+adapter dependency parity against the current runtime JVM Maven release,
+`artifacts/public-artifacts.tsv`, and the optional content scanner when the
+scanner path is provided.
 
 `artifacts/public-artifacts.tsv` is the consumer-facing package manifest. Each
 row is status, label, relative path, and SHA256. The public surface gate rejects
