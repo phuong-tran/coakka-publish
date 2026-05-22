@@ -15,9 +15,9 @@ repositories {
 
 dependencies {
     implementation("coakka.logger:coakka-jvm-native-logger:0.1.0-gba2a66d98eb5")
-    implementation("coakka.v2:coakka-jvm-native-runtime-v2:0.1.1-ge2dc43a-9227dc0")
-    implementation("coakka.spring:coakka-spring-boot-starter:0.1.0-ge2dc43a")
-    implementation("coakka.quarkus:coakka-quarkus-extension:0.1.0-ge2dc43a")
+    implementation("coakka.v2:coakka-jvm-native-runtime-v2:0.2.0-gc124a9e-2bab9ee")
+    implementation("coakka.spring:coakka-spring-boot-starter:0.2.0-g5ab812f")
+    implementation("coakka.quarkus:coakka-quarkus-extension:0.2.0-g5ab812f")
 }
 ```
 
@@ -25,5 +25,6 @@ The logger jar embeds supported native libraries. Consumers should not need a
 separate native artifact download for the platforms included in its release
 manifest.
 
-Runtime JVM, Spring Boot, and Quarkus Maven artifacts are published against
-runtime native package `0.1.0+e2dc43a`.
+Runtime JVM `0.2.0-gc124a9e-2bab9ee` is published against runtime native
+package `0.2.0+c124a9e`. The current Spring Boot and Quarkus Maven artifacts
+remain on their `0.2.0-g5ab812f` adapter release line.

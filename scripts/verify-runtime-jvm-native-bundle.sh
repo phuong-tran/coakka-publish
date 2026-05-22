@@ -50,6 +50,28 @@ jar_native_version() {
     '
 }
 
+public_runtime_native_version() {
+  local manifest="${repo_root}/artifacts/public-artifacts.tsv"
+  local version=""
+  local count=0
+
+  [[ -f "${manifest}" ]] || return 1
+  while IFS=$'\t' read -r _status _label relative_path _sha; do
+    [[ -n "${relative_path}" ]] || continue
+    case "${relative_path}" in
+      runtime/native/releases/*/coakka-runtime-native-v2-*.tar.gz)
+        version="${relative_path#runtime/native/releases/}"
+        version="${version%%/*}"
+        count=$((count + 1))
+        ;;
+    esac
+  done < <(awk -F '\t' '$2 == "runtime Native package" { print }' "${manifest}")
+
+  [[ "${count}" -le 1 ]] || fail "artifacts/public-artifacts.tsv has multiple runtime Native package rows"
+  [[ "${count}" -eq 1 ]] || return 1
+  printf '%s\n' "${version}"
+}
+
 native_release_archive() {
   local native_version="$1"
   local release_dir="${repo_root}/runtime/native/releases/${native_version}"
@@ -113,11 +135,15 @@ check_platform_entries() {
 
 check_runtime_jvm_jar() {
   local jar_path="$1"
+  local expected_public_native_version="${2:-}"
   local native_version
   local native_archive=""
 
   native_version="$(jar_native_version "${jar_path}")"
   [[ -n "${native_version}" ]] || fail "${jar_path#${repo_root}/} is missing Coakka-V2-Native-Package-Version"
+  if [[ -n "${expected_public_native_version}" && "${native_version}" != "${expected_public_native_version}" ]]; then
+    fail "${jar_path#${repo_root}/} bundles native package ${native_version}; public runtime native package is ${expected_public_native_version}"
+  fi
 
   if [[ -x "${intake_verifier}" ]]; then
     "${intake_verifier}" \
@@ -166,8 +192,9 @@ current_runtime_jvm_jars() {
 }
 
 jar_count=0
+public_native_version="$(public_runtime_native_version || true)"
 while IFS= read -r -d '' jar_path; do
-  check_runtime_jvm_jar "${jar_path}"
+  check_runtime_jvm_jar "${jar_path}" "${public_native_version}"
   jar_count=$((jar_count + 1))
 done < <(current_runtime_jvm_jars)
 

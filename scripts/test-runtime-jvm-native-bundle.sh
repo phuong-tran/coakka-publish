@@ -94,11 +94,27 @@ make_native_archive() {
   )
 }
 
+write_public_manifest() {
+  local fixture="$1"
+  local native_version="$2"
+  local jvm_version="$3"
+  local native_core_version="${native_version%%+*}"
+
+  mkdir -p "${fixture}/artifacts"
+  cat >"${fixture}/artifacts/public-artifacts.tsv" <<EOF
+# Public artifact manifest v1.
+# Columns: status	label	relative_path	sha256
+public	runtime Native package	runtime/native/releases/${native_version}/coakka-runtime-native-v2-${native_core_version}.tar.gz	0000000000000000000000000000000000000000000000000000000000000000
+public	runtime JVM jar	runtime/jvm/releases/${native_version}/coakka-jvm-native-runtime-v2-${jvm_version}.jar	0000000000000000000000000000000000000000000000000000000000000000
+EOF
+}
+
 make_fixture() {
   local name="$1"
   local release_marker="${2:-current}"
   local fixture="${tmp_root}/${name}"
   local native_version="0.1.0+test"
+  local jvm_version="0.1.0-test"
   rm -rf "${fixture}"
 
   mkdir -p \
@@ -121,15 +137,16 @@ make_fixture() {
   make_native_archive "${fixture}" "${native_version}"
 
   make_runtime_jar \
-    "${fixture}/runtime/jvm/releases/${native_version}/coakka-jvm-native-runtime-v2-0.1.0-test.jar" \
+    "${fixture}/runtime/jvm/releases/${native_version}/coakka-jvm-native-runtime-v2-${jvm_version}.jar" \
     "${fixture}" \
     "${native_version}" \
     "${release_marker}"
   make_runtime_jar \
-    "${fixture}/maven/coakka/v2/coakka-jvm-native-runtime-v2/0.1.0-test/coakka-jvm-native-runtime-v2-0.1.0-test.jar" \
+    "${fixture}/maven/coakka/v2/coakka-jvm-native-runtime-v2/${jvm_version}/coakka-jvm-native-runtime-v2-${jvm_version}.jar" \
     "${fixture}" \
     "${native_version}" \
     "current"
+  write_public_manifest "${fixture}" "${native_version}" "${jvm_version}"
 
   printf '%s\n' "${fixture}"
 }
@@ -150,5 +167,12 @@ zip -dq \
   "native/linux-aarch64/libcoakka_runtime_v2-0.1.0+test.so"
 expect_failure "missing versioned native entry" "${missing_entry_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
 grep -Fq "missing native entry" "${test_output}"
+
+stale_public_native_fixture="$(make_fixture stale-public-native)"
+sed -i.bak \
+  's:runtime/native/releases/0.1.0+test/:runtime/native/releases/0.1.0+newer/:' \
+  "${stale_public_native_fixture}/artifacts/public-artifacts.tsv"
+expect_failure "JVM jar behind public native package" "${stale_public_native_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
+grep -Fq "public runtime native package is 0.1.0+newer" "${test_output}"
 
 echo "[runtime-jvm-bundle-test] ok"

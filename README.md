@@ -7,7 +7,9 @@ This repository is the public binary-only publish surface for CoAkka artifacts.
 Current native runtime refresh note:
 [2026-05-18 runtime native c124a9e](docs/releases/2026-05-18-runtime-native-c124a9e.md).
 
-Current language connector release note:
+Current language connector release notes:
+[2026-05-23 runtime JVM c124a9e rebundle](docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md)
+and
 [2026-05-21 runtime connector 5ab812f](docs/releases/2026-05-21-runtime-connector-5ab812f.md).
 
 Current source connector release note:
@@ -36,7 +38,8 @@ branding.
 ## Public Status
 
 Current public native runtime generation: `0.2.0+c124a9e`.
-Current public JVM, Python, Node.js, Go, Spring Boot, and Quarkus connector
+Current public JVM connector generation: `0.2.0+c124a9e-2bab9ee`.
+Current public Python, Node.js, Go, Spring Boot, and Quarkus connector
 generation: `0.2.0+94a5729-5ab812f`.
 Current public C# connector generation: `0.2.0+94a5729-2bab9ee`.
 Current public Rust connector generation: `0.2.0+94a5729-6b7a3bf`.
@@ -52,14 +55,16 @@ Current public Mojo/Zig source connector generation: `0.2.0+c124a9e-2bab9ee`.
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 
-The current root native runtime package is `0.2.0+c124a9e`. Published JVM,
-Python, Node.js, Go, Spring Boot, and Quarkus packages are on the
-`0.2.0+94a5729-5ab812f` connector UX refresh over native package
-`0.2.0+94a5729`. C# is on the `0.2.0+94a5729-2bab9ee` local-helper and XML-doc
-refresh, while Rust remains on `0.2.0+94a5729-6b7a3bf`. Mojo and Zig source
-packages are published against `0.2.0+c124a9e-2bab9ee`. Do not mix language or
-framework runtime packages from another native package generation unless a
-release note explicitly declares that combination compatible.
+The current root native runtime package is `0.2.0+c124a9e`. The published JVM
+runtime jar is now rebundled over that native package as
+`0.2.0-gc124a9e-2bab9ee`. Published Python, Node.js, Go, Spring Boot, and
+Quarkus packages remain on the `0.2.0+94a5729-5ab812f` connector UX refresh
+over native package `0.2.0+94a5729`. C# is on the
+`0.2.0+94a5729-2bab9ee` local-helper and XML-doc refresh, while Rust remains on
+`0.2.0+94a5729-6b7a3bf`. Mojo and Zig source packages are published against
+`0.2.0+c124a9e-2bab9ee`. Do not mix language or framework runtime packages
+from another native package generation unless a release note explicitly
+declares that combination compatible.
 
 Consumer-facing downloads are listed in `artifacts/public-artifacts.tsv`.
 Integrity metadata is checksum-based for this surface: release manifests,
@@ -119,17 +124,19 @@ contract remains the same across profiles: targets, route generations,
 request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
-Runtime JVM, Python, Node.js, Go, Spring Boot, and Quarkus artifacts currently
-use the `0.2.0+94a5729-5ab812f` connector UX refresh over native package
-`0.2.0+94a5729`. C# now uses the `0.2.0+94a5729-2bab9ee` helper/doc refresh,
-Rust remains on the `0.2.0+94a5729-6b7a3bf` connector set, and Mojo/Zig use
-source connector packages over the `0.2.0+c124a9e` native runtime. Each release
+Runtime JVM now uses the `0.2.0-gc124a9e-2bab9ee` connector rebundle over native
+package `0.2.0+c124a9e`. Python, Node.js, Go, Spring Boot, and Quarkus artifacts
+remain on the `0.2.0+94a5729-5ab812f` connector UX refresh over native package
+`0.2.0+94a5729`. C# uses the `0.2.0+94a5729-2bab9ee` helper/doc refresh, Rust
+remains on the `0.2.0+94a5729-6b7a3bf` connector set, and Mojo/Zig use source
+connector packages over the `0.2.0+c124a9e` native runtime. Each release
 directory has its own manifest and checksums.
 
 Native refresh note:
 [`docs/releases/2026-05-18-runtime-native-c124a9e.md`](docs/releases/2026-05-18-runtime-native-c124a9e.md)
 
 Language connector release notes:
+[`docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md`](docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md),
 [`docs/releases/2026-05-21-runtime-connector-5ab812f.md`](docs/releases/2026-05-21-runtime-connector-5ab812f.md)
 and
 [`docs/releases/2026-05-17-runtime-94a5729.md`](docs/releases/2026-05-17-runtime-94a5729.md)
@@ -144,7 +151,7 @@ These artifacts are the current public runtime set:
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
 | Native C ABI | `runtime/native/releases/0.2.0+c124a9e/coakka-runtime-native-v2-0.2.0.tar.gz` | `0.2.0+c124a9e` | `0.2.0+c124a9e` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.2.0-g94a5729-5ab812f` | `0.2.0+94a5729` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.2.0-gc124a9e-2bab9ee` | `0.2.0+c124a9e` |
 | Python runtime | `coakka_v2_connector` wheel | `0.2.0` from `0.2.0+94a5729-5ab812f` | `0.2.0+94a5729` |
 | Node.js runtime | `coakka-v2-connector-node` package | `0.2.0` from `0.2.0+94a5729-5ab812f` | `0.2.0+94a5729` |
 | Go runtime | `coakka-v2-connector-go` source package | `0.2.0` from `0.2.0+94a5729-5ab812f` | `0.2.0+94a5729` |
@@ -190,7 +197,7 @@ COAKKA_PUBLIC_SURFACE_SCANNER=/path/to/scan_public_artifact_surface.sh \
 
 The script verifies the root runtime checksums, every logger/runtime release
 checksum file, Maven checksum sidecars, runtime JVM release and Maven jars
-against the staged native runtime binaries, `artifacts/public-artifacts.tsv`,
+against the current public native runtime package, `artifacts/public-artifacts.tsv`,
 and the optional content scanner when the scanner path is provided.
 
 `artifacts/public-artifacts.tsv` is the consumer-facing package manifest. Each

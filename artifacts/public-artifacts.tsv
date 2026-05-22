@@ -8,7 +8,7 @@ public	logger C# package	logger/csharp/releases/0.1.0+ba2a66d98eb5/CoAkka.Logger
 public	logger Rust package	logger/rust/releases/0.1.0+ba2a66d98eb5/coakka-logger-rs-0.1.0-spike.tar.gz	0979f83ce46efb6927e4a755781b580990f6d84ad82decc6aa83e6d3eed8b04c
 public	logger Native package	logger/native/releases/0.1.0+ba2a66d98eb5/coakka-logger-native-0.1.0.tar.gz	ca75c5addc92ba48efbd6577516cd6bac80da390c2583a51f02a5e412ab5d5ab
 public	runtime Native package	runtime/native/releases/0.2.0+c124a9e/coakka-runtime-native-v2-0.2.0.tar.gz	38f570fd493af350708cfd79f68f04dcc8a109884a152dee4605d005fcd69201
-public	runtime JVM jar	runtime/jvm/releases/0.2.0+94a5729-5ab812f/coakka-jvm-native-runtime-v2-0.2.0-g94a5729-5ab812f.jar	635aaffb274239a3c3365ef40639f3cd972e3fe948f4798f8a404bd4b54f98aa
+public	runtime JVM jar	runtime/jvm/releases/0.2.0+c124a9e-2bab9ee/coakka-jvm-native-runtime-v2-0.2.0-gc124a9e-2bab9ee.jar	2dc52930ac8186f78ead20dfd78aeed0f9acabb6ba718dea53fa8b3515c9aba4
 public	runtime Python wheel	runtime/python/releases/0.2.0+94a5729-5ab812f/coakka_v2_connector-0.2.0-py3-none-any.whl	7a704463261635d909ed2020d116a7658d2bf08433ce92e68fc12a0d92d29408
 public	runtime Node package	runtime/node/releases/0.2.0+94a5729-5ab812f/coakka-v2-connector-node-0.2.0.tgz	b3d3f5bc01ca5cdfe228f12d50484b938af2983bf8fb73d99563d0de28c5c088
 public	runtime Go package	runtime/go/releases/0.2.0+94a5729-5ab812f/coakka-v2-connector-go-0.2.0.tar.gz	939827d1e554eddce4c8379c934b270f112061ff9be4d722117df43a524c0414
