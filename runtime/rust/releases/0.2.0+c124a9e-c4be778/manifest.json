@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "rust",
+  "release_directory": "0.2.0+c124a9e-c4be778",
+  "artifact": {
+    "package_name": "coakka-runtime-rs",
+    "artifact_version": "0.2.0-spike",
+    "bundled_native_core_version": "0.2.0",
+    "bundled_native_package_version": "0.2.0+c124a9e",
+    "bundled_native_git_commit": "c124a9e"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "generated_at_utc": "2026-07-05T15:12:39Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 1322,
+      "sha256": "d46f03e6cd661c35c87455fe99855adecfc959470d0365649147eb6e8c3d3a34"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 603,
+      "sha256": "7443793145f674ba6b58e7676a8303254bce29c438ac363b574e1447c4fe49e0"
+    },
+    {
+      "name": "coakka-runtime-rs-0.2.0-spike.tar.gz",
+      "size_bytes": 7727312,
+      "sha256": "9d9c528b6cc250c0f84789845248eb519c5cdeaa17cdde9e5a4cd6a445de2193"
+    }
+  ]
+}

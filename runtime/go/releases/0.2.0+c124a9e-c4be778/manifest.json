@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "go",
+  "release_directory": "0.2.0+c124a9e-c4be778",
+  "artifact": {
+    "package_name": "coakka-v2-connector-go",
+    "artifact_version": "0.2.0",
+    "bundled_native_core_version": "0.2.0",
+    "bundled_native_package_version": "0.2.0+c124a9e",
+    "bundled_native_git_commit": "c124a9e"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "generated_at_utc": "2026-07-05T15:12:39Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 1567,
+      "sha256": "763a443e83a81d24cdf57761c86420f2774efd6ac1325b986cc3bf9599af4bd2"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 598,
+      "sha256": "ac71158ae86064346f0f19d0fbffa093e635eb50331f5dc9dc1f1d20f627329c"
+    },
+    {
+      "name": "coakka-v2-connector-go-0.2.0.tar.gz",
+      "size_bytes": 7741507,
+      "sha256": "8fe31a3f6cfde369b8220402095af32ab2e8a4681102f46497c9ffcdbe682c29"
+    }
+  ]
+}

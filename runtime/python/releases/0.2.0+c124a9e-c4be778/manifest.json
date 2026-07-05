@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "python",
+  "release_directory": "0.2.0+c124a9e-c4be778",
+  "artifact": {
+    "package_name": "coakka-v2-connector",
+    "artifact_version": "0.2.0",
+    "bundled_native_core_version": "0.2.0",
+    "bundled_native_package_version": "0.2.0+c124a9e",
+    "bundled_native_git_commit": "c124a9e"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "generated_at_utc": "2026-07-05T15:12:39Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 1812,
+      "sha256": "b44e34cbbff9dca2040d4cfe4150772affa679ecb4757a9920ddbb0b81a13936"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 599,
+      "sha256": "ee18e7d977cdded10a16f835c7b6b6d99f7cba41bd0a82ba2996709708db2cae"
+    },
+    {
+      "name": "coakka_v2_connector-0.2.0-py3-none-any.whl",
+      "size_bytes": 7732821,
+      "sha256": "ba97a6c7a1ba5171948fa21978b38546bb781958b6058e995f0816c12ff00c4d"
+    }
+  ]
+}

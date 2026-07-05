@@ -143,8 +143,8 @@ For JVM, Python, Node.js, Go, C#, Rust, Mojo, and Zig:
 - public samples must use the language artifact directly
 
 Mojo and Zig are currently published as source connector packages with bundled
-native runtime libraries. They are public evaluation artifacts, not
-package-manager releases yet.
+native runtime libraries. They are public source packages, not package-manager
+releases yet.
 
 For native C/C++ packages:
 
