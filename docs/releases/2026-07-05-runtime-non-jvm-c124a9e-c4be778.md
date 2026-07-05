@@ -26,7 +26,7 @@ for runtime rollout claims.
 User-facing changes:
 
 - Python, Node.js, Go, and C# resolvers no longer fall back to internal
-  `libcoakka_runtime_v2_caf.*` names in the public path.
+  native-library names in the public path.
 - C# local helpers now auto-select one free IPv4 loopback port when
   `RuntimeHost.StartLocal(...)` or `RuntimeHost.LocalRoute(...)` omits
   `diagnosticPort` or sets it to `0`.

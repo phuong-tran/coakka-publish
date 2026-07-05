@@ -49,5 +49,4 @@ LD_LIBRARY_PATH=/path/to/coakka-runtime-native-v2-<version>/native/linux-x86_64 
 ```
 
 Normal public packages are self-contained. Consumers should not need to install
-ambient `protobuf`, `absl`, `CAF`, `libuv`, or any other third-party native
-runtime dependency for this archive.
+ambient third-party native runtime dependencies for this archive.

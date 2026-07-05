@@ -14,6 +14,5 @@ and Quarkus artifacts are published against this native package version.
 
 Public release rule:
 
-- package users must not have to install `protobuf`, `absl`, `CAF`, `libuv`,
-  or other ambient third-party native libraries
+- package users must not have to install ambient third-party native libraries
 - consumer-facing package/docs must not expose backend implementation names
