@@ -3,9 +3,9 @@
   "version": "0.2.0",
   "release": "0.2.0+b8ecfae",
   "sourceSnapshot": "b8ecfae",
-  "profile": "local-runtime-only",
+  "profile": "public-tcp-transport-candidate",
   "archive": "coakka-runtime-native-v2-0.2.0.tar.gz",
-  "sha256": "265d8c3c8dfb28ab407edc303ae48de1b207328514230440ccbe9a0f5a6a431a",
+  "sha256": "3d3424890546b2f14324ec98ced09d3d2d4ac038ba35ad3dc8a96beafb092977",
   "platforms": [
     "linux-aarch64",
     "linux-x86_64",

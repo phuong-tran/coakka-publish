@@ -32,8 +32,8 @@ Current goals:
 Current native packaging note:
 
 - the jar embeds one `libcoakka_runtime_v2` native library per staged platform
-- the runtime artifact excludes the in-repo sample package; source-side samples
-  stay outside `coakka-jvm-native-runtime-v2`
+- the runtime artifact excludes the in-repo demo package; demos stay source-side
+  and must not be published as part of `coakka-jvm-native-runtime-v2`
 - current staged coverage is:
   - `macos-aarch64`
   - `linux-aarch64`
@@ -87,7 +87,7 @@ natives:
 ./gradlew :v2:jvm:packageRuntimeJvmJar
 ```
 
-Verify that the packaged runtime jar does not contain sample classes or obsolete
+Verify that the packaged runtime jar does not contain demo classes or obsolete
 native sidecars:
 
 ```sh
@@ -132,24 +132,24 @@ Current release-shaped native coverage:
 ./gradlew :v2:jvm:publishToMavenLocal
 ```
 
-## Runtime Sample And Remote Exchange
+## Runtime Demo And Remote Exchange
 
 ```sh
 ./gradlew :v2:jvm:run
 ./gradlew :v2:jvm:remoteJvmExchange
 ```
 
-`remoteJvmExchange` is the local developer harness for the remote runtime path.
+`remoteJvmExchange` is the local developer proof for the remote runtime path.
 It builds a transport-enabled runtime, copies the host runtime library into
 `lib/`, starts two JVM processes, and exchanges real remote request/reply traffic
 between them. The harness enables
 the separate delivered-request lane because remote request delivery should not
 share the legacy mixed response lane under concurrent ask traffic.
 
-Do not treat this task as the public remote release shape. The current release
-jar still packages the generic `libcoakka_runtime_v2.*` staged natives; remote
+Do not treat this task as the public release shape yet. The current release jar
+still packages the generic `libcoakka_runtime_v2.*` staged natives; remote
 publish artifacts need an explicit dependency/runtime-library packaging pass
-before published remote samples claim transport coverage from the jar alone.
+before samples should claim remote traffic works from the published jar alone.
 
 ## Consumer Notes
 
