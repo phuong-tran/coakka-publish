@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "zig",
+  "release_directory": "0.1.0+ba2a66d98eb5-1107154",
+  "artifact": {
+    "package_name": "coakka-logger-zig",
+    "artifact_version": "0.1.0-source",
+    "bundled_native_core_version": "0.1.0",
+    "bundled_native_package_version": "0.1.0+ba2a66d98eb5",
+    "bundled_native_git_commit": "ba2a66d98eb5",
+    "connector_source_git_commit": "1107154",
+    "source_package": true
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64"
+  ],
+  "source": {
+    "generated_at_utc": "2026-07-05T12:10:56Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 806,
+      "sha256": "111ccceb0716ec9b320ebd796c5e25770a029c4b28c4e17c6776c45f698506ff"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 725,
+      "sha256": "8705b776b6d57787519b1270c5bc8e25320132b23273a99f1e4706e64298b9c6"
+    },
+    {
+      "name": "coakka-logger-zig-0.1.0-source.tar.gz",
+      "size_bytes": 161025,
+      "sha256": "b792334e8ef7e1995f65567e88739190f902acac46d5bd233f31112871570c90"
+    }
+  ]
+}

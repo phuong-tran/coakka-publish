@@ -8,6 +8,7 @@ Current native runtime refresh note:
 [2026-05-18 runtime native c124a9e](docs/releases/2026-05-18-runtime-native-c124a9e.md).
 
 Current language connector release notes:
+[2026-07-05 logger Mojo and Zig source refresh 1107154](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
 [2026-07-05 runtime JVM c124a9e refresh da30a95](docs/releases/2026-07-05-runtime-jvm-c124a9e-da30a95.md),
 [2026-07-05 runtime JVM adapters c124a9e refresh da30a95](docs/releases/2026-07-05-runtime-jvm-adapters-c124a9e-da30a95.md),
 [2026-07-05 runtime non-JVM c124a9e refresh 66ebe58](docs/releases/2026-07-05-runtime-non-jvm-c124a9e-66ebe58.md),
@@ -41,6 +42,9 @@ branding.
 
 ## Public Status
 
+Current public logger native generation: `0.1.0+ba2a66d98eb5`.
+Current public logger Mojo/Zig source connector generation:
+`0.1.0+ba2a66d98eb5-1107154`.
 Current public native runtime generation: `0.2.0+c124a9e`.
 Current public JVM connector generation: `0.2.0+c124a9e-da30a95`.
 Current public Spring Boot and Quarkus adapter generation: `0.2.0-gda30a95`.
@@ -51,6 +55,7 @@ Current public Mojo/Zig source connector generation: `0.2.0+c124a9e-66ebe58`.
 | Lane | Public status | Public location |
 | --- | --- | --- |
 | Logger JVM, Python, Node.js, Go, C#, Rust | public | `logger/{jvm,python,node,go,csharp,rust}/releases/` |
+| Logger Mojo and Zig source connector lanes | public source packages | `logger/{mojo,zig}/releases/` |
 | Logger native C/C++ | public | `logger/native/releases/` |
 | Runtime native C ABI | public | `runtime/native/releases/` |
 | Runtime JVM, Python, Node.js, Go, C#, Rust | public | `runtime/{jvm,python,node,go,csharp,rust}/releases/` |
@@ -72,6 +77,12 @@ Integrity metadata is checksum-based for this surface: release manifests,
 `SHA256SUMS`, Maven checksum sidecars, and the root artifact manifest. Signature,
 SBOM, and attestation files are not part of this release surface yet.
 
+The current public logger family keeps native package generation
+`0.1.0+ba2a66d98eb5`. JVM, Python, Node.js, Go, C#, Rust, and the native C/C++
+archive continue to publish against that same logger native package. Mojo and
+Zig now also publish source-first logger connector packages over that native
+generation through connector source commit `1107154`.
+
 Repository rules:
 
 - keep this as a plain artifact repository, not a source-build repository
@@ -91,6 +102,8 @@ Current published lanes:
 - `logger/go`
 - `logger/csharp`
 - `logger/rust`
+- `logger/mojo`
+- `logger/zig`
 - `logger/native`
 - static Maven repo under `maven/`
   - `coakka.logger:coakka-jvm-native-logger`
@@ -249,6 +262,8 @@ Logger packages are published under:
 - `logger/go/releases/`
 - `logger/csharp/releases/`
 - `logger/rust/releases/`
+- `logger/mojo/releases/`
+- `logger/zig/releases/`
 - `logger/native/releases/`
 
 The logger lanes keep their own release manifests and checksums.
