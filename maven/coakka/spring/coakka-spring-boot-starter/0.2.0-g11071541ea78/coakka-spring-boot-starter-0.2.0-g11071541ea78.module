@@ -1,0 +1,118 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "coakka.spring",
+    "module": "coakka-spring-boot-starter",
+    "version": "0.2.0-g11071541ea78",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "coakka.v2",
+          "module": "coakka-jvm-native-runtime-v2",
+          "version": {
+            "requires": "0.2.0-gb8ecfae-1107154"
+          }
+        },
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-autoconfigure"
+        },
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter"
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-spring-boot-starter-0.2.0-g11071541ea78.jar",
+          "url": "coakka-spring-boot-starter-0.2.0-g11071541ea78.jar",
+          "size": 10988,
+          "sha512": "f319ff28812eab3823d910b07259ead59edddf65903c0119bb86597cd6cc6d16d3b15353dd0d593890665b0ca2f8cea8ccf1a26fd6c14782f8eb292b5992fd1b",
+          "sha256": "1be5bd23e207ec9792653b08c60cef73f3d3db1ec3e5ff72599def86b7e9fa95",
+          "sha1": "f5e0a1f11de8d6db33559ebead4b0b15bd356036",
+          "md5": "b3d4ded7016396042e8acb87fd6d213f"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.fasterxml.jackson.module",
+          "module": "jackson-module-kotlin"
+        },
+        {
+          "group": "coakka.v2",
+          "module": "coakka-jvm-native-runtime-v2",
+          "version": {
+            "requires": "0.2.0-gb8ecfae-1107154"
+          }
+        },
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-autoconfigure"
+        },
+        {
+          "group": "org.springframework.boot",
+          "module": "spring-boot-starter"
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-spring-boot-starter-0.2.0-g11071541ea78.jar",
+          "url": "coakka-spring-boot-starter-0.2.0-g11071541ea78.jar",
+          "size": 10988,
+          "sha512": "f319ff28812eab3823d910b07259ead59edddf65903c0119bb86597cd6cc6d16d3b15353dd0d593890665b0ca2f8cea8ccf1a26fd6c14782f8eb292b5992fd1b",
+          "sha256": "1be5bd23e207ec9792653b08c60cef73f3d3db1ec3e5ff72599def86b7e9fa95",
+          "sha1": "f5e0a1f11de8d6db33559ebead4b0b15bd356036",
+          "md5": "b3d4ded7016396042e8acb87fd6d213f"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "coakka-spring-boot-starter-0.2.0-g11071541ea78-sources.jar",
+          "url": "coakka-spring-boot-starter-0.2.0-g11071541ea78-sources.jar",
+          "size": 5220,
+          "sha512": "c66c355532a0711bcc46f7054cf563dbe7e4f63f0dfb2b0dd719460ee2dad3643b2ed9b11e38a06e8247bda81b2102d8a3f22def6e03acb3f6cb2ba82400f5bc",
+          "sha256": "b14835ae7c6889624ac3eee234556957e6e8371adbcc2cb53c4c49395f1ae959",
+          "sha1": "f2e3d924c3170e0eab8ff000c731110ff2840766",
+          "md5": "ef009634362dc12c937d61df56215f21"
+        }
+      ]
+    }
+  ]
+}

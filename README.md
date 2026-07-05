@@ -5,12 +5,12 @@
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
 Current native runtime refresh note:
-[2026-05-18 runtime native c124a9e](docs/releases/2026-05-18-runtime-native-c124a9e.md).
+[2026-07-05 runtime native b8ecfae](docs/releases/2026-07-05-runtime-native-b8ecfae.md).
 
 Current language connector release notes:
 [2026-07-05 logger Mojo and Zig source refresh 1107154](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
-[2026-07-05 runtime JVM c124a9e refresh da30a95](docs/releases/2026-07-05-runtime-jvm-c124a9e-da30a95.md),
-[2026-07-05 runtime JVM adapters c124a9e refresh da30a95](docs/releases/2026-07-05-runtime-jvm-adapters-c124a9e-da30a95.md),
+[2026-07-05 runtime JVM b8ecfae refresh 1107154](docs/releases/2026-07-05-runtime-jvm-b8ecfae-1107154.md),
+[2026-07-05 runtime JVM adapters b8ecfae refresh 1107154](docs/releases/2026-07-05-runtime-jvm-adapters-b8ecfae-1107154.md),
 [2026-07-05 runtime non-JVM c124a9e refresh 66ebe58](docs/releases/2026-07-05-runtime-non-jvm-c124a9e-66ebe58.md),
 [2026-05-23 runtime JVM adapters c124a9e](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
 [2026-05-23 runtime JVM c124a9e rebundle](docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md)
@@ -45,9 +45,9 @@ branding.
 Current public logger native generation: `0.1.0+ba2a66d98eb5`.
 Current public logger Mojo/Zig source connector generation:
 `0.1.0+ba2a66d98eb5-1107154`.
-Current public native runtime generation: `0.2.0+c124a9e`.
-Current public JVM connector generation: `0.2.0+c124a9e-da30a95`.
-Current public Spring Boot and Quarkus adapter generation: `0.2.0-gda30a95`.
+Current public native runtime generation: `0.2.0+b8ecfae`.
+Current public JVM connector generation: `0.2.0+b8ecfae-1107154`.
+Current public Spring Boot and Quarkus adapter generation: `0.2.0-g11071541ea78`.
 Current public Python, Node.js, Go, C#, and Rust connector generation:
 `0.2.0+c124a9e-66ebe58`.
 Current public Mojo/Zig source connector generation: `0.2.0+c124a9e-66ebe58`.
@@ -63,13 +63,14 @@ Current public Mojo/Zig source connector generation: `0.2.0+c124a9e-66ebe58`.
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 
-The current root native runtime package is `0.2.0+c124a9e`. The published JVM
+The current root native runtime package is `0.2.0+b8ecfae`. The published JVM
 runtime jar is now refreshed over that native package as
-`0.2.0-gc124a9e-da30a95`. Published Spring Boot and Quarkus adapters are
-rebuilt as `0.2.0-gda30a95` over that JVM runtime. Python, Node.js, Go, C#,
-Rust, Mojo, and Zig are now also refreshed onto native package
-`0.2.0+c124a9e` through connector source commit `66ebe58`. Do not mix language
-or framework runtime packages from another native package generation unless a
+`0.2.0-gb8ecfae-1107154`. Published Spring Boot and Quarkus adapters are
+rebuilt as `0.2.0-g11071541ea78` over that JVM runtime. Python, Node.js, Go,
+C#, Rust, Mojo, and Zig remain on the earlier `0.2.0+c124a9e` runtime refresh
+through connector source commit `66ebe58`; that lag is explicit and not a claim
+that the non-JVM lanes already moved to `b8ecfae`. Do not mix language or
+framework runtime packages from another native package generation unless a
 release note explicitly declares that combination compatible.
 
 Consumer-facing downloads are listed in `artifacts/public-artifacts.tsv`.
@@ -117,7 +118,7 @@ Current published lanes:
 
 ## Runtime v2 Public Artifacts
 
-Core source snapshot: `c124a9e`
+Core source snapshot: `b8ecfae`
 
 Package contents:
 
@@ -130,7 +131,7 @@ Package contents:
 - `native/linux-x86_64/libcoakka_runtime_v2.so`
 - `native/macos-aarch64/libcoakka_runtime_v2.dylib`
 - `SHA256SUMS`
-- `runtime/native/releases/0.2.0+c124a9e/coakka-runtime-native-v2-0.2.0.tar.gz`
+- `runtime/native/releases/0.2.0+b8ecfae/coakka-runtime-native-v2-0.2.0.tar.gz`
 
 The staged native libraries include the runtime C ABI and scanner-clean
 platform libraries for the public artifact surface. The host-facing routing
@@ -138,22 +139,22 @@ contract remains the same across profiles: targets, route generations,
 request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
-Runtime JVM now uses the `0.2.0-gc124a9e-da30a95` connector refresh over native
-package `0.2.0+c124a9e`. Spring Boot and Quarkus adapters now use
-`0.2.0-gda30a95` over that JVM runtime. Embedded-native coverage in the
+Runtime JVM now uses the `0.2.0-gb8ecfae-1107154` connector refresh over native
+package `0.2.0+b8ecfae`. Spring Boot and Quarkus adapters now use
+`0.2.0-g11071541ea78` over that JVM runtime. Embedded-native coverage in the
 published JVM jar remains `macos-aarch64`, `linux-aarch64`, and
 `linux-x86_64`; Windows guest validation exists downstream but is not bundled
 into this public runtime jar yet. Python, Node.js, Go, C#, Rust, Mojo, and Zig
-now publish against the same `0.2.0+c124a9e` native runtime through release
-directory `0.2.0+c124a9e-66ebe58`. Each release directory has its own manifest
-and checksums.
+still publish against the earlier `0.2.0+c124a9e` native runtime through
+release directory `0.2.0+c124a9e-66ebe58`. Each release directory has its own
+manifest and checksums.
 
 Native refresh note:
-[`docs/releases/2026-05-18-runtime-native-c124a9e.md`](docs/releases/2026-05-18-runtime-native-c124a9e.md)
+[`docs/releases/2026-07-05-runtime-native-b8ecfae.md`](docs/releases/2026-07-05-runtime-native-b8ecfae.md)
 
 Language connector release notes:
-[`docs/releases/2026-07-05-runtime-jvm-c124a9e-da30a95.md`](docs/releases/2026-07-05-runtime-jvm-c124a9e-da30a95.md),
-[`docs/releases/2026-07-05-runtime-jvm-adapters-c124a9e-da30a95.md`](docs/releases/2026-07-05-runtime-jvm-adapters-c124a9e-da30a95.md),
+[`docs/releases/2026-07-05-runtime-jvm-b8ecfae-1107154.md`](docs/releases/2026-07-05-runtime-jvm-b8ecfae-1107154.md),
+[`docs/releases/2026-07-05-runtime-jvm-adapters-b8ecfae-1107154.md`](docs/releases/2026-07-05-runtime-jvm-adapters-b8ecfae-1107154.md),
 [`docs/releases/2026-07-05-runtime-non-jvm-c124a9e-66ebe58.md`](docs/releases/2026-07-05-runtime-non-jvm-c124a9e-66ebe58.md),
 [`docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md`](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
 [`docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md`](docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md),
@@ -170,8 +171,8 @@ These artifacts are the current public runtime set:
 
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/0.2.0+c124a9e/coakka-runtime-native-v2-0.2.0.tar.gz` | `0.2.0+c124a9e` | `0.2.0+c124a9e` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.2.0-gc124a9e-da30a95` | `0.2.0+c124a9e` |
+| Native C ABI | `runtime/native/releases/0.2.0+b8ecfae/coakka-runtime-native-v2-0.2.0.tar.gz` | `0.2.0+b8ecfae` | `0.2.0+b8ecfae` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `0.2.0-gb8ecfae-1107154` | `0.2.0+b8ecfae` |
 | Python runtime | `coakka_v2_connector` wheel | `0.2.0` from `0.2.0+c124a9e-66ebe58` | `0.2.0+c124a9e` |
 | Node.js runtime | `coakka-v2-connector-node` package | `0.2.0` from `0.2.0+c124a9e-66ebe58` | `0.2.0+c124a9e` |
 | Go runtime | `coakka-v2-connector-go` source package | `0.2.0` from `0.2.0+c124a9e-66ebe58` | `0.2.0+c124a9e` |
@@ -179,8 +180,8 @@ These artifacts are the current public runtime set:
 | Rust runtime | `coakka-runtime-rs` package | `0.2.0-spike` from `0.2.0+c124a9e-66ebe58` | `0.2.0+c124a9e` |
 | Mojo runtime | `runtime/mojo/releases/0.2.0+c124a9e-66ebe58/coakka-runtime-mojo-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
 | Zig runtime | `runtime/zig/releases/0.2.0+c124a9e-66ebe58/coakka-runtime-zig-0.2.0-source.tar.gz` | `0.2.0-source` | `0.2.0+c124a9e` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.2.0-gda30a95` | via JVM runtime `0.2.0-gc124a9e-da30a95` |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.2.0-gda30a95` | via JVM runtime `0.2.0-gc124a9e-da30a95` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `0.2.0-g11071541ea78` | via JVM runtime `0.2.0-gb8ecfae-1107154` |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `0.2.0-g11071541ea78` | via JVM runtime `0.2.0-gb8ecfae-1107154` |
 
 Do not mix runtime language packages from another native package generation
 unless a later release note explicitly declares that combination compatible.
@@ -240,7 +241,7 @@ run the intake gate on the candidate artifact:
 scripts/verify-runtime-intake-artifact.py \
   --lane python \
   --artifact /path/to/coakka_v2_connector-0.2.0-py3-none-any.whl \
-  --expected-native-version 0.2.0+c124a9e
+  --expected-native-version 0.2.0+b8ecfae
 ```
 
 Use the matching `--lane` value for the candidate package. The gate verifies
