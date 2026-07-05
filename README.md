@@ -22,10 +22,10 @@ Current source connector release note:
 
 ## License And Trademark
 
-This repository distributes CoAkka artifacts under the preview terms in
+This repository distributes CoAkka artifacts under the current release terms in
 [LICENSE.md](LICENSE.md), unless a specific release artifact includes different
 license terms. The repository is intended for developer evaluation, official
-sample execution, proof-of-concept integrations, and integration testing,
+sample execution, integration bring-up, and integration testing,
 including company evaluations inside commercial organizations. Production
 use, hosted service use, customer distribution, and paid redistribution require
 explicit release terms or a separate written agreement.
@@ -235,7 +235,7 @@ SBOM, and attestation files are not part of this release surface yet; add them
 as explicit release artifacts when the signing flow is introduced.
 
 Before adding a runtime JVM, Python, Node.js, Go, C#, Rust, Mojo, or Zig package release,
-run the intake gate on the candidate artifact:
+run the intake gate on the submitted artifact:
 
 ```bash
 scripts/verify-runtime-intake-artifact.py \
@@ -244,8 +244,8 @@ scripts/verify-runtime-intake-artifact.py \
   --expected-native-version 0.2.0+b8ecfae
 ```
 
-Use the matching `--lane` value for the candidate package. The gate verifies
-the bundled native package version, rejects workspace/demo/test paths, rejects
+Use the matching `--lane` value for the submitted package. The gate verifies
+the bundled native package version, rejects workspace/sample/test paths, rejects
 stale native library names, and runs the recursive public surface scanner over
 the full artifact contents.
 

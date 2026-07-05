@@ -9,7 +9,7 @@ runtime/native/releases/<version+snapshot>/coakka-runtime-native-v2-<version>.ta
 ```
 
 The current package includes the runtime C ABI and the scanner-clean TCP frame
-transport candidate. Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot,
+transport profile. Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot,
 and Quarkus artifacts are published against this native package version.
 
 Public release rule:

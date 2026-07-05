@@ -28,8 +28,8 @@
     },
     {
       "name": "README.md",
-      "size_bytes": 700,
-      "sha256": "66b329aa6ee483cd14b5b21a89ee338d32c2c48e66c9c075327fb86cb6c232d1"
+      "size_bytes": 699,
+      "sha256": "b3eedde0e0b56df25e8e632ecb6ea23210addd1afd0bfe3497c25768340fb3c2"
     },
     {
       "name": "coakka-runtime-zig-0.2.0-source.tar.gz",

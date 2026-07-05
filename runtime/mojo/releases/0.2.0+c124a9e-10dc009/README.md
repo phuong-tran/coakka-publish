@@ -24,4 +24,4 @@ Contents:
 - `manifest.json`
 - `SHA256SUMS`
 
-This drop is a source connector package over the public native runtime `0.2.0+c124a9e`. It is intended for evaluation and sample execution while the full package-manager lane remains source-first.
+This drop is a published source connector package over the public native runtime `0.2.0+c124a9e`. It supports source-integrated execution while the full package-manager lane remains source-first.

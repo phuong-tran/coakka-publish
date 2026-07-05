@@ -24,7 +24,7 @@ manifest is intentionally limited to the current public release surface:
 Runtime language artifacts must pass
 `scripts/verify-runtime-intake-artifact.py` before they are copied into a
 release directory. That intake gate checks the bundled native package version,
-rejects workspace/demo/test path leakage, rejects stale native library names,
+rejects workspace/sample/test path leakage, rejects stale native library names,
 and runs the recursive public surface scanner against the candidate archive.
 Auxiliary artifacts that intentionally omit native libraries, such as JVM
 sources jars, may pass the same gate with `--allow-no-native`; main runtime
@@ -176,4 +176,4 @@ Not allowed in public docs, manifests, consuming guides, or sample imports:
 
 Go packages need special care because the module path is public identity. A Go
 release tarball must use a public, stable module path before the corresponding
-sample is considered public-ready.
+sample is considered public-consumable.

@@ -123,7 +123,7 @@ C#:
 
 Zig:
 
-- The current lane is source-first and experimental.
+- The current lane is source-first and intentionally narrow.
 - Public `pub` structs/functions carry `///` docs for ABI lifetime,
   host-owned fds, local route metadata, and no hidden Zig event loop.
 - Level 1 stays small until the lane is promoted beyond package smoke.

@@ -16,7 +16,7 @@
     "macos-aarch64"
   ],
   "source": {
-    "generated_at_utc": "2026-07-05T13:28:28Z"
+    "generated_at_utc": "2026-07-05T14:28:44Z"
   },
   "files": [
     {
@@ -26,8 +26,8 @@
     },
     {
       "name": "README.md",
-      "size_bytes": 4688,
-      "sha256": "f5cb9f468d9d54424e17209b71b563598691b544582a614b6af457e200a20752"
+      "size_bytes": 4670,
+      "sha256": "8f305a7e530e7d0d13e2fdd862f65f1d506091af858979808bcaab7bc9cacdfc"
     },
     {
       "name": "coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-1107154-sources.jar",
@@ -36,8 +36,8 @@
     },
     {
       "name": "coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-1107154.jar",
-      "size_bytes": 8503920,
-      "sha256": "df6c913b78c9d4d430aa607208b8fd9c5a89f94d2677250f518bd7c5fe04ad79"
+      "size_bytes": 8987352,
+      "sha256": "005b36bd543901cf5748796125c23650fbe08c65a276bd2cf4d9c49b99b14621"
     }
   ]
 }

@@ -12,7 +12,7 @@ Each platform directory contains exactly one loadable runtime shared library:
 not ship sidecar third-party runtime libraries.
 
 The current public runtime profile includes the runtime C ABI plus the
-scanner-clean TCP frame transport candidate used by the public cross-process
+scanner-clean TCP frame transport profile used by the public cross-process
 samples.
 
 ## Contents

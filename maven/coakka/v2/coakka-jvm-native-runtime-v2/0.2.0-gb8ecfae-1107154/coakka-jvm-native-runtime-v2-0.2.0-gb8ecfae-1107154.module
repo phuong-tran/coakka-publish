@@ -65,11 +65,11 @@
         {
           "name": "coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-1107154.jar",
           "url": "coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-1107154.jar",
-          "size": 8503920,
-          "sha512": "a7f042bb7a02f787ef799e06cb94faa05fd5b8e9fcfe853b73f0e26205077d760ccac31c7139683288b49c21eece8e3dc129569700ce8785f92327e06c0f1c28",
-          "sha256": "df6c913b78c9d4d430aa607208b8fd9c5a89f94d2677250f518bd7c5fe04ad79",
-          "sha1": "bd62e3434471cbafdbe777ab1d36cb21706b2905",
-          "md5": "464c20e4c70bf799b447cbd169fc82cd"
+          "size": 8987352,
+          "sha512": "2eb12d628917c13dfc5d753cd4426a6bbbf983ac28a83e584c0eecb41777303a541c65f0bac3d2511885cf436c2de9b883d9fa258531174ab39d8a49d03e7007",
+          "sha256": "005b36bd543901cf5748796125c23650fbe08c65a276bd2cf4d9c49b99b14621",
+          "sha1": "e1b92d84d23b3866341c0d448110828f1c1d0b36",
+          "md5": "0c7fe6760a6e76c44264c1b9228e53de"
         }
       ]
     },
@@ -131,11 +131,11 @@
         {
           "name": "coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-1107154.jar",
           "url": "coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-1107154.jar",
-          "size": 8503920,
-          "sha512": "a7f042bb7a02f787ef799e06cb94faa05fd5b8e9fcfe853b73f0e26205077d760ccac31c7139683288b49c21eece8e3dc129569700ce8785f92327e06c0f1c28",
-          "sha256": "df6c913b78c9d4d430aa607208b8fd9c5a89f94d2677250f518bd7c5fe04ad79",
-          "sha1": "bd62e3434471cbafdbe777ab1d36cb21706b2905",
-          "md5": "464c20e4c70bf799b447cbd169fc82cd"
+          "size": 8987352,
+          "sha512": "2eb12d628917c13dfc5d753cd4426a6bbbf983ac28a83e584c0eecb41777303a541c65f0bac3d2511885cf436c2de9b883d9fa258531174ab39d8a49d03e7007",
+          "sha256": "005b36bd543901cf5748796125c23650fbe08c65a276bd2cf4d9c49b99b14621",
+          "sha1": "e1b92d84d23b3866341c0d448110828f1c1d0b36",
+          "md5": "0c7fe6760a6e76c44264c1b9228e53de"
         }
       ]
     }

@@ -5,7 +5,6 @@
 #include <stdint.h>
 
 #include "coakka/v2/control.h"
-#include "coakka/v2/dubbing.h"
 
 #ifdef __cplusplus
 extern "C" {
