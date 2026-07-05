@@ -71,6 +71,7 @@ That jar must embed the supported platform native runtime libraries under:
 ```text
 native/<platform>/libcoakka_runtime_v2.so
 native/<platform>/libcoakka_runtime_v2.dylib
+native/<platform>/libcoakka_runtime_v2.dll
 ```
 
 Consumers must not have to download a separate native runtime artifact for the

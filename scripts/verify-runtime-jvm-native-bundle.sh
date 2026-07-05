@@ -38,6 +38,29 @@ sha256_tar_entry() {
   tar -xOzf "${archive_path}" "${entry}" | shasum -a 256 | awk '{print $1}'
 }
 
+jar_has_entry() {
+  local jar_path="$1"
+  local entry="$2"
+  unzip -Z1 "${jar_path}" "${entry}" >/dev/null 2>&1
+}
+
+archive_has_entry_suffix() {
+  local archive_path="$1"
+  local entry_suffix="$2"
+
+  [[ -n "${archive_path}" ]] || return 1
+  tar -tzf "${archive_path}" |
+    awk -v suffix="${entry_suffix}" '
+      index($0, suffix) > 0 && index($0, suffix) == length($0) - length(suffix) + 1 {
+        found = 1
+        exit
+      }
+      END {
+        exit(found ? 0 : 1)
+      }
+    '
+}
+
 jar_native_version() {
   local jar_path="$1"
   unzip -p "${jar_path}" META-INF/MANIFEST.MF |
@@ -160,6 +183,16 @@ check_runtime_jvm_jar() {
     "${jar_path}" "${native_version}" "linux-x86_64" "libcoakka_runtime_v2" "so" "${native_archive}"
   check_platform_entries \
     "${jar_path}" "${native_version}" "macos-aarch64" "libcoakka_runtime_v2" "dylib" "${native_archive}"
+
+  if jar_has_entry "${jar_path}" "native/windows-aarch64/libcoakka_runtime_v2.dll" || \
+    jar_has_entry "${jar_path}" "native/windows-aarch64/libcoakka_runtime_v2-${native_version}.dll"; then
+    local windows_native_archive=""
+    if archive_has_entry_suffix "${native_archive}" "native/windows-aarch64/libcoakka_runtime_v2.dll"; then
+      windows_native_archive="${native_archive}"
+    fi
+    check_platform_entries \
+      "${jar_path}" "${native_version}" "windows-aarch64" "libcoakka_runtime_v2" "dll" "${windows_native_archive}"
+  fi
 }
 
 current_runtime_jvm_jars() {

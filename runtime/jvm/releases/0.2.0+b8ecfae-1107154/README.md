@@ -38,6 +38,7 @@ Current native packaging note:
   - `macos-aarch64`
   - `linux-aarch64`
   - `linux-x86_64`
+  - `windows-aarch64`
 - public-ready staged natives must pass the native dependency gate before they
   are embedded into the jar
 - consuming the jar must not require a separate native artifact download
@@ -80,8 +81,8 @@ Host-native resource only:
 ./gradlew :v2:jvm:jar
 ```
 
-Release-shaped jar with versioned host-native plus staged Linux runtime
-natives:
+Release-shaped jar with versioned host-native plus staged Linux and Windows
+runtime natives:
 
 ```sh
 ./gradlew :v2:jvm:packageRuntimeJvmJar
@@ -125,6 +126,7 @@ Current release-shaped native coverage:
 - `macos-aarch64`
 - `linux-aarch64`
 - `linux-x86_64`
+- `windows-aarch64`
 
 ## Publish To Maven Local
 

@@ -10,7 +10,7 @@ public	logger Mojo source package	logger/mojo/releases/0.1.0+ba2a66d98eb5-110715
 public	logger Zig source package	logger/zig/releases/0.1.0+ba2a66d98eb5-1107154/coakka-logger-zig-0.1.0-source.tar.gz	b792334e8ef7e1995f65567e88739190f902acac46d5bd233f31112871570c90
 public	logger Native package	logger/native/releases/0.1.0+ba2a66d98eb5/coakka-logger-native-0.1.0.tar.gz	ca75c5addc92ba48efbd6577516cd6bac80da390c2583a51f02a5e412ab5d5ab
 public	runtime Native package	runtime/native/releases/0.2.0+b8ecfae/coakka-runtime-native-v2-0.2.0.tar.gz	3d3424890546b2f14324ec98ced09d3d2d4ac038ba35ad3dc8a96beafb092977
-public	runtime JVM jar	runtime/jvm/releases/0.2.0+b8ecfae-1107154/coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-1107154.jar	9e9683e92fda221ae9b293b2d86e948044d6b00631082e802c342eebf93ef80e
+public	runtime JVM jar	runtime/jvm/releases/0.2.0+b8ecfae-1107154/coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-1107154.jar	9041f61d0a21a93d175603547608657ec7252170ebdf5304a17ffc5c9c7d9474
 public	runtime Python wheel	runtime/python/releases/0.2.0+c124a9e-c4be778/coakka_v2_connector-0.2.0-py3-none-any.whl	ba97a6c7a1ba5171948fa21978b38546bb781958b6058e995f0816c12ff00c4d
 public	runtime Node package	runtime/node/releases/0.2.0+c124a9e-c4be778/coakka-v2-connector-node-0.2.0.tgz	ee3429f0a9317789195043145aa11a958ebfaa9fea45e9e0f6a05f9d3f836c3e
 public	runtime Go package	runtime/go/releases/0.2.0+c124a9e-c4be778/coakka-v2-connector-go-0.2.0.tar.gz	8fe31a3f6cfde369b8220402095af32ab2e8a4681102f46497c9ffcdbe682c29

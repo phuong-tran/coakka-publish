@@ -49,6 +49,7 @@ Default path:
   - `macos-aarch64`
   - `linux-aarch64`
   - `linux-x86_64`
+  - `windows-aarch64`
 
 Override path:
 
@@ -60,6 +61,12 @@ or on macOS:
 
 ```sh
 -Dcoakka.runtime.lib=/abs/path/to/libcoakka_runtime_v2.dylib
+```
+
+or on Windows:
+
+```powershell
+-Dcoakka.runtime.lib=C:\path\to\libcoakka_runtime_v2.dll
 ```
 
 ## Minimal Kotlin Example
