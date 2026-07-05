@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "node",
+  "release_directory": "0.2.0+b8ecfae-2d085e5",
+  "version": "0.2.0",
+  "artifact": {
+    "name": "coakka-v2-connector-node-0.2.0.tgz",
+    "bundled_native_package_version": "0.2.0+b8ecfae",
+    "bundled_native_git_commit": "b8ecfae",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ]
+  },
+  "connector_source_git_commit": "2d085e5"
+}

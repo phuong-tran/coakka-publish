@@ -5,11 +5,13 @@
   "sourceSnapshot": "b8ecfae",
   "profile": "public-tcp-transport-candidate",
   "archive": "coakka-runtime-native-v2-0.2.0.tar.gz",
-  "sha256": "3d3424890546b2f14324ec98ced09d3d2d4ac038ba35ad3dc8a96beafb092977",
+  "sha256": "f166395ab00fc5ccf37137448c9a58b145b2f19d4794c1a3549561c443d0f762",
   "platforms": [
     "linux-aarch64",
     "linux-x86_64",
-    "macos-aarch64"
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
   ],
   "headers": [
     "include/coakka/v2/runtime.h",

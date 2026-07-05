@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "mojo",
+  "release_directory": "0.2.0+b8ecfae-2d085e5",
+  "version": "0.2.0-source",
+  "artifact": {
+    "name": "coakka-runtime-mojo-0.2.0-source.tar.gz",
+    "bundled_native_package_version": "0.2.0+b8ecfae",
+    "bundled_native_git_commit": "b8ecfae",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ]
+  },
+  "connector_source_git_commit": "2d085e5",
+  "source_package": true
+}

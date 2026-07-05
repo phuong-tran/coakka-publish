@@ -52,6 +52,8 @@ make_fixture() {
     "${fixture}/native/linux-aarch64" \
     "${fixture}/native/linux-x86_64" \
     "${fixture}/native/macos-aarch64" \
+    "${fixture}/native/windows-aarch64" \
+    "${fixture}/native/windows-x86_64" \
     "${fixture}/runtime/native/releases/0.1.0+63c346e" \
     "${fixture}/scripts"
 
@@ -72,6 +74,8 @@ EOF
   printf 'linux aarch64 native\n' >"${fixture}/native/linux-aarch64/libcoakka_runtime_v2.so"
   printf 'linux x86_64 native\n' >"${fixture}/native/linux-x86_64/libcoakka_runtime_v2.so"
   printf 'macos aarch64 native\n' >"${fixture}/native/macos-aarch64/libcoakka_runtime_v2.dylib"
+  printf 'windows aarch64 native\n' >"${fixture}/native/windows-aarch64/libcoakka_runtime_v2.dll"
+  printf 'windows x86_64 native\n' >"${fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll"
   printf 'logger archive\n' >"${fixture}/logger/native/releases/test/coakka-logger-native-test.tar.gz"
   printf 'runtime archive\n' >"${fixture}/runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz"
 
@@ -85,7 +89,9 @@ EOF
       include/coakka/v2/utils.h \
       native/linux-aarch64/libcoakka_runtime_v2.so \
       native/linux-x86_64/libcoakka_runtime_v2.so \
-      native/macos-aarch64/libcoakka_runtime_v2.dylib >SHA256SUMS
+      native/macos-aarch64/libcoakka_runtime_v2.dylib \
+      native/windows-aarch64/libcoakka_runtime_v2.dll \
+      native/windows-x86_64/libcoakka_runtime_v2.dll >SHA256SUMS
   )
   (
     cd "${fixture}/logger/native/releases/test"

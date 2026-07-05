@@ -31,6 +31,8 @@ The CMake config selects one of these platform directories from the host build:
 - `native/linux-aarch64`
 - `native/linux-x86_64`
 - `native/macos-aarch64`
+- `native/windows-aarch64`
+- `native/windows-x86_64`
 
 Each platform directory contains exactly one loadable runtime shared library:
 `libcoakka_runtime_v2` with the host suffix for that OS.
@@ -41,7 +43,8 @@ add a matching platform directory before packaging your app.
 ## Runtime Loader
 
 The executable must be able to find `libcoakka_runtime_v2` at runtime. During
-development, use `DYLD_LIBRARY_PATH` on macOS or `LD_LIBRARY_PATH` on Linux:
+development, use `DYLD_LIBRARY_PATH` on macOS, `LD_LIBRARY_PATH` on Linux, or
+copy the matching DLL next to the executable on Windows:
 
 ```sh
 DYLD_LIBRARY_PATH=/path/to/coakka-runtime-native-v2-<version>/native/macos-aarch64 ./runtime_c

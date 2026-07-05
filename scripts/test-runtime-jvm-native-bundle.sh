@@ -46,7 +46,8 @@ make_runtime_jar() {
     "${root}/native/linux-aarch64" \
     "${root}/native/linux-x86_64" \
     "${root}/native/macos-aarch64" \
-    "${root}/native/windows-aarch64"
+    "${root}/native/windows-aarch64" \
+    "${root}/native/windows-x86_64"
 
   cat >"${root}/META-INF/MANIFEST.MF" <<EOF
 Manifest-Version: 1.0
@@ -76,6 +77,10 @@ EOF
     "${root}/native/windows-aarch64/libcoakka_runtime_v2.dll"
   cp "${fixture}/native/windows-aarch64/libcoakka_runtime_v2.dll" \
     "${root}/native/windows-aarch64/libcoakka_runtime_v2-${native_version}.dll"
+  cp "${fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll" \
+    "${root}/native/windows-x86_64/libcoakka_runtime_v2.dll"
+  cp "${fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll" \
+    "${root}/native/windows-x86_64/libcoakka_runtime_v2-${native_version}.dll"
 
   (cd "${root}" && zip -qr "${target}" .)
 }
@@ -130,6 +135,7 @@ make_fixture() {
     "${fixture}/native/linux-x86_64" \
     "${fixture}/native/macos-aarch64" \
     "${fixture}/native/windows-aarch64" \
+    "${fixture}/native/windows-x86_64" \
     "${fixture}/runtime/native/releases/${native_version}" \
     "${fixture}/runtime/jvm/releases/${native_version}" \
     "${fixture}/maven/coakka/v2/coakka-jvm-native-runtime-v2/0.1.0-test" \
@@ -143,6 +149,7 @@ make_fixture() {
   printf 'linux-x86_64 current\n' >"${fixture}/native/linux-x86_64/libcoakka_runtime_v2.so"
   printf 'macos-aarch64 current\n' >"${fixture}/native/macos-aarch64/libcoakka_runtime_v2.dylib"
   printf 'windows-aarch64 current\n' >"${fixture}/native/windows-aarch64/libcoakka_runtime_v2.dll"
+  printf 'windows-x86_64 current\n' >"${fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll"
 
   make_native_archive "${fixture}" "${native_version}"
 
@@ -166,6 +173,7 @@ printf 'linux-aarch64 newer root\n' >"${good_fixture}/native/linux-aarch64/libco
 printf 'linux-x86_64 newer root\n' >"${good_fixture}/native/linux-x86_64/libcoakka_runtime_v2.so"
 printf 'macos-aarch64 newer root\n' >"${good_fixture}/native/macos-aarch64/libcoakka_runtime_v2.dylib"
 printf 'windows-aarch64 newer root\n' >"${good_fixture}/native/windows-aarch64/libcoakka_runtime_v2.dll"
+printf 'windows-x86_64 newer root\n' >"${good_fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll"
 expect_success "matching runtime JVM bundle" "${good_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
 
 mismatch_fixture="$(make_fixture mismatch stale)"

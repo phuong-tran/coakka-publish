@@ -193,6 +193,15 @@ check_runtime_jvm_jar() {
     check_platform_entries \
       "${jar_path}" "${native_version}" "windows-aarch64" "libcoakka_runtime_v2" "dll" "${windows_native_archive}"
   fi
+  if jar_has_entry "${jar_path}" "native/windows-x86_64/libcoakka_runtime_v2.dll" || \
+    jar_has_entry "${jar_path}" "native/windows-x86_64/libcoakka_runtime_v2-${native_version}.dll"; then
+    local windows_x8664_native_archive=""
+    if archive_has_entry_suffix "${native_archive}" "native/windows-x86_64/libcoakka_runtime_v2.dll"; then
+      windows_x8664_native_archive="${native_archive}"
+    fi
+    check_platform_entries \
+      "${jar_path}" "${native_version}" "windows-x86_64" "libcoakka_runtime_v2" "dll" "${windows_x8664_native_archive}"
+  fi
 }
 
 current_runtime_jvm_jars() {

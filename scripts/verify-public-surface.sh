@@ -228,6 +228,8 @@ require_file "include/coakka/v2/utils.h"
 require_file "native/linux-aarch64/libcoakka_runtime_v2.so"
 require_file "native/linux-x86_64/libcoakka_runtime_v2.so"
 require_file "native/macos-aarch64/libcoakka_runtime_v2.dylib"
+require_file "native/windows-aarch64/libcoakka_runtime_v2.dll"
+require_file "native/windows-x86_64/libcoakka_runtime_v2.dll"
 require_file "SHA256SUMS"
 
 (cd "${repo_root}" && shasum -a 256 -c SHA256SUMS >/dev/null)

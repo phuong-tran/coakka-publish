@@ -9,14 +9,14 @@ public	logger Rust package	logger/rust/releases/0.1.0+ba2a66d98eb5/coakka-logger
 public	logger Mojo source package	logger/mojo/releases/0.1.0+ba2a66d98eb5-1107154/coakka-logger-mojo-0.1.0-source.tar.gz	3d3bbc4ccc5cd0f27ff830c62b9fe4fb32b4e614ebb7d9eb2dd58d8ad3ed37fb
 public	logger Zig source package	logger/zig/releases/0.1.0+ba2a66d98eb5-1107154/coakka-logger-zig-0.1.0-source.tar.gz	b792334e8ef7e1995f65567e88739190f902acac46d5bd233f31112871570c90
 public	logger Native package	logger/native/releases/0.1.0+ba2a66d98eb5/coakka-logger-native-0.1.0.tar.gz	ca75c5addc92ba48efbd6577516cd6bac80da390c2583a51f02a5e412ab5d5ab
-public	runtime Native package	runtime/native/releases/0.2.0+b8ecfae/coakka-runtime-native-v2-0.2.0.tar.gz	3d3424890546b2f14324ec98ced09d3d2d4ac038ba35ad3dc8a96beafb092977
-public	runtime JVM jar	runtime/jvm/releases/0.2.0+b8ecfae-1107154/coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-1107154.jar	9041f61d0a21a93d175603547608657ec7252170ebdf5304a17ffc5c9c7d9474
-public	runtime Python wheel	runtime/python/releases/0.2.0+c124a9e-c4be778/coakka_v2_connector-0.2.0-py3-none-any.whl	ba97a6c7a1ba5171948fa21978b38546bb781958b6058e995f0816c12ff00c4d
-public	runtime Node package	runtime/node/releases/0.2.0+c124a9e-c4be778/coakka-v2-connector-node-0.2.0.tgz	ee3429f0a9317789195043145aa11a958ebfaa9fea45e9e0f6a05f9d3f836c3e
-public	runtime Go package	runtime/go/releases/0.2.0+c124a9e-c4be778/coakka-v2-connector-go-0.2.0.tar.gz	8fe31a3f6cfde369b8220402095af32ab2e8a4681102f46497c9ffcdbe682c29
-public	runtime C# package	runtime/csharp/releases/0.2.0+c124a9e-c4be778/CoAkka.Runtime.0.2.0.nupkg	44e3ea1c3c1e9602ef2ef7c9d4b5e075c67f34373213cdc78836c2a0957dbb5e
-public	runtime Rust package	runtime/rust/releases/0.2.0+c124a9e-c4be778/coakka-runtime-rs-0.2.0-spike.tar.gz	9d9c528b6cc250c0f84789845248eb519c5cdeaa17cdde9e5a4cd6a445de2193
-public	runtime Mojo source package	runtime/mojo/releases/0.2.0+c124a9e-c4be778/coakka-runtime-mojo-0.2.0-source.tar.gz	6100217bee57e8456d62b6162a5d26b0033ff2e8add3f730813b534fe79f0206
-public	runtime Zig source package	runtime/zig/releases/0.2.0+c124a9e-c4be778/coakka-runtime-zig-0.2.0-source.tar.gz	01353c4989e707b83cc065533160a9729f2e5a800a2c691396166c13099cebf4
-public	Spring Boot starter Maven jar	maven/coakka/spring/coakka-spring-boot-starter/0.2.0-g11071541ea78/coakka-spring-boot-starter-0.2.0-g11071541ea78.jar	1be5bd23e207ec9792653b08c60cef73f3d3db1ec3e5ff72599def86b7e9fa95
-public	Quarkus extension Maven jar	maven/coakka/quarkus/coakka-quarkus-extension/0.2.0-g11071541ea78/coakka-quarkus-extension-0.2.0-g11071541ea78.jar	af14745aec4a57247868ff2f733280cedc8c1bd4eb9dc113d10312893bd6f78b
+public	runtime Native package	runtime/native/releases/0.2.0+b8ecfae/coakka-runtime-native-v2-0.2.0.tar.gz	f166395ab00fc5ccf37137448c9a58b145b2f19d4794c1a3549561c443d0f762
+public	runtime JVM jar	runtime/jvm/releases/0.2.0+b8ecfae-2d085e5/coakka-jvm-native-runtime-v2-0.2.0-gb8ecfae-2d085e5.jar	4b62cb3bcb2df6b7bdcab177ee2fa5e9e0765fa8aaa6e86a609d40b2ba556c43
+public	runtime Python wheel	runtime/python/releases/0.2.0+b8ecfae-2d085e5/coakka_v2_connector-0.2.0-py3-none-any.whl	f448a04c3e466c840e558a5f40b88b166d81de7e69f1d7edd6fd74563dbc5a00
+public	runtime Node package	runtime/node/releases/0.2.0+b8ecfae-2d085e5/coakka-v2-connector-node-0.2.0.tgz	e8a30b2fff651cc9b8f0ede763f99aac5a57672373850282ae1dff12a26f9773
+public	runtime Go package	runtime/go/releases/0.2.0+b8ecfae-2d085e5/coakka-v2-connector-go-0.2.0.tar.gz	fd71c0c194d074a16bf5ce97dbae173ee179024b6ae9d37c9c33fa89231bec19
+public	runtime C# package	runtime/csharp/releases/0.2.0+b8ecfae-2d085e5/CoAkka.Runtime.0.2.0.nupkg	4195e57e194266bc7c96fe44c7bcc63c9b50e124d4843481187dd3a78cd46b17
+public	runtime Rust package	runtime/rust/releases/0.2.0+b8ecfae-2d085e5/coakka-runtime-rs-0.2.0-spike.tar.gz	add437141860872e8fe8132b52c08d03f517b79bad29dc58b64570c0e6f3708a
+public	runtime Mojo source package	runtime/mojo/releases/0.2.0+b8ecfae-2d085e5/coakka-runtime-mojo-0.2.0-source.tar.gz	ee0289a9a46368a5fd94290b2f55d126d218c12a5bf9c01bf2385a785df1db0b
+public	runtime Zig source package	runtime/zig/releases/0.2.0+b8ecfae-2d085e5/coakka-runtime-zig-0.2.0-source.tar.gz	3ac475990e6421e54c16cb81a5d3756bb2ce8a64398fc53bfd936787de382219
+public	Spring Boot starter Maven jar	maven/coakka/spring/coakka-spring-boot-starter/0.2.0-g2d085e5923d9/coakka-spring-boot-starter-0.2.0-g2d085e5923d9.jar	b2a14be37655800b959236ed1f837a7d2a0f81c97ff935f5b05934bd07898f7d
+public	Quarkus extension Maven jar	maven/coakka/quarkus/coakka-quarkus-extension/0.2.0-g2d085e5923d9/coakka-quarkus-extension-0.2.0-g2d085e5923d9.jar	63fba294f20d4c6bb07c45f1f317c99dc44faf4c488c0e8e3ee43d7a01cfd989

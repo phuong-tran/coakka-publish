@@ -6,6 +6,8 @@ runtime libraries for:
 - `linux-aarch64`
 - `linux-x86_64`
 - `macos-aarch64`
+- `windows-aarch64`
+- `windows-x86_64`
 
 Each platform directory contains exactly one loadable runtime shared library:
 `libcoakka_runtime_v2` with the platform suffix for that OS. Public packages do
