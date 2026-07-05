@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
 if [[ "$#" -lt 1 ]]; then
   echo "usage: $0 <path> [<path>...]" >&2
   exit 64
@@ -15,7 +17,9 @@ fi
 default_blocked_re='/(Users|home)/[^[:space:]/]+/(misc|study|workspace|src|dev)/|external/(caf|libuv)'
 blocked_re="${COAKKA_PUBLIC_FORBIDDEN_RE:-${default_blocked_re}}"
 self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "$0")"
-tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-surface.XXXXXX")"
+tmp_parent="${COAKKA_PUBLIC_TMP_ROOT:-${repo_root}/.tmp}"
+mkdir -p "${tmp_parent}"
+tmp_root="$(mktemp -d "${tmp_parent}/coakka-public-surface.XXXXXX")"
 violations_file="${tmp_root}/violations.txt"
 extract_counter=0
 
@@ -74,7 +78,7 @@ scan_tree() {
   local file rel extract_dir
 
   while IFS= read -r -d '' file; do
-    rel="${file#${root}/}"
+    rel="${file#"${root}"/}"
     extract_dir="${tmp_root}/nested-${extract_counter}"
     extract_counter=$((extract_counter + 1))
     if extract_archive "${file}" "${extract_dir}"; then

@@ -4,7 +4,9 @@ set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd "${script_dir}/.." && pwd)"
-tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-manifest.XXXXXX")"
+tmp_parent="${COAKKA_PUBLIC_TMP_ROOT:-${repo_root}/.tmp}"
+mkdir -p "${tmp_parent}"
+tmp_root="$(mktemp -d "${tmp_parent}/coakka-public-manifest.XXXXXX")"
 test_output="${tmp_root}/last-command.out"
 
 cleanup() {
@@ -108,13 +110,19 @@ EOF
 }
 
 good_fixture="$(make_fixture good)"
-expect_success "clean public manifest" "${good_fixture}/scripts/verify-public-surface.sh"
+expect_success "clean public manifest" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
+  "${good_fixture}/scripts/verify-public-surface.sh"
 
 bad_path_fixture="$(make_fixture bad-path)"
 cat >>"${bad_path_fixture}/artifacts/public-artifacts.tsv" <<'EOF'
 public	unsafe path	../outside.tar.gz	0000000000000000000000000000000000000000000000000000000000000000
 EOF
-expect_failure "path outside public manifest surface" "${bad_path_fixture}/scripts/verify-public-surface.sh"
+expect_failure "path outside public manifest surface" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
+  "${bad_path_fixture}/scripts/verify-public-surface.sh"
 grep -Fq "unsafe artifact path" "${test_output}"
 
 duplicate_path_fixture="$(make_fixture duplicate-path)"
@@ -122,7 +130,10 @@ runtime_sha="$(sha256_file "${duplicate_path_fixture}/runtime/native/releases/0.
 cat >>"${duplicate_path_fixture}/artifacts/public-artifacts.tsv" <<EOF
 public	runtime Native package duplicate	runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz	${runtime_sha}
 EOF
-expect_failure "duplicate manifest path" "${duplicate_path_fixture}/scripts/verify-public-surface.sh"
+expect_failure "duplicate manifest path" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
+  "${duplicate_path_fixture}/scripts/verify-public-surface.sh"
 grep -Fq "duplicate artifact path" "${test_output}"
 
 duplicate_label_fixture="$(make_fixture duplicate-label)"
@@ -130,13 +141,19 @@ logger_sha="$(sha256_file "${duplicate_label_fixture}/logger/native/releases/tes
 cat >>"${duplicate_label_fixture}/artifacts/public-artifacts.tsv" <<EOF
 public	logger Native package	logger/native/releases/test/coakka-logger-native-test-copy.tar.gz	${logger_sha}
 EOF
-expect_failure "duplicate manifest label" "${duplicate_label_fixture}/scripts/verify-public-surface.sh"
+expect_failure "duplicate manifest label" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
+  "${duplicate_label_fixture}/scripts/verify-public-surface.sh"
 grep -Fq "duplicate artifact label" "${test_output}"
 
 bad_sha_fixture="$(make_fixture bad-sha)"
 sed -i.bak 's/[0-9a-f]\{64\}$/ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff/' \
   "${bad_sha_fixture}/artifacts/public-artifacts.tsv"
-expect_failure "manifest checksum mismatch" "${bad_sha_fixture}/scripts/verify-public-surface.sh"
+expect_failure "manifest checksum mismatch" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
+  "${bad_sha_fixture}/scripts/verify-public-surface.sh"
 grep -Fq "manifest sha256 mismatch" "${test_output}"
 
 echo "[public-manifest-test] ok"

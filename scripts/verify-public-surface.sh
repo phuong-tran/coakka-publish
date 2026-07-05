@@ -61,7 +61,7 @@ verify_digest_sidecar() {
   expected="$(awk '{print $1}' "${sidecar}")"
   actual="$(file_digest "${algorithm}" "${file}")"
   if [[ "${actual}" != "${expected}" ]]; then
-    fail "${algorithm} mismatch for ${file#${repo_root}/}"
+    fail "${algorithm} mismatch for ${file#"${repo_root}"/}"
   fi
 }
 
@@ -140,7 +140,7 @@ verify_framework_adapter_runtime_dependency() {
   jar_path="${repo_root}/${relative_path}"
   pom_path="${jar_path%.jar}.pom"
   [[ -f "${jar_path}" ]] || fail "${label} jar is missing: ${relative_path}"
-  [[ -f "${pom_path}" ]] || fail "${label} pom is missing: ${pom_path#${repo_root}/}"
+  [[ -f "${pom_path}" ]] || fail "${label} pom is missing: ${pom_path#"${repo_root}"/}"
 
   manifest_version="$(jar_manifest_attribute "${jar_path}" "Coakka-Runtime-Jvm-Dependency")"
   if [[ "${manifest_version}" != "${expected_runtime_version}" ]]; then
@@ -149,7 +149,7 @@ verify_framework_adapter_runtime_dependency() {
 
   pom_version="$(pom_runtime_jvm_dependency_version "${pom_path}")"
   if [[ "${pom_version}" != "${expected_runtime_version}" ]]; then
-    fail "${pom_path#${repo_root}/} depends on runtime JVM ${pom_version}; expected ${expected_runtime_version}"
+    fail "${pom_path#"${repo_root}"/} depends on runtime JVM ${pom_version}; expected ${expected_runtime_version}"
   fi
 }
 
@@ -240,15 +240,19 @@ fi
 
 while IFS= read -r -d '' sums_file; do
   release_dir="$(dirname "${sums_file}")"
-  verify_sha256_file "${release_dir#${repo_root}/}"
+  verify_sha256_file "${release_dir#"${repo_root}"/}"
 done < <(find "${repo_root}/logger" "${repo_root}/runtime" -path '*/releases/*/SHA256SUMS' -print0)
 
 verify_maven_sidecars
 
 verify_public_artifact_manifest
-verify_framework_adapter_dependencies
 
-if [[ -x "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh" ]]; then
+if [[ "${COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS:-0}" != "1" ]]; then
+  verify_framework_adapter_dependencies
+fi
+
+if [[ "${COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE:-0}" != "1" &&
+      -x "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh" ]]; then
   "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh"
 fi
 

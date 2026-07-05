@@ -4,7 +4,9 @@ set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd "${script_dir}/.." && pwd)"
-tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-runtime-jvm-bundle.XXXXXX")"
+tmp_parent="${COAKKA_PUBLIC_TMP_ROOT:-${repo_root}/.tmp}"
+mkdir -p "${tmp_parent}"
+tmp_root="$(mktemp -d "${tmp_parent}/coakka-runtime-jvm-bundle.XXXXXX")"
 test_output="${tmp_root}/last-command.out"
 
 cleanup() {

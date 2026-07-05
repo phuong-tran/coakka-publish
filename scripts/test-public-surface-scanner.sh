@@ -4,7 +4,11 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 scanner="${repo_root}/scripts/scan-public-surface.sh"
-tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-surface-test.XXXXXX")"
+tmp_parent="${COAKKA_PUBLIC_TMP_ROOT:-${repo_root}/.tmp}"
+mkdir -p "${tmp_parent}"
+tmp_root="$(mktemp -d "${tmp_parent}/coakka-public-surface-test.XXXXXX")"
+test_stdout="${tmp_root}/scanner.out"
+test_stderr="${tmp_root}/scanner.err"
 
 cleanup() {
   rm -rf "${tmp_root}"
@@ -21,17 +25,17 @@ blocked_dir="${tmp_root}/blocked"
 mkdir -p "${blocked_dir}/pkg"
 printf '%s/%s/workspace/pkg marker\n' "/Users" "builder" >"${blocked_dir}/pkg/README.txt"
 (cd "${blocked_dir}" && tar -czf "${tmp_root}/blocked.tar.gz" pkg)
-if "${scanner}" "${tmp_root}/blocked.tar.gz" >/tmp/coakka-surface-test.out 2>/tmp/coakka-surface-test.err; then
+if "${scanner}" "${tmp_root}/blocked.tar.gz" >"${test_stdout}" 2>"${test_stderr}"; then
   echo "[test-public-surface-scanner] expected archive payload marker to fail" >&2
   exit 1
 fi
-grep -q "forbidden marker" /tmp/coakka-surface-test.err
+grep -q "forbidden marker" "${test_stderr}"
 
 printf '%s/%s/dev/pkg marker\n' "/home" "builder" >"${tmp_root}/not-an-archive.tar.gz"
-if "${scanner}" "${tmp_root}/not-an-archive.tar.gz" >/tmp/coakka-surface-test.out 2>/tmp/coakka-surface-test.err; then
+if "${scanner}" "${tmp_root}/not-an-archive.tar.gz" >"${test_stdout}" 2>"${test_stderr}"; then
   echo "[test-public-surface-scanner] expected invalid archive blob marker to fail" >&2
   exit 1
 fi
-grep -q "forbidden marker" /tmp/coakka-surface-test.err
+grep -q "forbidden marker" "${test_stderr}"
 
 echo "[test-public-surface-scanner] ok"
