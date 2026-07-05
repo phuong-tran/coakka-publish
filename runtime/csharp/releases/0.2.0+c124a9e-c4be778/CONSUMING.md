@@ -2,9 +2,9 @@
 
 This is the C#/.NET runtime connector for CoAkka runtime v2.
 
-The first release is macOS/Linux-first. It does not claim Windows support yet.
-That is intentional: the current goal is to make the .NET local runtime shape
-obvious before adding Windows DLL packaging.
+macOS and Windows are supported development and validation hosts for this
+connector shape. This release directory still bundles native runtime libraries
+for macOS/Linux first, and Linux remains the default server deployment path.
 
 ## Install From A Local Release Directory
 
@@ -21,6 +21,9 @@ The package includes native runtime libraries for:
 - `macos-aarch64`
 - `linux-aarch64`
 - `linux-x86_64`
+
+Windows host validation is supported through the source-owner lane and staged
+runtime DLLs. This release directory does not bundle Windows DLLs yet.
 
 The runtime library resolution order is:
 

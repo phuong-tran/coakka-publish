@@ -18,6 +18,11 @@ native package generation while rebundling all seven public language lanes from
 one connector source commit. The native/JVM `b8ecfae` refresh stays separate;
 this note does not claim non-JVM compatibility with `0.2.0+b8ecfae`.
 
+macOS and Windows are both supported development/validation hosts in this
+refresh. The published artifacts in this note still bundle the current
+macOS/Linux native payload set, and Linux remains the default deployment path
+for runtime rollout claims.
+
 User-facing changes:
 
 - Python, Node.js, Go, and C# resolvers no longer fall back to internal

@@ -73,6 +73,11 @@ that the non-JVM lanes already moved to `b8ecfae`. Do not mix language or
 framework runtime packages from another native package generation unless a
 release note explicitly declares that combination compatible.
 
+For development and integration work, macOS and Windows are both supported host
+surfaces in the current train. The current published package surface still
+bundles macOS/Linux runtime natives, and Linux remains the normal deployment
+path for release, soak, and operator-readiness claims.
+
 Consumer-facing downloads are listed in `artifacts/public-artifacts.tsv`.
 Integrity metadata is checksum-based for this surface: release manifests,
 `SHA256SUMS`, Maven checksum sidecars, and the root artifact manifest. Signature,

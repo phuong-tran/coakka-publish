@@ -40,7 +40,9 @@ Supported packaged platforms for this connector:
 - `linux-aarch64`
 - `linux-x86_64`
 
-Windows support is not claimed.
+Windows is a supported development and validation host through the source-owner
+lane and staged runtime DLLs. This release tarball still bundles the current
+macOS/Linux native set, and Linux remains the default deployment path.
 
 ## Boundary Shape
 
