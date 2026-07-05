@@ -11,7 +11,9 @@ Current language connector release notes:
 [2026-07-05 logger Mojo and Zig source refresh 1107154](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
 [2026-07-06 runtime JVM b8ecfae refresh 2d085e5](docs/releases/2026-07-06-runtime-jvm-b8ecfae-2d085e5.md),
 [2026-07-06 runtime JVM adapters b8ecfae refresh 2d085e5](docs/releases/2026-07-06-runtime-jvm-adapters-b8ecfae-2d085e5.md),
-[2026-07-06 runtime non-JVM b8ecfae refresh 2d085e5](docs/releases/2026-07-06-runtime-non-jvm-b8ecfae-2d085e5.md),
+[2026-07-06 runtime non-JVM b8ecfae refresh 2d085e5](docs/releases/2026-07-06-runtime-non-jvm-b8ecfae-2d085e5.md).
+
+Historical runtime connector release notes:
 [2026-05-23 runtime JVM adapters c124a9e](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
 [2026-05-23 runtime JVM c124a9e rebundle](docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md)
 and
@@ -161,7 +163,9 @@ Native refresh note:
 Language connector release notes:
 [`docs/releases/2026-07-06-runtime-jvm-b8ecfae-2d085e5.md`](docs/releases/2026-07-06-runtime-jvm-b8ecfae-2d085e5.md),
 [`docs/releases/2026-07-06-runtime-jvm-adapters-b8ecfae-2d085e5.md`](docs/releases/2026-07-06-runtime-jvm-adapters-b8ecfae-2d085e5.md),
-[`docs/releases/2026-07-06-runtime-non-jvm-b8ecfae-2d085e5.md`](docs/releases/2026-07-06-runtime-non-jvm-b8ecfae-2d085e5.md),
+[`docs/releases/2026-07-06-runtime-non-jvm-b8ecfae-2d085e5.md`](docs/releases/2026-07-06-runtime-non-jvm-b8ecfae-2d085e5.md)
+
+Historical runtime connector release notes:
 [`docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md`](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
 [`docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md`](docs/releases/2026-05-23-runtime-jvm-c124a9e-2bab9ee.md),
 [`docs/releases/2026-05-21-runtime-connector-5ab812f.md`](docs/releases/2026-05-21-runtime-connector-5ab812f.md)
