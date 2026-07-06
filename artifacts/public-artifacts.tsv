@@ -1,14 +1,14 @@
 # Public artifact manifest v1.
 # Columns: status	label	relative_path	sha256
-public	logger JVM jar	logger/jvm/releases/0.1.0+ba2a66d98eb5/coakka-jvm-native-logger-0.1.0.jar	68aeca8c5526b47b0db083b45e6f34d8f77768d5bab2db79e4ea311c3016ed54
-public	logger Python wheel	logger/python/releases/0.1.0+ba2a66d98eb5/coakka_logger-0.1.0-py3-none-any.whl	f2419d3008cb5e62cad03f6a6739942bcc8f8d93fddcc777bef4ea54c73e3ad0
-public	logger Node package	logger/node/releases/0.1.0+ba2a66d98eb5/coakka-logger-node-0.1.0.tgz	d51e7cf0b55309eadb6d0e5eba8410faeeef7c18c04145b130c21b7ec525904e
-public	logger Go package	logger/go/releases/0.1.0+ba2a66d98eb5/coakka-logger-go-0.1.0.tar.gz	6ded85a08a5da36ee7c9179a9fa9995a1b5c8090b593d3213fb62f029a96a13b
-public	logger C# package	logger/csharp/releases/0.1.0+ba2a66d98eb5/CoAkka.Logger.0.1.0.nupkg	28a6ce043dc8fe678c27b749cc7352f10ba5cfb2c76011ca64c06a78a959fd56
-public	logger Rust package	logger/rust/releases/0.1.0+ba2a66d98eb5/coakka-logger-rs-0.1.0-spike.tar.gz	0979f83ce46efb6927e4a755781b580990f6d84ad82decc6aa83e6d3eed8b04c
-public	logger Mojo source package	logger/mojo/releases/0.1.0+ba2a66d98eb5-1107154/coakka-logger-mojo-0.1.0-source.tar.gz	3d3bbc4ccc5cd0f27ff830c62b9fe4fb32b4e614ebb7d9eb2dd58d8ad3ed37fb
-public	logger Zig source package	logger/zig/releases/0.1.0+ba2a66d98eb5-1107154/coakka-logger-zig-0.1.0-source.tar.gz	b792334e8ef7e1995f65567e88739190f902acac46d5bd233f31112871570c90
-public	logger Native package	logger/native/releases/0.1.0+ba2a66d98eb5/coakka-logger-native-0.1.0.tar.gz	ca75c5addc92ba48efbd6577516cd6bac80da390c2583a51f02a5e412ab5d5ab
+public	logger JVM jar	logger/jvm/releases/1.2.1+f50756ebff0d/coakka-jvm-native-logger-1.2.1-gf50756ebff0d.jar	6c3ae767883f11da9b183803b1696964279120e6a9b55286bcf9f304ee4a6bea
+public	logger Python wheel	logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.1-py3-none-any.whl	6e03f595bc7c5496978c979d6eb8da89a7e9edc37f70737be21c2be908f64b26
+public	logger Node package	logger/node/releases/1.2.1+f50756ebff0d/coakka-logger-node-1.2.1.tgz	5c2cafeeb594c65bd98c83472ea7f8ede03cd760def24c6cd8ed121bb92187d4
+public	logger Go package	logger/go/releases/1.2.1+f50756ebff0d/coakka-logger-go-1.2.1.tar.gz	34858281b333b48b00962498823d536735b9fd1fdb97053901cbeb2e9a0b028a
+public	logger C# package	logger/csharp/releases/1.2.1+f50756ebff0d/CoAkka.Logger.1.2.1.nupkg	4ecfaf8c89ace73dc63a3452cb2cbe40e82082a964030d9fd22d9147d7fe849a
+public	logger Rust package	logger/rust/releases/1.2.1+f50756ebff0d/coakka-logger-rs-1.2.1.tar.gz	142857bb805eab08da5d9243b6ddb2de2043329eb57a59572c8360b422463a14
+public	logger Mojo source package	logger/mojo/releases/1.2.1+f50756ebff0d-8264bba/coakka-logger-mojo-1.2.1-source.tar.gz	c58f5d1746fca15ef8ca41c0dcec2623256803ed02a505bebf3c05d8552dd825
+public	logger Zig source package	logger/zig/releases/1.2.1+f50756ebff0d-8264bba/coakka-logger-zig-1.2.1-source.tar.gz	0f95b96170d515ef7b1f0dd41904a9c8e15f9506e716933005f82b88819f3b3b
+public	logger Native package	logger/native/releases/1.2.1+f50756ebff0d/coakka-logger-native-1.2.1.tar.gz	6411abdc74749e48efbe3385f3be6cb280625c42659ec739a1f35e5d48bdf9f3
 public	runtime Native package	runtime/native/releases/1.2.1+abde383/coakka-runtime-native-v2-1.2.1.tar.gz	921f18fe145a24aa3c2499cc059dddc56e991ef3f230e9f70804e7f40116de9b
 public	runtime JVM jar	runtime/jvm/releases/1.2.1+abde383-fa29f94/coakka-jvm-native-runtime-v2-1.2.1-gabde383-fa29f94.jar	9c3ad0189641fae9490a908f60ee597cbade24002bcaa39d47e65c8cf53af818
 public	runtime Python wheel	runtime/python/releases/1.2.1+abde383-fa29f94/coakka_v2_connector-1.2.1-py3-none-any.whl	0cc22e9c523c987b964835fbf959519e29d2ed354dbe38383e039dee55e61115

@@ -1,6 +1,6 @@
 # logger/rust
 
-This lane stores Rust logger spike package drops.
+This lane stores Rust logger package drops.
 
 Published releases live under:
 
@@ -10,7 +10,7 @@ logger/rust/releases/<native-package-version>/
 
 Each release directory contains:
 
-- `coakka-logger-rs-<version>-spike.tar.gz`
+- `coakka-logger-rs-<version>.tar.gz`
 - `manifest.json`
 - `SHA256SUMS`
 - `README.md`

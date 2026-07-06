@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "mojo",
+  "release_directory": "1.2.1+f50756ebff0d-8264bba",
+  "artifact": {
+    "package_name": "coakka-logger-mojo",
+    "artifact_version": "1.2.1-source",
+    "bundled_native_core_version": "1.2.1",
+    "bundled_native_package_version": "1.2.1+f50756ebff0d",
+    "bundled_native_git_commit": "f50756ebff0d",
+    "connector_source_git_commit": "8264bba",
+    "source_package": true
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ],
+  "source": {
+    "generated_at_utc": "2026-07-06T03:32:25Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 832,
+      "sha256": "eda247ca60907844d4dca276171fe6284a790a7d14c72de4c6bda5188a57a969"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 433,
+      "sha256": "96c60b97bbbcb8e25b1da8f8c69099aa0cff474bd501e8da378e140b6621ceab"
+    },
+    {
+      "name": "coakka-logger-mojo-1.2.1-source.tar.gz",
+      "size_bytes": 1886488,
+      "sha256": "c58f5d1746fca15ef8ca41c0dcec2623256803ed02a505bebf3c05d8552dd825"
+    }
+  ]
+}

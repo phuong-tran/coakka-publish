@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "rust",
+  "release_directory": "1.2.1+f50756ebff0d",
+  "artifact": {
+    "package_name": "coakka-logger-rs",
+    "artifact_version": "1.2.1",
+    "bundled_native_core_version": "1.2.1",
+    "bundled_native_package_version": "1.2.1+f50756ebff0d",
+    "bundled_native_git_commit": "f50756ebff0d",
+    "c_abi_version": 10
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ],
+  "source": {
+    "connector_repo": "coakkaJVMConnector@8264bba",
+    "generated_at_utc": "2026-07-06T03:32:25Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 468,
+      "sha256": "d4353ada851d18d3e11c9b82c5bdd69aff7c8f946b634d70d26dac2e90833555"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 369,
+      "sha256": "d3b83f4ae6eb0d07051de3dec22e654797470767fc19f3d4bde106371e2821ab"
+    },
+    {
+      "name": "coakka-logger-rs-1.2.1.tar.gz",
+      "size_bytes": 1887447,
+      "sha256": "142857bb805eab08da5d9243b6ddb2de2043329eb57a59572c8360b422463a14"
+    }
+  ]
+}

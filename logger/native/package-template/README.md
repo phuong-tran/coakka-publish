@@ -6,6 +6,8 @@ and prebuilt native logger cores for:
 - `linux-aarch64`
 - `linux-x86_64`
 - `macos-aarch64`
+- `windows-aarch64`
+- `windows-x86_64`
 
 The host application owns configuration and lifecycle. The native logger core
 only receives explicit API calls from the host process.

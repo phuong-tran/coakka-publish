@@ -5,7 +5,7 @@ Published logger JVM drops live under `logger/jvm/releases/<release-dir>/`.
 Current release-directory bias:
 
 - default to the bundled native package version, for example
-  `0.1.0+7ae87f3c4ee7`
+  `1.2.1+f50756ebff0d`
 - keep the JVM artifact version and native core version inside `manifest.json`
   instead of encoding every version axis into the directory name
 

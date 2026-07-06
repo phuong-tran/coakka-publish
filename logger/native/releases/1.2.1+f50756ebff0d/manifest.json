@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "native",
+  "release_directory": "1.2.1+f50756ebff0d",
+  "artifact": {
+    "package_name": "coakka-logger-native",
+    "artifact_version": "1.2.1",
+    "bundled_native_core_version": "1.2.1",
+    "bundled_native_package_version": "1.2.1+f50756ebff0d",
+    "bundled_native_git_commit": "f50756ebff0d",
+    "c_abi_version": 10
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ],
+  "source": {
+    "c_headers_dir": "logger/include",
+    "cpp_connector_dir": "logger/connectors/native-cpp",
+    "native_libraries_source": "coakkaCoreNativeDev/logger/staging/native/1.2.1",
+    "generated_at_utc": "2026-07-06T03:42:27Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 1199,
+      "sha256": "2029b465668b6784fe386766143b5895e11749cb939f2079a10d30b69236522a"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 376,
+      "sha256": "e1d58e9e76487c733c6809d723bf1d2488f87f9d1fbf43650353bcb9108b6cb7"
+    },
+    {
+      "name": "coakka-logger-native-1.2.1.tar.gz",
+      "size_bytes": 1967588,
+      "sha256": "6411abdc74749e48efbe3385f3be6cb280625c42659ec739a1f35e5d48bdf9f3"
+    }
+  ]
+}

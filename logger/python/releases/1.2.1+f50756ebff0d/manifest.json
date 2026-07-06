@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "python",
+  "release_directory": "1.2.1+f50756ebff0d",
+  "artifact": {
+    "package_name": "coakka-logger",
+    "artifact_version": "1.2.1",
+    "bundled_native_core_version": "1.2.1",
+    "bundled_native_package_version": "1.2.1+f50756ebff0d",
+    "bundled_native_git_commit": "f50756ebff0d"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ],
+  "source": {
+    "connector_repo": "coakkaJVMConnector@8264bba",
+    "generated_at_utc": "2026-07-06T03:32:25Z"
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 868,
+      "sha256": "96929a6e18f927e41846da498ae7941ab0cd09cbaec11be2f9cce4b35629ded1"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 370,
+      "sha256": "994193191c575e76b66042bd17be387da1562ac522cb2936ae5e4839738c9103"
+    },
+    {
+      "name": "coakka_logger-1.2.1-py3-none-any.whl",
+      "size_bytes": 1893100,
+      "sha256": "6e03f595bc7c5496978c979d6eb8da89a7e9edc37f70737be21c2be908f64b26"
+    }
+  ]
+}

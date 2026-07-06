@@ -8,6 +8,7 @@ Current native runtime refresh note:
 [2026-07-06 runtime native 1.2.1 abde383](docs/releases/2026-07-06-runtime-native-1.2.1-abde383.md).
 
 Current language connector release notes:
+[2026-07-06 logger 1.2.1 Windows parity 8264bba](docs/releases/2026-07-06-logger-1.2.1-8264bba.md),
 [2026-07-05 logger Mojo and Zig source refresh 1107154](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
 [2026-07-06 runtime JVM 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md),
 [2026-07-06 runtime JVM adapters 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-jvm-adapters-1.2.1-fa29f94.md),
@@ -47,9 +48,9 @@ branding.
 
 ## Public Status
 
-Current public logger native generation: `0.1.0+ba2a66d98eb5`.
+Current public logger native generation: `1.2.1+f50756ebff0d`.
 Current public logger Mojo/Zig source connector generation:
-`0.1.0+ba2a66d98eb5-1107154`.
+`1.2.1+f50756ebff0d-8264bba`.
 Current public native runtime generation: `1.2.1+abde383`.
 Current public JVM connector generation: `1.2.1+abde383-fa29f94`.
 Current public Spring Boot and Quarkus adapter generation: `1.2.1-gfa29f94b59f9`.
@@ -89,10 +90,12 @@ Integrity metadata is checksum-based for this surface: release manifests,
 SBOM, and attestation files are not part of this release surface yet.
 
 The current public logger family keeps native package generation
-`0.1.0+ba2a66d98eb5`. JVM, Python, Node.js, Go, C#, Rust, and the native C/C++
-archive continue to publish against that same logger native package. Mojo and
-Zig now also publish source-first logger connector packages over that native
-generation through connector source commit `1107154`.
+`1.2.1+f50756ebff0d`. JVM, Python, Node.js, Go, C#, Rust, and the native C/C++
+archive publish against that same logger native package, with the JVM Maven
+lane at `1.2.1-gf50756ebff0d`. Mojo and Zig also publish current source
+connector packages over that native generation through connector source commit
+`8264bba`. The published logger package surface now bundles `macOS`, `Linux`,
+and `Windows` logger natives across the binary and source release lanes.
 
 Repository rules:
 
