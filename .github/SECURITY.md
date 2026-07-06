@@ -22,6 +22,10 @@ Instead:
 - use the repository security reporting flow if it is enabled
 - or contact the repository owner privately and clearly mark the report as a
   security issue
+- or contact `gabrielgun1983@gmail.com` directly and clearly mark the report as
+  a security issue
+
+General support contact is listed in [SUPPORT.md](../SUPPORT.md).
 
 ## What To Include
 
