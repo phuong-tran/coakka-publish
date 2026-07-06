@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "jvm",
+  "release_directory": "1.2.1+abde383-fa29f94",
+  "version": "1.2.1-gabde383-fa29f94",
+  "artifact": {
+    "bundled_native_package_version": "1.2.1+abde383",
+    "bundled_native_git_commit": "abde383",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ]
+  },
+  "connector_source_git_commit": "fa29f94"
+}
