@@ -2,6 +2,8 @@
 
 [![public-surface](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml/badge.svg)](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml)
 
+Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
+
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
 Current native runtime refresh note:
