@@ -8,6 +8,9 @@ or release-train coordination, contact:
 Please use the repository issue tracker for normal publish-surface bugs and
 documentation fixes when public discussion is appropriate.
 
+Release feedback, publish-surface bug reports, doc fixes, and small
+sponsorships are all appreciated.
+
 Please use private contact first for:
 
 - security concerns
