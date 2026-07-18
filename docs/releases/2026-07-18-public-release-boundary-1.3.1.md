@@ -38,6 +38,18 @@ documentation commits. If tags are added later, tag artifact source snapshots
 for artifact provenance and tag documentation commits only as release
 documentation boundaries.
 
+## Git Tag Boundary
+
+Annotated release boundary tags:
+
+| Repository | Tag | Peeled target commit |
+| --- | --- | --- |
+| `coakkaCoreNativeDev` | `coakka-runtime-core-v1.3.1-bda2ef5` | `bda2ef53b8b499e6dc27e3d9da51f59800648052` |
+| `coakkaCoreNativeDev` | `coakka-runtime-client-v1.3.1-2215b0f` | `2215b0f542010052c5a263e6e0dc21ea4c30b856` |
+| `coakkaJVMConnector` | `coakka-runtime-connector-v1.3.1-bda2ef5-0a0aa76` | `0a0aa76d0f2fc7fd8eb7d7e2e5702f4070822deb` |
+| `coakka-publish` | `coakka-public-artifacts-v1.3.1` | `f8a70b0295e57b91759567de10b3741bdf315869` |
+| `coakka-samples` | `coakka-samples-runtime-v1.3.1` | `85b2a8ca7b4d5a45a86c620d360362229b76254d` |
+
 The `85b2a8c` samples checkpoint does not change the artifact manifest,
 published archives, Docker Hub tags, or connector/native package generations.
 It clarifies the public first-run path and adds `runtime-client docker-bundle`
