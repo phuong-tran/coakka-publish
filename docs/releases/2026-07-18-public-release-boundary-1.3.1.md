@@ -84,7 +84,10 @@ Verification covered:
 All runtime sample paths reported `version=1.3.1` and runtime git `bda2ef5`.
 The Node.js sample emitted only the existing npm `min-release-age` warning.
 
-Follow-up local verification for the `85b2a8c` onboarding checkpoint covered:
+Follow-up clean-room verification for the `85b2a8c` onboarding checkpoint used
+a fresh public clone without a sibling `coakka-publish` checkout, so CLI and
+Docker bundle artifacts resolved through the public raw GitHub artifact URLs.
+It covered:
 
 - `bash -n run.sh runtime-client/run.sh scripts/sample-metadata.sh scripts/check-artifact-pins.sh scripts/test-artifact-pins.sh`
 - `bash run.sh runtime-client --help`
