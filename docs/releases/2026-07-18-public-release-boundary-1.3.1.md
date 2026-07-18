@@ -14,7 +14,8 @@ sample repository.
 | Runtime non-JVM connectors | `1.3.1+bda2ef5-0a0aa76` | connector source snapshot `0a0aa76`, native core `bda2ef5` |
 | Spring Boot and Quarkus adapters | `1.3.1-g0a0aa76` | connector source snapshot `0a0aa76` |
 | CoAkka Runtime Client | `1.3.1+2215b0f` | `coakkaCoreNativeDev` client source snapshot `2215b0f` |
-| Public samples | `450ed5d` | `coakka-samples` commit `450ed5d` |
+| Public samples verified boundary | `450ed5d` | `coakka-samples` commit `450ed5d` |
+| Public samples onboarding checkpoint | `85b2a8c` | docs and runner alias checkpoint over the same published artifacts |
 
 The public artifact manifest checksum for this boundary is:
 
@@ -27,14 +28,21 @@ The public artifact manifest checksum for this boundary is:
 | Repository | Commit | Role |
 | --- | --- | --- |
 | `coakkaCoreNativeDev` | `7c17afc2` | release tooling, docs ledger, and clean-room verification evidence |
-| `coakka-publish` | `2d9f809` | public artifact surface and release documentation |
+| `coakka-publish` | `b824bc1` | public artifact surface and release documentation boundary |
 | `coakkaJVMConnector` | `feaee7b` | refreshed connector source/package pins over runtime native `1.3.1+bda2ef5` |
 | `coakka-samples` | `450ed5d` | public sample repository defaulting the Node.js/Python container path to Docker Hub images |
+| `coakka-samples` | `85b2a8c` | post-boundary onboarding docs and `runtime-client docker-bundle` compatibility alias |
 
 The artifact source snapshots are intentionally not all the same as the latest
 documentation commits. If tags are added later, tag artifact source snapshots
 for artifact provenance and tag documentation commits only as release
 documentation boundaries.
+
+The `85b2a8c` samples checkpoint does not change the artifact manifest,
+published archives, Docker Hub tags, or connector/native package generations.
+It clarifies the public first-run path and adds `runtime-client docker-bundle`
+as the preferred sample command while retaining the existing `docker-demo`
+artifact layout and runner alias for compatibility.
 
 ## Docker Hub Boundary
 
@@ -75,3 +83,15 @@ Verification covered:
 
 All runtime sample paths reported `version=1.3.1` and runtime git `bda2ef5`.
 The Node.js sample emitted only the existing npm `min-release-age` warning.
+
+Follow-up local verification for the `85b2a8c` onboarding checkpoint covered:
+
+- `bash -n run.sh runtime-client/run.sh scripts/sample-metadata.sh scripts/check-artifact-pins.sh scripts/test-artifact-pins.sh`
+- `bash run.sh runtime-client --help`
+- `bash run.sh list`
+- stale public wording scan for early/demo/old runtime version patterns
+- `bash run.sh runtime-client`
+- `bash scripts/test-artifact-pins.sh`
+- `COAKKA_PIN_CHECK_NETWORK=1 bash scripts/check-artifact-pins.sh`
+- `bash run.sh containers node-python config`
+- `bash run.sh runtime-client docker-bundle`
