@@ -20,6 +20,7 @@ sample repository.
 | Public samples walkthrough checkpoint | `a614565` | docs embed the runtime-client animated CLI walkthrough GIF |
 | Public samples onboarding polish | `d89701e` | docs clarify `coakka-client` command naming, public runtime-client docs link, and Docker bundle output shape |
 | Public manifest provenance checkpoint | `25179d6` manifest checksum prefix | manifest comments make Mojo/Zig source-package source commits explicit without changing artifact bytes |
+| Public runtime-client Docker Hub demo image | `ab5c612` | sample image checkpoint for the prebuilt `coakka-client` walkthrough image |
 
 The public artifact manifest checksum for this boundary is:
 
@@ -44,6 +45,7 @@ repository paths while verifying the same manifest SHA256 values.
 | `coakka-samples` | `85b2a8c` | post-boundary onboarding docs and `runtime-client docker-bundle` compatibility alias |
 | `coakka-samples` | `53ea3a6` | public docs point direct runtime-client downloads at GitHub Release assets |
 | `coakka-samples` | `a614565` | public docs embed the runtime-client animated CLI walkthrough GIF |
+| `coakka-samples` | `ab5c612` | public Docker Hub image starts native runtime services and drives them with `coakka-client` |
 
 The artifact source snapshots are intentionally not all the same as the latest
 documentation commits. If tags are added later, tag artifact source snapshots
@@ -73,6 +75,11 @@ publish checkpoint are documentation-only follow-ups after GitHub Release
 assets were attached. They do not change artifact provenance, checksums,
 Docker Hub tags, or release package generations.
 
+The `ab5c612` samples checkpoint adds the prebuilt Docker Hub
+runtime-client demo image. It does not change the canonical archive manifest
+or package bytes; it packages the already published Linux Docker bundle into a
+one-command sample image.
+
 The manifest provenance checkpoint updates only comment lines in
 `artifacts/public-artifacts.tsv` so public Mojo/Zig source-package rows expose
 their connector source commits at the manifest boundary. Artifact files,
@@ -87,6 +94,7 @@ Published multi-arch Docker Hub tags:
 docker.io/gabrielgun1983/runtime-base:1.3.1-bda2ef5-remote
 docker.io/gabrielgun1983/sample-python-store:1.3.1-bda2ef5-0a0aa76-remote
 docker.io/gabrielgun1983/sample-node-web:1.3.1-bda2ef5-0a0aa76-remote
+docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote
 ```
 
 Manifest list digests:
@@ -95,9 +103,14 @@ Manifest list digests:
 runtime-base       sha256:35952461da183b3bb3016d492bdc0459acc8498d022ee48659410982baa3c41c
 sample-python-store sha256:7449360692f3248339dbfd0bedb024f03eea8c402ca2e2f06d0e08c608824bcc
 sample-node-web     sha256:292148457d64c896b35291a42c51be08d326b82cd735cc883cc915ea1cb3b22f
+coakka-runtime-client-demo sha256:ad00c5f990f1d484e3a83deab18f4cac4175d5d41eccb9d27872f342a22e8fe3
 ```
 
 Each image tag was published for `linux/amd64` and `linux/arm64`.
+The runtime-client demo image is a sample convenience image that starts two
+native runtime service processes and drives them with the packaged
+`coakka-client`; the GitHub Release archives remain the canonical binary
+download surface.
 
 ## Verification Boundary
 
@@ -133,3 +146,12 @@ It covered:
 - `COAKKA_PIN_CHECK_NETWORK=1 bash scripts/check-artifact-pins.sh`
 - `bash run.sh containers node-python config`
 - `bash run.sh runtime-client docker-bundle`
+
+Follow-up verification for the `ab5c612` runtime-client Docker Hub image
+checkpoint covered:
+
+- `docker manifest inspect docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`
+- `docker run --rm docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`
+- `docker run --rm docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote client --help`
+- `bash run.sh runtime-client dockerhub-demo`
+- `bash run.sh runtime-client dockerhub-demo client --help`

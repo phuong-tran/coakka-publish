@@ -74,6 +74,8 @@ Current public Python, Node.js, Go, C#, and Rust connector generation:
 Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
+Current public coakka-client Docker Hub demo image:
+`docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -87,6 +89,7 @@ Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 | coakka-client native CLI | public | `cli/releases/` |
 | coakka-client Docker Linux bundle | public Linux bundles | `demo/coakka-client/releases/` |
+| coakka-client Docker Hub demo image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote` |
 
 The current root native runtime package is `1.3.1+bda2ef5`. The published JVM
 runtime jar is refreshed over that native package as
@@ -151,6 +154,8 @@ Current published lanes:
 - runtime source connector packages under `runtime/{mojo,zig}/releases/`
 - coakka-client native CLI archives under `cli/releases/`
 - coakka-client Docker Linux bundles under `demo/coakka-client/releases/`
+- coakka-client Docker Hub demo image at
+  `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`
 
 ## coakka-client Public Artifacts
 
@@ -170,6 +175,16 @@ Package contents:
 `call`/`ask`, and bounded shell script mode over the current public TCP frame
 profile. It is not the dashboard, inspect surface, topology authority, or a
 business schema registry.
+
+The runtime-client Docker Hub demo image is:
+
+```text
+docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote
+```
+
+It starts two native runtime service processes and drives them with the
+packaged `coakka-client`. This image is a sample convenience path; the
+canonical binary archives and checksums remain in the release artifacts above.
 
 Release note:
 [`docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md`](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md)
