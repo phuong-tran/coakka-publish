@@ -13,6 +13,9 @@ Current native runtime refresh note:
 Current coakka-client release note:
 [2026-07-18 coakka-client 1.3.1 2215b0f](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md).
 
+Current public release boundary:
+[2026-07-18 public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
+
 Current language connector release notes:
 [2026-07-06 logger 1.2.1 Windows parity 8264bba](docs/releases/2026-07-06-logger-1.2.1-8264bba.md),
 [2026-07-05 logger Mojo and Zig source refresh 1107154](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),

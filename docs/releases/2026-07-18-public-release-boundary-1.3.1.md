@@ -1,0 +1,77 @@
+# 2026-07-18 Public Release Boundary 1.3.1
+
+This note records the public release boundary for the current CoAkka Runtime
+`1.3.1` train. It is the provenance checkpoint for the artifact repository,
+the runtime source repository, the runtime connector repository, and the public
+sample repository.
+
+## Public Artifact Boundary
+
+| Surface | Public generation | Source or package snapshot |
+| --- | --- | --- |
+| Runtime native core | `1.3.1+bda2ef5` | `coakkaCoreNativeDev` source snapshot `bda2ef5` |
+| Runtime JVM connector | `1.3.1-gbda2ef5-0a0aa76` | connector source snapshot `0a0aa76`, native core `bda2ef5` |
+| Runtime non-JVM connectors | `1.3.1+bda2ef5-0a0aa76` | connector source snapshot `0a0aa76`, native core `bda2ef5` |
+| Spring Boot and Quarkus adapters | `1.3.1-g0a0aa76` | connector source snapshot `0a0aa76` |
+| CoAkka Runtime Client | `1.3.1+2215b0f` | `coakkaCoreNativeDev` client source snapshot `2215b0f` |
+| Public samples | `450ed5d` | `coakka-samples` commit `450ed5d` |
+
+The public artifact manifest checksum for this boundary is:
+
+```text
+9447f42cfc136ca19f518c94ca777192f8062332a63dfeff95be19a2a2f51ce7  artifacts/public-artifacts.tsv
+```
+
+## Repository Boundary
+
+| Repository | Commit | Role |
+| --- | --- | --- |
+| `coakkaCoreNativeDev` | `7c17afc2` | release tooling, docs ledger, and clean-room verification evidence |
+| `coakka-publish` | `2d9f809` | public artifact surface and release documentation |
+| `coakkaJVMConnector` | `feaee7b` | refreshed connector source/package pins over runtime native `1.3.1+bda2ef5` |
+| `coakka-samples` | `450ed5d` | public sample repository defaulting the Node.js/Python container path to Docker Hub images |
+
+The artifact source snapshots are intentionally not all the same as the latest
+documentation commits. If tags are added later, tag artifact source snapshots
+for artifact provenance and tag documentation commits only as release
+documentation boundaries.
+
+## Docker Hub Boundary
+
+Published multi-arch Docker Hub tags:
+
+```text
+docker.io/gabrielgun1983/runtime-base:1.3.1-bda2ef5-remote
+docker.io/gabrielgun1983/sample-python-store:1.3.1-bda2ef5-0a0aa76-remote
+docker.io/gabrielgun1983/sample-node-web:1.3.1-bda2ef5-0a0aa76-remote
+```
+
+Manifest list digests:
+
+```text
+runtime-base       sha256:35952461da183b3bb3016d492bdc0459acc8498d022ee48659410982baa3c41c
+sample-python-store sha256:7449360692f3248339dbfd0bedb024f03eea8c402ca2e2f06d0e08c608824bcc
+sample-node-web     sha256:292148457d64c896b35291a42c51be08d326b82cd735cc883cc915ea1cb3b22f
+```
+
+Each image tag was published for `linux/amd64` and `linux/arm64`.
+
+## Verification Boundary
+
+Verification covered:
+
+- `scripts/verify-public-surface.sh` in `coakka-publish`
+- Docker Hub manifest inspection for the three published image tags
+- clean-room `coakka-samples` clone at `450ed5d`
+- `bash run.sh containers node-python config`
+- `bash run.sh containers node-python pull`
+- `COAKKA_SAMPLE_EXPECT_RUNTIME_GIT_COMMIT=bda2ef5 bash run.sh containers node-python smoke`
+- `bash run.sh runtime-client`
+- `COAKKA_PIN_CHECK_NETWORK=1 bash scripts/check-artifact-pins.sh`
+- `bash run.sh runtime native basic`
+- `bash run.sh runtime python basic`
+- `bash run.sh runtime node basic`
+- `bash run.sh runtime go basic`
+
+All runtime sample paths reported `version=1.3.1` and runtime git `bda2ef5`.
+The Node.js sample emitted only the existing npm `min-release-age` warning.
