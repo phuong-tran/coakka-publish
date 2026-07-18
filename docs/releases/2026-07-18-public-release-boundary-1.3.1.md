@@ -17,6 +17,7 @@ sample repository.
 | Public samples verified boundary | `450ed5d` | `coakka-samples` commit `450ed5d` |
 | Public samples onboarding checkpoint | `85b2a8c` | docs and runner alias checkpoint over the same published artifacts |
 | Public samples release-link checkpoint | `53ea3a6` | docs point direct downloads at the attached GitHub Release assets |
+| Public samples walkthrough checkpoint | `a614565` | docs embed the runtime-client animated CLI walkthrough GIF |
 
 The public artifact manifest checksum for this boundary is:
 
@@ -40,6 +41,7 @@ repository paths while verifying the same manifest SHA256 values.
 | `coakka-samples` | `450ed5d` | public sample repository defaulting the Node.js/Python container path to Docker Hub images |
 | `coakka-samples` | `85b2a8c` | post-boundary onboarding docs and `runtime-client docker-bundle` compatibility alias |
 | `coakka-samples` | `53ea3a6` | public docs point direct runtime-client downloads at GitHub Release assets |
+| `coakka-samples` | `a614565` | public docs embed the runtime-client animated CLI walkthrough GIF |
 
 The artifact source snapshots are intentionally not all the same as the latest
 documentation commits. If tags are added later, tag artifact source snapshots
@@ -64,10 +66,10 @@ It clarifies the public first-run path and adds `runtime-client docker-bundle`
 as the preferred sample command while retaining the existing `docker-demo`
 artifact layout and runner alias for compatibility.
 
-The `53ea3a6` samples checkpoint and `64589b4` publish checkpoint are
-documentation-only follow-ups after GitHub Release assets were attached. They
-do not change artifact provenance, checksums, Docker Hub tags, or release
-package generations.
+The `53ea3a6` and `a614565` samples checkpoints and `64589b4` publish
+checkpoint are documentation-only follow-ups after GitHub Release assets were
+attached. They do not change artifact provenance, checksums, Docker Hub tags,
+or release package generations.
 
 ## Docker Hub Boundary
 
