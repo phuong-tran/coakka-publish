@@ -25,7 +25,8 @@ Instead:
 - or contact `gabrielgun1983@gmail.com` directly and clearly mark the report as
   a security issue
 
-General support contact is listed in [SUPPORT.md](../SUPPORT.md).
+General support contact is listed in
+[SUPPORT.md](https://github.com/phuong-tran/coakka-publish/blob/main/SUPPORT.md).
 
 ## What To Include
 
