@@ -7,6 +7,9 @@ Support: [SUPPORT.md](SUPPORT.md)
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
+Current GitHub Release page with attached public artifacts:
+[CoAkka Public Artifacts 1.3.1](https://github.com/phuong-tran/coakka-publish/releases/tag/coakka-public-artifacts-v1.3.1).
+
 Current native runtime refresh note:
 [2026-07-18 runtime native 1.3.1 bda2ef5](docs/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md).
 
@@ -99,10 +102,11 @@ surfaces in the current train. The current published package surface bundles
 macOS, Linux, and Windows runtime natives. Linux remains the normal deployment
 path for release, soak, and operator-readiness claims.
 
-Consumer-facing downloads are listed in `artifacts/public-artifacts.tsv`.
-Integrity metadata is checksum-based for this surface: release manifests,
-`SHA256SUMS`, Maven checksum sidecars, and the root artifact manifest. Signature,
-SBOM, and attestation files are not part of this release surface yet.
+Consumer-facing downloads are attached to the GitHub Release page and listed
+in `artifacts/public-artifacts.tsv`. Integrity metadata is checksum-based for
+this surface: release manifests, `SHA256SUMS`, Maven checksum sidecars, and
+the root artifact manifest. Signature, SBOM, and attestation files are not part
+of this release surface yet.
 
 The current public logger family keeps native package generation
 `1.2.1+f50756ebff0d`. JVM, Python, Node.js, Go, C#, Rust, and the native C/C++
