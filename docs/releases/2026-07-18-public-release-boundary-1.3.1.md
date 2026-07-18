@@ -18,6 +18,7 @@ sample repository.
 | Public samples onboarding checkpoint | `85b2a8c` | docs and runner alias checkpoint over the same published artifacts |
 | Public samples release-link checkpoint | `53ea3a6` | docs point direct downloads at the attached GitHub Release assets |
 | Public samples walkthrough checkpoint | `a614565` | docs embed the runtime-client animated CLI walkthrough GIF |
+| Public samples onboarding polish | `d89701e` | docs clarify `coakka-client` command naming, public runtime-client docs link, and Docker bundle output shape |
 | Public manifest provenance checkpoint | `25179d6` manifest checksum prefix | manifest comments make Mojo/Zig source-package source commits explicit without changing artifact bytes |
 
 The public artifact manifest checksum for this boundary is:
@@ -67,10 +68,10 @@ It clarifies the public first-run path and adds `runtime-client docker-bundle`
 as the preferred sample command while retaining the existing `docker-demo`
 artifact layout and runner alias for compatibility.
 
-The `53ea3a6` and `a614565` samples checkpoints and `64589b4` publish
-checkpoint are documentation-only follow-ups after GitHub Release assets were
-attached. They do not change artifact provenance, checksums, Docker Hub tags,
-or release package generations.
+The `53ea3a6`, `a614565`, and `d89701e` samples checkpoints and `64589b4`
+publish checkpoint are documentation-only follow-ups after GitHub Release
+assets were attached. They do not change artifact provenance, checksums,
+Docker Hub tags, or release package generations.
 
 The manifest provenance checkpoint updates only comment lines in
 `artifacts/public-artifacts.tsv` so public Mojo/Zig source-package rows expose
