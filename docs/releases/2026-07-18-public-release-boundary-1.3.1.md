@@ -16,6 +16,7 @@ sample repository.
 | CoAkka Runtime Client | `1.3.1+2215b0f` | `coakkaCoreNativeDev` client source snapshot `2215b0f` |
 | Public samples verified boundary | `450ed5d` | `coakka-samples` commit `450ed5d` |
 | Public samples onboarding checkpoint | `85b2a8c` | docs and runner alias checkpoint over the same published artifacts |
+| Public samples release-link checkpoint | `53ea3a6` | docs point direct downloads at the attached GitHub Release assets |
 
 The public artifact manifest checksum for this boundary is:
 
@@ -34,9 +35,11 @@ repository paths while verifying the same manifest SHA256 values.
 | --- | --- | --- |
 | `coakkaCoreNativeDev` | `7c17afc2` | release tooling, docs ledger, and clean-room verification evidence |
 | `coakka-publish` | `b824bc1` | public artifact surface and release documentation boundary |
+| `coakka-publish` | `64589b4` | README points users at the GitHub Release page with attached artifacts |
 | `coakkaJVMConnector` | `feaee7b` | refreshed connector source/package pins over runtime native `1.3.1+bda2ef5` |
 | `coakka-samples` | `450ed5d` | public sample repository defaulting the Node.js/Python container path to Docker Hub images |
 | `coakka-samples` | `85b2a8c` | post-boundary onboarding docs and `runtime-client docker-bundle` compatibility alias |
+| `coakka-samples` | `53ea3a6` | public docs point direct runtime-client downloads at GitHub Release assets |
 
 The artifact source snapshots are intentionally not all the same as the latest
 documentation commits. If tags are added later, tag artifact source snapshots
@@ -60,6 +63,11 @@ published archives, Docker Hub tags, or connector/native package generations.
 It clarifies the public first-run path and adds `runtime-client docker-bundle`
 as the preferred sample command while retaining the existing `docker-demo`
 artifact layout and runner alias for compatibility.
+
+The `53ea3a6` samples checkpoint and `64589b4` publish checkpoint are
+documentation-only follow-ups after GitHub Release assets were attached. They
+do not change artifact provenance, checksums, Docker Hub tags, or release
+package generations.
 
 ## Docker Hub Boundary
 
