@@ -106,7 +106,9 @@ Consumer-facing downloads are attached to the GitHub Release page and listed
 in `artifacts/public-artifacts.tsv`. Integrity metadata is checksum-based for
 this surface: release manifests, `SHA256SUMS`, Maven checksum sidecars, and
 the root artifact manifest. Signature, SBOM, and attestation files are not part
-of this release surface yet.
+of this release surface yet. The manifest also keeps explicit provenance
+comments for public Mojo/Zig source-package lanes so the connector source
+commit is visible at the package list boundary.
 
 The current public logger family keeps native package generation
 `1.2.1+f50756ebff0d`. JVM, Python, Node.js, Go, C#, Rust, and the native C/C++

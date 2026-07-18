@@ -22,6 +22,8 @@ manifest so sample metadata and publish contents do not drift silently. The
 manifest is intentionally limited to the current public release surface:
 `logger/*/releases/*`, `runtime/*/releases/*`, `cli/releases/*`,
 `demo/coakka-client/releases/*`, and selected Maven jars under `maven/coakka/`.
+Comment lines may record provenance for source-package lanes when the source
+commit is part of the consumer-facing release identity.
 
 Runtime language artifacts must pass
 `scripts/verify-runtime-intake-artifact.py` before they are copied into a

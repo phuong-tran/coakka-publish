@@ -18,11 +18,12 @@ sample repository.
 | Public samples onboarding checkpoint | `85b2a8c` | docs and runner alias checkpoint over the same published artifacts |
 | Public samples release-link checkpoint | `53ea3a6` | docs point direct downloads at the attached GitHub Release assets |
 | Public samples walkthrough checkpoint | `a614565` | docs embed the runtime-client animated CLI walkthrough GIF |
+| Public manifest provenance checkpoint | `25179d6` manifest checksum prefix | manifest comments make Mojo/Zig source-package source commits explicit without changing artifact bytes |
 
 The public artifact manifest checksum for this boundary is:
 
 ```text
-9447f42cfc136ca19f518c94ca777192f8062332a63dfeff95be19a2a2f51ce7  artifacts/public-artifacts.tsv
+25179d688e700441a056ac028f4bcbbdb51cc44863429c4e6e5924bc12c9be37  artifacts/public-artifacts.tsv
 ```
 
 The GitHub Release page for `coakka-public-artifacts-v1.3.1` attaches all 27
@@ -70,6 +71,12 @@ The `53ea3a6` and `a614565` samples checkpoints and `64589b4` publish
 checkpoint are documentation-only follow-ups after GitHub Release assets were
 attached. They do not change artifact provenance, checksums, Docker Hub tags,
 or release package generations.
+
+The manifest provenance checkpoint updates only comment lines in
+`artifacts/public-artifacts.tsv` so public Mojo/Zig source-package rows expose
+their connector source commits at the manifest boundary. Artifact files,
+per-artifact SHA256 values, source tags, Docker Hub tags, and package
+generations are unchanged.
 
 ## Docker Hub Boundary
 
