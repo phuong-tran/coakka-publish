@@ -15,6 +15,9 @@ extern "C" {
  *
  * For endpoints marked COAKKA_V2_ENDPOINT_FLAG_LOCAL, host/port are diagnostic
  * metadata only; the runtime does not bind or listen on that socket.
+ *
+ * Endpoint host must be concrete and endpoint port must be non-zero in control
+ * snapshots accepted by the current runtime.
  */
 typedef struct coakka_v2_endpoint_t {
     const char *host;
@@ -50,6 +53,15 @@ enum {
 /**
  * Target-to-endpoints route-table entry.
  *
+ * `target` must be present and non-empty. It is the runtime routing key, not a
+ * display label or business schema name. Targets must be unique within one
+ * control snapshot.
+ * `strategy` must be one declared route resolution strategy.
+ * `endpoint_count` must be non-zero. To remove a target, omit the route from a
+ * newer full snapshot instead of publishing an empty route entry.
+ * Unknown route or endpoint flag bits are rejected by the current runtime
+ * instead of being preserved into topology/catalog read-models.
+ *
  * The caller owns every string and endpoint array for the duration of the
  * apply call. The runtime copies the snapshot before returning.
  */
@@ -78,6 +90,22 @@ typedef struct coakka_v2_control_snapshot_t {
 coakka_v2_status_t coakka_v2_runtime_apply_control_snapshot(
     coakka_v2_runtime_t *rt,
     const coakka_v2_control_snapshot_t *snapshot
+);
+
+/**
+ * Applies a route snapshot only after the caller-owned auth context satisfies
+ * the runtime-owned control access policy.
+ *
+ * A valid but unauthorized request returns COAKKA_V2_OK with out_result set to
+ * UNAUTHORIZED or FORBIDDEN and does not mutate topology. If authorization is
+ * accepted, out_result is OK and the returned status is the underlying control
+ * apply status.
+ */
+coakka_v2_status_t coakka_v2_runtime_apply_control_snapshot_with_auth_context(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_context_t *context,
+    const coakka_v2_control_snapshot_t *snapshot,
+    coakka_v2_runtime_auth_result_t *out_result
 );
 
 /** Applies a route snapshot and overload policy as one control-plane update. */

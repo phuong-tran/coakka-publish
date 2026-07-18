@@ -1,0 +1,151 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "coakka.quarkus",
+    "module": "coakka-quarkus-extension",
+    "version": "1.3.1-g0a0aa76",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "io.quarkus.platform",
+          "module": "quarkus-bom",
+          "version": {
+            "requires": "3.35.2"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "coakka.v2",
+          "module": "coakka-jvm-native-runtime-v2",
+          "version": {
+            "requires": "1.3.1-gbda2ef5-0a0aa76"
+          }
+        },
+        {
+          "group": "io.quarkus",
+          "module": "quarkus-arc"
+        },
+        {
+          "group": "io.quarkus",
+          "module": "quarkus-jackson"
+        },
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-databind"
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-quarkus-extension-1.3.1-g0a0aa76.jar",
+          "url": "coakka-quarkus-extension-1.3.1-g0a0aa76.jar",
+          "size": 9509,
+          "sha512": "20e834f36834011b06bbe0a6d318966b3c32f8b9c287ec1d8d29167d7f928227db75f894abb810b06b1209c6b644886a9a9ef92c290ec3f4a9da90aeb68637d8",
+          "sha256": "fb9c7e179bf7d3695c8b30059119be93fdf36ca942b0ae89bd05e8481f599326",
+          "sha1": "75d708d3e5d72a31ae15b73f060b69424bddf58e",
+          "md5": "9b4e53bb519d9aeec9d128e78ce89122"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "io.quarkus.platform",
+          "module": "quarkus-bom",
+          "version": {
+            "requires": "3.35.2"
+          },
+          "attributes": {
+            "org.gradle.category": "platform"
+          },
+          "endorseStrictVersions": true
+        },
+        {
+          "group": "coakka.v2",
+          "module": "coakka-jvm-native-runtime-v2",
+          "version": {
+            "requires": "1.3.1-gbda2ef5-0a0aa76"
+          }
+        },
+        {
+          "group": "io.quarkus",
+          "module": "quarkus-arc"
+        },
+        {
+          "group": "io.quarkus",
+          "module": "quarkus-jackson"
+        },
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-databind"
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-quarkus-extension-1.3.1-g0a0aa76.jar",
+          "url": "coakka-quarkus-extension-1.3.1-g0a0aa76.jar",
+          "size": 9509,
+          "sha512": "20e834f36834011b06bbe0a6d318966b3c32f8b9c287ec1d8d29167d7f928227db75f894abb810b06b1209c6b644886a9a9ef92c290ec3f4a9da90aeb68637d8",
+          "sha256": "fb9c7e179bf7d3695c8b30059119be93fdf36ca942b0ae89bd05e8481f599326",
+          "sha1": "75d708d3e5d72a31ae15b73f060b69424bddf58e",
+          "md5": "9b4e53bb519d9aeec9d128e78ce89122"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "coakka-quarkus-extension-1.3.1-g0a0aa76-sources.jar",
+          "url": "coakka-quarkus-extension-1.3.1-g0a0aa76-sources.jar",
+          "size": 5110,
+          "sha512": "e4cc5d8c196f6d1ce2f0329b001023494b82de037fc538399d49bc8a580d763d2fa6580c1269f8725c775795f2bd1ebe6677b54b39d2c758338dcf3fffea025c",
+          "sha256": "df23a1f08d87eef6944f45bfca6a5e3f62c46035872755b7d0d9663e40e74962",
+          "sha1": "c62d715a944c2e8ce87a497575967b2c7b8be25f",
+          "md5": "d98bcfeeac12753f90c4dfba7ae81edc"
+        }
+      ]
+    }
+  ]
+}

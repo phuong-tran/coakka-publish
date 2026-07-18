@@ -8,7 +8,7 @@ Support: [SUPPORT.md](SUPPORT.md)
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
 Current native runtime refresh note:
-[2026-07-06 runtime native 1.2.1 abde383](docs/releases/2026-07-06-runtime-native-1.2.1-abde383.md).
+[2026-07-18 runtime native 1.3.1 bda2ef5](docs/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md).
 
 Current coakka-client release note:
 [2026-07-18 coakka-client 1.3.1 2215b0f](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md).
@@ -16,11 +16,14 @@ Current coakka-client release note:
 Current language connector release notes:
 [2026-07-06 logger 1.2.1 Windows parity 8264bba](docs/releases/2026-07-06-logger-1.2.1-8264bba.md),
 [2026-07-05 logger Mojo and Zig source refresh 1107154](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
-[2026-07-06 runtime JVM 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md),
-[2026-07-06 runtime JVM adapters 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-jvm-adapters-1.2.1-fa29f94.md),
-[2026-07-06 runtime non-JVM 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-non-jvm-1.2.1-fa29f94.md).
+[2026-07-18 runtime JVM 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md),
+[2026-07-18 runtime JVM adapters 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
+[2026-07-18 runtime non-JVM 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md).
 
 Historical runtime connector release notes:
+[2026-07-06 runtime JVM 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md),
+[2026-07-06 runtime JVM adapters 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-jvm-adapters-1.2.1-fa29f94.md),
+[2026-07-06 runtime non-JVM 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-non-jvm-1.2.1-fa29f94.md),
 [2026-07-06 runtime JVM adapters b8ecfae refresh 2d085e5](docs/releases/2026-07-06-runtime-jvm-adapters-b8ecfae-2d085e5.md),
 [2026-07-06 runtime JVM b8ecfae refresh 2d085e5](docs/releases/2026-07-06-runtime-jvm-b8ecfae-2d085e5.md),
 [2026-07-06 runtime non-JVM b8ecfae refresh 2d085e5](docs/releases/2026-07-06-runtime-non-jvm-b8ecfae-2d085e5.md),
@@ -30,7 +33,7 @@ and
 [2026-05-21 runtime connector 5ab812f](docs/releases/2026-05-21-runtime-connector-5ab812f.md).
 
 Current source connector release note:
-[2026-07-06 runtime non-JVM 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-non-jvm-1.2.1-fa29f94.md).
+[2026-07-18 runtime non-JVM 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md).
 
 ## License And Trademark
 
@@ -57,12 +60,12 @@ branding.
 Current public logger native generation: `1.2.1+f50756ebff0d`.
 Current public logger Mojo/Zig source connector generation:
 `1.2.1+f50756ebff0d-8264bba`.
-Current public native runtime generation: `1.2.1+abde383`.
-Current public JVM connector generation: `1.2.1+abde383-fa29f94`.
-Current public Spring Boot and Quarkus adapter generation: `1.2.1-gfa29f94b59f9`.
+Current public native runtime generation: `1.3.1+bda2ef5`.
+Current public JVM connector generation: `1.3.1+bda2ef5-0a0aa76`.
+Current public Spring Boot and Quarkus adapter generation: `1.3.1-g0a0aa76`.
 Current public Python, Node.js, Go, C#, and Rust connector generation:
-`1.2.1+abde383-fa29f94`.
-Current public Mojo/Zig source connector generation: `1.2.1+abde383-fa29f94`.
+`1.3.1+bda2ef5-0a0aa76`.
+Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker demo generation: `1.3.1+2215b0f`.
 
@@ -79,15 +82,14 @@ Current public coakka-client Docker demo generation: `1.3.1+2215b0f`.
 | coakka-client native CLI | public | `cli/releases/` |
 | coakka-client Docker demo | public demo bundles | `demo/coakka-client/releases/` |
 
-The current root native runtime package is `1.2.1+abde383`. The published JVM
+The current root native runtime package is `1.3.1+bda2ef5`. The published JVM
 runtime jar is refreshed over that native package as
-`1.2.1-gabde383-fa29f94`. Published Spring Boot and Quarkus adapters are
-rebuilt as `1.2.1-gfa29f94b59f9` over that JVM runtime. Python, Node.js, Go,
-C#, Rust, Mojo, and Zig also now publish against the same
-`1.2.1+abde383` native package through connector source commit `fa29f94`. Do
-not mix language or framework runtime packages from another native package
-generation unless a release note explicitly declares that combination
-compatible.
+`1.3.1-gbda2ef5-0a0aa76`. Published Spring Boot and Quarkus adapters are
+rebuilt as `1.3.1-g0a0aa76` over that JVM runtime. Python, Node.js, Go, C#,
+Rust, Mojo, and Zig also publish against the same `1.3.1+bda2ef5` native
+package through connector source commit `0a0aa76`. Do not mix language or
+framework runtime packages from another native package generation unless a
+release note explicitly declares that combination compatible.
 
 For development and integration work, macOS and Windows are both supported host
 surfaces in the current train. The current published package surface bundles
@@ -165,7 +167,7 @@ Release note:
 
 ## Runtime v2 Public Artifacts
 
-Core source snapshot: `abde383`
+Core source snapshot: `bda2ef5`
 
 Package contents:
 
@@ -180,7 +182,7 @@ Package contents:
 - `native/windows-aarch64/libcoakka_runtime_v2.dll`
 - `native/windows-x86_64/libcoakka_runtime_v2.dll`
 - `SHA256SUMS`
-- `runtime/native/releases/1.2.1+abde383/coakka-runtime-native-v2-1.2.1.tar.gz`
+- `runtime/native/releases/1.3.1+bda2ef5/coakka-runtime-native-v2-1.3.1.tar.gz`
 
 The staged native libraries include the runtime C ABI and scanner-clean
 platform libraries for the public artifact surface. The host-facing routing
@@ -188,22 +190,22 @@ contract remains the same across profiles: targets, route generations,
 request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
-Runtime JVM now uses the `1.2.1-gabde383-fa29f94` connector refresh over native
-package `1.2.1+abde383`. Spring Boot and Quarkus adapters now use
-`1.2.1-gfa29f94b59f9` over that JVM runtime. Embedded-native coverage in the
+Runtime JVM now uses the `1.3.1-gbda2ef5-0a0aa76` connector refresh over native
+package `1.3.1+bda2ef5`. Spring Boot and Quarkus adapters now use
+`1.3.1-g0a0aa76` over that JVM runtime. Embedded-native coverage in the
 published JVM jar now includes `macos-aarch64`, `linux-aarch64`,
 `linux-x86_64`, `windows-aarch64`, and `windows-x86_64`. Python, Node.js, Go,
-C#, Rust, Mojo, and Zig also publish against `1.2.1+abde383` through release
-directory `1.2.1+abde383-fa29f94`. Each release directory has its own manifest
+C#, Rust, Mojo, and Zig also publish against `1.3.1+bda2ef5` through release
+directory `1.3.1+bda2ef5-0a0aa76`. Each release directory has its own manifest
 and checksums.
 
 Native refresh note:
-[`docs/releases/2026-07-06-runtime-native-1.2.1-abde383.md`](docs/releases/2026-07-06-runtime-native-1.2.1-abde383.md)
+[`docs/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md`](docs/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md)
 
 Language connector release notes:
-[`docs/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md`](docs/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md),
-[`docs/releases/2026-07-06-runtime-jvm-adapters-1.2.1-fa29f94.md`](docs/releases/2026-07-06-runtime-jvm-adapters-1.2.1-fa29f94.md),
-[`docs/releases/2026-07-06-runtime-non-jvm-1.2.1-fa29f94.md`](docs/releases/2026-07-06-runtime-non-jvm-1.2.1-fa29f94.md)
+[`docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md),
+[`docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
+[`docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md)
 
 Historical runtime connector release notes:
 [`docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md`](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
@@ -213,7 +215,7 @@ and
 [`docs/releases/2026-05-17-runtime-94a5729.md`](docs/releases/2026-05-17-runtime-94a5729.md)
 
 Source connector release note:
-[`docs/releases/2026-07-06-runtime-non-jvm-1.2.1-fa29f94.md`](docs/releases/2026-07-06-runtime-non-jvm-1.2.1-fa29f94.md)
+[`docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md)
 
 ## Runtime Compatibility Matrix
 
@@ -221,17 +223,17 @@ These artifacts are the current public runtime set:
 
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/1.2.1+abde383/coakka-runtime-native-v2-1.2.1.tar.gz` | `1.2.1+abde383` | `1.2.1+abde383` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.2.1-gabde383-fa29f94` | `1.2.1+abde383` |
-| Python runtime | `coakka_v2_connector` wheel | `1.2.1` from `1.2.1+abde383-fa29f94` | `1.2.1+abde383` |
-| Node.js runtime | `coakka-v2-connector-node` package | `1.2.1` from `1.2.1+abde383-fa29f94` | `1.2.1+abde383` |
-| Go runtime | `coakka-v2-connector-go` source package | `1.2.1` from `1.2.1+abde383-fa29f94` | `1.2.1+abde383` |
-| C# runtime | `CoAkka.Runtime` NuGet package | `1.2.1` from `1.2.1+abde383-fa29f94` | `1.2.1+abde383` |
-| Rust runtime | `coakka-runtime-rs` package | `1.2.1-spike` from `1.2.1+abde383-fa29f94` | `1.2.1+abde383` |
-| Mojo runtime | `runtime/mojo/releases/1.2.1+abde383-fa29f94/coakka-runtime-mojo-1.2.1-source.tar.gz` | `1.2.1-source` | `1.2.1+abde383` |
-| Zig runtime | `runtime/zig/releases/1.2.1+abde383-fa29f94/coakka-runtime-zig-1.2.1-source.tar.gz` | `1.2.1-source` | `1.2.1+abde383` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.2.1-gfa29f94b59f9` | via JVM runtime `1.2.1-gabde383-fa29f94` |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.2.1-gfa29f94b59f9` | via JVM runtime `1.2.1-gabde383-fa29f94` |
+| Native C ABI | `runtime/native/releases/1.3.1+bda2ef5/coakka-runtime-native-v2-1.3.1.tar.gz` | `1.3.1+bda2ef5` | `1.3.1+bda2ef5` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.1-gbda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
+| Python runtime | `coakka_v2_connector` wheel | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
+| Node.js runtime | `coakka-v2-connector-node` package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
+| Go runtime | `coakka-v2-connector-go` source package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
+| C# runtime | `CoAkka.Runtime` NuGet package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
+| Rust runtime | `coakka-runtime-rs` package | `1.3.1-spike` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
+| Mojo runtime | `runtime/mojo/releases/1.3.1+bda2ef5-0a0aa76/coakka-runtime-mojo-1.3.1-source.tar.gz` | `1.3.1-source` | `1.3.1+bda2ef5` |
+| Zig runtime | `runtime/zig/releases/1.3.1+bda2ef5-0a0aa76/coakka-runtime-zig-1.3.1-source.tar.gz` | `1.3.1-source` | `1.3.1+bda2ef5` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.1-g0a0aa76` | via JVM runtime `1.3.1-gbda2ef5-0a0aa76` |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.1-g0a0aa76` | via JVM runtime `1.3.1-gbda2ef5-0a0aa76` |
 
 Do not mix runtime language packages from another native package generation
 unless a later release note explicitly declares that combination compatible.
@@ -245,7 +247,7 @@ local handler/ask first, explicit route snapshots second, custom
 envelope/transport policy last.
 
 Release docs and samples must only present a helper as released after the
-published artifact contains it. The runtime connector refresh in `fa29f94`
+published artifact contains it. The runtime connector refresh in `0a0aa76`
 keeps the local-first helper/doc level split introduced earlier for C#,
 removes internal runtime fallback names from public resolvers, widens the
 public package set to both Windows DLL arches, and keeps the current
@@ -276,7 +278,8 @@ release checksum file, Maven checksum sidecars, runtime JVM release and Maven ja
 against the current public native runtime package, Spring Boot and Quarkus
 adapter dependency parity against the current runtime JVM Maven release,
 `artifacts/public-artifacts.tsv`, and the optional content scanner when the
-scanner path is provided.
+scanner path is provided. The scanner ignores the repo-local `.tmp` work area
+so root scans do not recursively inspect their own extracted archives.
 
 `artifacts/public-artifacts.tsv` is the consumer-facing package manifest. Each
 row is status, label, relative path, and SHA256. The public surface gate rejects
@@ -294,8 +297,8 @@ run the intake gate on the submitted artifact:
 ```bash
 scripts/verify-runtime-intake-artifact.py \
   --lane python \
-  --artifact /path/to/coakka_v2_connector-1.2.1-py3-none-any.whl \
-  --expected-native-version 1.2.1+abde383
+  --artifact /path/to/coakka_v2_connector-1.3.1-py3-none-any.whl \
+  --expected-native-version 1.3.1+bda2ef5
 ```
 
 Use the matching `--lane` value for the submitted package. The gate verifies

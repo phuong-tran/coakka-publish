@@ -34,7 +34,12 @@ typedef enum coakka_v2_client_delivery_hint_t {
  *
  * The caller owns every string and payload byte span for the duration of the
  * build call. The returned buffer is owned by the caller and must be released
- * with coakka_v2_client_bytes_release().
+ * with coakka_v2_client_bytes_release(). Required fields outside struct_size
+ * fail closed. Required strings must be non-empty. Optional tail fields outside
+ * struct_size use safe defaults. struct_size = 0 means the current full local
+ * struct. delivery_hint must be one of coakka_v2_client_delivery_hint_t, and
+ * one_way must be 0 or 1. timeout_ms must fit the transport int32 timeout
+ * field.
  */
 typedef struct coakka_v2_client_raw_request_spec_t {
     size_t struct_size;
@@ -54,7 +59,12 @@ typedef struct coakka_v2_client_raw_request_spec_t {
  *
  * request_buf/request_len must contain one delivered request frame returned by
  * the runtime. The returned reply buffer is caller-owned and must be released
- * with coakka_v2_client_bytes_release().
+ * with coakka_v2_client_bytes_release(). Required fields outside struct_size
+ * fail closed. Required strings must be non-empty. Optional tail fields outside
+ * struct_size use safe defaults. struct_size = 0 means the current full local
+ * struct. request_len must fit the protobuf parser's int length parameter.
+ * The request frame must be reply-capable: MESSAGE_KIND_REQUEST,
+ * one_way=false, and non-empty message_id/source.
  */
 typedef struct coakka_v2_client_raw_reply_spec_t {
     size_t struct_size;
@@ -65,7 +75,14 @@ typedef struct coakka_v2_client_raw_reply_spec_t {
     size_t payload_len;
 } coakka_v2_client_raw_reply_spec_t;
 
-/** Creates connector-side ask state over an already-created runtime host. */
+/**
+ * Creates connector-side ask state over an already-created runtime host.
+ *
+ * The host handles span must include response_read_fd, deadletter_read_fd, and
+ * delivered_request_read_fd; older spans fail closed instead of reading beyond
+ * the caller's advertised struct_size. struct_size = 0 means the current full
+ * local host-handle struct.
+ */
 coakka_v2_ask_client_t *coakka_v2_ask_client_create(
     coakka_v2_runtime_t *rt,
     const coakka_v2_host_handles_t *handles
@@ -74,7 +91,12 @@ coakka_v2_ask_client_t *coakka_v2_ask_client_create(
 /** Destroys the ask client and releases connector-side matching state. */
 void coakka_v2_ask_client_destroy(coakka_v2_ask_client_t *client);
 
-/** Submits a request frame and returns a ticket used to await or poll the result. */
+/**
+ * Submits a request frame and returns a ticket used to await or poll the result.
+ *
+ * Returns COAKKA_V2_ERR_CLOSED when the ask helper has already observed that
+ * the runtime's terminal response/deadletter lanes are no longer usable.
+ */
 coakka_v2_status_t coakka_v2_ask_client_begin(
     coakka_v2_ask_client_t *client,
     const uint8_t *request_buf,
@@ -87,6 +109,10 @@ coakka_v2_status_t coakka_v2_ask_client_begin(
  *
  * On COAKKA_V2_OK, out_buf is caller-owned and must be released with
  * coakka_v2_client_bytes_release().
+ * Returns COAKKA_V2_ERR_WOULD_BLOCK when the caller wait window expires while
+ * the ask remains pending. Returns COAKKA_V2_ERR_CLOSED when the runtime
+ * closes its terminal response/deadletter lanes before any terminal result is
+ * delivered.
  */
 coakka_v2_status_t coakka_v2_ask_ticket_await(
     coakka_v2_ask_ticket_t *ticket,
@@ -100,6 +126,8 @@ coakka_v2_status_t coakka_v2_ask_ticket_await(
  * Polls an ask ticket without blocking.
  *
  * Returns COAKKA_V2_ERR_WOULD_BLOCK when no response/deadletter is available.
+ * Returns COAKKA_V2_ERR_CLOSED when the runtime has already closed terminal
+ * ask lanes before any matched result arrived.
  * On COAKKA_V2_OK, out_buf is caller-owned and must be released with
  * coakka_v2_client_bytes_release().
  */

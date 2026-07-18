@@ -5,6 +5,8 @@
 #include <stdint.h>
 
 #include "coakka/v2/control.h"
+#include "coakka/v2/runtime_auth.h"
+#include "coakka/v2/transport.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,13 +25,27 @@ const char *coakka_v2_overload_mode_name(uint32_t mode);
 const char *coakka_v2_route_strategy_name(coakka_v2_route_resolution_strategy_t strategy);
 
 /*
- * Legacy monitor enum name helpers. They describe reserved source-compatible
- * names only; monitor_read_fd is a doorbell and does not emit typed event
- * records.
+ * Monitor event/category name helpers.
+ *
+ * monitor_read_fd is still only a doorbell and does not emit typed event
+ * records, but these enum names are also reused by the pull-based recent event
+ * log ABI.
  */
 const char *coakka_v2_monitor_event_kind_name(uint32_t kind);
 
 const char *coakka_v2_monitor_queue_scope_name(uint32_t scope);
+
+const char *coakka_v2_monitor_queue_reject_detail_name(uint32_t detail);
+
+const char *coakka_v2_deadletter_reason_name(uint32_t reason);
+
+const char *coakka_v2_runtime_auth_role_name(uint32_t role);
+
+const char *coakka_v2_runtime_auth_scope_name(uint32_t scope);
+
+const char *coakka_v2_runtime_auth_access_kind_name(uint32_t access_kind);
+
+const char *coakka_v2_runtime_auth_result_code_name(uint32_t code);
 
 /** Returns a stable diagnostic name for one dubbing job state. */
 const char *coakka_v2_dubbing_job_state_name(uint32_t state);

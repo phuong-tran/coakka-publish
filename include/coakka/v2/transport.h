@@ -12,6 +12,29 @@ extern "C" {
 
 typedef struct coakka_v2_frame_reader_t coakka_v2_frame_reader_t;
 
+/*
+ * Stable deadletter reason vocabulary shared by framed runtime deadletter
+ * payloads and public C clients. Numeric values intentionally match
+ * coakka.v2.transport.DeadletterReason in the protobuf wire profile.
+ */
+typedef enum coakka_v2_deadletter_reason_t {
+    COAKKA_V2_DEADLETTER_REASON_UNSPECIFIED = 0u,
+    COAKKA_V2_DEADLETTER_REASON_NO_ACTIVE_SNAPSHOT = 1u,
+    COAKKA_V2_DEADLETTER_REASON_ROUTE_MISS = 2u,
+    COAKKA_V2_DEADLETTER_REASON_NO_RESPONSIBLE_HOST = 3u,
+    COAKKA_V2_DEADLETTER_REASON_QUEUE_REJECTED = 4u,
+    COAKKA_V2_DEADLETTER_REASON_LOCAL_HANDOFF_FAILED = 5u,
+    COAKKA_V2_DEADLETTER_REASON_DELIVERY_FAILED = 6u,
+    COAKKA_V2_DEADLETTER_REASON_REMOTE_TRANSPORT_FAILED = 7u,
+    COAKKA_V2_DEADLETTER_REASON_RUNTIME_STOPPED = 8u,
+    COAKKA_V2_DEADLETTER_REASON_INVALID_ENVELOPE = 9u,
+    COAKKA_V2_DEADLETTER_REASON_ENDPOINT_UNAVAILABLE = 10u,
+    COAKKA_V2_DEADLETTER_REASON_REMOTE_REPLY_TIMEOUT = 11u,
+    COAKKA_V2_DEADLETTER_REASON_LOCALITY_MISMATCH = 12u,
+    COAKKA_V2_DEADLETTER_REASON_EXPIRED_BEFORE_DELIVERY = 13u,
+    COAKKA_V2_DEADLETTER_REASON_ONE_WAY_DROPPED_BY_POLICY = 14u
+} coakka_v2_deadletter_reason_t;
+
 /**
  * Creates a bounded framed-pipe reader.
  *
@@ -28,7 +51,9 @@ void coakka_v2_frame_reader_destroy(coakka_v2_frame_reader_t *reader);
  *
  * Returns COAKKA_V2_ERR_WOULD_BLOCK when no full frame is available. On
  * COAKKA_V2_OK, out_buf is caller-owned and must be released with
- * coakka_v2_frame_release().
+ * coakka_v2_frame_release(). Frames whose advertised payload length exceeds
+ * max_frame_size or cannot be represented safely by the runtime allocator are
+ * rejected as COAKKA_V2_ERR_IO.
  */
 coakka_v2_status_t coakka_v2_frame_read_try(coakka_v2_frame_reader_t *reader,
                                             uint8_t **out_buf,

@@ -87,7 +87,23 @@ scan_tree() {
       rm -rf "${extract_dir}"
       scan_file "${file}" "${label_prefix}/${rel}"
     fi
-  done < <(find "${root}" -type f ! -path '*/.git/*' ! -path '*/.github/*' ! -path '*/.idea/*' -print0)
+  done < <(
+    if [[ "${root}" == "${tmp_parent}" || "${root}" == "${tmp_parent}/"* ]]; then
+      find "${root}" \
+        -path '*/.git/*' -prune -o \
+        -path '*/.github/*' -prune -o \
+        -path '*/.idea/*' -prune -o \
+        -type f -print0
+    else
+      find "${root}" \
+        -path "${tmp_parent}" -prune -o \
+        -path "${tmp_parent}/*" -prune -o \
+        -path '*/.git/*' -prune -o \
+        -path '*/.github/*' -prune -o \
+        -path '*/.idea/*' -prune -o \
+        -type f -print0
+    fi
+  )
 }
 
 for input in "$@"; do

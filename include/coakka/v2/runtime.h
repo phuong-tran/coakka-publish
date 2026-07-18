@@ -4,6 +4,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "coakka/v2/runtime_auth.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -64,7 +66,8 @@ typedef enum coakka_v2_overload_mode_t {
  * Bounded queue overload policy.
  *
  * Set struct_size to sizeof(coakka_v2_overload_policy_t). Smaller legacy
- * struct sizes are accepted only for source compatibility.
+ * struct sizes are accepted only for source compatibility; fields outside the
+ * advertised byte span use conservative runtime defaults.
  */
 typedef struct coakka_v2_overload_policy_t {
     size_t struct_size;
@@ -172,13 +175,14 @@ enum {
 };
 
 /*
- * Legacy typed monitor names are reserved for source compatibility only.
+ * Monitor event/category names reused by runtime observability surfaces.
  *
  * The phase-2 monitor lane is a doorbell: runtime rings monitor_read_fd, the
  * host calls coakka_v2_monitor_consume(...), then refreshes stats/health through
- * direct ABI calls. No public API currently emits coakka_v2_monitor_event_t
- * frames, and connectors must not treat these enum values as an event-stream
- * wire contract.
+ * direct ABI calls. monitor_read_fd never emits serialized
+ * coakka_v2_monitor_event_t frames, and connectors must not treat these enum
+ * values as an fd wire contract. The same enums may still be reused by
+ * pull-based snapshot contracts such as the bounded recent event log.
  */
 typedef enum coakka_v2_monitor_event_kind_t {
     COAKKA_V2_MONITOR_EVENT_KIND_STARTED = 1,
@@ -190,7 +194,14 @@ typedef enum coakka_v2_monitor_event_kind_t {
     COAKKA_V2_MONITOR_EVENT_KIND_REMOTE_RESPONSE_FORWARDED = 7,
     COAKKA_V2_MONITOR_EVENT_KIND_REMOTE_DEADLETTER_FORWARDED = 8,
     COAKKA_V2_MONITOR_EVENT_KIND_REMOTE_REPLY_TIMEOUT = 9,
-    COAKKA_V2_MONITOR_EVENT_KIND_LATE_REMOTE_REPLY_DROPPED = 10
+    COAKKA_V2_MONITOR_EVENT_KIND_LATE_REMOTE_REPLY_DROPPED = 10,
+    COAKKA_V2_MONITOR_EVENT_KIND_REMOTE_TRANSPORT_FAILED = 11,
+    COAKKA_V2_MONITOR_EVENT_KIND_AUTH_CONFIG_APPLIED = 12,
+    COAKKA_V2_MONITOR_EVENT_KIND_AUTHENTICATION_ACCEPTED = 13,
+    COAKKA_V2_MONITOR_EVENT_KIND_AUTHENTICATION_DENIED = 14,
+    COAKKA_V2_MONITOR_EVENT_KIND_AUTHORIZATION_ACCEPTED = 15,
+    COAKKA_V2_MONITOR_EVENT_KIND_AUTHORIZATION_DENIED = 16,
+    COAKKA_V2_MONITOR_EVENT_KIND_AUTH_POLICY_APPLIED = 17
 } coakka_v2_monitor_event_kind_t;
 
 typedef enum coakka_v2_monitor_queue_scope_t {
@@ -198,6 +209,12 @@ typedef enum coakka_v2_monitor_queue_scope_t {
     COAKKA_V2_MONITOR_QUEUE_SCOPE_LOCAL_DELIVERY = 2,
     COAKKA_V2_MONITOR_QUEUE_SCOPE_REMOTE_OUTBOUND = 3
 } coakka_v2_monitor_queue_scope_t;
+
+typedef enum coakka_v2_monitor_queue_reject_detail_t {
+    COAKKA_V2_MONITOR_QUEUE_REJECT_DETAIL_NONE = 0,
+    COAKKA_V2_MONITOR_QUEUE_REJECT_DETAIL_QUEUE_FULL = 1,
+    COAKKA_V2_MONITOR_QUEUE_REJECT_DETAIL_REMOTE_REPLY_RESERVE = 2
+} coakka_v2_monitor_queue_reject_detail_t;
 
 /*
  * Reserved legacy event payload shape. Kept in the public header so older
@@ -231,8 +248,30 @@ enum {
     COAKKA_V2_RUNTIME_FEATURE_REMOTE_TRANSPORT = 1u << 5,
     COAKKA_V2_RUNTIME_FEATURE_JEMALLOC = 1u << 6,
     COAKKA_V2_RUNTIME_FEATURE_DELIVERED_REQUEST_PIPE = 1u << 7,
-    COAKKA_V2_RUNTIME_FEATURE_DUBBING_JOBS = 1u << 8
+    COAKKA_V2_RUNTIME_FEATURE_DUBBING_JOBS = 1u << 8,
+    COAKKA_V2_RUNTIME_FEATURE_TOPOLOGY_SNAPSHOT = 1u << 9,
+    COAKKA_V2_RUNTIME_FEATURE_MONITOR_SNAPSHOT = 1u << 10,
+    COAKKA_V2_RUNTIME_FEATURE_EVENT_LOG = 1u << 11,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_TYPES = 1u << 12,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_CONFIG = 1u << 13,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_GATE = 1u << 14,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_POLICY = 1u << 15,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_CONTEXT = 1u << 16,
+    COAKKA_V2_RUNTIME_FEATURE_ROUTE_CATALOG = 1u << 17,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_CONTROL_APPLY = 1u << 18,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_OBSERVE_READ = 1u << 19,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_DISCOVERY_READ = 1u << 20,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_STATUS_READ = 1u << 21,
+    COAKKA_V2_RUNTIME_FEATURE_AUTH_SECURITY_READ = 1u << 22
 };
+
+typedef enum coakka_v2_runtime_surface_profile_t {
+    COAKKA_V2_RUNTIME_SURFACE_PROFILE_DISCOVERY = 1u,
+    COAKKA_V2_RUNTIME_SURFACE_PROFILE_OBSERVE = 2u,
+    COAKKA_V2_RUNTIME_SURFACE_PROFILE_EVENT_LOG = 3u,
+    COAKKA_V2_RUNTIME_SURFACE_PROFILE_CONTROL = 4u,
+    COAKKA_V2_RUNTIME_SURFACE_PROFILE_REQUEST_DRIVER = 5u
+} coakka_v2_runtime_surface_profile_t;
 
 /**
  * Immutable runtime build and feature information.
@@ -291,9 +330,161 @@ uint32_t coakka_v2_runtime_get_abi_version(void);
 /** Reads immutable runtime build and feature information. */
 coakka_v2_status_t coakka_v2_runtime_get_info(coakka_v2_runtime_info_t *out_info);
 
+/** Returns a stable diagnostic name for one runtime surface profile. */
+const char *coakka_v2_runtime_surface_profile_name(uint32_t profile);
+
+/** Returns the runtime feature bits required by one surface profile. */
+uint32_t coakka_v2_runtime_surface_required_features(uint32_t profile);
+
+/**
+ * Checks whether a runtime feature bitset supports one surface profile.
+ *
+ * Returns 1 when supported, 0 when unsupported. If out_missing_features is not
+ * NULL, it receives the missing feature bits for known profiles, or 0 for
+ * unknown profiles.
+ */
+int coakka_v2_runtime_surface_check_features(uint32_t feature_flags,
+                                             uint32_t profile,
+                                             uint32_t *out_missing_features);
+
 /** Reads the current configuration/status view for one runtime instance. */
 coakka_v2_status_t coakka_v2_runtime_get_config(coakka_v2_runtime_t *rt,
                                                 coakka_v2_runtime_config_view_t *out_config);
+
+/**
+ * Reads the current configuration/status view only after the caller-owned auth
+ * context satisfies the runtime-owned observe access policy.
+ *
+ * Unauthorized or forbidden callers receive COAKKA_V2_OK with out_result set
+ * accordingly, and out_config is projected as an empty value while preserving
+ * the caller's struct_size compatibility boundary.
+ */
+coakka_v2_status_t coakka_v2_runtime_get_config_with_auth_context(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_context_t *context,
+    coakka_v2_runtime_config_view_t *out_config,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
+/** Validates one future runtime-side auth config shape without mutating runtime state. */
+coakka_v2_status_t coakka_v2_runtime_validate_auth_config(
+    const coakka_v2_runtime_auth_config_t *config
+);
+
+/** Applies or clears the active runtime-owned auth config summary truth. */
+coakka_v2_status_t coakka_v2_runtime_apply_auth_config(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_config_t *config
+);
+
+/** Reads the current runtime-owned auth config summary without exposing secrets. */
+coakka_v2_status_t coakka_v2_runtime_get_auth_config_summary(
+    coakka_v2_runtime_t *rt,
+    coakka_v2_runtime_auth_config_summary_t *out_summary
+);
+
+/**
+ * Reads the current auth config summary only after the caller-owned auth
+ * context satisfies the runtime-owned observe access policy.
+ *
+ * Unauthorized or forbidden callers receive COAKKA_V2_OK with out_result set
+ * accordingly, and out_summary is projected as an empty value while preserving
+ * the caller's struct_size compatibility boundary.
+ */
+coakka_v2_status_t coakka_v2_runtime_get_auth_config_summary_with_auth_context(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_context_t *context,
+    coakka_v2_runtime_auth_config_summary_t *out_summary,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
+/** Validates one runtime access-policy payload without mutating runtime state. */
+coakka_v2_status_t coakka_v2_runtime_validate_auth_policy(
+    const coakka_v2_runtime_auth_policy_t *policy
+);
+
+/** Applies one runtime-owned observe/control access policy. */
+coakka_v2_status_t coakka_v2_runtime_apply_auth_policy(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_policy_t *policy
+);
+
+/** Reads the current runtime-owned observe/control access policy. */
+coakka_v2_status_t coakka_v2_runtime_get_auth_policy(
+    coakka_v2_runtime_t *rt,
+    coakka_v2_runtime_auth_policy_t *out_policy
+);
+
+/**
+ * Reads the current observe/control access policy only after the caller-owned
+ * auth context satisfies the runtime-owned observe access policy.
+ */
+coakka_v2_status_t coakka_v2_runtime_get_auth_policy_with_auth_context(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_context_t *context,
+    coakka_v2_runtime_auth_policy_t *out_policy,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
+/** Evaluates one username/password pair against the current runtime-owned auth config. */
+coakka_v2_status_t coakka_v2_runtime_authenticate(
+    coakka_v2_runtime_t *rt,
+    const char *username,
+    const char *password,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
+/** Clears one caller-owned auth context to an unauthenticated state. */
+coakka_v2_status_t coakka_v2_runtime_clear_auth_context(
+    coakka_v2_runtime_auth_context_t *out_context
+);
+
+/** Authenticates credentials and fills one caller-owned connection auth context. */
+coakka_v2_status_t coakka_v2_runtime_login(
+    coakka_v2_runtime_t *rt,
+    const char *username,
+    const char *password,
+    coakka_v2_runtime_auth_context_t *out_context,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
+/**
+ * Evaluates whether one authenticated role satisfies one declared runtime auth
+ * scope. Unknown roles or scopes fail closed as INVALID_ARG.
+ */
+coakka_v2_status_t coakka_v2_runtime_authorize_scope(
+    uint32_t role,
+    uint32_t required_scope,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
+/**
+ * Evaluates one role against one declared required scope and records one
+ * bounded runtime-owned authz breadcrumb for accepted/forbidden outcomes.
+ * Unknown roles or scopes fail closed as INVALID_ARG.
+ */
+coakka_v2_status_t coakka_v2_runtime_authorize(
+    coakka_v2_runtime_t *rt,
+    uint32_t role,
+    uint32_t required_scope,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
+/** Evaluates one role against the current runtime-owned access policy. */
+coakka_v2_status_t coakka_v2_runtime_authorize_access(
+    coakka_v2_runtime_t *rt,
+    uint32_t role,
+    uint32_t access_kind,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
+/** Evaluates one caller-owned auth context against the current access policy. */
+coakka_v2_status_t coakka_v2_runtime_authorize_context_access(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_context_t *context,
+    uint32_t access_kind,
+    coakka_v2_runtime_auth_result_t *out_result
+);
 
 /** Creates one runtime instance. The returned pointer must be destroyed by the host. */
 coakka_v2_runtime_t *coakka_v2_runtime_create(const coakka_v2_runtime_config_t *cfg);
@@ -305,7 +496,10 @@ void coakka_v2_runtime_destroy(coakka_v2_runtime_t *rt);
  * Exports host-owned file-descriptor lanes.
  *
  * Call before coakka_v2_runtime_start(). The caller must set struct_size and
- * requested flags in out_handles before calling. Returned fds are host-owned.
+ * requested flags in out_handles before calling. The advertised struct_size
+ * must include the required request, response, deadletter, and control fds;
+ * additive optional lanes remain gated by their own field span. Returned fds
+ * are host-owned.
  */
 coakka_v2_status_t coakka_v2_runtime_get_host_handles(coakka_v2_runtime_t *rt,
                                                       coakka_v2_host_handles_t *out_handles);
@@ -326,19 +520,64 @@ coakka_v2_status_t coakka_v2_runtime_apply_overload_policy(
 coakka_v2_status_t coakka_v2_runtime_get_stats(coakka_v2_runtime_t *rt,
                                                coakka_v2_runtime_stats_t *out_stats);
 
+/**
+ * Reads runtime counters only after the caller-owned auth context satisfies the
+ * runtime-owned observe access policy.
+ */
+coakka_v2_status_t coakka_v2_runtime_get_stats_with_auth_context(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_context_t *context,
+    coakka_v2_runtime_stats_t *out_stats,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
 /** Reads lightweight runtime health evidence. */
 coakka_v2_status_t coakka_v2_runtime_get_health(coakka_v2_runtime_t *rt,
                                                 coakka_v2_runtime_health_t *out_health);
 
-/** Submits one serialized transport envelope to the runtime. The buffer is not retained. */
+/**
+ * Reads lightweight runtime health evidence only after the caller-owned auth
+ * context satisfies the runtime-owned observe access policy.
+ */
+coakka_v2_status_t coakka_v2_runtime_get_health_with_auth_context(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_context_t *context,
+    coakka_v2_runtime_health_t *out_health,
+    coakka_v2_runtime_auth_result_t *out_result
+);
+
+/**
+ * Submits one serialized transport envelope to the runtime. The buffer is not retained.
+ *
+ * Returns COAKKA_V2_ERR_BAD_STATE before runtime_start() succeeds, and
+ * COAKKA_V2_ERR_CLOSED once runtime_stop() has begun closing ingress.
+ */
 coakka_v2_status_t coakka_v2_runtime_submit_envelope(coakka_v2_runtime_t *rt,
                                                      const uint8_t *buf,
                                                      size_t len);
 
-/** Applies one serialized control envelope to the runtime. The buffer is not retained. */
+/**
+ * Applies one serialized control envelope to the runtime. The buffer is not
+ * retained. len must fit the protobuf parser's int length parameter.
+ */
 coakka_v2_status_t coakka_v2_runtime_apply_control_envelope(coakka_v2_runtime_t *rt,
                                                             const uint8_t *buf,
                                                             size_t len);
+
+/**
+ * Applies one serialized control envelope only after the caller-owned auth
+ * context satisfies the runtime-owned control access policy.
+ *
+ * Unauthorized or forbidden callers receive COAKKA_V2_OK with out_result set
+ * accordingly, and the runtime does not parse or apply the envelope.
+ */
+coakka_v2_status_t coakka_v2_runtime_apply_control_envelope_with_auth_context(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_runtime_auth_context_t *context,
+    const uint8_t *buf,
+    size_t len,
+    coakka_v2_runtime_auth_result_t *out_result
+);
 
 #ifdef __cplusplus
 }
