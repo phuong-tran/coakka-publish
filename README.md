@@ -67,7 +67,7 @@ Current public Python, Node.js, Go, C#, and Rust connector generation:
 `1.3.1+bda2ef5-0a0aa76`.
 Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
-Current public coakka-client Docker demo generation: `1.3.1+2215b0f`.
+Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -80,7 +80,7 @@ Current public coakka-client Docker demo generation: `1.3.1+2215b0f`.
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 | coakka-client native CLI | public | `cli/releases/` |
-| coakka-client Docker demo | public demo bundles | `demo/coakka-client/releases/` |
+| coakka-client Docker Linux bundle | public Linux bundles | `demo/coakka-client/releases/` |
 
 The current root native runtime package is `1.3.1+bda2ef5`. The published JVM
 runtime jar is refreshed over that native package as
@@ -141,7 +141,7 @@ Current published lanes:
 - runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
 - runtime source connector packages under `runtime/{mojo,zig}/releases/`
 - coakka-client native CLI archives under `cli/releases/`
-- coakka-client Docker demo bundles under `demo/coakka-client/releases/`
+- coakka-client Docker Linux bundles under `demo/coakka-client/releases/`
 
 ## coakka-client Public Artifacts
 
@@ -273,10 +273,10 @@ COAKKA_PUBLIC_SURFACE_SCANNER=/path/to/scan_public_artifact_surface.sh \
   scripts/verify-public-surface.sh
 ```
 
-The script verifies the root runtime checksums, every logger/runtime/CLI/demo
-release checksum file, Maven checksum sidecars, runtime JVM release and Maven jars
-against the current public native runtime package, Spring Boot and Quarkus
-adapter dependency parity against the current runtime JVM Maven release,
+The script verifies the root runtime checksums, every logger/runtime/CLI/Docker
+bundle release checksum file, Maven checksum sidecars, runtime JVM release and
+Maven jars against the current public native runtime package, Spring Boot and
+Quarkus adapter dependency parity against the current runtime JVM Maven release,
 `artifacts/public-artifacts.tsv`, and the optional content scanner when the
 scanner path is provided. The scanner ignores the repo-local `.tmp` work area
 so root scans do not recursively inspect their own extracted archives.

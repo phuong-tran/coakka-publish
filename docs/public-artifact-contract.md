@@ -14,7 +14,7 @@ The current public release surface contains:
 - runtime source connector packages under `runtime/{mojo,zig}/releases/`
 - runtime JVM, Spring Boot, and Quarkus artifacts under `maven/`
 - coakka-client native CLI archives under `cli/releases/`
-- coakka-client Docker demo bundles under `demo/coakka-client/releases/`
+- coakka-client Docker Linux bundles under `demo/coakka-client/releases/`
 
 Consumer-facing package downloads are listed in
 `artifacts/public-artifacts.tsv`. Public samples should pin against that
@@ -68,7 +68,7 @@ under:
 cli/releases/<release-id>/coakka-client-v2-<version>-<platform>.tar.gz
 ```
 
-The matching Docker demo bundles are published under:
+The matching Docker Linux bundles are published under:
 
 ```text
 demo/coakka-client/releases/<release-id>/coakka-client-docker-demo-v2-<version>-<platform>.tar.gz
