@@ -57,13 +57,14 @@ development, test, CI, sample execution, or proof-of-concept evaluation.
 Production use, hosted service use, customer distribution, and paid
 redistribution require explicit release terms or a separate written agreement.
 
-Official CoAkka sample images published by the project or repository owner may
-bundle unmodified artifacts solely to run official samples. Users may pull,
-cache internally, and run those official sample images for local development,
-CI, test, sample execution, proof-of-concept integration, and evaluation. This
-does not grant third parties rights to create derivative production images,
-hosted services, paid support packages, appliances, or cloud marketplace
-offerings.
+Official CoAkka sample images published by the project or repository owner,
+including the current `docker.io/gabrielgun1983/*` sample namespace and any
+future official CoAkka container namespace, may bundle unmodified artifacts
+solely to run official samples. Users may pull, cache internally, and run those
+official sample images for local development, CI, test, sample execution,
+proof-of-concept integration, and evaluation. This does not grant third
+parties rights to create derivative production images, hosted services, paid
+support packages, appliances, or cloud marketplace offerings.
 
 The separate `coakka-samples` repository contains sample code and documentation
 under its own license. That sample license does not change the terms for the

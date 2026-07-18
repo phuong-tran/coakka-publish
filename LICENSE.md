@@ -1,5 +1,7 @@
 # CoAkka Public Artifact Preview License 1.0
 
+Effective: 2026-07-19
+
 This repository is the public binary artifact surface for CoAkka. It contains
 headers, native libraries, connector packages, Maven artifacts, checksums, and
 artifact metadata. It is not a source-build repository.
@@ -25,10 +27,11 @@ customer data, live operational data, revenue-generating workloads, or
 customer-facing workloads outside development, test, CI, sample execution, or
 proof-of-concept evaluation.
 
-`Official sample images` means container images published by the CoAkka project
-or repository owner, including the current `docker.io/gabrielgun1983/*` sample
-image namespace, that bundle unmodified artifacts solely to run official CoAkka
-samples.
+`Official sample images` means container images published by the CoAkka
+project or repository owner, including the current
+`docker.io/gabrielgun1983/*` sample image namespace and any future images
+published under an official CoAkka container namespace, that bundle unmodified
+artifacts solely to run official CoAkka samples.
 
 ## Allowed Use
 
@@ -86,13 +89,6 @@ explicit release terms or a separate written agreement.
 
 For production, hosted service, customer distribution, paid redistribution, or
 other commercial rights, contact the project through `SUPPORT.md`.
-
-## Samples
-
-The separate `coakka-samples` repository may use a permissive open source
-license for sample code and documentation. That sample license does not change
-the terms for the runtime binaries, connector packages, Maven artifacts, or
-other released artifacts distributed from this repository.
 
 ## No Warranty
 
