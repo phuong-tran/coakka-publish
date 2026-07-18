@@ -23,6 +23,11 @@ The public artifact manifest checksum for this boundary is:
 9447f42cfc136ca19f518c94ca777192f8062332a63dfeff95be19a2a2f51ce7  artifacts/public-artifacts.tsv
 ```
 
+The GitHub Release page for `coakka-public-artifacts-v1.3.1` attaches all 27
+public artifact files listed by `artifacts/public-artifacts.tsv`, plus the
+manifest itself, so users can download from either the release page or the
+repository paths while verifying the same manifest SHA256 values.
+
 ## Repository Boundary
 
 | Repository | Commit | Role |
