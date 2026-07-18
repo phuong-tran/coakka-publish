@@ -184,7 +184,7 @@ verify_public_artifact_manifest() {
       fail "unsafe artifact path in manifest row ${line_no}: ${relative_path}"
     fi
     case "${relative_path}" in
-      logger/*/releases/*|runtime/*/releases/*|maven/coakka/*/*/*/*.jar)
+      logger/*/releases/*|runtime/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|maven/coakka/*/*/*/*.jar)
         ;;
       *)
         fail "artifact path is outside the current public manifest surface in row ${line_no}: ${relative_path}"
@@ -240,10 +240,17 @@ if ! find "${repo_root}/runtime/native/releases" -mindepth 2 -maxdepth 2 \
   exit 1
 fi
 
+release_roots=()
+for release_root in logger runtime cli demo; do
+  if [[ -d "${repo_root}/${release_root}" ]]; then
+    release_roots+=("${repo_root}/${release_root}")
+  fi
+done
+
 while IFS= read -r -d '' sums_file; do
   release_dir="$(dirname "${sums_file}")"
   verify_sha256_file "${release_dir#"${repo_root}"/}"
-done < <(find "${repo_root}/logger" "${repo_root}/runtime" -path '*/releases/*/SHA256SUMS' -print0)
+done < <(find "${release_roots[@]}" -path '*/releases/*/SHA256SUMS' -print0)
 
 verify_maven_sidecars
 

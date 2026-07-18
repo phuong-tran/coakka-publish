@@ -13,13 +13,15 @@ The current public release surface contains:
 - runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
 - runtime source connector packages under `runtime/{mojo,zig}/releases/`
 - runtime JVM, Spring Boot, and Quarkus artifacts under `maven/`
+- coakka-client native CLI archives under `cli/releases/`
+- coakka-client Docker demo bundles under `demo/coakka-client/releases/`
 
 Consumer-facing package downloads are listed in
 `artifacts/public-artifacts.tsv`. Public samples should pin against that
 manifest so sample metadata and publish contents do not drift silently. The
 manifest is intentionally limited to the current public release surface:
-`logger/*/releases/*`, `runtime/*/releases/*`, and selected Maven jars under
-`maven/coakka/`.
+`logger/*/releases/*`, `runtime/*/releases/*`, `cli/releases/*`,
+`demo/coakka-client/releases/*`, and selected Maven jars under `maven/coakka/`.
 
 Runtime language artifacts must pass
 `scripts/verify-runtime-intake-artifact.py` before they are copied into a
@@ -58,6 +60,23 @@ claims. When introduced, they should be checked by the same public surface gate
 instead of living as separate manual notes.
 
 ## Consumer Shape
+
+`coakka-client` archives are directly runnable CLI drops. They are published
+under:
+
+```text
+cli/releases/<release-id>/coakka-client-v2-<version>-<platform>.tar.gz
+```
+
+The matching Docker demo bundles are published under:
+
+```text
+demo/coakka-client/releases/<release-id>/coakka-client-docker-demo-v2-<version>-<platform>.tar.gz
+```
+
+`coakka-client` is a request/reply runtime client. It must not be documented as
+an inspect/dashboard surface, topology authority, business schema registry, or
+sink/business workflow owner.
 
 Public runtime artifacts must be directly consumable in their target ecosystem.
 For JVM, the downloaded jar is the artifact:

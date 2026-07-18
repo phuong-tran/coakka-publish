@@ -10,6 +10,9 @@ This repository is the public binary-only publish surface for CoAkka artifacts.
 Current native runtime refresh note:
 [2026-07-06 runtime native 1.2.1 abde383](docs/releases/2026-07-06-runtime-native-1.2.1-abde383.md).
 
+Current coakka-client release note:
+[2026-07-18 coakka-client 1.3.1 2215b0f](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md).
+
 Current language connector release notes:
 [2026-07-06 logger 1.2.1 Windows parity 8264bba](docs/releases/2026-07-06-logger-1.2.1-8264bba.md),
 [2026-07-05 logger Mojo and Zig source refresh 1107154](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
@@ -60,6 +63,8 @@ Current public Spring Boot and Quarkus adapter generation: `1.2.1-gfa29f94b59f9`
 Current public Python, Node.js, Go, C#, and Rust connector generation:
 `1.2.1+abde383-fa29f94`.
 Current public Mojo/Zig source connector generation: `1.2.1+abde383-fa29f94`.
+Current public coakka-client generation: `1.3.1+2215b0f`.
+Current public coakka-client Docker demo generation: `1.3.1+2215b0f`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -71,6 +76,8 @@ Current public Mojo/Zig source connector generation: `1.2.1+abde383-fa29f94`.
 | Runtime Mojo and Zig source connector lanes | public source packages | `runtime/{mojo,zig}/releases/` |
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
+| coakka-client native CLI | public | `cli/releases/` |
+| coakka-client Docker demo | public demo bundles | `demo/coakka-client/releases/` |
 
 The current root native runtime package is `1.2.1+abde383`. The published JVM
 runtime jar is refreshed over that native package as
@@ -131,6 +138,30 @@ Current published lanes:
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
 - runtime source connector packages under `runtime/{mojo,zig}/releases/`
+- coakka-client native CLI archives under `cli/releases/`
+- coakka-client Docker demo bundles under `demo/coakka-client/releases/`
+
+## coakka-client Public Artifacts
+
+Current coakka-client source snapshot: `2215b0f`
+
+Package contents:
+
+- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz`
+- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-aarch64.tar.gz`
+- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-macos-aarch64.tar.gz`
+- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-windows-x86_64.tar.gz`
+- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-windows-aarch64.tar.gz`
+- `demo/coakka-client/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz`
+- `demo/coakka-client/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-aarch64.tar.gz`
+
+`coakka-client` is the CLI runtime client for diagnostics, request/reply
+`call`/`ask`, and bounded shell script mode over the current public TCP frame
+profile. It is not the dashboard, inspect surface, topology authority, or a
+business schema registry.
+
+Release note:
+[`docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md`](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md)
 
 ## Runtime v2 Public Artifacts
 
@@ -240,8 +271,8 @@ COAKKA_PUBLIC_SURFACE_SCANNER=/path/to/scan_public_artifact_surface.sh \
   scripts/verify-public-surface.sh
 ```
 
-The script verifies the root runtime checksums, every logger/runtime release
-checksum file, Maven checksum sidecars, runtime JVM release and Maven jars
+The script verifies the root runtime checksums, every logger/runtime/CLI/demo
+release checksum file, Maven checksum sidecars, runtime JVM release and Maven jars
 against the current public native runtime package, Spring Boot and Quarkus
 adapter dependency parity against the current runtime JVM Maven release,
 `artifacts/public-artifacts.tsv`, and the optional content scanner when the
