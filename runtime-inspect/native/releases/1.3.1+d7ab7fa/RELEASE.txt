@@ -1,7 +1,14 @@
-coakka-runtime-inspect native bundle
+coakka-runtime-inspect native bundles
 version=1.3.1
 source_snapshot=d7ab7fa
-platform=macos-aarch64
+platforms=linux-aarch64,macos-aarch64
+
+archive=coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz
+platform=linux-aarch64
+sha256=0cbf301e5ee4ae533552304c0cd3554aa48235673bbd9753bd299142783a8381
+prefix=coakka-runtime-inspect-v2-1.3.1-linux-aarch64
+
 archive=coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz
+platform=macos-aarch64
 sha256=5b3bdd7316946b85a284a276aea57c45166c0de7ed9263c191f16e654c19c4ce
 prefix=coakka-runtime-inspect-v2-1.3.1-macos-aarch64

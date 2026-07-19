@@ -1,6 +1,6 @@
-# 2026-07-19 CoAkka Runtime Inspect 1.3.1 d7ab7fa macOS ARM64
+# 2026-07-19 CoAkka Runtime Inspect 1.3.1 d7ab7fa Linux ARM64
 
-This note records the public macOS ARM64 `coakka-runtime-inspect` native archive
+This note records the public Linux ARM64 `coakka-runtime-inspect` native archive
 cut from source snapshot `d7ab7fa`.
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
@@ -12,28 +12,28 @@ business schema owner.
 
 | Artifact | Path | Source snapshot |
 | --- | --- | --- |
-| Native inspect UI, macOS ARM64 | `runtime-inspect/native/releases/1.3.1+d7ab7fa/` | `1.3.1+d7ab7fa` |
+| Native inspect UI, Linux ARM64 | `runtime-inspect/native/releases/1.3.1+d7ab7fa/` | `1.3.1+d7ab7fa` |
 
 Archive:
 
-- `coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz`
+- `coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz`
 
 Contents:
 
 - `bin/coakka-runtime-inspect`
-- `lib/libcoakka_runtime_v2.dylib`
+- `lib/libcoakka_runtime_v2.so`
 - `RELEASE.txt`
 
 SHA256:
 
 ```text
-5b3bdd7316946b85a284a276aea57c45166c0de7ed9263c191f16e654c19c4ce  coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz
+0cbf301e5ee4ae533552304c0cd3554aa48235673bbd9753bd299142783a8381  coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz
 ```
 
 ## Verification
 
-The archive was built from the native v2 runtime tree and verified on macOS
-ARM64 with:
+The archive was built from the native v2 runtime tree and verified inside the
+Linux ARM64 UTM guest with:
 
 - `coakka_runtime_inspect_command_smoke`
 - `test_coakka_runtime_inspect_serve_smoke.sh`
@@ -46,8 +46,7 @@ tree.
 
 ## Platform Matrix
 
-This is a macOS ARM64 follow-on archive refresh. Linux ARM64 is also published
-at `1.3.1+d7ab7fa`. Linux x86_64 remains published at `1.3.1+e664986`, Windows
-x86_64 remains published at `1.3.1+6c63864`, and Windows ARM64 remains
-published at `1.3.1+5c70234` until their matching host/guest recuts are
-completed.
+Linux ARM64 and macOS ARM64 are published at `1.3.1+d7ab7fa`. Linux x86_64
+remains published at `1.3.1+e664986`, Windows x86_64 remains published at
+`1.3.1+6c63864`, and Windows ARM64 remains published at `1.3.1+5c70234` until
+their matching host/guest recuts are completed.
