@@ -17,16 +17,19 @@ control plane, topology authority, or business schema owner.
 
 Native inspect archives in this drop:
 
+- `linux-aarch64`
 - `macos-aarch64`
 
-The macOS ARM64 archive provides:
+The native archives provide:
 
 - `bin/coakka-runtime-inspect`
+- `lib/libcoakka_runtime_v2.so` on Linux
 - `lib/libcoakka_runtime_v2.dylib`
 
 Validation covered:
 
 - host-native macOS ARM64 build with embedded `git_commit=e664986`
+- Docker Linux ARM64 build with embedded `git_commit=e664986`
 - generated archive checksum recorded in `SHA256SUMS`
 - generated per-lane `artifacts/public-artifacts.tsv`
 - extracted bundle command smoke for `version`, `doctor`, and help
@@ -38,6 +41,6 @@ Current limits:
 - `/api/snapshot` is a runtime-owned `local-linked-runtime` snapshot from the
   inspect process, not remote runtime read/observe yet.
 - `serve --connect host:port` configures the Try Route request path only.
-- Linux and Windows inspect archives are not published in this drop.
+- Linux x86_64 and Windows inspect archives are not published in this drop.
 - Business payload schemas, auth policy, service discovery, and mTLS policy
   stay above runtime core.

@@ -96,7 +96,7 @@ Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
 Current public coakka-runtime-inspect native generation:
-`1.3.1+e664986` for macOS ARM64.
+`1.3.1+e664986` for macOS ARM64 and Linux ARM64.
 Current public coakka-client Docker Hub demo image:
 `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`.
 
@@ -112,7 +112,7 @@ Current public coakka-client Docker Hub demo image:
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 | coakka-client native CLI | public | `cli/releases/` |
 | coakka-client Docker Linux bundle | public Linux bundles | `demo/coakka-client/releases/` |
-| coakka-runtime-inspect native UI | public macOS ARM64 | `runtime-inspect/native/releases/` |
+| coakka-runtime-inspect native UI | public macOS ARM64 and Linux ARM64 | `runtime-inspect/native/releases/` |
 | coakka-client Docker Hub demo image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote` |
 
 The current root native runtime package is `1.3.1+bda2ef5`. The published JVM
@@ -220,6 +220,7 @@ Current coakka-runtime-inspect source snapshot: `e664986`
 
 Package contents:
 
+- `runtime-inspect/native/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
@@ -227,9 +228,10 @@ CoAkka Runtime. It is the visual sibling of `coakka-client`, not an admin
 dashboard, schema registry, service discovery server, mTLS control plane, or
 business schema owner.
 
-The macOS ARM64 archive includes:
+The native archives include:
 
 - `bin/coakka-runtime-inspect`
+- `lib/libcoakka_runtime_v2.so` on Linux
 - `lib/libcoakka_runtime_v2.dylib`
 
 Current limits:
@@ -238,7 +240,7 @@ Current limits:
   future runtime surface.
 - `serve --connect host:port` configures route try against a runtime request
   path.
-- Linux and Windows inspect archives are not published in this drop.
+- Linux x86_64 and Windows inspect archives are not published in this drop.
 
 Release note:
 [`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-e664986.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-e664986.md)
