@@ -1,0 +1,7 @@
+coakka-runtime-inspect native bundle
+version=1.3.1
+source_snapshot=6c63864
+platform=windows-x86_64
+archive=coakka-runtime-inspect-v2-1.3.1-windows-x86_64.tar.gz
+sha256=b093780592e0fe0fd7f82a0be8614613fb981cbbca5df3d79cf05c3359412c80
+prefix=coakka-runtime-inspect-v2-1.3.1-windows-x86_64

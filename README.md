@@ -17,7 +17,7 @@ Current coakka-client release note:
 [2026-07-18 coakka-client 1.3.1 2215b0f](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md).
 
 Current coakka-runtime-inspect release note:
-[2026-07-19 coakka-runtime-inspect 1.3.1 e664986](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-e664986.md).
+[2026-07-19 coakka-runtime-inspect 1.3.1 6c63864 Windows x86_64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-6c63864-windows-x86_64.md).
 
 Current public release boundary:
 [2026-07-18 public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
@@ -95,8 +95,9 @@ Current public Python, Node.js, Go, C#, and Rust connector generation:
 Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
-Current public coakka-runtime-inspect native generation:
-`1.3.1+e664986` for macOS ARM64, Linux x86_64, and Linux ARM64.
+Current public coakka-runtime-inspect native generations:
+`1.3.1+e664986` for macOS ARM64, Linux x86_64, and Linux ARM64;
+`1.3.1+6c63864` for Windows x86_64.
 Current public coakka-client Docker Hub demo image:
 `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`.
 
@@ -112,7 +113,7 @@ Current public coakka-client Docker Hub demo image:
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 | coakka-client native CLI | public | `cli/releases/` |
 | coakka-client Docker Linux bundle | public Linux bundles | `demo/coakka-client/releases/` |
-| coakka-runtime-inspect native UI | public macOS ARM64 and Linux x86_64/ARM64 | `runtime-inspect/native/releases/` |
+| coakka-runtime-inspect native UI | public macOS ARM64, Linux x86_64/ARM64, and Windows x86_64 | `runtime-inspect/native/releases/` |
 | coakka-client Docker Hub demo image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote` |
 
 The current root native runtime package is `1.3.1+bda2ef5`. The published JVM
@@ -216,13 +217,17 @@ Release note:
 
 ## coakka-runtime-inspect Public Artifacts
 
-Current coakka-runtime-inspect source snapshot: `e664986`
+Current coakka-runtime-inspect source snapshots:
+
+- macOS ARM64, Linux x86_64, and Linux ARM64: `e664986`
+- Windows x86_64: `6c63864`
 
 Package contents:
 
 - `runtime-inspect/native/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-linux-x86_64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+6c63864/coakka-runtime-inspect-v2-1.3.1-windows-x86_64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
 CoAkka Runtime. It is the visual sibling of `coakka-client`, not an admin
@@ -232,8 +237,10 @@ business schema owner.
 The native archives include:
 
 - `bin/coakka-runtime-inspect`
+- `bin/coakka-runtime-inspect.exe` on Windows
 - `lib/libcoakka_runtime_v2.so` on Linux
 - `lib/libcoakka_runtime_v2.dylib`
+- `bin/libcoakka_runtime_v2.dll` on Windows
 
 Current limits:
 
@@ -241,10 +248,10 @@ Current limits:
   future runtime surface.
 - `serve --connect host:port` configures route try against a runtime request
   path.
-- Windows inspect archives are not published in this drop.
+- Windows ARM64 inspect archive is not published in this drop.
 
 Release note:
-[`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-e664986.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-e664986.md)
+[`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-6c63864-windows-x86_64.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-6c63864-windows-x86_64.md)
 
 ## Runtime v2 Public Artifacts
 
