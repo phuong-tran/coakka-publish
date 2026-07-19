@@ -184,7 +184,7 @@ verify_public_artifact_manifest() {
       fail "unsafe artifact path in manifest row ${line_no}: ${relative_path}"
     fi
     case "${relative_path}" in
-      logger/*/releases/*|runtime/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|maven/coakka/*/*/*/*.jar)
+      logger/*/releases/*|runtime/*/releases/*|runtime-inspect/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|maven/coakka/*/*/*/*.jar)
         ;;
       *)
         fail "artifact path is outside the current public manifest surface in row ${line_no}: ${relative_path}"
