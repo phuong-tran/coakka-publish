@@ -1,0 +1,3 @@
+# Public artifact manifest v1.
+# Columns: status	label	relative_path	sha256
+public	coakka-runtime-inspect windows-aarch64	runtime-inspect/native/releases/1.3.1+5c70234/coakka-runtime-inspect-v2-1.3.1-windows-aarch64.tar.gz	7fc03858321d987b48f9cecf1c7c0697b26e43159566f4abeeaa0dfa9db1134d

@@ -43,6 +43,7 @@ Current limits:
 - `/api/snapshot` is a runtime-owned `local-linked-runtime` snapshot from the
   inspect process, not remote runtime read/observe yet.
 - `serve --connect host:port` configures the Try Route request path only.
-- Windows inspect archives are not published in this drop.
+- Windows inspect archives were added in follow-on drops:
+  `1.3.1+6c63864` for Windows x86_64 and `1.3.1+5c70234` for Windows ARM64.
 - Business payload schemas, auth policy, service discovery, and mTLS policy
   stay above runtime core.
