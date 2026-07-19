@@ -27,7 +27,7 @@ Contents:
 SHA256:
 
 ```text
-85eeb1eab832ce0b5147b8c5f4a4c61432c1b29ec85c3c3a66414cd211f8d0d4  coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz
+5b3bdd7316946b85a284a276aea57c45166c0de7ed9263c191f16e654c19c4ce  coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz
 ```
 
 ## Verification
