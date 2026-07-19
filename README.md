@@ -18,6 +18,8 @@ Current coakka-client release note:
 
 Current coakka-runtime-inspect release note:
 [2026-07-19 coakka-runtime-inspect 1.3.1 d7ab7fa macOS ARM64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md).
+Current coakka-runtime-inspect Docker Hub release note:
+[2026-07-19 coakka-runtime-inspect Docker Hub image 1.3.1 d7ab7fa](docs/releases/2026-07-19-coakka-runtime-inspect-dockerhub-1.3.1-d7ab7fa.md).
 
 Current public release boundary:
 [2026-07-18 public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
@@ -101,6 +103,8 @@ Current public coakka-runtime-inspect native generations:
 `1.3.1+5c70234` for Windows ARM64.
 Current public coakka-client Docker Hub demo image:
 `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`.
+Current public coakka-runtime-inspect Docker Hub sample image:
+`docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-d7ab7fa-remote`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -116,6 +120,7 @@ Current public coakka-client Docker Hub demo image:
 | coakka-client Docker Linux bundle | public Linux bundles | `demo/coakka-client/releases/` |
 | coakka-runtime-inspect native UI | public macOS ARM64, Linux x86_64/ARM64, and Windows x86_64/ARM64 | `runtime-inspect/native/releases/` |
 | coakka-client Docker Hub demo image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote` |
+| coakka-runtime-inspect Docker Hub sample image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-d7ab7fa-remote` |
 
 The current root native runtime package is `1.3.1+bda2ef5`. The published JVM
 runtime jar is refreshed over that native package as
@@ -183,6 +188,8 @@ Current published lanes:
 - coakka-runtime-inspect native UI archives under `runtime-inspect/native/releases/`
 - coakka-client Docker Hub demo image at
   `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`
+- coakka-runtime-inspect Docker Hub sample image at
+  `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-d7ab7fa-remote`
 
 ## coakka-client Public Artifacts
 
