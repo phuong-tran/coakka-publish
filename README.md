@@ -96,8 +96,7 @@ Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
 Current public coakka-runtime-inspect native generations:
-`1.3.1+d7ab7fa` for macOS ARM64 and Linux ARM64;
-`1.3.1+e664986` for Linux x86_64;
+`1.3.1+d7ab7fa` for macOS ARM64, Linux x86_64, and Linux ARM64;
 `1.3.1+6c63864` for Windows x86_64;
 `1.3.1+5c70234` for Windows ARM64.
 Current public coakka-client Docker Hub demo image:
@@ -223,14 +222,14 @@ Current coakka-runtime-inspect source snapshots:
 
 - macOS ARM64: `d7ab7fa`
 - Linux ARM64: `d7ab7fa`
-- Linux x86_64: `e664986`
+- Linux x86_64: `d7ab7fa`
 - Windows x86_64: `6c63864`
 - Windows ARM64: `5c70234`
 
 Package contents:
 
 - `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz`
-- `runtime-inspect/native/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-linux-x86_64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-linux-x86_64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+6c63864/coakka-runtime-inspect-v2-1.3.1-windows-x86_64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+5c70234/coakka-runtime-inspect-v2-1.3.1-windows-aarch64.tar.gz`
