@@ -18,12 +18,12 @@ Current coakka-client release note:
 
 Current coakka-runtime-inspect release notes:
 [2026-07-19 coakka-runtime-inspect 1.3.1 d7ab7fa macOS ARM64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md),
-[2026-07-19 coakka-runtime-inspect 1.3.1 d7ab7fa Linux x86_64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-x86_64.md),
-[2026-07-19 coakka-runtime-inspect 1.3.1 d7ab7fa Linux ARM64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-aarch64.md),
+[2026-07-20 coakka-runtime-inspect 1.3.1 4ce41f19 Linux x86_64](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-x86_64.md),
+[2026-07-20 coakka-runtime-inspect 1.3.1 4ce41f19 Linux ARM64](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-aarch64.md),
 and
 [2026-07-20 coakka-runtime-inspect 1.3.1 d7ab7fa Windows](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md).
 Current coakka-runtime-inspect Docker Hub release note:
-[2026-07-19 coakka-runtime-inspect Docker Hub image 1.3.1 d7ab7fa](docs/releases/2026-07-19-coakka-runtime-inspect-dockerhub-1.3.1-d7ab7fa.md).
+[2026-07-20 coakka-runtime-inspect Docker Hub image 1.3.1 4ce41f19](docs/releases/2026-07-20-coakka-runtime-inspect-dockerhub-1.3.1-4ce41f19.md).
 
 Current public release boundary:
 [2026-07-18 public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
@@ -102,12 +102,12 @@ Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
 Current public coakka-runtime-inspect native generations:
-`1.3.1+d7ab7fa` for macOS ARM64, Linux x86_64, Linux ARM64,
-Windows x86_64, and Windows ARM64.
+`1.3.1+4ce41f19` for Linux x86_64 and Linux ARM64; `1.3.1+d7ab7fa`
+for macOS ARM64, Windows x86_64, and Windows ARM64.
 Current public coakka-client Docker Hub demo image:
 `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`.
 Current public coakka-runtime-inspect Docker Hub sample image:
-`docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-d7ab7fa-remote`.
+`docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-4ce41f19-remote`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -123,7 +123,7 @@ Current public coakka-runtime-inspect Docker Hub sample image:
 | coakka-client Docker Linux bundle | public Linux bundles | `demo/coakka-client/releases/` |
 | coakka-runtime-inspect native UI | public macOS ARM64, Linux x86_64/ARM64, and Windows x86_64/ARM64 | `runtime-inspect/native/releases/` |
 | coakka-client Docker Hub demo image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote` |
-| coakka-runtime-inspect Docker Hub sample image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-d7ab7fa-remote` |
+| coakka-runtime-inspect Docker Hub sample image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-4ce41f19-remote` |
 
 The current root native runtime package is `1.3.1+bda2ef5`. The published JVM
 runtime jar is refreshed over that native package as
@@ -192,7 +192,7 @@ Current published lanes:
 - coakka-client Docker Hub demo image at
   `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`
 - coakka-runtime-inspect Docker Hub sample image at
-  `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-d7ab7fa-remote`
+  `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-4ce41f19-remote`
 
 ## coakka-client Public Artifacts
 
@@ -231,15 +231,15 @@ Release note:
 Current coakka-runtime-inspect source snapshots:
 
 - macOS ARM64: `d7ab7fa`
-- Linux ARM64: `d7ab7fa`
-- Linux x86_64: `d7ab7fa`
+- Linux ARM64: `4ce41f19`
+- Linux x86_64: `4ce41f19`
 - Windows x86_64: `d7ab7fa`
 - Windows ARM64: `d7ab7fa`
 
 Package contents:
 
-- `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz`
-- `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-linux-x86_64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+4ce41f19/coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+4ce41f19/coakka-runtime-inspect-v2-1.3.1-linux-x86_64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-windows-x86_64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-windows-aarch64.tar.gz`
@@ -267,8 +267,8 @@ Current limits:
 
 Release notes:
 [`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md),
-[`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-x86_64.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-x86_64.md),
-[`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-aarch64.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-aarch64.md),
+[`docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-x86_64.md`](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-x86_64.md),
+[`docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-aarch64.md`](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-aarch64.md),
 and
 [`docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md`](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md)
 

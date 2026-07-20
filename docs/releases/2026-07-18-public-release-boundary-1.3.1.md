@@ -14,7 +14,7 @@ sample repository.
 | Runtime non-JVM connectors | `1.3.1+bda2ef5-0a0aa76` | connector source snapshot `0a0aa76`, native core `bda2ef5` |
 | Spring Boot and Quarkus adapters | `1.3.1-g0a0aa76` | connector source snapshot `0a0aa76` |
 | CoAkka Runtime Client | `1.3.1+2215b0f` | `coakkaCoreNativeDev` client source snapshot `2215b0f` |
-| CoAkka Runtime Inspect native UI | `1.3.1+d7ab7fa` | `coakkaCoreNativeDev` inspect source snapshot `d7ab7fa` |
+| CoAkka Runtime Inspect native UI | `1.3.1+4ce41f19` Linux; `1.3.1+d7ab7fa` macOS/Windows | `coakkaCoreNativeDev` inspect source snapshots `4ce41f19` and `d7ab7fa` |
 | Public samples verified boundary | `450ed5d` | `coakka-samples` commit `450ed5d` |
 | Public samples onboarding checkpoint | `85b2a8c` | docs and runner alias checkpoint over the same published artifacts |
 | Public samples release-link checkpoint | `53ea3a6` | docs point direct downloads at the attached GitHub Release assets |
@@ -27,7 +27,7 @@ sample repository.
 The public artifact manifest checksum for this boundary is:
 
 ```text
-e6c7122ba4ab755bc8287c8f9555faced97ec3645138754650e5e352e9115d79  artifacts/public-artifacts.tsv
+c94978e181da1243ce9522b101802c12d9a4972918a48300e8c5234b7b0a1b52  artifacts/public-artifacts.tsv
 ```
 
 The GitHub Release page for `coakka-public-artifacts-v1.3.1` attaches all 32
@@ -50,7 +50,7 @@ repository paths while verifying the same manifest SHA256 values.
 | `coakka-samples` | `53ea3a6` | public docs point direct runtime-client downloads at GitHub Release assets |
 | `coakka-samples` | `a614565` | public docs embed the runtime-client animated CLI walkthrough GIF |
 | `coakka-samples` | `ab5c612` | public Docker Hub image starts native runtime services and drives them with `coakka-client` |
-| `coakka-samples` | `bc87a35` | runtime-inspect sample pins/docs resolve all native inspect platforms to `1.3.1+d7ab7fa` |
+| `coakka-samples` | `bc87a35` | runtime-inspect sample pins/docs resolve native inspect platforms to the published archive generations |
 
 The artifact source snapshots are intentionally not all the same as the latest
 documentation commits. If tags are added later, tag artifact source snapshots
@@ -86,10 +86,11 @@ or package bytes; it packages the already published Linux Docker bundle into a
 one-command sample image.
 
 The inspect closure checkpoints add the browser inspect native archive lane and
-Docker Hub sample image after the original runtime-client boundary. macOS ARM64,
-Linux x86_64, Linux ARM64, Windows x86_64, and Windows ARM64 now resolve to
-`coakka-runtime-inspect` `1.3.1+d7ab7fa`; the Docker Hub inspect image remains
-a sample wrapper around the published Linux inspect archives.
+Docker Hub sample image after the original runtime-client boundary. Linux
+x86_64/ARM64 now resolve to self-contained `coakka-runtime-inspect`
+`1.3.1+4ce41f19`; macOS ARM64 and Windows x86_64/ARM64 remain at
+`1.3.1+d7ab7fa`. The Docker Hub inspect image remains a sample wrapper around
+the published Linux inspect archives.
 
 The manifest provenance checkpoint updates only comment lines in
 `artifacts/public-artifacts.tsv` so public Mojo/Zig source-package rows expose
@@ -106,7 +107,7 @@ docker.io/gabrielgun1983/runtime-base:1.3.1-bda2ef5-remote
 docker.io/gabrielgun1983/sample-python-store:1.3.1-bda2ef5-0a0aa76-remote
 docker.io/gabrielgun1983/sample-node-web:1.3.1-bda2ef5-0a0aa76-remote
 docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote
-docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-d7ab7fa-remote
+docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-4ce41f19-remote
 ```
 
 Manifest list digests:
@@ -116,7 +117,7 @@ runtime-base       sha256:35952461da183b3bb3016d492bdc0459acc8498d022ee486594109
 sample-python-store sha256:7449360692f3248339dbfd0bedb024f03eea8c402ca2e2f06d0e08c608824bcc
 sample-node-web     sha256:292148457d64c896b35291a42c51be08d326b82cd735cc883cc915ea1cb3b22f
 coakka-runtime-client-demo sha256:ad00c5f990f1d484e3a83deab18f4cac4175d5d41eccb9d27872f342a22e8fe3
-coakka-runtime-inspect-sample sha256:95f3a104fc8531d4700d020cad901b5219cbe7ece46175a1fea68bb0d6a63930
+coakka-runtime-inspect-sample sha256:fdff242d12d626bfd14ae4f3efb48c2fff564b1698b01f2115369be0f5b8e391
 ```
 
 Each image tag was published for `linux/amd64` and `linux/arm64`.
@@ -176,7 +177,8 @@ checkpoint covered:
 Follow-up verification for the inspect native and Docker Hub closure covered:
 
 - macOS ARM64, Linux x86_64, Linux ARM64, Windows x86_64, and Windows ARM64
-  inspect native archives at `1.3.1+d7ab7fa`
+  inspect native archives at `1.3.1+4ce41f19` for Linux and `1.3.1+d7ab7fa`
+  for macOS/Windows
 - Windows x86_64 and Windows ARM64 staged-prefix smokes in the real UTM
   `Windows11` guest
 - Windows x86_64 and Windows ARM64 extracted-archive smokes in the same guest
