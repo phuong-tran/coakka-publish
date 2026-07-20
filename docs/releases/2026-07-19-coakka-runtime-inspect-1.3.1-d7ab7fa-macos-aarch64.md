@@ -46,7 +46,5 @@ tree.
 
 ## Platform Matrix
 
-This is a macOS ARM64 follow-on archive refresh. Linux x86_64 and Linux ARM64
-are also published at `1.3.1+d7ab7fa`. Windows x86_64 remains published at
-`1.3.1+6c63864`, and Windows ARM64 remains published at `1.3.1+5c70234` until
-their matching guest recuts are completed.
+This is a macOS ARM64 follow-on archive refresh. Linux x86_64, Linux ARM64,
+Windows x86_64, and Windows ARM64 are also published at `1.3.1+d7ab7fa`.

@@ -16,8 +16,12 @@ Current native runtime refresh note:
 Current coakka-client release note:
 [2026-07-18 coakka-client 1.3.1 2215b0f](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md).
 
-Current coakka-runtime-inspect release note:
-[2026-07-19 coakka-runtime-inspect 1.3.1 d7ab7fa macOS ARM64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md).
+Current coakka-runtime-inspect release notes:
+[2026-07-19 coakka-runtime-inspect 1.3.1 d7ab7fa macOS ARM64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md),
+[2026-07-19 coakka-runtime-inspect 1.3.1 d7ab7fa Linux x86_64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-x86_64.md),
+[2026-07-19 coakka-runtime-inspect 1.3.1 d7ab7fa Linux ARM64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-aarch64.md),
+and
+[2026-07-20 coakka-runtime-inspect 1.3.1 d7ab7fa Windows](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md).
 Current coakka-runtime-inspect Docker Hub release note:
 [2026-07-19 coakka-runtime-inspect Docker Hub image 1.3.1 d7ab7fa](docs/releases/2026-07-19-coakka-runtime-inspect-dockerhub-1.3.1-d7ab7fa.md).
 
@@ -98,9 +102,8 @@ Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
 Current public coakka-runtime-inspect native generations:
-`1.3.1+d7ab7fa` for macOS ARM64, Linux x86_64, and Linux ARM64;
-`1.3.1+6c63864` for Windows x86_64;
-`1.3.1+5c70234` for Windows ARM64.
+`1.3.1+d7ab7fa` for macOS ARM64, Linux x86_64, Linux ARM64,
+Windows x86_64, and Windows ARM64.
 Current public coakka-client Docker Hub demo image:
 `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`.
 Current public coakka-runtime-inspect Docker Hub sample image:
@@ -230,16 +233,16 @@ Current coakka-runtime-inspect source snapshots:
 - macOS ARM64: `d7ab7fa`
 - Linux ARM64: `d7ab7fa`
 - Linux x86_64: `d7ab7fa`
-- Windows x86_64: `6c63864`
-- Windows ARM64: `5c70234`
+- Windows x86_64: `d7ab7fa`
+- Windows ARM64: `d7ab7fa`
 
 Package contents:
 
 - `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-linux-x86_64.tar.gz`
 - `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz`
-- `runtime-inspect/native/releases/1.3.1+6c63864/coakka-runtime-inspect-v2-1.3.1-windows-x86_64.tar.gz`
-- `runtime-inspect/native/releases/1.3.1+5c70234/coakka-runtime-inspect-v2-1.3.1-windows-aarch64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-windows-x86_64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-windows-aarch64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
 CoAkka Runtime. It is the visual sibling of `coakka-client`, not an admin
@@ -262,8 +265,12 @@ Current limits:
   path.
 - Remote read/observe remains a future runtime surface across all platforms.
 
-Release note:
-[`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md)
+Release notes:
+[`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md),
+[`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-x86_64.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-x86_64.md),
+[`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-aarch64.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-linux-aarch64.md),
+and
+[`docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md`](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md)
 
 ## Runtime v2 Public Artifacts
 
