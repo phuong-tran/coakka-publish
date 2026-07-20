@@ -21,7 +21,7 @@ Current goals:
 - keep JNA bindings in sync with the runtime v2 C ABI
 - expose Kotlin-friendly and Java-friendly runtime APIs
 - keep first-run user code on `CoAkka.local(...)`, `handler(...)`, and
-  `ask(...)` before exposing route snapshots or protobuf envelopes
+  `ask(...)` before exposing route snapshots or wire envelopes
 - keep the first private `runtime-addon-probe` adapter cut process-launch-first
   instead of forcing a premature JNI/JNA probe ABI
 - package `v2/jvm` as its own Gradle subproject

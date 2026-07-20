@@ -30,6 +30,6 @@ self-contained release profile and verified with:
 - `test_coakka_runtime_inspect_serve_smoke.sh`
 - `verify_coakka_runtime_inspect_native_bundle.sh`
 
-Direct ELF inspection shows no dynamic protobuf, absl, libuv, libstdc++, or
-libgcc runtime dependency. The remaining dynamic edges are the bundled
+Direct ELF inspection shows no dynamic non-system implementation runtime
+dependency. The remaining dynamic edges are the bundled
 `libcoakka_runtime_v2.so` plus Linux system libraries.

@@ -21,7 +21,7 @@ Current goals:
 - keep JNA bindings in sync with the runtime v2 C ABI
 - expose Kotlin-friendly and Java-friendly runtime APIs
 - keep first-run user code on `CoAkka.local(...)`, `handler(...)`, and
-  `ask(...)` before exposing route snapshots or protobuf envelopes
+  `ask(...)` before exposing route snapshots or wire envelopes
 - package `v2/jvm` as its own Gradle subproject
 - keep embedded-native loading and explicit `-Dcoakka.runtime.lib=...` override
 - verify the artifact through a real standalone consumer instead of only

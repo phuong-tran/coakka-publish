@@ -19,14 +19,13 @@ Published platform coverage in this package is:
 - `windows-x86_64`
 
 All published shared libraries in this cut remain self-contained from the user
-point of view: the package does not require ambient `protobuf`, `absl`, `CAF`,
-`libuv`, `libstdc++`, `libgcc`, `winpthread`, or a separate native helper
-install.
+point of view: the package does not require ambient non-system implementation
+libraries or a separate native helper install.
 
 Validation covered:
 
 - Linux `aarch64` and `x86_64` public native package staging in Docker with
-  static `libstdc++` and `libgcc`
+  self-contained compiler-runtime linkage
 - macOS `aarch64` public native rebuild with loadable `LC_ID_DYLIB`
 - Windows `aarch64` and `x86_64` public DLL builds
 - native dependency checks and public surface scanning

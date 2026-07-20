@@ -12,7 +12,7 @@ The first slice proves the Rust connector can:
 - surface a route-miss deadletter
 
 The spike keeps the API synchronous and local-first. Tokio integration,
-packaging, crates.io metadata, generated protobufs, and public docs are later
+packaging, crates.io metadata, generated wires, and public docs are later
 work.
 
 ## Run

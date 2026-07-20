@@ -12,7 +12,7 @@ docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-4ce41f19-remote
 Manifest digest:
 
 ```text
-sha256:fdff242d12d626bfd14ae4f3efb48c2fff564b1698b01f2115369be0f5b8e391
+sha256:0f69c5eb4eac4ea2c11c5123971a591bf67adb4d6c0f791283f3286d3aecca89
 ```
 
 Platforms:
@@ -21,8 +21,8 @@ Platforms:
 - `linux/arm64`
 
 The image is a sample convenience wrapper around the published Linux native
-inspect archives at `1.3.1+4ce41f19`. Its Dockerfiles do not install protobuf,
-absl, libuv, libstdc++, or libgcc packages.
+inspect archives at `1.3.1+4ce41f19`. Its Dockerfiles do not install native
+implementation runtime packages.
 
 ## Verification
 

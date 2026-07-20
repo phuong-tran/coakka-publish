@@ -15,7 +15,7 @@ typedef struct coakka_v2_frame_reader_t coakka_v2_frame_reader_t;
 /*
  * Stable deadletter reason vocabulary shared by framed runtime deadletter
  * payloads and public C clients. Numeric values intentionally match
- * coakka.v2.transport.DeadletterReason in the protobuf wire profile.
+ * coakka.v2.transport.DeadletterReason in the wire profile.
  */
 typedef enum coakka_v2_deadletter_reason_t {
     COAKKA_V2_DEADLETTER_REASON_UNSPECIFIED = 0u,

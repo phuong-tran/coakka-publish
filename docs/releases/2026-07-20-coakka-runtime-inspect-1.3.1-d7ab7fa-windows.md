@@ -35,7 +35,7 @@ a09dc984e2c580b047d8fffc8a585f7995e09e86377e48d488a597da80775696  coakka-runtime
 
 - Zig Windows x86_64 and ARM64 cross-builds with embedded
   `git_commit=d7ab7fa`
-- Windows-target static libuv cache through the repo-owned cache wrapper
+- Windows-target static native dependency cache through the repo-owned cache wrapper
 - static dependency and architecture gates for both staged prefixes
 - staged-prefix smoke on the real UTM `Windows11` guest for `version`,
   `doctor`, `help serve`, and `snapshot --local-route`

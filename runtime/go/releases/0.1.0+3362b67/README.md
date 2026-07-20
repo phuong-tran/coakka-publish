@@ -143,7 +143,7 @@ Hot-path reading note:
   nghĩa như native C++ connector
 - cost center dễ đáng ngờ hơn hiện tại là:
   - `cgo` boundary và native read/write calls
-  - protobuf marshal/unmarshal
+  - wire marshal/unmarshal
   - channel/subscriber churn quanh `TerminalEvents(...)`
   - goroutine handoff topology
 - chỉ nên quay lại cacheline/padding style hardening nếu layer này sau đó

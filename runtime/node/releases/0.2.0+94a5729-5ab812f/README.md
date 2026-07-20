@@ -109,7 +109,7 @@ Hot-path reading note:
   in the same way it is for the native C++ connector
 - the current Node connector cost center is more likely to sit in:
   - `koffi` boundary and native read/write calls
-  - protobufjs encode/decode and JS object mapping
+  - wire codec encode/decode and JS object mapping
   - async iterator buffering around `terminalEvents(...)`
   - event-loop and worker handoff topology
 - only revisit cacheline-style hardening here if this layer later moves toward

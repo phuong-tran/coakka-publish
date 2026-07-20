@@ -558,7 +558,7 @@ coakka_v2_status_t coakka_v2_runtime_submit_envelope(coakka_v2_runtime_t *rt,
 
 /**
  * Applies one serialized control envelope to the runtime. The buffer is not
- * retained. len must fit the protobuf parser's int length parameter.
+ * retained. len must fit the wire parser's int length parameter.
  */
 coakka_v2_status_t coakka_v2_runtime_apply_control_envelope(coakka_v2_runtime_t *rt,
                                                             const uint8_t *buf,

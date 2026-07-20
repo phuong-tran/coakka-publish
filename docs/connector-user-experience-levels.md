@@ -65,7 +65,7 @@ Level 1 rules:
 
 - no route snapshot in the first Kotlin local-text sample
 - no endpoint host/port placeholders in first-run local samples
-- no generated protobuf envelope in first-run samples
+- no generated wire envelope in first-run samples
 - no explicit payload identity for plain-text local Kotlin/Java helpers
 - no runtime-owned discovery, watch loop, or hidden application runner
 
@@ -90,7 +90,7 @@ Connector authors and advanced integrations use this layer.
 
 Examples:
 
-- generated protobuf or host-language envelope models
+- generated wire or host-language envelope models
 - typed/raw submit APIs
 - delivery hints
 - deadletter observation

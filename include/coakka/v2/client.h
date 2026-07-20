@@ -62,7 +62,7 @@ typedef struct coakka_v2_client_raw_request_spec_t {
  * with coakka_v2_client_bytes_release(). Required fields outside struct_size
  * fail closed. Required strings must be non-empty. Optional tail fields outside
  * struct_size use safe defaults. struct_size = 0 means the current full local
- * struct. request_len must fit the protobuf parser's int length parameter.
+ * struct. request_len must fit the wire parser's int length parameter.
  * The request frame must be reply-capable: MESSAGE_KIND_REQUEST,
  * one_way=false, and non-empty message_id/source.
  */

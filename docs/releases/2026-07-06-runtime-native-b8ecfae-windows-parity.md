@@ -18,8 +18,8 @@ current public archive to a five-platform native set:
 - `windows-x86_64`
 
 All published shared libraries in this cut are dependency-clean from the user
-point of view: the current package does not require ambient `protobuf`, `absl`,
-`CAF`, `libuv`, `libstdc++`, `libgcc`, or `winpthread` runtime installs.
+point of view: the current package does not require ambient non-system
+implementation runtime installs.
 
 Validation covered:
 

@@ -120,7 +120,7 @@ runtime-base       sha256:35952461da183b3bb3016d492bdc0459acc8498d022ee486594109
 sample-python-store sha256:7449360692f3248339dbfd0bedb024f03eea8c402ca2e2f06d0e08c608824bcc
 sample-node-web     sha256:292148457d64c896b35291a42c51be08d326b82cd735cc883cc915ea1cb3b22f
 coakka-runtime-client-demo sha256:ad00c5f990f1d484e3a83deab18f4cac4175d5d41eccb9d27872f342a22e8fe3
-coakka-runtime-inspect-sample sha256:fdff242d12d626bfd14ae4f3efb48c2fff564b1698b01f2115369be0f5b8e391
+coakka-runtime-inspect-sample sha256:0f69c5eb4eac4ea2c11c5123971a591bf67adb4d6c0f791283f3286d3aecca89
 ```
 
 Each image tag was published for `linux/amd64` and `linux/arm64`.

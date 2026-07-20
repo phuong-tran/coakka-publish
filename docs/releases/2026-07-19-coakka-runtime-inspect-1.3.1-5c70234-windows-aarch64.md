@@ -27,7 +27,7 @@ The native archive provides:
 Validation covered:
 
 - Zig Windows ARM64 cross-build with embedded `git_commit=5c70234`
-- Windows-target static libuv cache built through the repo-owned cache wrapper
+- Windows-target static native dependency cache built through the repo-owned cache wrapper
 - runtime DLL dependency gate
 - inspect executable dependency gate
 - generated archive checksum recorded in `SHA256SUMS`

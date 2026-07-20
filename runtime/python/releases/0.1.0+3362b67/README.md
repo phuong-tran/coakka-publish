@@ -21,7 +21,7 @@ Request/reply lane in Python now has two host API shapes over the same runtime c
 - `ask_*`: submit and wait inline
 - `submit_request_*` + `terminal_events(...)`: submit now, consume terminal outcome (`response` or `deadletter`) later through a stdlib queue-backed subscription
 
-`terminal_events(...)` is a connector-owned API shape, not a separate backend mode. `CAF` remains just the current transporter underneath.
+`terminal_events(...)` is a connector-owned API shape, not a separate backend mode. `private transport backend` remains just the current transporter underneath.
 
 ## Before / After
 
@@ -89,7 +89,7 @@ Hot-path reading note:
   in the same way it is for the native C++ connector
 - the current Python connector cost center is more likely to sit in:
   - `ctypes` boundary and native read/write calls
-  - protobuf encode/decode and Python object mapping
+  - wire encode/decode and Python object mapping
   - queue/subscription churn around `terminal_events(...)`
   - thread and event handoff topology
 - only revisit cacheline-style hardening here if this layer later moves toward

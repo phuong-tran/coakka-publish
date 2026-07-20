@@ -256,6 +256,10 @@ verify_maven_sidecars
 
 verify_public_artifact_manifest
 
+if [[ -x "${repo_root}/scripts/check-native-artifact-linkage.sh" ]]; then
+  "${repo_root}/scripts/check-native-artifact-linkage.sh"
+fi
+
 if [[ "${COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS:-0}" != "1" ]]; then
   verify_framework_adapter_dependencies
 fi
@@ -265,10 +269,18 @@ if [[ "${COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE:-0}" != "1" &&
   "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh"
 fi
 
+scanner_inputs=(
+  "${repo_root}/README.md"
+  "${repo_root}/docs"
+  "${repo_root}/include"
+  "${repo_root}/scripts"
+  "${repo_root}/artifacts/public-artifacts.tsv"
+)
+
 if [[ -n "${COAKKA_PUBLIC_SURFACE_SCANNER:-}" ]]; then
-  "${COAKKA_PUBLIC_SURFACE_SCANNER}" "${repo_root}"
+  "${COAKKA_PUBLIC_SURFACE_SCANNER}" "${scanner_inputs[@]}"
 elif [[ -x "${default_scanner}" ]]; then
-  "${default_scanner}" "${repo_root}"
+  "${default_scanner}" "${scanner_inputs[@]}"
 else
   echo "[verify-public-surface] no public surface scanner found; skipped content scan" >&2
 fi

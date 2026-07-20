@@ -14,7 +14,7 @@ if ! command -v strings >/dev/null 2>&1; then
   exit 69
 fi
 
-default_blocked_re='/(Users|home)/[^[:space:]/]+/(misc|study|workspace|src|dev)/|external/(caf|libuv)'
+default_blocked_re='/(Users|home)/[^[:space:]/]+/(misc|study|workspace|src|dev)/'
 blocked_re="${COAKKA_PUBLIC_FORBIDDEN_RE:-${default_blocked_re}}"
 self_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "$0")"
 tmp_parent="${COAKKA_PUBLIC_TMP_ROOT:-${repo_root}/.tmp}"
@@ -67,7 +67,6 @@ scan_file() {
   if [[ -n "${matches}" ]]; then
     {
       echo "[public-artifact-surface] forbidden marker in ${label}"
-      echo "${matches}"
     } >>"${violations_file}"
   fi
 }

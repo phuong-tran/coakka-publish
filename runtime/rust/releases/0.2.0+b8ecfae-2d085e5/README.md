@@ -19,7 +19,7 @@ The first slice proves the Rust connector can:
 - enable the delivered-request lane by default for request/reply hosts
 
 The current package keeps the API synchronous and local-first. Tokio
-integration, crates.io metadata, generated protobufs, and broader package
+integration, crates.io metadata, generated wires, and broader package
 surface work remain follow-on packaging work.
 
 `ConnectorStartSpec::new(...)` defaults `separate_delivered_request_lane` to

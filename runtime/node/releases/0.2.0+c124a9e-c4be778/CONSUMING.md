@@ -44,4 +44,4 @@ const routes = [localRoute("svc.echo")];
 ```
 
 Use `PayloadFormat.TEXT` for plain text in user-facing code. `PLAIN_TEXT`
-remains as a compatibility alias for the protobuf wire name.
+remains as a compatibility alias for the wire name.

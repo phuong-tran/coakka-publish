@@ -14,7 +14,7 @@ surface:
 - read runtime stats
 - stop and destroy the runtime instance
 
-It does not own retry, transport, or protobuf policy. Those stay in the native
+It does not own retry, transport, or wire policy. Those stay in the native
 runtime core and higher-level connector layers.
 
 ## Smoke
