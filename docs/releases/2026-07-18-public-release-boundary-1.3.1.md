@@ -22,7 +22,7 @@ sample repository.
 | Public samples onboarding polish | `d89701e` | docs clarify `coakka-client` command naming, public runtime-client docs link, and Docker bundle output shape |
 | Public manifest provenance checkpoint | `25179d6` manifest checksum prefix | manifest comments make Mojo/Zig source-package source commits explicit without changing artifact bytes |
 | Public runtime-client Docker Hub demo image | `ab5c612` | sample image checkpoint for the prebuilt `coakka-client` walkthrough image |
-| Public runtime-inspect Docker Hub sample image | `bc87a35` | sample image checkpoint for the prebuilt browser inspect walkthrough image |
+| Public runtime-inspect Docker Hub sample image | `a455e9b` | sample image checkpoint for the self-contained browser inspect Docker image |
 
 The public artifact manifest checksum for this boundary is:
 
@@ -41,9 +41,11 @@ repository paths while verifying the same manifest SHA256 values.
 | --- | --- | --- |
 | `coakkaCoreNativeDev` | `7c17afc2` | release tooling, docs ledger, and clean-room verification evidence |
 | `coakkaCoreNativeDev` | `c5d44657` | inspect Windows archive refresh ledger and release-closure docs |
+| `coakkaCoreNativeDev` | `4ce41f19` | inspect Linux release target links C++ support libraries statically in the self-contained profile |
 | `coakka-publish` | `b824bc1` | public artifact surface and release documentation boundary |
 | `coakka-publish` | `64589b4` | README points users at the GitHub Release page with attached artifacts |
 | `coakka-publish` | `a16bef6` | inspect Windows archives, manifests, checksums, and release notes refreshed to `1.3.1+d7ab7fa` |
+| `coakka-publish` | `08484e4` | inspect Linux archives, manifest rows, Docker Hub digest, and release notes refreshed to `1.3.1+4ce41f19` |
 | `coakkaJVMConnector` | `feaee7b` | refreshed connector source/package pins over runtime native `1.3.1+bda2ef5` |
 | `coakka-samples` | `450ed5d` | public sample repository defaulting the Node.js/Python container path to Docker Hub images |
 | `coakka-samples` | `85b2a8c` | post-boundary onboarding docs and `runtime-client docker-bundle` compatibility alias |
@@ -51,6 +53,7 @@ repository paths while verifying the same manifest SHA256 values.
 | `coakka-samples` | `a614565` | public docs embed the runtime-client animated CLI walkthrough GIF |
 | `coakka-samples` | `ab5c612` | public Docker Hub image starts native runtime services and drives them with `coakka-client` |
 | `coakka-samples` | `bc87a35` | runtime-inspect sample pins/docs resolve native inspect platforms to the published archive generations |
+| `coakka-samples` | `a455e9b` | runtime-inspect Dockerfiles stop installing runtime implementation packages and gate Linux archive dependency leaks |
 
 The artifact source snapshots are intentionally not all the same as the latest
 documentation commits. If tags are added later, tag artifact source snapshots
