@@ -141,6 +141,7 @@ EOF
 
 good_fixture="$(make_fixture good)"
 expect_success "clean public manifest" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
   "${good_fixture}/scripts/verify-public-surface.sh"
@@ -150,6 +151,7 @@ cat >>"${bad_path_fixture}/artifacts/public-artifacts.tsv" <<'EOF'
 public	unsafe path	../outside.tar.gz	0000000000000000000000000000000000000000000000000000000000000000
 EOF
 expect_failure "path outside public manifest surface" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
   "${bad_path_fixture}/scripts/verify-public-surface.sh"
@@ -161,6 +163,7 @@ cat >>"${duplicate_path_fixture}/artifacts/public-artifacts.tsv" <<EOF
 public	runtime Native package duplicate	runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz	${runtime_sha}
 EOF
 expect_failure "duplicate manifest path" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
   "${duplicate_path_fixture}/scripts/verify-public-surface.sh"
@@ -172,6 +175,7 @@ cat >>"${duplicate_label_fixture}/artifacts/public-artifacts.tsv" <<EOF
 public	logger Native package	logger/native/releases/test/coakka-logger-native-test-copy.tar.gz	${logger_sha}
 EOF
 expect_failure "duplicate manifest label" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
   "${duplicate_label_fixture}/scripts/verify-public-surface.sh"
@@ -181,6 +185,7 @@ bad_sha_fixture="$(make_fixture bad-sha)"
 sed -i.bak 's/[0-9a-f]\{64\}$/ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff/' \
   "${bad_sha_fixture}/artifacts/public-artifacts.tsv"
 expect_failure "manifest checksum mismatch" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
   COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
   "${bad_sha_fixture}/scripts/verify-public-surface.sh"

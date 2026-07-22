@@ -458,7 +458,10 @@ done < <(find "${release_roots[@]}" -path '*/releases/*/SHA256SUMS' -print0)
 verify_maven_sidecars
 
 verify_public_artifact_manifest
-verify_current_bun_tauri_public_boundary
+
+if [[ "${COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY:-0}" != "1" ]]; then
+  verify_current_bun_tauri_public_boundary
+fi
 
 if [[ -x "${repo_root}/scripts/check-native-artifact-linkage.sh" ]]; then
   "${repo_root}/scripts/check-native-artifact-linkage.sh"
