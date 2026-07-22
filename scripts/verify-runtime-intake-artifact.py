@@ -148,6 +148,16 @@ def node_native_version(artifact: Path) -> tuple[str, list[str]]:
     )
 
 
+def bun_native_version(artifact: Path) -> tuple[str, list[str]]:
+    with tarfile.open(artifact, "r:gz") as archive:
+        entries = [member.name for member in archive.getmembers()]
+        packaging_text = read_tar_member_text(archive, "/dist/core/packaging.js")
+    return (
+        parse_assignment(packaging_text, r"export const COAKKA_V2_NATIVE_PACKAGE_VERSION = ['\"]([^'\"]+)['\"];", "Bun native package version"),
+        entries,
+    )
+
+
 def go_native_version(artifact: Path) -> tuple[str, list[str]]:
     with tarfile.open(artifact, "r:gz") as archive:
         entries = [member.name for member in archive.getmembers()]
@@ -191,7 +201,12 @@ def zig_native_version(artifact: Path) -> tuple[str, list[str]]:
     return source_connector_native_version(artifact, "coakka-runtime-zig-package.json")
 
 
+def tauri_native_version(artifact: Path) -> tuple[str, list[str]]:
+    return source_connector_native_version(artifact, "coakka-runtime-tauri-package.json")
+
+
 LANE_READERS = {
+    "bun": bun_native_version,
     "jvm": jvm_native_version,
     "python": python_native_version,
     "node": node_native_version,
@@ -199,6 +214,7 @@ LANE_READERS = {
     "csharp": csharp_native_version,
     "mojo": mojo_native_version,
     "rust": rust_native_version,
+    "tauri": tauri_native_version,
     "zig": zig_native_version,
 }
 

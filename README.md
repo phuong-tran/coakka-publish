@@ -33,7 +33,9 @@ Current language connector release notes:
 [2026-07-05 logger Mojo and Zig source refresh 1107154](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
 [2026-07-18 runtime JVM 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md),
 [2026-07-18 runtime JVM adapters 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
-[2026-07-18 runtime non-JVM 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md).
+[2026-07-18 runtime non-JVM 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md),
+and
+[2026-07-23 runtime Bun and Tauri 1.3.1 refresh 15d262e](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-15d262e.md).
 
 Historical runtime connector release notes:
 [2026-07-06 runtime JVM 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md),
@@ -99,6 +101,8 @@ Current public Spring Boot and Quarkus adapter generation: `1.3.1-g0a0aa76`.
 Current public Python, Node.js, Go, C#, and Rust connector generation:
 `1.3.1+bda2ef5-0a0aa76`.
 Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
+Current public Bun connector generation: `1.3.1+bda2ef5-15d262e`.
+Current public Tauri intent source connector generation: `1.3.1+bda2ef5-15d262e`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
 Current public coakka-runtime-inspect native generations:
@@ -115,8 +119,8 @@ Current public coakka-runtime-inspect Docker Hub sample image:
 | Logger Mojo and Zig source connector lanes | public source packages | `logger/{mojo,zig}/releases/` |
 | Logger native C/C++ | public | `logger/native/releases/` |
 | Runtime native C ABI | public | `runtime/native/releases/` |
-| Runtime JVM, Python, Node.js, Go, C#, Rust | public | `runtime/{jvm,python,node,go,csharp,rust}/releases/` |
-| Runtime Mojo and Zig source connector lanes | public source packages | `runtime/{mojo,zig}/releases/` |
+| Runtime JVM, Python, Node.js, Bun, Go, C#, Rust | public | `runtime/{jvm,python,node,bun,go,csharp,rust}/releases/` |
+| Runtime Mojo, Zig, and Tauri source connector lanes | public source packages | `runtime/{mojo,zig,tauri}/releases/` |
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 | coakka-client native CLI | public | `cli/releases/` |
@@ -130,9 +134,11 @@ runtime jar is refreshed over that native package as
 `1.3.1-gbda2ef5-0a0aa76`. Published Spring Boot and Quarkus adapters are
 rebuilt as `1.3.1-g0a0aa76` over that JVM runtime. Python, Node.js, Go, C#,
 Rust, Mojo, and Zig also publish against the same `1.3.1+bda2ef5` native
-package through connector source commit `0a0aa76`. Do not mix language or
-framework runtime packages from another native package generation unless a
-release note explicitly declares that combination compatible.
+package through connector source commit `0a0aa76`. Bun and the Tauri intent
+source package publish against the same native package through connector source
+commit `15d262e`. Do not mix language or framework runtime packages from
+another native package generation unless a release note explicitly declares
+that combination compatible.
 
 For development and integration work, macOS and Windows are both supported host
 surfaces in the current train. The current published package surface bundles
@@ -184,8 +190,8 @@ Current published lanes:
   - `coakka.quarkus:coakka-quarkus-extension`
 - runtime v2 public `C` ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
-- runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
-- runtime source connector packages under `runtime/{mojo,zig}/releases/`
+- runtime connector packages under `runtime/{jvm,python,node,bun,go,csharp,rust}/releases/`
+- runtime source connector packages under `runtime/{mojo,zig,tauri}/releases/`
 - coakka-client native CLI archives under `cli/releases/`
 - coakka-client Docker Linux bundles under `demo/coakka-client/releases/`
 - coakka-runtime-inspect native UI archives under `runtime-inspect/native/releases/`
@@ -334,11 +340,13 @@ These artifacts are the current public runtime set:
 | JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.1-gbda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Python runtime | `coakka_v2_connector` wheel | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Node.js runtime | `coakka-v2-connector-node` package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
+| Bun runtime | `coakka-v2-connector-bun` package | `1.3.1` from `1.3.1+bda2ef5-15d262e` | `1.3.1+bda2ef5` |
 | Go runtime | `coakka-v2-connector-go` source package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | C# runtime | `CoAkka.Runtime` NuGet package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Rust runtime | `coakka-runtime-rs` package | `1.3.1-spike` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Mojo runtime | `runtime/mojo/releases/1.3.1+bda2ef5-0a0aa76/coakka-runtime-mojo-1.3.1-source.tar.gz` | `1.3.1-source` | `1.3.1+bda2ef5` |
 | Zig runtime | `runtime/zig/releases/1.3.1+bda2ef5-0a0aa76/coakka-runtime-zig-1.3.1-source.tar.gz` | `1.3.1-source` | `1.3.1+bda2ef5` |
+| Tauri runtime | `runtime/tauri/releases/1.3.1+bda2ef5-15d262e/coakka-runtime-tauri-intents-1.3.1-source.tar.gz` | `1.3.1-source` | `1.3.1+bda2ef5` |
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.1-g0a0aa76` | via JVM runtime `1.3.1-gbda2ef5-0a0aa76` |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.1-g0a0aa76` | via JVM runtime `1.3.1-gbda2ef5-0a0aa76` |
 

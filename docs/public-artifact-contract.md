@@ -10,8 +10,8 @@ The current public release surface contains:
 - logger packages and logger Maven artifacts
 - runtime v2 public C ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
-- runtime connector packages under `runtime/{jvm,python,node,go,csharp,rust}/releases/`
-- runtime source connector packages under `runtime/{mojo,zig}/releases/`
+- runtime connector packages under `runtime/{jvm,python,node,bun,go,csharp,rust}/releases/`
+- runtime source connector packages under `runtime/{mojo,zig,tauri}/releases/`
 - runtime JVM, Spring Boot, and Quarkus artifacts under `maven/`
 - coakka-client native CLI archives under `cli/releases/`
 - coakka-client Docker Linux bundles under `demo/coakka-client/releases/`
@@ -155,7 +155,7 @@ platform baseline allowlist.
 Language packages may expose language-native APIs and language dependencies,
 but they must not weaken the native runtime contract.
 
-For JVM, Python, Node.js, Go, C#, Rust, Mojo, and Zig:
+For JVM, Python, Node.js, Bun, Go, C#, Rust, Mojo, Zig, and Tauri:
 
 - the package may expose language-native APIs and language dependencies
 - the package must include or resolve exactly one native runtime library for the
