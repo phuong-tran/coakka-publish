@@ -217,6 +217,68 @@ verify_public_artifact_manifest() {
   fi
 }
 
+verify_no_public_core_markers_in_tree() {
+  local root="$1"
+  local label="$2"
+  local forbidden_re='protobuf|libuv|(^|[^[:alnum:]_])caf([^[:alnum:]_]|$)|runtime-ffi|proto/|[.]proto'
+  local matches
+
+  matches="$(
+    grep -RInIE \
+      --exclude='*.dll' \
+      --exclude='*.dylib' \
+      --exclude='*.so' \
+      --exclude='*.a' \
+      --exclude='*.lib' \
+      --exclude='*.o' \
+      --exclude='*.rlib' \
+      --exclude='*.rmeta' \
+      --exclude='*.tgz' \
+      --exclude='*.tar.gz' \
+      "${forbidden_re}" \
+      "${root}" \
+      | head -n 20 || true
+  )"
+  if [[ -n "${matches}" ]]; then
+    echo "[verify-public-surface] public core marker leaked in ${label}" >&2
+    echo "${matches}" >&2
+    exit 1
+  fi
+}
+
+verify_no_public_core_markers_in_archive() {
+  local artifact="$1"
+  local label="$2"
+  local tmp_root
+
+  tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-artifact.XXXXXX")"
+  case "${artifact}" in
+    *.tar.gz|*.tgz)
+      COPYFILE_DISABLE=1 tar -xzf "${artifact}" -C "${tmp_root}"
+      ;;
+    *)
+      fail "unsupported archive for public core marker scan: ${artifact#"${repo_root}"/}"
+      ;;
+  esac
+  verify_no_public_core_markers_in_tree "${tmp_root}" "${label}"
+  rm -rf "${tmp_root}"
+}
+
+verify_current_bun_tauri_public_boundary() {
+  local bun_rel tauri_rel
+
+  verify_no_public_core_markers_in_tree "${repo_root}/README.md" "root README"
+  verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-04a53ae.md" "Bun/Tauri release note"
+
+  bun_rel="$(public_manifest_path_for_label "runtime Bun package")"
+  tauri_rel="$(public_manifest_path_for_label "runtime Tauri source package")"
+
+  verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${bun_rel}")" "runtime Bun release directory"
+  verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${tauri_rel}")" "runtime Tauri release directory"
+  verify_no_public_core_markers_in_archive "${repo_root}/${bun_rel}" "runtime Bun artifact"
+  verify_no_public_core_markers_in_archive "${repo_root}/${tauri_rel}" "runtime Tauri artifact"
+}
+
 require_file "README.md"
 require_file "docs/public-artifact-contract.md"
 require_file "artifacts/public-artifacts.tsv"
@@ -255,6 +317,7 @@ done < <(find "${release_roots[@]}" -path '*/releases/*/SHA256SUMS' -print0)
 verify_maven_sidecars
 
 verify_public_artifact_manifest
+verify_current_bun_tauri_public_boundary
 
 if [[ -x "${repo_root}/scripts/check-native-artifact-linkage.sh" ]]; then
   "${repo_root}/scripts/check-native-artifact-linkage.sh"

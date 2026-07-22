@@ -35,7 +35,7 @@ Current language connector release notes:
 [2026-07-18 runtime JVM adapters 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
 [2026-07-18 runtime non-JVM 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md),
 and
-[2026-07-23 runtime Bun and Tauri 1.3.1 refresh 15d262e](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-15d262e.md).
+[2026-07-23 runtime Bun and Tauri 1.3.1 refresh 04a53ae](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-04a53ae.md).
 
 Historical runtime connector release notes:
 [2026-07-06 runtime JVM 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md),
@@ -101,8 +101,8 @@ Current public Spring Boot and Quarkus adapter generation: `1.3.1-g0a0aa76`.
 Current public Python, Node.js, Go, C#, and Rust connector generation:
 `1.3.1+bda2ef5-0a0aa76`.
 Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
-Current public Bun connector generation: `1.3.1+bda2ef5-15d262e`.
-Current public Tauri intent source connector generation: `1.3.1+bda2ef5-15d262e`.
+Current public Bun connector generation: `1.3.1+bda2ef5-04a53ae`.
+Current public Tauri intent source connector generation: `1.3.1+bda2ef5-04a53ae`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
 Current public coakka-runtime-inspect native generations:
@@ -136,7 +136,7 @@ rebuilt as `1.3.1-g0a0aa76` over that JVM runtime. Python, Node.js, Go, C#,
 Rust, Mojo, and Zig also publish against the same `1.3.1+bda2ef5` native
 package through connector source commit `0a0aa76`. Bun and the Tauri intent
 source package publish against the same native package through connector source
-commit `15d262e`. Do not mix language or framework runtime packages from
+commit `04a53ae`. Do not mix language or framework runtime packages from
 another native package generation unless a release note explicitly declares
 that combination compatible.
 
@@ -311,7 +311,7 @@ published JVM jar now includes `macos-aarch64`, `linux-aarch64`,
 C#, Rust, Mojo, and Zig also publish against `1.3.1+bda2ef5` through release
 directory `1.3.1+bda2ef5-0a0aa76`. Bun and the Tauri intent source package
 publish against the same native runtime through release directory
-`1.3.1+bda2ef5-15d262e`. Each release directory has its own manifest and
+`1.3.1+bda2ef5-04a53ae`. Each release directory has its own manifest and
 checksums.
 
 Native refresh note:
@@ -321,7 +321,7 @@ Language connector release notes:
 [`docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md),
 [`docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
 [`docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md),
-[`docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-15d262e.md`](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-15d262e.md)
+[`docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-04a53ae.md`](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-04a53ae.md)
 
 Historical runtime connector release notes:
 [`docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md`](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
@@ -343,13 +343,13 @@ These artifacts are the current public runtime set:
 | JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.1-gbda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Python runtime | `coakka_v2_connector` wheel | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Node.js runtime | `coakka-v2-connector-node` package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| Bun runtime | `coakka-v2-connector-bun` package | `1.3.1` from `1.3.1+bda2ef5-15d262e` | `1.3.1+bda2ef5` |
+| Bun runtime | `coakka-v2-connector-bun` package | `1.3.1` from `1.3.1+bda2ef5-04a53ae` | `1.3.1+bda2ef5` |
 | Go runtime | `coakka-v2-connector-go` source package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | C# runtime | `CoAkka.Runtime` NuGet package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Rust runtime | `coakka-runtime-rs` package | `1.3.1-spike` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Mojo runtime | `runtime/mojo/releases/1.3.1+bda2ef5-0a0aa76/coakka-runtime-mojo-1.3.1-source.tar.gz` | `1.3.1-source` | `1.3.1+bda2ef5` |
 | Zig runtime | `runtime/zig/releases/1.3.1+bda2ef5-0a0aa76/coakka-runtime-zig-1.3.1-source.tar.gz` | `1.3.1-source` | `1.3.1+bda2ef5` |
-| Tauri runtime | `runtime/tauri/releases/1.3.1+bda2ef5-15d262e/coakka-runtime-tauri-intents-1.3.1-source.tar.gz` | `1.3.1-source` | `1.3.1+bda2ef5` |
+| Tauri runtime | `runtime/tauri/releases/1.3.1+bda2ef5-04a53ae/coakka-runtime-tauri-intents-1.3.1-source.tar.gz` | `1.3.1-source` | `1.3.1+bda2ef5` |
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.1-g0a0aa76` | via JVM runtime `1.3.1-gbda2ef5-0a0aa76` |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.1-g0a0aa76` | via JVM runtime `1.3.1-gbda2ef5-0a0aa76` |
 
