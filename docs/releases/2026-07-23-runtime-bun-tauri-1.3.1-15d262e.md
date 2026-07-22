@@ -14,6 +14,14 @@ plugin. Its public boundary is the Rust app-host intent bridge: WebView
 JavaScript sends an intent through Tauri `invoke`, Rust owns execution, and the
 WebView receives a projected result.
 
+Both artifacts are attached to the GitHub Release page
+`coakka-public-artifacts-v1.3.1`. The attached `public-artifacts.tsv` manifest
+checksum after this update is:
+
+```text
+a1ea3ed6a090df4a3e05a7ee4d985046448922a00472ce93560fea796f9bfd83  artifacts/public-artifacts.tsv
+```
+
 Verification before publish:
 
 ```sh

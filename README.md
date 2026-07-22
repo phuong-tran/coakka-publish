@@ -309,8 +309,10 @@ package `1.3.1+bda2ef5`. Spring Boot and Quarkus adapters now use
 published JVM jar now includes `macos-aarch64`, `linux-aarch64`,
 `linux-x86_64`, `windows-aarch64`, and `windows-x86_64`. Python, Node.js, Go,
 C#, Rust, Mojo, and Zig also publish against `1.3.1+bda2ef5` through release
-directory `1.3.1+bda2ef5-0a0aa76`. Each release directory has its own manifest
-and checksums.
+directory `1.3.1+bda2ef5-0a0aa76`. Bun and the Tauri intent source package
+publish against the same native runtime through release directory
+`1.3.1+bda2ef5-15d262e`. Each release directory has its own manifest and
+checksums.
 
 Native refresh note:
 [`docs/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md`](docs/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md)
@@ -318,7 +320,8 @@ Native refresh note:
 Language connector release notes:
 [`docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md),
 [`docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
-[`docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md)
+[`docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md),
+[`docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-15d262e.md`](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-15d262e.md)
 
 Historical runtime connector release notes:
 [`docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md`](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
