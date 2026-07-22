@@ -12,7 +12,7 @@ sample repository.
 | Runtime native core | `1.3.1+bda2ef5` | `coakkaCoreNativeDev` source snapshot `bda2ef5` |
 | Runtime JVM connector | `1.3.1-gbda2ef5-0a0aa76` | connector source snapshot `0a0aa76`, native core `bda2ef5` |
 | Runtime non-JVM connectors | `1.3.1+bda2ef5-0a0aa76` | connector source snapshot `0a0aa76`, native core `bda2ef5` |
-| Runtime Bun connector and Tauri intent source package | `1.3.1+bda2ef5-04a53ae` | connector source snapshot `04a53ae`, native core `bda2ef5` |
+| Runtime Bun connector and Tauri intent source package | `1.3.1+bda2ef5-247df1b` | connector source snapshot `247df1b`, native core `bda2ef5` |
 | Spring Boot and Quarkus adapters | `1.3.1-g0a0aa76` | connector source snapshot `0a0aa76` |
 | CoAkka Runtime Client | `1.3.1+2215b0f` | `coakkaCoreNativeDev` client source snapshot `2215b0f` |
 | CoAkka Runtime Inspect native UI | `1.3.1+4ce41f19` Linux; `1.3.1+d7ab7fa` macOS/Windows | `coakkaCoreNativeDev` inspect source snapshots `4ce41f19` and `d7ab7fa` |
@@ -25,12 +25,12 @@ sample repository.
 | Public runtime-client Docker Hub demo image | `ab5c612` | sample image checkpoint for the prebuilt `coakka-client` walkthrough image |
 | Public runtime-inspect Docker Hub sample image | `a455e9b` | sample image checkpoint for the self-contained browser inspect Docker image |
 | Public Bun and Tauri artifact checkpoint | `f38e4e9` | Bun package, Tauri intent source package, manifest, checksums, and release note over connector source `15d262e` |
-| Public Bun and Tauri boundary scrub checkpoint | current publish checkpoint | Bun package and Tauri intent source package refreshed over connector source `04a53ae` so public package paths and source text stay at the CoAkka boundary |
+| Public Bun and Tauri boundary scrub checkpoint | current publish checkpoint | Bun package and Tauri intent source package refreshed over connector source `247df1b` so public package paths and source text stay at the CoAkka boundary; Bun package has no runtime package dependencies |
 
 The public artifact manifest checksum for this boundary is:
 
 ```text
-ae71432feb6b8df9fae3c33739dec61f329267f6d5e7bcc13f77e61a976fc93d  artifacts/public-artifacts.tsv
+a52dceb6891b96aa89e5ed375cb98db4dbd0496449dee5bfbf4cf2bbc89a413e  artifacts/public-artifacts.tsv
 ```
 
 The GitHub Release page for `coakka-public-artifacts-v1.3.1` attaches all 34
@@ -50,10 +50,11 @@ repository paths while verifying the same manifest SHA256 values.
 | `coakka-publish` | `a16bef6` | inspect Windows archives, manifests, checksums, and release notes refreshed to `1.3.1+d7ab7fa` |
 | `coakka-publish` | `08484e4` | inspect Linux archives, manifest rows, Docker Hub digest, and release notes refreshed to `1.3.1+4ce41f19` |
 | `coakka-publish` | `f38e4e9` | Bun and Tauri artifact rows, release directories, checksums, and release notes refreshed to `1.3.1+bda2ef5-15d262e` |
-| `coakka-publish` | current publish checkpoint | Bun and Tauri artifacts refreshed to `1.3.1+bda2ef5-04a53ae` with package source text and paths kept at the public CoAkka boundary |
+| `coakka-publish` | current publish checkpoint | Bun and Tauri artifacts refreshed to `1.3.1+bda2ef5-247df1b` with package source text and paths kept at the public CoAkka boundary |
 | `coakkaJVMConnector` | `feaee7b` | refreshed connector source/package pins over runtime native `1.3.1+bda2ef5` |
 | `coakkaJVMConnector` | `15d262e` | Bun packaged artifact and Tauri intent source package builder boundary over runtime native `1.3.1+bda2ef5` |
 | `coakkaJVMConnector` | `04a53ae` | Bun and Tauri connector package boundary scrub over runtime native `1.3.1+bda2ef5` |
+| `coakkaJVMConnector` | `247df1b` | Bun package removes runtime package dependency while keeping the Tauri intent source package on the same native runtime |
 | `coakka-samples` | `450ed5d` | public sample repository defaulting the Node.js/Python container path to Docker Hub images |
 | `coakka-samples` | `85b2a8c` | post-boundary onboarding docs and `runtime-client docker-bundle` compatibility alias |
 | `coakka-samples` | `53ea3a6` | public docs point direct runtime-client downloads at GitHub Release assets |
@@ -78,6 +79,7 @@ Annotated release boundary tags:
 | `coakkaJVMConnector` | `coakka-runtime-connector-v1.3.1-bda2ef5-0a0aa76` | `0a0aa76d0f2fc7fd8eb7d7e2e5702f4070822deb` |
 | `coakkaJVMConnector` | `coakka-runtime-connector-v1.3.1-bda2ef5-15d262e` | `15d262ecd32b6551c64b82a660b7d526b9ee271c` |
 | `coakkaJVMConnector` | `coakka-runtime-connector-v1.3.1-bda2ef5-04a53ae` | `04a53ae` |
+| `coakkaJVMConnector` | `coakka-runtime-connector-v1.3.1-bda2ef5-247df1b` | `247df1b` |
 | `coakka-publish` | `coakka-public-artifacts-v1.3.1` | `1c4537c9fef468ff69f756ea96fa02b6befdd50b` |
 | `coakka-samples` | `coakka-samples-runtime-v1.3.1` | `85b2a8ca7b4d5a45a86c620d360362229b76254d` |
 
