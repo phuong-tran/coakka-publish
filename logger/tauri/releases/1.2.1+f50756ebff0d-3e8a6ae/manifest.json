@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "tauri",
+  "release_directory": "1.2.1+f50756ebff0d-3e8a6ae",
+  "artifact": {
+    "package_name": "coakka-logger-tauri-intents",
+    "artifact_version": "1.2.1-source",
+    "bundled_native_core_version": "1.2.1",
+    "bundled_native_package_version": "1.2.1+f50756ebff0d",
+    "bundled_native_git_commit": "f50756ebff0d"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ],
+  "source": {
+    "connector_repo": "coakkaJVMConnector@3e8a6ae",
+    "generated_at_utc": "2026-07-22T22:10:00Z"
+  },
+  "public_boundary": {
+    "source_package": true,
+    "no_external_native_runtime_dependencies": true,
+    "no_public_core_dependency_names": true
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 1049,
+      "sha256": "cfe3b3dcfcb86dd4b33b75a3cbea9d4486c1c28e051c07241872b2e1bae2e3f7"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 1251,
+      "sha256": "68729d4f418dc99157c766154a321e3ad7d8cdf54f64fdb6bbdffd126f6e6deb"
+    },
+    {
+      "name": "coakka-logger-tauri-intents-1.2.1-source.tar.gz",
+      "size_bytes": 1891215,
+      "sha256": "013a18bb1c9c7aeb598ecc1783e630d03ea9e6b25b52ed3c3eac774dde1a93f4"
+    }
+  ]
+}

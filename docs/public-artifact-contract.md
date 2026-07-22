@@ -183,7 +183,8 @@ For native C/C++ packages:
 Logger language packages follow the same end-user shape as runtime language
 packages: the normal artifact must include or resolve the supported logger
 native library for the current platform, and public samples must consume the
-language artifact directly.
+language artifact directly. Tauri logger artifacts may be source packages with
+bundled logger natives until there is a package-manager release lane.
 
 ## Public Source Identity
 

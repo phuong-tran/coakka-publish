@@ -29,6 +29,7 @@ Current public release boundary:
 [2026-07-18 public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
 
 Current language connector release notes:
+[2026-07-23 logger Tauri and Electron 1.2.1 refresh 3e8a6ae](docs/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md),
 [2026-07-23 logger Bun 1.2.1 refresh 6fdcc69](docs/releases/2026-07-23-logger-bun-1.2.1-6fdcc69.md),
 [2026-07-06 logger 1.2.1 Windows parity 8264bba](docs/releases/2026-07-06-logger-1.2.1-8264bba.md),
 [2026-07-05 logger Mojo and Zig source refresh 1107154](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
@@ -96,6 +97,8 @@ branding.
 
 Current public logger native generation: `1.2.1+f50756ebff0d`.
 Current public logger Bun connector generation: `1.2.1+f50756ebff0d-6fdcc69`.
+Current public logger Tauri/Electron connector generation:
+`1.2.1+f50756ebff0d-3e8a6ae`.
 Current public logger Mojo/Zig source connector generation:
 `1.2.1+f50756ebff0d-8264bba`.
 Current public native runtime generation: `1.3.1+bda2ef5`.
@@ -119,8 +122,8 @@ Current public coakka-runtime-inspect Docker Hub sample image:
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
-| Logger JVM, Python, Node.js, Bun, Go, C#, Rust | public | `logger/{jvm,python,node,bun,go,csharp,rust}/releases/` |
-| Logger Mojo and Zig source connector lanes | public source packages | `logger/{mojo,zig}/releases/` |
+| Logger JVM, Python, Node.js, Bun, Electron, Go, C#, Rust | public | `logger/{jvm,python,node,bun,electron,go,csharp,rust}/releases/` |
+| Logger Tauri, Mojo, and Zig source connector lanes | public source packages | `logger/{tauri,mojo,zig}/releases/` |
 | Logger native C/C++ | public | `logger/native/releases/` |
 | Runtime native C ABI | public | `runtime/native/releases/` |
 | Runtime JVM, Python, Node.js, Bun, Electron, Go, C#, Rust | public | `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/` |
@@ -159,10 +162,11 @@ comments for public Mojo/Zig source-package lanes so the connector source
 commit is visible at the package list boundary.
 
 The current public logger family keeps native package generation
-`1.2.1+f50756ebff0d`. JVM, Python, Node.js, Bun, Go, C#, Rust, and the native
-C/C++ archive publish against that same logger native package, with the JVM
-Maven lane at `1.2.1-gf50756ebff0d`. Bun publishes through connector source
-commit `6fdcc69`. Mojo and Zig also publish current source connector packages
+`1.2.1+f50756ebff0d`. JVM, Python, Node.js, Bun, Electron, Go, C#, Rust, and
+the native C/C++ archive publish against that same logger native package, with
+the JVM Maven lane at `1.2.1-gf50756ebff0d`. Bun publishes through connector
+source commit `6fdcc69`. Tauri and Electron publish through connector source
+commit `3e8a6ae`. Mojo and Zig also publish current source connector packages
 over that native generation through connector source commit `8264bba`. The
 published logger package surface now bundles `macOS`, `Linux`, and `Windows`
 logger natives across the binary and source release lanes.
@@ -184,9 +188,11 @@ Current published lanes:
 - `logger/python`
 - `logger/node`
 - `logger/bun`
+- `logger/electron`
 - `logger/go`
 - `logger/csharp`
 - `logger/rust`
+- `logger/tauri`
 - `logger/mojo`
 - `logger/zig`
 - `logger/native`
@@ -446,9 +452,11 @@ Logger packages are published under:
 - `logger/python/releases/`
 - `logger/node/releases/`
 - `logger/bun/releases/`
+- `logger/electron/releases/`
 - `logger/go/releases/`
 - `logger/csharp/releases/`
 - `logger/rust/releases/`
+- `logger/tauri/releases/`
 - `logger/mojo/releases/`
 - `logger/zig/releases/`
 - `logger/native/releases/`

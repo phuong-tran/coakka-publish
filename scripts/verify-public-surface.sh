@@ -352,22 +352,61 @@ PY
   rm -rf "${tmp_root}"
 }
 
+verify_logger_electron_archive_has_expected_package_dependencies() {
+  local artifact="$1"
+  local tmp_root package_json
+
+  tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-logger-electron.XXXXXX")"
+  COPYFILE_DISABLE=1 tar -xzf "${artifact}" -C "${tmp_root}"
+  package_json="${tmp_root}/package/package.json"
+  [[ -f "${package_json}" ]] || fail "logger Electron package archive is missing package/package.json"
+
+  python3 - "${package_json}" <<'PY'
+import json
+import sys
+
+package_json = sys.argv[1]
+with open(package_json, "r", encoding="utf-8") as fh:
+    package = json.load(fh)
+
+deps = package.get("dependencies") or {}
+expected = {
+    "coakka-logger-node": "https://raw.githubusercontent.com/phuong-tran/coakka-publish/main/logger/node/releases/1.2.1+f50756ebff0d/coakka-logger-node-1.2.1.tgz"
+}
+if deps != expected:
+    rendered = ", ".join(f"{name}={value}" for name, value in sorted(deps.items()))
+    raise SystemExit(f"logger Electron package has unexpected dependencies: {rendered}")
+
+for key in ("optionalDependencies", "peerDependencies"):
+    extra = package.get(key) or {}
+    if extra:
+        rendered = ", ".join(sorted(extra))
+        raise SystemExit(f"logger Electron package has dependency entries in {key}: {rendered}")
+PY
+  rm -rf "${tmp_root}"
+}
+
 verify_current_bun_tauri_public_boundary() {
-  local bun_rel electron_rel logger_bun_rel tauri_rel
+  local bun_rel electron_rel logger_bun_rel logger_electron_rel logger_tauri_rel tauri_rel
 
   verify_no_public_core_markers_in_tree "${repo_root}/README.md" "root README"
   verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-logger-bun-1.2.1-6fdcc69.md" "logger Bun release note"
+  verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md" "logger Tauri/Electron release note"
   verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md" "Bun/Tauri release note"
   verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-runtime-electron-1.3.1-4e0cab0.md" "Electron release note"
 
   bun_rel="$(public_manifest_path_for_label "runtime Bun package")"
   electron_rel="$(public_manifest_path_for_label "runtime Electron package")"
   logger_bun_rel="$(public_manifest_path_for_label "logger Bun package")"
+  logger_electron_rel="$(public_manifest_path_for_label "logger Electron package")"
+  logger_tauri_rel="$(public_manifest_path_for_label "logger Tauri source package")"
   tauri_rel="$(public_manifest_path_for_label "runtime Tauri source package")"
 
   verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${bun_rel}")" "runtime Bun release directory"
   verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${electron_rel}")" "runtime Electron release directory"
   verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${logger_bun_rel}")" "logger Bun release directory"
+  verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${logger_electron_rel}")" "logger Electron release directory"
+  verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${logger_tauri_rel}")" "logger Tauri release directory"
   verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${tauri_rel}")" "runtime Tauri release directory"
   verify_no_public_core_markers_in_archive "${repo_root}/${bun_rel}" "runtime Bun artifact"
   verify_bun_archive_has_no_runtime_package_dependencies "${repo_root}/${bun_rel}"
@@ -375,6 +414,9 @@ verify_current_bun_tauri_public_boundary() {
   verify_electron_archive_has_expected_runtime_package_dependencies "${repo_root}/${electron_rel}"
   verify_no_public_core_markers_in_archive "${repo_root}/${logger_bun_rel}" "logger Bun artifact"
   verify_archive_has_no_package_dependencies "${repo_root}/${logger_bun_rel}" "logger Bun"
+  verify_no_public_core_markers_in_archive "${repo_root}/${logger_electron_rel}" "logger Electron artifact"
+  verify_logger_electron_archive_has_expected_package_dependencies "${repo_root}/${logger_electron_rel}"
+  verify_no_public_core_markers_in_archive "${repo_root}/${logger_tauri_rel}" "logger Tauri artifact"
   verify_no_public_core_markers_in_archive "${repo_root}/${tauri_rel}" "runtime Tauri artifact"
 }
 
