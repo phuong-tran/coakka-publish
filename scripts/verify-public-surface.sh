@@ -290,6 +290,34 @@ PY
   rm -rf "${tmp_root}"
 }
 
+verify_archive_has_no_package_dependencies() {
+  local artifact="$1"
+  local label="$2"
+  local tmp_root package_json
+
+  tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-package.XXXXXX")"
+  COPYFILE_DISABLE=1 tar -xzf "${artifact}" -C "${tmp_root}"
+  package_json="${tmp_root}/package/package.json"
+  [[ -f "${package_json}" ]] || fail "${label} archive is missing package/package.json"
+
+  python3 - "${package_json}" "${label}" <<'PY'
+import json
+import sys
+
+package_json = sys.argv[1]
+label = sys.argv[2]
+with open(package_json, "r", encoding="utf-8") as fh:
+    package = json.load(fh)
+
+for key in ("dependencies", "optionalDependencies", "peerDependencies"):
+    deps = package.get(key) or {}
+    if deps:
+        rendered = ", ".join(sorted(deps))
+        raise SystemExit(f"{label} package has dependency entries in {key}: {rendered}")
+PY
+  rm -rf "${tmp_root}"
+}
+
 verify_electron_archive_has_expected_runtime_package_dependencies() {
   local artifact="$1"
   local tmp_root package_json
@@ -325,23 +353,28 @@ PY
 }
 
 verify_current_bun_tauri_public_boundary() {
-  local bun_rel electron_rel tauri_rel
+  local bun_rel electron_rel logger_bun_rel tauri_rel
 
   verify_no_public_core_markers_in_tree "${repo_root}/README.md" "root README"
+  verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-logger-bun-1.2.1-6fdcc69.md" "logger Bun release note"
   verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md" "Bun/Tauri release note"
   verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-runtime-electron-1.3.1-4e0cab0.md" "Electron release note"
 
   bun_rel="$(public_manifest_path_for_label "runtime Bun package")"
   electron_rel="$(public_manifest_path_for_label "runtime Electron package")"
+  logger_bun_rel="$(public_manifest_path_for_label "logger Bun package")"
   tauri_rel="$(public_manifest_path_for_label "runtime Tauri source package")"
 
   verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${bun_rel}")" "runtime Bun release directory"
   verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${electron_rel}")" "runtime Electron release directory"
+  verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${logger_bun_rel}")" "logger Bun release directory"
   verify_no_public_core_markers_in_tree "${repo_root}/$(dirname "${tauri_rel}")" "runtime Tauri release directory"
   verify_no_public_core_markers_in_archive "${repo_root}/${bun_rel}" "runtime Bun artifact"
   verify_bun_archive_has_no_runtime_package_dependencies "${repo_root}/${bun_rel}"
   verify_no_public_core_markers_in_archive "${repo_root}/${electron_rel}" "runtime Electron artifact"
   verify_electron_archive_has_expected_runtime_package_dependencies "${repo_root}/${electron_rel}"
+  verify_no_public_core_markers_in_archive "${repo_root}/${logger_bun_rel}" "logger Bun artifact"
+  verify_archive_has_no_package_dependencies "${repo_root}/${logger_bun_rel}" "logger Bun"
   verify_no_public_core_markers_in_archive "${repo_root}/${tauri_rel}" "runtime Tauri artifact"
 }
 

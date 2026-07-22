@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "bun",
+  "release_directory": "1.2.1+f50756ebff0d-6fdcc69",
+  "artifact": {
+    "package_name": "coakka-logger-bun",
+    "artifact_version": "1.2.1",
+    "bundled_native_core_version": "1.2.1",
+    "bundled_native_package_version": "1.2.1+f50756ebff0d",
+    "bundled_native_git_commit": "f50756ebff0d"
+  },
+  "included_platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ],
+  "source": {
+    "connector_repo": "coakkaJVMConnector@6fdcc69",
+    "generated_at_utc": "2026-07-22T20:57:32Z"
+  },
+  "public_boundary": {
+    "no_external_native_runtime_dependencies": true,
+    "no_public_core_dependency_names": true,
+    "no_package_dependencies": true
+  },
+  "files": [
+    {
+      "name": "CONSUMING.md",
+      "size_bytes": 940,
+      "sha256": "bc64b2f2da3397213e0cb15ecd76f49bc9d0e2d54f0fd9f46d80b22bef0af973"
+    },
+    {
+      "name": "README.md",
+      "size_bytes": 948,
+      "sha256": "9bfdc52a2c9385c7dd9f9070cb7665bdc1987496d5c62303707b235941996098"
+    },
+    {
+      "name": "coakka-logger-bun-1.2.1.tgz",
+      "size_bytes": 1884756,
+      "sha256": "481a963f2a64e1a0275e375222e28e5875bcb1a4c589c912bfa1f006d57ac98a"
+    }
+  ]
+}

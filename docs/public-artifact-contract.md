@@ -180,6 +180,11 @@ For native C/C++ packages:
   schema/transport dependencies; when in doubt, expose the C ABI only
 - the archive is not a Maven artifact
 
+Logger language packages follow the same end-user shape as runtime language
+packages: the normal artifact must include or resolve the supported logger
+native library for the current platform, and public samples must consume the
+language artifact directly.
+
 ## Public Source Identity
 
 Public artifacts and public samples must not mention unpublished source
