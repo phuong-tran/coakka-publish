@@ -158,6 +158,21 @@ def bun_native_version(artifact: Path) -> tuple[str, list[str]]:
     )
 
 
+def electron_native_version(artifact: Path) -> tuple[str, list[str]]:
+    with tarfile.open(artifact, "r:gz") as archive:
+        entries = [member.name for member in archive.getmembers()]
+        package_text = read_tar_member_text(archive, "/package.json")
+    package = json.loads(package_text)
+    node_dependency = (package.get("dependencies") or {}).get("coakka-v2-connector-node")
+    if not isinstance(node_dependency, str):
+        fail("Electron package must depend on the public coakka-v2-connector-node package")
+    match = re.search(r"/runtime/node/releases/([^/]+)/coakka-v2-connector-node-", node_dependency)
+    if match is None:
+        fail("Electron package coakka-v2-connector-node dependency must point at a public Node connector release")
+    release_dir = match.group(1)
+    return release_dir.rsplit("-", 1)[0], entries
+
+
 def go_native_version(artifact: Path) -> tuple[str, list[str]]:
     with tarfile.open(artifact, "r:gz") as archive:
         entries = [member.name for member in archive.getmembers()]
@@ -207,6 +222,7 @@ def tauri_native_version(artifact: Path) -> tuple[str, list[str]]:
 
 LANE_READERS = {
     "bun": bun_native_version,
+    "electron": electron_native_version,
     "jvm": jvm_native_version,
     "python": python_native_version,
     "node": node_native_version,
@@ -217,6 +233,8 @@ LANE_READERS = {
     "tauri": tauri_native_version,
     "zig": zig_native_version,
 }
+
+NATIVE_OPTIONAL_LANES = frozenset({"electron"})
 
 
 def run_scanner(scanner: Path, artifact: Path) -> None:
@@ -255,7 +273,8 @@ def main() -> int:
             f"expected {args.expected_native_version!r}"
         )
     require_no_forbidden_components(entries)
-    require_native_entries_clean(entries, args.expected_native_version, require_native=not args.allow_no_native)
+    require_native = not (args.allow_no_native or args.lane in NATIVE_OPTIONAL_LANES)
+    require_native_entries_clean(entries, args.expected_native_version, require_native=require_native)
     run_scanner(scanner, artifact)
     print(f"[runtime-intake] ok lane={args.lane} artifact={artifact.name}")
     return 0

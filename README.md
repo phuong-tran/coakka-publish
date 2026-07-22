@@ -34,8 +34,9 @@ Current language connector release notes:
 [2026-07-18 runtime JVM 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md),
 [2026-07-18 runtime JVM adapters 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
 [2026-07-18 runtime non-JVM 1.3.1 refresh 0a0aa76](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md),
+[2026-07-23 runtime Bun and Tauri 1.3.1 refresh 247df1b](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md),
 and
-[2026-07-23 runtime Bun and Tauri 1.3.1 refresh 247df1b](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md).
+[2026-07-23 runtime Electron 1.3.1 refresh 4e0cab0](docs/releases/2026-07-23-runtime-electron-1.3.1-4e0cab0.md).
 
 Historical runtime connector release notes:
 [2026-07-06 runtime JVM 1.2.1 refresh fa29f94](docs/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md),
@@ -103,6 +104,7 @@ Current public Python, Node.js, Go, C#, and Rust connector generation:
 Current public Mojo/Zig source connector generation: `1.3.1+bda2ef5-0a0aa76`.
 Current public Bun connector generation: `1.3.1+bda2ef5-247df1b`.
 Current public Tauri intent source connector generation: `1.3.1+bda2ef5-247df1b`.
+Current public Electron connector generation: `1.3.1+bda2ef5-4e0cab0`.
 Current public coakka-client generation: `1.3.1+2215b0f`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
 Current public coakka-runtime-inspect native generations:
@@ -119,7 +121,7 @@ Current public coakka-runtime-inspect Docker Hub sample image:
 | Logger Mojo and Zig source connector lanes | public source packages | `logger/{mojo,zig}/releases/` |
 | Logger native C/C++ | public | `logger/native/releases/` |
 | Runtime native C ABI | public | `runtime/native/releases/` |
-| Runtime JVM, Python, Node.js, Bun, Go, C#, Rust | public | `runtime/{jvm,python,node,bun,go,csharp,rust}/releases/` |
+| Runtime JVM, Python, Node.js, Bun, Electron, Go, C#, Rust | public | `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/` |
 | Runtime Mojo, Zig, and Tauri source connector lanes | public source packages | `runtime/{mojo,zig,tauri}/releases/` |
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
@@ -136,7 +138,8 @@ rebuilt as `1.3.1-g0a0aa76` over that JVM runtime. Python, Node.js, Go, C#,
 Rust, Mojo, and Zig also publish against the same `1.3.1+bda2ef5` native
 package through connector source commit `0a0aa76`. Bun and the Tauri intent
 source package publish against the same native package through connector source
-commit `247df1b`. Do not mix language or framework runtime packages from
+commit `247df1b`. Electron publishes against the same native package through
+connector source commit `4e0cab0`. Do not mix language or framework runtime packages from
 another native package generation unless a release note explicitly declares
 that combination compatible.
 
@@ -190,7 +193,7 @@ Current published lanes:
   - `coakka.quarkus:coakka-quarkus-extension`
 - runtime v2 public `C` ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
-- runtime connector packages under `runtime/{jvm,python,node,bun,go,csharp,rust}/releases/`
+- runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`
 - runtime source connector packages under `runtime/{mojo,zig,tauri}/releases/`
 - coakka-client native CLI archives under `cli/releases/`
 - coakka-client Docker Linux bundles under `demo/coakka-client/releases/`
@@ -311,8 +314,9 @@ published JVM jar now includes `macos-aarch64`, `linux-aarch64`,
 C#, Rust, Mojo, and Zig also publish against `1.3.1+bda2ef5` through release
 directory `1.3.1+bda2ef5-0a0aa76`. Bun and the Tauri intent source package
 publish against the same native runtime through release directory
-`1.3.1+bda2ef5-247df1b`. Each release directory has its own manifest and
-checksums.
+`1.3.1+bda2ef5-247df1b`. Electron publishes against the same native runtime
+through release directory `1.3.1+bda2ef5-4e0cab0`. Each release directory has
+its own manifest and checksums.
 
 Native refresh note:
 [`docs/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md`](docs/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md)
@@ -321,7 +325,8 @@ Language connector release notes:
 [`docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md),
 [`docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
 [`docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md`](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md),
-[`docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md`](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md)
+[`docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md`](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md),
+[`docs/releases/2026-07-23-runtime-electron-1.3.1-4e0cab0.md`](docs/releases/2026-07-23-runtime-electron-1.3.1-4e0cab0.md)
 
 Historical runtime connector release notes:
 [`docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md`](docs/releases/2026-05-23-runtime-jvm-adapters-c124a9e-1c2694b.md),
@@ -344,6 +349,7 @@ These artifacts are the current public runtime set:
 | Python runtime | `coakka_v2_connector` wheel | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Node.js runtime | `coakka-v2-connector-node` package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Bun runtime | `coakka-v2-connector-bun` package | `1.3.1` from `1.3.1+bda2ef5-247df1b` | `1.3.1+bda2ef5` |
+| Electron runtime | `coakka-v2-connector-electron` package | `1.3.1` from `1.3.1+bda2ef5-4e0cab0` | `1.3.1+bda2ef5` |
 | Go runtime | `coakka-v2-connector-go` source package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | C# runtime | `CoAkka.Runtime` NuGet package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Rust runtime | `coakka-runtime-rs` package | `1.3.1-spike` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
@@ -409,7 +415,7 @@ Maven checksum sidecars, and `artifacts/public-artifacts.tsv`. Signature,
 SBOM, and attestation files are not part of this release surface yet; add them
 as explicit release artifacts when the signing flow is introduced.
 
-Before adding a runtime JVM, Python, Node.js, Go, C#, Rust, Mojo, or Zig package release,
+Before adding a runtime JVM, Python, Node.js, Electron, Go, C#, Rust, Mojo, or Zig package release,
 run the intake gate on the submitted artifact:
 
 ```bash

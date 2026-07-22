@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "electron",
+  "release_directory": "1.3.1+bda2ef5-4e0cab0",
+  "version": "1.3.1",
+  "artifact": {
+    "name": "coakka-v2-connector-electron-1.3.1.tgz",
+    "bundled_native_package_version": "1.3.1+bda2ef5",
+    "bundled_native_git_commit": "bda2ef5",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ]
+  },
+  "connector_source_git_commit": "4e0cab0",
+  "public_boundary": {
+    "renderer_uses_intents_only": true,
+    "main_process_owns_runtime": true,
+    "no_external_native_runtime_dependencies": true,
+    "no_public_core_dependency_names": true
+  }
+}
