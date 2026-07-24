@@ -80,11 +80,14 @@ bash -n \
   scripts/scan-public-surface.sh \
   scripts/test-public-surface-scanner.sh \
   scripts/test-public-artifact-manifest.sh \
+  scripts/test-npm-package-manager-artifact.sh \
   scripts/test-runtime-intake-artifact.sh \
   scripts/verify-public-surface.sh
 python3 -m py_compile scripts/verify-runtime-intake-artifact.py
+python3 -m py_compile scripts/verify-npm-package-manager-artifact.py
 scripts/test-public-surface-scanner.sh
 scripts/test-public-artifact-manifest.sh
+scripts/test-npm-package-manager-artifact.sh
 scripts/test-runtime-intake-artifact.sh
 scripts/verify-public-surface.sh
 ```
@@ -101,6 +104,19 @@ coverage for the manifest, intake, or public boundary gate before publishing.
 If the change introduces a package-manager lane, also verify the package
 metadata or repository metadata that users will consume. Do not mark the lane
 current in docs until CI covers that public path.
+
+For npm candidates, run the package-manager preflight before moving a lane from
+planned to current:
+
+```bash
+scripts/verify-npm-package-manager-artifact.py --current-candidates
+```
+
+That preflight is stricter than the GitHub Release artifact gate: it requires
+registry-ready metadata, no `private=true`, explicit license carry-through, no
+install-time native setup scripts, no raw/file/git dependencies, no `.proto`
+schema leakage, and native delivery through the package itself or through the
+matching first-party Node package for Electron.
 
 ## GitHub Release
 

@@ -10,6 +10,9 @@ remain under [docs/releases/](docs/releases/).
   artifact repository.
 - Documented the planned npm, Go module, crates.io, and apt/deb distribution
   lanes without changing the current artifact or license surface.
+- Added an npm package-manager preflight and fixture coverage for the planned
+  Node.js, Bun, and Electron runtime/logger lanes without making an npm release
+  claim.
 
 ## 2026-07-23
 

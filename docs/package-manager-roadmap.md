@@ -58,6 +58,28 @@ Electron packages should keep the renderer boundary explicit: renderer code
 sends intent through preload/IPC, and the Electron main process owns runtime or
 logger execution.
 
+### Bootstrap Milestones
+
+The npm lane should open in small gates:
+
+1. Add a package-manager preflight that audits the current Node.js, Bun, and
+   Electron runtime/logger tarballs without changing their planned status.
+2. Make Node.js and Bun runtime/logger packages registry-ready: no
+   `private=true`, explicit license carry-through, no install-time native setup,
+   no `.proto` schema leakage, and no package dependencies on protobuf, libuv,
+   CAF, FFI/native build helpers, or other implementation/native dependency
+   packages.
+3. Make Electron runtime/logger packages depend on the matching first-party
+   Node package through npm registry version metadata instead of raw GitHub
+   tarball URLs.
+4. Add CI coverage for the package-manager artifact path or registry metadata.
+5. Only after the registry artifact exists and CI verifies it, update the
+   compatibility matrix and public samples from planned to current npm
+   coordinates.
+
+Until all of those gates pass, the existing GitHub Release tarballs remain
+public artifacts, not npm package-manager release claims.
+
 ## Go Modules
 
 Go packages need stable public module identity before release. A Go module
