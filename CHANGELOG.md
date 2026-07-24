@@ -22,6 +22,9 @@ remain under [docs/releases/](docs/releases/).
 - Added a first-reader `New To CoAkka` entrypoint that explains the runtime,
   logger, npm packages, and the relationship between `coakka-publish` and
   `coakka-samples`.
+- Staged npm onboarding patch release candidates from connector commit
+  `e5d3342`: runtime packages `1.3.2` and logger packages `1.2.2`, with the
+  same native runtime/logger generations as the previous npm release.
 
 ## 2026-07-23
 
