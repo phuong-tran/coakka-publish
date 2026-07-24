@@ -7,24 +7,24 @@ per-drop details remain in [releases/](releases/).
 ## Runtime 1.3.1 Train
 
 All runtime connector lanes below align to native runtime generation
-`1.3.1+bda2ef5` unless a later release note explicitly says otherwise.
+`1.3.1+0da8c2d9` unless a later release note explicitly says otherwise.
 
 | Surface | Public artifact or coordinate | Public generation | Native generation |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/1.3.1+bda2ef5/coakka-runtime-native-v2-1.3.1.tar.gz` | `1.3.1+bda2ef5` | `1.3.1+bda2ef5` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.1-gbda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.1-g0a0aa76` | via JVM runtime |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.1-g0a0aa76` | via JVM runtime |
-| Python runtime | `coakka_v2_connector` wheel | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| Node.js runtime | `coakka-v2-connector-node` package | npm `1.3.5` from connector `e2c2442` | `1.3.1+bda2ef5` |
-| Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.5` from connector `e2c2442` | `1.3.1+bda2ef5` |
-| Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.5` from connector `e2c2442` | via `coakka-v2-connector-node@1.3.5` |
-| Tauri runtime | `coakka-runtime-tauri-intents` source package | `1.3.1+bda2ef5-247df1b` | `1.3.1+bda2ef5` |
-| Go runtime | `coakka-v2-connector-go` source package | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| C# runtime | `CoAkka.Runtime` package | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| Rust runtime | `coakka-runtime-rs` package | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| Mojo runtime | `coakka-runtime-mojo` source package | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| Zig runtime | `coakka-runtime-zig` source package | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
+| Native C ABI | `runtime/native/releases/1.3.1+0da8c2d9/coakka-runtime-native-v2-1.3.1.tar.gz` | `1.3.1+0da8c2d9` | `1.3.1+0da8c2d9` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.1-g0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.1-g0da8c2d9-8ff6f32` | via JVM runtime |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.1-g0da8c2d9-8ff6f32` | via JVM runtime |
+| Python runtime | `coakka_v2_connector` wheel | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
+| Node.js runtime | `coakka-v2-connector-node` package | npm `1.3.6` from connector `8ff6f32` | `1.3.1+0da8c2d9` |
+| Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.6` from connector `8ff6f32` | `1.3.1+0da8c2d9` |
+| Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.6` from connector `8ff6f32` | via `coakka-v2-connector-node@1.3.6` |
+| Tauri runtime | `coakka-runtime-tauri-intents` source package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
+| Go runtime | `coakka-v2-connector-go` source package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
+| C# runtime | `CoAkka.Runtime` package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
+| Rust runtime | `coakka-runtime-rs` package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
+| Mojo runtime | `coakka-runtime-mojo` source package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
+| Zig runtime | `coakka-runtime-zig` source package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
 
 ## Logger 1.2.1 Train
 
@@ -68,9 +68,9 @@ Current npm coordinates:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@1.3.5` | `1.3.1+bda2ef5` |
-| Bun runtime | `coakka-v2-connector-bun@1.3.5` | `1.3.1+bda2ef5` |
-| Electron runtime | `coakka-v2-connector-electron@1.3.5` | via `coakka-v2-connector-node@1.3.5` |
+| Node.js runtime | `coakka-v2-connector-node@1.3.6` | `1.3.1+0da8c2d9` |
+| Bun runtime | `coakka-v2-connector-bun@1.3.6` | `1.3.1+0da8c2d9` |
+| Electron runtime | `coakka-v2-connector-electron@1.3.6` | via `coakka-v2-connector-node@1.3.6` |
 | Node.js logger | `coakka-logger-node@1.2.4` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.4` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.4` | via `coakka-logger-node@1.2.4` |

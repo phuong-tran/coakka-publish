@@ -86,12 +86,15 @@ the canonical non-npm artifact surface for every other lane.
 
 ### Current Release
 
-The staged candidate set under `package-manager/npm/candidates/e2c2442/` is
-published to npm and passes the npm registry verification gate for:
+The staged runtime candidate set under `package-manager/npm/candidates/8ff6f32/`
+is ready for the stop backpressure hotfix npm release:
 
-- `coakka-v2-connector-node@1.3.5`
-- `coakka-v2-connector-bun@1.3.5`
-- `coakka-v2-connector-electron@1.3.5`
+- `coakka-v2-connector-node@1.3.6`
+- `coakka-v2-connector-bun@1.3.6`
+- `coakka-v2-connector-electron@1.3.6`
+
+The current published logger npm set remains:
+
 - `coakka-logger-node@1.2.4`
 - `coakka-logger-bun@1.2.4`
 - `coakka-logger-electron@1.2.4`

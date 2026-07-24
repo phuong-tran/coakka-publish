@@ -53,9 +53,9 @@ APIs still belong to the application architecture around CoAkka.
 The npm lane is published and registry-verified:
 
 ```sh
-npm install coakka-v2-connector-node@1.3.5
-npm install coakka-v2-connector-bun@1.3.5
-npm install coakka-v2-connector-electron@1.3.5
+npm install coakka-v2-connector-node@1.3.6
+npm install coakka-v2-connector-bun@1.3.6
+npm install coakka-v2-connector-electron@1.3.6
 npm install coakka-logger-node@1.2.4
 npm install coakka-logger-bun@1.2.4
 npm install coakka-logger-electron@1.2.4

@@ -337,7 +337,7 @@ with open(package_json, "r", encoding="utf-8") as fh:
 
 deps = package.get("dependencies") or {}
 expected = {
-    "coakka-v2-connector-node": "https://raw.githubusercontent.com/phuong-tran/coakka-publish/main/runtime/node/releases/1.3.1+bda2ef5-0a0aa76/coakka-v2-connector-node-1.3.1.tgz"
+    "coakka-v2-connector-node": "https://raw.githubusercontent.com/phuong-tran/coakka-publish/main/runtime/node/releases/1.3.1+0da8c2d9-8ff6f32/coakka-v2-connector-node-1.3.6.tgz"
 }
 if deps != expected:
     rendered = ", ".join(f"{name}={value}" for name, value in sorted(deps.items()))
