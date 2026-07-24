@@ -4,6 +4,7 @@
 
 Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 Support: [SUPPORT.md](SUPPORT.md)
+Changelog: [CHANGELOG.md](CHANGELOG.md)
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
