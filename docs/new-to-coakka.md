@@ -70,6 +70,10 @@ The matching samples live in:
 - https://github.com/phuong-tran/coakka-samples/tree/main/logger/bun
 - https://github.com/phuong-tran/coakka-samples/tree/main/logger/electron
 
+The smallest no-checkout npm smoke is:
+
+- https://github.com/phuong-tran/coakka-samples/blob/main/docs/first-npm-smoke.md
+
 ## First Learning Path
 
 1. Clone and run samples:
