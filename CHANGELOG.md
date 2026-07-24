@@ -49,6 +49,13 @@ remain under [docs/releases/](docs/releases/).
 - Staged npm package metadata links patch candidates from connector commit
   `e2c2442`: runtime packages `1.3.5` and logger packages `1.2.4`, with the
   same native runtime/logger generations as the current npm release.
+- Published and registry-verified the npm package metadata links patch release:
+  `coakka-v2-connector-node@1.3.5`,
+  `coakka-v2-connector-bun@1.3.5`,
+  `coakka-v2-connector-electron@1.3.5`,
+  `coakka-logger-node@1.2.4`,
+  `coakka-logger-bun@1.2.4`, and
+  `coakka-logger-electron@1.2.4`.
 
 ## 2026-07-23
 

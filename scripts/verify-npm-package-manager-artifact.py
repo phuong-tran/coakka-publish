@@ -26,7 +26,7 @@ CURRENT_CANDIDATES = (
         "node",
         "coakka-v2-connector-node",
         "1.3.1+bda2ef5",
-        "package-manager/npm/candidates/f3e25ec/runtime/node/coakka-v2-connector-node-1.3.4.tgz",
+        "package-manager/npm/candidates/e2c2442/runtime/node/coakka-v2-connector-node-1.3.5.tgz",
         None,
     ),
     (
@@ -35,7 +35,7 @@ CURRENT_CANDIDATES = (
         "bun",
         "coakka-v2-connector-bun",
         "1.3.1+bda2ef5",
-        "package-manager/npm/candidates/f3e25ec/runtime/bun/coakka-v2-connector-bun-1.3.4.tgz",
+        "package-manager/npm/candidates/e2c2442/runtime/bun/coakka-v2-connector-bun-1.3.5.tgz",
         None,
     ),
     (
@@ -44,7 +44,7 @@ CURRENT_CANDIDATES = (
         "electron",
         "coakka-v2-connector-electron",
         "1.3.1+bda2ef5",
-        "package-manager/npm/candidates/f3e25ec/runtime/electron/coakka-v2-connector-electron-1.3.4.tgz",
+        "package-manager/npm/candidates/e2c2442/runtime/electron/coakka-v2-connector-electron-1.3.5.tgz",
         "coakka-v2-connector-node",
     ),
     (
@@ -53,7 +53,7 @@ CURRENT_CANDIDATES = (
         "node",
         "coakka-logger-node",
         "1.2.1+f50756ebff0d",
-        "package-manager/npm/candidates/f3e25ec/logger/node/coakka-logger-node-1.2.3.tgz",
+        "package-manager/npm/candidates/e2c2442/logger/node/coakka-logger-node-1.2.4.tgz",
         None,
     ),
     (
@@ -62,7 +62,7 @@ CURRENT_CANDIDATES = (
         "bun",
         "coakka-logger-bun",
         "1.2.1+f50756ebff0d",
-        "package-manager/npm/candidates/f3e25ec/logger/bun/coakka-logger-bun-1.2.3.tgz",
+        "package-manager/npm/candidates/e2c2442/logger/bun/coakka-logger-bun-1.2.4.tgz",
         None,
     ),
     (
@@ -71,7 +71,7 @@ CURRENT_CANDIDATES = (
         "electron",
         "coakka-logger-electron",
         "1.2.1+f50756ebff0d",
-        "package-manager/npm/candidates/f3e25ec/logger/electron/coakka-logger-electron-1.2.3.tgz",
+        "package-manager/npm/candidates/e2c2442/logger/electron/coakka-logger-electron-1.2.4.tgz",
         "coakka-logger-node",
     ),
 )

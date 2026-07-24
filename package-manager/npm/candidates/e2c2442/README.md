@@ -3,7 +3,7 @@
 This directory stages npm-ready candidate tarballs for an npm package metadata
 links patch release.
 
-Status: candidate prepared; blocked on npm publish OTP.
+Status: published to npm and registry-verified.
 
 The candidate packages are built from connector commit `e2c2442`. This patch
 adds npm metadata links (`repository`, `homepage`, `bugs`, and `keywords`) so

@@ -210,12 +210,12 @@ Repository rules:
 
 Current published lanes:
 
-- `npm: coakka-v2-connector-node@1.3.4`
-- `npm: coakka-v2-connector-bun@1.3.4`
-- `npm: coakka-v2-connector-electron@1.3.4`
-- `npm: coakka-logger-node@1.2.3`
-- `npm: coakka-logger-bun@1.2.3`
-- `npm: coakka-logger-electron@1.2.3`
+- `npm: coakka-v2-connector-node@1.3.5`
+- `npm: coakka-v2-connector-bun@1.3.5`
+- `npm: coakka-v2-connector-electron@1.3.5`
+- `npm: coakka-logger-node@1.2.4`
+- `npm: coakka-logger-bun@1.2.4`
+- `npm: coakka-logger-electron@1.2.4`
 - `logger/jvm`
 - `logger/python`
 - `logger/node`
@@ -389,9 +389,9 @@ These artifacts are the current public runtime set:
 | Native C ABI | `runtime/native/releases/1.3.1+bda2ef5/coakka-runtime-native-v2-1.3.1.tar.gz` | `1.3.1+bda2ef5` | `1.3.1+bda2ef5` |
 | JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.1-gbda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Python runtime | `coakka_v2_connector` wheel | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| Node.js runtime | `coakka-v2-connector-node` package | npm `1.3.4` from connector `f3e25ec` | `1.3.1+bda2ef5` |
-| Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.4` from connector `f3e25ec` | `1.3.1+bda2ef5` |
-| Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.4` from connector `f3e25ec` | via `coakka-v2-connector-node@1.3.4` |
+| Node.js runtime | `coakka-v2-connector-node` package | npm `1.3.5` from connector `e2c2442` | `1.3.1+bda2ef5` |
+| Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.5` from connector `e2c2442` | `1.3.1+bda2ef5` |
+| Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.5` from connector `e2c2442` | via `coakka-v2-connector-node@1.3.5` |
 | Go runtime | `coakka-v2-connector-go` source package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | C# runtime | `CoAkka.Runtime` NuGet package | `1.3.1` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | Rust runtime | `coakka-runtime-rs` package | `1.3.1-spike` from `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
