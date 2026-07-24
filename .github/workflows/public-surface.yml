@@ -26,6 +26,7 @@ jobs:
             scripts/test-public-surface-scanner.sh \
             scripts/test-public-artifact-manifest.sh \
             scripts/test-npm-package-manager-artifact.sh \
+            scripts/test-npm-package-manager-candidates.sh \
             scripts/test-runtime-intake-artifact.sh \
             scripts/verify-public-surface.sh
           python3 -m py_compile scripts/verify-runtime-intake-artifact.py
@@ -33,5 +34,6 @@ jobs:
           scripts/test-public-surface-scanner.sh
           scripts/test-public-artifact-manifest.sh
           scripts/test-npm-package-manager-artifact.sh
+          scripts/test-npm-package-manager-candidates.sh
           scripts/test-runtime-intake-artifact.sh
           scripts/verify-public-surface.sh

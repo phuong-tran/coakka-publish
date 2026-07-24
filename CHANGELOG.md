@@ -13,6 +13,9 @@ remain under [docs/releases/](docs/releases/).
 - Added an npm package-manager preflight and fixture coverage for the planned
   Node.js, Bun, and Electron runtime/logger lanes without making an npm release
   claim.
+- Staged npm-ready candidate tarballs for Node.js, Bun, and Electron runtime
+  and logger lanes under `package-manager/npm/candidates/55bbeb7/`; the lane
+  remains blocked on npm account, package ownership, and publish credentials.
 
 ## 2026-07-23
 

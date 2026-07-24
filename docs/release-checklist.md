@@ -81,6 +81,7 @@ bash -n \
   scripts/test-public-surface-scanner.sh \
   scripts/test-public-artifact-manifest.sh \
   scripts/test-npm-package-manager-artifact.sh \
+  scripts/test-npm-package-manager-candidates.sh \
   scripts/test-runtime-intake-artifact.sh \
   scripts/verify-public-surface.sh
 python3 -m py_compile scripts/verify-runtime-intake-artifact.py
@@ -88,6 +89,7 @@ python3 -m py_compile scripts/verify-npm-package-manager-artifact.py
 scripts/test-public-surface-scanner.sh
 scripts/test-public-artifact-manifest.sh
 scripts/test-npm-package-manager-artifact.sh
+scripts/test-npm-package-manager-candidates.sh
 scripts/test-runtime-intake-artifact.sh
 scripts/verify-public-surface.sh
 ```
@@ -105,8 +107,14 @@ If the change introduces a package-manager lane, also verify the package
 metadata or repository metadata that users will consume. Do not mark the lane
 current in docs until CI covers that public path.
 
-For npm candidates, run the package-manager preflight before moving a lane from
-planned to current:
+For staged npm candidate tarballs, run:
+
+```bash
+scripts/test-npm-package-manager-candidates.sh
+```
+
+For current public npm candidates, run the package-manager preflight before
+moving a lane from planned to current:
 
 ```bash
 scripts/verify-npm-package-manager-artifact.py --current-candidates

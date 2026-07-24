@@ -369,6 +369,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--expected-native-generation")
     parser.add_argument("--expected-internal-dependency")
     parser.add_argument(
+        "--candidate-manifest",
+        type=Path,
+        help="verify all package-manager candidate artifacts listed in a manifest.json file",
+    )
+    parser.add_argument(
         "--current-candidates",
         action="store_true",
         help="audit the current public Node/Bun/Electron runtime and logger npm candidates",
@@ -390,10 +395,61 @@ def verify_current_candidates() -> int:
     return 1 if failures else 0
 
 
+def require_manifest_string(entry: dict, key: str, label: str) -> str:
+    value = entry.get(key)
+    if not isinstance(value, str) or not value:
+        fail(f"{label} manifest entry must include string field {key!r}")
+    return value
+
+
+def verify_candidate_manifest(manifest_path: Path) -> int:
+    if not manifest_path.is_file():
+        print(f"[npm-package-manager] candidate manifest does not exist: {manifest_path}", file=sys.stderr)
+        return 1
+    try:
+        with manifest_path.open("r", encoding="utf-8") as fh:
+            manifest = json.load(fh)
+    except json.JSONDecodeError as exc:
+        print(f"[npm-package-manager] candidate manifest is not valid JSON: {exc}", file=sys.stderr)
+        return 1
+
+    packages = manifest.get("packages")
+    if not isinstance(packages, list) or not packages:
+        print("[npm-package-manager] candidate manifest must include a non-empty packages list", file=sys.stderr)
+        return 1
+
+    failures = 0
+    base = manifest_path.parent
+    for entry in packages:
+        if not isinstance(entry, dict):
+            print("[npm-package-manager] candidate manifest package entry must be an object", file=sys.stderr)
+            failures += 1
+            continue
+        label = str(entry.get("label") or "<unknown>")
+        try:
+            artifact = base / require_manifest_string(entry, "relative_path", label)
+            verify_artifact(
+                artifact,
+                require_manifest_string(entry, "product", label),
+                require_manifest_string(entry, "role", label),
+                require_manifest_string(entry, "package_name", label),
+                require_manifest_string(entry, "expected_native_generation", label),
+                entry.get("expected_internal_dependency"),
+            )
+        except VerificationError as exc:
+            failures += 1
+            print(f"[npm-package-manager] {label}: blocked: {exc}", file=sys.stderr)
+        else:
+            print(f"[npm-package-manager] {label}: ok")
+    return 1 if failures else 0
+
+
 def main() -> int:
     args = parse_args()
     if args.current_candidates:
         return verify_current_candidates()
+    if args.candidate_manifest:
+        return verify_candidate_manifest(args.candidate_manifest)
 
     required = (
         args.artifact,

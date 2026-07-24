@@ -80,6 +80,24 @@ The npm lane should open in small gates:
 Until all of those gates pass, the existing GitHub Release tarballs remain
 public artifacts, not npm package-manager release claims.
 
+### Current Candidate
+
+The staged candidate set under
+`package-manager/npm/candidates/55bbeb7/` passes the npm package-manager
+artifact gate for:
+
+- `coakka-v2-connector-node`
+- `coakka-v2-connector-bun`
+- `coakka-v2-connector-electron`
+- `coakka-logger-node`
+- `coakka-logger-bun`
+- `coakka-logger-electron`
+
+That candidate is still blocked on npm account, package ownership, and publish
+credentials. Do not update the compatibility matrix or public samples to npm
+coordinates until those packages exist in the registry and CI verifies the
+registry path.
+
 ## Go Modules
 
 Go packages need stable public module identity before release. A Go module

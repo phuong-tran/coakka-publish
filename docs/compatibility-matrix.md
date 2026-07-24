@@ -61,7 +61,7 @@ Package-manager channels are planned but not current release claims yet.
 
 | Channel | Intended first surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron runtime/logger packages | planned |
+| npm | Node.js, Bun, and Electron runtime/logger packages | candidate staged; blocked on npm account |
 | Go modules | Go runtime/logger packages | planned |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
