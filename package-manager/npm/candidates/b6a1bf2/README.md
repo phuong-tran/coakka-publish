@@ -3,7 +3,7 @@
 This directory stages npm-ready candidate tarballs for a runtime package
 metadata patch release.
 
-Status: candidate prepared; blocked on npm publish OTP.
+Status: published to npm and registry-verified.
 
 The candidate packages are built from connector commit `b6a1bf2`. This patch
 corrects runtime package version constants exposed by the JavaScript runtime
@@ -29,7 +29,8 @@ scripts/publish-npm-package-manager-candidates.sh \
   --dry-run
 ```
 
-Publish with current npm 2FA:
+The packages were published to npm on 2026-07-25. If this release ever needs a
+resume check, the publish helper skips already-published verified packages:
 
 ```sh
 scripts/publish-npm-package-manager-candidates.sh \

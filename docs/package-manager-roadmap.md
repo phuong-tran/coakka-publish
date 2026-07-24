@@ -89,9 +89,9 @@ the canonical non-npm artifact surface for every other lane.
 The staged candidate set under `package-manager/npm/candidates/e5d3342/` is
 published to npm and passes the npm registry verification gate for:
 
-- `coakka-v2-connector-node@1.3.2`
-- `coakka-v2-connector-bun@1.3.2`
-- `coakka-v2-connector-electron@1.3.2`
+- `coakka-v2-connector-node@1.3.3`
+- `coakka-v2-connector-bun@1.3.3`
+- `coakka-v2-connector-electron@1.3.3`
 - `coakka-logger-node@1.2.2`
 - `coakka-logger-bun@1.2.2`
 - `coakka-logger-electron@1.2.2`

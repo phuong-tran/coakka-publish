@@ -1,10 +1,11 @@
 {
-  "status": "candidate_pending_publish",
+  "status": "published_to_npm",
   "connector_commit": "b6a1bf2",
   "created_date": "2026-07-25",
+  "published_date": "2026-07-25",
+  "verified_date": "2026-07-25",
   "native_runtime_generation": "1.3.1+bda2ef5",
   "release_reason": "runtime npm metadata patch release for package version constants",
-  "blocked_on": "npm publish OTP",
   "publish_order": [
     "runtime-node",
     "runtime-bun",

@@ -32,6 +32,10 @@ remain under [docs/releases/](docs/releases/).
 - Staged runtime npm metadata patch candidates from connector commit
   `b6a1bf2`: runtime packages `1.3.3`, with the same native runtime
   generation `1.3.1+bda2ef5`.
+- Published and registry-verified the runtime npm metadata patch release:
+  `coakka-v2-connector-node@1.3.3`,
+  `coakka-v2-connector-bun@1.3.3`, and
+  `coakka-v2-connector-electron@1.3.3`.
 
 ## 2026-07-23
 

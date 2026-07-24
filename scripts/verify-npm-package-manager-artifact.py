@@ -26,7 +26,7 @@ CURRENT_CANDIDATES = (
         "node",
         "coakka-v2-connector-node",
         "1.3.1+bda2ef5",
-        "package-manager/npm/candidates/e5d3342/runtime/node/coakka-v2-connector-node-1.3.2.tgz",
+        "package-manager/npm/candidates/b6a1bf2/runtime/node/coakka-v2-connector-node-1.3.3.tgz",
         None,
     ),
     (
@@ -35,7 +35,7 @@ CURRENT_CANDIDATES = (
         "bun",
         "coakka-v2-connector-bun",
         "1.3.1+bda2ef5",
-        "package-manager/npm/candidates/e5d3342/runtime/bun/coakka-v2-connector-bun-1.3.2.tgz",
+        "package-manager/npm/candidates/b6a1bf2/runtime/bun/coakka-v2-connector-bun-1.3.3.tgz",
         None,
     ),
     (
@@ -44,7 +44,7 @@ CURRENT_CANDIDATES = (
         "electron",
         "coakka-v2-connector-electron",
         "1.3.1+bda2ef5",
-        "package-manager/npm/candidates/e5d3342/runtime/electron/coakka-v2-connector-electron-1.3.2.tgz",
+        "package-manager/npm/candidates/b6a1bf2/runtime/electron/coakka-v2-connector-electron-1.3.3.tgz",
         "coakka-v2-connector-node",
     ),
     (
