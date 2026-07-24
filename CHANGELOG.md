@@ -46,6 +46,9 @@ remain under [docs/releases/](docs/releases/).
   `coakka-logger-node@1.2.3`,
   `coakka-logger-bun@1.2.3`, and
   `coakka-logger-electron@1.2.3`.
+- Staged npm package metadata links patch candidates from connector commit
+  `e2c2442`: runtime packages `1.3.5` and logger packages `1.2.4`, with the
+  same native runtime/logger generations as the current npm release.
 
 ## 2026-07-23
 

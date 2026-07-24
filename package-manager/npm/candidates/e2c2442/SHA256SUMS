@@ -1,0 +1,6 @@
+88cf21f1e308c73f576082d9b786791d0164bb8f824c92f3ea9696623edced37  runtime/node/coakka-v2-connector-node-1.3.5.tgz
+179fdc9e2075557ccacf100bb8749c7d61ec5ee9c259afae85843e6b284a3bda  runtime/bun/coakka-v2-connector-bun-1.3.5.tgz
+81f82bb46b6a3373517dc500ec63ee404a698fdadfc12d56cf443abe7a002548  runtime/electron/coakka-v2-connector-electron-1.3.5.tgz
+0fbb35c82b02f4f1f06d900c0816b288dd74c3bce12a348b5c34aecf0d12a411  logger/node/coakka-logger-node-1.2.4.tgz
+a65b965a4476d32147369065ecac1eb323ef1763c7f751ef9f2f7cdd8542e404  logger/bun/coakka-logger-bun-1.2.4.tgz
+5f42e83f75e3eec67f67e128d680b3134992a840d783176ceb84fe58d9554790  logger/electron/coakka-logger-electron-1.2.4.tgz
