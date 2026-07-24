@@ -16,9 +16,9 @@ All runtime connector lanes below align to native runtime generation
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.1-g0a0aa76` | via JVM runtime |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.1-g0a0aa76` | via JVM runtime |
 | Python runtime | `coakka_v2_connector` wheel | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| Node.js runtime | `coakka-v2-connector-node` package | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
-| Bun runtime | `coakka-v2-connector-bun` package | `1.3.1+bda2ef5-247df1b` | `1.3.1+bda2ef5` |
-| Electron runtime | `coakka-v2-connector-electron` package | `1.3.1+bda2ef5-4e0cab0` | `1.3.1+bda2ef5` |
+| Node.js runtime | `coakka-v2-connector-node` package | npm `1.3.4` from connector `f3e25ec` | `1.3.1+bda2ef5` |
+| Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.4` from connector `f3e25ec` | `1.3.1+bda2ef5` |
+| Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.4` from connector `f3e25ec` | via `coakka-v2-connector-node@1.3.4` |
 | Tauri runtime | `coakka-runtime-tauri-intents` source package | `1.3.1+bda2ef5-247df1b` | `1.3.1+bda2ef5` |
 | Go runtime | `coakka-v2-connector-go` source package | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
 | C# runtime | `CoAkka.Runtime` package | `1.3.1+bda2ef5-0a0aa76` | `1.3.1+bda2ef5` |
@@ -36,9 +36,9 @@ All logger connector lanes below align to logger native generation
 | Native C/C++ logger | `logger/native/releases/1.2.1+f50756ebff0d/coakka-logger-native-1.2.1.tar.gz` | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
 | JVM logger | `coakka.logger:coakka-jvm-native-logger` | `1.2.1-gf50756ebff0d` | `1.2.1+f50756ebff0d` |
 | Python logger | `coakka_logger` package | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
-| Node.js logger | `coakka-logger-node` package | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
-| Bun logger | `coakka-logger-bun` package | `1.2.1+f50756ebff0d-6fdcc69` | `1.2.1+f50756ebff0d` |
-| Electron logger | `coakka-logger-electron` package | `1.2.1+f50756ebff0d-3e8a6ae` | `1.2.1+f50756ebff0d` |
+| Node.js logger | `coakka-logger-node` package | npm `1.2.3` from connector `f3e25ec` | `1.2.1+f50756ebff0d` |
+| Bun logger | `coakka-logger-bun` package | npm `1.2.3` from connector `f3e25ec` | `1.2.1+f50756ebff0d` |
+| Electron logger | `coakka-logger-electron` package | npm `1.2.3` from connector `f3e25ec` | via `coakka-logger-node@1.2.3` |
 | Tauri logger | `coakka-logger-tauri-intents` source package | `1.2.1+f50756ebff0d-3e8a6ae` | `1.2.1+f50756ebff0d` |
 | Go logger | `coakka-logger-go` source package | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
 | C# logger | `CoAkka.Logger` package | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
@@ -68,12 +68,12 @@ Current npm coordinates:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@1.3.3` | `1.3.1+bda2ef5` |
-| Bun runtime | `coakka-v2-connector-bun@1.3.3` | `1.3.1+bda2ef5` |
-| Electron runtime | `coakka-v2-connector-electron@1.3.3` | via `coakka-v2-connector-node@1.3.3` |
-| Node.js logger | `coakka-logger-node@1.2.2` | `1.2.1+f50756ebff0d` |
-| Bun logger | `coakka-logger-bun@1.2.2` | `1.2.1+f50756ebff0d` |
-| Electron logger | `coakka-logger-electron@1.2.2` | via `coakka-logger-node@1.2.2` |
+| Node.js runtime | `coakka-v2-connector-node@1.3.4` | `1.3.1+bda2ef5` |
+| Bun runtime | `coakka-v2-connector-bun@1.3.4` | `1.3.1+bda2ef5` |
+| Electron runtime | `coakka-v2-connector-electron@1.3.4` | via `coakka-v2-connector-node@1.3.4` |
+| Node.js logger | `coakka-logger-node@1.2.3` | `1.2.1+f50756ebff0d` |
+| Bun logger | `coakka-logger-bun@1.2.3` | `1.2.1+f50756ebff0d` |
+| Electron logger | `coakka-logger-electron@1.2.3` | via `coakka-logger-node@1.2.3` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for remaining
 planned package-manager channels.

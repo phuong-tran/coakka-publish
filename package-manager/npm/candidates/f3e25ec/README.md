@@ -3,7 +3,7 @@
 This directory stages npm-ready candidate tarballs for a package README
 first-run smoke patch release.
 
-Status: candidate prepared; blocked on npm publish OTP.
+Status: published to npm and registry-verified.
 
 The candidate packages are built from connector commit `f3e25ec`. This patch
 adds a no-checkout first npm smoke path to npm package README pages. Native
