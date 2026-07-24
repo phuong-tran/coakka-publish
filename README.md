@@ -165,9 +165,9 @@ of this release surface yet. The manifest also keeps explicit provenance
 comments for public Mojo/Zig source-package lanes so the connector source
 commit is visible at the package list boundary.
 
-Package-manager lanes such as npm, Go modules, crates.io, and apt/deb are
-planned distribution surfaces, not current release claims. The intended order
-and release gates are tracked in
+The npm package-manager lane is current for JavaScript runtime/logger packages.
+Go modules, crates.io, and apt/deb remain planned distribution surfaces. The
+intended order and release gates are tracked in
 [`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).
 
 The current public logger family keeps native package generation
@@ -193,6 +193,12 @@ Repository rules:
 
 Current published lanes:
 
+- `npm: coakka-v2-connector-node@1.3.1`
+- `npm: coakka-v2-connector-bun@1.3.1`
+- `npm: coakka-v2-connector-electron@1.3.1`
+- `npm: coakka-logger-node@1.2.1`
+- `npm: coakka-logger-bun@1.2.1`
+- `npm: coakka-logger-electron@1.2.1`
 - `logger/jvm`
 - `logger/python`
 - `logger/node`

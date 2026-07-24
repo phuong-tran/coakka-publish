@@ -14,8 +14,11 @@ remain under [docs/releases/](docs/releases/).
   Node.js, Bun, and Electron runtime/logger lanes without making an npm release
   claim.
 - Staged npm-ready candidate tarballs for Node.js, Bun, and Electron runtime
-  and logger lanes under `package-manager/npm/candidates/55bbeb7/`; the lane
-  remains blocked on npm account, package ownership, and publish credentials.
+  and logger lanes under `package-manager/npm/candidates/55bbeb7/`.
+- Published and registry-verified the npm JavaScript runtime/logger lane:
+  `coakka-v2-connector-node@1.3.1`, `coakka-v2-connector-bun@1.3.1`,
+  `coakka-v2-connector-electron@1.3.1`, `coakka-logger-node@1.2.1`,
+  `coakka-logger-bun@1.2.1`, and `coakka-logger-electron@1.2.1`.
 
 ## 2026-07-23
 

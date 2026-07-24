@@ -65,10 +65,10 @@ instead of living as separate manual notes.
 
 The current canonical distribution channels are GitHub Release assets, raw
 GitHub artifact URLs, the checked-in Maven layout, release-local manifests and
-checksums, and `artifacts/public-artifacts.tsv`.
+checksums, `artifacts/public-artifacts.tsv`, and npm registry packages for the
+JavaScript runtime/logger lanes.
 
-Package-manager lanes such as npm, Go modules, crates.io, and apt/deb are
-planned surfaces. They must not weaken the public artifact contract:
+Package-manager lanes must not weaken the public artifact contract:
 
 - package managers are distribution layers, not new runtime contracts
 - language packages must still include or resolve the expected platform native
@@ -77,7 +77,8 @@ planned surfaces. They must not weaken the public artifact contract:
 - package-manager coordinates must be reflected in public docs and verification
   before samples present them as current
 
-The planned order and release gate live in
+The npm lane is current for JavaScript packages. The remaining planned order
+and release gate live in
 [`package-manager-roadmap.md`](package-manager-roadmap.md).
 
 ## Consumer Shape

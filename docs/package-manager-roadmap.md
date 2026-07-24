@@ -1,7 +1,9 @@
 # Package Manager Roadmap
 
-This page records the intended package-manager direction for the public CoAkka
-artifact surface. It is a roadmap, not a current release claim.
+This page records the package-manager direction for the public CoAkka artifact
+surface. The npm JavaScript lane is current; the remaining channels are still
+roadmap items until their registry or repository paths are published and
+verified.
 
 Today, the canonical public distribution surface is:
 
@@ -10,6 +12,8 @@ Today, the canonical public distribution surface is:
 - `artifacts/public-artifacts.tsv`
 - release-local `manifest.json` and `SHA256SUMS`
 - the checked-in Maven layout for JVM and framework artifacts
+- npm registry packages for the Node.js, Bun, and Electron runtime/logger
+  lanes
 
 Package managers should improve installation ergonomics without changing the
 runtime boundary or native dependency contract.
@@ -80,23 +84,17 @@ The npm lane should open in small gates:
 Until all of those gates pass, the existing GitHub Release tarballs remain
 public artifacts, not npm package-manager release claims.
 
-### Current Candidate
+### Current Release
 
-The staged candidate set under
-`package-manager/npm/candidates/55bbeb7/` passes the npm package-manager
-artifact gate for:
+The staged candidate set under `package-manager/npm/candidates/55bbeb7/` is
+published to npm and passes the npm registry verification gate for:
 
-- `coakka-v2-connector-node`
-- `coakka-v2-connector-bun`
-- `coakka-v2-connector-electron`
-- `coakka-logger-node`
-- `coakka-logger-bun`
-- `coakka-logger-electron`
-
-That candidate is still blocked on npm account, package ownership, and publish
-credentials. Do not update the compatibility matrix or public samples to npm
-coordinates until those packages exist in the registry and CI verifies the
-registry path.
+- `coakka-v2-connector-node@1.3.1`
+- `coakka-v2-connector-bun@1.3.1`
+- `coakka-v2-connector-electron@1.3.1`
+- `coakka-logger-node@1.2.1`
+- `coakka-logger-bun@1.2.1`
+- `coakka-logger-electron@1.2.1`
 
 The publish helper keeps the first-party dependency order explicit:
 
@@ -105,6 +103,9 @@ scripts/publish-npm-package-manager-candidates.sh --dry-run
 scripts/publish-npm-package-manager-candidates.sh --publish --otp <current-code>
 scripts/verify-npm-registry-candidates.sh
 ```
+
+Public JavaScript samples should consume these npm coordinates unless they are
+explicitly exercising a local unpublished connector build.
 
 ## Go Modules
 

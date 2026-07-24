@@ -55,19 +55,28 @@ All logger connector lanes below align to logger native generation
 | `coakka-runtime-inspect` Linux x86_64/ARM64 | `1.3.1+4ce41f19` | `runtime-inspect/native/releases/` |
 | `coakka-runtime-inspect` macOS ARM64 and Windows x86_64/ARM64 | `1.3.1+d7ab7fa` | `runtime-inspect/native/releases/` |
 
-## Planned Package-Manager Channels
-
-Package-manager channels are planned but not current release claims yet.
+## Package-Manager Channels
 
 | Channel | Intended first surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron runtime/logger packages | candidate staged; blocked on npm account |
+| npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
 | Go modules | Go runtime/logger packages | planned |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
-See [package-manager-roadmap.md](package-manager-roadmap.md) for the release
-gate before any package-manager coordinate becomes public current status.
+Current npm coordinates:
+
+| Surface | npm coordinate | Native generation |
+| --- | --- | --- |
+| Node.js runtime | `coakka-v2-connector-node@1.3.1` | `1.3.1+bda2ef5` |
+| Bun runtime | `coakka-v2-connector-bun@1.3.1` | `1.3.1+bda2ef5` |
+| Electron runtime | `coakka-v2-connector-electron@1.3.1` | via `coakka-v2-connector-node@1.3.1` |
+| Node.js logger | `coakka-logger-node@1.2.1` | `1.2.1+f50756ebff0d` |
+| Bun logger | `coakka-logger-bun@1.2.1` | `1.2.1+f50756ebff0d` |
+| Electron logger | `coakka-logger-electron@1.2.1` | via `coakka-logger-node@1.2.1` |
+
+See [package-manager-roadmap.md](package-manager-roadmap.md) for remaining
+planned package-manager channels.
 
 ## Compatibility Rule
 
