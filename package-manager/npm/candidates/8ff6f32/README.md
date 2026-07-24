@@ -3,12 +3,12 @@
 This directory stages npm-ready runtime candidate tarballs for the stop
 backpressure hotfix.
 
-Status: staged locally, not published.
+Status: published to npm and registry-verified on 2026-07-25.
 
 The candidate packages are built from connector commit `8ff6f32` and bundle
 runtime native generation `1.3.1+0da8c2d9`.
 
-Candidate coordinates:
+Published coordinates:
 
 - `coakka-v2-connector-node@1.3.6`
 - `coakka-v2-connector-bun@1.3.6`
@@ -28,11 +28,9 @@ scripts/publish-npm-package-manager-candidates.sh \
   --dry-run
 ```
 
-Publish later with current npm 2FA:
+Verify the published registry artifacts:
 
 ```sh
-scripts/publish-npm-package-manager-candidates.sh \
-  --manifest package-manager/npm/candidates/8ff6f32/manifest.json \
-  --publish \
-  --otp <current-code>
+scripts/verify-npm-registry-candidates.sh \
+  --manifest package-manager/npm/candidates/8ff6f32/manifest.json
 ```

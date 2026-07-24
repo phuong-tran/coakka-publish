@@ -86,8 +86,9 @@ the canonical non-npm artifact surface for every other lane.
 
 ### Current Release
 
-The staged runtime candidate set under `package-manager/npm/candidates/8ff6f32/`
-is ready for the stop backpressure hotfix npm release:
+The runtime candidate set under `package-manager/npm/candidates/8ff6f32/`
+has been published to npm and registry-verified for the stop backpressure
+hotfix:
 
 - `coakka-v2-connector-node@1.3.6`
 - `coakka-v2-connector-bun@1.3.6`
@@ -104,7 +105,7 @@ The publish helper keeps the first-party dependency order explicit:
 ```sh
 scripts/publish-npm-package-manager-candidates.sh --dry-run
 scripts/publish-npm-package-manager-candidates.sh --publish --otp <current-code>
-scripts/verify-npm-registry-candidates.sh
+scripts/verify-npm-registry-candidates.sh --manifest package-manager/npm/candidates/8ff6f32/manifest.json
 ```
 
 Public JavaScript samples should consume these npm coordinates unless they are

@@ -32,8 +32,9 @@ scripts/test-npm-package-manager-candidates.sh package-manager/npm/candidates/8f
 scripts/publish-npm-package-manager-candidates.sh \
   --manifest package-manager/npm/candidates/8ff6f32/manifest.json \
   --dry-run
+scripts/verify-npm-registry-candidates.sh \
+  --manifest package-manager/npm/candidates/8ff6f32/manifest.json
 ```
 
-The npm candidate set is staged under
-`package-manager/npm/candidates/8ff6f32/` and must be published with current
-npm 2FA before the npm registry surface is considered live.
+The npm candidate set under `package-manager/npm/candidates/8ff6f32/` was
+published and registry-verified on 2026-07-25.
