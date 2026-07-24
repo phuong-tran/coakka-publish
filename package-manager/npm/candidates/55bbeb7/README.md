@@ -27,6 +27,12 @@ After `npm adduser` succeeds, publish in the manifest order:
 scripts/publish-npm-package-manager-candidates.sh --publish
 ```
 
+Then verify the registry surface:
+
+```sh
+scripts/verify-npm-registry-candidates.sh
+```
+
 After npm publishing is complete, refresh the compatibility matrix, public
 artifact manifest, samples, and release notes to name the registry
 coordinates as current.

@@ -28,6 +28,7 @@ jobs:
             scripts/test-npm-package-manager-artifact.sh \
             scripts/test-npm-package-manager-candidates.sh \
             scripts/publish-npm-package-manager-candidates.sh \
+            scripts/verify-npm-registry-candidates.sh \
             scripts/test-runtime-intake-artifact.sh \
             scripts/verify-public-surface.sh
           python3 -m py_compile scripts/verify-runtime-intake-artifact.py

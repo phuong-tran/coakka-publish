@@ -114,6 +114,12 @@ scripts/test-npm-package-manager-candidates.sh
 scripts/publish-npm-package-manager-candidates.sh --dry-run
 ```
 
+After publishing staged npm candidates with real credentials, run:
+
+```bash
+scripts/verify-npm-registry-candidates.sh
+```
+
 For current public npm candidates, run the package-manager preflight before
 moving a lane from planned to current:
 
