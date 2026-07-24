@@ -13,7 +13,7 @@ go 1.23.0
 
 require github.com/phuong-tran/coakka-runtime-go v0.0.0
 
-replace github.com/phuong-tran/coakka-runtime-go => ./coakka-v2-connector-go-1.3.6
+replace github.com/phuong-tran/coakka-runtime-go => ./coakka-v2-connector-go-1.3.1
 ```
 
 Example:
@@ -54,6 +54,8 @@ Current packaged platforms:
 - `macos-aarch64`
 - `linux-aarch64`
 - `linux-x86_64`
+- `windows-aarch64`
+- `windows-x86_64`
 
 One Go process may start one active runtime host. `StartConnectorOrchestrator`
 remains as the compatibility name for the same lifecycle owner.

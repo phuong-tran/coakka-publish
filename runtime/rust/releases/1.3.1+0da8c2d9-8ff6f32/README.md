@@ -2,15 +2,13 @@
 
 This is the Rust connector package for the CoAkka runtime v2.
 
-macOS and Windows are both valid development and validation hosts for this
-connector lane. Linux remains the default deployment path and the current
-packaged runtime target.
+macOS, Linux, and Windows are packaged runtime targets for this connector lane.
+Linux remains the default deployment path.
 
 The first slice proves the Rust connector can:
 
-- load the native CoAkka runtime library on the current packaged macOS/Linux
-  lanes and on Windows development hosts through the validated source-owner
-  path
+- load the native CoAkka runtime library on the current packaged macOS, Linux,
+  and Windows lanes
 - start one local `RuntimeHost`
 - apply one route snapshot
 - register a local handler
@@ -19,7 +17,7 @@ The first slice proves the Rust connector can:
 - enable the delivered-request lane by default for request/reply hosts
 
 The current package keeps the API synchronous and local-first. Tokio
-integration, crates.io metadata, generated wires, and broader package
+integration, crates.io metadata, generated wire codecs, and broader package
 surface work remain follow-on packaging work.
 
 `ConnectorStartSpec::new(...)` defaults `separate_delivered_request_lane` to
@@ -41,5 +39,5 @@ The resolver checks:
 4. `go/native/<platform>/`
 5. repo-local `lib/`
 
-The current package reuses already staged native libraries from the Go
-connector lane instead of copying a second native bundle.
+The current package stages the same native runtime generation as the other
+runtime connector lanes.

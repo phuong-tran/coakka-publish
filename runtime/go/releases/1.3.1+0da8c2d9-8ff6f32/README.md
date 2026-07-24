@@ -36,7 +36,7 @@ bash scripts/package-release.sh
 Archive được ghi ra:
 
 ```text
-go/coakka-v2-connector-go-1.3.6.tar.gz
+go/coakka-v2-connector-go-1.3.1.tar.gz
 ```
 
 Public surface chính:
@@ -148,7 +148,7 @@ Hot-path reading note:
   nghĩa như native C++ connector
 - cost center dễ đáng ngờ hơn hiện tại là:
   - `cgo` boundary và native read/write calls
-  - wire marshal/unmarshal
+  - protobuf marshal/unmarshal
   - channel/subscriber churn quanh `TerminalEvents(...)`
   - goroutine handoff topology
 - chỉ nên quay lại cacheline/padding style hardening nếu layer này sau đó

@@ -18,13 +18,13 @@ Unpack the release tarball and use a path dependency:
 
 ```toml
 [dependencies]
-coakka-runtime-rs = { path = "/path/to/coakka-runtime-rs-1.3.6-spike" }
+coakka-runtime-rs = { path = "/path/to/coakka-runtime-rs-1.3.1-spike" }
 ```
 
 Run the packaged smoke:
 
 ```sh
-cargo run --manifest-path /path/to/coakka-runtime-rs-1.3.6-spike/Cargo.toml --bin coakka-rust-smoke
+cargo run --manifest-path /path/to/coakka-runtime-rs-1.3.1-spike/Cargo.toml --bin coakka-rust-smoke
 ```
 
 The crate resolves native libraries from:
@@ -39,10 +39,11 @@ Supported packaged platforms for this connector:
 - `macos-aarch64`
 - `linux-aarch64`
 - `linux-x86_64`
+- `windows-aarch64`
+- `windows-x86_64`
 
-Windows is a supported development and validation host through the source-owner
-lane and staged runtime DLLs. This release tarball still bundles the current
-macOS/Linux native set, and Linux remains the default deployment path.
+Linux remains the default deployment path, and this release tarball also
+bundles the current Windows DLLs for Windows host validation and consumption.
 
 ## Boundary Shape
 
