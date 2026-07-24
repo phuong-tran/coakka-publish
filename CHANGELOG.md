@@ -29,6 +29,9 @@ remain under [docs/releases/](docs/releases/).
   `coakka-v2-connector-node@1.3.2`, `coakka-v2-connector-bun@1.3.2`,
   `coakka-v2-connector-electron@1.3.2`, `coakka-logger-node@1.2.2`,
   `coakka-logger-bun@1.2.2`, and `coakka-logger-electron@1.2.2`.
+- Staged runtime npm metadata patch candidates from connector commit
+  `b6a1bf2`: runtime packages `1.3.3`, with the same native runtime
+  generation `1.3.1+bda2ef5`.
 
 ## 2026-07-23
 
