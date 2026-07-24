@@ -5,11 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-07-25
 
-- Refreshed native `coakka-client` and `coakka-runtime-inspect` archives to
-  `1.3.1+0da8c2d9` so the runtime stop-backpressure hotfix covers the native
-  tooling surface as well as the language connector packages. Docker demo
-  bundles/images remain on their previous sample generations until the Docker
-  lane is refreshed separately.
+- Refreshed native `coakka-client`, `coakka-runtime-inspect`, and
+  `coakka-client` Docker Linux bundle artifacts to `1.3.1+0da8c2d9` so the
+  runtime stop-backpressure hotfix covers the native tooling surface as well
+  as the language connector packages.
 
 ## 2026-07-24
 

@@ -40,7 +40,7 @@ Current coakka-client release note:
 Current coakka-runtime-inspect release notes:
 [2026-07-25 runtime tooling stop backpressure hotfix 0da8c2d9](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md).
 Current coakka-runtime-inspect Docker Hub release note:
-[2026-07-20 coakka-runtime-inspect Docker Hub image 1.3.1 4ce41f19](docs/releases/2026-07-20-coakka-runtime-inspect-dockerhub-1.3.1-4ce41f19.md).
+[2026-07-25 runtime tooling stop backpressure hotfix 0da8c2d9](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md).
 
 Current public release boundary:
 [2026-07-18 public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
@@ -129,12 +129,12 @@ Current public Bun connector generation: `1.3.1+0da8c2d9-8ff6f32`.
 Current public Tauri intent source connector generation: `1.3.1+0da8c2d9-8ff6f32`.
 Current public Electron connector generation: `1.3.1+0da8c2d9-8ff6f32`.
 Current public coakka-client generation: `1.3.1+0da8c2d9`.
-Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
+Current public coakka-client Docker Linux bundle generation: `1.3.1+0da8c2d9`.
 Current public coakka-runtime-inspect native generation: `1.3.1+0da8c2d9`.
 Current public coakka-client Docker Hub demo image:
-`docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`.
+`docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-0da8c2d9-remote`.
 Current public coakka-runtime-inspect Docker Hub sample image:
-`docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-4ce41f19-remote`.
+`docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-0da8c2d9-remote`.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -149,8 +149,8 @@ Current public coakka-runtime-inspect Docker Hub sample image:
 | coakka-client native CLI | public | `cli/releases/` |
 | coakka-client Docker Linux bundle | public Linux bundles | `demo/coakka-client/releases/` |
 | coakka-runtime-inspect native UI | public macOS ARM64, Linux x86_64/ARM64, and Windows x86_64/ARM64 | `runtime-inspect/native/releases/` |
-| coakka-client Docker Hub demo image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote` |
-| coakka-runtime-inspect Docker Hub sample image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-4ce41f19-remote` |
+| coakka-client Docker Hub demo image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-0da8c2d9-remote` |
+| coakka-runtime-inspect Docker Hub sample image | public sample image | `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-0da8c2d9-remote` |
 
 The current root native runtime package is `1.3.1+0da8c2d9`. The published JVM
 runtime jar is refreshed over that native package as
@@ -234,9 +234,9 @@ Current published lanes:
 - coakka-client Docker Linux bundles under `demo/coakka-client/releases/`
 - coakka-runtime-inspect native UI archives under `runtime-inspect/native/releases/`
 - coakka-client Docker Hub demo image at
-  `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`
+  `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-0da8c2d9-remote`
 - coakka-runtime-inspect Docker Hub sample image at
-  `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-4ce41f19-remote`
+  `docker.io/gabrielgun1983/coakka-runtime-inspect-sample:1.3.1-0da8c2d9-remote`
 
 ## coakka-client Public Artifacts
 
@@ -249,8 +249,8 @@ Package contents:
 - `cli/releases/1.3.1+0da8c2d9/coakka-client-v2-1.3.1-macos-aarch64.tar.gz`
 - `cli/releases/1.3.1+0da8c2d9/coakka-client-v2-1.3.1-windows-x86_64.tar.gz`
 - `cli/releases/1.3.1+0da8c2d9/coakka-client-v2-1.3.1-windows-aarch64.tar.gz`
-- `demo/coakka-client/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz`
-- `demo/coakka-client/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-aarch64.tar.gz`
+- `demo/coakka-client/releases/1.3.1+0da8c2d9/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz`
+- `demo/coakka-client/releases/1.3.1+0da8c2d9/coakka-client-docker-demo-v2-1.3.1-linux-aarch64.tar.gz`
 
 `coakka-client` is the CLI runtime client for diagnostics, request/reply
 `call`/`ask`, and bounded shell script mode over the current public TCP frame
@@ -260,7 +260,7 @@ business schema registry.
 The runtime-client Docker Hub demo image is:
 
 ```text
-docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote
+docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-0da8c2d9-remote
 ```
 
 It starts two native runtime service processes and drives them with the
