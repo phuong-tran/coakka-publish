@@ -27,6 +27,12 @@ After `npm adduser` succeeds, publish in the manifest order:
 scripts/publish-npm-package-manager-candidates.sh --publish
 ```
 
+If npm reports `EOTP`, pass the current authenticator code:
+
+```sh
+scripts/publish-npm-package-manager-candidates.sh --publish --otp 123456
+```
+
 Then verify the registry surface:
 
 ```sh

@@ -117,6 +117,7 @@ scripts/publish-npm-package-manager-candidates.sh --dry-run
 After publishing staged npm candidates with real credentials, run:
 
 ```bash
+scripts/publish-npm-package-manager-candidates.sh --publish --otp <current-code>
 scripts/verify-npm-registry-candidates.sh
 ```
 

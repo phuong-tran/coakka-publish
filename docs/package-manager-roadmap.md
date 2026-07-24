@@ -102,7 +102,7 @@ The publish helper keeps the first-party dependency order explicit:
 
 ```sh
 scripts/publish-npm-package-manager-candidates.sh --dry-run
-scripts/publish-npm-package-manager-candidates.sh --publish
+scripts/publish-npm-package-manager-candidates.sh --publish --otp <current-code>
 scripts/verify-npm-registry-candidates.sh
 ```
 
