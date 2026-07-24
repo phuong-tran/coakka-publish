@@ -4,11 +4,12 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 manifest="${repo_root}/package-manager/npm/candidates/55bbeb7/manifest.json"
 tag="latest"
+only_label=""
 
 usage() {
   cat >&2 <<'EOF'
 Usage:
-  scripts/verify-npm-registry-candidates.sh [--manifest PATH] [--tag TAG]
+  scripts/verify-npm-registry-candidates.sh [--manifest PATH] [--tag TAG] [--only LABEL]
 
 Verifies that staged npm candidate tarballs have been published to the npm
 registry with matching version, license, dependency metadata, shasum, and
@@ -26,6 +27,10 @@ while [[ $# -gt 0 ]]; do
       tag="$2"
       shift 2
       ;;
+    --only)
+      only_label="$2"
+      shift 2
+      ;;
     -h|--help)
       usage
       exit 0
@@ -39,7 +44,7 @@ done
 
 "${repo_root}/scripts/test-npm-package-manager-candidates.sh" "${manifest}"
 
-python3 - "${manifest}" "${tag}" <<'PY'
+python3 - "${manifest}" "${tag}" "${only_label}" <<'PY'
 import hashlib
 import json
 import subprocess
@@ -49,6 +54,7 @@ from pathlib import Path
 
 manifest_path = Path(sys.argv[1]).resolve()
 tag = sys.argv[2]
+only_label = sys.argv[3]
 candidate_dir = manifest_path.parent
 
 
@@ -96,6 +102,10 @@ with manifest_path.open("r", encoding="utf-8") as fh:
 
 packages = {entry["label"]: entry for entry in manifest["packages"]}
 labels = manifest.get("publish_order") or list(packages)
+if only_label:
+    if only_label not in packages:
+        fail(f"unknown candidate label: {only_label}")
+    labels = [only_label]
 failures: list[str] = []
 
 for label in labels:
