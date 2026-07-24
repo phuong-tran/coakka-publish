@@ -19,6 +19,9 @@ remain under [docs/releases/](docs/releases/).
   `coakka-v2-connector-node@1.3.1`, `coakka-v2-connector-bun@1.3.1`,
   `coakka-v2-connector-electron@1.3.1`, `coakka-logger-node@1.2.1`,
   `coakka-logger-bun@1.2.1`, and `coakka-logger-electron@1.2.1`.
+- Added a first-reader `New To CoAkka` entrypoint that explains the runtime,
+  logger, npm packages, and the relationship between `coakka-publish` and
+  `coakka-samples`.
 
 ## 2026-07-23
 

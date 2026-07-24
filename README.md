@@ -5,11 +5,28 @@
 Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 Support: [SUPPORT.md](SUPPORT.md)
 Changelog: [CHANGELOG.md](CHANGELOG.md)
+New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
 Release checklist: [docs/release-checklist.md](docs/release-checklist.md)
 Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
+If you are new to CoAkka, start with
+[New To CoAkka](docs/new-to-coakka.md), then use
+[`coakka-samples`](https://github.com/phuong-tran/coakka-samples) to run
+examples.
+
+CoAkka is a native-backed runtime and logger toolkit for application-owned
+work. It helps an app route work by target name, handle request/reply,
+deadletters, bounded queues, diagnostics, and native-backed logging without
+turning every internal boundary into another hand-written HTTP endpoint.
+
+Public repository map:
+
+| Repository | Use it for | Link |
+| --- | --- | --- |
+| `coakka-publish` | Released packages, native archives, manifests, checksums, compatibility matrix, and release notes. | https://github.com/phuong-tran/coakka-publish |
+| `coakka-samples` | Runnable examples that show how an app uses the runtime and logger packages. | https://github.com/phuong-tran/coakka-samples |
 
 Current GitHub Release page with attached public artifacts:
 [CoAkka Public Artifacts 1.3.1](https://github.com/phuong-tran/coakka-publish/releases/tag/coakka-public-artifacts-v1.3.1).
