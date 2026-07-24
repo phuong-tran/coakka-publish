@@ -86,7 +86,7 @@ while IFS=$'\t' read -r label package_name relative_path; do
   artifact="${candidate_dir}/${relative_path}"
   echo "[npm-publish-candidate] ${label}: ${package_name}"
   if [[ "${mode}" == "--publish" ]] &&
-      python3 "${repo_root}/scripts/verify-npm-registry-candidates.sh" \
+      "${repo_root}/scripts/verify-npm-registry-candidates.sh" \
         --manifest "${manifest}" \
         --only "${label}" >/dev/null 2>&1; then
     echo "[npm-publish-candidate] ${label}: already published and verified"
