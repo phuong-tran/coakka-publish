@@ -5,9 +5,8 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-07-24
 
-- Added this root changelog so artifact consumers can scan the release train
-  without reading every individual release note.
-- Added public compatibility matrix and release checklist entrypoints for the
+- Documented the public artifact release train in a root changelog.
+- Added public compatibility matrix and release checklist documents for the
   artifact repository.
 
 ## 2026-07-23
