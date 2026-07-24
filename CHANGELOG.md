@@ -36,6 +36,9 @@ remain under [docs/releases/](docs/releases/).
   `coakka-v2-connector-node@1.3.3`,
   `coakka-v2-connector-bun@1.3.3`, and
   `coakka-v2-connector-electron@1.3.3`.
+- Staged npm README first-run smoke patch candidates from connector commit
+  `f3e25ec`: runtime packages `1.3.4` and logger packages `1.2.3`, with the
+  same native runtime/logger generations as the current npm release.
 
 ## 2026-07-23
 
