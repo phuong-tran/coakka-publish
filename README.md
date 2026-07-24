@@ -35,14 +35,10 @@ Current runtime hotfix note:
 [2026-07-25 runtime stop backpressure hotfix 8ff6f32](docs/releases/2026-07-25-runtime-stop-backpressure-hotfix-8ff6f32.md).
 
 Current coakka-client release note:
-[2026-07-18 coakka-client 1.3.1 2215b0f](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md).
+[2026-07-25 runtime tooling stop backpressure hotfix 0da8c2d9](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md).
 
 Current coakka-runtime-inspect release notes:
-[2026-07-19 coakka-runtime-inspect 1.3.1 d7ab7fa macOS ARM64](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md),
-[2026-07-20 coakka-runtime-inspect 1.3.1 4ce41f19 Linux x86_64](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-x86_64.md),
-[2026-07-20 coakka-runtime-inspect 1.3.1 4ce41f19 Linux ARM64](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-aarch64.md),
-and
-[2026-07-20 coakka-runtime-inspect 1.3.1 d7ab7fa Windows](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md).
+[2026-07-25 runtime tooling stop backpressure hotfix 0da8c2d9](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md).
 Current coakka-runtime-inspect Docker Hub release note:
 [2026-07-20 coakka-runtime-inspect Docker Hub image 1.3.1 4ce41f19](docs/releases/2026-07-20-coakka-runtime-inspect-dockerhub-1.3.1-4ce41f19.md).
 
@@ -132,11 +128,9 @@ Current public Mojo/Zig source connector generation: `1.3.1+0da8c2d9-8ff6f32`.
 Current public Bun connector generation: `1.3.1+0da8c2d9-8ff6f32`.
 Current public Tauri intent source connector generation: `1.3.1+0da8c2d9-8ff6f32`.
 Current public Electron connector generation: `1.3.1+0da8c2d9-8ff6f32`.
-Current public coakka-client generation: `1.3.1+2215b0f`.
+Current public coakka-client generation: `1.3.1+0da8c2d9`.
 Current public coakka-client Docker Linux bundle generation: `1.3.1+2215b0f`.
-Current public coakka-runtime-inspect native generations:
-`1.3.1+4ce41f19` for Linux x86_64 and Linux ARM64; `1.3.1+d7ab7fa`
-for macOS ARM64, Windows x86_64, and Windows ARM64.
+Current public coakka-runtime-inspect native generation: `1.3.1+0da8c2d9`.
 Current public coakka-client Docker Hub demo image:
 `docker.io/gabrielgun1983/coakka-runtime-client-demo:1.3.1-2215b0f-remote`.
 Current public coakka-runtime-inspect Docker Hub sample image:
@@ -246,15 +240,15 @@ Current published lanes:
 
 ## coakka-client Public Artifacts
 
-Current coakka-client source snapshot: `2215b0f`
+Current coakka-client source snapshot: `0da8c2d9`
 
 Package contents:
 
-- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz`
-- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-aarch64.tar.gz`
-- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-macos-aarch64.tar.gz`
-- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-windows-x86_64.tar.gz`
-- `cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-windows-aarch64.tar.gz`
+- `cli/releases/1.3.1+0da8c2d9/coakka-client-v2-1.3.1-linux-x86_64.tar.gz`
+- `cli/releases/1.3.1+0da8c2d9/coakka-client-v2-1.3.1-linux-aarch64.tar.gz`
+- `cli/releases/1.3.1+0da8c2d9/coakka-client-v2-1.3.1-macos-aarch64.tar.gz`
+- `cli/releases/1.3.1+0da8c2d9/coakka-client-v2-1.3.1-windows-x86_64.tar.gz`
+- `cli/releases/1.3.1+0da8c2d9/coakka-client-v2-1.3.1-windows-aarch64.tar.gz`
 - `demo/coakka-client/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz`
 - `demo/coakka-client/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-aarch64.tar.gz`
 
@@ -274,25 +268,19 @@ packaged `coakka-client`. This image is a sample convenience path; the
 canonical binary archives and checksums remain in the release artifacts above.
 
 Release note:
-[`docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md`](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md)
+[`docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md`](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md)
 
 ## coakka-runtime-inspect Public Artifacts
 
-Current coakka-runtime-inspect source snapshots:
-
-- macOS ARM64: `d7ab7fa`
-- Linux ARM64: `4ce41f19`
-- Linux x86_64: `4ce41f19`
-- Windows x86_64: `d7ab7fa`
-- Windows ARM64: `d7ab7fa`
+Current coakka-runtime-inspect source snapshot: `0da8c2d9`
 
 Package contents:
 
-- `runtime-inspect/native/releases/1.3.1+4ce41f19/coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz`
-- `runtime-inspect/native/releases/1.3.1+4ce41f19/coakka-runtime-inspect-v2-1.3.1-linux-x86_64.tar.gz`
-- `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz`
-- `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-windows-x86_64.tar.gz`
-- `runtime-inspect/native/releases/1.3.1+d7ab7fa/coakka-runtime-inspect-v2-1.3.1-windows-aarch64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+0da8c2d9/coakka-runtime-inspect-v2-1.3.1-linux-aarch64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+0da8c2d9/coakka-runtime-inspect-v2-1.3.1-linux-x86_64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+0da8c2d9/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+0da8c2d9/coakka-runtime-inspect-v2-1.3.1-windows-x86_64.tar.gz`
+- `runtime-inspect/native/releases/1.3.1+0da8c2d9/coakka-runtime-inspect-v2-1.3.1-windows-aarch64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
 CoAkka Runtime. It is the visual sibling of `coakka-client`, not an admin
@@ -316,11 +304,7 @@ Current limits:
 - Remote read/observe remains a future runtime surface across all platforms.
 
 Release notes:
-[`docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md`](docs/releases/2026-07-19-coakka-runtime-inspect-1.3.1-d7ab7fa-macos-aarch64.md),
-[`docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-x86_64.md`](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-x86_64.md),
-[`docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-aarch64.md`](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-aarch64.md),
-and
-[`docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md`](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md)
+[`docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md`](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md)
 
 ## Runtime v2 Public Artifacts
 
