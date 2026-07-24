@@ -7,6 +7,7 @@ Support: [SUPPORT.md](SUPPORT.md)
 Changelog: [CHANGELOG.md](CHANGELOG.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
 Release checklist: [docs/release-checklist.md](docs/release-checklist.md)
+Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 
@@ -163,6 +164,11 @@ the root artifact manifest. Signature, SBOM, and attestation files are not part
 of this release surface yet. The manifest also keeps explicit provenance
 comments for public Mojo/Zig source-package lanes so the connector source
 commit is visible at the package list boundary.
+
+Package-manager lanes such as npm, Go modules, crates.io, and apt/deb are
+planned distribution surfaces, not current release claims. The intended order
+and release gates are tracked in
+[`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).
 
 The current public logger family keeps native package generation
 `1.2.1+f50756ebff0d`. JVM, Python, Node.js, Bun, Electron, Go, C#, Rust, and

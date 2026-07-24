@@ -55,6 +55,20 @@ All logger connector lanes below align to logger native generation
 | `coakka-runtime-inspect` Linux x86_64/ARM64 | `1.3.1+4ce41f19` | `runtime-inspect/native/releases/` |
 | `coakka-runtime-inspect` macOS ARM64 and Windows x86_64/ARM64 | `1.3.1+d7ab7fa` | `runtime-inspect/native/releases/` |
 
+## Planned Package-Manager Channels
+
+Package-manager channels are planned but not current release claims yet.
+
+| Channel | Intended first surface | Status |
+| --- | --- | --- |
+| npm | Node.js, Bun, and Electron runtime/logger packages | planned |
+| Go modules | Go runtime/logger packages | planned |
+| crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
+| apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
+
+See [package-manager-roadmap.md](package-manager-roadmap.md) for the release
+gate before any package-manager coordinate becomes public current status.
+
 ## Compatibility Rule
 
 Treat the native runtime or logger native generation as the compatibility

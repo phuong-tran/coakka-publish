@@ -16,6 +16,7 @@ Before copying artifacts into this repository, identify:
 - target platforms covered by the artifact
 - whether the lane is a binary package, Maven artifact, native archive, Docker
   bundle, or source connector package
+- whether this release also opens or updates a package-manager channel
 
 Do not publish a lane if its public artifact generation and compatibility
 anchor are unclear.
@@ -33,6 +34,8 @@ For each public artifact:
 - keep Maven checksum sidecars current for Maven artifacts
 - ensure the package does not require users to install native implementation
   dependencies outside the artifact contract
+- keep package-manager metadata aligned with the same generation when a
+  package-manager lane exists
 
 For runtime connector packages, run the intake gate before copying the artifact
 into its release directory:
@@ -61,6 +64,9 @@ For each release train update:
   and compatibility
 - do not document a connector helper as released until the published artifact
   contains it
+- update [package-manager-roadmap.md](package-manager-roadmap.md) if a planned
+  npm, Go module, crates.io, apt/deb, or other package-manager lane changes
+  status
 
 Release docs should say what a consumer can download and run. They should not
 turn source-owner implementation details into the public contract.
@@ -91,6 +97,10 @@ scripts/test-runtime-jvm-native-bundle.sh
 
 If the change introduces a new package lane, add or update focused fixture
 coverage for the manifest, intake, or public boundary gate before publishing.
+
+If the change introduces a package-manager lane, also verify the package
+metadata or repository metadata that users will consume. Do not mark the lane
+current in docs until CI covers that public path.
 
 ## GitHub Release
 

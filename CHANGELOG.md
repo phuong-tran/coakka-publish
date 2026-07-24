@@ -8,6 +8,8 @@ remain under [docs/releases/](docs/releases/).
 - Documented the public artifact release train in a root changelog.
 - Added public compatibility matrix and release checklist documents for the
   artifact repository.
+- Documented the planned npm, Go module, crates.io, and apt/deb distribution
+  lanes without changing the current artifact or license surface.
 
 ## 2026-07-23
 

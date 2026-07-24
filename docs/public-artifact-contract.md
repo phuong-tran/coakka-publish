@@ -61,6 +61,25 @@ Signature, SBOM, and attestation files are future release artifacts, not implici
 claims. When introduced, they should be checked by the same public surface gate
 instead of living as separate manual notes.
 
+## Distribution Channels
+
+The current canonical distribution channels are GitHub Release assets, raw
+GitHub artifact URLs, the checked-in Maven layout, release-local manifests and
+checksums, and `artifacts/public-artifacts.tsv`.
+
+Package-manager lanes such as npm, Go modules, crates.io, and apt/deb are
+planned surfaces. They must not weaken the public artifact contract:
+
+- package managers are distribution layers, not new runtime contracts
+- language packages must still include or resolve the expected platform native
+  library for the normal path
+- end users must not have to install separate native implementation packages
+- package-manager coordinates must be reflected in public docs and verification
+  before samples present them as current
+
+The planned order and release gate live in
+[`package-manager-roadmap.md`](package-manager-roadmap.md).
+
 ## Consumer Shape
 
 `coakka-client` archives are directly runnable CLI drops. They are published
