@@ -25,6 +25,10 @@ remain under [docs/releases/](docs/releases/).
 - Staged npm onboarding patch release candidates from connector commit
   `e5d3342`: runtime packages `1.3.2` and logger packages `1.2.2`, with the
   same native runtime/logger generations as the previous npm release.
+- Published and registry-verified the npm onboarding patch release:
+  `coakka-v2-connector-node@1.3.2`, `coakka-v2-connector-bun@1.3.2`,
+  `coakka-v2-connector-electron@1.3.2`, `coakka-logger-node@1.2.2`,
+  `coakka-logger-bun@1.2.2`, and `coakka-logger-electron@1.2.2`.
 
 ## 2026-07-23
 

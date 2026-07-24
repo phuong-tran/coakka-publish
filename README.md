@@ -210,12 +210,12 @@ Repository rules:
 
 Current published lanes:
 
-- `npm: coakka-v2-connector-node@1.3.1`
-- `npm: coakka-v2-connector-bun@1.3.1`
-- `npm: coakka-v2-connector-electron@1.3.1`
-- `npm: coakka-logger-node@1.2.1`
-- `npm: coakka-logger-bun@1.2.1`
-- `npm: coakka-logger-electron@1.2.1`
+- `npm: coakka-v2-connector-node@1.3.2`
+- `npm: coakka-v2-connector-bun@1.3.2`
+- `npm: coakka-v2-connector-electron@1.3.2`
+- `npm: coakka-logger-node@1.2.2`
+- `npm: coakka-logger-bun@1.2.2`
+- `npm: coakka-logger-electron@1.2.2`
 - `logger/jvm`
 - `logger/python`
 - `logger/node`

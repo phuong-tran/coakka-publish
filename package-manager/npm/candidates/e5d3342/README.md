@@ -3,7 +3,7 @@
 This directory stages npm-ready candidate tarballs for the JavaScript runtime
 and logger onboarding patch release.
 
-Status: candidate prepared; blocked on npm publish OTP.
+Status: published to npm and registry-verified.
 
 The candidate packages are built from connector commit `e5d3342`. This is a
 package README and first-reader onboarding patch release only; the native
@@ -35,18 +35,15 @@ scripts/publish-npm-package-manager-candidates.sh \
   --dry-run
 ```
 
-Publish with current npm 2FA:
+The packages were published to npm on 2026-07-25. If this release ever needs a
+resume check, the publish helper skips already-published verified packages:
 
 ```sh
-scripts/publish-npm-package-manager-candidates.sh \
-  --manifest package-manager/npm/candidates/e5d3342/manifest.json \
-  --publish \
-  --otp <current-code>
+scripts/publish-npm-package-manager-candidates.sh --publish --otp <current-code>
 ```
 
 Then verify the registry surface:
 
 ```sh
-scripts/verify-npm-registry-candidates.sh \
-  --manifest package-manager/npm/candidates/e5d3342/manifest.json
+scripts/verify-npm-registry-candidates.sh
 ```

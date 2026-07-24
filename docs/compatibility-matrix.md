@@ -68,12 +68,12 @@ Current npm coordinates:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@1.3.1` | `1.3.1+bda2ef5` |
-| Bun runtime | `coakka-v2-connector-bun@1.3.1` | `1.3.1+bda2ef5` |
-| Electron runtime | `coakka-v2-connector-electron@1.3.1` | via `coakka-v2-connector-node@1.3.1` |
-| Node.js logger | `coakka-logger-node@1.2.1` | `1.2.1+f50756ebff0d` |
-| Bun logger | `coakka-logger-bun@1.2.1` | `1.2.1+f50756ebff0d` |
-| Electron logger | `coakka-logger-electron@1.2.1` | via `coakka-logger-node@1.2.1` |
+| Node.js runtime | `coakka-v2-connector-node@1.3.2` | `1.3.1+bda2ef5` |
+| Bun runtime | `coakka-v2-connector-bun@1.3.2` | `1.3.1+bda2ef5` |
+| Electron runtime | `coakka-v2-connector-electron@1.3.2` | via `coakka-v2-connector-node@1.3.2` |
+| Node.js logger | `coakka-logger-node@1.2.2` | `1.2.1+f50756ebff0d` |
+| Bun logger | `coakka-logger-bun@1.2.2` | `1.2.1+f50756ebff0d` |
+| Electron logger | `coakka-logger-electron@1.2.2` | via `coakka-logger-node@1.2.2` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for remaining
 planned package-manager channels.

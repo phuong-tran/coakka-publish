@@ -81,20 +81,20 @@ The npm lane should open in small gates:
    compatibility matrix and public samples from planned to current npm
    coordinates.
 
-Until all of those gates pass, the existing GitHub Release tarballs remain
-public artifacts, not npm package-manager release claims.
+Those gates have passed for the npm lane below. GitHub Release tarballs remain
+the canonical non-npm artifact surface for every other lane.
 
 ### Current Release
 
-The staged candidate set under `package-manager/npm/candidates/55bbeb7/` is
+The staged candidate set under `package-manager/npm/candidates/e5d3342/` is
 published to npm and passes the npm registry verification gate for:
 
-- `coakka-v2-connector-node@1.3.1`
-- `coakka-v2-connector-bun@1.3.1`
-- `coakka-v2-connector-electron@1.3.1`
-- `coakka-logger-node@1.2.1`
-- `coakka-logger-bun@1.2.1`
-- `coakka-logger-electron@1.2.1`
+- `coakka-v2-connector-node@1.3.2`
+- `coakka-v2-connector-bun@1.3.2`
+- `coakka-v2-connector-electron@1.3.2`
+- `coakka-logger-node@1.2.2`
+- `coakka-logger-bun@1.2.2`
+- `coakka-logger-electron@1.2.2`
 
 The publish helper keeps the first-party dependency order explicit:
 
