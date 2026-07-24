@@ -98,6 +98,13 @@ credentials. Do not update the compatibility matrix or public samples to npm
 coordinates until those packages exist in the registry and CI verifies the
 registry path.
 
+The publish helper keeps the first-party dependency order explicit:
+
+```sh
+scripts/publish-npm-package-manager-candidates.sh --dry-run
+scripts/publish-npm-package-manager-candidates.sh --publish
+```
+
 ## Go Modules
 
 Go packages need stable public module identity before release. A Go module

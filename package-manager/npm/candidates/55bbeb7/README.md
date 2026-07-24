@@ -15,6 +15,18 @@ Run the candidate gate from the repository root:
 scripts/test-npm-package-manager-candidates.sh
 ```
 
+Run the release dry-run:
+
+```sh
+scripts/publish-npm-package-manager-candidates.sh --dry-run
+```
+
+After `npm adduser` succeeds, publish in the manifest order:
+
+```sh
+scripts/publish-npm-package-manager-candidates.sh --publish
+```
+
 After npm publishing is complete, refresh the compatibility matrix, public
 artifact manifest, samples, and release notes to name the registry
 coordinates as current.

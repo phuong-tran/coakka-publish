@@ -6,6 +6,14 @@
   "native_runtime_generation": "1.3.1+bda2ef5",
   "logger_native_generation": "1.2.1+f50756ebff0d",
   "blocked_on": "npm registry account, package ownership, and publish credentials",
+  "publish_order": [
+    "runtime-node",
+    "logger-node",
+    "runtime-bun",
+    "logger-bun",
+    "runtime-electron",
+    "logger-electron"
+  ],
   "packages": [
     {
       "label": "runtime-node",

@@ -111,6 +111,7 @@ For staged npm candidate tarballs, run:
 
 ```bash
 scripts/test-npm-package-manager-candidates.sh
+scripts/publish-npm-package-manager-candidates.sh --dry-run
 ```
 
 For current public npm candidates, run the package-manager preflight before
