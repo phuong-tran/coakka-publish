@@ -50,6 +50,7 @@ Latest GitHub Release boundary note:
 [2026-07-18 public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
 
 Current language connector release notes:
+[2026-07-26 Go module native payload cleanup](docs/releases/2026-07-26-go-module-native-payload-cleanup.md),
 [2026-07-25 runtime language packages 1.3.2 caff6d6d 6d5ea58](docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md),
 [2026-07-25 npm runtime package b46f705](docs/releases/2026-07-25-npm-runtime-native-bridge-b46f705.md),
 [2026-07-23 logger Tauri and Electron 1.2.1 refresh 3e8a6ae](docs/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md),
@@ -180,8 +181,8 @@ commit is visible at the package list boundary.
 The npm package-manager lane is current for JavaScript runtime/logger packages.
 The Python runtime package `coakka-v2-connector==1.3.4` and logger package
 `coakka-logger==1.2.2` are published on PyPI. The Go runtime package
-`github.com/phuong-tran/coakka-runtime-go@v1.3.3` and logger package
-`github.com/phuong-tran/coakka-logger-go@v1.2.2` are published as public Go
+`github.com/phuong-tran/coakka-runtime-go@v1.3.5` and logger package
+`github.com/phuong-tran/coakka-logger-go@v1.2.4` are published as public Go
 modules. crates.io and apt/deb remain planned distribution surfaces. The
 intended order and release gates are tracked in
 [`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).

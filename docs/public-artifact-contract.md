@@ -225,8 +225,8 @@ Not allowed in public docs, manifests, consuming guides, or sample imports:
 Go packages need special care because the module path is public identity. A Go
 release tarball must use a public, stable module path before the corresponding
 sample is considered public-consumable. The current Go module lane satisfies
-that rule with tagged public repositories for `coakka-runtime-go@v1.3.3` and
-`coakka-logger-go@v1.2.2`.
+that rule with tagged public repositories for `coakka-runtime-go@v1.3.5` and
+`coakka-logger-go@v1.2.4`.
 
 For any future Go module path, keep public samples honest: consume the tarball
 with a temporary local `replace` until the public module repository is tagged
