@@ -1,14 +1,23 @@
-# 2026-07-25 Go Module Readiness
+# 2026-07-25 Go Module Release
 
-The Go runtime and logger lanes are ready to become public Go modules after
-their dedicated module repositories are opened and tagged.
+The Go runtime and logger lanes are now public Go modules.
 
-Current module paths:
+Current module coordinates:
 
-- `github.com/phuong-tran/coakka-runtime-go`
-- `github.com/phuong-tran/coakka-logger-go`
+- `github.com/phuong-tran/coakka-runtime-go@v1.3.2`
+- `github.com/phuong-tran/coakka-logger-go@v1.2.1`
 
-Current tarball artifacts remain the public consumable surface:
+Current module repositories:
+
+- `https://github.com/phuong-tran/coakka-runtime-go`, commit `325517c`, tag `v1.3.2`
+- `https://github.com/phuong-tran/coakka-logger-go`, commit `589abdc`, tag `v1.2.1`
+
+Onboarding docs were refreshed on module repository `main` after tagging:
+
+- `coakka-runtime-go@ce64e43`
+- `coakka-logger-go@6e8bccd`
+
+The tarball artifacts remain the GitHub artifact-mirror surface:
 
 - `runtime/go/releases/1.3.2+caff6d6d-6d5ea58/coakka-v2-connector-go-1.3.2.tar.gz`
 - `logger/go/releases/1.2.1+f50756ebff0d/coakka-logger-go-1.2.1.tar.gz`
@@ -34,11 +43,15 @@ cd /tmp/coakka-logger-go-module
 go test ./...
 ```
 
-Release blocker before documenting `go get`:
+Clean consumer verification:
 
-- create public repository `phuong-tran/coakka-runtime-go`
-- create public repository `phuong-tran/coakka-logger-go`
-- push the exported module roots
-- tag `coakka-runtime-go` as `v1.3.2`
-- tag `coakka-logger-go` as `v1.2.1`
-- verify clean consumer installs without local `replace`
+```sh
+GOPROXY=direct GONOSUMDB=github.com/phuong-tran/* go get github.com/phuong-tran/coakka-runtime-go@v1.3.2
+GOPROXY=direct GONOSUMDB=github.com/phuong-tran/* go get github.com/phuong-tran/coakka-logger-go@v1.2.1
+GOPROXY=direct GONOSUMDB=github.com/phuong-tran/* go test github.com/phuong-tran/coakka-runtime-go
+GOPROXY=direct GONOSUMDB=github.com/phuong-tran/* go test github.com/phuong-tran/coakka-logger-go
+```
+
+The default Go checksum proxy returned transient `500` responses while the new
+public module tags were fresh, so direct GitHub module fetch was used for the
+release verification. No local `replace` was used.

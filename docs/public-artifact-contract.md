@@ -224,9 +224,10 @@ Not allowed in public docs, manifests, consuming guides, or sample imports:
 
 Go packages need special care because the module path is public identity. A Go
 release tarball must use a public, stable module path before the corresponding
-sample is considered public-consumable.
+sample is considered public-consumable. The current Go module lane satisfies
+that rule with tagged public repositories for `coakka-runtime-go@v1.3.2` and
+`coakka-logger-go@v1.2.1`.
 
-Until a dedicated public Go module repository exists for that module path, the
-public sample must stay honest and consume the tarball with a temporary local
-`replace`. Do not document `go get` as the normal path until the public module
-repository is tagged and a clean consumer has verified it without `replace`.
+For any future Go module path, keep public samples honest: consume the tarball
+with a temporary local `replace` until the public module repository is tagged
+and a clean consumer has verified `go get` without `replace`.

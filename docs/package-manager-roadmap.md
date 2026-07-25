@@ -1,8 +1,8 @@
 # Package Manager Roadmap
 
 This page records the package-manager direction for the public CoAkka artifact
-surface. The npm JavaScript lane is current; the remaining channels are still
-roadmap items until their registry or repository paths are published and
+surface. npm, PyPI, and Go modules are current; the remaining channels are
+still roadmap items until their registry or repository paths are published and
 verified.
 
 Today, the canonical public distribution surface is:
@@ -14,6 +14,8 @@ Today, the canonical public distribution surface is:
 - the checked-in Maven layout for JVM and framework artifacts
 - npm registry packages for the Node.js, Bun, and Electron runtime/logger
   lanes
+- PyPI packages for Python runtime/logger lanes
+- public Go modules for Go runtime/logger lanes
 
 Package managers should improve installation ergonomics without changing the
 runtime boundary or native dependency contract.
@@ -35,7 +37,7 @@ normal path.
 | --- | --- | --- | --- |
 | 1 | npm | Node.js, Bun, Electron runtime and logger packages | Best first package-manager lane because it improves JavaScript and desktop onboarding together. |
 | 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.4` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
-| 3 | Go modules | Go runtime and logger packages | Source tarballs are module-shaped; dedicated public module repos and tags are still required before `go get` is documented as the normal path. |
+| 3 | Go modules | Go runtime and logger packages | Runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.2` and logger `github.com/phuong-tran/coakka-logger-go@v1.2.1` are published and clean-consumer verified. |
 | 4 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
 | 5 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
 
@@ -152,27 +154,22 @@ Current readiness gates:
 
 ## Go Modules
 
-Go is the next package-manager lane after npm and PyPI. The current runtime/logger Go
-source packages are module-shaped and already use stable public module paths:
+Go is a current package-manager lane. The runtime/logger Go packages are
+published as public modules with stable module paths:
 
-- `github.com/phuong-tran/coakka-runtime-go`
-- `github.com/phuong-tran/coakka-logger-go`
+- `github.com/phuong-tran/coakka-runtime-go@v1.3.2`
+- `github.com/phuong-tran/coakka-logger-go@v1.2.1`
 
-Current public samples still consume the GitHub Release tarballs through a
-temporary local `replace`. That is intentional until the dedicated public Go
-module repositories exist and are tagged.
+Current public samples consume those module coordinates directly. The GitHub
+Release tarballs remain valid artifact-mirror drops for provenance and
+compatibility, but they are no longer the normal Go install path.
 
-Before opening the Go module lane:
+Current module repositories:
 
-- create public module repositories for the two module paths above
-- export the module roots from the connector release workspace
-- verify `go test ./...` from each exported module root
-- tag `coakka-runtime-go` as `v1.3.2`
-- tag `coakka-logger-go` as `v1.2.1`
-- verify a clean consumer with `go get` and no local `replace`
-- then update samples from tarball-local `replace` to normal module install
+- `https://github.com/phuong-tran/coakka-runtime-go`, tag `v1.3.2`
+- `https://github.com/phuong-tran/coakka-logger-go`, tag `v1.2.1`
 
-The current release-ready module export commands are:
+The release module export commands are:
 
 ```sh
 # From the connector release workspace:
@@ -189,7 +186,7 @@ cd /tmp/coakka-logger-go-module
 go test ./...
 ```
 
-The tarball lane remains valid while the module repositories are pending:
+The tarball lane remains valid as the artifact mirror:
 
 - runtime tarball:
   `runtime/go/releases/1.3.2+caff6d6d-6d5ea58/coakka-v2-connector-go-1.3.2.tar.gz`
