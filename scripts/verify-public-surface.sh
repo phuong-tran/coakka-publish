@@ -320,25 +320,26 @@ PY
 
 verify_electron_archive_has_expected_runtime_package_dependencies() {
   local artifact="$1"
-  local tmp_root package_json
+  local tmp_root package_json expected_node_dependency
 
   tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-electron.XXXXXX")"
   COPYFILE_DISABLE=1 tar -xzf "${artifact}" -C "${tmp_root}"
   package_json="${tmp_root}/package/package.json"
   [[ -f "${package_json}" ]] || fail "Electron package archive is missing package/package.json"
 
-  python3 - "${package_json}" <<'PY'
+  expected_node_dependency="https://raw.githubusercontent.com/phuong-tran/coakka-publish/main/$(public_manifest_path_for_label "runtime Node package")"
+
+  python3 - "${package_json}" "${expected_node_dependency}" <<'PY'
 import json
 import sys
 
 package_json = sys.argv[1]
+expected_node_dependency = sys.argv[2]
 with open(package_json, "r", encoding="utf-8") as fh:
     package = json.load(fh)
 
 deps = package.get("dependencies") or {}
-expected = {
-    "coakka-v2-connector-node": "https://raw.githubusercontent.com/phuong-tran/coakka-publish/main/runtime/node/releases/1.3.1+0da8c2d9-8ff6f32/coakka-v2-connector-node-1.3.6.tgz"
-}
+expected = {"coakka-v2-connector-node": expected_node_dependency}
 if deps != expected:
     rendered = ", ".join(f"{name}={value}" for name, value in sorted(deps.items()))
     raise SystemExit(f"Electron package has unexpected runtime dependencies: {rendered}")
