@@ -3,7 +3,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 require_public_metadata="false"
-manifest="${repo_root}/package-manager/npm/candidates/e2c2442/manifest.json"
+manifest="${repo_root}/package-manager/npm/candidates/b052a3f/manifest.json"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
