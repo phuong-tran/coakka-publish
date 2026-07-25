@@ -34,7 +34,7 @@ normal path.
 | Priority | Channel | Main use | Notes |
 | --- | --- | --- | --- |
 | 1 | npm | Node.js, Bun, Electron runtime and logger packages | Best first package-manager lane because it improves JavaScript and desktop onboarding together. |
-| 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.4` and logger package `coakka-logger==1.2.1` are published and install-smoked. |
+| 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.4` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
 | 3 | Go modules | Go runtime and logger packages | Requires stable public module identity before release. |
 | 4 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
 | 5 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
@@ -131,15 +131,15 @@ The current runtime and logger wheels are published on PyPI and remain mirrored
 as GitHub Release artifacts:
 
 - PyPI current: `coakka-v2-connector==1.3.4`
-- PyPI current: `coakka-logger==1.2.1`
+- PyPI current: `coakka-logger==1.2.2`
 - GitHub Release artifact mirror: `runtime/python/releases/1.3.2+caff6d6d-6d5ea58/coakka_v2_connector-1.3.2-py3-none-any.whl`
-- GitHub Release artifact mirror: `logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.1-py3-none-any.whl`
+- GitHub Release artifact mirror: `logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.2-py3-none-any.whl`
 
 Verified PyPI logger gate:
 
 - package name and version availability were checked before first upload
 - the logger PyPI readiness gate passed in the connector release workspace
-- PyPI upload succeeded for `coakka-logger==1.2.1`
+- PyPI upload succeeded for `coakka-logger==1.2.2`
 - clean install smoke loaded logger native package `1.2.1+f50756ebff0d`
 - public logger samples now install from PyPI
 

@@ -179,7 +179,7 @@ commit is visible at the package list boundary.
 
 The npm package-manager lane is current for JavaScript runtime/logger packages.
 The Python runtime package `coakka-v2-connector==1.3.4` and logger package
-`coakka-logger==1.2.1` are published on PyPI. Go modules, crates.io, and
+`coakka-logger==1.2.2` are published on PyPI. Go modules, crates.io, and
 apt/deb remain planned distribution surfaces. The intended order and release gates are tracked in
 [`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).
 
@@ -210,7 +210,7 @@ Current published lanes:
 - `npm: coakka-v2-connector-bun@1.3.9`
 - `npm: coakka-v2-connector-electron@1.3.9`
 - `PyPI: coakka-v2-connector==1.3.4`
-- `PyPI: coakka-logger==1.2.1`
+- `PyPI: coakka-logger==1.2.2`
 - `npm: coakka-logger-node@1.2.6`
 - `npm: coakka-logger-bun@1.2.6`
 - `npm: coakka-logger-electron@1.2.6`

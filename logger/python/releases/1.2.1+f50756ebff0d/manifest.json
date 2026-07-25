@@ -5,7 +5,7 @@
   "release_directory": "1.2.1+f50756ebff0d",
   "artifact": {
     "package_name": "coakka-logger",
-    "artifact_version": "1.2.1",
+    "artifact_version": "1.2.2",
     "bundled_native_core_version": "1.2.1",
     "bundled_native_package_version": "1.2.1+f50756ebff0d",
     "bundled_native_git_commit": "f50756ebff0d"
@@ -18,24 +18,29 @@
     "windows-x86_64"
   ],
   "source": {
-    "connector_repo": "coakkaJVMConnector@8264bba",
-    "generated_at_utc": "2026-07-06T03:32:25Z"
+    "connector_repo": "coakkaJVMConnector@5d47ac7",
+    "generated_at_utc": "2026-07-25T18:21:36Z"
   },
   "files": [
     {
       "name": "CONSUMING.md",
-      "size_bytes": 868,
-      "sha256": "96929a6e18f927e41846da498ae7941ab0cd09cbaec11be2f9cce4b35629ded1"
+      "size_bytes": 907,
+      "sha256": "cc5ca96208562f3904fb748247bae074bed482c9497d140e9efa07478dc36e96"
     },
     {
       "name": "README.md",
-      "size_bytes": 370,
-      "sha256": "994193191c575e76b66042bd17be387da1562ac522cb2936ae5e4839738c9103"
+      "size_bytes": 621,
+      "sha256": "92d8c4a7b92bb36ad876dd5ad09c136104826d99920b1cd883e9a3e3e3bb0e2f"
     },
     {
       "name": "coakka_logger-1.2.1-py3-none-any.whl",
       "size_bytes": 1893100,
       "sha256": "6e03f595bc7c5496978c979d6eb8da89a7e9edc37f70737be21c2be908f64b26"
+    },
+    {
+      "name": "coakka_logger-1.2.2-py3-none-any.whl",
+      "size_bytes": 1894224,
+      "sha256": "194c29f972e12c3fa7eb2c1b1f3bcb8ad15e69f756b95dad8882760e9d61d9c5"
     }
   ]
 }

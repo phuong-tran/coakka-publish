@@ -28,4 +28,5 @@ Current embedded native package:
 
 - native core version: `1.2.1`
 - native package version: `1.2.1+f50756ebff0d`
-- platforms: `macos-aarch64`, `linux-aarch64`, `linux-x86_64`
+- platforms: `macos-aarch64`, `linux-aarch64`, `linux-x86_64`,
+  `windows-aarch64`, `windows-x86_64`

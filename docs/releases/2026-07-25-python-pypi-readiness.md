@@ -18,7 +18,7 @@ Current runtime PyPI package:
 
 Current logger PyPI package:
 
-- `coakka-logger==1.2.1`
+- `coakka-logger==1.2.2`
 
 Runtime adoption story:
 
@@ -32,7 +32,7 @@ Runtime adoption story:
 Current GitHub Release wheel artifacts:
 
 - `runtime/python/releases/1.3.2+caff6d6d-6d5ea58/coakka_v2_connector-1.3.2-py3-none-any.whl`
-- `logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.1-py3-none-any.whl`
+- `logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.2-py3-none-any.whl`
 
 Readiness gate from the connector release workspace:
 
@@ -54,11 +54,11 @@ Runtime release verification:
 
 Logger release verification:
 
-- `twine check` passed for `coakka_logger-1.2.1-py3-none-any.whl`
-- PyPI upload succeeded for `coakka-logger==1.2.1`
+- `twine check` passed for `coakka_logger-1.2.2-py3-none-any.whl`
+- PyPI upload succeeded for `coakka-logger==1.2.2`
 - clean PyPI install smoke loaded logger native package `1.2.1+f50756ebff0d`
-- PyPI metadata uses the npm-style New To CoAkka onboarding and does not link
-  to package-local `CONSUMING.md`, `RELEASE.md`, or `consumer-smoke/README.md`
-  paths
+- PyPI metadata uses the npm-style New To CoAkka onboarding, includes first-run
+  install/code/output guidance, and does not link to package-local
+  `CONSUMING.md`, `RELEASE.md`, or `consumer-smoke/README.md` paths
 - public logger sample docs were updated from GitHub Release wheel install to
   PyPI install

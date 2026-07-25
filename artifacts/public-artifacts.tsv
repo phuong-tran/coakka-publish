@@ -1,7 +1,7 @@
 # Public artifact manifest v1.
 # Columns: status	label	relative_path	sha256
 public	logger JVM jar	logger/jvm/releases/1.2.1+f50756ebff0d/coakka-jvm-native-logger-1.2.1-gf50756ebff0d.jar	6c3ae767883f11da9b183803b1696964279120e6a9b55286bcf9f304ee4a6bea
-public	logger Python wheel	logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.1-py3-none-any.whl	6e03f595bc7c5496978c979d6eb8da89a7e9edc37f70737be21c2be908f64b26
+public	logger Python wheel	logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.2-py3-none-any.whl	194c29f972e12c3fa7eb2c1b1f3bcb8ad15e69f756b95dad8882760e9d61d9c5
 public	logger Node package	logger/node/releases/1.2.1+f50756ebff0d/coakka-logger-node-1.2.1.tgz	5c2cafeeb594c65bd98c83472ea7f8ede03cd760def24c6cd8ed121bb92187d4
 public	logger Bun package	logger/bun/releases/1.2.1+f50756ebff0d-6fdcc69/coakka-logger-bun-1.2.1.tgz	481a963f2a64e1a0275e375222e28e5875bcb1a4c589c912bfa1f006d57ac98a
 public	logger Electron package	logger/electron/releases/1.2.1+f50756ebff0d-3e8a6ae/coakka-logger-electron-1.2.1.tgz	167d92be0649fcd9600669d4e8af2e79b24a39344a18d39261d132a76dbc0417
