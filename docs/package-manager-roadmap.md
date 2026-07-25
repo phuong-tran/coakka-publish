@@ -73,9 +73,8 @@ The npm lane should open in small gates:
    Electron runtime/logger tarballs without changing their planned status.
 2. Make Node.js and Bun runtime/logger packages registry-ready: no
    `private=true`, explicit license carry-through, no install-time native setup,
-   no `.proto` schema leakage, and no package dependencies on protobuf, libuv,
-   CAF, FFI/native build helpers, or other implementation/native dependency
-   packages.
+   no generated wire schema files, and no implementation dependency packages in
+   user-facing package metadata.
 3. Make Electron runtime/logger packages depend on the matching first-party
    Node package through npm registry version metadata instead of raw GitHub
    tarball URLs.

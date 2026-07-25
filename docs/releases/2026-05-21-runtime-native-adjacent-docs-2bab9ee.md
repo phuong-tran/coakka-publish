@@ -22,8 +22,8 @@ User-facing changes:
   `PayloadIdentity.Text`.
 - Zig public structs/functions carry inline `///` docs and expose
   `localStartSpec(...)` for first-run source examples.
-- Mojo docs now explicitly describe the lane as an FFI smoke over a C shim, not
-  a stable application connector API.
+- Mojo docs now explicitly describe the lane as a low-level native smoke, not a
+  stable application connector API.
 
 Validation covered:
 

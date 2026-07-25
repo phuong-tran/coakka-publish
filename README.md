@@ -7,8 +7,6 @@ Support: [SUPPORT.md](SUPPORT.md)
 Changelog: [CHANGELOG.md](CHANGELOG.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
-Release runbook: [docs/release-runbook.md](docs/release-runbook.md)
-Release checklist: [docs/release-checklist.md](docs/release-checklist.md)
 Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
@@ -53,7 +51,7 @@ Latest GitHub Release boundary note:
 
 Current language connector release notes:
 [2026-07-25 runtime language packages 1.3.2 caff6d6d 6d5ea58](docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md),
-[2026-07-25 npm runtime native bridge b46f705](docs/releases/2026-07-25-npm-runtime-native-bridge-b46f705.md),
+[2026-07-25 npm runtime package b46f705](docs/releases/2026-07-25-npm-runtime-native-bridge-b46f705.md),
 [2026-07-23 logger Tauri and Electron 1.2.1 refresh 3e8a6ae](docs/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md),
 [2026-07-23 logger Bun 1.2.1 refresh 6fdcc69](docs/releases/2026-07-23-logger-bun-1.2.1-6fdcc69.md),
 [2026-07-06 logger 1.2.1 Windows parity 8264bba](docs/releases/2026-07-06-logger-1.2.1-8264bba.md),
@@ -401,7 +399,7 @@ envelope/transport policy last.
 Release docs and samples must only present a helper as released after the
 published artifact contains it. The current npm runtime connector refresh in
 `b46f705` uses native generation `1.3.2+caff6d6d` and keeps the JavaScript
-transport serialization details behind the native bridge. The broader runtime
+transport serialization details behind the package boundary. The broader runtime
 connector refresh in `6d5ea58` remains the source for the non-npm language lanes.
 
 Validation gates run before publishing:

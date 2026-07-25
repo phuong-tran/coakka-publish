@@ -130,7 +130,7 @@ Zig:
 
 Mojo:
 
-- The current lane is an FFI smoke through a C shim, not a stable application
+- The current lane is a low-level native smoke, not a stable application
   connector API.
 - Docs say the shim owns lifecycle for package verification only until direct
   Mojo bindings are stable enough for a real Level 1 API.

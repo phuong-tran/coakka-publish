@@ -1,7 +1,7 @@
-# npm Runtime Native Bridge Candidate b46f705
+# npm Runtime Package Candidate b46f705
 
-This note records the npm-ready runtime connector candidate for the native
-payload bridge release.
+This note records the npm-ready runtime connector candidate for the runtime
+package release.
 
 - `coakka-v2-connector-node@1.3.9`
 - `coakka-v2-connector-bun@1.3.9`
@@ -9,8 +9,8 @@ payload bridge release.
 
 The candidate bundles native runtime generation `1.3.2+caff6d6d` and is built
 from connector commit `b46f705`. The JavaScript package surface no longer ships
-the old JavaScript protobuf transport codec; the runtime payload bridge is
-provided by the bundled native runtime.
+the old userland transport codec; the runtime package boundary is provided by
+the bundled native runtime.
 
 Candidate directory:
 

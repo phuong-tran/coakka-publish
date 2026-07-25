@@ -8,8 +8,8 @@ bridge work.
 | Native C ABI | `runtime/native/releases/1.3.2+caff6d6d/coakka-runtime-native-v2-1.3.2.tar.gz` | `1.3.2+caff6d6d` |
 
 This cut adds native transport envelope/deadletter codec helpers so JavaScript
-runtime connectors can stop shipping JavaScript protobuf or hand-written wire
-codecs. The runtime C ABI version remains `1`; older callers that do not use
+runtime connectors can stop shipping userland wire codecs. The runtime C ABI
+version remains `1`; older callers that do not use
 the new helper symbols remain on the existing ABI contract.
 
 Published platform coverage in this package is:

@@ -38,4 +38,15 @@ if "${scanner}" "${tmp_root}/not-an-archive.tar.gz" >"${test_stdout}" 2>"${test_
 fi
 grep -q "forbidden marker" "${test_stderr}"
 
+internal_doc_dir="${tmp_root}/internal-doc"
+mkdir -p "${internal_doc_dir}/docs"
+internal_doc_kind="runbook"
+internal_doc_name="release-${internal_doc_kind}.md"
+printf 'internal release coordination\n' >"${internal_doc_dir}/docs/${internal_doc_name}"
+if "${scanner}" "${internal_doc_dir}" >"${test_stdout}" 2>"${test_stderr}"; then
+  echo "[test-public-surface-scanner] expected internal release doc marker to fail" >&2
+  exit 1
+fi
+grep -q "internal release document" "${test_stderr}"
+
 echo "[test-public-surface-scanner] ok"
