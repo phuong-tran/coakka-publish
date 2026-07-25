@@ -17,6 +17,15 @@ Current runtime PyPI package:
 
 - `coakka-v2-connector==1.3.2`
 
+Runtime adoption story:
+
+- before: public browser/API HTTP may stay real, but app-owned customer/store
+  work often grows a second private backend HTTP endpoint only to get a URL,
+  status mapping, retries, logs, and tests
+- after: Python installs the runtime host from PyPI and routes that same work
+  to a target such as `samples.customer.store`, with request/reply completion
+  and deadletter visibility instead of a store REST fallback
+
 Current GitHub Release wheel artifacts:
 
 - `runtime/python/releases/1.3.2+caff6d6d-6d5ea58/coakka_v2_connector-1.3.2-py3-none-any.whl`

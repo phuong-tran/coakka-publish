@@ -30,34 +30,43 @@ Request/reply lane in Python now has two host API shapes over the same runtime c
 
 ## Before / After
 
-Before, a local consumer had to learn the connector-internal orchestration name first:
+CoAkka is easiest to understand from a fake backend HTTP handoff. The
+browser/API edge can be real HTTP and should stay HTTP. The fake part is the
+second private endpoint a team adds only so app-owned store work has something
+URL-shaped to call:
 
 ```python
-from coakka_v2_connector import (
-    ConnectorOrchestrator,
-    ConnectorStartSpec,
-    PayloadFormat,
-    PayloadIdentity,
-)
-
-start_spec = ConnectorStartSpec(
-    system_name="customer-local",
-    node_id="customer-local-node",
-    routes=[],
-)
-request_identity = PayloadIdentity("customer.create.request.v1", 1, PayloadFormat.JSON)
-
-with ConnectorOrchestrator.start(start_spec=start_spec) as connector:
-    response = connector.ask_json(
-        source="customer-api",
-        target="customer.create",
-        payload={"name": "Ada"},
-        payload_identity=request_identity,
-    )
+@app.post("/backend/customers")
+def create_customer(command: CustomerDraft):
+    return store.create(command)
 ```
 
-After, the same single-process runtime is exposed with the name an application
-owner expects:
+The caller now owns URL config, HTTP parsing, status mapping, timeout mapping,
+retry policy, logs, and test fixtures for a boundary that is not really a
+public API:
+
+```python
+reply = requests.post(
+    "http://customer-store/backend/customers",
+    json=command,
+    timeout=5,
+)
+reply.raise_for_status()
+customer = reply.json()
+```
+
+Read the address change like this:
+
+```text
+Before fake backend HTTP:
+  POST /api/customers -> requests.post("http://customer-store/backend/customers")
+
+After CoAkka:
+  POST /api/customers -> target "samples.customer.store" -> registered handler
+```
+
+After CoAkka, HTTP can stay at the real edge, and the private backend URL
+becomes a runtime target owned by the process that handles it:
 
 ```python
 from coakka_v2_connector import (
@@ -65,23 +74,43 @@ from coakka_v2_connector import (
     PayloadFormat,
     PayloadIdentity,
     RuntimeHost,
+    local_route,
 )
 
 start_spec = ConnectorStartSpec(
-    system_name="customer-local",
-    node_id="customer-local-node",
-    routes=[],
+    system_name="customer-store",
+    node_id="customer-store-node-1",
+    routes=[local_route("samples.customer.store", 19102)],
 )
-request_identity = PayloadIdentity("customer.create.request.v1", 1, PayloadFormat.JSON)
+
+def handle_customer(request):
+    return runtime.client.make_json_reply_from_request_identity(
+        request=request,
+        source="samples.customer.store",
+        payload={"status": "accepted"},
+    )
 
 with RuntimeHost.start(start_spec=start_spec) as runtime:
+    runtime.register_handler("samples.customer.store", handle_customer)
+
     response = runtime.ask_json(
-        source="customer-api",
-        target="customer.create",
+        source="samples.customer.frontend",
+        target="samples.customer.store",
         payload={"name": "Ada"},
-        payload_identity=request_identity,
+        payload_identity=PayloadIdentity(
+            "samples.customer.create.request.v1",
+            1,
+            PayloadFormat.JSON,
+        ),
+        timeout_ms=5000,
+        operation="create_customer",
     )
 ```
+
+The important change is not "HTTP is bad." Public HTTP and gRPC still belong at
+real API edges. CoAkka removes the extra backend HTTP surface when the caller
+and handler are application-owned capabilities that only need typed runtime
+delivery, request/reply completion, and deadletter visibility.
 
 `ConnectorOrchestrator` remains available for existing code. New local-first
 Spring Boot, Quarkus, CRUD, and script-style examples should prefer
