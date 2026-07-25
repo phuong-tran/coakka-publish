@@ -25,8 +25,8 @@ CURRENT_CANDIDATES = (
         "runtime",
         "node",
         "coakka-v2-connector-node",
-        "1.3.1+0da8c2d9",
-        "package-manager/npm/candidates/b052a3f/runtime/node/coakka-v2-connector-node-1.3.8.tgz",
+        "1.3.2+caff6d6d",
+        "package-manager/npm/candidates/b46f705/runtime/node/coakka-v2-connector-node-1.3.9.tgz",
         None,
     ),
     (
@@ -34,8 +34,8 @@ CURRENT_CANDIDATES = (
         "runtime",
         "bun",
         "coakka-v2-connector-bun",
-        "1.3.1+0da8c2d9",
-        "package-manager/npm/candidates/b052a3f/runtime/bun/coakka-v2-connector-bun-1.3.8.tgz",
+        "1.3.2+caff6d6d",
+        "package-manager/npm/candidates/b46f705/runtime/bun/coakka-v2-connector-bun-1.3.9.tgz",
         None,
     ),
     (
@@ -43,8 +43,8 @@ CURRENT_CANDIDATES = (
         "runtime",
         "electron",
         "coakka-v2-connector-electron",
-        "1.3.1+0da8c2d9",
-        "package-manager/npm/candidates/b052a3f/runtime/electron/coakka-v2-connector-electron-1.3.8.tgz",
+        "1.3.2+caff6d6d",
+        "package-manager/npm/candidates/b46f705/runtime/electron/coakka-v2-connector-electron-1.3.9.tgz",
         "coakka-v2-connector-node",
     ),
     (
@@ -116,6 +116,33 @@ FORBIDDEN_METADATA_SUBSTRINGS = (
     "github.com/phuong-tran/coakkaJVMConnector",
 )
 
+TEXT_MEMBER_SUFFIXES = (
+    ".cjs",
+    ".d.ts",
+    ".js",
+    ".json",
+    ".md",
+    ".mjs",
+    ".ts",
+    ".txt",
+)
+
+FORBIDDEN_TEXT_PATTERNS = tuple(
+    re.compile(pattern, re.IGNORECASE)
+    for pattern in (
+        r"protobufjs",
+        r"wire-codec",
+        r"proto/",
+        r"\bWIRE_VARINT\b",
+        r"\bencodeVarint\b",
+        r"\bdecodeEnvelope\b",
+        r"\bdecodeDeadletter\b",
+        r"\bencodeEnvelope\b",
+        r"coakkaJVMConnector",
+        r"workingDir",
+    )
+)
+
 PUBLIC_REPOSITORY_URL = "git+https://github.com/phuong-tran/coakka-publish.git"
 PUBLIC_BUGS_URL = "https://github.com/phuong-tran/coakka-samples/issues"
 
@@ -161,6 +188,11 @@ def member_names(archive: tarfile.TarFile) -> list[str]:
     return [member.name for member in archive.getmembers()]
 
 
+def is_text_member(name: str) -> bool:
+    normalized = posixpath.normpath(name).lower()
+    return normalized.endswith(TEXT_MEMBER_SUFFIXES)
+
+
 def verify_member_boundary(names: list[str]) -> None:
     for name in names:
         normalized = posixpath.normpath(name)
@@ -177,6 +209,22 @@ def verify_member_boundary(names: list[str]) -> None:
         for marker in FORBIDDEN_MEMBER_SUBSTRINGS:
             if marker in normalized:
                 fail(f"unpublished source identity leaked into npm artifact: {name}")
+
+
+def verify_text_content(archive: tarfile.TarFile) -> None:
+    for member in archive.getmembers():
+        if not member.isfile() or not is_text_member(member.name):
+            continue
+        file_obj = archive.extractfile(member)
+        if file_obj is None:
+            continue
+        try:
+            text = file_obj.read().decode("utf-8")
+        except UnicodeDecodeError:
+            continue
+        for pattern in FORBIDDEN_TEXT_PATTERNS:
+            if pattern.search(text):
+                fail(f"JavaScript-visible wire/protobuf or private marker leaked into npm artifact: {member.name}")
 
 
 def native_library_base(product: str) -> str:
@@ -411,8 +459,16 @@ def verify_artifact(
     with tarfile.open(artifact, "r:gz") as archive:
         names = member_names(archive)
         package = read_package_json(archive)
+        try:
+            verify_text_content(archive)
+        except VerificationError as exc:
+            text_content_error = str(exc)
+        else:
+            text_content_error = ""
 
     errors = []
+    if text_content_error:
+        errors.append(text_content_error)
     for check, check_args in (
         (verify_member_boundary, (names,)),
         (verify_package_json, (package, package_name, role, expected_internal_dependency, require_public_metadata)),

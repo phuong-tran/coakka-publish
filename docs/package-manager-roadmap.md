@@ -84,15 +84,18 @@ The npm lane should open in small gates:
 Those gates have passed for the npm lane below. GitHub Release tarballs remain
 the canonical non-npm artifact surface for every other lane.
 
-### Current Release
+### Current Runtime Candidate
 
-The npm candidate set under `package-manager/npm/candidates/b052a3f/` has
-been published to npm and registry-verified for the native alias dedupe patch
-over the stop backpressure hotfix:
+The runtime npm candidate set under `package-manager/npm/candidates/b46f705/`
+is ready for the native payload bridge release over runtime native
+`1.3.2+caff6d6d`:
 
-- `coakka-v2-connector-node@1.3.8`
-- `coakka-v2-connector-bun@1.3.8`
-- `coakka-v2-connector-electron@1.3.8`
+- `coakka-v2-connector-node@1.3.9`
+- `coakka-v2-connector-bun@1.3.9`
+- `coakka-v2-connector-electron@1.3.9`
+
+The current published logger npm lane remains:
+
 - `coakka-logger-node@1.2.6`
 - `coakka-logger-bun@1.2.6`
 - `coakka-logger-electron@1.2.6`
@@ -102,11 +105,11 @@ The publish helper keeps the first-party dependency order explicit:
 ```sh
 scripts/publish-npm-package-manager-candidates.sh --dry-run
 scripts/publish-npm-package-manager-candidates.sh --publish --otp <current-code>
-scripts/verify-npm-registry-candidates.sh --manifest package-manager/npm/candidates/b052a3f/manifest.json
+scripts/verify-npm-registry-candidates.sh --manifest package-manager/npm/candidates/b46f705/manifest.json
 ```
 
-Public JavaScript samples should consume these npm coordinates unless they are
-explicitly exercising a local unpublished connector build.
+Public JavaScript samples should consume the `1.3.9` runtime coordinates after
+the candidate is published and registry-verified.
 
 ## Go Modules
 

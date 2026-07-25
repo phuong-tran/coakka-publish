@@ -1,0 +1,5 @@
+7a2a30237e2b3c2019a1af5ed4b369f59d0b6c14d6f082d5f38b0a853e24c607  README.md
+3a5f0ff98a68446c6ef8d365674551d8dfe3765232749df1358f93b2da4ed659  manifest.json
+7d95bb0e05907229b0376e43a22d3033c38bd1fa319153b5cdaf1cd4600c768b  runtime/node/coakka-v2-connector-node-1.3.9.tgz
+8ce854fe54d2da92e5f565733b7ae0c92e856fb127110e5c643a7f5c9648bc57  runtime/bun/coakka-v2-connector-bun-1.3.9.tgz
+0e1a56a4d02da1281d8a13022e2d28506dcc9812fecb7d6294e6004a2645af52  runtime/electron/coakka-v2-connector-electron-1.3.9.tgz

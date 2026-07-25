@@ -1,0 +1,7 @@
+# Public artifact manifest v1.
+# Columns: status	label	relative_path	sha256
+public	coakka-client linux-x86_64	cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-linux-x86_64.tar.gz	8f051f0221da2fb32204d433a95d203df81464d8ae83cd49d9284a3f9f2eb875
+public	coakka-client linux-aarch64	cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-linux-aarch64.tar.gz	17ff24475154b2d9a0b391fb0fbb3f2e3fadcc0b8519f88decb3c6ab96513129
+public	coakka-client macos-aarch64	cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-macos-aarch64.tar.gz	a949466b13197e795f2335e82c04f216326521c672f06389f767be58e95ebc5c
+public	coakka-client windows-x86_64	cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-windows-x86_64.tar.gz	98ea5ac49538e0a904cde1e3d3fe5727f7c3eee3143f7a98b3b36c9311f03f38
+public	coakka-client windows-aarch64	cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-windows-aarch64.tar.gz	8292e1e66d3da46849f1e795dd5f5afb8d700408e80058c4fe48c5cbb52e67af
