@@ -1,9 +1,9 @@
 # npm Candidate ae6472b
 
-This directory stages npm-ready candidate tarballs for the public metadata and
-onboarding patch release.
+This directory records the npm-ready candidate tarballs for the public metadata
+and onboarding patch release.
 
-Status: staged and release-ready. This candidate has not been published to npm.
+Status: published to npm and registry-verified on 2026-07-25.
 
 The candidate packages are built from connector commit `ae6472b`. This patch
 keeps the runtime stop-backpressure native generation, fixes npm package page
@@ -16,7 +16,7 @@ Native generations:
 - runtime native: `1.3.1+0da8c2d9`
 - logger native: `1.2.1+f50756ebff0d`
 
-Candidate coordinates:
+Published coordinates:
 
 - `coakka-v2-connector-node@1.3.7`
 - `coakka-v2-connector-bun@1.3.7`
@@ -41,7 +41,8 @@ scripts/publish-npm-package-manager-candidates.sh \
   --dry-run
 ```
 
-Publish with current npm 2FA:
+The packages were published to npm on 2026-07-25. If this release ever needs a
+resume check, the publish helper skips already-published verified packages:
 
 ```sh
 scripts/publish-npm-package-manager-candidates.sh \
@@ -50,7 +51,7 @@ scripts/publish-npm-package-manager-candidates.sh \
   --otp <current-code>
 ```
 
-Then verify the registry surface:
+Verify the published registry surface:
 
 ```sh
 scripts/verify-npm-registry-candidates.sh \
