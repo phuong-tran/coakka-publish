@@ -34,7 +34,7 @@ normal path.
 | Priority | Channel | Main use | Notes |
 | --- | --- | --- | --- |
 | 1 | npm | Node.js, Bun, Electron runtime and logger packages | Best first package-manager lane because it improves JavaScript and desktop onboarding together. |
-| 2 | PyPI | Python runtime and logger wheels | Wheels already exist on the GitHub Release surface; PyPI needs registry account/upload verification. |
+| 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.2` is published and install-smoked; logger upload remains pending. |
 | 3 | Go modules | Go runtime and logger packages | Requires stable public module identity before release. |
 | 4 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
 | 5 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
@@ -122,21 +122,26 @@ Current wheel coordinates:
 
 - runtime package name: `coakka-v2-connector`
 - runtime import name: `coakka_v2_connector`
-- runtime version: `1.3.1`
+- runtime version: `1.3.2`
 - logger package name: `coakka-logger`
 - logger import name: `coakka_logger`
 - logger version: `1.2.1`
 
-The current public wheels remain GitHub Release artifacts until PyPI is
-uploaded and verified:
+The current runtime wheel is published on PyPI and remains mirrored as a
+GitHub Release artifact:
 
-- `runtime/python/releases/1.3.1+0da8c2d9-8ff6f32/coakka_v2_connector-1.3.1-py3-none-any.whl`
+- `coakka-v2-connector==1.3.2`
+- `runtime/python/releases/1.3.2+caff6d6d-6d5ea58/coakka_v2_connector-1.3.2-py3-none-any.whl`
+
+The current logger wheel remains a GitHub Release artifact until its separate
+PyPI upload is verified:
+
 - `logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.1-py3-none-any.whl`
 
-Before opening the PyPI lane:
+Before opening the remaining logger PyPI lane:
 
 - re-check package name and version availability on PyPI
-- run the connector PyPI readiness gates from the connector release workspace
+- run the logger PyPI readiness gate from the connector release workspace
 - upload to TestPyPI first if the account is new
 - upload to PyPI only after TestPyPI install and smoke verification
 - update public samples only after the real PyPI install path is registry

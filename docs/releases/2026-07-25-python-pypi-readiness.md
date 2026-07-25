@@ -1,7 +1,7 @@
-# 2026-07-25 Python PyPI Readiness
+# 2026-07-25 Python PyPI Runtime Release
 
-The Python runtime and logger lanes are ready for a later PyPI publish once a
-PyPI account and upload token are available.
+The Python runtime lane is published on PyPI. The logger lane remains ready for
+a later PyPI publish once its separate upload is verified.
 
 Current package names:
 
@@ -13,9 +13,13 @@ Current import names:
 - `coakka_v2_connector`
 - `coakka_logger`
 
+Current runtime PyPI package:
+
+- `coakka-v2-connector==1.3.2`
+
 Current GitHub Release wheel artifacts:
 
-- `runtime/python/releases/1.3.1+0da8c2d9-8ff6f32/coakka_v2_connector-1.3.1-py3-none-any.whl`
+- `runtime/python/releases/1.3.2+caff6d6d-6d5ea58/coakka_v2_connector-1.3.2-py3-none-any.whl`
 - `logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.1-py3-none-any.whl`
 
 Readiness gate from the connector release workspace:
@@ -25,9 +29,14 @@ Readiness gate from the connector release workspace:
 ./logger/python/scripts/check_pypi_readiness.sh
 ```
 
-Release blocker before documenting normal PyPI install:
+Runtime release verification:
 
-- PyPI/TestPyPI account and upload token
-- TestPyPI upload and clean install smoke
-- real PyPI upload and clean install smoke
-- public sample docs updated from GitHub Release wheel install to PyPI install
+- `twine check` passed for `coakka_v2_connector-1.3.2-py3-none-any.whl`
+- PyPI upload succeeded for `coakka-v2-connector==1.3.2`
+- clean PyPI install smoke loaded native package `1.3.2+caff6d6d`
+
+Remaining logger release blocker before documenting normal logger PyPI install:
+
+- logger PyPI upload and clean install smoke
+- public logger sample docs updated from GitHub Release wheel install to PyPI
+  install

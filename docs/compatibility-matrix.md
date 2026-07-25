@@ -59,7 +59,7 @@ All logger connector lanes below align to logger native generation
 | Channel | Intended first surface | Status |
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
-| PyPI | Python runtime/logger wheels | GitHub Release wheels current; PyPI pending |
+| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.3.2` current; logger pending |
 | Go modules | Go runtime/logger packages | planned |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
@@ -74,6 +74,12 @@ Runtime npm packages are published for the sealed native bridge:
 | Node.js logger | `coakka-logger-node@1.2.6` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.6` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.6` | via `coakka-logger-node@1.2.6` |
+
+Runtime PyPI package:
+
+| Surface | PyPI coordinate | Native generation |
+| --- | --- | --- |
+| Python runtime | `coakka-v2-connector==1.3.2` | `1.3.2+caff6d6d` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for remaining
 planned package-manager channels.
