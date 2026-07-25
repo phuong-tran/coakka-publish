@@ -4,6 +4,11 @@ This checklist is for refreshing the public artifact surface in this repository.
 It keeps the public story aligned without turning `coakka-publish` into a
 source-build workspace.
 
+Use [release-runbook.md](release-runbook.md) before this checklist. The runbook
+decides release order, compatibility anchors, package-manager gates, and
+multi-repo completion. This checklist handles the `coakka-publish` artifact
+intake details after the release lane is allowed to proceed.
+
 ## Scope
 
 Before copying artifacts into this repository, identify:

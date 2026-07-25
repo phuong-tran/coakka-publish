@@ -7,6 +7,7 @@ Support: [SUPPORT.md](SUPPORT.md)
 Changelog: [CHANGELOG.md](CHANGELOG.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
+Release runbook: [docs/release-runbook.md](docs/release-runbook.md)
 Release checklist: [docs/release-checklist.md](docs/release-checklist.md)
 Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
 
