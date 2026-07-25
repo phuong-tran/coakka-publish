@@ -17,7 +17,7 @@ python/build/wheelhouse/
 ```sh
 python3 -m venv .venv-coakka-python
 source .venv-coakka-python/bin/activate
-python -m pip install python/build/wheelhouse/coakka_v2_connector-1.3.6-py3-none-any.whl
+python -m pip install python/build/wheelhouse/coakka_v2_connector-1.3.1-py3-none-any.whl
 ```
 
 ## Native Loading
@@ -25,7 +25,7 @@ python -m pip install python/build/wheelhouse/coakka_v2_connector-1.3.6-py3-none
 Default path:
 
 - the installed package loads the embedded native runtime for the current platform
-- the embedded native package version is `1.3.6+0da8c2d9`
+- the embedded native package version is `1.3.1+0da8c2d9`
 - current embedded platforms are `macos-aarch64`, `linux-aarch64`,
   `linux-x86_64`, `windows-aarch64`, and `windows-x86_64`
 

@@ -177,8 +177,10 @@ comments for public Mojo/Zig source-package lanes so the connector source
 commit is visible at the package list boundary.
 
 The npm package-manager lane is current for JavaScript runtime/logger packages.
-Go modules, crates.io, and apt/deb remain planned distribution surfaces. The
-intended order and release gates are tracked in
+Python wheels are current on the GitHub Release artifact surface and have a
+local PyPI readiness gate, but PyPI publishing remains pending until an account
+and registry upload are verified. Go modules, crates.io, and apt/deb remain
+planned distribution surfaces. The intended order and release gates are tracked in
 [`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).
 
 The current public logger family keeps native package generation

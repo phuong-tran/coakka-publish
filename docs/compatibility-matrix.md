@@ -58,19 +58,19 @@ All logger connector lanes below align to logger native generation
 
 | Channel | Intended first surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `1.3.9` candidate ready; logger current |
+| npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
+| PyPI | Python runtime/logger wheels | GitHub Release wheels current; PyPI pending |
 | Go modules | Go runtime/logger packages | planned |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
-Runtime npm candidates are ready for the sealed native bridge. The registry
-moves to these coordinates only after the publish step completes:
+Runtime npm packages are published for the sealed native bridge:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@1.3.9` candidate | `1.3.2+caff6d6d` |
-| Bun runtime | `coakka-v2-connector-bun@1.3.9` candidate | `1.3.2+caff6d6d` |
-| Electron runtime | `coakka-v2-connector-electron@1.3.9` candidate | via `coakka-v2-connector-node@1.3.9` |
+| Node.js runtime | `coakka-v2-connector-node@1.3.9` | `1.3.2+caff6d6d` |
+| Bun runtime | `coakka-v2-connector-bun@1.3.9` | `1.3.2+caff6d6d` |
+| Electron runtime | `coakka-v2-connector-electron@1.3.9` | via `coakka-v2-connector-node@1.3.9` |
 | Node.js logger | `coakka-logger-node@1.2.6` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.6` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.6` | via `coakka-logger-node@1.2.6` |

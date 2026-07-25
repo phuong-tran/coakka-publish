@@ -34,9 +34,10 @@ normal path.
 | Priority | Channel | Main use | Notes |
 | --- | --- | --- | --- |
 | 1 | npm | Node.js, Bun, Electron runtime and logger packages | Best first package-manager lane because it improves JavaScript and desktop onboarding together. |
-| 2 | Go modules | Go runtime and logger packages | Requires stable public module identity before release. |
-| 3 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
-| 4 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
+| 2 | PyPI | Python runtime and logger wheels | Wheels already exist on the GitHub Release surface; PyPI needs registry account/upload verification. |
+| 3 | Go modules | Go runtime and logger packages | Requires stable public module identity before release. |
+| 4 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
+| 5 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
 
 Other channels such as Homebrew, Scoop, Chocolatey, or NuGet gallery publishing
 can be evaluated after the main language and Linux tooling lanes are stable.
@@ -110,6 +111,43 @@ scripts/verify-npm-registry-candidates.sh --manifest package-manager/npm/candida
 
 Public JavaScript samples should consume the `1.3.9` runtime coordinates after
 the candidate is published and registry-verified.
+
+## PyPI
+
+Python is the next easy package-manager lane after npm because the runtime and
+logger wheels already exist and public samples already install those wheels from
+the GitHub Release artifact surface.
+
+Current wheel coordinates:
+
+- runtime package name: `coakka-v2-connector`
+- runtime import name: `coakka_v2_connector`
+- runtime version: `1.3.1`
+- logger package name: `coakka-logger`
+- logger import name: `coakka_logger`
+- logger version: `1.2.1`
+
+The current public wheels remain GitHub Release artifacts until PyPI is
+uploaded and verified:
+
+- `runtime/python/releases/1.3.1+0da8c2d9-8ff6f32/coakka_v2_connector-1.3.1-py3-none-any.whl`
+- `logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.1-py3-none-any.whl`
+
+Before opening the PyPI lane:
+
+- re-check package name and version availability on PyPI
+- run the connector PyPI readiness gates from the connector release workspace
+- upload to TestPyPI first if the account is new
+- upload to PyPI only after TestPyPI install and smoke verification
+- update public samples only after the real PyPI install path is registry
+  verified
+
+Current readiness gates:
+
+```sh
+./python/scripts/check_pypi_readiness.sh
+./logger/python/scripts/check_pypi_readiness.sh
+```
 
 ## Go Modules
 
