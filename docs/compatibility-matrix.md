@@ -16,9 +16,9 @@ All runtime connector lanes below align to native runtime generation
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.2-gcaff6d6d-6d5ea58` | via JVM runtime |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.2-gcaff6d6d-6d5ea58` | via JVM runtime |
 | Python runtime | `coakka_v2_connector` wheel | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
-| Node.js runtime | `coakka-v2-connector-node` tarball | `1.3.2+caff6d6d-6d5ea58` package `1.3.9` | `1.3.2+caff6d6d` |
-| Bun runtime | `coakka-v2-connector-bun` tarball | `1.3.2+caff6d6d-6d5ea58` package `1.3.9` | `1.3.2+caff6d6d` |
-| Electron runtime | `coakka-v2-connector-electron` tarball | `1.3.2+caff6d6d-6d5ea58` package `1.3.9` | via matching Node tarball |
+| Node.js runtime | `coakka-v2-connector-node` tarball | `1.3.2+caff6d6d-b46f705` package `1.3.9` | `1.3.2+caff6d6d` |
+| Bun runtime | `coakka-v2-connector-bun` tarball | `1.3.2+caff6d6d-b46f705` package `1.3.9` | `1.3.2+caff6d6d` |
+| Electron runtime | `coakka-v2-connector-electron` tarball | `1.3.2+caff6d6d-b46f705` package `1.3.9` | via matching Node tarball |
 | Tauri runtime | `coakka-runtime-tauri-intents` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
 | Go runtime | `coakka-v2-connector-go` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
 | C# runtime | `CoAkka.Runtime` package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
@@ -58,19 +58,19 @@ All logger connector lanes below align to logger native generation
 
 | Channel | Intended first surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
+| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `1.3.9` candidate ready; logger current |
 | Go modules | Go runtime/logger packages | planned |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
-Current npm registry coordinates remain on the earlier npm patch train until
-the Node/Bun/Electron packages are republished from the sealed native bridge:
+Runtime npm candidates are ready for the sealed native bridge. The registry
+moves to these coordinates only after the publish step completes:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@1.3.8` | `1.3.1+0da8c2d9` |
-| Bun runtime | `coakka-v2-connector-bun@1.3.8` | `1.3.1+0da8c2d9` |
-| Electron runtime | `coakka-v2-connector-electron@1.3.8` | via `coakka-v2-connector-node@1.3.8` |
+| Node.js runtime | `coakka-v2-connector-node@1.3.9` candidate | `1.3.2+caff6d6d` |
+| Bun runtime | `coakka-v2-connector-bun@1.3.9` candidate | `1.3.2+caff6d6d` |
+| Electron runtime | `coakka-v2-connector-electron@1.3.9` candidate | via `coakka-v2-connector-node@1.3.9` |
 | Node.js logger | `coakka-logger-node@1.2.6` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.6` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.6` | via `coakka-logger-node@1.2.6` |

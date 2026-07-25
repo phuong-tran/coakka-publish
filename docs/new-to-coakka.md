@@ -50,12 +50,13 @@ APIs still belong to the application architecture around CoAkka.
 
 ## Current JavaScript Packages
 
-The npm lane is published and registry-verified:
+The runtime npm publish candidate is ready at `1.3.9` over native runtime
+`1.3.2+caff6d6d`. The logger npm lane stays on `1.2.6`:
 
 ```sh
-npm install coakka-v2-connector-node@1.3.8
-npm install coakka-v2-connector-bun@1.3.8
-npm install coakka-v2-connector-electron@1.3.8
+npm install coakka-v2-connector-node@1.3.9
+npm install coakka-v2-connector-bun@1.3.9
+npm install coakka-v2-connector-electron@1.3.9
 npm install coakka-logger-node@1.2.6
 npm install coakka-logger-bun@1.2.6
 npm install coakka-logger-electron@1.2.6

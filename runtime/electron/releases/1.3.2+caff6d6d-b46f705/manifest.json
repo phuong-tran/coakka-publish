@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "electron",
+  "release_directory": "1.3.2+caff6d6d-b46f705",
+  "version": "1.3.9",
+  "artifact": {
+    "name": "coakka-v2-connector-electron-1.3.9.tgz",
+    "bundled_native_package_version": "1.3.2+caff6d6d",
+    "bundled_native_git_commit": "caff6d6d",
+    "included_platforms": []
+  },
+  "connector_source_git_commit": "b46f705"
+}

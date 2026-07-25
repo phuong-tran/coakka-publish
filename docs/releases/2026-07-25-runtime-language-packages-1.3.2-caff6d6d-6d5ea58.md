@@ -7,9 +7,9 @@ This note records the language package refresh over native runtime core
 | --- | --- | --- |
 | JVM | `runtime/jvm/releases/1.3.2+caff6d6d-6d5ea58/coakka-jvm-native-runtime-v2-1.3.2-gcaff6d6d-6d5ea58.jar` | `1.3.2-gcaff6d6d-6d5ea58` |
 | Python | `runtime/python/releases/1.3.2+caff6d6d-6d5ea58/coakka_v2_connector-1.3.2-py3-none-any.whl` | `1.3.2` |
-| Node | `runtime/node/releases/1.3.2+caff6d6d-6d5ea58/coakka-v2-connector-node-1.3.9.tgz` | `1.3.9` |
-| Bun | `runtime/bun/releases/1.3.2+caff6d6d-6d5ea58/coakka-v2-connector-bun-1.3.9.tgz` | `1.3.9` |
-| Electron | `runtime/electron/releases/1.3.2+caff6d6d-6d5ea58/coakka-v2-connector-electron-1.3.9.tgz` | `1.3.9` |
+| Node | `runtime/node/releases/1.3.2+caff6d6d-b46f705/coakka-v2-connector-node-1.3.9.tgz` | `1.3.9` |
+| Bun | `runtime/bun/releases/1.3.2+caff6d6d-b46f705/coakka-v2-connector-bun-1.3.9.tgz` | `1.3.9` |
+| Electron | `runtime/electron/releases/1.3.2+caff6d6d-b46f705/coakka-v2-connector-electron-1.3.9.tgz` | `1.3.9` |
 | Go | `runtime/go/releases/1.3.2+caff6d6d-6d5ea58/coakka-v2-connector-go-1.3.2.tar.gz` | `1.3.2` |
 | C# | `runtime/csharp/releases/1.3.2+caff6d6d-6d5ea58/CoAkka.Runtime.1.3.2.nupkg` | `1.3.2` |
 | Rust | `runtime/rust/releases/1.3.2+caff6d6d-6d5ea58/coakka-runtime-rs-1.3.2-spike.tar.gz` | `1.3.2-spike` |
@@ -34,6 +34,7 @@ Validation covered:
 - Node, Bun, and Electron package builds and packaged smokes
 - public artifact surface verification in `coakka-publish`
 
-This is not the npm registry patch. The npm registry package currently released
-as runtime connector `1.3.8` still needs a later patch release after the native
-core and language package surface has landed.
+The npm registry publish candidate lives under
+`package-manager/npm/candidates/b46f705/`. It carries runtime connector
+`1.3.9` over native generation `1.3.2+caff6d6d`; the registry moves only after
+the publish step completes.

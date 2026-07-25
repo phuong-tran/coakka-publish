@@ -320,14 +320,16 @@ PY
 
 verify_electron_archive_has_expected_runtime_package_dependencies() {
   local artifact="$1"
-  local tmp_root package_json expected_node_dependency
+  local tmp_root package_json node_artifact_name expected_node_dependency
 
   tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-electron.XXXXXX")"
   COPYFILE_DISABLE=1 tar -xzf "${artifact}" -C "${tmp_root}"
   package_json="${tmp_root}/package/package.json"
   [[ -f "${package_json}" ]] || fail "Electron package archive is missing package/package.json"
 
-  expected_node_dependency="https://raw.githubusercontent.com/phuong-tran/coakka-publish/main/$(public_manifest_path_for_label "runtime Node package")"
+  node_artifact_name="$(basename "$(public_manifest_path_for_label "runtime Node package")")"
+  expected_node_dependency="${node_artifact_name#coakka-v2-connector-node-}"
+  expected_node_dependency="${expected_node_dependency%.tgz}"
 
   python3 - "${package_json}" "${expected_node_dependency}" <<'PY'
 import json
