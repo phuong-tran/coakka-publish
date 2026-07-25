@@ -4,27 +4,27 @@ This page is the quick compatibility view for the current public artifact
 surface. The root README remains the canonical current-status summary, and
 per-drop details remain in [releases/](releases/).
 
-## Runtime 1.3.1 Train
+## Runtime 1.3.2 Train
 
 All runtime connector lanes below align to native runtime generation
-`1.3.1+0da8c2d9` unless a later release note explicitly says otherwise.
+`1.3.2+caff6d6d` unless a later release note explicitly says otherwise.
 
 | Surface | Public artifact or coordinate | Public generation | Native generation |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/1.3.1+0da8c2d9/coakka-runtime-native-v2-1.3.1.tar.gz` | `1.3.1+0da8c2d9` | `1.3.1+0da8c2d9` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.1-g0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.1-g0da8c2d9-8ff6f32` | via JVM runtime |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.1-g0da8c2d9-8ff6f32` | via JVM runtime |
-| Python runtime | `coakka_v2_connector` wheel | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
-| Node.js runtime | `coakka-v2-connector-node` package | npm `1.3.8` from connector `b052a3f` | `1.3.1+0da8c2d9` |
-| Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.8` from connector `b052a3f` | `1.3.1+0da8c2d9` |
-| Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.8` from connector `b052a3f` | via `coakka-v2-connector-node@1.3.8` |
-| Tauri runtime | `coakka-runtime-tauri-intents` source package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
-| Go runtime | `coakka-v2-connector-go` source package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
-| C# runtime | `CoAkka.Runtime` package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
-| Rust runtime | `coakka-runtime-rs` package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
-| Mojo runtime | `coakka-runtime-mojo` source package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
-| Zig runtime | `coakka-runtime-zig` source package | `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
+| Native C ABI | `runtime/native/releases/1.3.2+caff6d6d/coakka-runtime-native-v2-1.3.2.tar.gz` | `1.3.2+caff6d6d` | `1.3.2+caff6d6d` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.2-gcaff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.2-gcaff6d6d-6d5ea58` | via JVM runtime |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.2-gcaff6d6d-6d5ea58` | via JVM runtime |
+| Python runtime | `coakka_v2_connector` wheel | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
+| Node.js runtime | `coakka-v2-connector-node` tarball | `1.3.2+caff6d6d-6d5ea58` package `1.3.9` | `1.3.2+caff6d6d` |
+| Bun runtime | `coakka-v2-connector-bun` tarball | `1.3.2+caff6d6d-6d5ea58` package `1.3.9` | `1.3.2+caff6d6d` |
+| Electron runtime | `coakka-v2-connector-electron` tarball | `1.3.2+caff6d6d-6d5ea58` package `1.3.9` | via matching Node tarball |
+| Tauri runtime | `coakka-runtime-tauri-intents` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
+| Go runtime | `coakka-v2-connector-go` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
+| C# runtime | `CoAkka.Runtime` package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
+| Rust runtime | `coakka-runtime-rs` package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
+| Mojo runtime | `coakka-runtime-mojo` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
+| Zig runtime | `coakka-runtime-zig` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
 
 ## Logger 1.2.1 Train
 
@@ -50,9 +50,9 @@ All logger connector lanes below align to logger native generation
 
 | Surface | Public generation | Public location |
 | --- | --- | --- |
-| `coakka-client` native CLI | `1.3.1+0da8c2d9` | `cli/releases/` |
-| `coakka-client` Docker Linux bundle | `1.3.1+0da8c2d9` | `demo/coakka-client/releases/` |
-| `coakka-runtime-inspect` native UI | `1.3.1+0da8c2d9` | `runtime-inspect/native/releases/` |
+| `coakka-client` native CLI | `1.3.2+caff6d6d` | `cli/releases/` |
+| `coakka-client` Docker Linux bundle | `1.3.2+caff6d6d` | `demo/coakka-client/releases/` |
+| `coakka-runtime-inspect` native UI | `1.3.2+caff6d6d` | `runtime-inspect/native/releases/` |
 
 ## Package-Manager Channels
 
@@ -63,7 +63,8 @@ All logger connector lanes below align to logger native generation
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
-Current npm coordinates:
+Current npm registry coordinates remain on the earlier npm patch train until
+the Node/Bun/Electron packages are republished from the sealed native bridge:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
