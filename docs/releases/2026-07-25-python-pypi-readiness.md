@@ -15,7 +15,7 @@ Current import names:
 
 Current runtime PyPI package:
 
-- `coakka-v2-connector==1.3.3`
+- `coakka-v2-connector==1.3.4`
 
 Runtime adoption story:
 
@@ -43,8 +43,11 @@ Runtime release verification:
 - `twine check` passed for `coakka_v2_connector-1.3.2-py3-none-any.whl`
 - initial PyPI upload succeeded for runtime package version `1.3.2`
 - metadata patch upload succeeded for `coakka-v2-connector==1.3.3`
+- onboarding link patch upload succeeded for `coakka-v2-connector==1.3.4`
 - clean PyPI install smoke loaded native package `1.3.2+caff6d6d`
-- PyPI `1.3.3` metadata contains the fake backend HTTP before/after wording
+- PyPI `1.3.4` metadata uses the npm-style New To CoAkka onboarding and does
+  not link to package-local `CONSUMING.md`, `RELEASE.md`, or
+  `consumer-smoke/README.md` paths
 
 Remaining logger release blocker before documenting normal logger PyPI install:
 
