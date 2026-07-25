@@ -177,7 +177,7 @@ comments for public Mojo/Zig source-package lanes so the connector source
 commit is visible at the package list boundary.
 
 The npm package-manager lane is current for JavaScript runtime/logger packages.
-The Python runtime package `coakka-v2-connector==1.3.2` is published on PyPI;
+The Python runtime package `coakka-v2-connector==1.3.3` is published on PyPI;
 Python logger wheels remain on the GitHub Release artifact surface until a
 separate logger PyPI upload is verified. Go modules, crates.io, and apt/deb
 remain planned distribution surfaces. The intended order and release gates are tracked in
@@ -209,7 +209,7 @@ Current published lanes:
 - `npm: coakka-v2-connector-node@1.3.9`
 - `npm: coakka-v2-connector-bun@1.3.9`
 - `npm: coakka-v2-connector-electron@1.3.9`
-- `PyPI: coakka-v2-connector==1.3.2`
+- `PyPI: coakka-v2-connector==1.3.3`
 - `npm: coakka-logger-node@1.2.6`
 - `npm: coakka-logger-bun@1.2.6`
 - `npm: coakka-logger-electron@1.2.6`

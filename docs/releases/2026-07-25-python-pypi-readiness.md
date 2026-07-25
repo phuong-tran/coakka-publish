@@ -15,7 +15,7 @@ Current import names:
 
 Current runtime PyPI package:
 
-- `coakka-v2-connector==1.3.2`
+- `coakka-v2-connector==1.3.3`
 
 Runtime adoption story:
 
@@ -41,8 +41,10 @@ Readiness gate from the connector release workspace:
 Runtime release verification:
 
 - `twine check` passed for `coakka_v2_connector-1.3.2-py3-none-any.whl`
-- PyPI upload succeeded for `coakka-v2-connector==1.3.2`
+- initial PyPI upload succeeded for runtime package version `1.3.2`
+- metadata patch upload succeeded for `coakka-v2-connector==1.3.3`
 - clean PyPI install smoke loaded native package `1.3.2+caff6d6d`
+- PyPI `1.3.3` metadata contains the fake backend HTTP before/after wording
 
 Remaining logger release blocker before documenting normal logger PyPI install:
 
