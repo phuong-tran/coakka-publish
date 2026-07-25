@@ -1,10 +1,10 @@
 # 2026-07-25 npm Native Alias Dedupe b052a3f
 
-This staged npm candidate cleans the JavaScript runtime/logger package tarballs
+This npm patch release cleans the JavaScript runtime/logger package tarballs
 after the npm package browser showed both generation-pinned native libraries
 and unversioned aliases for the same platform.
 
-Status: staged, not published.
+Status: published to npm and registry-verified on 2026-07-25.
 
 Candidate coordinates:
 
@@ -35,7 +35,10 @@ scripts/test-npm-package-manager-candidates.sh \
   package-manager/npm/candidates/b052a3f/manifest.json
 scripts/publish-npm-package-manager-candidates.sh \
   --manifest package-manager/npm/candidates/b052a3f/manifest.json \
-  --dry-run
+  --publish \
+  --otp <current-code>
+scripts/verify-npm-registry-candidates.sh \
+  --manifest package-manager/npm/candidates/b052a3f/manifest.json
 ```
 
 Manual tarball inspection confirms the candidate runtime/logger Node.js and Bun

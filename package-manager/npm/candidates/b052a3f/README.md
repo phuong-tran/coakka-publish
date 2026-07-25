@@ -1,9 +1,9 @@
 # npm Candidate b052a3f
 
-This directory stages npm-ready candidate tarballs for the native alias dedupe
+This directory records npm-ready candidate tarballs for the native alias dedupe
 patch release.
 
-Status: staged, not published.
+Status: published to npm and registry-verified on 2026-07-25.
 
 The candidate packages are built from connector commit `b052a3f`. This patch
 keeps the same runtime and logger native generations, but removes duplicate
@@ -40,4 +40,11 @@ Run the release dry-run:
 scripts/publish-npm-package-manager-candidates.sh \
   --manifest package-manager/npm/candidates/b052a3f/manifest.json \
   --dry-run
+```
+
+Verify the published registry surface:
+
+```sh
+scripts/verify-npm-registry-candidates.sh \
+  --manifest package-manager/npm/candidates/b052a3f/manifest.json
 ```

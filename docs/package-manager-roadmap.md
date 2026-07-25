@@ -86,23 +86,23 @@ the canonical non-npm artifact surface for every other lane.
 
 ### Current Release
 
-The npm candidate set under `package-manager/npm/candidates/ae6472b/` has
-been published to npm and registry-verified for the public metadata and
-onboarding patch over the stop backpressure hotfix:
+The npm candidate set under `package-manager/npm/candidates/b052a3f/` has
+been published to npm and registry-verified for the native alias dedupe patch
+over the stop backpressure hotfix:
 
-- `coakka-v2-connector-node@1.3.7`
-- `coakka-v2-connector-bun@1.3.7`
-- `coakka-v2-connector-electron@1.3.7`
-- `coakka-logger-node@1.2.5`
-- `coakka-logger-bun@1.2.5`
-- `coakka-logger-electron@1.2.5`
+- `coakka-v2-connector-node@1.3.8`
+- `coakka-v2-connector-bun@1.3.8`
+- `coakka-v2-connector-electron@1.3.8`
+- `coakka-logger-node@1.2.6`
+- `coakka-logger-bun@1.2.6`
+- `coakka-logger-electron@1.2.6`
 
 The publish helper keeps the first-party dependency order explicit:
 
 ```sh
 scripts/publish-npm-package-manager-candidates.sh --dry-run
 scripts/publish-npm-package-manager-candidates.sh --publish --otp <current-code>
-scripts/verify-npm-registry-candidates.sh --manifest package-manager/npm/candidates/ae6472b/manifest.json
+scripts/verify-npm-registry-candidates.sh --manifest package-manager/npm/candidates/b052a3f/manifest.json
 ```
 
 Public JavaScript samples should consume these npm coordinates unless they are

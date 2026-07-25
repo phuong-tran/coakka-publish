@@ -46,7 +46,7 @@ Current public release boundary:
 [2026-07-18 public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
 
 Current language connector release notes:
-[2026-07-25 npm public metadata and onboarding patch ae6472b](docs/releases/2026-07-25-npm-public-metadata-onboarding-patch-ae6472b.md),
+[2026-07-25 npm native alias dedupe b052a3f](docs/releases/2026-07-25-npm-native-dedupe-b052a3f.md),
 [2026-07-25 runtime stop backpressure hotfix 8ff6f32](docs/releases/2026-07-25-runtime-stop-backpressure-hotfix-8ff6f32.md),
 [2026-07-23 logger Tauri and Electron 1.2.1 refresh 3e8a6ae](docs/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md),
 [2026-07-23 logger Bun 1.2.1 refresh 6fdcc69](docs/releases/2026-07-23-logger-bun-1.2.1-6fdcc69.md),
@@ -204,12 +204,12 @@ Repository rules:
 
 Current published lanes:
 
-- `npm: coakka-v2-connector-node@1.3.7`
-- `npm: coakka-v2-connector-bun@1.3.7`
-- `npm: coakka-v2-connector-electron@1.3.7`
-- `npm: coakka-logger-node@1.2.5`
-- `npm: coakka-logger-bun@1.2.5`
-- `npm: coakka-logger-electron@1.2.5`
+- `npm: coakka-v2-connector-node@1.3.8`
+- `npm: coakka-v2-connector-bun@1.3.8`
+- `npm: coakka-v2-connector-electron@1.3.8`
+- `npm: coakka-logger-node@1.2.6`
+- `npm: coakka-logger-bun@1.2.6`
+- `npm: coakka-logger-electron@1.2.6`
 - `logger/jvm`
 - `logger/python`
 - `logger/node`
@@ -371,9 +371,9 @@ These artifacts are the current public runtime set:
 | Native C ABI | `runtime/native/releases/1.3.1+0da8c2d9/coakka-runtime-native-v2-1.3.1.tar.gz` | `1.3.1+0da8c2d9` | `1.3.1+0da8c2d9` |
 | JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.1-g0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
 | Python runtime | `coakka_v2_connector` wheel | `1.3.1` from `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
-| Node.js runtime | `coakka-v2-connector-node` package | npm `1.3.7` from connector `ae6472b` | `1.3.1+0da8c2d9` |
-| Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.7` from connector `ae6472b` | `1.3.1+0da8c2d9` |
-| Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.7` from connector `ae6472b` | via `coakka-v2-connector-node@1.3.7` |
+| Node.js runtime | `coakka-v2-connector-node` package | npm `1.3.8` from connector `b052a3f` | `1.3.1+0da8c2d9` |
+| Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.8` from connector `b052a3f` | `1.3.1+0da8c2d9` |
+| Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.8` from connector `b052a3f` | via `coakka-v2-connector-node@1.3.8` |
 | Go runtime | `coakka-v2-connector-go` source package | `1.3.1` from `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
 | C# runtime | `CoAkka.Runtime` NuGet package | `1.3.1` from `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
 | Rust runtime | `coakka-runtime-rs` package | `1.3.1-spike` from `1.3.1+0da8c2d9-8ff6f32` | `1.3.1+0da8c2d9` |
@@ -396,10 +396,11 @@ envelope/transport policy last.
 
 Release docs and samples must only present a helper as released after the
 published artifact contains it. The current npm connector refresh in
-`ae6472b` keeps the local-first helper/doc level split, preserves the
-`1.3.1+0da8c2d9` native runtime generation, and points npm package metadata at
-the public artifact and samples repositories. The broader runtime connector
-refresh in `8ff6f32` remains the source for the non-npm language lanes.
+`b052a3f` keeps the local-first helper/doc level split, preserves the
+`1.3.1+0da8c2d9` native runtime generation, and removes duplicate unversioned
+native aliases from the published Node.js and Bun package tarballs. The broader
+runtime connector refresh in `8ff6f32` remains the source for the non-npm
+language lanes.
 
 Validation gates run before publishing:
 
