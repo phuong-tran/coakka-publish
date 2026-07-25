@@ -63,7 +63,7 @@ fi
 
 candidate_dir="$(cd "$(dirname "${manifest}")" && pwd)"
 
-"${repo_root}/scripts/test-npm-package-manager-candidates.sh" "${manifest}"
+"${repo_root}/scripts/test-npm-package-manager-candidates.sh" --require-public-metadata "${manifest}"
 
 if [[ "${mode}" == "--publish" ]]; then
   npm whoami >/dev/null

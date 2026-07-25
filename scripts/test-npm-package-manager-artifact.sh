@@ -45,6 +45,7 @@ make_package() {
   local license_value="${8:-SEE LICENSE IN LICENSE.md}"
   local include_proto="${9:-false}"
   local include_install="${10:-false}"
+  local private_repo_metadata="${11:-false}"
   local root="${tmp_root}/pkg-root/package"
 
   rm -rf "${tmp_root}/pkg-root"
@@ -70,11 +71,25 @@ make_package() {
     \"install\": \"node scripts/install.js\""
   fi
 
+  local repository_url="git+https://github.com/phuong-tran/coakka-publish.git"
+  local bugs_url="https://github.com/phuong-tran/coakka-samples/issues"
+  if [[ "${private_repo_metadata}" == "true" ]]; then
+    repository_url="git+https://github.com/phuong-tran/coakkaJVMConnector.git"
+    bugs_url="https://github.com/phuong-tran/coakkaJVMConnector/issues"
+  fi
+
   cat >"${root}/package.json" <<EOF
 {
   "name": "${package_name}",
   "version": "1.3.1",
   "license": "${license_value}",
+  "repository": {
+    "type": "git",
+    "url": "${repository_url}"
+  },
+  "bugs": {
+    "url": "${bugs_url}"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -145,6 +160,7 @@ verify_fixture() {
     --role "${role}" \
     --package-name "${package_name}" \
     --expected-native-generation "1.3.1+abcdef0" \
+    --require-public-metadata \
     "$@"
 }
 
@@ -224,5 +240,10 @@ install_script="${tmp_root}/coakka-v2-connector-node-install.tgz"
 make_package "${install_script}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN LICENSE.md" false true
 expect_failure "install lifecycle script" verify_fixture "${install_script}" runtime node coakka-v2-connector-node
 grep -Fq "lifecycle script" "${test_output}"
+
+private_repo_metadata="${tmp_root}/coakka-v2-connector-node-private-repo.tgz"
+make_package "${private_repo_metadata}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN LICENSE.md" false false true
+expect_failure "private repo metadata" verify_fixture "${private_repo_metadata}" runtime node coakka-v2-connector-node
+grep -Fq "private source repo marker leaked into npm metadata" "${test_output}"
 
 echo "[npm-package-manager-test] ok"

@@ -111,6 +111,14 @@ FORBIDDEN_MEMBER_SUBSTRINGS = (
     "build-root",
 )
 
+FORBIDDEN_METADATA_SUBSTRINGS = (
+    "coakkaJVMConnector",
+    "github.com/phuong-tran/coakkaJVMConnector",
+)
+
+PUBLIC_REPOSITORY_URL = "git+https://github.com/phuong-tran/coakka-publish.git"
+PUBLIC_BUGS_URL = "https://github.com/phuong-tran/coakka-samples/issues"
+
 INSTALL_LIFECYCLE_SCRIPTS = (
     "preinstall",
     "install",
@@ -294,7 +302,34 @@ def verify_dependencies(package: dict, expected_internal_dependency: str | None)
         fail("; ".join(errors))
 
 
-def verify_package_json(package: dict, package_name: str, role: str, expected_internal_dependency: str | None) -> None:
+def verify_public_metadata(package: dict) -> None:
+    errors = []
+    encoded = json.dumps(package, sort_keys=True)
+    for marker in FORBIDDEN_METADATA_SUBSTRINGS:
+        if marker in encoded:
+            errors.append(f"private source repo marker leaked into npm metadata: {marker}")
+
+    repository = package.get("repository")
+    if not isinstance(repository, dict):
+        errors.append("package-manager artifact must declare public repository metadata")
+    elif repository.get("url") != PUBLIC_REPOSITORY_URL:
+        errors.append(f"package repository.url must be {PUBLIC_REPOSITORY_URL!r}")
+
+    bugs = package.get("bugs")
+    if not isinstance(bugs, dict) or bugs.get("url") != PUBLIC_BUGS_URL:
+        errors.append(f"package bugs.url must be {PUBLIC_BUGS_URL!r}")
+
+    if errors:
+        fail("; ".join(errors))
+
+
+def verify_package_json(
+    package: dict,
+    package_name: str,
+    role: str,
+    expected_internal_dependency: str | None,
+    require_public_metadata: bool,
+) -> None:
     errors = []
     if package.get("name") != package_name:
         errors.append(f"expected package name {package_name!r}, found {package.get('name')!r}")
@@ -308,10 +343,13 @@ def verify_package_json(package: dict, package_name: str, role: str, expected_in
         errors.append("package-manager artifact must declare types")
     if role == "electron" and "exports" not in package:
         errors.append("Electron package-manager artifact must declare explicit exports")
-    for check, check_args in (
+    checks = [
         (verify_scripts, (package,)),
         (verify_dependencies, (package, expected_internal_dependency)),
-    ):
+    ]
+    if require_public_metadata:
+        checks.append((verify_public_metadata, (package,)))
+    for check, check_args in checks:
         try:
             check(*check_args)
         except VerificationError as exc:
@@ -327,6 +365,7 @@ def verify_artifact(
     package_name: str,
     expected_native_generation: str,
     expected_internal_dependency: str | None,
+    require_public_metadata: bool = False,
 ) -> None:
     if not artifact.is_file():
         fail(f"artifact does not exist: {artifact}")
@@ -337,7 +376,7 @@ def verify_artifact(
     errors = []
     for check, check_args in (
         (verify_member_boundary, (names,)),
-        (verify_package_json, (package, package_name, role, expected_internal_dependency)),
+        (verify_package_json, (package, package_name, role, expected_internal_dependency, require_public_metadata)),
         (verify_license, (package, names)),
         (verify_native_shape, (names, product, role, expected_internal_dependency)),
     ):
@@ -378,6 +417,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="audit the current public Node/Bun/Electron runtime and logger npm candidates",
     )
+    parser.add_argument(
+        "--require-public-metadata",
+        action="store_true",
+        help="require public repository and issue metadata; use for new publish candidates",
+    )
     return parser.parse_args()
 
 
@@ -402,7 +446,7 @@ def require_manifest_string(entry: dict, key: str, label: str) -> str:
     return value
 
 
-def verify_candidate_manifest(manifest_path: Path) -> int:
+def verify_candidate_manifest(manifest_path: Path, require_public_metadata: bool) -> int:
     if not manifest_path.is_file():
         print(f"[npm-package-manager] candidate manifest does not exist: {manifest_path}", file=sys.stderr)
         return 1
@@ -435,6 +479,7 @@ def verify_candidate_manifest(manifest_path: Path) -> int:
                 require_manifest_string(entry, "package_name", label),
                 require_manifest_string(entry, "expected_native_generation", label),
                 entry.get("expected_internal_dependency"),
+                require_public_metadata,
             )
         except VerificationError as exc:
             failures += 1
@@ -449,7 +494,7 @@ def main() -> int:
     if args.current_candidates:
         return verify_current_candidates()
     if args.candidate_manifest:
-        return verify_candidate_manifest(args.candidate_manifest)
+        return verify_candidate_manifest(args.candidate_manifest, args.require_public_metadata)
 
     required = (
         args.artifact,
@@ -474,6 +519,7 @@ def main() -> int:
             args.package_name,
             args.expected_native_generation,
             args.expected_internal_dependency,
+            args.require_public_metadata,
         )
     except VerificationError as exc:
         print(f"[npm-package-manager] blocked: {exc}", file=sys.stderr)

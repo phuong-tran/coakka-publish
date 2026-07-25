@@ -2,7 +2,22 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-manifest="${1:-${repo_root}/package-manager/npm/candidates/e2c2442/manifest.json}"
+require_public_metadata="false"
+manifest="${repo_root}/package-manager/npm/candidates/e2c2442/manifest.json"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --require-public-metadata)
+      require_public_metadata="true"
+      shift
+      ;;
+    *)
+      manifest="$1"
+      shift
+      ;;
+  esac
+done
+
 candidate_dir="$(cd "$(dirname "${manifest}")" && pwd)"
 
 (
@@ -10,7 +25,11 @@ candidate_dir="$(cd "$(dirname "${manifest}")" && pwd)"
   shasum -a 256 -c SHA256SUMS >/dev/null
 )
 
-python3 "${repo_root}/scripts/verify-npm-package-manager-artifact.py" \
-  --candidate-manifest "${manifest}"
+verify_args=(--candidate-manifest "${manifest}")
+if [[ "${require_public_metadata}" == "true" ]]; then
+  verify_args+=(--require-public-metadata)
+fi
+
+python3 "${repo_root}/scripts/verify-npm-package-manager-artifact.py" "${verify_args[@]}"
 
 echo "[npm-package-manager-candidates-test] ok"
