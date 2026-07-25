@@ -50,8 +50,8 @@ APIs still belong to the application architecture around CoAkka.
 
 ## Current JavaScript Packages
 
-The runtime npm publish candidate is ready at `1.3.9` over native runtime
-`1.3.2+caff6d6d`. The logger npm lane stays on `1.2.6`:
+The runtime npm packages are published at `1.3.9` over native runtime
+`1.3.2+caff6d6d`. The logger npm packages are published at `1.2.6`:
 
 ```sh
 npm install coakka-v2-connector-node@1.3.9

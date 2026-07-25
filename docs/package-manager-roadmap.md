@@ -85,11 +85,11 @@ The npm lane should open in small gates:
 Those gates have passed for the npm lane below. GitHub Release tarballs remain
 the canonical non-npm artifact surface for every other lane.
 
-### Current Runtime Candidate
+### Current Runtime npm Lane
 
-The runtime npm candidate set under `package-manager/npm/candidates/b46f705/`
-is ready for the native payload bridge release over runtime native
-`1.3.2+caff6d6d`:
+The runtime npm package set published from
+`package-manager/npm/candidates/b46f705/` is current for the native payload
+bridge release over runtime native `1.3.2+caff6d6d`:
 
 - `coakka-v2-connector-node@1.3.9`
 - `coakka-v2-connector-bun@1.3.9`
@@ -109,23 +109,23 @@ scripts/publish-npm-package-manager-candidates.sh --publish --otp <current-code>
 scripts/verify-npm-registry-candidates.sh --manifest package-manager/npm/candidates/b46f705/manifest.json
 ```
 
-Public JavaScript samples should consume the `1.3.9` runtime coordinates after
-the candidate is published and registry-verified.
+Public JavaScript samples consume the `1.3.9` runtime coordinates after the
+registry verification gate passes.
 
 ## PyPI
 
-Python is the next easy package-manager lane after npm because the runtime and
-logger wheels already exist and public samples already install those wheels from
-the GitHub Release artifact surface.
+Python is the current PyPI package-manager lane after npm. The runtime and
+logger wheels are published on PyPI and remain mirrored from the GitHub
+artifact surface.
 
 Current wheel coordinates:
 
 - runtime package name: `coakka-v2-connector`
 - runtime import name: `coakka_v2_connector`
-- runtime version: `1.3.2`
+- runtime wheel artifact version: `1.3.2`
 - logger package name: `coakka-logger`
 - logger import name: `coakka_logger`
-- logger version: `1.2.1`
+- logger wheel artifact version: `1.2.2`
 
 The current runtime and logger wheels are published on PyPI and remain mirrored
 as GitHub Release artifacts:
