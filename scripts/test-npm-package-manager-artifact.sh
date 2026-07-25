@@ -46,7 +46,9 @@ make_package() {
   local include_proto="${9:-false}"
   local include_install="${10:-false}"
   local private_repo_metadata="${11:-false}"
+  local include_unversioned_alias="${12:-false}"
   local root="${tmp_root}/pkg-root/package"
+  local native_generation="1.3.1+abcdef0"
 
   rm -rf "${tmp_root}/pkg-root"
   mkdir -p "${root}/dist"
@@ -123,7 +125,10 @@ EOF
         *) extension="so" ;;
       esac
       mkdir -p "${root}/native/${platform}"
-      printf 'native placeholder\n' >"${root}/native/${platform}/${lib_base}.${extension}"
+      printf 'native placeholder\n' >"${root}/native/${platform}/${lib_base}-${native_generation}.${extension}"
+      if [[ "${include_unversioned_alias}" == "true" ]]; then
+        printf 'native placeholder\n' >"${root}/native/${platform}/${lib_base}.${extension}"
+      fi
     done
   fi
 
@@ -167,6 +172,23 @@ verify_fixture() {
 good_node="${tmp_root}/coakka-v2-connector-node-1.3.1.tgz"
 make_package "${good_node}" runtime node coakka-v2-connector-node
 expect_success "clean Node package" verify_fixture "${good_node}" runtime node coakka-v2-connector-node
+
+duplicate_native_alias="${tmp_root}/coakka-v2-connector-node-duplicate-native.tgz"
+make_package \
+  "${duplicate_native_alias}" \
+  runtime \
+  node \
+  coakka-v2-connector-node \
+  "" \
+  "" \
+  false \
+  "SEE LICENSE IN LICENSE.md" \
+  false \
+  false \
+  false \
+  true
+expect_failure "duplicate native alias" verify_fixture "${duplicate_native_alias}" runtime node coakka-v2-connector-node
+grep -Fq "must include exactly one runtime native" "${test_output}"
 
 good_electron="${tmp_root}/coakka-v2-connector-electron-1.3.1.tgz"
 make_package "${good_electron}" runtime electron coakka-v2-connector-electron coakka-v2-connector-node 1.3.1

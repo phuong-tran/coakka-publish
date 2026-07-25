@@ -179,35 +179,74 @@ def verify_member_boundary(names: list[str]) -> None:
                 fail(f"unpublished source identity leaked into npm artifact: {name}")
 
 
-def native_library_name(product: str, platform: str) -> str:
-    extension = ".dll" if platform.startswith("windows-") else ".dylib" if platform.startswith("macos-") else ".so"
+def native_library_base(product: str) -> str:
     if product == "runtime":
-        return f"libcoakka_runtime_v2{extension}"
+        return "libcoakka_runtime_v2"
     if product == "logger":
-        return f"libcoakka_logger_core{extension}"
+        return "libcoakka_logger_core"
     fail(f"unsupported product lane: {product}")
 
 
-def native_members_by_platform(names: list[str], product: str) -> dict[str, list[str]]:
+def native_library_extension(platform: str) -> str:
+    extension = ".dll" if platform.startswith("windows-") else ".dylib" if platform.startswith("macos-") else ".so"
+    return extension
+
+
+def native_library_names(product: str, platform: str, expected_native_generation: str) -> tuple[str, str]:
+    base = native_library_base(product)
+    extension = native_library_extension(platform)
+    return f"{base}{extension}", f"{base}-{expected_native_generation}{extension}"
+
+
+def native_members_by_platform(
+    names: list[str],
+    product: str,
+    expected_native_generation: str,
+) -> dict[str, list[str]]:
     by_platform = {platform: [] for platform in PACKAGE_PLATFORMS}
     for name in names:
         normalized = posixpath.normpath(name)
         for platform in PACKAGE_PLATFORMS:
             if f"/{platform}/" not in normalized:
                 continue
-            if posixpath.basename(normalized) == native_library_name(product, platform):
+            generic_name, versioned_name = native_library_names(product, platform, expected_native_generation)
+            if posixpath.basename(normalized) in {generic_name, versioned_name}:
                 by_platform[platform].append(normalized)
     return by_platform
 
 
-def verify_native_shape(names: list[str], product: str, role: str, expected_internal_dependency: str | None) -> None:
-    by_platform = native_members_by_platform(names, product)
+def verify_native_shape(
+    names: list[str],
+    product: str,
+    role: str,
+    expected_native_generation: str,
+    expected_internal_dependency: str | None,
+) -> None:
+    by_platform = native_members_by_platform(names, product, expected_native_generation)
     present = {platform for platform, matches in by_platform.items() if matches}
 
     if role in {"node", "bun"}:
         missing = sorted(set(PACKAGE_PLATFORMS) - present)
         if missing:
             fail(f"{role} package is missing bundled {product} native libraries for: {', '.join(missing)}")
+        errors = []
+        for platform, matches in by_platform.items():
+            if len(matches) != 1:
+                rendered = ", ".join(matches)
+                errors.append(f"{role} package must include exactly one {product} native for {platform}: {rendered}")
+                continue
+            generic_name, versioned_name = native_library_names(product, platform, expected_native_generation)
+            basename = posixpath.basename(matches[0])
+            if basename == generic_name:
+                errors.append(
+                    f"{role} package must not ship unversioned native alias for {platform}: {matches[0]}"
+                )
+            elif basename != versioned_name:
+                errors.append(
+                    f"{role} package native for {platform} must be {versioned_name}, found {basename}"
+                )
+        if errors:
+            fail("; ".join(errors))
         return
 
     if role == "electron":
@@ -378,7 +417,7 @@ def verify_artifact(
         (verify_member_boundary, (names,)),
         (verify_package_json, (package, package_name, role, expected_internal_dependency, require_public_metadata)),
         (verify_license, (package, names)),
-        (verify_native_shape, (names, product, role, expected_internal_dependency)),
+        (verify_native_shape, (names, product, role, expected_native_generation, expected_internal_dependency)),
     ):
         try:
             check(*check_args)
