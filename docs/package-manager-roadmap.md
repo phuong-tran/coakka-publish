@@ -35,7 +35,7 @@ normal path.
 | --- | --- | --- | --- |
 | 1 | npm | Node.js, Bun, Electron runtime and logger packages | Best first package-manager lane because it improves JavaScript and desktop onboarding together. |
 | 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.4` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
-| 3 | Go modules | Go runtime and logger packages | Requires stable public module identity before release. |
+| 3 | Go modules | Go runtime and logger packages | Source tarballs are module-shaped; dedicated public module repos and tags are still required before `go get` is documented as the normal path. |
 | 4 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
 | 5 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
 
@@ -152,16 +152,49 @@ Current readiness gates:
 
 ## Go Modules
 
-Go packages need stable public module identity before release. A Go module
-path is user-facing API, so it should not be treated as a throwaway archive
-layout.
+Go is the next package-manager lane after npm and PyPI. The current runtime/logger Go
+source packages are module-shaped and already use stable public module paths:
+
+- `github.com/phuong-tran/coakka-runtime-go`
+- `github.com/phuong-tran/coakka-logger-go`
+
+Current public samples still consume the GitHub Release tarballs through a
+temporary local `replace`. That is intentional until the dedicated public Go
+module repositories exist and are tagged.
 
 Before opening the Go module lane:
 
-- choose and document the final public module path
-- keep package names and import paths stable
-- verify samples consume the module path a user would use
-- keep native loading self-contained for the normal path
+- create public module repositories for the two module paths above
+- export the module roots from the connector release workspace
+- verify `go test ./...` from each exported module root
+- tag `coakka-runtime-go` as `v1.3.2`
+- tag `coakka-logger-go` as `v1.2.1`
+- verify a clean consumer with `go get` and no local `replace`
+- then update samples from tarball-local `replace` to normal module install
+
+The current release-ready module export commands are:
+
+```sh
+# From the connector release workspace:
+CONNECTOR_ROOT="$(pwd)"
+
+cd "${CONNECTOR_ROOT}/go"
+bash scripts/export-module-repo.sh /tmp/coakka-runtime-go-module
+cd /tmp/coakka-runtime-go-module
+go test ./...
+
+cd "${CONNECTOR_ROOT}/logger/go"
+bash scripts/export-module-repo.sh /tmp/coakka-logger-go-module
+cd /tmp/coakka-logger-go-module
+go test ./...
+```
+
+The tarball lane remains valid while the module repositories are pending:
+
+- runtime tarball:
+  `runtime/go/releases/1.3.2+caff6d6d-6d5ea58/coakka-v2-connector-go-1.3.2.tar.gz`
+- logger tarball:
+  `logger/go/releases/1.2.1+f50756ebff0d/coakka-logger-go-1.2.1.tar.gz`
 
 ## crates.io
 

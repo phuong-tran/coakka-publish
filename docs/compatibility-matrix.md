@@ -60,7 +60,7 @@ All logger connector lanes below align to logger native generation
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.3.4` and logger `coakka-logger==1.2.2` current |
-| Go modules | Go runtime/logger packages | planned |
+| Go modules | Go runtime/logger packages | source tarballs current; public module repos pending |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
