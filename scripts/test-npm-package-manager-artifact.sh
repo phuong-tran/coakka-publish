@@ -258,6 +258,21 @@ make_package "${proto_leak}" runtime node coakka-v2-connector-node "" "" false "
 expect_failure "proto leak" verify_fixture "${proto_leak}" runtime node coakka-v2-connector-node
 grep -Fq "protobuf schema leaked" "${test_output}"
 
+text_wire_leak="${tmp_root}/coakka-v2-connector-node-wire-text.tgz"
+make_package "${text_wire_leak}" runtime node coakka-v2-connector-node
+cat >"${tmp_root}/pkg-root/package/dist/protobuf.js" <<'EOF'
+const WIRE_VARINT = 0;
+function encodeVarint(value) {
+  return value;
+}
+export function decodeEnvelope(bytes) {
+  return bytes;
+}
+EOF
+COPYFILE_DISABLE=1 tar -C "${tmp_root}/pkg-root" -czf "${text_wire_leak}" package
+expect_failure "text wire codec leak" verify_fixture "${text_wire_leak}" runtime node coakka-v2-connector-node
+grep -Fq "JavaScript-visible wire/protobuf" "${test_output}"
+
 install_script="${tmp_root}/coakka-v2-connector-node-install.tgz"
 make_package "${install_script}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN LICENSE.md" false true
 expect_failure "install lifecycle script" verify_fixture "${install_script}" runtime node coakka-v2-connector-node
