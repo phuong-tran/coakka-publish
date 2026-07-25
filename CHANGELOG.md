@@ -9,6 +9,11 @@ remain under [docs/releases/](docs/releases/).
   `coakka-client` Docker Linux bundle artifacts to `1.3.1+0da8c2d9` so the
   runtime stop-backpressure hotfix covers the native tooling surface as well
   as the language connector packages.
+- Staged npm public metadata and onboarding patch candidates from connector
+  commit `ae6472b`: runtime packages `1.3.7` and logger packages `1.2.5`.
+  These candidates keep native runtime generation `1.3.1+0da8c2d9` and logger
+  native generation `1.2.1+f50756ebff0d`, and are release-ready but not yet
+  published to npm.
 
 ## 2026-07-24
 

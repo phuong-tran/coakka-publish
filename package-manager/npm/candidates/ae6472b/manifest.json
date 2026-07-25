@@ -1,0 +1,69 @@
+{
+  "status": "staged_release_ready",
+  "connector_commit": "ae6472b",
+  "created_date": "2026-07-25",
+  "verified_date": "2026-07-25",
+  "native_runtime_generation": "1.3.1+0da8c2d9",
+  "logger_native_generation": "1.2.1+f50756ebff0d",
+  "release_reason": "npm public metadata and onboarding patch release",
+  "publish_order": [
+    "runtime-node",
+    "logger-node",
+    "runtime-bun",
+    "logger-bun",
+    "runtime-electron",
+    "logger-electron"
+  ],
+  "packages": [
+    {
+      "label": "runtime-node",
+      "product": "runtime",
+      "role": "node",
+      "package_name": "coakka-v2-connector-node",
+      "expected_native_generation": "1.3.1+0da8c2d9",
+      "relative_path": "runtime/node/coakka-v2-connector-node-1.3.7.tgz"
+    },
+    {
+      "label": "runtime-bun",
+      "product": "runtime",
+      "role": "bun",
+      "package_name": "coakka-v2-connector-bun",
+      "expected_native_generation": "1.3.1+0da8c2d9",
+      "relative_path": "runtime/bun/coakka-v2-connector-bun-1.3.7.tgz"
+    },
+    {
+      "label": "runtime-electron",
+      "product": "runtime",
+      "role": "electron",
+      "package_name": "coakka-v2-connector-electron",
+      "expected_native_generation": "1.3.1+0da8c2d9",
+      "expected_internal_dependency": "coakka-v2-connector-node",
+      "relative_path": "runtime/electron/coakka-v2-connector-electron-1.3.7.tgz"
+    },
+    {
+      "label": "logger-node",
+      "product": "logger",
+      "role": "node",
+      "package_name": "coakka-logger-node",
+      "expected_native_generation": "1.2.1+f50756ebff0d",
+      "relative_path": "logger/node/coakka-logger-node-1.2.5.tgz"
+    },
+    {
+      "label": "logger-bun",
+      "product": "logger",
+      "role": "bun",
+      "package_name": "coakka-logger-bun",
+      "expected_native_generation": "1.2.1+f50756ebff0d",
+      "relative_path": "logger/bun/coakka-logger-bun-1.2.5.tgz"
+    },
+    {
+      "label": "logger-electron",
+      "product": "logger",
+      "role": "electron",
+      "package_name": "coakka-logger-electron",
+      "expected_native_generation": "1.2.1+f50756ebff0d",
+      "expected_internal_dependency": "coakka-logger-node",
+      "relative_path": "logger/electron/coakka-logger-electron-1.2.5.tgz"
+    }
+  ]
+}
