@@ -23,19 +23,24 @@ sha256_jar_entry() {
 sha256_tar_entry() {
   local archive_path="$1"
   local entry_suffix="$2"
-  local entry
 
-  entry="$(
-    tar -tzf "${archive_path}" |
-      awk -v suffix="${entry_suffix}" '
-        index($0, suffix) > 0 && index($0, suffix) == length($0) - length(suffix) + 1 {
-          print
-          exit
-        }
-      '
-  )"
-  [[ -n "${entry}" ]] || return 1
-  tar -xOzf "${archive_path}" "${entry}" | shasum -a 256 | awk '{print $1}'
+  python3 - "${archive_path}" "${entry_suffix}" <<'PY'
+import hashlib
+import sys
+import tarfile
+
+archive_path, entry_suffix = sys.argv[1], sys.argv[2]
+with tarfile.open(archive_path, "r:gz") as archive:
+    for member in archive.getmembers():
+        if not member.isfile() or not member.name.endswith(entry_suffix):
+            continue
+        extracted = archive.extractfile(member)
+        if extracted is None:
+            raise SystemExit(1)
+        print(hashlib.sha256(extracted.read()).hexdigest())
+        raise SystemExit(0)
+raise SystemExit(1)
+PY
 }
 
 jar_has_entry() {
@@ -49,16 +54,17 @@ archive_has_entry_suffix() {
   local entry_suffix="$2"
 
   [[ -n "${archive_path}" ]] || return 1
-  tar -tzf "${archive_path}" |
-    awk -v suffix="${entry_suffix}" '
-      index($0, suffix) > 0 && index($0, suffix) == length($0) - length(suffix) + 1 {
-        found = 1
-        exit
-      }
-      END {
-        exit(found ? 0 : 1)
-      }
-    '
+  python3 - "${archive_path}" "${entry_suffix}" <<'PY'
+import sys
+import tarfile
+
+archive_path, entry_suffix = sys.argv[1], sys.argv[2]
+with tarfile.open(archive_path, "r:gz") as archive:
+    for member in archive.getmembers():
+        if member.name.endswith(entry_suffix):
+            raise SystemExit(0)
+raise SystemExit(1)
+PY
 }
 
 jar_native_version() {
