@@ -1,7 +1,6 @@
-# 2026-07-25 Python PyPI Runtime Release
+# 2026-07-25 Python PyPI Runtime And Logger Release
 
-The Python runtime lane is published on PyPI. The logger lane remains ready for
-a later PyPI publish once its separate upload is verified.
+The Python runtime and logger lanes are published on PyPI.
 
 Current package names:
 
@@ -16,6 +15,10 @@ Current import names:
 Current runtime PyPI package:
 
 - `coakka-v2-connector==1.3.4`
+
+Current logger PyPI package:
+
+- `coakka-logger==1.2.1`
 
 Runtime adoption story:
 
@@ -49,8 +52,13 @@ Runtime release verification:
   not link to package-local `CONSUMING.md`, `RELEASE.md`, or
   `consumer-smoke/README.md` paths
 
-Remaining logger release blocker before documenting normal logger PyPI install:
+Logger release verification:
 
-- logger PyPI upload and clean install smoke
-- public logger sample docs updated from GitHub Release wheel install to PyPI
-  install
+- `twine check` passed for `coakka_logger-1.2.1-py3-none-any.whl`
+- PyPI upload succeeded for `coakka-logger==1.2.1`
+- clean PyPI install smoke loaded logger native package `1.2.1+f50756ebff0d`
+- PyPI metadata uses the npm-style New To CoAkka onboarding and does not link
+  to package-local `CONSUMING.md`, `RELEASE.md`, or `consumer-smoke/README.md`
+  paths
+- public logger sample docs were updated from GitHub Release wheel install to
+  PyPI install
