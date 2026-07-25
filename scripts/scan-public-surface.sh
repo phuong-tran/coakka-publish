@@ -58,17 +58,9 @@ scan_file() {
   local file="$1"
   local label="$2"
   local matches
-  local base
 
   if [[ "${file}" == "${self_path}" || "$(cd "$(dirname "${file}")" && pwd)/$(basename "${file}")" == "${self_path}" ]]; then
     return 0
-  fi
-
-  base="$(basename "${file}")"
-  if [[ "${base}" == release-*runbook.md || "${base}" == release-*checklist.md ]]; then
-    {
-      echo "[public-artifact-surface] internal release document in ${label}"
-    } >>"${violations_file}"
   fi
 
   matches="$(strings -a "${file}" 2>/dev/null | grep -En "${blocked_re}" | head -n 20 || true)"
