@@ -6,8 +6,8 @@ adds package license metadata for pkg.go.dev.
 
 Current module coordinates:
 
-- `github.com/phuong-tran/coakka-runtime-go@v1.3.5`
-- `github.com/phuong-tran/coakka-logger-go@v1.2.4`
+- `github.com/phuong-tran/coakka-runtime-go@v1.3.6`
+- `github.com/phuong-tran/coakka-logger-go@v1.2.5`
 
 Native generations are unchanged:
 
@@ -25,14 +25,18 @@ using the generation-pinned filename only:
 
 Source commits:
 
-- `coakkaJVMConnector@e2ea901`
-- `coakka-runtime-go@36a3566`, tag `v1.3.5`
-- `coakka-logger-go@3fe8bd9`, tag `v1.2.4`
+- `coakkaJVMConnector@b5aa219`
+- `coakka-runtime-go@abec546`, tag `v1.3.6`
+- `coakka-logger-go@62f9dee`, tag `v1.2.5`
 
 Package metadata:
 
 - root `LICENSE` covers the Go connector source as Apache-2.0
 - `NATIVE-LICENSE.md` carries the preview terms for bundled native libraries
+- `.github/FUNDING.yml` matches the public samples funding metadata
+- README badges cover CI, pkg.go.dev, package version, GitHub release, license,
+  and funding
+- module CI runs `go test ./...` and checks the native payload shape
 
 Verification:
 

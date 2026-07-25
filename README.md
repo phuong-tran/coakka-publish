@@ -181,8 +181,8 @@ commit is visible at the package list boundary.
 The npm package-manager lane is current for JavaScript runtime/logger packages.
 The Python runtime package `coakka-v2-connector==1.3.4` and logger package
 `coakka-logger==1.2.2` are published on PyPI. The Go runtime package
-`github.com/phuong-tran/coakka-runtime-go@v1.3.5` and logger package
-`github.com/phuong-tran/coakka-logger-go@v1.2.4` are published as public Go
+`github.com/phuong-tran/coakka-runtime-go@v1.3.6` and logger package
+`github.com/phuong-tran/coakka-logger-go@v1.2.5` are published as public Go
 modules. crates.io and apt/deb remain planned distribution surfaces. The
 intended order and release gates are tracked in
 [`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).
