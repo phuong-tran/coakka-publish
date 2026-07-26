@@ -8,6 +8,9 @@ Changelog: [CHANGELOG.md](CHANGELOG.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
 Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
+Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
+Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
+Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 If you are new to CoAkka, start with
@@ -26,6 +29,17 @@ Public repository map:
 | --- | --- | --- |
 | `coakka-publish` | Released packages, native archives, manifests, checksums, compatibility matrix, and release notes. | https://github.com/phuong-tran/coakka-publish |
 | `coakka-samples` | Runnable examples that show how an app uses the runtime and logger packages. | https://github.com/phuong-tran/coakka-samples |
+
+Public docs:
+[Runtime Glossary](docs/runtime-glossary.md),
+[Runtime Message And Routing Model](docs/runtime-message-and-routing-model.md),
+[Runtime Integration Guide](docs/runtime-integration-guide.md),
+[Cluster Routing](docs/runtime-cluster-routing.md),
+[Containerized Runtime](docs/containerized-runtime.md),
+[Production Readiness](docs/production-readiness.md),
+[Production Evidence](docs/production-evidence.md),
+and
+[Repository Boundaries](docs/repository-boundaries.md).
 
 Latest GitHub Release page with attached public artifacts:
 [CoAkka Public Artifacts 1.3.1](https://github.com/phuong-tran/coakka-publish/releases/tag/coakka-public-artifacts-v1.3.1).
