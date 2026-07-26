@@ -37,7 +37,7 @@ normal path.
 | --- | --- | --- | --- |
 | 1 | npm | Node.js, Bun, Electron runtime and logger packages | Best first package-manager lane because it improves JavaScript and desktop onboarding together. |
 | 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.4` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
-| 3 | Go modules | Go runtime and logger packages | Runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.7` and logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published and clean-consumer verified. |
+| 3 | Go modules | Go runtime and logger packages | Runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.9` and logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published and clean-consumer verified. |
 | 4 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
 | 5 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
 
@@ -156,7 +156,7 @@ Current readiness gates:
 Go is a current package-manager lane. The runtime/logger Go packages are
 published as public modules with stable module paths:
 
-- `github.com/phuong-tran/coakka-runtime-go@v1.3.7`
+- `github.com/phuong-tran/coakka-runtime-go@v1.3.9`
 - `github.com/phuong-tran/coakka-logger-go@v1.2.5`
 
 Current public samples consume those module coordinates directly. The GitHub
@@ -165,7 +165,7 @@ compatibility, but they are no longer the normal Go install path.
 
 Current module repositories:
 
-- `https://github.com/phuong-tran/coakka-runtime-go`, tag `v1.3.7`
+- `https://github.com/phuong-tran/coakka-runtime-go`, tag `v1.3.9`
 - `https://github.com/phuong-tran/coakka-logger-go`, tag `v1.2.5`
 
 The release module export commands are:

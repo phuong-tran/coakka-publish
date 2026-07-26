@@ -20,7 +20,7 @@ All runtime connector lanes below align to native runtime generation
 | Bun runtime | `coakka-v2-connector-bun` tarball | `1.3.2+caff6d6d-b46f705` package `1.3.9` | `1.3.2+caff6d6d` |
 | Electron runtime | `coakka-v2-connector-electron` tarball | `1.3.2+caff6d6d-b46f705` package `1.3.9` | via matching Node tarball |
 | Tauri runtime | `coakka-runtime-tauri-intents` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
-| Go runtime | `github.com/phuong-tran/coakka-runtime-go` Go module | `v1.3.7` | `1.3.2+caff6d6d` |
+| Go runtime | `github.com/phuong-tran/coakka-runtime-go` Go module | `v1.3.9` | `1.3.2+caff6d6d` |
 | C# runtime | `CoAkka.Runtime` package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
 | Rust runtime | `coakka-runtime-rs` package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
 | Mojo runtime | `coakka-runtime-mojo` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
@@ -60,7 +60,7 @@ All logger connector lanes below align to logger native generation
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.3.4` and logger `coakka-logger==1.2.2` current |
-| Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.7`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
+| Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.9`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
