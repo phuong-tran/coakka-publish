@@ -10,6 +10,7 @@ Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.m
 Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
 Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
 Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
+Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.md)
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
 Questions and answers: [docs/qna.md](docs/qna.md)
 
@@ -35,6 +36,7 @@ Public docs:
 [Runtime Glossary](docs/runtime-glossary.md),
 [Runtime Message And Routing Model](docs/runtime-message-and-routing-model.md),
 [Runtime Integration Guide](docs/runtime-integration-guide.md),
+[Incremental Adoption](docs/incremental-adoption.md),
 [Cluster Routing](docs/runtime-cluster-routing.md),
 [Containerized Runtime](docs/containerized-runtime.md),
 [Production Readiness](docs/production-readiness.md),
