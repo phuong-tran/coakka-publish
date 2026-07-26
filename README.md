@@ -11,6 +11,7 @@ Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-
 Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
 Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
+Questions and answers: [docs/qna.md](docs/qna.md)
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 If you are new to CoAkka, start with
@@ -38,6 +39,7 @@ Public docs:
 [Containerized Runtime](docs/containerized-runtime.md),
 [Production Readiness](docs/production-readiness.md),
 [Production Evidence](docs/production-evidence.md),
+[Questions And Answers](docs/qna.md),
 and
 [Repository Boundaries](docs/repository-boundaries.md).
 
