@@ -47,8 +47,8 @@ make_fixture() {
     "${fixture}/artifacts" \
     "${fixture}/docs" \
     "${fixture}/include/coakka/v2" \
-    "${fixture}/cli/releases/1.3.1+2215b0f" \
-    "${fixture}/demo/coakka-client/releases/1.3.1+2215b0f" \
+    "${fixture}/coakka-tools/coakka-client/releases/1.3.1+2215b0f" \
+    "${fixture}/coakka-tools/coakka-client/docker-demo/releases/1.3.1+2215b0f" \
     "${fixture}/logger/native/releases/test" \
     "${fixture}/maven" \
     "${fixture}/native/linux-aarch64" \
@@ -57,7 +57,7 @@ make_fixture() {
     "${fixture}/native/windows-aarch64" \
     "${fixture}/native/windows-x86_64" \
     "${fixture}/runtime/native/releases/0.1.0+63c346e" \
-    "${fixture}/runtime-inspect/native/releases/1.3.1+e664986" \
+    "${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986" \
     "${fixture}/scripts"
 
   cp "${repo_root}/scripts/verify-public-surface.sh" "${fixture}/scripts/verify-public-surface.sh"
@@ -81,9 +81,9 @@ EOF
   printf 'windows x86_64 native\n' >"${fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll"
   printf 'logger archive\n' >"${fixture}/logger/native/releases/test/coakka-logger-native-test.tar.gz"
   printf 'runtime archive\n' >"${fixture}/runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz"
-  printf 'runtime inspect archive\n' >"${fixture}/runtime-inspect/native/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz"
-  printf 'cli archive\n' >"${fixture}/cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz"
-  printf 'docker demo archive\n' >"${fixture}/demo/coakka-client/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz"
+  printf 'runtime inspect archive\n' >"${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz"
+  printf 'cli archive\n' >"${fixture}/coakka-tools/coakka-client/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz"
+  printf 'docker demo archive\n' >"${fixture}/coakka-tools/coakka-client/docker-demo/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz"
 
   (
     cd "${fixture}"
@@ -108,32 +108,32 @@ EOF
     shasum -a 256 coakka-runtime-native-v2-0.1.0.tar.gz >SHA256SUMS
   )
   (
-    cd "${fixture}/runtime-inspect/native/releases/1.3.1+e664986"
+    cd "${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986"
     shasum -a 256 coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz >SHA256SUMS
   )
   (
-    cd "${fixture}/cli/releases/1.3.1+2215b0f"
+    cd "${fixture}/coakka-tools/coakka-client/releases/1.3.1+2215b0f"
     shasum -a 256 coakka-client-v2-1.3.1-linux-x86_64.tar.gz >SHA256SUMS
   )
   (
-    cd "${fixture}/demo/coakka-client/releases/1.3.1+2215b0f"
+    cd "${fixture}/coakka-tools/coakka-client/docker-demo/releases/1.3.1+2215b0f"
     shasum -a 256 coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz >SHA256SUMS
   )
 
   local logger_sha runtime_sha inspect_sha cli_sha demo_sha
   logger_sha="$(sha256_file "${fixture}/logger/native/releases/test/coakka-logger-native-test.tar.gz")"
   runtime_sha="$(sha256_file "${fixture}/runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz")"
-  inspect_sha="$(sha256_file "${fixture}/runtime-inspect/native/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz")"
-  cli_sha="$(sha256_file "${fixture}/cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz")"
-  demo_sha="$(sha256_file "${fixture}/demo/coakka-client/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz")"
+  inspect_sha="$(sha256_file "${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz")"
+  cli_sha="$(sha256_file "${fixture}/coakka-tools/coakka-client/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz")"
+  demo_sha="$(sha256_file "${fixture}/coakka-tools/coakka-client/docker-demo/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz")"
   cat >"${fixture}/artifacts/public-artifacts.tsv" <<EOF
 # Public artifact manifest v1.
 # Columns: status	label	relative_path	sha256
 public	logger Native package	logger/native/releases/test/coakka-logger-native-test.tar.gz	${logger_sha}
 public	runtime Native package	runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz	${runtime_sha}
-public	coakka-runtime-inspect macos-aarch64	runtime-inspect/native/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz	${inspect_sha}
-public	coakka-client Linux x86_64 CLI	cli/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz	${cli_sha}
-public	coakka-client Docker demo Linux x86_64	demo/coakka-client/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz	${demo_sha}
+public	coakka-runtime-inspect macos-aarch64	coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz	${inspect_sha}
+public	coakka-client Linux x86_64 CLI	coakka-tools/coakka-client/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz	${cli_sha}
+public	coakka-client Docker demo Linux x86_64	coakka-tools/coakka-client/docker-demo/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz	${demo_sha}
 EOF
 
   printf '%s\n' "${fixture}"

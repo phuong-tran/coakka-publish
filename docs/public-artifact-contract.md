@@ -13,15 +13,21 @@ The current public release surface contains:
 - runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`
 - runtime source connector packages under `runtime/{mojo,zig,tauri}/releases/`
 - runtime JVM, Spring Boot, and Quarkus artifacts under `maven/`
-- coakka-client native CLI archives under `cli/releases/`
-- coakka-client Docker Linux bundles under `demo/coakka-client/releases/`
+- coakka-client native CLI archives under `coakka-tools/coakka-client/releases/`
+- coakka-client Docker Linux bundles under
+  `coakka-tools/coakka-client/docker-demo/releases/`
+- coakka-runtime-inspect native UI archives under
+  `coakka-tools/coakka-runtime-inspect/releases/`
 
 Consumer-facing package downloads are listed in
 `artifacts/public-artifacts.tsv`. Public samples should pin against that
 manifest so sample metadata and publish contents do not drift silently. The
 manifest is intentionally limited to the current public release surface:
-`logger/*/releases/*`, `runtime/*/releases/*`, `cli/releases/*`,
-`demo/coakka-client/releases/*`, and selected Maven jars under `maven/coakka/`.
+`logger/*/releases/*`, `runtime/*/releases/*`, `coakka-tools/*/releases/*`,
+`coakka-tools/*/*/releases/*`, and selected Maven jars under `maven/coakka/`.
+Older `cli/releases/`, `demo/coakka-client/releases/`, and
+`runtime-inspect/native/releases/` paths remain as compatibility history, not
+the current tool artifact surface.
 Comment lines may record provenance for source-package lanes when the source
 commit is part of the consumer-facing release identity.
 
@@ -87,13 +93,13 @@ and release gate live in
 under:
 
 ```text
-cli/releases/<release-id>/coakka-client-v2-<version>-<platform>.tar.gz
+coakka-tools/coakka-client/releases/<release-id>/coakka-client-v2-<version>-<platform>.tar.gz
 ```
 
 The matching Docker Linux bundles are published under:
 
 ```text
-demo/coakka-client/releases/<release-id>/coakka-client-docker-demo-v2-<version>-<platform>.tar.gz
+coakka-tools/coakka-client/docker-demo/releases/<release-id>/coakka-client-docker-demo-v2-<version>-<platform>.tar.gz
 ```
 
 `coakka-client` is a request/reply runtime client. It must not be documented as

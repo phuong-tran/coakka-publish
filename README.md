@@ -148,9 +148,9 @@ GitHub demo bundles above are the captured public sample artifacts.
 | Runtime Mojo, Zig, and Tauri source connector lanes | public source packages | `runtime/{mojo,zig,tauri}/releases/` |
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
-| coakka-client native CLI | public | `cli/releases/` |
-| coakka-client Docker Linux bundle | public Linux bundles | `demo/coakka-client/releases/` |
-| coakka-runtime-inspect native UI | public macOS ARM64, Linux x86_64/ARM64, and Windows x86_64/ARM64 | `runtime-inspect/native/releases/` |
+| coakka-client native CLI | public | `coakka-tools/coakka-client/releases/` |
+| coakka-client Docker Linux bundle | public Linux bundles | `coakka-tools/coakka-client/docker-demo/releases/` |
+| coakka-runtime-inspect native UI | public macOS ARM64, Linux x86_64/ARM64, and Windows x86_64/ARM64 | `coakka-tools/coakka-runtime-inspect/releases/` |
 | Docker Hub sample images | not captured in the current release ledger | see per-release Docker Hub notes |
 
 The current root native runtime package is `1.3.2+caff6d6d`. The published JVM
@@ -239,9 +239,11 @@ Current published lanes:
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`
 - runtime source connector packages under `runtime/{mojo,zig,tauri}/releases/`
-- coakka-client native CLI archives under `cli/releases/`
-- coakka-client Docker Linux bundles under `demo/coakka-client/releases/`
-- coakka-runtime-inspect native UI archives under `runtime-inspect/native/releases/`
+- coakka-client native CLI archives under `coakka-tools/coakka-client/releases/`
+- coakka-client Docker Linux bundles under
+  `coakka-tools/coakka-client/docker-demo/releases/`
+- coakka-runtime-inspect native UI archives under
+  `coakka-tools/coakka-runtime-inspect/releases/`
 - Docker Hub sample image tags are recorded in the release notes that publish
   them; they are not part of the current release ledger yet.
 
@@ -251,13 +253,13 @@ Current coakka-client source snapshot: `caff6d6d`
 
 Package contents:
 
-- `cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-linux-x86_64.tar.gz`
-- `cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-linux-aarch64.tar.gz`
-- `cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-macos-aarch64.tar.gz`
-- `cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-windows-x86_64.tar.gz`
-- `cli/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-windows-aarch64.tar.gz`
-- `demo/coakka-client/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz`
-- `demo/coakka-client/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz`
 
 `coakka-client` is the CLI runtime client for diagnostics, request/reply
 `call`/`ask`, and bounded shell script mode over the current public TCP frame
@@ -278,11 +280,11 @@ Current coakka-runtime-inspect source snapshot: `caff6d6d`
 
 Package contents:
 
-- `runtime-inspect/native/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-linux-aarch64.tar.gz`
-- `runtime-inspect/native/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-linux-x86_64.tar.gz`
-- `runtime-inspect/native/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-macos-aarch64.tar.gz`
-- `runtime-inspect/native/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-windows-x86_64.tar.gz`
-- `runtime-inspect/native/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-windows-aarch64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
 CoAkka Runtime. It is the visual sibling of `coakka-client`, not an admin

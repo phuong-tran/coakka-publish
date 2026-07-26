@@ -94,7 +94,7 @@ while IFS=$'\t' read -r row_status label relative_path expected_sha extra || [[ 
   [[ -z "${row_status:-}" || "${row_status}" == \#* ]] && continue
   [[ "${row_status}" == "public" ]] || continue
   case "${relative_path}" in
-    logger/native/releases/*.tar.gz|runtime/native/releases/*.tar.gz|runtime-inspect/native/releases/*.tar.gz|cli/releases/*.tar.gz|demo/coakka-client/releases/*.tar.gz)
+    logger/native/releases/*.tar.gz|runtime/native/releases/*.tar.gz|runtime-inspect/native/releases/*.tar.gz|cli/releases/*.tar.gz|demo/coakka-client/releases/*.tar.gz|coakka-tools/coakka-client/releases/*/*.tar.gz|coakka-tools/coakka-client/docker-demo/releases/*/*.tar.gz|coakka-tools/coakka-runtime-inspect/releases/*/*.tar.gz)
       check_archive "${relative_path}"
       ;;
   esac

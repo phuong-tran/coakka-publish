@@ -6,16 +6,16 @@ train.
 
 Published artifacts:
 
-- `cli/releases/1.3.2+caff6d6d/`
+- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/`
   - `coakka-client-v2-1.3.2-linux-x86_64.tar.gz`
   - `coakka-client-v2-1.3.2-linux-aarch64.tar.gz`
   - `coakka-client-v2-1.3.2-macos-aarch64.tar.gz`
   - `coakka-client-v2-1.3.2-windows-x86_64.tar.gz`
   - `coakka-client-v2-1.3.2-windows-aarch64.tar.gz`
-- `demo/coakka-client/releases/1.3.2+caff6d6d/`
+- `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/`
   - `coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz`
   - `coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz`
-- `runtime-inspect/native/releases/1.3.2+caff6d6d/`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/`
   - `coakka-runtime-inspect-v2-1.3.2-linux-x86_64.tar.gz`
   - `coakka-runtime-inspect-v2-1.3.2-linux-aarch64.tar.gz`
   - `coakka-runtime-inspect-v2-1.3.2-macos-aarch64.tar.gz`
