@@ -133,8 +133,15 @@ as GitHub Release artifacts:
 
 - PyPI current: `coakka-v2-connector==1.3.4`
 - PyPI current: `coakka-logger==1.2.2`
+- PyPI yanked runtime versions: `coakka-v2-connector==1.3.2`,
+  `coakka-v2-connector==1.3.3`
+- PyPI yanked logger version: `coakka-logger==1.2.1`
 - GitHub Release artifact mirror: `runtime/python/releases/1.3.2+caff6d6d-6d5ea58/coakka_v2_connector-1.3.2-py3-none-any.whl`
 - GitHub Release artifact mirror: `logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.2-py3-none-any.whl`
+
+The yanked PyPI versions were superseded because their public package
+metadata/onboarding links were not the final public shape. They remain version
+history; new installs should use the current versions above.
 
 Verified PyPI logger gate:
 

@@ -20,6 +20,16 @@ Current logger PyPI package:
 
 - `coakka-logger==1.2.2`
 
+Yanked PyPI versions:
+
+- `coakka-v2-connector==1.3.2`
+- `coakka-v2-connector==1.3.3`
+- `coakka-logger==1.2.1`
+
+Those versions were yanked after the current patch releases because their
+public package metadata/onboarding links were not the final public shape. They
+remain historical versions; new installs should use the current versions above.
+
 Runtime adoption story:
 
 - before: public browser/API HTTP may stay real, but app-owned customer/store
