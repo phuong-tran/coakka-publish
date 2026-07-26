@@ -6,7 +6,7 @@ adds package license metadata for pkg.go.dev.
 
 Current module coordinates:
 
-- `github.com/phuong-tran/coakka-runtime-go@v1.3.9`
+- `github.com/phuong-tran/coakka-runtime-go@v1.3.10`
 - `github.com/phuong-tran/coakka-logger-go@v1.2.5`
 
 Native generations are unchanged:
@@ -25,8 +25,8 @@ using the generation-pinned filename only:
 
 Source commits:
 
-- `coakkaJVMConnector@dff0d36`
-- `coakka-runtime-go@daef719`, tag `v1.3.9`
+- `coakkaJVMConnector@7488db7`
+- `coakka-runtime-go@6a34250`, tag `v1.3.10`
 - `coakka-logger-go@62f9dee`, tag `v1.2.5`
 
 Package metadata:
