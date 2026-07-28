@@ -46,6 +46,20 @@ Public repository map:
 | --- | --- | --- |
 | `coakka-publish` | Released packages, native archives, manifests, checksums, compatibility matrix, and release notes. | https://github.com/phuong-tran/coakka-publish |
 | `coakka-samples` | Runnable examples that show how an app uses the runtime and logger packages. | https://github.com/phuong-tran/coakka-samples |
+| `coakka-runtime-go` | Public Go module for CoAkka Runtime. | https://github.com/phuong-tran/coakka-runtime-go |
+| `coakka-logger-go` | Public Go module for CoAkka Logger. | https://github.com/phuong-tran/coakka-logger-go |
+| `coakka-runtime-swift` | Public SwiftPM package for CoAkka Runtime on macOS ARM64. | https://github.com/phuong-tran/coakka-runtime-swift |
+| `coakka-logger-swift` | Public SwiftPM package for CoAkka Logger on macOS ARM64. | https://github.com/phuong-tran/coakka-logger-swift |
+
+Current package-manager entrypoints:
+
+| Channel | Runtime package | Logger package |
+| --- | --- | --- |
+| NuGet | [`CoAkka.Runtime` 1.3.3](https://www.nuget.org/packages/CoAkka.Runtime/1.3.3) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
+| npm | [`coakka-v2-connector-node` 1.3.9](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.3.9) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
+| PyPI | [`coakka-v2-connector` 1.3.4](https://pypi.org/project/coakka-v2-connector/1.3.4/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
+| Go modules | [`coakka-runtime-go` v1.3.10](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.3.10) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
+| SwiftPM | [`coakka-runtime-swift` v1.3.2](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.3.2) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
 
 Public docs:
 [How It Works](docs/how-it-works.md),
