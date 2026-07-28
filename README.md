@@ -6,6 +6,8 @@ Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 Support: [SUPPORT.md](SUPPORT.md)
 Changelog: [CHANGELOG.md](CHANGELOG.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
+Runtime client: [docs/coakka-runtime-client.md](docs/coakka-runtime-client.md)
+Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
 Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
 How it works: [docs/how-it-works.md](docs/how-it-works.md)
@@ -35,6 +37,8 @@ Public repository map:
 
 Public docs:
 [How It Works](docs/how-it-works.md),
+[CoAkka Runtime Client](docs/coakka-runtime-client.md),
+[CoAkka Runtime Inspect](docs/coakka-runtime-inspect.md),
 [Runtime Glossary](docs/runtime-glossary.md),
 [Runtime Message And Routing Model](docs/runtime-message-and-routing-model.md),
 [Runtime Integration Guide](docs/runtime-integration-guide.md),
