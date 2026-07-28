@@ -1,0 +1,27 @@
+{
+  "lane": "nuget",
+  "status": "current",
+  "released_at": "2026-07-28",
+  "packages": [
+    {
+      "surface": "runtime",
+      "package": "CoAkka.Runtime",
+      "version": "1.3.3",
+      "url": "https://www.nuget.org/packages/CoAkka.Runtime/1.3.3",
+      "native_generation": "1.3.2+caff6d6d",
+      "platforms": [
+        "osx-arm64",
+        "linux-arm64",
+        "linux-x64",
+        "win-arm64",
+        "win-x64"
+      ]
+    }
+  ],
+  "verification": [
+    "csharp/scripts/check-nuget-readiness.sh",
+    "csharp/scripts/smoke-packaged-package.sh",
+    "dotnet add package CoAkka.Runtime --version 1.3.3 from https://api.nuget.org/v3/index.json",
+    "clean consumer runtime host smoke"
+  ]
+}

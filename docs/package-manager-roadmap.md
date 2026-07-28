@@ -1,9 +1,9 @@
 # Package Manager Roadmap
 
 This page records the package-manager direction for the public CoAkka artifact
-surface. npm, PyPI, Go modules, and SwiftPM are current; the remaining channels
-are still roadmap items until their registry or repository paths are published
-and verified.
+surface. npm, PyPI, Go modules, SwiftPM, and NuGet are current; the remaining
+channels are still roadmap items until their registry or repository paths are
+published and verified.
 
 Today, the canonical public distribution surface is:
 
@@ -17,6 +17,7 @@ Today, the canonical public distribution surface is:
 - PyPI packages for Python runtime/logger lanes
 - public Go modules for Go runtime/logger lanes
 - public SwiftPM packages for Swift runtime/logger lanes
+- NuGet package for the C# runtime lane
 
 Package managers should improve installation ergonomics without changing the
 runtime boundary or native dependency contract.
@@ -40,11 +41,12 @@ normal path.
 | 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.4` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
 | 3 | Go modules | Go runtime and logger packages | Runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.10` and logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published and clean-consumer verified. |
 | 4 | SwiftPM | Swift runtime and logger source packages | Current for macOS ARM64; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.2`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1`. |
-| 5 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
-| 6 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
+| 5 | NuGet | C#/.NET runtime and logger packages | Runtime `CoAkka.Runtime==1.3.3` is published and clean-consumer verified. Logger remains artifact-mirror only. |
+| 6 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
+| 7 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
 
-Other channels such as Homebrew, Scoop, Chocolatey, or NuGet gallery publishing
-can be evaluated after the main language and Linux tooling lanes are stable.
+Other channels such as Homebrew, Scoop, or Chocolatey can be evaluated after
+the main language and Linux tooling lanes are stable.
 
 ## npm
 
@@ -216,6 +218,22 @@ Current public repositories:
 
 The release manifest is tracked in `package-manager/swiftpm/current.json`.
 Public samples consume those Git tags directly.
+
+## NuGet
+
+NuGet is current for the C# runtime connector:
+
+- runtime package: `CoAkka.Runtime`
+- runtime version: `1.3.3`
+- native runtime generation: `1.3.2+caff6d6d`
+- package URL: `https://www.nuget.org/packages/CoAkka.Runtime/1.3.3`
+
+Clean-consumer verification installs from `https://api.nuget.org/v3/index.json`
+and starts a local runtime host through the package RID native asset path.
+
+The C# logger remains an artifact-mirror package in
+`logger/csharp/releases/1.2.1+f50756ebff0d/` until a NuGet logger release gate
+is opened.
 
 ## crates.io
 

@@ -89,6 +89,7 @@ Latest GitHub Release boundary note:
 
 Current language connector release notes:
 [2026-07-26 Go module native payload cleanup](docs/releases/2026-07-26-go-module-native-payload-cleanup.md),
+[2026-07-28 C# runtime NuGet 1.3.3](docs/releases/2026-07-28-csharp-runtime-nuget-1.3.3.md),
 [2026-07-25 runtime language packages 1.3.2 caff6d6d 6d5ea58](docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md),
 [2026-07-25 npm runtime package b46f705](docs/releases/2026-07-25-npm-runtime-native-bridge-b46f705.md),
 [2026-07-23 logger Tauri and Electron 1.2.1 refresh 3e8a6ae](docs/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md),
@@ -166,6 +167,7 @@ Current public Python, Go, C#, and Rust connector generation:
 `1.3.2+caff6d6d-6d5ea58`.
 Current public Node.js, Bun, and Electron npm runtime packages:
 `coakka-v2-connector-{node,bun,electron}@1.3.9`.
+Current public C# runtime NuGet package: `CoAkka.Runtime@1.3.3`.
 Current public Mojo/Zig source connector generation:
 `1.3.2+caff6d6d-6d5ea58`.
 Current public Tauri intent source connector generation:
@@ -202,6 +204,16 @@ SwiftPM package-manager releases:
 
 The SwiftPM lane is source-first and macOS ARM64. Its release manifest is
 tracked under `package-manager/swiftpm/current.json`.
+
+NuGet package-manager releases:
+
+| Lane | Coordinate | Native generation |
+| --- | --- | --- |
+| C# runtime connector | `CoAkka.Runtime`, exact `1.3.3` | runtime native `1.3.2+caff6d6d` |
+
+The NuGet runtime lane is binary package-manager distribution for .NET
+consumers. Its release manifest is tracked under
+`package-manager/nuget/current.json`.
 
 The current root native runtime package is `1.3.2+caff6d6d`. The published JVM
 runtime jar is refreshed over that native package as
@@ -439,7 +451,7 @@ These artifacts are the current public runtime set:
 | Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.9` from connector `b46f705` | `1.3.2+caff6d6d` |
 | Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.9` from connector `b46f705` | via `coakka-v2-connector-node@1.3.9` |
 | Go runtime | `coakka-v2-connector-go` source package | `1.3.2` from `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
-| C# runtime | `CoAkka.Runtime` NuGet package | `1.3.2` from `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
+| C# runtime | `CoAkka.Runtime` NuGet package | `1.3.3` | `1.3.2+caff6d6d` |
 | Rust runtime | `coakka-runtime-rs` package | `1.3.2-spike` from `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
 | Mojo runtime | `runtime/mojo/releases/1.3.2+caff6d6d-6d5ea58/coakka-runtime-mojo-1.3.2-source.tar.gz` | `1.3.2-source` | `1.3.2+caff6d6d` |
 | Zig runtime | `runtime/zig/releases/1.3.2+caff6d6d-6d5ea58/coakka-runtime-zig-1.3.2-source.tar.gz` | `1.3.2-source` | `1.3.2+caff6d6d` |
