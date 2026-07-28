@@ -1,9 +1,9 @@
 # Package Manager Roadmap
 
 This page records the package-manager direction for the public CoAkka artifact
-surface. npm, PyPI, and Go modules are current; the remaining channels are
-still roadmap items until their registry or repository paths are published and
-verified.
+surface. npm, PyPI, Go modules, and SwiftPM are current; the remaining channels
+are still roadmap items until their registry or repository paths are published
+and verified.
 
 Today, the canonical public distribution surface is:
 
@@ -16,8 +16,7 @@ Today, the canonical public distribution surface is:
   lanes
 - PyPI packages for Python runtime/logger lanes
 - public Go modules for Go runtime/logger lanes
-- SwiftPM source packages for Swift runtime/logger lanes are prepared but not
-  yet public repository/tag releases
+- public SwiftPM packages for Swift runtime/logger lanes
 
 Package managers should improve installation ergonomics without changing the
 runtime boundary or native dependency contract.
@@ -40,7 +39,7 @@ normal path.
 | 1 | npm | Node.js, Bun, Electron runtime and logger packages | Best first package-manager lane because it improves JavaScript and desktop onboarding together. |
 | 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.4` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
 | 3 | Go modules | Go runtime and logger packages | Runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.10` and logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published and clean-consumer verified. |
-| 4 | SwiftPM | Swift runtime and logger source packages | Source prepared for macOS ARM64; public repos/tags and clean public SwiftPM smoke are pending. Runtime and logger should promote together. |
+| 4 | SwiftPM | Swift runtime and logger source packages | Current for macOS ARM64; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.2`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1`. |
 | 5 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
 | 6 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
 
@@ -204,18 +203,19 @@ The tarball lane remains valid as the artifact mirror:
 
 ## SwiftPM
 
-SwiftPM is the next prepared package-manager lane for Swift runtime/logger
-connectors. The prepared package shape is source-first and macOS ARM64 only:
+SwiftPM is the current package-manager lane for Swift runtime/logger
+connectors. The package shape is source-first and macOS ARM64 only:
 
-- runtime: `coakka-runtime-swift`, native runtime `1.3.2+caff6d6d`
-- logger: `coakka-logger-swift`, native logger `1.2.1+f50756ebff0d`
+- runtime: `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.2`, native runtime `1.3.2+caff6d6d`
+- logger: `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1`, native logger `1.2.1+f50756ebff0d`
 
-The public lane is not current until both public repositories exist, both tags
-are cut, clean SwiftPM consumer smokes pass from those public tags, and
-`coakka-publish` plus `coakka-samples` are updated together.
+Current public repositories:
 
-Swift runtime and logger should be promoted together rather than as separate
-public releases.
+- `https://github.com/phuong-tran/coakka-runtime-swift`, tag `v1.3.2`
+- `https://github.com/phuong-tran/coakka-logger-swift`, tag `v1.2.1`
+
+The release manifest is tracked in `package-manager/swiftpm/current.json`.
+Public samples consume those Git tags directly.
 
 ## crates.io
 

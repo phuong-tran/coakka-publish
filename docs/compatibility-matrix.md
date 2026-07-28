@@ -23,6 +23,7 @@ All runtime connector lanes below align to native runtime generation
 | Go runtime | `github.com/phuong-tran/coakka-runtime-go` Go module | `v1.3.10` | `1.3.2+caff6d6d` |
 | C# runtime | `CoAkka.Runtime` package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
 | Rust runtime | `coakka-runtime-rs` package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
+| Swift runtime | `github.com/phuong-tran/coakka-runtime-swift` SwiftPM package | `v1.3.2` | `1.3.2+caff6d6d` |
 | Mojo runtime | `coakka-runtime-mojo` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
 | Zig runtime | `coakka-runtime-zig` source package | `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
 
@@ -43,18 +44,9 @@ All logger connector lanes below align to logger native generation
 | Go logger | `github.com/phuong-tran/coakka-logger-go` Go module | `v1.2.5` | `1.2.1+f50756ebff0d` |
 | C# logger | `CoAkka.Logger` package | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
 | Rust logger | `coakka-logger-rs` package | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
+| Swift logger | `github.com/phuong-tran/coakka-logger-swift` SwiftPM package | `v1.2.1` | `1.2.1+f50756ebff0d` |
 | Mojo logger | `coakka-logger-mojo` source package | `1.2.1+f50756ebff0d-8264bba` | `1.2.1+f50756ebff0d` |
 | Zig logger | `coakka-logger-zig` source package | `1.2.1+f50756ebff0d-8264bba` | `1.2.1+f50756ebff0d` |
-
-## Prepared Source Lanes
-
-These lanes are prepared in connector source but are not current public
-artifacts yet.
-
-| Surface | Prepared package shape | Native generation | Public status |
-| --- | --- | --- | --- |
-| Swift runtime | SwiftPM source package, macOS ARM64 | `1.3.2+caff6d6d` | public repo/tag and artifact mirror pending |
-| Swift logger | SwiftPM source package, macOS ARM64 | `1.2.1+f50756ebff0d` | public repo/tag and artifact mirror pending |
 
 ## Runtime Tools
 
@@ -71,7 +63,7 @@ artifacts yet.
 | npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.3.4` and logger `coakka-logger==1.2.2` current |
 | Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.10`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
-| SwiftPM | Swift runtime/logger source packages | source prepared; public repositories and tags pending |
+| SwiftPM | Swift runtime/logger source packages | current; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.2`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
@@ -101,6 +93,13 @@ Logger PyPI package:
 | Surface | PyPI coordinate | Logger native generation |
 | --- | --- | --- |
 | Python logger | `coakka-logger==1.2.2` | `1.2.1+f50756ebff0d` |
+
+SwiftPM packages:
+
+| Surface | SwiftPM coordinate | Native generation |
+| --- | --- | --- |
+| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.2` | `1.3.2+caff6d6d` |
+| Swift logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1` | `1.2.1+f50756ebff0d` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for remaining
 planned package-manager channels.

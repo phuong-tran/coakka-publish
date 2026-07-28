@@ -169,10 +169,12 @@ GitHub demo bundles above are the captured public sample artifacts.
 | Lane | Public status | Public location |
 | --- | --- | --- |
 | Logger JVM, Python, Node.js, Bun, Electron, Go, C#, Rust | public | `logger/{jvm,python,node,bun,electron,go,csharp,rust}/releases/` |
+| Logger Swift | public SwiftPM | `https://github.com/phuong-tran/coakka-logger-swift`, tag `v1.2.1` |
 | Logger Tauri, Mojo, and Zig source connector lanes | public source packages | `logger/{tauri,mojo,zig}/releases/` |
 | Logger native C/C++ | public | `logger/native/releases/` |
 | Runtime native C ABI | public | `runtime/native/releases/` |
 | Runtime JVM, Python, Node.js, Bun, Electron, Go, C#, Rust | public | `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/` |
+| Runtime Swift | public SwiftPM | `https://github.com/phuong-tran/coakka-runtime-swift`, tag `v1.3.2` |
 | Runtime Mojo, Zig, and Tauri source connector lanes | public source packages | `runtime/{mojo,zig,tauri}/releases/` |
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
@@ -181,17 +183,15 @@ GitHub demo bundles above are the captured public sample artifacts.
 | coakka-runtime-inspect native UI | public macOS ARM64, Linux x86_64/ARM64, and Windows x86_64/ARM64 | `coakka-tools/coakka-runtime-inspect/releases/` |
 | Docker Hub sample images | not captured in the current release ledger | see per-release Docker Hub notes |
 
-Prepared source lanes pending public promotion:
+SwiftPM package-manager releases:
 
-| Lane | Prepared source | Current public status |
+| Lane | Coordinate | Native generation |
 | --- | --- | --- |
-| Swift runtime connector | SwiftPM, macOS ARM64, runtime native `1.3.2+caff6d6d` | public repo/tag and `coakka-publish` artifact mirror pending |
-| Swift logger connector | SwiftPM, macOS ARM64, logger native `1.2.1+f50756ebff0d` | public repo/tag and `coakka-publish` artifact mirror pending |
+| Swift runtime connector | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.2` | runtime native `1.3.2+caff6d6d` |
+| Swift logger connector | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1` | logger native `1.2.1+f50756ebff0d` |
 
-Swift runtime and logger should be promoted together after public SwiftPM
-export smoke passes. They are not part of the current public artifact table
-above until their public repositories, tags, release manifests, and samples are
-verified.
+The SwiftPM lane is source-first and macOS ARM64. Its release manifest is
+tracked under `package-manager/swiftpm/current.json`.
 
 The current root native runtime package is `1.3.2+caff6d6d`. The published JVM
 runtime jar is refreshed over that native package as
@@ -226,20 +226,21 @@ The Python runtime package `coakka-v2-connector==1.3.4` and logger package
 patch versions. The Go runtime package
 `github.com/phuong-tran/coakka-runtime-go@v1.3.10` and logger package
 `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published as public Go
-modules. SwiftPM source packages for Swift runtime/logger are prepared and
-pending public repository/tag promotion. crates.io and apt/deb remain planned
-distribution surfaces. The intended order and release gates are tracked in
+modules. SwiftPM packages for Swift runtime/logger are published as public
+GitHub tag coordinates. crates.io and apt/deb remain planned distribution
+surfaces. The intended order and release gates are tracked in
 [`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).
 
 The current public logger family keeps native package generation
-`1.2.1+f50756ebff0d`. JVM, Python, Node.js, Bun, Electron, Go, C#, Rust, and
-the native C/C++ archive publish against that same logger native package, with
-the JVM Maven lane at `1.2.1-gf50756ebff0d`. Bun publishes through connector
-source commit `6fdcc69`. Tauri and Electron publish through connector source
-commit `3e8a6ae`. Mojo and Zig also publish current source connector packages
-over that native generation through connector source commit `8264bba`. The
-published logger package surface now bundles `macOS`, `Linux`, and `Windows`
-logger natives across the binary and source release lanes.
+`1.2.1+f50756ebff0d`. JVM, Python, Node.js, Bun, Electron, Go, C#, Rust,
+Swift, and the native C/C++ archive publish against that same logger native
+package, with the JVM Maven lane at `1.2.1-gf50756ebff0d`. Bun publishes
+through connector source commit `6fdcc69`. Tauri and Electron publish through
+connector source commit `3e8a6ae`. Mojo and Zig also publish current source
+connector packages over that native generation through connector source commit
+`8264bba`. The published logger package surface now bundles `macOS`, `Linux`,
+and `Windows` logger natives across the binary and source release lanes, with
+SwiftPM currently scoped to macOS ARM64.
 
 Repository rules:
 
@@ -259,6 +260,8 @@ Current published lanes:
 - `npm: coakka-v2-connector-electron@1.3.9`
 - `PyPI: coakka-v2-connector==1.3.4`
 - `PyPI: coakka-logger==1.2.2`
+- `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.2`
+- `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1`
 - `npm: coakka-logger-node@1.2.6`
 - `npm: coakka-logger-bun@1.2.6`
 - `npm: coakka-logger-electron@1.2.6`
@@ -283,9 +286,8 @@ Current published lanes:
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`
 - runtime source connector packages under `runtime/{mojo,zig,tauri}/releases/`
-- prepared SwiftPM runtime/logger source lanes are pending public repo/tag
-  promotion and are not yet mirrored under `runtime/swift/releases/` or
-  `logger/swift/releases/`
+- SwiftPM runtime/logger packages are published through public GitHub tags and
+  tracked in `package-manager/swiftpm/current.json`
 - coakka-client native CLI archives under `coakka-tools/coakka-client/releases/`
 - coakka-client Docker Linux bundles under
   `coakka-tools/coakka-client/docker-demo/releases/`
