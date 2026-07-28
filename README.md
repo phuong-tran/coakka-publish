@@ -6,6 +6,7 @@ Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 Support: [SUPPORT.md](SUPPORT.md)
 Changelog: [CHANGELOG.md](CHANGELOG.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
+CoAkka story: [docs/coakka-story.md](docs/coakka-story.md)
 Runtime client: [docs/coakka-runtime-client.md](docs/coakka-runtime-client.md)
 Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
@@ -62,6 +63,7 @@ Current package-manager entrypoints:
 | SwiftPM | [`coakka-runtime-swift` v1.3.2](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.3.2) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
 
 Public docs:
+[The CoAkka Story](docs/coakka-story.md),
 [How It Works](docs/how-it-works.md),
 [CoAkka Spring Boot](docs/coakka-spring-boot.md),
 [CoAkka Quarkus](docs/coakka-quarkus.md),
