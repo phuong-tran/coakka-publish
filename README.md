@@ -11,6 +11,8 @@ Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
 Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
 How it works: [docs/how-it-works.md](docs/how-it-works.md)
+Spring Boot: [docs/coakka-spring-boot.md](docs/coakka-spring-boot.md)
+Quarkus: [docs/coakka-quarkus.md](docs/coakka-quarkus.md)
 Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
 Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
 Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.md)
@@ -37,6 +39,8 @@ Public repository map:
 
 Public docs:
 [How It Works](docs/how-it-works.md),
+[CoAkka Spring Boot](docs/coakka-spring-boot.md),
+[CoAkka Quarkus](docs/coakka-quarkus.md),
 [CoAkka Runtime Client](docs/coakka-runtime-client.md),
 [CoAkka Runtime Inspect](docs/coakka-runtime-inspect.md),
 [Runtime Glossary](docs/runtime-glossary.md),
