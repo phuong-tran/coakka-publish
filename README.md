@@ -181,6 +181,18 @@ GitHub demo bundles above are the captured public sample artifacts.
 | coakka-runtime-inspect native UI | public macOS ARM64, Linux x86_64/ARM64, and Windows x86_64/ARM64 | `coakka-tools/coakka-runtime-inspect/releases/` |
 | Docker Hub sample images | not captured in the current release ledger | see per-release Docker Hub notes |
 
+Prepared source lanes pending public promotion:
+
+| Lane | Prepared source | Current public status |
+| --- | --- | --- |
+| Swift runtime connector | SwiftPM, macOS ARM64, runtime native `1.3.2+caff6d6d` | public repo/tag and `coakka-publish` artifact mirror pending |
+| Swift logger connector | SwiftPM, macOS ARM64, logger native `1.2.1+f50756ebff0d` | public repo/tag and `coakka-publish` artifact mirror pending |
+
+Swift runtime and logger should be promoted together after public SwiftPM
+export smoke passes. They are not part of the current public artifact table
+above until their public repositories, tags, release manifests, and samples are
+verified.
+
 The current root native runtime package is `1.3.2+caff6d6d`. The published JVM
 runtime jar is refreshed over that native package as
 `1.3.2-gcaff6d6d-6d5ea58`. Published Spring Boot and Quarkus adapters are
@@ -214,8 +226,9 @@ The Python runtime package `coakka-v2-connector==1.3.4` and logger package
 patch versions. The Go runtime package
 `github.com/phuong-tran/coakka-runtime-go@v1.3.10` and logger package
 `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published as public Go
-modules. crates.io and apt/deb remain planned distribution surfaces. The
-intended order and release gates are tracked in
+modules. SwiftPM source packages for Swift runtime/logger are prepared and
+pending public repository/tag promotion. crates.io and apt/deb remain planned
+distribution surfaces. The intended order and release gates are tracked in
 [`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).
 
 The current public logger family keeps native package generation
@@ -270,6 +283,9 @@ Current published lanes:
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`
 - runtime source connector packages under `runtime/{mojo,zig,tauri}/releases/`
+- prepared SwiftPM runtime/logger source lanes are pending public repo/tag
+  promotion and are not yet mirrored under `runtime/swift/releases/` or
+  `logger/swift/releases/`
 - coakka-client native CLI archives under `coakka-tools/coakka-client/releases/`
 - coakka-client Docker Linux bundles under
   `coakka-tools/coakka-client/docker-demo/releases/`

@@ -46,6 +46,16 @@ All logger connector lanes below align to logger native generation
 | Mojo logger | `coakka-logger-mojo` source package | `1.2.1+f50756ebff0d-8264bba` | `1.2.1+f50756ebff0d` |
 | Zig logger | `coakka-logger-zig` source package | `1.2.1+f50756ebff0d-8264bba` | `1.2.1+f50756ebff0d` |
 
+## Prepared Source Lanes
+
+These lanes are prepared in connector source but are not current public
+artifacts yet.
+
+| Surface | Prepared package shape | Native generation | Public status |
+| --- | --- | --- | --- |
+| Swift runtime | SwiftPM source package, macOS ARM64 | `1.3.2+caff6d6d` | public repo/tag and artifact mirror pending |
+| Swift logger | SwiftPM source package, macOS ARM64 | `1.2.1+f50756ebff0d` | public repo/tag and artifact mirror pending |
+
 ## Runtime Tools
 
 | Surface | Public generation | Public location |
@@ -61,6 +71,7 @@ All logger connector lanes below align to logger native generation
 | npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.3.4` and logger `coakka-logger==1.2.2` current |
 | Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.10`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
+| SwiftPM | Swift runtime/logger source packages | source prepared; public repositories and tags pending |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
