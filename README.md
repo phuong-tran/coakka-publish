@@ -7,6 +7,7 @@ Support: [SUPPORT.md](SUPPORT.md)
 Changelog: [CHANGELOG.md](CHANGELOG.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
 CoAkka story: [docs/coakka-story.md](docs/coakka-story.md)
+Architecture review guide: [docs/architecture-review-guide.md](docs/architecture-review-guide.md)
 Runtime client: [docs/coakka-runtime-client.md](docs/coakka-runtime-client.md)
 Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
@@ -64,6 +65,7 @@ Current package-manager entrypoints:
 
 Public docs:
 [The CoAkka Story](docs/coakka-story.md),
+[Architecture Review Guide](docs/architecture-review-guide.md),
 [How It Works](docs/how-it-works.md),
 [CoAkka Spring Boot](docs/coakka-spring-boot.md),
 [CoAkka Quarkus](docs/coakka-quarkus.md),
