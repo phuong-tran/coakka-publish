@@ -8,6 +8,7 @@ Changelog: [CHANGELOG.md](CHANGELOG.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
 Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
+How it works: [docs/how-it-works.md](docs/how-it-works.md)
 Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
 Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
 Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.md)
@@ -33,6 +34,7 @@ Public repository map:
 | `coakka-samples` | Runnable examples that show how an app uses the runtime and logger packages. | https://github.com/phuong-tran/coakka-samples |
 
 Public docs:
+[How It Works](docs/how-it-works.md),
 [Runtime Glossary](docs/runtime-glossary.md),
 [Runtime Message And Routing Model](docs/runtime-message-and-routing-model.md),
 [Runtime Integration Guide](docs/runtime-integration-guide.md),
