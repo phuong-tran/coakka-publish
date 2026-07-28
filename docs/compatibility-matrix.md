@@ -42,7 +42,7 @@ All logger connector lanes below align to logger native generation
 | Electron logger | `coakka-logger-electron` package | npm `1.2.6` from connector `b052a3f` | via `coakka-logger-node@1.2.6` |
 | Tauri logger | `coakka-logger-tauri-intents` source package | `1.2.1+f50756ebff0d-3e8a6ae` | `1.2.1+f50756ebff0d` |
 | Go logger | `github.com/phuong-tran/coakka-logger-go` Go module | `v1.2.5` | `1.2.1+f50756ebff0d` |
-| C# logger | `CoAkka.Logger` package | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
+| C# logger | `CoAkka.Logger` NuGet package | `1.2.2` | `1.2.1+f50756ebff0d` |
 | Rust logger | `coakka-logger-rs` package | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
 | Swift logger | `github.com/phuong-tran/coakka-logger-swift` SwiftPM package | `v1.2.1` | `1.2.1+f50756ebff0d` |
 | Mojo logger | `coakka-logger-mojo` source package | `1.2.1+f50756ebff0d-8264bba` | `1.2.1+f50756ebff0d` |
@@ -64,7 +64,7 @@ All logger connector lanes below align to logger native generation
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.3.4` and logger `coakka-logger==1.2.2` current |
 | Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.10`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
 | SwiftPM | Swift runtime/logger source packages | current; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.2`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
-| NuGet | C# runtime package | current; runtime `CoAkka.Runtime==1.3.3` |
+| NuGet | C# runtime/logger packages | current; runtime `CoAkka.Runtime==1.3.3`, logger `CoAkka.Logger==1.2.2` |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
@@ -94,6 +94,13 @@ Logger PyPI package:
 | Surface | PyPI coordinate | Logger native generation |
 | --- | --- | --- |
 | Python logger | `coakka-logger==1.2.2` | `1.2.1+f50756ebff0d` |
+
+NuGet packages:
+
+| Surface | NuGet coordinate | Native generation |
+| --- | --- | --- |
+| C# runtime | `CoAkka.Runtime==1.3.3` | `1.3.2+caff6d6d` |
+| C# logger | `CoAkka.Logger==1.2.2` | `1.2.1+f50756ebff0d` |
 
 SwiftPM packages:
 

@@ -7,20 +7,20 @@ Current coordinates:
 | Surface | Coordinate | Native generation |
 | --- | --- | --- |
 | Runtime | `CoAkka.Runtime`, exact `1.3.3` | `1.3.2+caff6d6d` |
+| Logger | `CoAkka.Logger`, exact `1.2.2` | `1.2.1+f50756ebff0d` |
 
 Install:
 
 ```sh
 dotnet add package CoAkka.Runtime --version 1.3.3
+dotnet add package CoAkka.Logger --version 1.2.2
 ```
 
-The runtime package bundles native assets under `runtimes/<rid>/native` for:
+The runtime and logger packages bundle native assets under
+`runtimes/<rid>/native` for:
 
 - `osx-arm64`
 - `linux-arm64`
 - `linux-x64`
 - `win-arm64`
 - `win-x64`
-
-The C# logger remains in the GitHub artifact mirror until a separate NuGet
-logger release gate is opened.

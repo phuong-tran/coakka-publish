@@ -17,7 +17,7 @@ Today, the canonical public distribution surface is:
 - PyPI packages for Python runtime/logger lanes
 - public Go modules for Go runtime/logger lanes
 - public SwiftPM packages for Swift runtime/logger lanes
-- NuGet package for the C# runtime lane
+- NuGet packages for C# runtime/logger lanes
 
 Package managers should improve installation ergonomics without changing the
 runtime boundary or native dependency contract.
@@ -41,7 +41,7 @@ normal path.
 | 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.4` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
 | 3 | Go modules | Go runtime and logger packages | Runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.10` and logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published and clean-consumer verified. |
 | 4 | SwiftPM | Swift runtime and logger source packages | Current for macOS ARM64; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.2`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1`. |
-| 5 | NuGet | C#/.NET runtime and logger packages | Runtime `CoAkka.Runtime==1.3.3` is published and clean-consumer verified. Logger remains artifact-mirror only. |
+| 5 | NuGet | C#/.NET runtime and logger packages | Runtime `CoAkka.Runtime==1.3.3` and logger `CoAkka.Logger==1.2.2` are published and clean-consumer verified. |
 | 6 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
 | 7 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
 
@@ -221,19 +221,20 @@ Public samples consume those Git tags directly.
 
 ## NuGet
 
-NuGet is current for the C# runtime connector:
+NuGet is current for the C# runtime and logger connectors:
 
 - runtime package: `CoAkka.Runtime`
 - runtime version: `1.3.3`
 - native runtime generation: `1.3.2+caff6d6d`
 - package URL: `https://www.nuget.org/packages/CoAkka.Runtime/1.3.3`
+- logger package: `CoAkka.Logger`
+- logger version: `1.2.2`
+- native logger generation: `1.2.1+f50756ebff0d`
+- package URL: `https://www.nuget.org/packages/CoAkka.Logger/1.2.2`
 
 Clean-consumer verification installs from `https://api.nuget.org/v3/index.json`
-and starts a local runtime host through the package RID native asset path.
-
-The C# logger remains an artifact-mirror package in
-`logger/csharp/releases/1.2.1+f50756ebff0d/` until a NuGet logger release gate
-is opened.
+and starts a local runtime host or logger host through the package RID native
+asset path.
 
 ## crates.io
 

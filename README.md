@@ -90,6 +90,7 @@ Latest GitHub Release boundary note:
 Current language connector release notes:
 [2026-07-26 Go module native payload cleanup](docs/releases/2026-07-26-go-module-native-payload-cleanup.md),
 [2026-07-28 C# runtime NuGet 1.3.3](docs/releases/2026-07-28-csharp-runtime-nuget-1.3.3.md),
+[2026-07-28 C# logger NuGet 1.2.2](docs/releases/2026-07-28-csharp-logger-nuget-1.2.2.md),
 [2026-07-25 runtime language packages 1.3.2 caff6d6d 6d5ea58](docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md),
 [2026-07-25 npm runtime package b46f705](docs/releases/2026-07-25-npm-runtime-native-bridge-b46f705.md),
 [2026-07-23 logger Tauri and Electron 1.2.1 refresh 3e8a6ae](docs/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md),
@@ -168,6 +169,7 @@ Current public Python, Go, C#, and Rust connector generation:
 Current public Node.js, Bun, and Electron npm runtime packages:
 `coakka-v2-connector-{node,bun,electron}@1.3.9`.
 Current public C# runtime NuGet package: `CoAkka.Runtime@1.3.3`.
+Current public C# logger NuGet package: `CoAkka.Logger@1.2.2`.
 Current public Mojo/Zig source connector generation:
 `1.3.2+caff6d6d-6d5ea58`.
 Current public Tauri intent source connector generation:
@@ -210,9 +212,10 @@ NuGet package-manager releases:
 | Lane | Coordinate | Native generation |
 | --- | --- | --- |
 | C# runtime connector | `CoAkka.Runtime`, exact `1.3.3` | runtime native `1.3.2+caff6d6d` |
+| C# logger connector | `CoAkka.Logger`, exact `1.2.2` | logger native `1.2.1+f50756ebff0d` |
 
-The NuGet runtime lane is binary package-manager distribution for .NET
-consumers. Its release manifest is tracked under
+The NuGet lane is binary package-manager distribution for .NET consumers.
+Its release manifest is tracked under
 `package-manager/nuget/current.json`.
 
 The current root native runtime package is `1.3.2+caff6d6d`. The published JVM
@@ -249,7 +252,8 @@ patch versions. The Go runtime package
 `github.com/phuong-tran/coakka-runtime-go@v1.3.10` and logger package
 `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published as public Go
 modules. SwiftPM packages for Swift runtime/logger are published as public
-GitHub tag coordinates. crates.io and apt/deb remain planned distribution
+GitHub tag coordinates. NuGet packages for C# runtime/logger are published as
+public package coordinates. crates.io and apt/deb remain planned distribution
 surfaces. The intended order and release gates are tracked in
 [`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).
 
@@ -284,6 +288,8 @@ Current published lanes:
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1`
+- `NuGet: CoAkka.Runtime@1.3.3`
+- `NuGet: CoAkka.Logger@1.2.2`
 - `npm: coakka-logger-node@1.2.6`
 - `npm: coakka-logger-bun@1.2.6`
 - `npm: coakka-logger-electron@1.2.6`
