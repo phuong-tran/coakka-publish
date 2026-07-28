@@ -1,15 +1,15 @@
 # Go Connector
 
-Package Go runtime connector nằm trong thư mục `go/`.
+The Go runtime connector package lives under `go/`.
 
-Verify nhanh:
+Quick verification:
 
 ```bash
 cd go
 go test ./...
 ```
 
-Live runtime integration smoke có thể bật thêm:
+The live runtime integration smoke can be enabled with:
 
 ```bash
 export COAKKA_GO_INTEGRATION=1
@@ -17,9 +17,9 @@ cd go
 go test ./...
 ```
 
-Integration lane này chạy helper subprocess riêng để tránh va chạm `dlopen` trong `go test` binary trên macOS.
+This integration lane runs a helper subprocess to avoid `dlopen` collisions inside the `go test` binary on macOS.
 
-Package smoke với embedded native runtime:
+Package smoke with the embedded native runtime:
 
 ```bash
 cd go
@@ -33,13 +33,13 @@ cd go
 bash scripts/package-release.sh
 ```
 
-Archive được ghi ra:
+Archive output:
 
 ```text
 go/coakka-v2-connector-go-1.3.1.tar.gz
 ```
 
-Public surface chính:
+Main public surface:
 
 - `StartRuntimeHost(startSpec, runtimeLibPath)` as the preferred single-process
   lifecycle entrypoint
@@ -59,7 +59,7 @@ Public surface chính:
 
 ## Before / After
 
-Truoc do, local consumer phai nhin thay ten orchestration noi bo truoc:
+Before, a local consumer had to start from an orchestration-shaped API name:
 
 ```go
 startSpec := coakka.ConnectorStartSpec{
@@ -91,8 +91,7 @@ response, err := connector.AskJSON(
 )
 ```
 
-Sau do, van la runtime single-process ay, nhung entrypoint doc dung theo vai tro
-application-owned host:
+After, it is still the same single-process runtime, but the entrypoint reads as an application-owned runtime host:
 
 ```go
 startSpec := coakka.ConnectorStartSpec{
@@ -124,9 +123,7 @@ response, err := runtime.AskJSON(
 )
 ```
 
-`StartConnectorOrchestrator` van giu cho code cu. Code local-first moi nen dung
-`StartRuntimeHost` de nguoi doc thay ngay day la mot runtime host embedded trong
-process hien tai, chua phai remote/Kubernetes setup.
+`StartConnectorOrchestrator` remains available for existing code. New local-first code should use `StartRuntimeHost` so readers can see immediately that the current process owns an embedded runtime host, not a remote or Kubernetes setup.
 
 Native runtime resolution order:
 
@@ -135,23 +132,21 @@ Native runtime resolution order:
 - packaged native under `native/<platform>/`
 - local fallback under `lib/`
 
-Request/reply lane trong Go hiện có hai host API shape trên cùng runtime contract:
+The Go request/reply lane currently has two host API shapes on the same runtime contract:
 
-- `Ask...`: submit rồi chờ inline
-- `SubmitRequest...` + `TerminalEvents(...)`: submit trước, bắt terminal outcome (`response` hoặc `deadletter`) sau qua channel
+- `Ask...`: submit and wait inline
+- `SubmitRequest...` + `TerminalEvents(...)`: submit first, then receive the terminal outcome (`response` or `deadletter`) through a channel
 
-`TerminalEvents(...)` là connector-owned API shape, không phải transport mode riêng.
+`TerminalEvents(...)` is a connector-owned API shape, not a separate transport mode.
 
 Hot-path reading note:
 
-- false-sharing hiện không phải mối lo hot-path cấp 1 ở layer Go này theo cùng
-  nghĩa như native C++ connector
-- cost center dễ đáng ngờ hơn hiện tại là:
-  - `cgo` boundary và native read/write calls
+- false-sharing is not currently the first-order hot-path concern in this Go layer in the same way it can be for a native C++ connector
+- the more likely cost centers are:
+  - `cgo` boundary and native read/write calls
   - protobuf marshal/unmarshal
-  - channel/subscriber churn quanh `TerminalEvents(...)`
+  - channel/subscriber churn around `TerminalEvents(...)`
   - goroutine handoff topology
-- chỉ nên quay lại cacheline/padding style hardening nếu layer này sau đó
-  chuyển sang packed shared state, off-heap rings, hoặc layout nhạy cacheline hơn
+- revisit cacheline/padding hardening only if this layer later moves toward packed shared state, off-heap rings, or layouts that are more cacheline-sensitive
 
 Cross-language demo web lives under `examples/` when that workspace is present.

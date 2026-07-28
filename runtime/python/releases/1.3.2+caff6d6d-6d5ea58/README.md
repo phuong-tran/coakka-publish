@@ -26,7 +26,9 @@ Request/reply lane in Python now has two host API shapes over the same runtime c
 - `ask_*`: submit and wait inline
 - `submit_request_*` + `terminal_events(...)`: submit now, consume terminal outcome (`response` or `deadletter`) later through a stdlib queue-backed subscription
 
-`terminal_events(...)` is a connector-owned API shape, not a separate backend mode. `CAF` remains just the current transporter underneath.
+`terminal_events(...)` is a connector-owned API shape, not a separate backend
+mode. Transport implementation details stay below the public connector
+contract.
 
 ## Before / After
 

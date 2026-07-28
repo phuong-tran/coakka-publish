@@ -30,6 +30,16 @@ work. It helps an app route work by target name, handle request/reply,
 deadletters, bounded queues, diagnostics, and native-backed logging without
 turning every internal boundary into another hand-written HTTP endpoint.
 
+## Start Here
+
+| Question | Short answer |
+| --- | --- |
+| Problem | Internal application work often becomes fake backend HTTP, spreading one contract across URLs, clients, retries, timeout mapping, status mapping, and logs. |
+| What CoAkka is | A runtime boundary for application capabilities: callers ask a typed target, route snapshots decide ownership, and replies/deadletters carry runtime diagnostics. |
+| What this repo is | The public artifact surface: packages, native archives, manifests, checksums, compatibility matrix, and release notes. |
+| What it is not | Not the runnable sample repo and not a source-build repository. Use `coakka-samples` to run examples. |
+| How to adopt | Pick one painful internal boundary, keep legacy HTTP/gRPC edges intact, and migrate gradually where runtime targets make ownership clearer. |
+
 Public repository map:
 
 | Repository | Use it for | Link |
