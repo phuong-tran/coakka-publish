@@ -2,4 +2,4 @@ CoAkka CLI Docker demo release
 version=1.3.1
 source_snapshot=0da8c2d9
 release_id=1.3.1+0da8c2d9
-cli_release_root=/Users/phuongtran/workingDir/coakkaCoreNativeDev/releases/cli/releases/1.3.1+0da8c2d9
+cli_release_root=cli/releases/1.3.1+0da8c2d9

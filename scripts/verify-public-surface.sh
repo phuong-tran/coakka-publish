@@ -487,6 +487,10 @@ scanner_inputs=(
   "${repo_root}/artifacts/public-artifacts.tsv"
 )
 
+while IFS= read -r -d '' release_file; do
+  scanner_inputs+=("${release_file}")
+done < <(find "${release_roots[@]}" -path '*/releases/*/RELEASE.txt' -print0)
+
 if [[ -n "${COAKKA_PUBLIC_SURFACE_SCANNER:-}" ]]; then
   "${COAKKA_PUBLIC_SURFACE_SCANNER}" "${scanner_inputs[@]}"
 elif [[ -x "${default_scanner}" ]]; then
