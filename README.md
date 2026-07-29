@@ -394,9 +394,9 @@ Package contents:
 - `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-windows-aarch64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
-CoAkka Runtime. It is the visual sibling of `coakka-client`, not an admin
-dashboard, schema registry, service discovery server, mTLS control plane, or
-business schema owner.
+CoAkka Runtime. It is the visual sibling of `coakka-client`: a way to read and
+try runtime facts, not the owner of fleet topology, business schema, or
+production operations policy.
 
 The native archives include:
 
