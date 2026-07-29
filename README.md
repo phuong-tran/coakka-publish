@@ -6,27 +6,28 @@ Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 Support: [SUPPORT.md](SUPPORT.md)
 Changelog: [CHANGELOG.md](CHANGELOG.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
-CoAkka story: [docs/coakka-story.md](docs/coakka-story.md)
-AI reviewer onboarding: [docs/ai-reviewer-onboarding.md](docs/ai-reviewer-onboarding.md)
-Architecture review guide: [docs/architecture-review-guide.md](docs/architecture-review-guide.md)
+Runtime field guide: [docs/runtime-field-guide.md](docs/runtime-field-guide.md)
+How it works: [docs/how-it-works.md](docs/how-it-works.md)
+Questions and answers: [docs/qna.md](docs/qna.md)
 Runtime client: [docs/coakka-runtime-client.md](docs/coakka-runtime-client.md)
 Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
 Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
-How it works: [docs/how-it-works.md](docs/how-it-works.md)
 Spring Boot: [docs/coakka-spring-boot.md](docs/coakka-spring-boot.md)
 Quarkus: [docs/coakka-quarkus.md](docs/coakka-quarkus.md)
 Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
 Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
 Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.md)
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
-Questions and answers: [docs/qna.md](docs/qna.md)
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 If you are new to CoAkka, start with
 [New To CoAkka](docs/new-to-coakka.md), then use
 [`coakka-samples`](https://github.com/phuong-tran/coakka-samples) to run
-examples.
+examples. After one sample, read
+[Runtime Field Guide](docs/runtime-field-guide.md) to connect the sample to
+Kubernetes Service DNS, topology, queues, overload, Nginx, mTLS placement, and
+route generation.
 
 CoAkka is a native-backed runtime and logger toolkit for application-owned
 work. It helps an app route work by target name, handle request/reply,
@@ -65,10 +66,13 @@ Current package-manager entrypoints:
 | SwiftPM | [`coakka-runtime-swift` v1.3.2](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.3.2) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
 
 Public docs:
+[New To CoAkka](docs/new-to-coakka.md),
+[Runtime Field Guide](docs/runtime-field-guide.md),
+[How It Works](docs/how-it-works.md),
+[Questions And Answers](docs/qna.md),
 [The CoAkka Story](docs/coakka-story.md),
 [AI Reviewer Onboarding](docs/ai-reviewer-onboarding.md),
 [Architecture Review Guide](docs/architecture-review-guide.md),
-[How It Works](docs/how-it-works.md),
 [CoAkka Spring Boot](docs/coakka-spring-boot.md),
 [CoAkka Quarkus](docs/coakka-quarkus.md),
 [CoAkka Runtime Client](docs/coakka-runtime-client.md),
@@ -81,7 +85,6 @@ Public docs:
 [Containerized Runtime](docs/containerized-runtime.md),
 [Production Readiness](docs/production-readiness.md),
 [Production Evidence](docs/production-evidence.md),
-[Questions And Answers](docs/qna.md),
 and
 [Repository Boundaries](docs/repository-boundaries.md).
 
