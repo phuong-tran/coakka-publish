@@ -46,7 +46,7 @@ CoAkka Logger is a separate bounded logging surface in the same ecosystem.
 | Question | Short answer |
 | --- | --- |
 | Problem | Internal application work often becomes fake backend HTTP, spreading one contract across URLs, clients, retries, timeout mapping, status mapping, and logs. |
-| What CoAkka is | A runtime boundary for application capabilities: callers ask a typed target, route snapshots decide ownership, and replies/deadletters carry runtime diagnostics. |
+| What CoAkka is | A runtime boundary for application capabilities: callers submit an identified payload to a stable target, route snapshots decide ownership, and replies/deadletters carry runtime diagnostics. |
 | What this repo is | The public artifact surface: packages, native archives, manifests, checksums, compatibility matrix, and release notes. |
 | What it is not | Not the runnable sample repo and not a source-build repository. Use `coakka-samples` to run examples. |
 | How to adopt | Pick one painful internal boundary, keep legacy HTTP/gRPC edges intact, and migrate gradually where runtime targets make ownership clearer. |
@@ -64,6 +64,10 @@ Public repository map:
 
 Current package-manager entrypoints:
 
+Package versions are independent across the ecosystem. A NuGet package, npm
+package, PyPI package, Go module, and SwiftPM tag do not need to share the same
+version number.
+
 | Channel | Runtime package | Logger package |
 | --- | --- | --- |
 | NuGet | [`CoAkka.Runtime` 1.3.3](https://www.nuget.org/packages/CoAkka.Runtime/1.3.3) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
@@ -74,6 +78,7 @@ Current package-manager entrypoints:
 
 Public docs:
 [New To CoAkka](docs/new-to-coakka.md),
+[Current Packages](docs/current-packages.md),
 [Runtime Field Guide](docs/runtime-field-guide.md),
 [How It Works](docs/how-it-works.md),
 [Questions And Answers](docs/qna.md),
