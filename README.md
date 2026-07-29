@@ -29,10 +29,17 @@ examples. After one sample, read
 Kubernetes Service DNS, topology, queues, overload, Nginx, mTLS placement, and
 route generation.
 
-CoAkka is a native-backed runtime and logger toolkit for application-owned
-work. It helps an app route work by target name, handle request/reply,
-deadletters, bounded queues, diagnostics, and native-backed logging without
-turning every internal boundary into another hand-written HTTP endpoint.
+CoAkka Runtime is a native-backed capability runtime for application-owned
+work across processes and languages. It helps an app route work by target
+name, handle request/reply, deadletters, bounded queues, and diagnostics
+without turning every internal boundary into another hand-written HTTP
+endpoint.
+
+Application-owned work means capability code governed by the same product or
+application boundary, even when it runs in another process, language,
+container, or host.
+
+CoAkka Logger is a separate bounded logging surface in the same ecosystem.
 
 ## Start Here
 
