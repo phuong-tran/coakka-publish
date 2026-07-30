@@ -45,7 +45,7 @@ CoAkka Logger is a separate bounded logging surface in the same ecosystem.
 
 | Question | Short answer |
 | --- | --- |
-| Problem | Internal application work often becomes fake backend HTTP, spreading one contract across URLs, clients, retries, timeout mapping, status mapping, and logs. |
+| Problem | Internal application work often becomes an HTTP-shaped handoff only to give capability code an address, spreading one contract across URLs, clients, retries, timeout mapping, status mapping, and logs. |
 | What CoAkka is | A runtime boundary for application capabilities: callers submit an identified payload to a stable target, route snapshots decide ownership, and replies/deadletters carry runtime diagnostics. |
 | What this repo is | The public artifact surface: packages, native archives, manifests, checksums, compatibility matrix, and release notes. |
 | What it is not | Not the runnable sample repo and not a source-build repository. Use `coakka-samples` to run examples. |
