@@ -4,29 +4,29 @@ This page is the quick compatibility view for the current public artifact
 surface. The root README remains the canonical current-status summary, and
 per-drop details remain in [releases/](releases/).
 
-## Runtime 1.3.3 Train
+## Runtime 1.3.4 Train
 
 The public artifact mirror aligns the runtime connector lanes below to native
-runtime generation `1.3.3+282f3ad`. Package-manager registries have independent
+runtime generation `1.3.4+dc6ec284`. Package-manager registries have independent
 publication state and remain listed separately below.
 
 | Surface | Public artifact or coordinate | Public generation | Native generation |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/1.3.3+282f3ad/coakka-runtime-native-v2-1.3.3.tar.gz` | `1.3.3+282f3ad` | `1.3.3+282f3ad` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.3-g282f3ad-657ec79` | `1.3.3+282f3ad` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.3-g282f3ad-657ec79` | via JVM runtime |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.3-g282f3ad-657ec79` | via JVM runtime |
-| Python runtime artifact | `coakka_v2_connector` wheel | `1.3.5` in `1.3.3+282f3ad-657ec79` | `1.3.3+282f3ad` |
-| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.3.10` in `1.3.3+282f3ad-657ec79` | `1.3.3+282f3ad` |
-| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.3.10` in `1.3.3+282f3ad-657ec79` | `1.3.3+282f3ad` |
-| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.3.10` in `1.3.3+282f3ad-657ec79` | via matching Node artifact |
-| Tauri runtime artifact | `coakka-runtime-tauri-intents` source package | `1.3.3-source` in `1.3.3+282f3ad-d57b614` | `1.3.3+282f3ad` |
-| Go runtime | `github.com/phuong-tran/coakka-runtime-go` Go module | `v1.3.11` | `1.3.3+282f3ad` |
-| C# runtime artifact | `CoAkka.Runtime` NuGet package file | `1.3.4` in `1.3.3+282f3ad-657ec79` | `1.3.3+282f3ad` |
-| Rust runtime artifact | `coakka-runtime-rs` package | `1.3.3-spike` in `1.3.3+282f3ad-657ec79` | `1.3.3+282f3ad` |
-| Swift runtime | `github.com/phuong-tran/coakka-runtime-swift` SwiftPM package | `v1.3.3` | `1.3.3+282f3ad` |
-| Mojo runtime artifact | `coakka-runtime-mojo` source package | `1.3.3-source` in `1.3.3+282f3ad-d57b614` | `1.3.3+282f3ad` |
-| Zig runtime artifact | `coakka-runtime-zig` source package | `1.3.3-source` in `1.3.3+282f3ad-d57b614` | `1.3.3+282f3ad` |
+| Native C ABI | `runtime/native/releases/1.3.4+dc6ec284/coakka-runtime-native-v2-1.3.4.tar.gz` | `1.3.4+dc6ec284` | `1.3.4+dc6ec284` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.4-gdc6ec284-f68ff5c` | `1.3.4+dc6ec284` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.4-gdc6ec284-f68ff5c` | via JVM runtime |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.4-gdc6ec284-f68ff5c` | via JVM runtime |
+| Python runtime artifact | `coakka_v2_connector` wheel | `1.3.6` in `1.3.4+dc6ec284-f68ff5c` | `1.3.4+dc6ec284` |
+| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.3.11` in `1.3.4+dc6ec284-f68ff5c` | `1.3.4+dc6ec284` |
+| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.3.11` in `1.3.4+dc6ec284-f68ff5c` | `1.3.4+dc6ec284` |
+| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.3.11` in `1.3.4+dc6ec284-f68ff5c` | via matching Node artifact |
+| Tauri runtime artifact | `coakka-runtime-tauri-intents` source package | `1.3.4-source` in `1.3.4+dc6ec284-f68ff5c` | `1.3.4+dc6ec284` |
+| Go runtime | `github.com/phuong-tran/coakka-runtime-go` Go module | `v1.3.12` | `1.3.4+dc6ec284` |
+| C# runtime artifact | `CoAkka.Runtime` NuGet package file | `1.3.5` in `1.3.4+dc6ec284-f68ff5c` | `1.3.4+dc6ec284` |
+| Rust runtime artifact | `coakka-runtime-rs` package | `1.3.4-spike` in `1.3.4+dc6ec284-f68ff5c` | `1.3.4+dc6ec284` |
+| Swift runtime | `github.com/phuong-tran/coakka-runtime-swift` SwiftPM package | `v1.3.4` | `1.3.4+dc6ec284` |
+| Mojo runtime artifact | `coakka-runtime-mojo` source package | `1.3.4-source` in `1.3.4+dc6ec284-f68ff5c` | `1.3.4+dc6ec284` |
+| Zig runtime artifact | `coakka-runtime-zig` source package | `1.3.4-source` in `1.3.4+dc6ec284-f68ff5c` | `1.3.4+dc6ec284` |
 
 ## Logger 1.2.1 Train
 
@@ -53,9 +53,9 @@ All logger connector lanes below align to logger native generation
 
 | Surface | Public generation | Public location |
 | --- | --- | --- |
-| `coakka-client` native CLI | `1.3.3+282f3ad` | `coakka-tools/coakka-client/releases/` |
+| `coakka-client` native CLI | `1.3.4+dc6ec28` | `coakka-tools/coakka-client/releases/` |
 | `coakka-client` Docker Linux bundle | `1.3.2+caff6d6d` | `coakka-tools/coakka-client/docker-demo/releases/` |
-| `coakka-runtime-inspect` native UI | `1.3.3+ae4be45` | `coakka-tools/coakka-runtime-inspect/releases/` |
+| `coakka-runtime-inspect` native UI | `1.3.4+dc6ec28` | `coakka-tools/coakka-runtime-inspect/releases/` |
 
 ## Package-Manager Channels
 
@@ -63,8 +63,8 @@ All logger connector lanes below align to logger native generation
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.3.4` and logger `coakka-logger==1.2.2` current |
-| Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.11`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
-| SwiftPM | Swift runtime/logger source packages | current; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.3`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
+| Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.12`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
+| SwiftPM | Swift runtime/logger source packages | current; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.4`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
 | NuGet | C# runtime/logger packages | current; runtime `CoAkka.Runtime==1.3.3`, logger `CoAkka.Logger==1.2.2` |
 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
 | apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
@@ -107,7 +107,7 @@ SwiftPM packages:
 
 | Surface | SwiftPM coordinate | Native generation |
 | --- | --- | --- |
-| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.3` | `1.3.3+282f3ad` |
+| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.4` | `1.3.4+dc6ec284` |
 | Swift logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1` | `1.2.1+f50756ebff0d` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for remaining

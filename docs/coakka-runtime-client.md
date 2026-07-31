@@ -56,12 +56,12 @@ runtime target.
 
 ## Published Artifacts
 
-Current public native CLI generation: `1.3.3+282f3ad`.
+Current public native CLI generation: `1.3.4+dc6ec28`.
 
 Native CLI archives live under:
 
 ```text
-coakka-tools/coakka-client/releases/1.3.3+282f3ad/
+coakka-tools/coakka-client/releases/1.3.4+dc6ec28/
 ```
 
 The Docker Linux verification bundle remains on its separately released

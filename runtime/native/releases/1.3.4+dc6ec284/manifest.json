@@ -1,0 +1,24 @@
+{
+  "name": "coakka-runtime-native-v2",
+  "version": "1.3.4",
+  "release": "1.3.4+dc6ec284",
+  "sourceSnapshot": "dc6ec284",
+  "profile": "public-tcp-transport-candidate",
+  "archive": "coakka-runtime-native-v2-1.3.4.tar.gz",
+  "sha256": "34cbcc710f7ed37525821f8352c4c698422c8e0ba046ea6696d3b9d474f28ad9",
+  "platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ],
+  "headers": [
+    "include/coakka/v2/runtime.h",
+    "include/coakka/v2/control.h",
+    "include/coakka/v2/client.h",
+    "include/coakka/v2/runtime_auth.h",
+    "include/coakka/v2/transport.h",
+    "include/coakka/v2/utils.h"
+  ]
+}
