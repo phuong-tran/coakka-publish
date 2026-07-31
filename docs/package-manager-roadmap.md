@@ -41,7 +41,7 @@ normal path.
 | 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.6` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
 | 3 | Go modules | Go runtime and logger packages | Runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.12` and logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published and clean-consumer verified. |
 | 4 | SwiftPM | Swift runtime and logger source packages | Current for macOS ARM64; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.4`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1`. |
-| 5 | NuGet | C#/.NET runtime and logger packages | Runtime `CoAkka.Runtime==1.3.3` and logger `CoAkka.Logger==1.2.2` are published and clean-consumer verified. |
+| 5 | NuGet | C#/.NET runtime and logger packages | Runtime `CoAkka.Runtime==1.3.5` and logger `CoAkka.Logger==1.2.2` are published and clean-consumer verified. |
 | 6 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
 | 7 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
 
@@ -216,7 +216,7 @@ connectors. The package shape is source-first and macOS ARM64 only:
 
 Current public repositories:
 
-- `https://github.com/phuong-tran/coakka-runtime-swift`, tag `v1.3.2`
+- `https://github.com/phuong-tran/coakka-runtime-swift`, tag `v1.3.4`
 - `https://github.com/phuong-tran/coakka-logger-swift`, tag `v1.2.1`
 
 The release manifest is tracked in `package-manager/swiftpm/current.json`.
@@ -227,9 +227,9 @@ Public samples consume those Git tags directly.
 NuGet is current for the C# runtime and logger connectors:
 
 - runtime package: `CoAkka.Runtime`
-- runtime version: `1.3.3`
-- native runtime generation: `1.3.2+caff6d6d`
-- package URL: `https://www.nuget.org/packages/CoAkka.Runtime/1.3.3`
+- runtime version: `1.3.5`
+- native runtime generation: `1.3.4+dc6ec284`
+- package URL: `https://www.nuget.org/packages/CoAkka.Runtime/1.3.5`
 - logger package: `CoAkka.Logger`
 - logger version: `1.2.2`
 - native logger generation: `1.2.1+f50756ebff0d`

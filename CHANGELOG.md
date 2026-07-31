@@ -12,6 +12,9 @@ remain under [docs/releases/](docs/releases/).
 - Published and registry-verified `coakka-v2-connector==1.3.6` on PyPI over
   native runtime `1.3.4+dc6ec284`. The release passed clean virtualenv install,
   embedded native load, and request/reply smoke.
+- Published and registry-verified `CoAkka.Runtime==1.3.5` on NuGet over native
+  runtime `1.3.4+dc6ec284`. The release passed clean project restore, RID native
+  load, request/reply, and matched-deadletter smoke.
 
 ## 2026-07-25
 
