@@ -5,6 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-07-31
 
+- Published native evidence runner `1.3.4+dc6ec284` for Linux ARM64/x64,
+  macOS ARM64, and Windows ARM64/x64. Linux is the preferred
+  deployment-oriented measurement host; Docker, CI, UTM, and other VM results
+  are portability evidence only.
 - Published and registry-verified `coakka-v2-connector-node@1.3.11` over
   native runtime `1.3.4+dc6ec284`. The release passed clean tarball install,
   native load, and request/reply smoke. Bun and Electron remain at `1.3.9`

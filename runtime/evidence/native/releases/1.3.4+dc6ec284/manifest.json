@@ -1,0 +1,46 @@
+{
+  "name": "coakka-runtime-native-evidence-v2",
+  "version": "1.3.4",
+  "release": "1.3.4+dc6ec284",
+  "runtimeNativeRelease": "1.3.4+dc6ec284",
+  "runtimeNativeArchive": "runtime/native/releases/1.3.4+dc6ec284/coakka-runtime-native-v2-1.3.4.tar.gz",
+  "sampleSourceDirectory": "coakka-samples/runtime/evidence/native",
+  "measurementPreference": "controlled Linux host matching the deployment worker",
+  "virtualizedResultClass": "correctness and portability evidence only",
+  "sampleSources": [
+    "main.c",
+    "evidence.h",
+    "evidence_config.c",
+    "evidence_platform.c",
+    "evidence_platform.h",
+    "evidence_runtime.c",
+    "evidence_report.c"
+  ],
+  "archives": [
+    {
+      "platform": "linux-aarch64",
+      "archive": "coakka-runtime-native-evidence-v2-1.3.4-linux-aarch64.tar.gz",
+      "sha256": "a48aeec1a688ce5595fe819b84389c398cafc778355371270164d97d551a4344"
+    },
+    {
+      "platform": "linux-x86_64",
+      "archive": "coakka-runtime-native-evidence-v2-1.3.4-linux-x86_64.tar.gz",
+      "sha256": "ac4107490f1cd67cf7b8d99593c818471443f198fe1f6e84903539649b757fde"
+    },
+    {
+      "platform": "macos-aarch64",
+      "archive": "coakka-runtime-native-evidence-v2-1.3.4-macos-aarch64.tar.gz",
+      "sha256": "940bc17d9030665305b541641ef200c5faa7987dd2a0bfd3d36cb73367707827"
+    },
+    {
+      "platform": "windows-aarch64",
+      "archive": "coakka-runtime-native-evidence-v2-1.3.4-windows-aarch64.zip",
+      "sha256": "3521ca0e83f86d140e19998452c2e4326b45bb03929e097c87acbb3cecbd5d89"
+    },
+    {
+      "platform": "windows-x86_64",
+      "archive": "coakka-runtime-native-evidence-v2-1.3.4-windows-x86_64.zip",
+      "sha256": "03c91235ccaab00d77ba0c192fb893dd14eac056efdb8ee17fbcdc4cfadd701e"
+    }
+  ]
+}

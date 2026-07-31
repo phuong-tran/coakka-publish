@@ -1,0 +1,22 @@
+CoAkka Runtime Native Evidence Runner 1.3.4+dc6ec284
+
+Purpose:
+- Public C ABI smoke, pressure, stress, and soak evidence.
+- Linux-first deployment-oriented measurement guidance.
+- macOS, Windows, Docker, CI, and VM portability verification.
+
+Runtime:
+- Native generation: 1.3.4+dc6ec284
+- No private core source is included.
+
+Platforms:
+- linux-aarch64
+- linux-x86_64
+- macos-aarch64
+- windows-aarch64
+- windows-x86_64
+
+Interpretation:
+- Prefer a controlled Linux host for deployment-oriented measurements.
+- Treat virtualized results as correctness and portability evidence only.
+- Do not compare throughput across hosts, operating systems, or VM shapes.
