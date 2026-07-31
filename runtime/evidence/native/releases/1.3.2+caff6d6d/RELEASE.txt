@@ -1,0 +1,24 @@
+CoAkka Runtime Native Evidence Runner 1.3.2+caff6d6d
+
+Purpose:
+- Local native public-ABI request/reply evidence, not a production benchmark
+  or SLO claim.
+- Built from coakka-samples/runtime/evidence/native/main.c.
+- Consumes the published CoAkka Runtime native C ABI.
+- Does not include or reach into private core runtime sources.
+
+Scope:
+- smoke: complete local target request/reply with strict route invariants
+- pressure: bounded admission becomes rejection/deadletter evidence
+- stress: larger finite local request/reply run with explicit payload size
+- soak: time-bounded local request/reply submission with final drain
+
+Measured path:
+- request build -> runtime admission -> route snapshot -> stable target
+- local echo handler -> reply submit -> terminal response -> caller drain
+
+Interpretation:
+- Results are environment-local.
+- Compare repeated JSON outputs, not one isolated number.
+- Connector, framework, network, serialization, and logging costs are outside
+  this native runtime evidence lane.
