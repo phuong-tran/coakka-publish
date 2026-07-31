@@ -1,0 +1,23 @@
+coakka-runtime-inspect native bundle
+version=1.3.3
+source_snapshot=ae4be45
+platform=linux-aarch64
+archive=coakka-runtime-inspect-v2-1.3.3-linux-aarch64.tar.gz
+sha256=41db89de6c426274b64a5ceedc52a855f39e1dd4754431dc816c540f9184202a
+prefix=coakka-runtime-inspect-v2-1.3.3-linux-aarch64
+platform=linux-x86_64
+archive=coakka-runtime-inspect-v2-1.3.3-linux-x86_64.tar.gz
+sha256=87c0bd2abbffec393aa9f0450bc5b6024de82b2e010a67ee96f8680059e1a973
+prefix=coakka-runtime-inspect-v2-1.3.3-linux-x86_64
+platform=macos-aarch64
+archive=coakka-runtime-inspect-v2-1.3.3-macos-aarch64.tar.gz
+sha256=68ed78dfe51272cbf31c40f7da9bea4efa3f5c39d7e93c328ea2cc1253fd7954
+prefix=coakka-runtime-inspect-v2-1.3.3-macos-aarch64
+platform=windows-aarch64
+archive=coakka-runtime-inspect-v2-1.3.3-windows-aarch64.tar.gz
+sha256=30a0a6a65f43781d5386da87e86d694cbc7d8896b5ad06052948a936d093356f
+prefix=coakka-runtime-inspect-v2-1.3.3-windows-aarch64
+platform=windows-x86_64
+archive=coakka-runtime-inspect-v2-1.3.3-windows-x86_64.tar.gz
+sha256=1ef31f513c717f1444233c3331a3ede6493dbc97dc1cd16aa91cb04e9d4bd28a
+prefix=coakka-runtime-inspect-v2-1.3.3-windows-x86_64

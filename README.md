@@ -73,8 +73,8 @@ version number.
 | NuGet | [`CoAkka.Runtime` 1.3.3](https://www.nuget.org/packages/CoAkka.Runtime/1.3.3) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
 | npm | [`coakka-v2-connector-node` 1.3.9](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.3.9) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
 | PyPI | [`coakka-v2-connector` 1.3.4](https://pypi.org/project/coakka-v2-connector/1.3.4/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
-| Go modules | [`coakka-runtime-go` v1.3.10](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.3.10) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
-| SwiftPM | [`coakka-runtime-swift` v1.3.2](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.3.2) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
+| Go modules | [`coakka-runtime-go` v1.3.11](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.3.11) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
+| SwiftPM | [`coakka-runtime-swift` v1.3.3](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.3.3) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
 
 Public docs:
 [New To CoAkka](docs/new-to-coakka.md),
@@ -108,14 +108,14 @@ The current artifact mirror is newer than that GitHub Release page. Use
 [`docs/compatibility-matrix.md`](docs/compatibility-matrix.md) as the current
 public artifact index.
 
-Current runtime native release note:
-[2026-07-25 runtime native 1.3.2 caff6d6d](docs/releases/2026-07-25-runtime-native-1.3.2-caff6d6d.md).
+Current runtime release note:
+[2026-07-31 runtime 1.3.3 public artifact train](docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md).
 
 Current coakka-client release note:
-[2026-07-25 runtime tooling 1.3.2 caff6d6d](docs/releases/2026-07-25-runtime-tooling-1.3.2-caff6d6d.md).
+[2026-07-31 runtime 1.3.3 public artifact train](docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md).
 
-Current coakka-runtime-inspect release notes:
-[2026-07-25 runtime tooling 1.3.2 caff6d6d](docs/releases/2026-07-25-runtime-tooling-1.3.2-caff6d6d.md).
+Current coakka-runtime-inspect release note:
+[2026-07-31 runtime 1.3.3 public artifact train](docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md).
 Last documented coakka-runtime-inspect Docker Hub release note:
 [2026-07-25 runtime tooling stop backpressure hotfix 0da8c2d9](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md).
 
@@ -147,7 +147,7 @@ and
 [2026-05-21 runtime connector 5ab812f](docs/releases/2026-05-21-runtime-connector-5ab812f.md).
 
 Current source connector release note:
-[2026-07-25 runtime language packages 1.3.2 caff6d6d 6d5ea58](docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md).
+[2026-07-31 runtime 1.3.3 public artifact train](docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md).
 
 ## License And Trademark
 
@@ -195,23 +195,23 @@ Current public logger Tauri/Electron connector generation:
 `1.2.1+f50756ebff0d-3e8a6ae`.
 Current public logger Mojo/Zig source connector generation:
 `1.2.1+f50756ebff0d-8264bba`.
-Current public native runtime generation: `1.3.2+caff6d6d`.
-Current public JVM connector generation: `1.3.2+caff6d6d-6d5ea58`.
+Current public native runtime generation: `1.3.3+282f3ad`.
+Current public JVM connector generation: `1.3.3-g282f3ad-657ec79`.
 Current public Spring Boot and Quarkus adapter generation:
-`1.3.2-gcaff6d6d-6d5ea58`.
-Current public Python, Go, C#, and Rust connector generation:
-`1.3.2+caff6d6d-6d5ea58`.
+`1.3.3-g282f3ad-657ec79`.
+Current public binary connector artifact generation:
+`1.3.3+282f3ad-657ec79`.
 Current public Node.js, Bun, and Electron npm runtime packages:
 `coakka-v2-connector-{node,bun,electron}@1.3.9`.
 Current public C# runtime NuGet package: `CoAkka.Runtime@1.3.3`.
 Current public C# logger NuGet package: `CoAkka.Logger@1.2.2`.
 Current public Mojo/Zig source connector generation:
-`1.3.2+caff6d6d-6d5ea58`.
+`1.3.3+282f3ad-d57b614`.
 Current public Tauri intent source connector generation:
-`1.3.2+caff6d6d-6d5ea58`.
-Current public coakka-client generation: `1.3.2+caff6d6d`.
+`1.3.3+282f3ad-d57b614`.
+Current public coakka-client generation: `1.3.3+282f3ad`.
 Current public coakka-client Docker Linux bundle generation: `1.3.2+caff6d6d`.
-Current public coakka-runtime-inspect native generation: `1.3.2+caff6d6d`.
+Current public coakka-runtime-inspect native generation: `1.3.3+ae4be45`.
 Docker Hub image tags are not part of the current release ledger yet; the
 GitHub demo bundles above are the captured public sample artifacts.
 
@@ -223,7 +223,7 @@ GitHub demo bundles above are the captured public sample artifacts.
 | Logger native C/C++ | public | `logger/native/releases/` |
 | Runtime native C ABI | public | `runtime/native/releases/` |
 | Runtime JVM, Python, Node.js, Bun, Electron, Go, C#, Rust | public | `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/` |
-| Runtime Swift | public SwiftPM | `https://github.com/phuong-tran/coakka-runtime-swift`, tag `v1.3.2` |
+| Runtime Swift | public SwiftPM | `https://github.com/phuong-tran/coakka-runtime-swift`, tag `v1.3.3` |
 | Runtime Mojo, Zig, and Tauri source connector lanes | public source packages | `runtime/{mojo,zig,tauri}/releases/` |
 | Runtime Spring Boot and Quarkus adapters | public | `maven/` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
@@ -236,7 +236,7 @@ SwiftPM package-manager releases:
 
 | Lane | Coordinate | Native generation |
 | --- | --- | --- |
-| Swift runtime connector | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.2` | runtime native `1.3.2+caff6d6d` |
+| Swift runtime connector | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.3` | runtime native `1.3.3+282f3ad` |
 | Swift logger connector | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1` | logger native `1.2.1+f50756ebff0d` |
 
 The SwiftPM lane is source-first and macOS ARM64. Its release manifest is
@@ -253,14 +253,17 @@ The NuGet lane is binary package-manager distribution for .NET consumers.
 Its release manifest is tracked under
 `package-manager/nuget/current.json`.
 
-The current root native runtime package is `1.3.2+caff6d6d`. The published JVM
-runtime jar is refreshed over that native package as
-`1.3.2-gcaff6d6d-6d5ea58`. Published Spring Boot and Quarkus adapters are
-rebuilt as `1.3.2-gcaff6d6d-6d5ea58` over that JVM runtime. Python, Go, C#,
-Rust, Mojo, Zig, and Tauri publish against the same `1.3.2+caff6d6d` native
-package through connector source commit `6d5ea58`. Node.js, Bun, and Electron
-npm runtime packages publish as `1.3.9` over connector source commit `b46f705`
-and the same native runtime generation.
+The current root native runtime package is `1.3.3+282f3ad`. The artifact mirror
+publishes JVM runtime, Spring Boot, and Quarkus as
+`1.3.3-g282f3ad-657ec79`. Binary connector artifacts use release directory
+`1.3.3+282f3ad-657ec79`; Mojo, Zig, and Tauri source packages use
+`1.3.3+282f3ad-d57b614`.
+
+Package-manager registries are separate publication channels. npm remains on
+runtime packages `1.3.9`, PyPI remains on runtime package `1.3.4`, and NuGet
+remains on `CoAkka.Runtime` `1.3.3` until their newer verified package
+candidates are published. Go modules and SwiftPM advance through public GitHub
+tags `v1.3.11` and `v1.3.3`.
 Do not mix language or framework runtime packages from another native package
 generation unless a release note explicitly declares that combination
 compatible.
@@ -284,7 +287,7 @@ The Python runtime package `coakka-v2-connector==1.3.4` and logger package
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
 `coakka-logger==1.2.1` are yanked so ordinary installs resolve to the current
 patch versions. The Go runtime package
-`github.com/phuong-tran/coakka-runtime-go@v1.3.10` and logger package
+`github.com/phuong-tran/coakka-runtime-go@v1.3.11` and logger package
 `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published as public Go
 modules. SwiftPM packages for Swift runtime/logger are published as public
 GitHub tag coordinates. NuGet packages for C# runtime/logger are published as
@@ -321,7 +324,7 @@ Current published lanes:
 - `npm: coakka-v2-connector-electron@1.3.9`
 - `PyPI: coakka-v2-connector==1.3.4`
 - `PyPI: coakka-logger==1.2.2`
-- `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.2`
+- `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.3`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1`
 - `NuGet: CoAkka.Runtime@1.3.3`
 - `NuGet: CoAkka.Logger@1.2.2`
@@ -361,15 +364,15 @@ Current published lanes:
 
 ## coakka-client Public Artifacts
 
-Current coakka-client source snapshot: `caff6d6d`
+Current coakka-client source snapshot: `282f3ad`
 
 Package contents:
 
-- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-windows-x86_64.tar.gz`
-- `coakka-tools/coakka-client/releases/1.3.2+caff6d6d/coakka-client-v2-1.3.2-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.3+282f3ad/coakka-client-v2-1.3.3-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.3+282f3ad/coakka-client-v2-1.3.3-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.3+282f3ad/coakka-client-v2-1.3.3-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.3+282f3ad/coakka-client-v2-1.3.3-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/1.3.3+282f3ad/coakka-client-v2-1.3.3-windows-aarch64.tar.gz`
 - `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz`
 - `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz`
 
@@ -384,19 +387,19 @@ convenience path recorded in the release notes that publish them; the canonical
 binary archives and checksums remain in the release artifacts above.
 
 Release note:
-[`docs/releases/2026-07-25-runtime-tooling-1.3.2-caff6d6d.md`](docs/releases/2026-07-25-runtime-tooling-1.3.2-caff6d6d.md)
+[`docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md`](docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md)
 
 ## coakka-runtime-inspect Public Artifacts
 
-Current coakka-runtime-inspect source snapshot: `caff6d6d`
+Current coakka-runtime-inspect source snapshot: `ae4be45`
 
 Package contents:
 
-- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-windows-x86_64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/1.3.2+caff6d6d/coakka-runtime-inspect-v2-1.3.2-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.3+ae4be45/coakka-runtime-inspect-v2-1.3.3-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.3+ae4be45/coakka-runtime-inspect-v2-1.3.3-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.3+ae4be45/coakka-runtime-inspect-v2-1.3.3-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.3+ae4be45/coakka-runtime-inspect-v2-1.3.3-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/1.3.3+ae4be45/coakka-runtime-inspect-v2-1.3.3-windows-aarch64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
 CoAkka Runtime. It is the visual sibling of `coakka-client`: a way to read and
@@ -419,12 +422,12 @@ Current limits:
   path.
 - Remote read/observe remains a future runtime surface across all platforms.
 
-Release notes:
-[`docs/releases/2026-07-25-runtime-tooling-1.3.2-caff6d6d.md`](docs/releases/2026-07-25-runtime-tooling-1.3.2-caff6d6d.md)
+Release note:
+[`docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md`](docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md)
 
 ## Runtime v2 Public Artifacts
 
-Core source snapshot: `caff6d6d`
+Core source snapshot: `282f3ad`
 
 Package contents:
 
@@ -439,7 +442,7 @@ Package contents:
 - `native/windows-aarch64/libcoakka_runtime_v2.dll`
 - `native/windows-x86_64/libcoakka_runtime_v2.dll`
 - `SHA256SUMS`
-- `runtime/native/releases/1.3.2+caff6d6d/coakka-runtime-native-v2-1.3.2.tar.gz`
+- `runtime/native/releases/1.3.3+282f3ad/coakka-runtime-native-v2-1.3.3.tar.gz`
 
 The staged native libraries include the runtime C ABI and scanner-clean
 platform libraries for the public artifact surface. The host-facing routing
@@ -447,18 +450,17 @@ contract remains the same across profiles: targets, route generations,
 request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
-Runtime JVM now uses the `1.3.2-gcaff6d6d-6d5ea58` connector refresh over
-native package `1.3.2+caff6d6d`. Spring Boot and Quarkus adapters now use
-`1.3.2-gcaff6d6d-6d5ea58` over that JVM runtime. Embedded-native coverage in
+Runtime JVM now uses the `1.3.3-g282f3ad-657ec79` connector refresh over
+native package `1.3.3+282f3ad`. Spring Boot and Quarkus adapters use the same
+`1.3.3-g282f3ad-657ec79` generation. Embedded-native coverage in
 the published JVM jar includes `macos-aarch64`, `linux-aarch64`,
-`linux-x86_64`, `windows-aarch64`, and `windows-x86_64`. Python, Go, C#,
-Rust, Mojo, Zig, and Tauri publish against `1.3.2+caff6d6d` through release
-directory `1.3.2+caff6d6d-6d5ea58`. Node.js, Bun, and Electron publish as npm
-package version `1.3.9` through release directory `1.3.2+caff6d6d-b46f705`.
-Each release directory has its own manifest and checksums.
+`linux-x86_64`, `windows-aarch64`, and `windows-x86_64`. Binary connector
+artifacts publish through `1.3.3+282f3ad-657ec79`; Mojo, Zig, and Tauri source
+packages publish through `1.3.3+282f3ad-d57b614`. Each release directory has
+its own manifest and checksums.
 
 Native refresh note:
-[`docs/releases/2026-07-25-runtime-native-1.3.2-caff6d6d.md`](docs/releases/2026-07-25-runtime-native-1.3.2-caff6d6d.md)
+[`docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md`](docs/releases/2026-07-31-runtime-1.3.3-282f3ad.md)
 
 Language connector release notes:
 [`docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md`](docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md),
@@ -485,20 +487,20 @@ These artifacts are the current public runtime set:
 
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/1.3.2+caff6d6d/coakka-runtime-native-v2-1.3.2.tar.gz` | `1.3.2+caff6d6d` | `1.3.2+caff6d6d` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.2-gcaff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
-| Python runtime | `coakka-v2-connector` PyPI package | PyPI `1.3.4` | `1.3.2+caff6d6d` |
-| Node.js runtime | `coakka-v2-connector-node` package | npm `1.3.9` from connector `b46f705` | `1.3.2+caff6d6d` |
-| Bun runtime | `coakka-v2-connector-bun` package | npm `1.3.9` from connector `b46f705` | `1.3.2+caff6d6d` |
-| Electron runtime | `coakka-v2-connector-electron` package | npm `1.3.9` from connector `b46f705` | via `coakka-v2-connector-node@1.3.9` |
-| Go runtime | `coakka-v2-connector-go` source package | `1.3.2` from `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
-| C# runtime | `CoAkka.Runtime` NuGet package | `1.3.3` | `1.3.2+caff6d6d` |
-| Rust runtime | `coakka-runtime-rs` package | `1.3.2-spike` from `1.3.2+caff6d6d-6d5ea58` | `1.3.2+caff6d6d` |
-| Mojo runtime | `runtime/mojo/releases/1.3.2+caff6d6d-6d5ea58/coakka-runtime-mojo-1.3.2-source.tar.gz` | `1.3.2-source` | `1.3.2+caff6d6d` |
-| Zig runtime | `runtime/zig/releases/1.3.2+caff6d6d-6d5ea58/coakka-runtime-zig-1.3.2-source.tar.gz` | `1.3.2-source` | `1.3.2+caff6d6d` |
-| Tauri runtime | `runtime/tauri/releases/1.3.2+caff6d6d-6d5ea58/coakka-runtime-tauri-intents-1.3.2-source.tar.gz` | `1.3.2-source` | `1.3.2+caff6d6d` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.2-gcaff6d6d-6d5ea58` | via JVM runtime `1.3.2-gcaff6d6d-6d5ea58` |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.2-gcaff6d6d-6d5ea58` | via JVM runtime `1.3.2-gcaff6d6d-6d5ea58` |
+| Native C ABI | `runtime/native/releases/1.3.3+282f3ad/coakka-runtime-native-v2-1.3.3.tar.gz` | `1.3.3+282f3ad` | `1.3.3+282f3ad` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.3.3-g282f3ad-657ec79` | `1.3.3+282f3ad` |
+| Python runtime artifact | `coakka_v2_connector` wheel | `1.3.5` | `1.3.3+282f3ad` |
+| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.3.10` | `1.3.3+282f3ad` |
+| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.3.10` | `1.3.3+282f3ad` |
+| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.3.10` | via matching Node artifact |
+| Go runtime | `github.com/phuong-tran/coakka-runtime-go` | `v1.3.11` | `1.3.3+282f3ad` |
+| C# runtime artifact | `CoAkka.Runtime` package file | `1.3.4` | `1.3.3+282f3ad` |
+| Rust runtime artifact | `coakka-runtime-rs` package | `1.3.3-spike` | `1.3.3+282f3ad` |
+| Mojo runtime | `runtime/mojo/releases/1.3.3+282f3ad-d57b614/coakka-runtime-mojo-1.3.3-source.tar.gz` | `1.3.3-source` | `1.3.3+282f3ad` |
+| Zig runtime | `runtime/zig/releases/1.3.3+282f3ad-d57b614/coakka-runtime-zig-1.3.3-source.tar.gz` | `1.3.3-source` | `1.3.3+282f3ad` |
+| Tauri runtime | `runtime/tauri/releases/1.3.3+282f3ad-d57b614/coakka-runtime-tauri-intents-1.3.3-source.tar.gz` | `1.3.3-source` | `1.3.3+282f3ad` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.3.3-g282f3ad-657ec79` | via JVM runtime |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.3.3-g282f3ad-657ec79` | via JVM runtime |
 
 Do not mix runtime language packages from another native package generation
 unless a later release note explicitly declares that combination compatible.
@@ -512,10 +514,10 @@ local handler/ask first, explicit route snapshots second, custom
 envelope/transport policy last.
 
 Release docs and samples must only present a helper as released after the
-published artifact contains it. The current npm runtime connector refresh in
-`b46f705` uses native generation `1.3.2+caff6d6d` and keeps the JavaScript
-transport serialization details behind the package boundary. The broader runtime
-connector refresh in `6d5ea58` remains the source for the non-npm language lanes.
+published artifact contains it. The current artifact mirror uses connector
+source `d57b614`, staged payload commit `657ec79`, and native generation
+`1.3.3+282f3ad`. Package-manager registry versions remain documented
+separately until those registry publications complete.
 
 Validation gates run before publishing:
 
@@ -559,8 +561,8 @@ run the intake gate on the submitted artifact:
 ```bash
 scripts/verify-runtime-intake-artifact.py \
   --lane python \
-  --artifact /path/to/coakka_v2_connector-1.3.2-py3-none-any.whl \
-  --expected-native-version 1.3.2+caff6d6d
+  --artifact /path/to/coakka_v2_connector-1.3.5-py3-none-any.whl \
+  --expected-native-version 1.3.3+282f3ad
 ```
 
 Use the matching `--lane` value for the submitted package. The gate verifies

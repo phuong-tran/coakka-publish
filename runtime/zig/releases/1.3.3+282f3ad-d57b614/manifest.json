@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "zig",
+  "release_directory": "1.3.3+282f3ad-d57b614",
+  "version": "1.3.3-source",
+  "artifact": {
+    "name": "coakka-runtime-zig-1.3.3-source.tar.gz",
+    "bundled_native_package_version": "1.3.3+282f3ad",
+    "bundled_native_git_commit": "282f3ad",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ],
+    "source_package": true
+  },
+  "connector_source_git_commit": "d57b614",
+  "payload_staging_git_commit": "657ec79"
+}

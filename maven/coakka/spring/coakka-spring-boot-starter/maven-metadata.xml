@@ -3,8 +3,8 @@
   <groupId>coakka.spring</groupId>
   <artifactId>coakka-spring-boot-starter</artifactId>
   <versioning>
-    <latest>1.3.2-gcaff6d6d-6d5ea58</latest>
-    <release>1.3.2-gcaff6d6d-6d5ea58</release>
+    <latest>1.3.3-g282f3ad-657ec79</latest>
+    <release>1.3.3-g282f3ad-657ec79</release>
     <versions>
       <version>0.1.0-ga671b3a</version>
       <version>0.1.0-ge2dc43a</version>
@@ -19,7 +19,8 @@
       <version>1.3.1-g0a0aa76</version>
       <version>1.3.1-g0da8c2d9-8ff6f32</version>
       <version>1.3.2-gcaff6d6d-6d5ea58</version>
+      <version>1.3.3-g282f3ad-657ec79</version>
     </versions>
-    <lastUpdated>20260725143933</lastUpdated>
+    <lastUpdated>20260731101626</lastUpdated>
   </versioning>
 </metadata>
