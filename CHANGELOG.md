@@ -9,6 +9,9 @@ remain under [docs/releases/](docs/releases/).
   native runtime `1.3.4+dc6ec284`. The release passed clean tarball install,
   native load, and request/reply smoke. Bun and Electron remain at `1.3.9`
   until their package-manager releases are published independently.
+- Published and registry-verified `coakka-v2-connector==1.3.6` on PyPI over
+  native runtime `1.3.4+dc6ec284`. The release passed clean virtualenv install,
+  embedded native load, and request/reply smoke.
 
 ## 2026-07-25
 

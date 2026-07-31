@@ -38,9 +38,9 @@ normal path.
 | Priority | Channel | Main use | Notes |
 | --- | --- | --- | --- |
 | 1 | npm | Node.js, Bun, Electron runtime and logger packages | Best first package-manager lane because it improves JavaScript and desktop onboarding together. |
-| 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.4` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
-| 3 | Go modules | Go runtime and logger packages | Runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.10` and logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published and clean-consumer verified. |
-| 4 | SwiftPM | Swift runtime and logger source packages | Current for macOS ARM64; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.2`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1`. |
+| 2 | PyPI | Python runtime and logger wheels | Runtime package `coakka-v2-connector==1.3.6` and logger package `coakka-logger==1.2.2` are published and install-smoked. |
+| 3 | Go modules | Go runtime and logger packages | Runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.12` and logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published and clean-consumer verified. |
+| 4 | SwiftPM | Swift runtime and logger source packages | Current for macOS ARM64; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.4`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1`. |
 | 5 | NuGet | C#/.NET runtime and logger packages | Runtime `CoAkka.Runtime==1.3.3` and logger `CoAkka.Logger==1.2.2` are published and clean-consumer verified. |
 | 6 | crates.io | Rust runtime/logger packages and Tauri host-side helpers | Should keep Rust as the native host boundary; do not present Tauri JavaScript as the runtime owner. |
 | 7 | apt/deb | `coakka-client`, native tools, and possibly native development packages | Operational surface with signing, repository metadata, upgrade policy, and install/remove behavior. |
@@ -117,8 +117,8 @@ scripts/publish-npm-package-manager-candidates.sh --publish --otp <current-code>
 scripts/verify-npm-registry-candidates.sh --manifest package-manager/npm/candidates/b46f705/manifest.json
 ```
 
-Public JavaScript samples consume the `1.3.9` runtime coordinates after the
-registry verification gate passes.
+Public JavaScript samples consume Node.js runtime `1.3.11`; Bun and Electron
+remain on `1.3.9` until their independent registry verification gates pass.
 
 ## PyPI
 
@@ -130,7 +130,7 @@ Current wheel coordinates:
 
 - runtime package name: `coakka-v2-connector`
 - runtime import name: `coakka_v2_connector`
-- runtime wheel artifact version: `1.3.2`
+- runtime wheel artifact version: `1.3.6`
 - logger package name: `coakka-logger`
 - logger import name: `coakka_logger`
 - logger wheel artifact version: `1.2.2`
@@ -138,12 +138,12 @@ Current wheel coordinates:
 The current runtime and logger wheels are published on PyPI and remain mirrored
 as GitHub Release artifacts:
 
-- PyPI current: `coakka-v2-connector==1.3.4`
+- PyPI current: `coakka-v2-connector==1.3.6`
 - PyPI current: `coakka-logger==1.2.2`
 - PyPI yanked runtime versions: `coakka-v2-connector==1.3.2`,
   `coakka-v2-connector==1.3.3`
 - PyPI yanked logger version: `coakka-logger==1.2.1`
-- GitHub Release artifact mirror: `runtime/python/releases/1.3.2+caff6d6d-6d5ea58/coakka_v2_connector-1.3.2-py3-none-any.whl`
+- GitHub Release artifact mirror: `runtime/python/releases/1.3.4+dc6ec284-f68ff5c/coakka_v2_connector-1.3.6-py3-none-any.whl`
 - GitHub Release artifact mirror: `logger/python/releases/1.2.1+f50756ebff0d/coakka_logger-1.2.2-py3-none-any.whl`
 
 The yanked PyPI versions were superseded because their public package

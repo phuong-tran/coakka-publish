@@ -72,7 +72,7 @@ version number.
 | --- | --- | --- |
 | NuGet | [`CoAkka.Runtime` 1.3.3](https://www.nuget.org/packages/CoAkka.Runtime/1.3.3) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
 | npm | [`coakka-v2-connector-node` 1.3.11](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.3.11) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
-| PyPI | [`coakka-v2-connector` 1.3.4](https://pypi.org/project/coakka-v2-connector/1.3.4/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
+| PyPI | [`coakka-v2-connector` 1.3.6](https://pypi.org/project/coakka-v2-connector/1.3.6/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.3.12](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.3.12) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
 | SwiftPM | [`coakka-runtime-swift` v1.3.4](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.3.4) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
 
@@ -110,13 +110,13 @@ public artifact index.
 Current runtime release note:
 [2026-07-31 runtime 1.3.4 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
 
-Current coakka-client release note:
+Current package-manager release notes:
 [2026-07-31 npm Node.js runtime 1.3.11](docs/releases/2026-07-31-npm-node-runtime-1.3.11.md)
 and
-[2026-07-31 runtime 1.3.4 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
+[2026-07-31 PyPI Python runtime 1.3.6](docs/releases/2026-07-31-pypi-python-runtime-1.3.6.md).
 
-Current coakka-runtime-inspect release note:
-[2026-07-31 runtime 1.3.3 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
+Current runtime tools release note:
+[2026-07-31 runtime 1.3.4 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
 Last documented coakka-runtime-inspect Docker Hub release note:
 [2026-07-25 runtime tooling stop backpressure hotfix 0da8c2d9](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md).
 
@@ -260,11 +260,10 @@ publishes JVM runtime, Spring Boot, and Quarkus as
 `1.3.4+dc6ec284-f68ff5c`; Mojo, Zig, and Tauri source packages use
 `1.3.4+dc6ec284-f68ff5c`.
 
-Package-manager registries are separate publication channels. npm remains on
-runtime packages `1.3.9`, PyPI remains on runtime package `1.3.4`, and NuGet
-remains on `CoAkka.Runtime` `1.3.3` until their newer verified package
-candidates are published. Go modules and SwiftPM advance through public GitHub
-tags `v1.3.12` and `v1.3.4`.
+Package-manager registries are separate publication channels. npm Node.js is
+current at `1.3.11`, while Bun and Electron remain at `1.3.9`. PyPI runtime is
+current at `1.3.6`, and NuGet remains on `CoAkka.Runtime` `1.3.3`. Go modules
+and SwiftPM advance through public GitHub tags `v1.3.12` and `v1.3.4`.
 Do not mix language or framework runtime packages from another native package
 generation unless a release note explicitly declares that combination
 compatible.
@@ -282,8 +281,9 @@ of this release surface yet. The manifest also keeps explicit provenance
 comments for public Mojo/Zig source-package lanes so the connector source
 commit is visible at the package list boundary.
 
-The npm package-manager lane is current for JavaScript runtime/logger packages.
-The Python runtime package `coakka-v2-connector==1.3.4` and logger package
+The current npm coordinates are listed per package because Node.js, Bun, and
+Electron advance independently. The Python runtime package
+`coakka-v2-connector==1.3.6` and logger package
 `coakka-logger==1.2.2` are published on PyPI. Superseded PyPI versions
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
 `coakka-logger==1.2.1` are yanked so ordinary installs resolve to the current
@@ -323,7 +323,7 @@ Current published lanes:
 - `npm: coakka-v2-connector-node@1.3.11`
 - `npm: coakka-v2-connector-bun@1.3.9`
 - `npm: coakka-v2-connector-electron@1.3.9`
-- `PyPI: coakka-v2-connector==1.3.4`
+- `PyPI: coakka-v2-connector==1.3.6`
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.4`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1`
