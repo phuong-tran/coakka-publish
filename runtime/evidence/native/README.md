@@ -3,11 +3,15 @@
 Native evidence runners are built from the public sample source:
 
 ```text
-coakka-samples/runtime/evidence/native/main.c
+coakka-samples/runtime/evidence/native/
 ```
 
 They consume the published CoAkka Runtime native C ABI and bundle the matching
 runtime native shared library for the target platform.
+
+The sample directory separates process orchestration, CLI/config parsing,
+runtime driving and ABI adaptation, and final JSON reporting. It contains no
+private core runtime implementation.
 
 The measured path is:
 

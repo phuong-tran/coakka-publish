@@ -6,7 +6,7 @@ CoAkka Runtime native package.
 The runner is built from the public sample source:
 
 ```text
-coakka-samples/runtime/evidence/native/main.c
+coakka-samples/runtime/evidence/native/
 ```
 
 It consumes the published native runtime through the public C ABI and does not

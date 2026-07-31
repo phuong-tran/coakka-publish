@@ -3,7 +3,8 @@ CoAkka Runtime Native Evidence Runner 1.3.2+caff6d6d
 Purpose:
 - Local native public-ABI request/reply evidence, not a production benchmark
   or SLO claim.
-- Built from coakka-samples/runtime/evidence/native/main.c.
+- Built from the public modules under
+  coakka-samples/runtime/evidence/native/.
 - Consumes the published CoAkka Runtime native C ABI.
 - Does not include or reach into private core runtime sources.
 
