@@ -71,7 +71,7 @@ version number.
 | Channel | Runtime package | Logger package |
 | --- | --- | --- |
 | NuGet | [`CoAkka.Runtime` 1.3.3](https://www.nuget.org/packages/CoAkka.Runtime/1.3.3) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
-| npm | [`coakka-v2-connector-node` 1.3.9](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.3.9) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
+| npm | [`coakka-v2-connector-node` 1.3.11](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.3.11) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
 | PyPI | [`coakka-v2-connector` 1.3.4](https://pypi.org/project/coakka-v2-connector/1.3.4/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.3.12](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.3.12) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
 | SwiftPM | [`coakka-runtime-swift` v1.3.4](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.3.4) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
@@ -111,7 +111,9 @@ Current runtime release note:
 [2026-07-31 runtime 1.3.4 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
 
 Current coakka-client release note:
-[2026-07-31 runtime 1.3.3 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
+[2026-07-31 npm Node.js runtime 1.3.11](docs/releases/2026-07-31-npm-node-runtime-1.3.11.md)
+and
+[2026-07-31 runtime 1.3.4 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
 
 Current coakka-runtime-inspect release note:
 [2026-07-31 runtime 1.3.3 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
@@ -318,7 +320,7 @@ Repository rules:
 
 Current published lanes:
 
-- `npm: coakka-v2-connector-node@1.3.9`
+- `npm: coakka-v2-connector-node@1.3.11`
 - `npm: coakka-v2-connector-bun@1.3.9`
 - `npm: coakka-v2-connector-electron@1.3.9`
 - `PyPI: coakka-v2-connector==1.3.4`

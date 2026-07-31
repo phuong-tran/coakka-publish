@@ -92,11 +92,14 @@ the canonical non-npm artifact surface for every other lane.
 
 ### Current Runtime npm Lane
 
-The runtime npm package set published from
-`package-manager/npm/candidates/b46f705/` is current for the native payload
+The Node.js runtime package is current for native runtime
+`1.3.4+dc6ec284`:
+
+- `coakka-v2-connector-node@1.3.11`
+
+The Bun and Electron runtime packages remain on the earlier native payload
 bridge release over runtime native `1.3.2+caff6d6d`:
 
-- `coakka-v2-connector-node@1.3.9`
 - `coakka-v2-connector-bun@1.3.9`
 - `coakka-v2-connector-electron@1.3.9`
 

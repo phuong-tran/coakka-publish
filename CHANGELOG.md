@@ -3,6 +3,13 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-07-31
+
+- Published and registry-verified `coakka-v2-connector-node@1.3.11` over
+  native runtime `1.3.4+dc6ec284`. The release passed clean tarball install,
+  native load, and request/reply smoke. Bun and Electron remain at `1.3.9`
+  until their package-manager releases are published independently.
+
 ## 2026-07-25
 
 - Refreshed native `coakka-client`, `coakka-runtime-inspect`, and
