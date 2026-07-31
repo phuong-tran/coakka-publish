@@ -101,15 +101,14 @@ and
 [Repository Boundaries](docs/repository-boundaries.md).
 
 Latest GitHub Release page with attached public artifacts:
-[CoAkka Public Artifacts 1.3.1](https://github.com/phuong-tran/coakka-publish/releases/tag/coakka-public-artifacts-v1.3.1).
+[CoAkka Public Artifacts 1.3.4](https://github.com/phuong-tran/coakka-publish/releases/tag/coakka-public-artifacts-v1.3.4).
 
-The current artifact mirror is newer than that GitHub Release page. Use
-[`artifacts/public-artifacts.tsv`](artifacts/public-artifacts.tsv) and
+Use [`artifacts/public-artifacts.tsv`](artifacts/public-artifacts.tsv) and
 [`docs/compatibility-matrix.md`](docs/compatibility-matrix.md) as the current
 public artifact index.
 
 Current runtime release note:
-[2026-07-31 runtime 1.3.3 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
+[2026-07-31 runtime 1.3.4 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
 
 Current coakka-client release note:
 [2026-07-31 runtime 1.3.3 public artifact train](docs/releases/2026-07-31-runtime-1.3.4-dc6ec284.md).
