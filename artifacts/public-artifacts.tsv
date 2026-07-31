@@ -17,7 +17,7 @@ public	logger Zig source package	logger/zig/releases/1.2.1+f50756ebff0d-8264bba/
 public	logger Tauri source package	logger/tauri/releases/1.2.1+f50756ebff0d-3e8a6ae/coakka-logger-tauri-intents-1.2.1-source.tar.gz	013a18bb1c9c7aeb598ecc1783e630d03ea9e6b25b52ed3c3eac774dde1a93f4
 public	logger Native package	logger/native/releases/1.2.1+f50756ebff0d/coakka-logger-native-1.2.1.tar.gz	6411abdc74749e48efbe3385f3be6cb280625c42659ec739a1f35e5d48bdf9f3
 public	runtime Native package	runtime/native/releases/1.3.2+caff6d6d/coakka-runtime-native-v2-1.3.2.tar.gz	1da237b476e95925ff136f6d87e730fb46f5d7e626eaae37a9a34dde06417b72
-public	runtime Native evidence runner macos-aarch64	runtime/evidence/native/releases/1.3.2+caff6d6d/coakka-runtime-native-evidence-v2-1.3.2-macos-aarch64.tar.gz	948774b9fe3ab6939d08c2fd4624d9464b8cd0bd715f87d25f4e838cd31f0595
+public	runtime Native evidence runner macos-aarch64	runtime/evidence/native/releases/1.3.2+caff6d6d/coakka-runtime-native-evidence-v2-1.3.2-macos-aarch64.tar.gz	8db3670c78d9a3e8d0695a0eeff1911246ed0f9c94a64f6dd6cef240853c6708
 public	runtime JVM jar	runtime/jvm/releases/1.3.2+caff6d6d-6d5ea58/coakka-jvm-native-runtime-v2-1.3.2-gcaff6d6d-6d5ea58.jar	dab4bee9b10b07e68ea4f2c42fbc502a211a072554fa9f38e2fb9f59fc2072a1
 public	runtime Python wheel	runtime/python/releases/1.3.2+caff6d6d-6d5ea58/coakka_v2_connector-1.3.2-py3-none-any.whl	911c6b015235e1093ae4c7b598f9ff2b7dcc30abf1c4c32a1cb94995256b1739
 public	runtime Node package	runtime/node/releases/1.3.2+caff6d6d-b46f705/coakka-v2-connector-node-1.3.9.tgz	7d95bb0e05907229b0376e43a22d3033c38bd1fa319153b5cdaf1cd4600c768b
