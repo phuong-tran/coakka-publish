@@ -1,6 +1,24 @@
 # CoAkka Publish
 
+<p align="center">
+  <img src="docs/assets/brand/coakka-logo.png" alt="CoAkka" width="480">
+</p>
+
 [![public-surface](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml/badge.svg)](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml)
+
+**CoAkka is a polyglot, multi-language, multi-platform runtime ecosystem.**
+One native core and a stable public C ABI support native C/C++, JVM and
+framework adapters, JavaScript runtimes, Python, Go, C#, Rust, Swift, Zig,
+Mojo, and related host integrations according to each release's compatibility
+row.
+
+Kubernetes is a first-class deployment lane, not a prerequisite. CoAkka keeps
+the same target, request/reply, bounded-admission, and deadletter contract on
+standalone Linux, macOS and Windows hosts, containers, VMs, bare metal, and
+architecture-matched edge deployments. Start with the
+[Ecosystem Overview](docs/ecosystem-overview.md) and use the
+[Compatibility Matrix](docs/compatibility-matrix.md) for exact package, OS,
+CPU, and release-channel evidence.
 
 Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 Support: [SUPPORT.md](SUPPORT.md)
@@ -14,7 +32,7 @@ Questions and answers: [docs/qna.md](docs/qna.md)
 Runtime client: [docs/coakka-runtime-client.md](docs/coakka-runtime-client.md)
 Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
-Package manager roadmap: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
+Package manager availability: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
 Spring Boot: [docs/coakka-spring-boot.md](docs/coakka-spring-boot.md)
 Quarkus: [docs/coakka-quarkus.md](docs/coakka-quarkus.md)
 Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
@@ -158,7 +176,7 @@ Current source connector release note:
 ## License And Trademark
 
 This repository distributes CoAkka artifacts under the
-[CoAkka Public Artifact Preview License 1.0](LICENSE.md), unless a specific
+[CoAkka Public Artifact License 1.0](LICENSE.md), unless a specific
 release artifact includes different license terms. This is not an OSI-approved
 open source license.
 
@@ -299,8 +317,7 @@ patch versions. The Go runtime package
 `github.com/phuong-tran/coakka-logger-go@v1.2.5` are published as public Go
 modules. SwiftPM packages for Swift runtime/logger are published as public
 GitHub tag coordinates. NuGet packages for C# runtime/logger are published as
-public package coordinates. crates.io and apt/deb remain planned distribution
-surfaces. The intended order and release gates are tracked in
+public package coordinates. Current package coordinates are summarized in
 [`docs/package-manager-roadmap.md`](docs/package-manager-roadmap.md).
 
 The current public logger family keeps native package generation

@@ -19,7 +19,7 @@ runtime generation `1.3.3+282f3ad` for macOS, Linux, and Windows.
 ## License
 
 The Go connector source is Apache-2.0 licensed. The bundled native runtime
-libraries under `native/` use the CoAkka Public Artifact Preview terms in
+libraries under `native/` use the CoAkka Public Artifact terms in
 `NATIVE-LICENSE.md`.
 
 ## New To CoAkka

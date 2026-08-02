@@ -12,3 +12,7 @@ Current lane:
 
 - `native`: prebuilt runner for native runtime smoke, pressure, stress, and soak
   evidence over a complete local target request/reply path.
+
+The native lane also publishes the exact auditable C11 harness source,
+including capability-aware connection-strategy checks and consumer-side
+ASan/UBSan build controls. See [Native Runtime Evidence](native/README.md).

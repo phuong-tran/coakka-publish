@@ -32,7 +32,7 @@ Source commits:
 Package metadata:
 
 - root `LICENSE` covers the Go connector source as Apache-2.0
-- `NATIVE-LICENSE.md` carries the preview terms for bundled native libraries
+- `NATIVE-LICENSE.md` carries the artifact terms for bundled native libraries
 - `.github/FUNDING.yml` matches the public samples funding metadata
 - README badges cover CI, pkg.go.dev, package version, GitHub release, license,
   and funding

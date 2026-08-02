@@ -2,6 +2,12 @@
 
 NuGet is the public package-manager lane for C#/.NET CoAkka packages.
 
+`CoAkka.Runtime` is the .NET connector in the polyglot, multi-language,
+multi-platform CoAkka Runtime ecosystem. CoAkka is not a .NET-only runtime: the
+package uses the same native core and public runtime contract as the JVM,
+JavaScript, Python, Go, Rust, Swift, and other connector lanes. Kubernetes is
+supported but not required.
+
 Current coordinates:
 
 | Surface | Coordinate | Native generation |

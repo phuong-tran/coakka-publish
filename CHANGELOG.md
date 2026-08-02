@@ -5,15 +5,24 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-02
 
-- Staged canonical ecosystem, connection-strategy, TLS/mTLS, support, signing,
-  and troubleshooting documentation for the runtime-v2 connector train.
-- Clarified that internal pre-commercial builds may be identified by exact
-  commit, profile, platform, and SHA-256 while OS-native signing is deferred.
-- Preserved `release_channel=preview` truth and made no artifact promotion,
-  package publication, or registry release claim.
-- Clarified in common troubleshooting that Windows, macOS, and Linux remain
-  distribution targets when one connector checkpoint has narrower execution
-  evidence; the missing evidence remains a release gate.
+- Added the canonical CoAkka guardian logo and brand guide, with registry-safe
+  assets shared across package and documentation surfaces.
+- Added canonical ecosystem, connection-strategy, TLS/mTLS, support, signing,
+  and troubleshooting documentation.
+- Documented exact artifact identity by source commit, platform, and SHA-256,
+  with publisher signing status reported separately.
+- Clarified that Windows, macOS, and Linux remain distribution targets while
+  bundled bytes, source compilation, and end-to-end execution are reported as
+  separate evidence.
+- Replaced public package sequencing with a concise current package-manager
+  availability page.
+- Included the auditable native C11 evidence source, a SHA-256 source manifest,
+  strict static-analysis and consumer sanitizer controls, plus a capability-
+  aware connection-strategy contract covering all four modes without making a
+  TLS handshake claim.
+- Documented connected `coakka-client runtime-info` snapshots and inspect
+  transport diagnostics, including capability truth, connection-policy
+  provenance, and non-secret TLS/mTLS state.
 
 ## 2026-07-31
 

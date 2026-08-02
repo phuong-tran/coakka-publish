@@ -102,7 +102,7 @@ make_package() {
 EOF
   printf 'export {};\n' >"${root}/dist/index.js"
   printf 'export {};\n' >"${root}/dist/index.d.ts"
-  printf '# CoAkka Public Artifact Preview License 1.0\n' >"${root}/LICENSE.md"
+  printf '# CoAkka Public Artifact Test License 1.0\n' >"${root}/LICENSE.md"
 
   if [[ "${include_proto}" == "true" ]]; then
     mkdir -p "${root}/proto/coakka/v2"

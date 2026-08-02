@@ -3,6 +3,12 @@
 SwiftPM is the public source package lane for Swift runtime and logger
 connectors.
 
+`coakka-runtime-swift` is the Swift connector in the polyglot, multi-language,
+multi-platform CoAkka Runtime ecosystem. CoAkka is not a Swift-only runtime:
+the package uses the same native core and public runtime contract as C++, the
+JVM, JavaScript, Python, Go, C#, Rust, and other connector lanes. Kubernetes is
+supported but not required.
+
 Current coordinates:
 
 | Surface | Coordinate | Native generation |

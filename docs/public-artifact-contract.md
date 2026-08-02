@@ -83,8 +83,7 @@ Package-manager lanes must not weaken the public artifact contract:
 - package-manager coordinates must be reflected in public docs and verification
   before samples present them as current
 
-The npm lane is current for JavaScript packages. The remaining planned order
-and release gate live in
+Current package-manager coordinates and consumption rules are summarized in
 [`package-manager-roadmap.md`](package-manager-roadmap.md).
 
 ## Consumer Shape

@@ -4,6 +4,22 @@ This page is the quick compatibility view for the current public artifact
 surface. The root README remains the canonical current-status summary, and
 per-drop details remain in [releases/](releases/).
 
+## Ecosystem Scope
+
+CoAkka is not Kubernetes-only. Kubernetes receives detailed operational
+coverage because topology, rollout, policy, and scale are substantial, while
+the runtime contract remains deployment-neutral.
+
+| Dimension | Current public scope | Verification boundary |
+| --- | --- | --- |
+| Languages and frameworks | Native C/C++, JVM, Spring Boot, Quarkus, Node.js, Bun, Electron, Python, Go, C#, Rust, Swift, Zig, Mojo, and Tauri lanes | A named lane is not automatically available on every OS; use the exact artifact and generation rows below. |
+| Native platforms | Linux x86-64 and ARM64, macOS ARM64, and Windows x86-64 and ARM64 appear in the current runtime, tool, or evidence artifact ledger | Each artifact may carry a smaller platform subset; verify its manifest and checksum. |
+| Deployment shapes | Standalone hosts, containers, Kubernetes, VMs, bare metal, and architecture-matched edge deployments | Device and industrial Android support requires release-specific ABI, dependency, clock, certificate, lifecycle, and execution evidence. |
+
+Across those surfaces, polyglot connectors preserve one target,
+request/reply, bounded-admission, deadletter, capability, and configuration
+contract instead of inventing language-specific runtime semantics.
+
 ## Runtime 1.3.4 Train
 
 The public artifact mirror aligns the runtime connector lanes below to native
@@ -59,15 +75,13 @@ All logger connector lanes below align to logger native generation
 
 ## Package-Manager Channels
 
-| Channel | Intended first surface | Status |
+| Channel | Available surface | Status |
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.3.6` and logger `coakka-logger==1.2.2` current |
 | Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.3.12`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
 | SwiftPM | Swift runtime/logger source packages | current; runtime `github.com/phuong-tran/coakka-runtime-swift@1.3.4`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
 | NuGet | C# runtime/logger packages | current; runtime `CoAkka.Runtime==1.3.5`, logger `CoAkka.Logger==1.2.2` |
-| crates.io | Rust runtime/logger packages and Tauri host-side helpers | planned |
-| apt/deb | `coakka-client`, `coakka-runtime-inspect`, and possible native dev packages | planned |
 
 PyPI superseded versions are yanked, not deleted:
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
@@ -110,8 +124,8 @@ SwiftPM packages:
 | Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.3.4` | `1.3.4+dc6ec284` |
 | Swift logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1` | `1.2.1+f50756ebff0d` |
 
-See [package-manager-roadmap.md](package-manager-roadmap.md) for remaining
-planned package-manager channels.
+See [package-manager-roadmap.md](package-manager-roadmap.md) for current
+package-manager coordinates.
 
 ## Compatibility Rule
 
