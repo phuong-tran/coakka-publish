@@ -5,6 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-03
 
+- Published the native C++ transport configuration contract at a stable public
+  URL and made the TLS/mTLS guide connector-first. The guide now includes a
+  Kotlin/JVM startup and credential-reload example and states that full runtime
+  connectors expose the same capability-gated contract without direct C use.
 - Published and registry-verified `CoAkka.Runtime==1.4.6` as a gallery-only
   patch over unchanged native runtime generation `1.4.0+2cee86bf`. Its NuGet
   README uses CommonMark for the public logo and an absolute public URL for

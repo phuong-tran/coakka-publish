@@ -127,6 +127,7 @@ Public docs:
 [Runtime Message And Routing Model](docs/runtime-message-and-routing-model.md),
 [Runtime Integration Guide](docs/runtime-integration-guide.md),
 [C# Transport Configuration](docs/csharp-transport-configuration.md),
+[Native C++ Transport Configuration](docs/native-cpp-transport-configuration.md),
 [Incremental Adoption](docs/incremental-adoption.md),
 [Cluster Routing](docs/runtime-cluster-routing.md),
 [Containerized Runtime](docs/containerized-runtime.md),
