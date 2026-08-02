@@ -3,6 +3,15 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-02
+
+- Staged canonical ecosystem, connection-strategy, TLS/mTLS, support, signing,
+  and troubleshooting documentation for the runtime-v2 connector train.
+- Clarified that internal pre-commercial builds may be identified by exact
+  commit, profile, platform, and SHA-256 while OS-native signing is deferred.
+- Preserved `release_channel=preview` truth and made no artifact promotion,
+  package publication, or registry release claim.
+
 ## 2026-07-31
 
 - Published native evidence runner `1.3.4+dc6ec284` for Linux ARM64/x64,

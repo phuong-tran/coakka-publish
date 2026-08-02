@@ -4,7 +4,9 @@
 
 Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 Support: [SUPPORT.md](SUPPORT.md)
+Contact: `gabrielgun1983@gmail.com`
 Changelog: [CHANGELOG.md](CHANGELOG.md)
+Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
 Runtime field guide: [docs/runtime-field-guide.md](docs/runtime-field-guide.md)
 How it works: [docs/how-it-works.md](docs/how-it-works.md)
@@ -19,6 +21,8 @@ Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
 Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
 Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.md)
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
+TLS and mTLS: [docs/tls-and-mtls.md](docs/tls-and-mtls.md)
+Connection strategies: [docs/connection-strategies.md](docs/connection-strategies.md)
 
 This repository is the public binary-only publish surface for CoAkka artifacts.
 If you are new to CoAkka, start with
