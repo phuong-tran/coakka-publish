@@ -9,7 +9,9 @@ remain under [docs/releases/](docs/releases/).
   URL and made the TLS/mTLS and connection-strategy guides connector-first.
   Both guides now include Kotlin/JVM startup examples and state that full
   runtime connectors expose the same capability-gated contracts without
-  direct C use.
+  direct C use. Root README and Q&A entrypoints now link to those canonical
+  guides, and the edge/IoT guide calls out runtime TLS/mTLS for secured device
+  and gateway boundaries.
 - Published and registry-verified `CoAkka.Runtime==1.4.6` as a gallery-only
   patch over unchanged native runtime generation `1.4.0+2cee86bf`. Its NuGet
   README uses CommonMark for the public logo and an absolute public URL for

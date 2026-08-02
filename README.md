@@ -39,8 +39,15 @@ Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
 Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
 Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.md)
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
-TLS and mTLS: [docs/tls-and-mtls.md](docs/tls-and-mtls.md)
-Connection strategies: [docs/connection-strategies.md](docs/connection-strategies.md)
+
+## Runtime Transport
+
+Runtime transport configuration is available through the full host-language
+connectors. Use the canonical guides for the supported modes, effective
+capabilities, lifecycle rules, and connector examples:
+
+- [TLS and mTLS](docs/tls-and-mtls.md)
+- [Connection strategies](docs/connection-strategies.md)
 
 ## Runtime Test
 
