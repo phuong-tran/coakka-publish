@@ -66,8 +66,10 @@ closed runtime binary requires a runtime artifact built with the same
 sanitizers. Linux is the authority for leak-detection evidence.
 
 The `public-surface` workflow runs Clang static analysis and the combined
-ASan/UBSan consumer harness on Linux. This instruments the public test harness;
-it does not turn an ordinary prebuilt runtime binary into an instrumented core.
+ASan/UBSan consumer harness on Linux ARM64 against native generation
+`1.4.0+2cee86bf`. It executes both the workload and four-mode connection
+strategy contracts. This instruments the public test harness; it does not turn
+an ordinary prebuilt runtime binary into an instrumented core.
 
 Run `bash scripts/verify-native-evidence-source.sh` from the repository root
 to verify `SOURCE-MANIFEST.sha256`.

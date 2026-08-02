@@ -12,10 +12,11 @@ connection strategies, structured atomic rejection, lifecycle immutability,
 and machine-readable result contracts. It does not include private core source
 or claim that its local throughput is a production benchmark.
 
-Linux CI builds the public harness with strict warnings, runs Clang static
-analysis, and executes it with AddressSanitizer and UndefinedBehaviorSanitizer.
-Windows and macOS remain first-class portability and correctness targets;
-Windows sanitizer evidence is not implied.
+Linux ARM64 CI builds the public harness against the exact released 1.4.0
+archive with strict warnings, runs Clang static analysis, and executes both the
+workload and four-mode connection-strategy contracts with AddressSanitizer and
+UndefinedBehaviorSanitizer. Windows and macOS remain first-class portability
+and correctness targets; Windows sanitizer evidence is not implied.
 
 Historical prebuilt runners and their release metadata remain unchanged under
 [`runtime/evidence/native/releases/`](../../runtime/evidence/native/releases/).

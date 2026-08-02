@@ -5,6 +5,9 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-02
 
+- Bound Linux sanitizer evidence to the released `linux-aarch64` bytes from
+  native generation `1.4.0+2cee86bf`, and execute both the public workload and
+  four-mode connection-strategy contracts under ASan/UBSan.
 - Published native runtime generation `1.4.0+2cee86bf` for Linux ARM64,
   macOS ARM64, and Windows x86-64 with 101 public exports on every platform.
 - Published connector artifact generation `1.4.0+2cee86bf-ec4902c` across
@@ -19,8 +22,8 @@ remain under [docs/releases/](docs/releases/).
 - Moved the exact auditable native C11 source projection to root-level
   `runtime-test/`, retained immutable prebuilt evidence archives at their
   historical paths, and kept a compatibility redirect for existing links.
-- Added a Linux CI lane that verifies the source manifest, runs Clang static
-  analysis, and executes the public consumer harness with ASan/UBSan.
+- Added a Linux ARM64 CI lane that verifies the source manifest, runs Clang
+  static analysis, and executes the public consumer harness with ASan/UBSan.
 - Added the canonical CoAkka guardian logo and brand guide, with registry-safe
   assets shared across package and documentation surfaces.
 - Added canonical ecosystem, connection-strategy, TLS/mTLS, support, signing,

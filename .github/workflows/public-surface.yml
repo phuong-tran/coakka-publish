@@ -41,9 +41,9 @@ jobs:
           scripts/verify-public-surface.sh
 
   runtime-test-sanitizers:
-    name: runtime test / linux ASan+UBSan
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    name: runtime test / linux-aarch64 ASan+UBSan
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
     steps:
       - name: Check out artifacts
         uses: actions/checkout@v6
@@ -57,12 +57,15 @@ jobs:
           build_dir="${RUNNER_TEMP}/coakka-runtime-test"
           mkdir -p "${package_dir}"
           tar -C "${package_dir}" -xzf \
-            runtime/native/releases/1.3.4+dc6ec284/coakka-runtime-native-v2-1.3.4.tar.gz
-          package_root="${package_dir}/coakka-runtime-native-v2-1.3.4"
+            runtime/native/releases/1.4.0+2cee86bf/coakka-runtime-native-v2-1.4.0.tar.gz
+          package_root="${package_dir}/coakka-runtime-native-v2-1.4.0"
           CLANG=clang bash runtime-test/analyze.sh "${package_root}/include"
           cmake -S runtime-test -B "${build_dir}" \
             -DCMAKE_PREFIX_PATH="${package_root}" \
-            -DCOAKKA_NATIVE_EVIDENCE_ENABLE_SANITIZERS=ON
+            -DCOAKKA_NATIVE_EVIDENCE_ENABLE_SANITIZERS=ON \
+            -DCOAKKA_NATIVE_EVIDENCE_REQUIRE_CONNECTION_STRATEGY=ON
           cmake --build "${build_dir}" --config Release
-          LD_LIBRARY_PATH="${package_root}/native/linux-x86_64" \
+          LD_LIBRARY_PATH="${package_root}/native/linux-aarch64" \
             "${build_dir}/coakka_runtime_v2_native_evidence" smoke --requests 32
+          LD_LIBRARY_PATH="${package_root}/native/linux-aarch64" \
+            "${build_dir}/coakka_runtime_v2_connection_strategy_evidence"
