@@ -11,6 +11,9 @@ remain under [docs/releases/](docs/releases/).
   commit, profile, platform, and SHA-256 while OS-native signing is deferred.
 - Preserved `release_channel=preview` truth and made no artifact promotion,
   package publication, or registry release claim.
+- Clarified in common troubleshooting that Windows, macOS, and Linux remain
+  distribution targets when one connector checkpoint has narrower execution
+  evidence; the missing evidence remains a release gate.
 
 ## 2026-07-31
 
