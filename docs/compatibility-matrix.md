@@ -33,9 +33,9 @@ publication state and remain listed separately below.
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.4.0-g2cee86bf-ec4902c` | via JVM runtime |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.4.0-g2cee86bf-ec4902c` | via JVM runtime |
 | Python runtime artifact | `coakka_v2_connector` wheel | `1.4.5` in `1.4.0+2cee86bf-77c9db8` | `1.4.0+2cee86bf` |
-| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
-| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
-| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | via matching Node artifact |
+| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.4.5` in `1.4.0+2cee86bf-2c0c598` | `1.4.0+2cee86bf` |
+| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.5` in `1.4.0+2cee86bf-2c0c598` | `1.4.0+2cee86bf` |
+| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.5` in `1.4.0+2cee86bf-2c0c598` | via matching Node artifact |
 | Tauri runtime artifact | `coakka-runtime-tauri-intents` source package | `1.4.0-source` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
 | Go runtime artifact | `coakka-v2-connector-go` module archive | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
 | C# runtime artifact | `CoAkka.Runtime` package file | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
@@ -91,9 +91,9 @@ Runtime npm packages are published for the sealed package boundary:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@1.3.11` | `1.3.4+dc6ec284` |
-| Bun runtime | `coakka-v2-connector-bun@1.3.9` | `1.3.2+caff6d6d` |
-| Electron runtime | `coakka-v2-connector-electron@1.3.9` | via `coakka-v2-connector-node@1.3.9` |
+| Node.js runtime | `coakka-v2-connector-node@1.4.5` | `1.4.0+2cee86bf` |
+| Bun runtime | `coakka-v2-connector-bun@1.4.5` | `1.4.0+2cee86bf` |
+| Electron runtime | `coakka-v2-connector-electron@1.4.5` | via `coakka-v2-connector-node@1.4.5` |
 | Node.js logger | `coakka-logger-node@1.2.6` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.6` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.6` | via `coakka-logger-node@1.2.6` |

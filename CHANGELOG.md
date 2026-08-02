@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-03
 
+- Published and registry-verified the Node.js, Bun, and Electron runtime
+  packages at `1.4.5` over unchanged native generation
+  `1.4.0+2cee86bf`. Clean registry installs completed package-boundary checks
+  and request/reply or Electron bridge smokes; the aggregate GitHub release
+  now also carries the exact three npm tarballs.
 - Published and registry-verified `coakka-v2-connector==1.4.5` on PyPI over
   unchanged native runtime generation `1.4.0+2cee86bf`. The PyPI digest matches
   the locally verified wheel, and a clean registry install completed embedded

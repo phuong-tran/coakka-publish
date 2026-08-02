@@ -28,6 +28,9 @@ public	runtime Python wheel	runtime/python/releases/1.4.0+2cee86bf-77c9db8/coakk
 public	runtime Node package	runtime/node/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-node-1.4.0.tgz	035188fb855c440784b5252fa33c58795ad27acac347ec9672e168f88ce43424
 public	runtime Bun package	runtime/bun/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-bun-1.4.0.tgz	49e1a0801e9b64772c93de149a16fc6a30a0c8c8258387622e0382384addd33b
 public	runtime Electron package	runtime/electron/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-electron-1.4.0.tgz	0fbbbb3c85389cbad465226cd464d7e5c86a588e55b242f16f44ee020e78b4e3
+public	runtime Node package 1.4.5	runtime/node/releases/1.4.0+2cee86bf-2c0c598/coakka-v2-connector-node-1.4.5.tgz	c3464cd05b28368587779890503d3e9ec4af71b59af9bb4bec571f412297c7b0
+public	runtime Bun package 1.4.5	runtime/bun/releases/1.4.0+2cee86bf-2c0c598/coakka-v2-connector-bun-1.4.5.tgz	2b75cfe6d8d7b2d3ce1eaf2d087f0ec777af58275f9446561bf9bd564664a866
+public	runtime Electron package 1.4.5	runtime/electron/releases/1.4.0+2cee86bf-2c0c598/coakka-v2-connector-electron-1.4.5.tgz	d3c1948ca3428de369472fbc432daf3724d1836bccdc93b76429bc63e47a1ad9
 public	runtime Go package	runtime/go/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-go-1.4.0.tar.gz	22e3474103f497eaf59294c69da05ec6d15cedf682824dc0b82238568a68d292
 public	runtime C# package	runtime/csharp/releases/1.4.0+2cee86bf-ec4902c/CoAkka.Runtime.1.4.0.nupkg	cc5a3b7c1e42fa1120efc0c9e6a7b0f09ebbb075179e33c85bea3bbaad164d71
 public	runtime Rust package	runtime/rust/releases/1.4.0+2cee86bf-ec4902c/coakka-runtime-rs-1.4.0.tar.gz	8d9eb93f4ae78f52623f7d8ac4405fd31dee7926b20100783fac3e9d94b2094e

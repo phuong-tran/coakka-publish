@@ -105,7 +105,7 @@ version number.
 | Channel | Runtime package | Logger package |
 | --- | --- | --- |
 | NuGet | [`CoAkka.Runtime` 1.3.5](https://www.nuget.org/packages/CoAkka.Runtime/1.3.5) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
-| npm | [`coakka-v2-connector-node` 1.3.11](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.3.11) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
+| npm | [`coakka-v2-connector-node` 1.4.5](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.4.5) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
 | PyPI | [`coakka-v2-connector` 1.4.5](https://pypi.org/project/coakka-v2-connector/1.4.5/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.4.0](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.4.0) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
 | SwiftPM | [`coakka-runtime-swift` v1.4.0](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.4.0) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
@@ -145,7 +145,7 @@ Current runtime release note:
 [2026-08-02 runtime 1.4.0](docs/releases/2026-08-02-runtime-1.4.0-2cee86bf.md).
 
 Current package-manager release notes:
-[2026-07-31 npm Node.js runtime 1.3.11](docs/releases/2026-07-31-npm-node-runtime-1.3.11.md),
+[2026-08-03 npm JavaScript runtime 1.4.5](docs/releases/2026-08-03-npm-runtime-1.4.5.md),
 [2026-07-31 NuGet C# runtime 1.3.5](docs/releases/2026-07-31-nuget-csharp-runtime-1.3.5.md),
 and
 [2026-08-03 PyPI Python runtime 1.4.5](docs/releases/2026-08-03-pypi-python-runtime-1.4.5.md).
@@ -231,9 +231,9 @@ Current public Spring Boot and Quarkus adapter generation:
 `1.4.0-g2cee86bf-ec4902c`.
 Current public binary connector artifact generation:
 `1.4.0+2cee86bf-ec4902c`.
-Current public Node.js npm runtime package: `coakka-v2-connector-node@1.3.11`.
-Current public Bun and Electron npm runtime packages:
-`coakka-v2-connector-{bun,electron}@1.3.9`.
+Current public npm runtime projection: `1.4.0+2cee86bf-2c0c598`.
+Current public Node.js, Bun, and Electron npm runtime packages:
+`coakka-v2-connector-{node,bun,electron}@1.4.5`.
 Current public Python PyPI runtime package:
 `coakka-v2-connector==1.4.5`, over native generation `1.4.0+2cee86bf`.
 Current public C# runtime NuGet package: `CoAkka.Runtime@1.3.5`.
@@ -291,11 +291,12 @@ Its release manifest is tracked under
 The current root native runtime package is `1.4.0+2cee86bf`. The artifact mirror
 publishes JVM runtime, Spring Boot, and Quarkus as
 `1.4.0-g2cee86bf-ec4902c`. Connector artifacts use release directory
-`1.4.0+2cee86bf-ec4902c`.
+`1.4.0+2cee86bf-ec4902c`; the npm `1.4.5` patch uses
+`1.4.0+2cee86bf-2c0c598` over the same native generation.
 
-Package-manager registries are separate publication channels. npm Node.js is
-current at `1.3.11`, while Bun and Electron remain at `1.3.9`. PyPI runtime is
-current at `1.4.5`, and NuGet runtime is current at `CoAkka.Runtime` `1.3.5`.
+Package-manager registries are separate publication channels. npm Node.js,
+Bun, and Electron are current at `1.4.5`. PyPI runtime is current at `1.4.5`,
+and NuGet runtime is current at `CoAkka.Runtime` `1.3.5`.
 Go modules and SwiftPM advance through public GitHub tag `v1.4.0`.
 Do not mix language or framework runtime packages from another native package
 generation unless a release note explicitly declares that combination
@@ -315,7 +316,8 @@ comments for public Mojo/Zig source-package lanes so the connector source
 commit is visible at the package list boundary.
 
 The current npm coordinates are listed per package because Node.js, Bun, and
-Electron advance independently. The Python runtime package
+Electron can advance independently; this release aligns all three at `1.4.5`.
+The Python runtime package
 `coakka-v2-connector==1.4.5` and logger package
 `coakka-logger==1.2.2` are published on PyPI. Superseded PyPI versions
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
@@ -352,9 +354,9 @@ Repository rules:
 
 Current published lanes:
 
-- `npm: coakka-v2-connector-node@1.3.11`
-- `npm: coakka-v2-connector-bun@1.3.9`
-- `npm: coakka-v2-connector-electron@1.3.9`
+- `npm: coakka-v2-connector-node@1.4.5`
+- `npm: coakka-v2-connector-bun@1.4.5`
+- `npm: coakka-v2-connector-electron@1.4.5`
 - `PyPI: coakka-v2-connector==1.4.5`
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.4.0`
@@ -523,9 +525,9 @@ These artifacts are the current public runtime set:
 | Native C ABI | `runtime/native/releases/1.4.0+2cee86bf/coakka-runtime-native-v2-1.4.0.tar.gz` | `1.4.0+2cee86bf` | `1.4.0+2cee86bf` |
 | JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.4.0-g2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
 | Python runtime artifact | `coakka_v2_connector` wheel | `1.4.5` | `1.4.0+2cee86bf` |
-| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.4.0` | `1.4.0+2cee86bf` |
-| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.0` | `1.4.0+2cee86bf` |
-| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.0` | via matching Node artifact |
+| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.4.5` | `1.4.0+2cee86bf` |
+| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.5` | `1.4.0+2cee86bf` |
+| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.5` | via matching Node artifact |
 | Go runtime artifact | `coakka-v2-connector-go` archive | `1.4.0` | `1.4.0+2cee86bf` |
 | C# runtime artifact | `CoAkka.Runtime` package file | `1.4.0` | `1.4.0+2cee86bf` |
 | Rust runtime artifact | `coakka-runtime-rs` package | `1.4.0` | `1.4.0+2cee86bf` |
@@ -549,9 +551,10 @@ envelope/transport policy last.
 
 Release docs and samples present a helper only when the published artifact
 contains it. The main 1.4.0 artifact mirror uses connector source `ec4902c`;
-the Python PyPI `1.4.5` projection uses source `77c9db8`. Both use native
-generation `1.4.0+2cee86bf`. Package-manager registry versions remain
-documented separately.
+the Python PyPI `1.4.5` projection uses source `77c9db8`, and the npm `1.4.5`
+projection uses source `2c0c598`. All use native generation
+`1.4.0+2cee86bf`. Package-manager registry versions remain documented
+separately.
 
 Validation gates run before publishing:
 

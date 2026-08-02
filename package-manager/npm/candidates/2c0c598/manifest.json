@@ -1,7 +1,10 @@
 {
-  "status": "ready_for_npm_publish",
+  "status": "published_to_npm",
   "connector_commit": "2c0c598",
   "created_date": "2026-08-03",
+  "published_date": "2026-08-03",
+  "verified_date": "2026-08-03",
+  "registry": "https://registry.npmjs.org/",
   "native_runtime_generation": "1.4.0+2cee86bf",
   "release_reason": "npm package patch 1.4.5 with explicit public exports over the unchanged 1.4.0 native generation",
   "publish_order": [

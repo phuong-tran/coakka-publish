@@ -3,7 +3,7 @@
 This directory stages the npm-ready JavaScript runtime packages for native
 runtime generation `1.4.0+2cee86bf`.
 
-Status: ready for npm publish.
+Status: published to npm and registry-verified on 2026-08-03.
 
 The candidate tarballs are byte-identical copies of the artifacts already
 published under the Node.js, Bun, and Electron runtime release directories.
