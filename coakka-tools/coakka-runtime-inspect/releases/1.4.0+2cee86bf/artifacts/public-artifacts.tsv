@@ -1,0 +1,3 @@
+# Public artifact manifest v1.
+# Columns: status	label	relative_path	sha256
+public	coakka-runtime-inspect macos-aarch64	coakka-tools/coakka-runtime-inspect/releases/1.4.0+2cee86bf/coakka-runtime-inspect-v2-1.4.0-macos-aarch64.tar.gz	de58bf22db3d1ae07fbbc498b167abb72c1712186891796812d19624994e3531

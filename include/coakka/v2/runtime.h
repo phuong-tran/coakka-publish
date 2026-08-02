@@ -5,6 +5,8 @@
 #include <stdint.h>
 
 #include "coakka/v2/runtime_auth.h"
+#include "coakka/v2/runtime_distribution.h"
+#include "coakka/v2/runtime_transport_config.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,7 +21,9 @@ typedef enum coakka_v2_status_t {
     COAKKA_V2_ERR_STALE_GENERATION = -4,
     COAKKA_V2_ERR_IO = -5,
     COAKKA_V2_ERR_WOULD_BLOCK = -6,
-    COAKKA_V2_ERR_CLOSED = -7
+    COAKKA_V2_ERR_CLOSED = -7,
+    COAKKA_V2_ERR_FEATURE_UNAVAILABLE = -8,
+    COAKKA_V2_ERR_FEATURE_NOT_ENTITLED = -9
 } coakka_v2_status_t;
 
 /** Native runtime lifecycle state. */
@@ -101,6 +105,7 @@ typedef struct coakka_v2_runtime_stats_t {
     uint64_t transport_probe_connect_success_count;
     uint64_t transport_probe_connect_failure_count;
     size_t request_max_frame_size;
+    /* Legacy adapter field; current runtimes report 0 (not applicable). */
     size_t local_dispatch_batch_limit;
     size_t delivered_request_outbound_queue_capacity;
     size_t delivered_request_outbound_queue_depth;
@@ -246,6 +251,7 @@ enum {
     COAKKA_V2_RUNTIME_FEATURE_NATIVE_SUBMIT = 1u << 3,
     COAKKA_V2_RUNTIME_FEATURE_CONTROL_JSON = 1u << 4,
     COAKKA_V2_RUNTIME_FEATURE_REMOTE_TRANSPORT = 1u << 5,
+    /* Legacy source alias. Not an active runtime provider. */
     COAKKA_V2_RUNTIME_FEATURE_JEMALLOC = 1u << 6,
     COAKKA_V2_RUNTIME_FEATURE_DELIVERED_REQUEST_PIPE = 1u << 7,
     COAKKA_V2_RUNTIME_FEATURE_DUBBING_JOBS = 1u << 8,
@@ -289,7 +295,25 @@ typedef struct coakka_v2_runtime_info_t {
     const char *docs_hint;
     const char *transport_profile;
     uint32_t transport_profile_version;
+    uint32_t edition;
+    const char *build_id;
 } coakka_v2_runtime_info_t;
+
+/*
+ * Additive core metadata aggregates frozen ABI blocks. Later contracts append
+ * another complete block instead of extending an older block.
+ */
+typedef struct coakka_v2_runtime_core_info_t {
+    size_t struct_size;
+    coakka_v2_runtime_info_t runtime;
+    coakka_v2_runtime_distribution_info_t distribution;
+    coakka_v2_runtime_capability_snapshot_t capabilities;
+    coakka_v2_runtime_license_snapshot_t license;
+} coakka_v2_runtime_core_info_t;
+
+#define COAKKA_V2_RUNTIME_CORE_INFO_V1_SIZE                                  \
+    (offsetof(coakka_v2_runtime_core_info_t, license) +                       \
+     sizeof(((coakka_v2_runtime_core_info_t *)0)->license))
 
 /**
  * Runtime configuration/status view.
@@ -304,6 +328,7 @@ typedef struct coakka_v2_runtime_config_view_t {
     int strict_no_drop;
     int queue_capacity;
     size_t request_max_frame_size;
+    /* Legacy adapter field; current runtimes report 0 (not applicable). */
     size_t local_dispatch_batch_limit;
     coakka_v2_runtime_state_t runtime_state;
     uint32_t snapshot_present;
@@ -330,6 +355,23 @@ uint32_t coakka_v2_runtime_get_abi_version(void);
 /** Reads immutable runtime build and feature information. */
 coakka_v2_status_t coakka_v2_runtime_get_info(coakka_v2_runtime_info_t *out_info);
 
+/**
+ * Returns one coherent immutable core/build/distribution metadata view.
+ * Nested blocks are populated only when each complete block fits struct_size.
+ */
+coakka_v2_status_t coakka_v2_runtime_get_core_info(
+    coakka_v2_runtime_core_info_t *out_info);
+
+/** Reads compiled, entitled, and effective runtime capability truth. */
+coakka_v2_status_t coakka_v2_runtime_get_capabilities(
+    coakka_v2_runtime_capability_snapshot_t *out_capabilities
+);
+
+/** Reads non-secret license status; Community builds report NOT_REQUIRED. */
+coakka_v2_status_t coakka_v2_runtime_get_license_status(
+    coakka_v2_runtime_license_snapshot_t *out_license
+);
+
 /** Returns a stable diagnostic name for one runtime surface profile. */
 const char *coakka_v2_runtime_surface_profile_name(uint32_t profile);
 
@@ -350,6 +392,107 @@ int coakka_v2_runtime_surface_check_features(uint32_t feature_flags,
 /** Reads the current configuration/status view for one runtime instance. */
 coakka_v2_status_t coakka_v2_runtime_get_config(coakka_v2_runtime_t *rt,
                                                 coakka_v2_runtime_config_view_t *out_config);
+
+/**
+ * Validates one TCP connection policy shape and compiled capability without
+ * consulting a runtime handle or its lifecycle state.
+ */
+coakka_v2_status_t coakka_v2_runtime_validate_tcp_connection_options(
+    const coakka_v2_tcp_connection_options_t *options,
+    coakka_v2_tcp_connection_validation_t *out_validation
+);
+
+/**
+ * Applies one immutable TCP connection policy while the runtime is CREATED.
+ * Repeated successful calls in CREATED are allowed; the last one is selected.
+ * STARTED and STOPPED return COAKKA_V2_ERR_BAD_STATE without changing it.
+ *
+ * Community builds allow PER_EXCHANGE and BOUNDED_POOL but reject pool tuning
+ * fields with COAKKA_V2_ERR_FEATURE_UNAVAILABLE.
+ */
+coakka_v2_status_t coakka_v2_runtime_apply_tcp_connection_options(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_tcp_connection_options_t *options
+);
+
+/**
+ * Applies one connection policy and reports whether effective state changed.
+ *
+ * out_result is required. Zero-initialize it and set struct_size to the
+ * allocated byte count; zero requests the current full structure. A nonzero
+ * size smaller than COAKKA_V2_TCP_CONNECTION_APPLY_RESULT_V1_HEADER_SIZE is
+ * rejected before apply. A valid result prefix is filled on success and
+ * rejection. The return value always equals out_result->apply_status.
+ */
+coakka_v2_status_t coakka_v2_runtime_apply_tcp_connection_options_ex(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_tcp_connection_options_t *options,
+    coakka_v2_tcp_connection_apply_result_t *out_result
+);
+
+/** Reads the effective TCP connection configuration for one runtime. */
+coakka_v2_status_t coakka_v2_runtime_get_tcp_connection_config(
+    coakka_v2_runtime_t *rt,
+    coakka_v2_tcp_connection_config_snapshot_t *out_config
+);
+
+/**
+ * Validates one TCP security policy shape and compiled capability without
+ * loading credentials or consulting runtime lifecycle/generation state.
+ */
+coakka_v2_status_t coakka_v2_runtime_validate_tcp_security_options(
+    const coakka_v2_tcp_security_options_t *options,
+    coakka_v2_tcp_security_validation_t *out_validation
+);
+
+/**
+ * Loads and atomically applies one TCP security credential generation.
+ *
+ * The first call may occur in CREATED. A strictly later generation of the same
+ * active TLS/mTLS mode may be applied in STARTED. GRACEFUL keeps established
+ * sessions on their captured generation; DRAIN_EXISTING_CONNECTIONS marks old
+ * sessions for bounded retirement. STOPPED returns COAKKA_V2_ERR_BAD_STATE.
+ * Any rejected apply leaves the published config and identity unchanged.
+ */
+coakka_v2_status_t coakka_v2_runtime_apply_tcp_security_options(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_tcp_security_options_t *options
+);
+
+/**
+ * Applies one security policy/generation and reports the resulting active
+ * non-secret state. changed is 1 only after successful atomic publication.
+ * Rejection leaves active_security on the previously published generation.
+ *
+ * out_result is required. Zero-initialize it and set struct_size to the
+ * allocated byte count; zero requests the current full structure. A nonzero
+ * size smaller than COAKKA_V2_TCP_SECURITY_APPLY_RESULT_V1_HEADER_SIZE is
+ * rejected before apply. A valid result prefix is filled on success and
+ * rejection. The return value always equals out_result->apply_status.
+ */
+coakka_v2_status_t coakka_v2_runtime_apply_tcp_security_options_ex(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_tcp_security_options_t *options,
+    coakka_v2_tcp_security_apply_result_t *out_result
+);
+
+/**
+ * Reads the non-secret TCP security view. Credential bytes, source paths, and
+ * provider diagnostics are never projected through this API.
+ */
+coakka_v2_status_t coakka_v2_runtime_get_tcp_security_config(
+    coakka_v2_runtime_t *rt,
+    coakka_v2_tcp_security_config_snapshot_t *out_config
+);
+
+/**
+ * Returns frozen security config plus additive non-secret identity metadata.
+ * Nested blocks are populated only when each complete block fits struct_size.
+ */
+coakka_v2_status_t coakka_v2_runtime_get_tcp_security_info(
+    coakka_v2_runtime_t *rt,
+    coakka_v2_tcp_security_info_t *out_info
+);
 
 /**
  * Reads the current configuration/status view only after the caller-owned auth

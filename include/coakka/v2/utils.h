@@ -6,6 +6,7 @@
 
 #include "coakka/v2/control.h"
 #include "coakka/v2/runtime_auth.h"
+#include "coakka/v2/runtime_transport_config.h"
 #include "coakka/v2/transport.h"
 
 #ifdef __cplusplus
@@ -17,6 +18,9 @@ const char *coakka_v2_status_name(coakka_v2_status_t status);
 
 /** Returns a stable diagnostic name for a runtime lifecycle state. */
 const char *coakka_v2_runtime_state_name(coakka_v2_runtime_state_t state);
+
+/** Returns a stable diagnostic name for a transport apply reason. */
+const char *coakka_v2_transport_apply_reason_name(uint32_t reason);
 
 /** Returns a stable diagnostic name for an overload mode. */
 const char *coakka_v2_overload_mode_name(uint32_t mode);

@@ -5,6 +5,17 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-02
 
+- Published native runtime generation `1.4.0+2cee86bf` for Linux ARM64,
+  macOS ARM64, and Windows x86-64 with 101 public exports on every platform.
+- Published connector artifact generation `1.4.0+2cee86bf-ec4902c` across
+  JVM, Node.js, Bun, Electron, Python, Go, C#, Rust, Swift, Tauri, Mojo, and
+  Zig, plus matching Spring Boot and Quarkus Maven adapters.
+- Published public Go module and SwiftPM releases at `v1.4.0`; npm, PyPI, and
+  NuGet retain their last registry-served versions until authenticated 1.4.0
+  uploads complete.
+- Published `coakka-client` and `coakka-runtime-inspect` 1.4.0 macOS ARM64
+  bundles with connected runtime configuration diagnostics; Linux and Windows
+  tool artifacts retain their separately recorded prior generations.
 - Moved the exact auditable native C11 source projection to root-level
   `runtime-test/`, retained immutable prebuilt evidence archives at their
   historical paths, and kept a compatibility redirect for existing links.

@@ -96,6 +96,67 @@ public_manifest_path_for_label() {
   printf '%s\n' "${matches[0]}"
 }
 
+verify_current_runtime_native_matrix() {
+  local artifact_rel release_dir manifest_rel
+  artifact_rel="$(public_manifest_path_for_label "runtime Native package")"
+  release_dir="$(dirname "${artifact_rel}")"
+  manifest_rel="${release_dir}/manifest.json"
+  require_file "${manifest_rel}"
+
+  python3 - "${repo_root}" "${artifact_rel}" "${manifest_rel}" <<'PY'
+import json
+import os
+import sys
+
+repo_root, artifact_rel, manifest_rel = sys.argv[1:]
+supported = [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64",
+]
+
+def fail(message: str) -> None:
+    print(f"[verify-public-surface] {message}", file=sys.stderr)
+    raise SystemExit(1)
+
+with open(os.path.join(repo_root, manifest_rel), "r", encoding="utf-8") as handle:
+    manifest = json.load(handle)
+
+platforms = manifest.get("platforms")
+if not isinstance(platforms, list) or not platforms:
+    fail("current runtime native manifest requires a non-empty platform matrix")
+if platforms != [platform for platform in supported if platform in platforms]:
+    fail("current runtime native manifest platform matrix is unsupported or non-canonical")
+if os.path.basename(artifact_rel) != manifest.get("archive"):
+    fail("current runtime native manifest archive does not match the public artifact row")
+
+native_root = os.path.join(repo_root, "native")
+actual_dirs = [
+    platform for platform in supported
+    if os.path.isdir(os.path.join(native_root, platform))
+]
+if actual_dirs != platforms:
+    fail(
+        "root native platform matrix does not match current runtime manifest: "
+        f"expected={platforms} actual={actual_dirs}"
+    )
+
+for platform in platforms:
+    if platform.startswith("linux-"):
+        library = "libcoakka_runtime_v2.so"
+    elif platform.startswith("macos-"):
+        library = "libcoakka_runtime_v2.dylib"
+    else:
+        library = "libcoakka_runtime_v2.dll"
+    platform_root = os.path.join(native_root, platform)
+    entries = sorted(os.listdir(platform_root))
+    if entries != [library]:
+        fail(f"root native directory {platform} must contain exactly {library}: {entries}")
+PY
+}
+
 maven_metadata_latest() {
   local metadata="$1"
   sed -n 's:.*<latest>\(.*\)</latest>.*:\1:p' "${repo_root}/${metadata}" |
@@ -431,12 +492,9 @@ require_file "include/coakka/v2/control.h"
 require_file "include/coakka/v2/runtime.h"
 require_file "include/coakka/v2/transport.h"
 require_file "include/coakka/v2/utils.h"
-require_file "native/linux-aarch64/libcoakka_runtime_v2.so"
-require_file "native/linux-x86_64/libcoakka_runtime_v2.so"
-require_file "native/macos-aarch64/libcoakka_runtime_v2.dylib"
-require_file "native/windows-aarch64/libcoakka_runtime_v2.dll"
-require_file "native/windows-x86_64/libcoakka_runtime_v2.dll"
 require_file "SHA256SUMS"
+
+verify_current_runtime_native_matrix
 
 (cd "${repo_root}" && shasum -a 256 -c SHA256SUMS >/dev/null)
 

@@ -1,0 +1,89 @@
+# Consuming `coakka-v2-connector`
+
+This is the Python connector for the polyglot, multi-language, multi-platform
+CoAkka Runtime ecosystem.
+
+## Build The Wheel
+
+```sh
+./python/scripts/build_wheel.sh
+```
+
+Expected wheel output:
+
+```text
+python/build/wheelhouse/
+```
+
+## Install From The Local Wheel
+
+```sh
+python3 -m venv .venv-coakka-python
+source .venv-coakka-python/bin/activate
+python -m pip install python/build/wheelhouse/coakka_v2_connector-1.4.0-py3-none-any.whl
+```
+
+## Native Loading
+
+Default path:
+
+- the installed package loads the embedded native runtime for the current platform
+- the bundled native generation is
+  `1.4.0+2cee86bf`
+- the wheel includes `macos-aarch64`, `linux-aarch64`, and
+  `windows-x86_64` native targets
+- the exact macOS ARM64 runtime has connector execution
+  evidence; this package receipt makes no Python execution claim for Linux or
+  Windows
+
+Override path:
+
+```sh
+export COAKKA_RUNTIME_LIB=/abs/path/to/libcoakka_runtime_v2.so
+```
+
+or on macOS:
+
+```sh
+export COAKKA_RUNTIME_LIB=/abs/path/to/libcoakka_runtime_v2.dylib
+```
+
+One Python process may start one active `RuntimeHost`. It owns the embedded
+native runtime handle and must be closed during application shutdown.
+
+Read [Transport Configuration](TRANSPORT_CONFIGURATION.md) before selecting a
+non-default connection mode or TLS/mTLS. See the canonical
+[troubleshooting guide](https://github.com/phuong-tran/coakka-publish/blob/main/docs/troubleshooting.md)
+for loader, capability, certificate, and platform-trust failures.
+
+## Minimal Example
+
+```python
+from coakka_v2_connector import ConnectorStartSpec, PayloadIdentity, RuntimeHost, local_route
+
+request_identity = PayloadIdentity.text("demo.echo.request.v1")
+
+start_spec = ConnectorStartSpec(
+    system_name="python-demo",
+    node_id="python-demo-node",
+    routes=[local_route("svc.echo")],
+)
+
+with RuntimeHost.start(start_spec=start_spec) as runtime:
+    runtime.register_handler(
+        "svc.echo",
+        lambda request: runtime.client.make_json_reply_from_request_identity(
+            request=request,
+            source="svc.echo",
+            payload={"echo": "ok"},
+        ),
+    )
+    response = runtime.ask_json(
+        source="test-client",
+        target="svc.echo",
+        payload={"message": "hello"},
+        payload_identity=request_identity,
+        timeout_ms=1000,
+    )
+    print(response)
+```

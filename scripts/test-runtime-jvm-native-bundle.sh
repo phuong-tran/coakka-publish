@@ -176,6 +176,33 @@ printf 'windows-aarch64 newer root\n' >"${good_fixture}/native/windows-aarch64/l
 printf 'windows-x86_64 newer root\n' >"${good_fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll"
 expect_success "matching runtime JVM bundle" "${good_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
 
+subset_fixture="$(make_fixture manifest-subset)"
+cat >"${subset_fixture}/runtime/native/releases/0.1.0+test/manifest.json" <<'EOF'
+{
+  "platforms": [
+    "linux-aarch64",
+    "macos-aarch64",
+    "windows-x86_64"
+  ]
+}
+EOF
+for jar_path in \
+  "${subset_fixture}/runtime/jvm/releases/0.1.0+test/coakka-jvm-native-runtime-v2-0.1.0-test.jar" \
+  "${subset_fixture}/maven/coakka/v2/coakka-jvm-native-runtime-v2/0.1.0-test/coakka-jvm-native-runtime-v2-0.1.0-test.jar"; do
+  zip -dq "${jar_path}" \
+    'native/linux-x86_64/*' \
+    'native/windows-aarch64/*'
+done
+expect_success "manifest-selected runtime JVM bundle" \
+  "${subset_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
+
+extra_platform_fixture="$(make_fixture manifest-extra-platform)"
+cp "${subset_fixture}/runtime/native/releases/0.1.0+test/manifest.json" \
+  "${extra_platform_fixture}/runtime/native/releases/0.1.0+test/manifest.json"
+expect_failure "JVM bundle platform outside native manifest" \
+  "${extra_platform_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
+grep -Fq "contains native platform outside release manifest" "${test_output}"
+
 mismatch_fixture="$(make_fixture mismatch stale)"
 expect_failure "mismatched runtime JVM bundle" "${mismatch_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
 grep -Fq "native entry mismatch" "${test_output}"

@@ -16,39 +16,38 @@ public	logger Zig source package	logger/zig/releases/1.2.1+f50756ebff0d-8264bba/
 # over logger native package generation 1.2.1+f50756ebff0d.
 public	logger Tauri source package	logger/tauri/releases/1.2.1+f50756ebff0d-3e8a6ae/coakka-logger-tauri-intents-1.2.1-source.tar.gz	013a18bb1c9c7aeb598ecc1783e630d03ea9e6b25b52ed3c3eac774dde1a93f4
 public	logger Native package	logger/native/releases/1.2.1+f50756ebff0d/coakka-logger-native-1.2.1.tar.gz	6411abdc74749e48efbe3385f3be6cb280625c42659ec739a1f35e5d48bdf9f3
-public	runtime Native package	runtime/native/releases/1.3.4+dc6ec284/coakka-runtime-native-v2-1.3.4.tar.gz	34cbcc710f7ed37525821f8352c4c698422c8e0ba046ea6696d3b9d474f28ad9
+public	runtime Native package	runtime/native/releases/1.4.0+2cee86bf/coakka-runtime-native-v2-1.4.0.tar.gz	0bc2c9e8f4b0c7cc5135a2e45ad53da5f55b78189e3a8b33131eff86d10de26b
 public	runtime Native evidence runner macos-aarch64	runtime/evidence/native/releases/1.3.2+caff6d6d/coakka-runtime-native-evidence-v2-1.3.2-macos-aarch64.tar.gz	8db3670c78d9a3e8d0695a0eeff1911246ed0f9c94a64f6dd6cef240853c6708
 public	runtime Native evidence runner linux-aarch64	runtime/evidence/native/releases/1.3.4+dc6ec284/coakka-runtime-native-evidence-v2-1.3.4-linux-aarch64.tar.gz	a48aeec1a688ce5595fe819b84389c398cafc778355371270164d97d551a4344
 public	runtime Native evidence runner linux-x86_64	runtime/evidence/native/releases/1.3.4+dc6ec284/coakka-runtime-native-evidence-v2-1.3.4-linux-x86_64.tar.gz	ac4107490f1cd67cf7b8d99593c818471443f198fe1f6e84903539649b757fde
 public	runtime Native evidence runner macos-aarch64 1.3.4	runtime/evidence/native/releases/1.3.4+dc6ec284/coakka-runtime-native-evidence-v2-1.3.4-macos-aarch64.tar.gz	940bc17d9030665305b541641ef200c5faa7987dd2a0bfd3d36cb73367707827
 public	runtime Native evidence runner windows-aarch64	runtime/evidence/native/releases/1.3.4+dc6ec284/coakka-runtime-native-evidence-v2-1.3.4-windows-aarch64.zip	3521ca0e83f86d140e19998452c2e4326b45bb03929e097c87acbb3cecbd5d89
 public	runtime Native evidence runner windows-x86_64	runtime/evidence/native/releases/1.3.4+dc6ec284/coakka-runtime-native-evidence-v2-1.3.4-windows-x86_64.zip	03c91235ccaab00d77ba0c192fb893dd14eac056efdb8ee17fbcdc4cfadd701e
-public	runtime JVM jar	runtime/jvm/releases/1.3.4+dc6ec284-f68ff5c/coakka-jvm-native-runtime-v2-1.3.4-gdc6ec284-f68ff5c.jar	f3388f797234307b2bf82caee3654f32a01d5bdc8773538136538f2f0e20eb21
-public	runtime Python wheel	runtime/python/releases/1.3.4+dc6ec284-f68ff5c/coakka_v2_connector-1.3.6-py3-none-any.whl	04b160a2de105fc5952415fdc8b9c993a2c9db31bc1a21517ab7c9112fccafa3
-public	runtime Node package	runtime/node/releases/1.3.4+dc6ec284-f68ff5c/coakka-v2-connector-node-1.3.11.tgz	f2d5a5315e97df15f8ed45233a3b522ab641d3b7ccd5c24a5c28c4e0093dabaa
-public	runtime Bun package	runtime/bun/releases/1.3.4+dc6ec284-f68ff5c/coakka-v2-connector-bun-1.3.11.tgz	90166b9d7c4caae763783adabb6c860f47d5e6290457f5e6b23892d22cb210d1
-public	runtime Electron package	runtime/electron/releases/1.3.4+dc6ec284-f68ff5c/coakka-v2-connector-electron-1.3.11.tgz	c682c5e53a938d62934097006aa905c20c3c08e160845da0547c11ac914fa10a
-public	runtime Go package	runtime/go/releases/1.3.4+dc6ec284-f68ff5c/coakka-v2-connector-go-1.3.12.tar.gz	0181ef24cb77f78c52217c4d0015c6fd3d7e42a411da613cbc52fd2a98c96739
-public	runtime C# package	runtime/csharp/releases/1.3.4+dc6ec284-f68ff5c/CoAkka.Runtime.1.3.5.nupkg	662c9a2f139f212e74ffc6f4fef109bb98c09fe087b2a00546409fa981c9da82
-public	runtime Rust package	runtime/rust/releases/1.3.4+dc6ec284-f68ff5c/coakka-runtime-rs-1.3.4-spike.tar.gz	bc0b673fd0a172a64092d7724333097410df6372abb264e10560a945f2037743
-# Runtime Mojo/Zig source packages are built from connector source commit f68ff5c
-# over runtime native package generation 1.3.4+dc6ec284.
-public	runtime Mojo source package	runtime/mojo/releases/1.3.4+dc6ec284-f68ff5c/coakka-runtime-mojo-1.3.4-source.tar.gz	524b11a4005d6e8c03fb0e3d596bc6b784cd3b5e8498707fd1339049e5c44315
-public	runtime Zig source package	runtime/zig/releases/1.3.4+dc6ec284-f68ff5c/coakka-runtime-zig-1.3.4-source.tar.gz	fde30e454c7a2a59ffc058eb1fcab077c929ec58bb4f1a0345249cd1552d3cfb
-# Runtime Tauri intent source package is built from connector source commit f68ff5c
-# over runtime native package generation 1.3.4+dc6ec284.
-public	runtime Tauri source package	runtime/tauri/releases/1.3.4+dc6ec284-f68ff5c/coakka-runtime-tauri-intents-1.3.4-source.tar.gz	a3c6be59395e8d1ac9f7a7b6c036d9175462438a1a46378955a661a1a963df67
-public	Spring Boot starter Maven jar	maven/coakka/spring/coakka-spring-boot-starter/1.3.4-gdc6ec284-f68ff5c/coakka-spring-boot-starter-1.3.4-gdc6ec284-f68ff5c.jar	57cd033b13029e5866a87a780140c3491789d453ed1f0f69143f1777d5b9e233
-public	Quarkus extension Maven jar	maven/coakka/quarkus/coakka-quarkus-extension/1.3.4-gdc6ec284-f68ff5c/coakka-quarkus-extension-1.3.4-gdc6ec284-f68ff5c.jar	1ac2bebbd92d1576d1430c836c6247bc2cf1f012d1f5dbc01cb226b30c31b1e1
+public	runtime JVM jar	runtime/jvm/releases/1.4.0+2cee86bf-ec4902c/coakka-jvm-native-runtime-v2-1.4.0-g2cee86bf-ec4902c.jar	f4db97776adbfe31c4dc834869abad78272d6576cfa531be9b0581a86d02c613
+public	runtime Python wheel	runtime/python/releases/1.4.0+2cee86bf-ec4902c/coakka_v2_connector-1.4.0-py3-none-any.whl	326145da44b750196989ed56b48711388f0b016925f7882859258e523f52306f
+public	runtime Node package	runtime/node/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-node-1.4.0.tgz	035188fb855c440784b5252fa33c58795ad27acac347ec9672e168f88ce43424
+public	runtime Bun package	runtime/bun/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-bun-1.4.0.tgz	49e1a0801e9b64772c93de149a16fc6a30a0c8c8258387622e0382384addd33b
+public	runtime Electron package	runtime/electron/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-electron-1.4.0.tgz	0fbbbb3c85389cbad465226cd464d7e5c86a588e55b242f16f44ee020e78b4e3
+public	runtime Go package	runtime/go/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-go-1.4.0.tar.gz	22e3474103f497eaf59294c69da05ec6d15cedf682824dc0b82238568a68d292
+public	runtime C# package	runtime/csharp/releases/1.4.0+2cee86bf-ec4902c/CoAkka.Runtime.1.4.0.nupkg	cc5a3b7c1e42fa1120efc0c9e6a7b0f09ebbb075179e33c85bea3bbaad164d71
+public	runtime Rust package	runtime/rust/releases/1.4.0+2cee86bf-ec4902c/coakka-runtime-rs-1.4.0.tar.gz	8d9eb93f4ae78f52623f7d8ac4405fd31dee7926b20100783fac3e9d94b2094e
+public	runtime Swift package	runtime/swift/releases/1.4.0+2cee86bf-ec4902c/coakka-runtime-swift-1.4.0.tar.gz	34ff61bcc0207799a3003715c4c7de9127e3db2a4d532d377686e7d1abe8aab2
+# Runtime source packages are built from connector source commit ec4902c
+# over runtime native package generation 1.4.0+2cee86bf.
+public	runtime Mojo source package	runtime/mojo/releases/1.4.0+2cee86bf-ec4902c/coakka-runtime-mojo-1.4.0-source.tar.gz	8f59cb314f51cbce13736bf31fd1289a8a82005ca3666b0b0674d7eac3faa703
+public	runtime Zig source package	runtime/zig/releases/1.4.0+2cee86bf-ec4902c/coakka-runtime-zig-1.4.0-source.tar.gz	b1609b2b5267f1945ae238a86fe91839fb2129cd011486243ceb57e2293a7e87
+public	runtime Tauri source package	runtime/tauri/releases/1.4.0+2cee86bf-ec4902c/coakka-runtime-tauri-intents-1.4.0-source.tar.gz	d567b9e89805ff4269c18df0bcb76376c10fce30852eaba0d8abb53662927d64
+public	Spring Boot starter Maven jar	maven/coakka/spring/coakka-spring-boot-starter/1.4.0-g2cee86bf-ec4902c/coakka-spring-boot-starter-1.4.0-g2cee86bf-ec4902c.jar	0fe7cbbb6a24295ec4bede0370ef0f29a805598f654088c72e559b9ac78d00f9
+public	Quarkus extension Maven jar	maven/coakka/quarkus/coakka-quarkus-extension/1.4.0-g2cee86bf-ec4902c/coakka-quarkus-extension-1.4.0-g2cee86bf-ec4902c.jar	cacc45cdfbed96229131926c5ec71606af039afa6b184d37ebe60924fb3b5979
 public	coakka-client linux-x86_64	coakka-tools/coakka-client/releases/1.3.4+dc6ec28/coakka-client-v2-1.3.4-linux-x86_64.tar.gz	e4c367e778a6a307fb3be5e0453162745a48550e9eab54dbd974c6fb31b1e6d7
 public	coakka-client linux-aarch64	coakka-tools/coakka-client/releases/1.3.4+dc6ec28/coakka-client-v2-1.3.4-linux-aarch64.tar.gz	6c06f87fe71a143af991b14cb7ecf7b579870efb0bfa040a8f4dfc6407085ecb
-public	coakka-client macos-aarch64	coakka-tools/coakka-client/releases/1.3.4+dc6ec28/coakka-client-v2-1.3.4-macos-aarch64.tar.gz	1f4c5819186aa85a548a1590c77a10c5b0a61f514fd419aa8f673cd75840e35b
+public	coakka-client macos-aarch64	coakka-tools/coakka-client/releases/1.4.0+2cee86bf/coakka-client-v2-1.4.0-macos-aarch64.tar.gz	8263dfd318f2b509e7560cc7f4a2629ef15b3856f98b71942adde44719ea405f
 public	coakka-client windows-x86_64	coakka-tools/coakka-client/releases/1.3.4+dc6ec28/coakka-client-v2-1.3.4-windows-x86_64.tar.gz	0655d98f2ee54cf6af5a77a33c1d6e031e1e372ddb102bcf7ccd75682d720ce2
 public	coakka-client windows-aarch64	coakka-tools/coakka-client/releases/1.3.4+dc6ec28/coakka-client-v2-1.3.4-windows-aarch64.tar.gz	b8271bb847830a0286ed7465d39ef9c3fbeacf5cbd5923e82dc3de38041e9d4a
 public	coakka-client docker-demo linux-x86_64	coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz	97a0c6d3865cd550d8e2762ffdb1d90b2d6895449c888c5b70970bd568f18f01
 public	coakka-client docker-demo linux-aarch64	coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz	0bcd3a51969f993d886a85ee3366c1af3289ffda443027f2efb542da424fca11
 public	coakka-runtime-inspect linux-aarch64	coakka-tools/coakka-runtime-inspect/releases/1.3.4+dc6ec28/coakka-runtime-inspect-v2-1.3.4-linux-aarch64.tar.gz	f92863121da32a5d2b64dd567a2d382b6db9b565ae75e4d53d34b5f3c48c26f2
 public	coakka-runtime-inspect linux-x86_64	coakka-tools/coakka-runtime-inspect/releases/1.3.4+dc6ec28/coakka-runtime-inspect-v2-1.3.4-linux-x86_64.tar.gz	c2b2a2aa90461543c61cce07e1e85d14c1c005dc471197215c39720251d9c843
-public	coakka-runtime-inspect macos-aarch64	coakka-tools/coakka-runtime-inspect/releases/1.3.4+dc6ec28/coakka-runtime-inspect-v2-1.3.4-macos-aarch64.tar.gz	f59d5f1edc15b3132c493e5fafcf13ec76d1f2bfe8153496661e6554ceed07da
+public	coakka-runtime-inspect macos-aarch64	coakka-tools/coakka-runtime-inspect/releases/1.4.0+2cee86bf/coakka-runtime-inspect-v2-1.4.0-macos-aarch64.tar.gz	de58bf22db3d1ae07fbbc498b167abb72c1712186891796812d19624994e3531
 public	coakka-runtime-inspect windows-aarch64	coakka-tools/coakka-runtime-inspect/releases/1.3.4+dc6ec28/coakka-runtime-inspect-v2-1.3.4-windows-aarch64.tar.gz	aff423a09113361fe89d673a9ba49b35d6c26605a21777140dd1c591d56c8f2d
 public	coakka-runtime-inspect windows-x86_64	coakka-tools/coakka-runtime-inspect/releases/1.3.4+dc6ec28/coakka-runtime-inspect-v2-1.3.4-windows-x86_64.tar.gz	212b89fe8928db28e57011c0253b7692381aedbcb9a3860a152e66091edeb7bd

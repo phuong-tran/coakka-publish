@@ -3,8 +3,8 @@
   <groupId>coakka.v2</groupId>
   <artifactId>coakka-jvm-native-runtime-v2</artifactId>
   <versioning>
-    <latest>1.3.4-gdc6ec284-f68ff5c</latest>
-    <release>1.3.4-gdc6ec284-f68ff5c</release>
+    <latest>1.4.0-g2cee86bf-ec4902c</latest>
+    <release>1.4.0-g2cee86bf-ec4902c</release>
     <versions>
       <version>0.1.1-ga671b3a</version>
       <version>0.1.1-ga671b3a-c20cf7c4</version>
@@ -21,7 +21,8 @@
       <version>1.3.2-gcaff6d6d-6d5ea58</version>
       <version>1.3.3-g282f3ad-657ec79</version>
       <version>1.3.4-gdc6ec284-f68ff5c</version>
+      <version>1.4.0-g2cee86bf-ec4902c</version>
     </versions>
-    <lastUpdated>20260731111722</lastUpdated>
+    <lastUpdated>20260802172658</lastUpdated>
   </versioning>
 </metadata>

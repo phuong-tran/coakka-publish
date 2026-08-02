@@ -81,6 +81,18 @@ EOF
   printf 'windows x86_64 native\n' >"${fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll"
   printf 'logger archive\n' >"${fixture}/logger/native/releases/test/coakka-logger-native-test.tar.gz"
   printf 'runtime archive\n' >"${fixture}/runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz"
+  cat >"${fixture}/runtime/native/releases/0.1.0+63c346e/manifest.json" <<'EOF'
+{
+  "archive": "coakka-runtime-native-v2-0.1.0.tar.gz",
+  "platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ]
+}
+EOF
   printf 'runtime inspect archive\n' >"${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz"
   printf 'cli archive\n' >"${fixture}/coakka-tools/coakka-client/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz"
   printf 'docker demo archive\n' >"${fixture}/coakka-tools/coakka-client/docker-demo/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz"
@@ -105,7 +117,9 @@ EOF
   )
   (
     cd "${fixture}/runtime/native/releases/0.1.0+63c346e"
-    shasum -a 256 coakka-runtime-native-v2-0.1.0.tar.gz >SHA256SUMS
+    shasum -a 256 \
+      coakka-runtime-native-v2-0.1.0.tar.gz \
+      manifest.json >SHA256SUMS
   )
   (
     cd "${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986"

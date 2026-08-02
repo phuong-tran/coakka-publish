@@ -112,6 +112,43 @@ native_release_archive() {
   printf '%s\n' "${archive}"
 }
 
+native_release_manifest() {
+  local native_version="$1"
+  local manifest="${repo_root}/runtime/native/releases/${native_version}/manifest.json"
+
+  [[ -f "${manifest}" ]] || return 1
+  printf '%s\n' "${manifest}"
+}
+
+manifest_platforms() {
+  local manifest="$1"
+
+  python3 - "${manifest}" <<'PY'
+import json
+import sys
+
+manifest_path = sys.argv[1]
+supported = [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64",
+]
+
+with open(manifest_path, "r", encoding="utf-8") as handle:
+    manifest = json.load(handle)
+
+platforms = manifest.get("platforms")
+if not isinstance(platforms, list) or not platforms:
+    raise SystemExit("native release manifest requires a non-empty platform matrix")
+if platforms != [platform for platform in supported if platform in platforms]:
+    raise SystemExit("native release manifest platform matrix is unsupported or non-canonical")
+for platform in platforms:
+    print(platform)
+PY
+}
+
 check_entry_matches_native() {
   local jar_path="$1"
   local entry="$2"
@@ -128,10 +165,10 @@ check_entry_matches_native() {
     expected="$(sha256_file "${root_native}")"
   fi
   if ! actual="$(sha256_jar_entry "${jar_path}" "${entry}")"; then
-    fail "${jar_path#${repo_root}/} is missing native entry ${entry}"
+    fail "${jar_path#"${repo_root}"/} is missing native entry ${entry}"
   fi
   if [[ "${actual}" != "${expected}" ]]; then
-    fail "${jar_path#${repo_root}/} native entry mismatch: ${entry}"
+    fail "${jar_path#"${repo_root}"/} native entry mismatch: ${entry}"
   fi
 }
 
@@ -162,16 +199,54 @@ check_platform_entries() {
     "native/${platform}/${basename}.${extension}"
 }
 
+check_manifest_platform_entries() {
+  local jar_path="$1"
+  local native_version="$2"
+  local native_archive="$3"
+  local manifest="$4"
+  local selected=$'\n'
+  local platform basename extension
+
+  while IFS= read -r platform; do
+    [[ -n "${platform}" ]] || continue
+    selected+="${platform}"$'\n'
+    case "${platform}" in
+      linux-*) basename="libcoakka_runtime_v2"; extension="so" ;;
+      macos-*) basename="libcoakka_runtime_v2"; extension="dylib" ;;
+      windows-*) basename="libcoakka_runtime_v2"; extension="dll" ;;
+      *) fail "unsupported native release platform: ${platform}" ;;
+    esac
+    check_platform_entries \
+      "${jar_path}" "${native_version}" "${platform}" \
+      "${basename}" "${extension}" "${native_archive}"
+  done < <(manifest_platforms "${manifest}")
+
+  for platform in \
+    linux-aarch64 linux-x86_64 macos-aarch64 windows-aarch64 windows-x86_64; do
+    [[ "${selected}" == *$'\n'"${platform}"$'\n'* ]] && continue
+    case "${platform}" in
+      linux-*) extension="so" ;;
+      macos-*) extension="dylib" ;;
+      windows-*) extension="dll" ;;
+    esac
+    if jar_has_entry "${jar_path}" "native/${platform}/libcoakka_runtime_v2.${extension}" ||
+       jar_has_entry "${jar_path}" "native/${platform}/libcoakka_runtime_v2-${native_version}.${extension}"; then
+      fail "${jar_path#"${repo_root}"/} contains native platform outside release manifest: ${platform}"
+    fi
+  done
+}
+
 check_runtime_jvm_jar() {
   local jar_path="$1"
   local expected_public_native_version="${2:-}"
   local native_version
   local native_archive=""
+  local native_manifest=""
 
   native_version="$(jar_native_version "${jar_path}")"
-  [[ -n "${native_version}" ]] || fail "${jar_path#${repo_root}/} is missing Coakka-V2-Native-Package-Version"
+  [[ -n "${native_version}" ]] || fail "${jar_path#"${repo_root}"/} is missing Coakka-V2-Native-Package-Version"
   if [[ -n "${expected_public_native_version}" && "${native_version}" != "${expected_public_native_version}" ]]; then
-    fail "${jar_path#${repo_root}/} bundles native package ${native_version}; public runtime native package is ${expected_public_native_version}"
+    fail "${jar_path#"${repo_root}"/} bundles native package ${native_version}; public runtime native package is ${expected_public_native_version}"
   fi
 
   if [[ -x "${intake_verifier}" ]]; then
@@ -182,6 +257,13 @@ check_runtime_jvm_jar() {
   fi
 
   native_archive="$(native_release_archive "${native_version}" || true)"
+
+  native_manifest="$(native_release_manifest "${native_version}" || true)"
+  if [[ -n "${native_manifest}" ]]; then
+    check_manifest_platform_entries \
+      "${jar_path}" "${native_version}" "${native_archive}" "${native_manifest}"
+    return 0
+  fi
 
   check_platform_entries \
     "${jar_path}" "${native_version}" "linux-aarch64" "libcoakka_runtime_v2" "so" "${native_archive}"
