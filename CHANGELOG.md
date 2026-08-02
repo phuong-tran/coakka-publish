@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-03
 
+- Published and registry-verified `CoAkka.Runtime==1.4.5` on NuGet over
+  unchanged native runtime generation `1.4.0+2cee86bf`. A clean registry
+  restore loaded the RID native asset and completed request/reply and matched
+  deadletter smoke. NuGet repository signing adds only `.signature.p7s`; all
+  candidate package entries remain byte-identical.
 - Published and registry-verified the Node.js, Bun, and Electron runtime
   packages at `1.4.5` over unchanged native generation
   `1.4.0+2cee86bf`. Clean registry installs completed package-boundary checks
