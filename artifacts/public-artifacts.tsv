@@ -24,7 +24,7 @@ public	runtime Native evidence runner macos-aarch64 1.3.4	runtime/evidence/nativ
 public	runtime Native evidence runner windows-aarch64	runtime/evidence/native/releases/1.3.4+dc6ec284/coakka-runtime-native-evidence-v2-1.3.4-windows-aarch64.zip	3521ca0e83f86d140e19998452c2e4326b45bb03929e097c87acbb3cecbd5d89
 public	runtime Native evidence runner windows-x86_64	runtime/evidence/native/releases/1.3.4+dc6ec284/coakka-runtime-native-evidence-v2-1.3.4-windows-x86_64.zip	03c91235ccaab00d77ba0c192fb893dd14eac056efdb8ee17fbcdc4cfadd701e
 public	runtime JVM jar	runtime/jvm/releases/1.4.0+2cee86bf-ec4902c/coakka-jvm-native-runtime-v2-1.4.0-g2cee86bf-ec4902c.jar	f4db97776adbfe31c4dc834869abad78272d6576cfa531be9b0581a86d02c613
-public	runtime Python wheel	runtime/python/releases/1.4.0+2cee86bf-ec4902c/coakka_v2_connector-1.4.0-py3-none-any.whl	326145da44b750196989ed56b48711388f0b016925f7882859258e523f52306f
+public	runtime Python wheel	runtime/python/releases/1.4.0+2cee86bf-77c9db8/coakka_v2_connector-1.4.5-py3-none-any.whl	082bfcda88e7b3fe850f9402d06ab79cd3e970636547d79305db66215eacfa2a
 public	runtime Node package	runtime/node/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-node-1.4.0.tgz	035188fb855c440784b5252fa33c58795ad27acac347ec9672e168f88ce43424
 public	runtime Bun package	runtime/bun/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-bun-1.4.0.tgz	49e1a0801e9b64772c93de149a16fc6a30a0c8c8258387622e0382384addd33b
 public	runtime Electron package	runtime/electron/releases/1.4.0+2cee86bf-ec4902c/coakka-v2-connector-electron-1.4.0.tgz	0fbbbb3c85389cbad465226cd464d7e5c86a588e55b242f16f44ee020e78b4e3

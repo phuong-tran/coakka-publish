@@ -32,7 +32,7 @@ publication state and remain listed separately below.
 | JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.4.0-g2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.4.0-g2cee86bf-ec4902c` | via JVM runtime |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.4.0-g2cee86bf-ec4902c` | via JVM runtime |
-| Python runtime artifact | `coakka_v2_connector` wheel | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
+| Python runtime artifact | `coakka_v2_connector` wheel | `1.4.5` in `1.4.0+2cee86bf-77c9db8` | `1.4.0+2cee86bf` |
 | Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
 | Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
 | Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | via matching Node artifact |
@@ -78,7 +78,7 @@ All logger connector lanes below align to logger native generation
 | Channel | Available surface | Status |
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
-| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.3.6` and logger `coakka-logger==1.2.2` current |
+| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.4.5` and logger `coakka-logger==1.2.2` current |
 | Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.4.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
 | SwiftPM | Swift runtime/logger source packages | current; runtime `github.com/phuong-tran/coakka-runtime-swift@1.4.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
 | NuGet | C# runtime/logger packages | current; runtime `CoAkka.Runtime==1.3.5`, logger `CoAkka.Logger==1.2.2` |
@@ -102,7 +102,7 @@ Runtime PyPI package:
 
 | Surface | PyPI coordinate | Native generation |
 | --- | --- | --- |
-| Python runtime | `coakka-v2-connector==1.3.6` | `1.3.4+dc6ec284` |
+| Python runtime | `coakka-v2-connector==1.4.5` | `1.4.0+2cee86bf` |
 
 Logger PyPI package:
 

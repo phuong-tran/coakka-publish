@@ -5,6 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-03
 
+- Published and registry-verified `coakka-v2-connector==1.4.5` on PyPI over
+  unchanged native runtime generation `1.4.0+2cee86bf`. The PyPI digest matches
+  the locally verified wheel, and a clean registry install completed embedded
+  native load and request/reply smoke.
 - Replaced CoAkka Public Artifact License 1.0 with version 1.1. The new grant
   explicitly permits royalty-free production, internal business, commercial
   application, customer distribution, and SaaS use when CoAkka is an internal
