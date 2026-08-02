@@ -68,6 +68,7 @@ EOF
   chmod +x "${fixture}/scripts/scan-public-surface.sh" "${fixture}/scripts/verify-public-surface.sh"
 
   printf '# Fixture\n' >"${fixture}/README.md"
+  cp "${repo_root}/LICENSE.md" "${fixture}/LICENSE.md"
   printf '# Fixture contract\n' >"${fixture}/docs/public-artifact-contract.md"
   printf 'client header\n' >"${fixture}/include/coakka/v2/client.h"
   printf 'control header\n' >"${fixture}/include/coakka/v2/control.h"
