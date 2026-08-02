@@ -3,11 +3,11 @@
 Native evidence runners are built from the public sample source:
 
 ```text
-coakka-samples/runtime/evidence/native/
+coakka-samples/runtime-test/
 ```
 
-The auditable C11 source is also included in this repository at
-[`source/`](source/). Its SHA-256 manifest and verification script let a
+The auditable C11 source is also included at the repository root under
+[`runtime-test/`](../../../runtime-test/README.md). Its SHA-256 manifest and verification script let a
 consumer inspect and verify the exact public-ABI harness without relying on a
 second checkout.
 
@@ -49,19 +49,19 @@ caller request
 Use the source-first sample path when possible:
 
 ```sh
-bash run.sh runtime/evidence/native smoke
+bash run.sh runtime-test smoke
 ```
 
 Use the prebuilt path when the local machine does not have a C toolchain:
 
 ```sh
-COAKKA_NATIVE_EVIDENCE_USE_PREBUILT=1 bash run.sh runtime/evidence/native smoke
+COAKKA_NATIVE_EVIDENCE_USE_PREBUILT=1 bash run.sh runtime-test smoke
 ```
 
 Windows uses the prebuilt path directly:
 
 ```powershell
-./runtime/evidence/native/run.ps1 smoke
+./runtime-test/run.ps1 smoke
 ```
 
 Interpret the JSON output as a native public-ABI baseline on the current

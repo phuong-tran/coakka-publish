@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-02
 
+- Moved the exact auditable native C11 source projection to root-level
+  `runtime-test/`, retained immutable prebuilt evidence archives at their
+  historical paths, and kept a compatibility redirect for existing links.
+- Added a Linux CI lane that verifies the source manifest, runs Clang static
+  analysis, and executes the public consumer harness with ASan/UBSan.
 - Added the canonical CoAkka guardian logo and brand guide, with registry-safe
   assets shared across package and documentation surfaces.
 - Added canonical ecosystem, connection-strategy, TLS/mTLS, support, signing,

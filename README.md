@@ -42,7 +42,19 @@ Production readiness: [docs/production-readiness.md](docs/production-readiness.m
 TLS and mTLS: [docs/tls-and-mtls.md](docs/tls-and-mtls.md)
 Connection strategies: [docs/connection-strategies.md](docs/connection-strategies.md)
 
-This repository is the public binary-only publish surface for CoAkka artifacts.
+## Runtime Test
+
+The root-level [`runtime-test/`](runtime-test/README.md) is the auditable C11
+consumer harness for the published native runtime. It uses only the stable
+public C ABI and covers request/reply invariants, bounded admission, all four
+connection strategies, structured rejection, static analysis, and
+consumer-side ASan/UBSan controls. Prebuilt platform runners remain under
+[`runtime/evidence/native/releases/`](runtime/evidence/native/releases/) for
+systems without a local C toolchain.
+
+This repository is the public package and artifact surface for CoAkka. The
+runtime implementation is not included; public consumer headers, samples, and
+the auditable `runtime-test/` harness remain inspectable.
 If you are new to CoAkka, start with
 [New To CoAkka](docs/new-to-coakka.md), then use
 [`coakka-samples`](https://github.com/phuong-tran/coakka-samples) to run

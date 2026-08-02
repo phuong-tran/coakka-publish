@@ -3,7 +3,7 @@ set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd "${script_dir}/.." && pwd)"
-source_dir="${repo_root}/runtime/evidence/native/source"
+source_dir="${repo_root}/runtime-test"
 manifest="${source_dir}/SOURCE-MANIFEST.sha256"
 
 if [[ ! -f "${manifest}" ]]; then
