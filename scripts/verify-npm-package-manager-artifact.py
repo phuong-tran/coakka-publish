@@ -133,14 +133,29 @@ FORBIDDEN_TEXT_PATTERNS = tuple(
         r"protobufjs",
         r"wire-codec",
         r"proto/",
-        r"\bWIRE_VARINT\b",
-        r"\bencodeVarint\b",
-        r"\bdecodeEnvelope\b",
-        r"\bdecodeDeadletter\b",
-        r"\bencodeEnvelope\b",
         r"coakkaJVMConnector",
         r"workingDir",
     )
+)
+
+INTERNAL_TRANSPORT_CODEC_PATTERNS = tuple(
+    re.compile(pattern, re.IGNORECASE)
+    for pattern in (
+        r"\bWIRE_VARINT\b",
+        r"\bencodeVarint\b",
+    )
+)
+
+PUBLIC_TRANSPORT_HELPER_PATTERN = re.compile(
+    r"\b(?:decodeEnvelope|decodeDeadletter|encodeEnvelope|encodeControlEnvelope)\b",
+    re.IGNORECASE,
+)
+
+FORBIDDEN_PUBLIC_CODEC_MEMBERS = (
+    "protobuf.js",
+    "protobuf.d.ts",
+    "wire-codec.js",
+    "wire-codec.d.ts",
 )
 
 PUBLIC_REPOSITORY_URL = "git+https://github.com/phuong-tran/coakka-publish.git"
@@ -206,12 +221,46 @@ def verify_member_boundary(names: list[str]) -> None:
             fail(f"workspace/test/build path leaked into npm artifact: {name}")
         if normalized.endswith(".proto"):
             fail(f"protobuf schema leaked into npm package-manager artifact: {name}")
+        if posixpath.basename(normalized).lower() in FORBIDDEN_PUBLIC_CODEC_MEMBERS:
+            fail(f"public transport codec member leaked into npm artifact: {name}")
         for marker in FORBIDDEN_MEMBER_SUBSTRINGS:
             if marker in normalized:
                 fail(f"unpublished source identity leaked into npm artifact: {name}")
 
 
-def verify_text_content(archive: tarfile.TarFile) -> None:
+def is_internal_transport_codec_member(name: str, product: str, role: str) -> bool:
+    if product != "runtime":
+        return False
+    normalized = posixpath.normpath(name)
+    expected = {
+        "node": {
+            "package/dist/internal-transport-codec.js",
+            "package/dist/internal-transport-codec.d.ts",
+        },
+        "bun": {
+            "package/dist/core/internal-transport-codec.js",
+            "package/dist/core/internal-transport-codec.d.ts",
+        },
+    }
+    return normalized in expected.get(role, set())
+
+
+def is_public_entrypoint_member(name: str, role: str) -> bool:
+    normalized = posixpath.normpath(name)
+    expected = {
+        "node": {"package/dist/index.js", "package/dist/index.d.ts"},
+        "bun": {
+            "package/dist/index.js",
+            "package/dist/index.d.ts",
+            "package/dist/core/index.js",
+            "package/dist/core/index.d.ts",
+        },
+        "electron": {"package/dist/index.js", "package/dist/index.d.ts"},
+    }
+    return normalized in expected.get(role, set())
+
+
+def verify_text_content(archive: tarfile.TarFile, product: str, role: str) -> None:
     for member in archive.getmembers():
         if not member.isfile() or not is_text_member(member.name):
             continue
@@ -225,6 +274,13 @@ def verify_text_content(archive: tarfile.TarFile) -> None:
         for pattern in FORBIDDEN_TEXT_PATTERNS:
             if pattern.search(text):
                 fail(f"JavaScript-visible wire/protobuf or private marker leaked into npm artifact: {member.name}")
+        if is_internal_transport_codec_member(member.name, product, role):
+            continue
+        if is_public_entrypoint_member(member.name, role) and PUBLIC_TRANSPORT_HELPER_PATTERN.search(text):
+            fail(f"transport framing helper leaked from public package entrypoint: {member.name}")
+        for pattern in INTERNAL_TRANSPORT_CODEC_PATTERNS:
+            if pattern.search(text):
+                fail(f"public transport framing implementation leaked into npm artifact: {member.name}")
 
 
 def native_library_base(product: str) -> str:
@@ -269,16 +325,30 @@ def verify_native_shape(
     role: str,
     expected_native_generation: str,
     expected_internal_dependency: str | None,
+    expected_platforms: tuple[str, ...],
 ) -> None:
+    if not expected_platforms:
+        fail("expected platform matrix must not be empty")
+    if len(set(expected_platforms)) != len(expected_platforms):
+        fail("expected platform matrix must not contain duplicates")
+    unknown_platforms = sorted(set(expected_platforms) - set(PACKAGE_PLATFORMS))
+    if unknown_platforms:
+        fail(f"expected platform matrix contains unsupported values: {', '.join(unknown_platforms)}")
+
     by_platform = native_members_by_platform(names, product, expected_native_generation)
     present = {platform for platform, matches in by_platform.items() if matches}
+    expected = set(expected_platforms)
 
     if role in {"node", "bun"}:
-        missing = sorted(set(PACKAGE_PLATFORMS) - present)
-        if missing:
-            fail(f"{role} package is missing bundled {product} native libraries for: {', '.join(missing)}")
         errors = []
-        for platform, matches in by_platform.items():
+        missing = sorted(expected - present)
+        unexpected = sorted(present - expected)
+        if missing:
+            errors.append(f"{role} package is missing bundled {product} native libraries for: {', '.join(missing)}")
+        if unexpected:
+            errors.append(f"{role} package includes native libraries outside the release matrix: {', '.join(unexpected)}")
+        for platform in expected_platforms:
+            matches = by_platform[platform]
             if len(matches) != 1:
                 rendered = ", ".join(matches)
                 errors.append(f"{role} package must include exactly one {product} native for {platform}: {rendered}")
@@ -410,6 +480,43 @@ def verify_public_metadata(package: dict) -> None:
         fail("; ".join(errors))
 
 
+def exported_targets(value: object) -> list[str]:
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        targets = []
+        for nested in value.values():
+            targets.extend(exported_targets(nested))
+        return targets
+    if isinstance(value, list):
+        targets = []
+        for nested in value:
+            targets.extend(exported_targets(nested))
+        return targets
+    return []
+
+
+def verify_exports(package: dict, require_explicit_exports: bool) -> None:
+    exports = package.get("exports")
+    if exports is None:
+        if require_explicit_exports:
+            fail("package-manager artifact must declare explicit package exports")
+        return
+    if not isinstance(exports, dict) or "." not in exports:
+        fail("package exports must include the package root entrypoint")
+
+    blocked_markers = ("internal-transport-codec", "protobuf", "wire-codec")
+    errors = []
+    for key, value in exports.items():
+        if any(marker in key.casefold() for marker in blocked_markers):
+            errors.append(f"package exports expose internal transport path: {key}")
+        for target in exported_targets(value):
+            if any(marker in target.casefold() for marker in blocked_markers):
+                errors.append(f"package exports target internal transport path: {target}")
+    if errors:
+        fail("; ".join(errors))
+
+
 def verify_package_json(
     package: dict,
     package_name: str,
@@ -428,11 +535,10 @@ def verify_package_json(
         errors.append("package-manager artifact must declare main")
     if not package.get("types"):
         errors.append("package-manager artifact must declare types")
-    if role == "electron" and "exports" not in package:
-        errors.append("Electron package-manager artifact must declare explicit exports")
     checks = [
         (verify_scripts, (package,)),
         (verify_dependencies, (package, expected_internal_dependency)),
+        (verify_exports, (package, require_public_metadata or role == "electron")),
     ]
     if require_public_metadata:
         checks.append((verify_public_metadata, (package,)))
@@ -453,6 +559,7 @@ def verify_artifact(
     expected_native_generation: str,
     expected_internal_dependency: str | None,
     require_public_metadata: bool = False,
+    expected_platforms: tuple[str, ...] = PACKAGE_PLATFORMS,
 ) -> None:
     if not artifact.is_file():
         fail(f"artifact does not exist: {artifact}")
@@ -460,7 +567,7 @@ def verify_artifact(
         names = member_names(archive)
         package = read_package_json(archive)
         try:
-            verify_text_content(archive)
+            verify_text_content(archive, product, role)
         except VerificationError as exc:
             text_content_error = str(exc)
         else:
@@ -473,7 +580,17 @@ def verify_artifact(
         (verify_member_boundary, (names,)),
         (verify_package_json, (package, package_name, role, expected_internal_dependency, require_public_metadata)),
         (verify_license, (package, names)),
-        (verify_native_shape, (names, product, role, expected_native_generation, expected_internal_dependency)),
+        (
+            verify_native_shape,
+            (
+                names,
+                product,
+                role,
+                expected_native_generation,
+                expected_internal_dependency,
+                expected_platforms,
+            ),
+        ),
     ):
         try:
             check(*check_args)
@@ -502,6 +619,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--package-name")
     parser.add_argument("--expected-native-generation")
     parser.add_argument("--expected-internal-dependency")
+    parser.add_argument(
+        "--expected-platform",
+        action="append",
+        choices=PACKAGE_PLATFORMS,
+        dest="expected_platforms",
+        help="expected packaged native platform; repeat to declare the exact release matrix",
+    )
     parser.add_argument(
         "--candidate-manifest",
         type=Path,
@@ -541,6 +665,15 @@ def require_manifest_string(entry: dict, key: str, label: str) -> str:
     return value
 
 
+def manifest_expected_platforms(entry: dict, label: str) -> tuple[str, ...]:
+    value = entry.get("expected_platforms")
+    if value is None:
+        return PACKAGE_PLATFORMS
+    if not isinstance(value, list) or not value or not all(isinstance(item, str) and item for item in value):
+        fail(f"{label} manifest entry field 'expected_platforms' must be a non-empty string list")
+    return tuple(value)
+
+
 def verify_candidate_manifest(manifest_path: Path, require_public_metadata: bool) -> int:
     if not manifest_path.is_file():
         print(f"[npm-package-manager] candidate manifest does not exist: {manifest_path}", file=sys.stderr)
@@ -575,6 +708,7 @@ def verify_candidate_manifest(manifest_path: Path, require_public_metadata: bool
                 require_manifest_string(entry, "expected_native_generation", label),
                 entry.get("expected_internal_dependency"),
                 require_public_metadata,
+                expected_platforms=manifest_expected_platforms(entry, label),
             )
         except VerificationError as exc:
             failures += 1
@@ -615,6 +749,7 @@ def main() -> int:
             args.expected_native_generation,
             args.expected_internal_dependency,
             args.require_public_metadata,
+            expected_platforms=tuple(args.expected_platforms or PACKAGE_PLATFORMS),
         )
     except VerificationError as exc:
         print(f"[npm-package-manager] blocked: {exc}", file=sys.stderr)

@@ -47,6 +47,8 @@ make_package() {
   local include_install="${10:-false}"
   local private_repo_metadata="${11:-false}"
   local include_unversioned_alias="${12:-false}"
+  local packaged_platforms="${13:-linux-aarch64 linux-x86_64 macos-aarch64 windows-aarch64 windows-x86_64}"
+  local include_exports="${14:-true}"
   local root="${tmp_root}/pkg-root/package"
   local native_generation="1.3.1+abcdef0"
 
@@ -118,7 +120,7 @@ EOF
     esac
 
     local platform extension
-    for platform in linux-aarch64 linux-x86_64 macos-aarch64 windows-aarch64 windows-x86_64; do
+    for platform in ${packaged_platforms}; do
       case "${platform}" in
         macos-*) extension="dylib" ;;
         windows-*) extension="dll" ;;
@@ -132,18 +134,24 @@ EOF
     done
   fi
 
-  if [[ "${role}" == "electron" ]]; then
-    python3 - "${root}/package.json" <<'PY'
+  if [[ "${include_exports}" == "true" ]]; then
+    python3 - "${root}/package.json" "${role}" <<'PY'
 import json
 import sys
 
 path = sys.argv[1]
+role = sys.argv[2]
 with open(path, "r", encoding="utf-8") as fh:
     package = json.load(fh)
 package["exports"] = {
     ".": {"types": "./dist/index.d.ts", "import": "./dist/index.js"},
-    "./preload": {"types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.js"},
 }
+if role == "electron":
+    package["exports"]["./preload"] = {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.js",
+    }
 with open(path, "w", encoding="utf-8") as fh:
     json.dump(package, fh, indent=2)
     fh.write("\n")
@@ -172,6 +180,132 @@ verify_fixture() {
 good_node="${tmp_root}/coakka-v2-connector-node-1.3.1.tgz"
 make_package "${good_node}" runtime node coakka-v2-connector-node
 expect_success "clean Node package" verify_fixture "${good_node}" runtime node coakka-v2-connector-node
+
+internal_codec_node="${tmp_root}/coakka-v2-connector-node-internal-codec.tgz"
+make_package "${internal_codec_node}" runtime node coakka-v2-connector-node
+cat >"${tmp_root}/pkg-root/package/dist/internal-transport-codec.js" <<'EOF'
+const WIRE_VARINT = 0;
+function encodeVarint(value) {
+  return value;
+}
+export function encodeEnvelope(value) {
+  return encodeVarint(value + WIRE_VARINT);
+}
+export function decodeEnvelope(bytes) {
+  return bytes;
+}
+export function decodeDeadletter(bytes) {
+  return bytes;
+}
+EOF
+COPYFILE_DISABLE=1 tar -C "${tmp_root}/pkg-root" -czf "${internal_codec_node}" package
+expect_success \
+  "internal transport codec behind exports" \
+  verify_fixture \
+  "${internal_codec_node}" \
+  runtime \
+  node \
+  coakka-v2-connector-node
+
+missing_exports="${tmp_root}/coakka-v2-connector-node-missing-exports.tgz"
+make_package \
+  "${missing_exports}" \
+  runtime \
+  node \
+  coakka-v2-connector-node \
+  "" \
+  "" \
+  false \
+  "SEE LICENSE IN LICENSE.md" \
+  false \
+  false \
+  false \
+  false \
+  "linux-aarch64 linux-x86_64 macos-aarch64 windows-aarch64 windows-x86_64" \
+  false
+expect_failure \
+  "missing explicit exports" \
+  verify_fixture \
+  "${missing_exports}" \
+  runtime \
+  node \
+  coakka-v2-connector-node
+grep -Fq "must declare explicit package exports" "${test_output}"
+
+exported_internal_codec="${tmp_root}/coakka-v2-connector-node-exported-internal-codec.tgz"
+make_package "${exported_internal_codec}" runtime node coakka-v2-connector-node
+python3 - "${tmp_root}/pkg-root/package/package.json" <<'PY'
+import json
+import sys
+
+path = sys.argv[1]
+with open(path, "r", encoding="utf-8") as fh:
+    package = json.load(fh)
+package["exports"]["./internal-transport-codec"] = "./dist/internal-transport-codec.js"
+with open(path, "w", encoding="utf-8") as fh:
+    json.dump(package, fh, indent=2)
+    fh.write("\n")
+PY
+COPYFILE_DISABLE=1 tar -C "${tmp_root}/pkg-root" -czf "${exported_internal_codec}" package
+expect_failure \
+  "exported internal transport codec" \
+  verify_fixture \
+  "${exported_internal_codec}" \
+  runtime \
+  node \
+  coakka-v2-connector-node
+grep -Fq "exports expose internal transport path" "${test_output}"
+
+release_matrix_node="${tmp_root}/coakka-v2-connector-node-release-matrix.tgz"
+make_package \
+  "${release_matrix_node}" \
+  runtime \
+  node \
+  coakka-v2-connector-node \
+  "" \
+  "" \
+  false \
+  "SEE LICENSE IN LICENSE.md" \
+  false \
+  false \
+  false \
+  false \
+  "linux-aarch64 macos-aarch64 windows-x86_64"
+expect_success \
+  "exact release platform matrix" \
+  verify_fixture \
+  "${release_matrix_node}" \
+  runtime \
+  node \
+  coakka-v2-connector-node \
+  --expected-platform linux-aarch64 \
+  --expected-platform macos-aarch64 \
+  --expected-platform windows-x86_64
+
+expect_failure \
+  "native outside release platform matrix" \
+  verify_fixture \
+  "${good_node}" \
+  runtime \
+  node \
+  coakka-v2-connector-node \
+  --expected-platform linux-aarch64 \
+  --expected-platform macos-aarch64 \
+  --expected-platform windows-x86_64
+grep -Fq "outside the release matrix" "${test_output}"
+
+expect_failure \
+  "missing release platform native" \
+  verify_fixture \
+  "${release_matrix_node}" \
+  runtime \
+  node \
+  coakka-v2-connector-node \
+  --expected-platform linux-aarch64 \
+  --expected-platform linux-x86_64 \
+  --expected-platform macos-aarch64 \
+  --expected-platform windows-x86_64
+grep -Fq "missing bundled runtime native libraries for: linux-x86_64" "${test_output}"
 
 duplicate_native_alias="${tmp_root}/coakka-v2-connector-node-duplicate-native.tgz"
 make_package \
@@ -271,7 +405,7 @@ export function decodeEnvelope(bytes) {
 EOF
 COPYFILE_DISABLE=1 tar -C "${tmp_root}/pkg-root" -czf "${text_wire_leak}" package
 expect_failure "text wire codec leak" verify_fixture "${text_wire_leak}" runtime node coakka-v2-connector-node
-grep -Fq "JavaScript-visible wire/protobuf" "${test_output}"
+grep -Eq "public transport (codec member|framing implementation)" "${test_output}"
 
 install_script="${tmp_root}/coakka-v2-connector-node-install.tgz"
 make_package "${install_script}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN LICENSE.md" false true
