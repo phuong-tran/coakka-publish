@@ -16,6 +16,7 @@ Please use private contact first for:
 - security concerns
 - sensitive release or disclosure coordination
 - artifact issues that should not start as a public issue
+- licensing questions about offering a Managed CoAkka Service
 
 ## What To Send
 

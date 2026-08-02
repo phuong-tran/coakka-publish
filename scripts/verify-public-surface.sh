@@ -17,6 +17,27 @@ require_file() {
   fi
 }
 
+verify_artifact_license() {
+  local license="${repo_root}/LICENSE.md"
+  local required
+
+  for required in \
+    "# CoAkka Public Artifact License 1.1" \
+    "including Artifacts first published before the effective" \
+    "use every capability included in an Artifact" \
+    "commercial workloads" \
+    "SaaS, hosted application, or customer-facing service" \
+    "Managed CoAkka Service" \
+    "## No Runtime Activation Gate"; do
+    grep -Fq "${required}" "${license}" ||
+      fail "LICENSE.md is missing required production-use grant: ${required}"
+  done
+
+  if grep -Fq -- "- running CoAkka artifacts in production systems" "${license}"; then
+    fail "LICENSE.md still reserves ordinary production use"
+  fi
+}
+
 verify_sha256_file() {
   local dir="$1"
   local sums="${repo_root}/${dir}/SHA256SUMS"
@@ -485,6 +506,7 @@ verify_current_bun_tauri_public_boundary() {
 }
 
 require_file "README.md"
+require_file "LICENSE.md"
 require_file "docs/public-artifact-contract.md"
 require_file "artifacts/public-artifacts.tsv"
 require_file "include/coakka/v2/client.h"
@@ -495,6 +517,7 @@ require_file "include/coakka/v2/utils.h"
 require_file "SHA256SUMS"
 
 verify_current_runtime_native_matrix
+verify_artifact_license
 
 (cd "${repo_root}" && shasum -a 256 -c SHA256SUMS >/dev/null)
 

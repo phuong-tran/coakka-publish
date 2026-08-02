@@ -3,6 +3,17 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-03
+
+- Replaced CoAkka Public Artifact License 1.0 with version 1.1. The new grant
+  explicitly permits royalty-free production, internal business, commercial
+  application, customer distribution, and SaaS use when CoAkka is an internal
+  component. A separate agreement is reserved for Managed CoAkka Services and
+  offerings whose primary or substantial value is CoAkka itself.
+- Applied the more permissive grant to all official artifacts currently
+  distributed from this repository, including runtime `1.4.0`, without
+  changing binary bytes, checksums, signing status, or runtime capabilities.
+
 ## 2026-08-02
 
 - Bound Linux sanitizer evidence to the released `linux-aarch64` bytes from

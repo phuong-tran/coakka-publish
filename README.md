@@ -188,35 +188,29 @@ Current source connector release note:
 ## License And Trademark
 
 This repository distributes CoAkka artifacts under the
-[CoAkka Public Artifact License 1.0](LICENSE.md), unless a specific
-release artifact includes different license terms. This is not an OSI-approved
-open source license.
+[CoAkka Public Artifact License 1.1](LICENSE.md), unless a specific artifact
+includes explicitly different terms. This public-use artifact license is not
+an OSI-approved open source license.
 
-The repository is intended for developer evaluation, official sample
-execution, CI, integration bring-up, and integration testing, including company
-evaluations inside commercial organizations. Production means environments
-serving live end-user traffic, live customer data, live operational data,
-revenue-generating workloads, or customer-facing workloads outside
-development, test, CI, sample execution, or proof-of-concept evaluation.
-Production use, hosted service use, customer distribution, and paid
-redistribution require explicit release terms or a separate written agreement.
+The license permits royalty-free use of every included capability in
+development, CI, production, internal business systems, commercial
+applications, and SaaS products that use CoAkka as an internal component. It
+also permits distributing unmodified artifacts as part of an application when
+the required notices remain available.
 
-Official CoAkka sample images published by the project or repository owner,
-including the current `docker.io/gabrielgun1983/*` sample namespace and any
-future official CoAkka container namespace, may bundle unmodified artifacts
-solely to run official samples. Users may pull, cache internally, and run those
-official sample images for local development, CI, test, sample execution,
-proof-of-concept integration, and evaluation. This does not grant third
-parties rights to create derivative production images, hosted services, paid
-support packages, appliances, or cloud marketplace offerings.
+A separate agreement is required only when the offering itself is a Managed
+CoAkka Service or when CoAkka provides the primary or substantial value of a
+standalone runtime, appliance, cloud image, infrastructure product, or
+marketplace offering. The restriction is based on what is offered, not on the
+size or industry of the user.
 
 The separate `coakka-samples` repository contains sample code and documentation
 under its own license. That sample license does not change the terms for the
 runtime binaries, connector packages, Maven artifacts, or other released
 artifacts distributed here.
 
-For production, hosted service, customer distribution, paid redistribution, or
-other commercial rights, use the private contact path in [SUPPORT.md](SUPPORT.md).
+For Managed CoAkka Service rights or another separately licensed use, use the
+contact path in [SUPPORT.md](SUPPORT.md).
 
 The CoAkka name and `coakka` package, artifact, and image prefixes identify
 the official project surface. See [TRADEMARKS.md](TRADEMARKS.md) before using
