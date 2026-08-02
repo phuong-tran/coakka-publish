@@ -5,6 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-03
 
+- Published and registry-verified `CoAkka.Runtime==1.4.6` as a gallery-only
+  patch over unchanged native runtime generation `1.4.0+2cee86bf`. Its NuGet
+  README uses CommonMark for the public logo and an absolute public URL for
+  the C# transport guide; runtime behavior and native bytes are unchanged.
 - Published and registry-verified `CoAkka.Runtime==1.4.5` on NuGet over
   unchanged native runtime generation `1.4.0+2cee86bf`. A clean registry
   restore loaded the RID native asset and completed request/reply and matched

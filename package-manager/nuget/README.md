@@ -12,13 +12,13 @@ Current coordinates:
 
 | Surface | Coordinate | Native generation |
 | --- | --- | --- |
-| Runtime | `CoAkka.Runtime`, exact `1.4.5` | `1.4.0+2cee86bf` |
+| Runtime | `CoAkka.Runtime`, exact `1.4.6` | `1.4.0+2cee86bf` |
 | Logger | `CoAkka.Logger`, exact `1.2.2` | `1.2.1+f50756ebff0d` |
 
 Install:
 
 ```sh
-dotnet add package CoAkka.Runtime --version 1.4.5
+dotnet add package CoAkka.Runtime --version 1.4.6
 dotnet add package CoAkka.Logger --version 1.2.2
 ```
 

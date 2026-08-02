@@ -104,7 +104,7 @@ version number.
 
 | Channel | Runtime package | Logger package |
 | --- | --- | --- |
-| NuGet | [`CoAkka.Runtime` 1.4.5](https://www.nuget.org/packages/CoAkka.Runtime/1.4.5) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
+| NuGet | [`CoAkka.Runtime` 1.4.6](https://www.nuget.org/packages/CoAkka.Runtime/1.4.6) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
 | npm | [`coakka-v2-connector-node` 1.4.5](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.4.5) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
 | PyPI | [`coakka-v2-connector` 1.4.5](https://pypi.org/project/coakka-v2-connector/1.4.5/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.4.0](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.4.0) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
@@ -147,7 +147,7 @@ Current runtime release note:
 
 Current package-manager release notes:
 [2026-08-03 npm JavaScript runtime 1.4.5](docs/releases/2026-08-03-npm-runtime-1.4.5.md),
-[2026-08-03 NuGet C# runtime 1.4.5](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.5.md),
+[2026-08-03 NuGet C# runtime 1.4.6](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.6.md),
 and
 [2026-08-03 PyPI Python runtime 1.4.5](docs/releases/2026-08-03-pypi-python-runtime-1.4.5.md).
 
@@ -161,7 +161,7 @@ Latest GitHub Release boundary note:
 
 Current language connector release notes:
 [2026-07-26 Go module native payload cleanup](docs/releases/2026-07-26-go-module-native-payload-cleanup.md),
-[2026-08-03 C# runtime NuGet 1.4.5](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.5.md),
+[2026-08-03 C# runtime NuGet 1.4.6](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.6.md),
 [2026-07-28 C# logger NuGet 1.2.2](docs/releases/2026-07-28-csharp-logger-nuget-1.2.2.md),
 [2026-07-25 runtime language packages 1.3.2 caff6d6d 6d5ea58](docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md),
 [2026-07-25 npm runtime package b46f705](docs/releases/2026-07-25-npm-runtime-native-bridge-b46f705.md),
@@ -237,7 +237,7 @@ Current public Node.js, Bun, and Electron npm runtime packages:
 `coakka-v2-connector-{node,bun,electron}@1.4.5`.
 Current public Python PyPI runtime package:
 `coakka-v2-connector==1.4.5`, over native generation `1.4.0+2cee86bf`.
-Current public C# runtime NuGet package: `CoAkka.Runtime@1.4.5`, over native
+Current public C# runtime NuGet package: `CoAkka.Runtime@1.4.6`, over native
 generation `1.4.0+2cee86bf`.
 Current public C# logger NuGet package: `CoAkka.Logger@1.2.2`.
 Current public Mojo/Zig source connector generation:
@@ -283,7 +283,7 @@ NuGet package-manager releases:
 
 | Lane | Coordinate | Native generation |
 | --- | --- | --- |
-| C# runtime connector | `CoAkka.Runtime`, exact `1.4.5` | runtime native `1.4.0+2cee86bf` |
+| C# runtime connector | `CoAkka.Runtime`, exact `1.4.6` | runtime native `1.4.0+2cee86bf` |
 | C# logger connector | `CoAkka.Logger`, exact `1.2.2` | logger native `1.2.1+f50756ebff0d` |
 
 The NuGet lane is binary package-manager distribution for .NET consumers.
@@ -294,12 +294,12 @@ The current root native runtime package is `1.4.0+2cee86bf`. The artifact mirror
 publishes JVM runtime, Spring Boot, and Quarkus as
 `1.4.0-g2cee86bf-ec4902c`. Connector artifacts use release directory
 `1.4.0+2cee86bf-ec4902c`; the npm `1.4.5` patch uses
-`1.4.0+2cee86bf-2c0c598`, and the NuGet `1.4.5` patch uses
-`1.4.0+2cee86bf-562028d`, over the same native generation.
+`1.4.0+2cee86bf-2c0c598`, and the NuGet `1.4.6` gallery patch uses
+`1.4.0+2cee86bf-693f122`, over the same native generation.
 
 Package-manager registries are separate publication channels. npm Node.js,
 Bun, and Electron are current at `1.4.5`. PyPI runtime is current at `1.4.5`,
-and NuGet runtime is current at `CoAkka.Runtime` `1.4.5`.
+and NuGet runtime is current at `CoAkka.Runtime` `1.4.6`.
 Go modules and SwiftPM advance through public GitHub tag `v1.4.0`.
 Do not mix language or framework runtime packages from another native package
 generation unless a release note explicitly declares that combination
@@ -364,7 +364,7 @@ Current published lanes:
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.4.0`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1`
-- `NuGet: CoAkka.Runtime@1.4.5`
+- `NuGet: CoAkka.Runtime@1.4.6`
 - `NuGet: CoAkka.Logger@1.2.2`
 - `npm: coakka-logger-node@1.2.6`
 - `npm: coakka-logger-bun@1.2.6`
@@ -532,7 +532,7 @@ These artifacts are the current public runtime set:
 | Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.5` | `1.4.0+2cee86bf` |
 | Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.5` | via matching Node artifact |
 | Go runtime artifact | `coakka-v2-connector-go` archive | `1.4.0` | `1.4.0+2cee86bf` |
-| C# runtime artifact | `CoAkka.Runtime` package file | `1.4.5` | `1.4.0+2cee86bf` |
+| C# runtime artifact | `CoAkka.Runtime` package file | `1.4.6` | `1.4.0+2cee86bf` |
 | Rust runtime artifact | `coakka-runtime-rs` package | `1.4.0` | `1.4.0+2cee86bf` |
 | Swift runtime artifact | `coakka-runtime-swift` package | `1.4.0` | `1.4.0+2cee86bf` |
 | Mojo runtime | `runtime/mojo/releases/1.4.0+2cee86bf-ec4902c/coakka-runtime-mojo-1.4.0-source.tar.gz` | `1.4.0-source` | `1.4.0+2cee86bf` |
@@ -555,8 +555,8 @@ envelope/transport policy last.
 Release docs and samples present a helper only when the published artifact
 contains it. The main 1.4.0 artifact mirror uses connector source `ec4902c`;
 the Python PyPI `1.4.5` projection uses source `77c9db8`, and the npm `1.4.5`
-projection uses source `2c0c598`. The NuGet `1.4.5` projection uses source
-`562028d`. All use native generation `1.4.0+2cee86bf`. Package-manager
+projection uses source `2c0c598`. The NuGet `1.4.6` projection uses source
+`693f122`. All use native generation `1.4.0+2cee86bf`. Package-manager
 registry versions remain documented separately.
 
 Validation gates run before publishing:
