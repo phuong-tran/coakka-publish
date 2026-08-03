@@ -100,13 +100,10 @@ binary. A Core race claim requires the exact runtime source generation and the
 harness to be compiled with TSan in one build graph. The JSON records this
 boundary and never treats a release binary as implicitly instrumented.
 
-The `public-surface` workflow runs Clang static analysis and the combined
-ASan/UBSan consumer harness on Linux ARM64 against native generation
-`1.4.0+2cee86bf`. It executes both the workload and four-mode connection
-strategy contracts plus small race and snapshot hot-reload profiles. This
-instruments the public test harness; it does not turn an ordinary prebuilt
-runtime binary into an instrumented core. The deeper source-level TSan gate is
-kept separate from normal public-surface CI.
+Sanitizer profiles are intentionally local or evaluator-run. Hosted
+`public-surface` CI verifies the artifact contract without paying for
+instrumented builds. This keeps the controls auditable without treating a slow
+or toolchain-sensitive sanitizer run as a per-change gate.
 
 Run `bash scripts/verify-native-evidence-source.sh` from the repository root
 to verify `SOURCE-MANIFEST.sha256`.

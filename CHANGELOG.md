@@ -5,11 +5,14 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-03
 
+- Removed hosted ASan/UBSan execution from `public-surface`. The auditable C11
+  harness and sanitizer switches remain available for explicit local or
+  evaluator runs; normal artifact CI no longer pays for instrumented builds.
 - Added the checksum-manifested public C11 concurrency evidence projection,
   including multi-producer terminal accounting, submit-versus-stop,
   independent runtime lifecycles, quota-gated route-snapshot hot reload, and
-  consumer-only TSan controls. Core race claims remain limited to the separate
-  exact-source instrumented workflow; published native bytes are unchanged.
+  consumer-only TSan controls. Core race claims remain limited to explicit
+  exact-source local instrumented runs; published native bytes are unchanged.
   The Windows harness derives an MSVC consumer import library from its public
   export definition without modifying the published runtime DLL.
 - Published the native C++ transport configuration contract at a stable public
