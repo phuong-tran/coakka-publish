@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "csharp",
+  "release_directory": "1.4.1+9e02a51d-af244b1e",
+  "version": "1.4.7",
+  "artifact": {
+    "name": "CoAkka.Runtime.1.4.7.nupkg",
+    "bundled_native_package_version": "1.4.1+9e02a51d",
+    "bundled_native_git_commit": "9e02a51d",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ]
+  },
+  "connector_source_git_commit": "af244b1e",
+  "payload_staging_git_commit": "af244b1e"
+}

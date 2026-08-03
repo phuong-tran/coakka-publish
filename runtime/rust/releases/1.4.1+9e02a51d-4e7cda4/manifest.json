@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "rust",
+  "release_directory": "1.4.1+9e02a51d-4e7cda4",
+  "version": "1.4.1",
+  "artifact": {
+    "name": "coakka-runtime-rs-1.4.1.tar.gz",
+    "bundled_native_package_version": "1.4.1+9e02a51d",
+    "bundled_native_git_commit": "9e02a51d",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ],
+    "source_package": true
+  },
+  "connector_source_git_commit": "4e7cda4",
+  "payload_staging_git_commit": "4e7cda4"
+}

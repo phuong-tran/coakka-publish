@@ -6,6 +6,9 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 connector_root="${1:-${repo_root}/../coakkaJVMConnector}"
 native_release="${COAKKA_NATIVE_RELEASE:-1.4.0+2cee86bf}"
 native_manifest="${repo_root}/runtime/native/releases/${native_release}/manifest.json"
+lanes_spec="${COAKKA_CONNECTOR_LANES-jvm node bun electron python go csharp rust swift tauri mojo zig}"
+supported_lanes=(jvm node bun electron python go csharp rust swift tauri mojo zig)
+release_lanes=()
 
 fail() {
   echo "[stage-runtime-connectors] $*" >&2
@@ -16,9 +19,113 @@ require_file() {
   [[ -f "$1" ]] || fail "missing required file: $1"
 }
 
+parse_release_lanes() {
+  local normalized lane supported existing
+  normalized="${lanes_spec//,/ }"
+  for lane in ${normalized}; do
+    supported=0
+    for existing in "${supported_lanes[@]}"; do
+      if [[ "${lane}" == "${existing}" ]]; then
+        supported=1
+        break
+      fi
+    done
+    [[ "${supported}" == "1" ]] || fail "unsupported connector lane: ${lane}"
+    if [[ "${#release_lanes[@]}" -gt 0 ]]; then
+      for existing in "${release_lanes[@]}"; do
+        [[ "${lane}" != "${existing}" ]] || fail "duplicate connector lane: ${lane}"
+      done
+    fi
+    release_lanes+=("${lane}")
+  done
+  [[ "${#release_lanes[@]}" -gt 0 ]] || fail "COAKKA_CONNECTOR_LANES must select at least one lane"
+}
+
+lane_selected() {
+  local wanted="$1" lane
+  for lane in "${release_lanes[@]}"; do
+    [[ "${lane}" == "${wanted}" ]] && return 0
+  done
+  return 1
+}
+
+artifact_label_for_lane() {
+  case "$1" in
+    jvm) printf '%s\n' "runtime JVM jar" ;;
+    node) printf '%s\n' "runtime Node package" ;;
+    bun) printf '%s\n' "runtime Bun package" ;;
+    electron) printf '%s\n' "runtime Electron package" ;;
+    python) printf '%s\n' "runtime Python wheel" ;;
+    go) printf '%s\n' "runtime Go package" ;;
+    csharp) printf '%s\n' "runtime C# package" ;;
+    rust) printf '%s\n' "runtime Rust package" ;;
+    swift) printf '%s\n' "runtime Swift package" ;;
+    tauri) printf '%s\n' "runtime Tauri source package" ;;
+    mojo) printf '%s\n' "runtime Mojo source package" ;;
+    zig) printf '%s\n' "runtime Zig source package" ;;
+    *) fail "missing artifact label for connector lane: $1" ;;
+  esac
+}
+
+refresh_artifact_ledger_row() {
+  local lane="$1"
+  local target_artifact="$2"
+  local ledger="${repo_root}/artifacts/public-artifacts.tsv"
+  local label relative_path digest
+  label="$(artifact_label_for_lane "${lane}")"
+  relative_path="${target_artifact#${repo_root}/}"
+  [[ "${relative_path}" != "${target_artifact}" ]] || fail "artifact is outside publish root: ${target_artifact}"
+  digest="$(shasum -a 256 "${target_artifact}" | awk '{print $1}')"
+
+  python3 - "${ledger}" "${label}" "${relative_path}" "${digest}" <<'PY'
+import csv
+import os
+import sys
+import tempfile
+
+ledger, label, relative_path, digest = sys.argv[1:]
+with open(ledger, encoding="utf-8", newline="") as stream:
+    lines = stream.readlines()
+
+replacement = f"public\t{label}\t{relative_path}\t{digest}\n"
+matched = 0
+output = []
+for line in lines:
+    if line.startswith("#") or not line.strip():
+        output.append(line)
+        continue
+    fields = next(csv.reader([line], delimiter="\t"))
+    if len(fields) == 4 and fields[1] == label:
+        matched += 1
+        if matched == 1:
+            output.append(replacement)
+        continue
+    output.append(line)
+
+if matched > 1:
+    raise SystemExit(f"duplicate artifact ledger label: {label}")
+if matched == 0:
+    output.append(replacement)
+
+directory = os.path.dirname(ledger)
+fd, temporary = tempfile.mkstemp(prefix="public-artifacts.", dir=directory, text=True)
+try:
+    with os.fdopen(fd, "w", encoding="utf-8", newline="") as stream:
+        stream.writelines(output)
+    os.replace(temporary, ledger)
+except BaseException:
+    try:
+        os.unlink(temporary)
+    except FileNotFoundError:
+        pass
+    raise
+PY
+}
+
 command -v jq >/dev/null 2>&1 || fail "jq is required"
 require_file "${native_manifest}"
 [[ -d "${connector_root}" ]] || fail "connector repo is missing: ${connector_root}"
+parse_release_lanes
 
 native_version="$(jq -er '.version' "${native_manifest}")"
 native_source="$(jq -er '.sourceSnapshot' "${native_manifest}")"
@@ -105,49 +212,52 @@ stage_lane() {
 
   mkdir -p "$(dirname "${target}")"
   mv "${staged}" "${target}"
+  refresh_artifact_ledger_row "${lane}" "${target}/$(basename "${artifact_path}")"
   echo "[stage-runtime-connectors] staged runtime/${lane}/releases/${release_directory}"
 }
 
 jvm_version="${connector_version}-g${native_source}-${connector_source}"
 jvm_dist="${connector_root}/v2/jvm/build/dist/coakka-jvm-native-runtime-v2"
 
-stage_lane \
-  jvm "${jvm_version}" \
-  "${jvm_dist}/coakka-jvm-native-runtime-v2-${jvm_version}.jar" \
-  "${jvm_dist}"
+if lane_selected jvm; then
+  stage_lane \
+    jvm "${jvm_version}" \
+    "${jvm_dist}/coakka-jvm-native-runtime-v2-${jvm_version}.jar" \
+    "${jvm_dist}"
+fi
 
-stage_lane node "${connector_version}" \
+lane_selected node && stage_lane node "${connector_version}" \
   "${connector_root}/node/coakka-v2-connector-node-${connector_version}.tgz" \
   "${connector_root}/node"
-stage_lane bun "${connector_version}" \
+lane_selected bun && stage_lane bun "${connector_version}" \
   "${connector_root}/bun/coakka-v2-connector-bun-${connector_version}.tgz" \
   "${connector_root}/bun"
-stage_lane electron "${connector_version}" \
+lane_selected electron && stage_lane electron "${connector_version}" \
   "${connector_root}/electron/coakka-v2-connector-electron-${connector_version}.tgz" \
   "${connector_root}/electron"
-stage_lane python "${connector_version}" \
+lane_selected python && stage_lane python "${connector_version}" \
   "${connector_root}/python/build/wheelhouse/coakka_v2_connector-${connector_version}-py3-none-any.whl" \
   "${connector_root}/python"
-stage_lane go "${connector_version}" \
+lane_selected go && stage_lane go "${connector_version}" \
   "${connector_root}/go/coakka-v2-connector-go-${connector_version}.tar.gz" \
   "${connector_root}/go"
-stage_lane csharp "${connector_version}" \
+lane_selected csharp && stage_lane csharp "${connector_version}" \
   "${connector_root}/csharp/build/nupkg/CoAkka.Runtime.${connector_version}.nupkg" \
   "${connector_root}/csharp"
-stage_lane rust "${connector_version}" \
+lane_selected rust && stage_lane rust "${connector_version}" \
   "${connector_root}/rust/coakka-runtime-rs-${connector_version}.tar.gz" \
   "${connector_root}/rust" true
-stage_lane swift "${connector_version}" \
+lane_selected swift && stage_lane swift "${connector_version}" \
   "${connector_root}/swift/coakka-runtime-swift-${connector_version}.tar.gz" \
   "${connector_root}/swift" true
-stage_lane tauri "${connector_version}-source" \
+lane_selected tauri && stage_lane tauri "${connector_version}-source" \
   "${connector_root}/tauri-intents/coakka-runtime-tauri-intents-${connector_version}-source.tar.gz" \
   "${connector_root}/tauri-intents" true
-stage_lane mojo "${connector_version}-source" \
+lane_selected mojo && stage_lane mojo "${connector_version}-source" \
   "${connector_root}/mojo/coakka-runtime-mojo-${connector_version}-source.tar.gz" \
   "${connector_root}/mojo" true
-stage_lane zig "${connector_version}-source" \
+lane_selected zig && stage_lane zig "${connector_version}-source" \
   "${connector_root}/zig/coakka-runtime-zig-${connector_version}-source.tar.gz" \
   "${connector_root}/zig" true
 
-echo "[stage-runtime-connectors] release=${release_directory} platforms=${platforms_json}"
+echo "[stage-runtime-connectors] release=${release_directory} lanes=${release_lanes[*]} platforms=${platforms_json}"

@@ -20,29 +20,29 @@ Across those surfaces, polyglot connectors preserve one target,
 request/reply, bounded-admission, deadletter, capability, and configuration
 contract instead of inventing language-specific runtime semantics.
 
-## Runtime 1.4.0 Train
+## Runtime 1.4.1 Train
 
 The public artifact mirror aligns the runtime connector lanes below to native
-runtime generation `1.4.0+2cee86bf`. Package-manager registries have independent
+runtime generation `1.4.1+9e02a51d`. Package-manager registries have independent
 publication state and remain listed separately below.
 
 | Surface | Public artifact or coordinate | Public generation | Native generation |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/1.4.0+2cee86bf/coakka-runtime-native-v2-1.4.0.tar.gz` | `1.4.0+2cee86bf` | `1.4.0+2cee86bf` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.4.0-g2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.4.0-g2cee86bf-ec4902c` | via JVM runtime |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.4.0-g2cee86bf-ec4902c` | via JVM runtime |
-| Python runtime artifact | `coakka_v2_connector` wheel | `1.4.5` in `1.4.0+2cee86bf-77c9db8` | `1.4.0+2cee86bf` |
-| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.4.5` in `1.4.0+2cee86bf-2c0c598` | `1.4.0+2cee86bf` |
-| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.5` in `1.4.0+2cee86bf-2c0c598` | `1.4.0+2cee86bf` |
-| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.5` in `1.4.0+2cee86bf-2c0c598` | via matching Node artifact |
-| Tauri runtime artifact | `coakka-runtime-tauri-intents` source package | `1.4.0-source` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
-| Go runtime artifact | `coakka-v2-connector-go` module archive | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
-| C# runtime artifact | `CoAkka.Runtime` package file | `1.4.6` in `1.4.0+2cee86bf-693f122` | `1.4.0+2cee86bf` |
-| Rust runtime artifact | `coakka-runtime-rs` source package | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
-| Swift runtime artifact | `coakka-runtime-swift` source package | `1.4.0` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
-| Mojo runtime artifact | `coakka-runtime-mojo` source package | `1.4.0-source` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
-| Zig runtime artifact | `coakka-runtime-zig` source package | `1.4.0-source` in `1.4.0+2cee86bf-ec4902c` | `1.4.0+2cee86bf` |
+| Native C ABI | `runtime/native/releases/1.4.1+9e02a51d/coakka-runtime-native-v2-1.4.1.tar.gz` | `1.4.1+9e02a51d` | `1.4.1+9e02a51d` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.4.1-g9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.4.1-g9e02a51d-4e7cda4` | via JVM runtime |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.4.1-g9e02a51d-4e7cda4` | via JVM runtime |
+| Python runtime artifact | `coakka_v2_connector` wheel | `1.4.6` candidate in `1.4.1+9e02a51d-603a3728` | `1.4.1+9e02a51d` |
+| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.4.6` candidate in `1.4.1+9e02a51d-37816322` | `1.4.1+9e02a51d` |
+| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.6` candidate in `1.4.1+9e02a51d-37816322` | `1.4.1+9e02a51d` |
+| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.6` candidate in `1.4.1+9e02a51d-37816322` | via matching Node artifact |
+| Tauri runtime artifact | `coakka-runtime-tauri-intents` source package | `1.4.1-source` in `1.4.1+9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
+| Go runtime artifact | `coakka-v2-connector-go` module archive | `1.4.1` in `1.4.1+9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
+| C# runtime artifact | `CoAkka.Runtime` package file | `1.4.7` candidate in `1.4.1+9e02a51d-af244b1e` | `1.4.1+9e02a51d` |
+| Rust runtime artifact | `coakka-runtime-rs` source package | `1.4.1` in `1.4.1+9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
+| Swift runtime artifact | `coakka-runtime-swift` source package | `1.4.1` in `1.4.1+9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
+| Mojo runtime artifact | `coakka-runtime-mojo` source package | `1.4.1-source` in `1.4.1+9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
+| Zig runtime artifact | `coakka-runtime-zig` source package | `1.4.1-source` in `1.4.1+9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
 
 ## Logger 1.2.1 Train
 
@@ -69,9 +69,9 @@ All logger connector lanes below align to logger native generation
 
 | Surface | Public generation | Public location |
 | --- | --- | --- |
-| `coakka-client` native CLI | macOS ARM64 `1.4.0+2cee86bf`; Linux/Windows `1.3.4+dc6ec28` | `coakka-tools/coakka-client/releases/` |
+| `coakka-client` native CLI | all five native platforms `1.4.1+9e02a51d` | `coakka-tools/coakka-client/releases/` |
 | `coakka-client` Docker Linux bundle | `1.3.2+caff6d6d` | `coakka-tools/coakka-client/docker-demo/releases/` |
-| `coakka-runtime-inspect` native UI | macOS ARM64 `1.4.0+2cee86bf`; Linux/Windows `1.3.4+dc6ec28` | `coakka-tools/coakka-runtime-inspect/releases/` |
+| `coakka-runtime-inspect` native UI | all five native platforms `1.4.1+9e02a51d` | `coakka-tools/coakka-runtime-inspect/releases/` |
 
 ## Package-Manager Channels
 

@@ -1,0 +1,61 @@
+{
+  "status": "staged_not_published",
+  "connector_commit": "37816322",
+  "created_date": "2026-08-03",
+  "registry": "https://registry.npmjs.org/",
+  "native_runtime_generation": "1.4.1+9e02a51d",
+  "release_reason": "corrective full five-platform native matrix over runtime 1.4.1",
+  "publish_order": [
+    "runtime-node",
+    "runtime-bun",
+    "runtime-electron"
+  ],
+  "packages": [
+    {
+      "label": "runtime-node",
+      "product": "runtime",
+      "role": "node",
+      "package_name": "coakka-v2-connector-node",
+      "expected_native_generation": "1.4.1+9e02a51d",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ],
+      "relative_path": "runtime/node/coakka-v2-connector-node-1.4.6.tgz"
+    },
+    {
+      "label": "runtime-bun",
+      "product": "runtime",
+      "role": "bun",
+      "package_name": "coakka-v2-connector-bun",
+      "expected_native_generation": "1.4.1+9e02a51d",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ],
+      "relative_path": "runtime/bun/coakka-v2-connector-bun-1.4.6.tgz"
+    },
+    {
+      "label": "runtime-electron",
+      "product": "runtime",
+      "role": "electron",
+      "package_name": "coakka-v2-connector-electron",
+      "expected_native_generation": "1.4.1+9e02a51d",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ],
+      "expected_internal_dependency": "coakka-v2-connector-node",
+      "relative_path": "runtime/electron/coakka-v2-connector-electron-1.4.6.tgz"
+    }
+  ]
+}
