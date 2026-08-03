@@ -12,13 +12,13 @@ Current coordinates:
 
 | Surface | Coordinate | Native generation |
 | --- | --- | --- |
-| Runtime | `CoAkka.Runtime`, exact `1.4.6` | `1.4.0+2cee86bf` |
+| Runtime | `CoAkka.Runtime`, exact `1.4.7` | `1.4.1+9e02a51d` |
 | Logger | `CoAkka.Logger`, exact `1.2.2` | `1.2.1+f50756ebff0d` |
 
 Install:
 
 ```sh
-dotnet add package CoAkka.Runtime --version 1.4.6
+dotnet add package CoAkka.Runtime --version 1.4.7
 dotnet add package CoAkka.Logger --version 1.2.2
 ```
 
@@ -26,6 +26,8 @@ The runtime package bundles native assets under `runtimes/<rid>/native` for:
 
 - `osx-arm64`
 - `linux-arm64`
+- `linux-x64`
+- `win-arm64`
 - `win-x64`
 
 The logger package remains at `1.2.2` with its separately documented five-RID

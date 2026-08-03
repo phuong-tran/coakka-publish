@@ -114,7 +114,7 @@ version number.
 
 | Channel | Runtime package | Logger package |
 | --- | --- | --- |
-| NuGet | [`CoAkka.Runtime` 1.4.6](https://www.nuget.org/packages/CoAkka.Runtime/1.4.6) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
+| NuGet | [`CoAkka.Runtime` 1.4.7](https://www.nuget.org/packages/CoAkka.Runtime/1.4.7) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
 | npm | [`coakka-v2-connector-node` 1.4.5](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.4.5) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
 | PyPI | [`coakka-v2-connector` 1.4.6](https://pypi.org/project/coakka-v2-connector/1.4.6/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.4.0](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.4.0) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
@@ -158,7 +158,7 @@ Current runtime release note:
 
 Current package-manager release notes:
 [2026-08-03 npm JavaScript runtime 1.4.5](docs/releases/2026-08-03-npm-runtime-1.4.5.md),
-[2026-08-03 NuGet C# runtime 1.4.6](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.6.md),
+[2026-08-03 NuGet C# runtime 1.4.7](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.7.md),
 and
 [2026-08-03 PyPI Python runtime 1.4.6](docs/releases/2026-08-03-pypi-python-runtime-1.4.6.md).
 
@@ -172,7 +172,7 @@ Latest GitHub Release boundary note:
 
 Current language connector release notes:
 [2026-07-26 Go module native payload cleanup](docs/releases/2026-07-26-go-module-native-payload-cleanup.md),
-[2026-08-03 C# runtime NuGet 1.4.6](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.6.md),
+[2026-08-03 C# runtime NuGet 1.4.7](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.7.md),
 [2026-07-28 C# logger NuGet 1.2.2](docs/releases/2026-07-28-csharp-logger-nuget-1.2.2.md),
 [2026-07-25 runtime language packages 1.3.2 caff6d6d 6d5ea58](docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md),
 [2026-07-25 npm runtime package b46f705](docs/releases/2026-07-25-npm-runtime-native-bridge-b46f705.md),
@@ -248,8 +248,8 @@ Current public Node.js, Bun, and Electron npm runtime packages:
 `coakka-v2-connector-{node,bun,electron}@1.4.5`.
 Current public Python PyPI runtime package:
 `coakka-v2-connector==1.4.6`, over native generation `1.4.1+9e02a51d`.
-Current public C# runtime NuGet package: `CoAkka.Runtime@1.4.6`, over native
-generation `1.4.0+2cee86bf`.
+Current public C# runtime NuGet package: `CoAkka.Runtime@1.4.7`, over native
+generation `1.4.1+9e02a51d`.
 Current public C# logger NuGet package: `CoAkka.Logger@1.2.2`.
 Current public Mojo/Zig source connector generation:
 `1.4.1+9e02a51d-4e7cda4`.
@@ -294,7 +294,7 @@ NuGet package-manager releases:
 
 | Lane | Coordinate | Native generation |
 | --- | --- | --- |
-| C# runtime connector | `CoAkka.Runtime`, exact `1.4.6` | runtime native `1.4.0+2cee86bf` |
+| C# runtime connector | `CoAkka.Runtime`, exact `1.4.7` | runtime native `1.4.1+9e02a51d` |
 | C# logger connector | `CoAkka.Logger`, exact `1.2.2` | logger native `1.2.1+f50756ebff0d` |
 
 The NuGet lane is binary package-manager distribution for .NET consumers.
@@ -306,12 +306,12 @@ mirror publishes JVM runtime, Spring Boot, and Quarkus as
 `1.4.1-g9e02a51d-4e7cda4`. Source connector artifacts use release directory
 `1.4.1+9e02a51d-4e7cda4`. Verified registry candidates are staged separately:
 npm `1.4.6` from `37816322`, NuGet `1.4.7` from `af244b1e`, and Python `1.4.6`
-from `603a3728`. Registry-current versions remain listed above until each
-registry serves the new bytes.
+from `603a3728`. Python and NuGet are registry-verified; npm remains a staged
+candidate until the registry serves the new bytes.
 
 Package-manager registries are separate publication channels. npm Node.js,
 Bun, and Electron are current at `1.4.5`. PyPI runtime is current at `1.4.6`,
-and NuGet runtime is current at `CoAkka.Runtime` `1.4.6`.
+and NuGet runtime is current at `CoAkka.Runtime` `1.4.7`.
 Go modules and SwiftPM advance through public GitHub tag `v1.4.0`.
 Do not mix language or framework runtime packages from another native package
 generation unless a release note explicitly declares that combination
@@ -376,7 +376,7 @@ Current published lanes:
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.4.0`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1`
-- `NuGet: CoAkka.Runtime@1.4.6`
+- `NuGet: CoAkka.Runtime@1.4.7`
 - `NuGet: CoAkka.Logger@1.2.2`
 - `npm: coakka-logger-node@1.2.6`
 - `npm: coakka-logger-bun@1.2.6`
@@ -544,7 +544,7 @@ These artifacts are the current public runtime set:
 | Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.6` candidate | `1.4.1+9e02a51d` |
 | Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.6` candidate | via matching Node artifact |
 | Go runtime artifact | `coakka-v2-connector-go` archive | `1.4.1` | `1.4.1+9e02a51d` |
-| C# runtime artifact | `CoAkka.Runtime` package file | `1.4.7` candidate | `1.4.1+9e02a51d` |
+| C# runtime artifact | `CoAkka.Runtime` package file | `1.4.7` | `1.4.1+9e02a51d` |
 | Rust runtime artifact | `coakka-runtime-rs` package | `1.4.1` | `1.4.1+9e02a51d` |
 | Swift runtime artifact | `coakka-runtime-swift` package | `1.4.1` | `1.4.1+9e02a51d` |
 | Mojo runtime | `runtime/mojo/releases/1.4.1+9e02a51d-4e7cda4/coakka-runtime-mojo-1.4.1-source.tar.gz` | `1.4.1-source` | `1.4.1+9e02a51d` |
@@ -567,9 +567,9 @@ envelope/transport policy last.
 Release docs and samples present a helper only when the published artifact
 contains it. The 1.4.1 artifact mirror uses connector source `4e7cda4` for JVM
 and source packages. The Python `1.4.6`, npm `1.4.6`, and NuGet `1.4.7`
-candidates use sources `603a3728`, `37816322`, and `af244b1e` respectively.
+packages use sources `603a3728`, `37816322`, and `af244b1e` respectively.
 All use native generation `1.4.1+9e02a51d`. Package-manager registry versions
-remain documented separately until publication is verified.
+remain documented separately; npm `1.4.6` is still awaiting publication.
 
 Validation gates run before publishing:
 
