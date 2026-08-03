@@ -1,0 +1,35 @@
+{
+  "lane": "pypi",
+  "status": "current",
+  "released_at": "2026-08-03",
+  "packages": [
+    {
+      "surface": "runtime",
+      "package": "coakka-v2-connector",
+      "version": "1.4.6",
+      "url": "https://pypi.org/project/coakka-v2-connector/1.4.6/",
+      "artifact": "coakka_v2_connector-1.4.6-py3-none-any.whl",
+      "sha256": "09285c8310a44e3c4e590239d478a2dab48e7ab1a2abc940884690dab1db43cf",
+      "native_generation": "1.4.1+9e02a51d",
+      "platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ]
+    },
+    {
+      "surface": "logger",
+      "package": "coakka-logger",
+      "version": "1.2.2",
+      "url": "https://pypi.org/project/coakka-logger/1.2.2/",
+      "native_generation": "1.2.1+f50756ebff0d"
+    }
+  ],
+  "verification": [
+    "PyPI JSON version, filename, yanked state, and SHA-256",
+    "clean isolated pip install from https://pypi.org/simple",
+    "consumer runtime request/reply smoke"
+  ]
+}

@@ -116,7 +116,7 @@ version number.
 | --- | --- | --- |
 | NuGet | [`CoAkka.Runtime` 1.4.6](https://www.nuget.org/packages/CoAkka.Runtime/1.4.6) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
 | npm | [`coakka-v2-connector-node` 1.4.5](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.4.5) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
-| PyPI | [`coakka-v2-connector` 1.4.5](https://pypi.org/project/coakka-v2-connector/1.4.5/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
+| PyPI | [`coakka-v2-connector` 1.4.6](https://pypi.org/project/coakka-v2-connector/1.4.6/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.4.0](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.4.0) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
 | SwiftPM | [`coakka-runtime-swift` v1.4.0](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.4.0) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
 
@@ -147,23 +147,23 @@ and
 [Repository Boundaries](docs/repository-boundaries.md).
 
 Latest GitHub Release page with attached public artifacts:
-[CoAkka Public Artifacts 1.4.0](https://github.com/phuong-tran/coakka-publish/releases/tag/coakka-public-artifacts-v1.4.0).
+[CoAkka Public Artifacts 1.4.1](https://github.com/phuong-tran/coakka-publish/releases/tag/coakka-public-artifacts-v1.4.1).
 
 Use [`artifacts/public-artifacts.tsv`](artifacts/public-artifacts.tsv) and
 [`docs/compatibility-matrix.md`](docs/compatibility-matrix.md) as the current
 public artifact index.
 
 Current runtime release note:
-[2026-08-02 runtime 1.4.0](docs/releases/2026-08-02-runtime-1.4.0-2cee86bf.md).
+[2026-08-03 runtime 1.4.1](docs/releases/2026-08-03-runtime-1.4.1-9e02a51d.md).
 
 Current package-manager release notes:
 [2026-08-03 npm JavaScript runtime 1.4.5](docs/releases/2026-08-03-npm-runtime-1.4.5.md),
 [2026-08-03 NuGet C# runtime 1.4.6](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.6.md),
 and
-[2026-08-03 PyPI Python runtime 1.4.5](docs/releases/2026-08-03-pypi-python-runtime-1.4.5.md).
+[2026-08-03 PyPI Python runtime 1.4.6](docs/releases/2026-08-03-pypi-python-runtime-1.4.6.md).
 
 Current runtime tools release note:
-[2026-08-02 runtime 1.4.0](docs/releases/2026-08-02-runtime-1.4.0-2cee86bf.md).
+[2026-08-03 runtime 1.4.1](docs/releases/2026-08-03-runtime-1.4.1-9e02a51d.md).
 Last documented coakka-runtime-inspect Docker Hub release note:
 [2026-07-25 runtime tooling stop backpressure hotfix 0da8c2d9](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md).
 
@@ -195,7 +195,7 @@ and
 [2026-05-21 runtime connector 5ab812f](docs/releases/2026-05-21-runtime-connector-5ab812f.md).
 
 Current source connector release note:
-[2026-08-02 runtime 1.4.0](docs/releases/2026-08-02-runtime-1.4.0-2cee86bf.md).
+[2026-08-03 runtime 1.4.1](docs/releases/2026-08-03-runtime-1.4.1-9e02a51d.md).
 
 ## License And Trademark
 
@@ -247,7 +247,7 @@ Current public npm runtime candidate projection: `1.4.1+9e02a51d-37816322`.
 Current public Node.js, Bun, and Electron npm runtime packages:
 `coakka-v2-connector-{node,bun,electron}@1.4.5`.
 Current public Python PyPI runtime package:
-`coakka-v2-connector==1.4.5`, over native generation `1.4.0+2cee86bf`.
+`coakka-v2-connector==1.4.6`, over native generation `1.4.1+9e02a51d`.
 Current public C# runtime NuGet package: `CoAkka.Runtime@1.4.6`, over native
 generation `1.4.0+2cee86bf`.
 Current public C# logger NuGet package: `CoAkka.Logger@1.2.2`.
@@ -310,7 +310,7 @@ from `603a3728`. Registry-current versions remain listed above until each
 registry serves the new bytes.
 
 Package-manager registries are separate publication channels. npm Node.js,
-Bun, and Electron are current at `1.4.5`. PyPI runtime is current at `1.4.5`,
+Bun, and Electron are current at `1.4.5`. PyPI runtime is current at `1.4.6`,
 and NuGet runtime is current at `CoAkka.Runtime` `1.4.6`.
 Go modules and SwiftPM advance through public GitHub tag `v1.4.0`.
 Do not mix language or framework runtime packages from another native package
@@ -333,7 +333,7 @@ commit is visible at the package list boundary.
 The current npm coordinates are listed per package because Node.js, Bun, and
 Electron can advance independently; this release aligns all three at `1.4.5`.
 The Python runtime package
-`coakka-v2-connector==1.4.5` and logger package
+`coakka-v2-connector==1.4.6` and logger package
 `coakka-logger==1.2.2` are published on PyPI. Superseded PyPI versions
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
 `coakka-logger==1.2.1` are yanked so ordinary installs resolve to the current
@@ -372,7 +372,7 @@ Current published lanes:
 - `npm: coakka-v2-connector-node@1.4.5`
 - `npm: coakka-v2-connector-bun@1.4.5`
 - `npm: coakka-v2-connector-electron@1.4.5`
-- `PyPI: coakka-v2-connector==1.4.5`
+- `PyPI: coakka-v2-connector==1.4.6`
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.4.0`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1`
