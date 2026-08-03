@@ -10,6 +10,8 @@ remain under [docs/releases/](docs/releases/).
   independent runtime lifecycles, quota-gated route-snapshot hot reload, and
   consumer-only TSan controls. Core race claims remain limited to the separate
   exact-source instrumented workflow; published native bytes are unchanged.
+  The Windows harness derives an MSVC consumer import library from its public
+  export definition without modifying the published runtime DLL.
 - Published the native C++ transport configuration contract at a stable public
   URL and made the TLS/mTLS and connection-strategy guides connector-first.
   Both guides now include Kotlin/JVM startup examples and state that full

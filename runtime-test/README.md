@@ -50,6 +50,11 @@ configuration directory:
 
 For a multi-configuration generator, use `build/Release/` instead.
 
+The current Windows archive contains the published runtime DLL but no MSVC
+import library. On MSVC, this harness creates a consumer-only `.lib` from
+`coakka_runtime_v2.def` during configure. The DLL is neither modified nor
+relinked.
+
 The connection-policy executable covers `PER_EXCHANGE`, `BOUNDED_POOL`,
 `PERSISTENT_SINGLE_FLIGHT`, and `MULTIPLEXING`. It evaluates support from the
 runtime capability snapshot and requires unsupported modes to fail without
