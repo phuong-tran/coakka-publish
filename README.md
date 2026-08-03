@@ -55,7 +55,10 @@ The root-level [`runtime-test/`](runtime-test/README.md) is the auditable C11
 consumer harness for the published native runtime. It uses only the stable
 public C ABI and covers request/reply invariants, bounded admission, all four
 connection strategies, structured rejection, static analysis, and
-consumer-side ASan/UBSan controls. Prebuilt platform runners remain under
+consumer-side ASan/UBSan controls. It also contains multi-producer race,
+submit-versus-stop, independent lifecycle, and atomic route-snapshot hot-reload
+evidence with a separate source-level TSan gate. Prebuilt platform runners
+remain under
 [`runtime/evidence/native/releases/`](runtime/evidence/native/releases/) for
 systems without a local C toolchain.
 

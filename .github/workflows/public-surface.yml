@@ -69,3 +69,9 @@ jobs:
             "${build_dir}/coakka_runtime_v2_native_evidence" smoke --requests 32
           LD_LIBRARY_PATH="${package_root}/native/linux-aarch64" \
             "${build_dir}/coakka_runtime_v2_connection_strategy_evidence"
+          LD_LIBRARY_PATH="${package_root}/native/linux-aarch64" \
+            "${build_dir}/coakka_runtime_v2_concurrency_evidence" \
+              race --threads 2 --requests 16 --lifecycle-iterations 1 --queue-capacity 32
+          LD_LIBRARY_PATH="${package_root}/native/linux-aarch64" \
+            "${build_dir}/coakka_runtime_v2_concurrency_evidence" \
+              hot-reload --threads 2 --requests 32 --generations 4 --queue-capacity 32

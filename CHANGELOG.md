@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-03
 
+- Added the checksum-manifested public C11 concurrency evidence projection,
+  including multi-producer terminal accounting, submit-versus-stop,
+  independent runtime lifecycles, quota-gated route-snapshot hot reload, and
+  consumer-only TSan controls. Core race claims remain limited to the separate
+  exact-source instrumented workflow; published native bytes are unchanged.
 - Published the native C++ transport configuration contract at a stable public
   URL and made the TLS/mTLS and connection-strategy guides connector-first.
   Both guides now include Kotlin/JVM startup examples and state that full
