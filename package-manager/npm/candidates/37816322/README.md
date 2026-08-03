@@ -3,7 +3,7 @@
 This directory stages the npm-ready Node.js, Bun, and Electron runtime
 packages for native generation `1.4.1+9e02a51d`.
 
-Status: staged and verified, not published.
+Status: published to npm and registry-verified on 2026-08-03.
 
 Every tarball contains exactly Linux ARM64/x86-64, macOS ARM64, and Windows
 ARM64/x86-64 native libraries. The copies here are byte-identical to the
@@ -15,5 +15,6 @@ Candidate coordinates:
 - `coakka-v2-connector-bun@1.4.6`
 - `coakka-v2-connector-electron@1.4.6`
 
-Publication order is Node.js, Bun, then Electron. The candidate remains staged
-until npm serves each exact version and shasum under the `latest` dist-tag.
+Publication order is Node.js, Bun, then Electron. npm now serves each exact
+version under the `latest` dist-tag, and registry verification matches the
+staged tarballs.

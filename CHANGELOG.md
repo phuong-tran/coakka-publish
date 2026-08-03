@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-03
 
+- Published and registry-verified the Node.js, Bun, and Electron runtime
+  packages at `1.4.6` over native generation `1.4.1+9e02a51d`. The staged
+  candidate `37816322` carries the full five-platform native matrix, npm
+  serves all three versions under the `latest` dist-tag, and registry checks
+  match the staged tarball digests.
 - Removed hosted ASan/UBSan execution from `public-surface`. The auditable C11
   harness and sanitizer switches remain available for explicit local or
   evaluator runs; normal artifact CI no longer pays for instrumented builds.

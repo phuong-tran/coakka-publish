@@ -91,9 +91,9 @@ Runtime npm packages are published for the sealed package boundary:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@1.4.5` | `1.4.0+2cee86bf` |
-| Bun runtime | `coakka-v2-connector-bun@1.4.5` | `1.4.0+2cee86bf` |
-| Electron runtime | `coakka-v2-connector-electron@1.4.5` | via `coakka-v2-connector-node@1.4.5` |
+| Node.js runtime | `coakka-v2-connector-node@1.4.6` | `1.4.1+9e02a51d` |
+| Bun runtime | `coakka-v2-connector-bun@1.4.6` | `1.4.1+9e02a51d` |
+| Electron runtime | `coakka-v2-connector-electron@1.4.6` | via `coakka-v2-connector-node@1.4.6` |
 | Node.js logger | `coakka-logger-node@1.2.6` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.6` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.6` | via `coakka-logger-node@1.2.6` |

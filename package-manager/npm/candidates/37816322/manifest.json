@@ -1,7 +1,9 @@
 {
-  "status": "staged_not_published",
+  "status": "published_to_npm",
   "connector_commit": "37816322",
   "created_date": "2026-08-03",
+  "published_date": "2026-08-03",
+  "verified_date": "2026-08-03",
   "registry": "https://registry.npmjs.org/",
   "native_runtime_generation": "1.4.1+9e02a51d",
   "release_reason": "corrective full five-platform native matrix over runtime 1.4.1",
