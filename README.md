@@ -612,8 +612,8 @@ run the intake gate on the submitted artifact:
 ```bash
 scripts/verify-runtime-intake-artifact.py \
   --lane python \
-  --artifact /path/to/coakka_v2_connector-1.4.5-py3-none-any.whl \
-  --expected-native-version 1.4.0+2cee86bf
+  --artifact /path/to/coakka_v2_connector-1.4.6-py3-none-any.whl \
+  --expected-native-version 1.4.1+9e02a51d
 ```
 
 Use the matching `--lane` value for the submitted package. The gate verifies

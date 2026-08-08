@@ -3,6 +3,13 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-08
+
+- Reconciled current package metadata with the registry-verified runtime train:
+  npm and PyPI `1.4.6`, NuGet `1.4.7`, Go and Swift `v1.4.1`, and native/JVM/
+  source artifacts from `1.4.1+9e02a51d`. SwiftPM current metadata now records
+  the five-platform payload and exact `v1.4.1` commit.
+
 ## 2026-08-03
 
 - Published and registry-verified the Node.js, Bun, and Electron runtime

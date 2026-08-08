@@ -80,7 +80,7 @@ All logger connector lanes below align to logger native generation
 | npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.4.6` and logger `coakka-logger==1.2.2` current |
 | Go modules | Go runtime/logger packages | current; runtime `github.com/phuong-tran/coakka-runtime-go@v1.4.1`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
-| SwiftPM | Swift runtime/logger source packages | current; runtime `github.com/phuong-tran/coakka-runtime-swift@1.4.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
+| SwiftPM | Swift runtime/logger source packages | current; runtime `github.com/phuong-tran/coakka-runtime-swift@1.4.1`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
 | NuGet | C# runtime/logger packages | current; runtime `CoAkka.Runtime==1.4.7`, logger `CoAkka.Logger==1.2.2` |
 
 PyPI superseded versions are yanked, not deleted:
@@ -121,7 +121,7 @@ SwiftPM packages:
 
 | Surface | SwiftPM coordinate | Native generation |
 | --- | --- | --- |
-| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.4.0` | `1.4.0+2cee86bf` |
+| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.4.1` | `1.4.1+9e02a51d` |
 | Swift logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1` | `1.2.1+f50756ebff0d` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for current

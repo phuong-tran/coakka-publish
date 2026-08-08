@@ -4,7 +4,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 connector_root="${1:-${repo_root}/../coakkaJVMConnector}"
-native_release="${COAKKA_NATIVE_RELEASE:-1.4.0+2cee86bf}"
+native_release="${COAKKA_NATIVE_RELEASE:-1.4.1+9e02a51d}"
 native_manifest="${repo_root}/runtime/native/releases/${native_release}/manifest.json"
 lanes_spec="${COAKKA_CONNECTOR_LANES-jvm node bun electron python go csharp rust swift tauri mojo zig}"
 supported_lanes=(jvm node bun electron python go csharp rust swift tauri mojo zig)

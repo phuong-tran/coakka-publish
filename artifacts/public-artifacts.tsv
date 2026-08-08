@@ -37,8 +37,8 @@ public	runtime C# package 1.4.5	runtime/csharp/releases/1.4.0+2cee86bf-562028d/C
 public	runtime C# package 1.4.6	runtime/csharp/releases/1.4.0+2cee86bf-693f122/CoAkka.Runtime.1.4.6.nupkg	04bda5dd20f3398bf299ddc128c0fe4a2dc399d93dd75066ac40897ad827545d
 public	runtime Rust package	runtime/rust/releases/1.4.1+9e02a51d-4e7cda4/coakka-runtime-rs-1.4.1.tar.gz	dd6a1dcd093148fcafa65ea5798e5c7d462b7a8264cbf0c92525bafbe411edc5
 public	runtime Swift package	runtime/swift/releases/1.4.1+9e02a51d-4e7cda4/coakka-runtime-swift-1.4.1.tar.gz	ea484e13e58bded97660cd6e28a8e3ef118a839dad49abe10f7e04507af04771
-# Runtime source packages are built from connector source commit ec4902c
-# over runtime native package generation 1.4.0+2cee86bf.
+# Runtime source packages are built from connector source commit 4e7cda4
+# over runtime native package generation 1.4.1+9e02a51d.
 public	runtime Mojo source package	runtime/mojo/releases/1.4.1+9e02a51d-4e7cda4/coakka-runtime-mojo-1.4.1-source.tar.gz	8cc85761e93ea0a6284a380b6812dfa2cf0e8dd0403c731ec2cdaeba37f5c42d
 public	runtime Zig source package	runtime/zig/releases/1.4.1+9e02a51d-4e7cda4/coakka-runtime-zig-1.4.1-source.tar.gz	55c43318529337792286f7f71e2d255a7b02404912ac81bfc8925fd9b1466579
 public	runtime Tauri source package	runtime/tauri/releases/1.4.1+9e02a51d-4e7cda4/coakka-runtime-tauri-intents-1.4.1-source.tar.gz	ae9bd5fef6a0fea6ca820d51ec916b023f79667eff2924b17eeb78c4f9a7ca58
