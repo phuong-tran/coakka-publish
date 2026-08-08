@@ -36,6 +36,7 @@ Package manager availability: [docs/package-manager-roadmap.md](docs/package-man
 Spring Boot: [docs/coakka-spring-boot.md](docs/coakka-spring-boot.md)
 Quarkus: [docs/coakka-quarkus.md](docs/coakka-quarkus.md)
 Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
+Envelope and deadletter map: [docs/envelope-deadletter-map.md](docs/envelope-deadletter-map.md)
 Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
 Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.md)
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
@@ -141,6 +142,7 @@ Public docs:
 [CoAkka Runtime Inspect](docs/coakka-runtime-inspect.md),
 [Runtime Glossary](docs/runtime-glossary.md),
 [Runtime Message And Routing Model](docs/runtime-message-and-routing-model.md),
+[Envelope And Deadletter Map](docs/envelope-deadletter-map.md),
 [Runtime Integration Guide](docs/runtime-integration-guide.md),
 [C# Transport Configuration](docs/csharp-transport-configuration.md),
 [Native C++ Transport Configuration](docs/native-cpp-transport-configuration.md),
