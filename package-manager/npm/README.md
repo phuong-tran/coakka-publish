@@ -11,9 +11,13 @@ contract as the JVM, Python, Go, C#, Rust, Swift, and other connector lanes.
 | Bun | `coakka-v2-connector-bun@1.4.6` |
 | Electron | `coakka-v2-connector-electron@1.4.6` |
 
-These three coordinates use native generation `1.4.1+9e02a51d` and connector
-source `37816322`. The exact registry candidates and checksums are recorded
-under `candidates/37816322/`.
+These three published coordinates use native generation `1.4.1+9e02a51d` and
+connector source `37816322`. Their immutable pre-publication artifacts and
+checksums remain recorded under `candidates/37816322/`.
+
+The Node.js registry package executes request/reply on macOS ARM64 and Linux
+ARM64/x86-64. See the exact [package and platform evidence](../../docs/runtime-package-platform-evidence.md)
+before selecting another host target.
 
 Kubernetes is supported but not required. Select an exact package version and
 native OS/CPU tuple using the [current packages](../../docs/current-packages.md)

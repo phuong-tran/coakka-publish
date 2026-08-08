@@ -26,16 +26,19 @@ The public artifact mirror aligns the runtime connector lanes below to native
 runtime generation `1.4.1+9e02a51d`. Package-manager registries have independent
 publication state and remain listed separately below.
 
+Package presence, verification, execution, and known failures are stated
+separately in [Runtime Package And Platform Evidence](runtime-package-platform-evidence.md).
+
 | Surface | Public artifact or coordinate | Public generation | Native generation |
 | --- | --- | --- | --- |
 | Native C ABI | `runtime/native/releases/1.4.1+9e02a51d/coakka-runtime-native-v2-1.4.1.tar.gz` | `1.4.1+9e02a51d` | `1.4.1+9e02a51d` |
 | JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.4.1-g9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
 | Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `1.4.1-g9e02a51d-4e7cda4` | via JVM runtime |
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `1.4.1-g9e02a51d-4e7cda4` | via JVM runtime |
-| Python runtime artifact | `coakka_v2_connector` wheel | `1.4.6` candidate in `1.4.1+9e02a51d-603a3728` | `1.4.1+9e02a51d` |
-| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.4.6` candidate in `1.4.1+9e02a51d-37816322` | `1.4.1+9e02a51d` |
-| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.6` candidate in `1.4.1+9e02a51d-37816322` | `1.4.1+9e02a51d` |
-| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.6` candidate in `1.4.1+9e02a51d-37816322` | via matching Node artifact |
+| Python runtime artifact | `coakka_v2_connector` wheel | PyPI `1.4.6`, source `603a3728`, mirrored in `1.4.1+9e02a51d-603a3728` | `1.4.1+9e02a51d` |
+| Node.js runtime artifact | `coakka-v2-connector-node` tarball | npm `1.4.6`, source `37816322`, mirrored in `1.4.1+9e02a51d-37816322` | `1.4.1+9e02a51d` |
+| Bun runtime artifact | `coakka-v2-connector-bun` tarball | npm `1.4.6`, source `37816322`, mirrored in `1.4.1+9e02a51d-37816322` | `1.4.1+9e02a51d` |
+| Electron runtime artifact | `coakka-v2-connector-electron` tarball | npm `1.4.6`, source `37816322`, mirrored in `1.4.1+9e02a51d-37816322` | via matching Node artifact |
 | Tauri runtime artifact | `coakka-runtime-tauri-intents` source package | `1.4.1-source` in `1.4.1+9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
 | Go runtime artifact | `coakka-v2-connector-go` module archive | `1.4.1` in `1.4.1+9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
 | C# runtime artifact | `CoAkka.Runtime` package file | NuGet `1.4.7` from `1.4.1+9e02a51d-af244b1e` | `1.4.1+9e02a51d` |

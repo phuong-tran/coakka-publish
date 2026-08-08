@@ -30,5 +30,10 @@ The runtime package bundles native assets under `runtimes/<rid>/native` for:
 - `win-arm64`
 - `win-x64`
 
+The exact registry runtime package executes request/reply and route-miss
+deadletter on macOS ARM64, Linux ARM64/x86-64, and Windows 11 ARM64. Windows
+x86-64 retains package/RID verification without a matching-host connector run.
+See [package and platform evidence](../../docs/runtime-package-platform-evidence.md).
+
 The logger package remains at `1.2.2` with its separately documented five-RID
 native matrix.

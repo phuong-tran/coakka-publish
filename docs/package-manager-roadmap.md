@@ -22,6 +22,14 @@ Maven layout in this repository. Native archives and source-first connector
 packages are indexed by `artifacts/public-artifacts.tsv` and the
 [compatibility matrix](compatibility-matrix.md).
 
+Package-lane installation and evidence details live in
+[PyPI](../package-manager/pypi/README.md),
+[npm](../package-manager/npm/README.md),
+[NuGet](../package-manager/nuget/README.md), and
+[SwiftPM](../package-manager/swiftpm/README.md). Go consumers use the
+[`coakka-runtime-go` README](https://github.com/phuong-tran/coakka-runtime-go)
+and its versioned `CONSUMING.md`.
+
 ## Consumption Rules
 
 - Prefer the package manager's normal install command for the language lane.

@@ -32,7 +32,9 @@ Questions and answers: [docs/qna.md](docs/qna.md)
 Runtime client: [docs/coakka-runtime-client.md](docs/coakka-runtime-client.md)
 Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
+Package and platform evidence: [docs/runtime-package-platform-evidence.md](docs/runtime-package-platform-evidence.md)
 Package manager availability: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
+PyPI package lane: [package-manager/pypi/README.md](package-manager/pypi/README.md)
 Spring Boot: [docs/coakka-spring-boot.md](docs/coakka-spring-boot.md)
 Quarkus: [docs/coakka-quarkus.md](docs/coakka-quarkus.md)
 Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
@@ -110,7 +112,7 @@ Public repository map:
 | `coakka-samples` | Runnable examples that show how an app uses the runtime and logger packages. | https://github.com/phuong-tran/coakka-samples |
 | `coakka-runtime-go` | Public Go module for CoAkka Runtime. | https://github.com/phuong-tran/coakka-runtime-go |
 | `coakka-logger-go` | Public Go module for CoAkka Logger. | https://github.com/phuong-tran/coakka-logger-go |
-| `coakka-runtime-swift` | Public SwiftPM package for CoAkka Runtime on macOS ARM64. | https://github.com/phuong-tran/coakka-runtime-swift |
+| `coakka-runtime-swift` | Public SwiftPM package with five native payloads and macOS ARM64 Swift execution. | https://github.com/phuong-tran/coakka-runtime-swift |
 | `coakka-logger-swift` | Public SwiftPM package for CoAkka Logger on macOS ARM64. | https://github.com/phuong-tran/coakka-logger-swift |
 
 Current package-manager entrypoints:
@@ -151,6 +153,7 @@ Public docs:
 [Containerized Runtime](docs/containerized-runtime.md),
 [Production Readiness](docs/production-readiness.md),
 [Production Evidence](docs/production-evidence.md),
+[Runtime Package And Platform Evidence](docs/runtime-package-platform-evidence.md),
 and
 [Repository Boundaries](docs/repository-boundaries.md).
 
@@ -251,7 +254,7 @@ Current public Spring Boot and Quarkus adapter generation:
 `1.4.1-g9e02a51d-4e7cda4`.
 Current public source connector artifact generation:
 `1.4.1+9e02a51d-4e7cda4`.
-Current public npm runtime candidate projection: `1.4.1+9e02a51d-37816322`.
+Current public npm runtime artifact generation: `1.4.1+9e02a51d-37816322`.
 Current public Node.js, Bun, and Electron npm runtime packages:
 `coakka-v2-connector-{node,bun,electron}@1.4.6`.
 Current public Python PyPI runtime package:
@@ -295,8 +298,11 @@ SwiftPM package-manager releases:
 | Swift runtime connector | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `1.4.1` | runtime native `1.4.1+9e02a51d` |
 | Swift logger connector | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1` | logger native `1.2.1+f50756ebff0d` |
 
-The SwiftPM lane is source-first and macOS ARM64. Its release manifest is
-tracked under `package-manager/swiftpm/current.json`.
+The SwiftPM runtime tag contains all five native payloads and has matching-host
+Swift execution on macOS ARM64. Linux carries strict C-bridge and payload
+verification; Windows carries payload verification. The separately versioned
+Swift logger package remains macOS ARM64. The release manifest is tracked under
+`package-manager/swiftpm/current.json`.
 
 NuGet package-manager releases:
 
@@ -312,9 +318,9 @@ Its release manifest is tracked under
 The current root native runtime package is `1.4.1+9e02a51d`. The artifact
 mirror publishes JVM runtime, Spring Boot, and Quarkus as
 `1.4.1-g9e02a51d-4e7cda4`. Source connector artifacts use release directory
-`1.4.1+9e02a51d-4e7cda4`. Verified registry candidates are recorded separately:
-npm `1.4.6` from `37816322`, NuGet `1.4.7` from `af244b1e`, and Python `1.4.6`
-from `603a3728`. Python, NuGet, and npm are registry-verified.
+`1.4.1+9e02a51d-4e7cda4`. Registry release receipts record npm `1.4.6` from
+`37816322`, NuGet `1.4.7` from `af244b1e`, and Python `1.4.6` from `603a3728`.
+Python, NuGet, and npm are registry-verified.
 
 Package-manager registries are separate publication channels. npm Node.js,
 Bun, and Electron are current at `1.4.6`. PyPI runtime is current at `1.4.6`,
@@ -546,10 +552,10 @@ These artifacts are the current public runtime set:
 | --- | --- | --- | --- |
 | Native C ABI | `runtime/native/releases/1.4.1+9e02a51d/coakka-runtime-native-v2-1.4.1.tar.gz` | `1.4.1+9e02a51d` | `1.4.1+9e02a51d` |
 | JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `1.4.1-g9e02a51d-4e7cda4` | `1.4.1+9e02a51d` |
-| Python runtime artifact | `coakka_v2_connector` wheel | `1.4.6` candidate | `1.4.1+9e02a51d` |
-| Node.js runtime artifact | `coakka-v2-connector-node` tarball | `1.4.6` candidate | `1.4.1+9e02a51d` |
-| Bun runtime artifact | `coakka-v2-connector-bun` tarball | `1.4.6` candidate | `1.4.1+9e02a51d` |
-| Electron runtime artifact | `coakka-v2-connector-electron` tarball | `1.4.6` candidate | via matching Node artifact |
+| Python runtime artifact | `coakka_v2_connector` wheel | PyPI `1.4.6`, source `603a3728` | `1.4.1+9e02a51d` |
+| Node.js runtime artifact | `coakka-v2-connector-node` tarball | npm `1.4.6`, source `37816322` | `1.4.1+9e02a51d` |
+| Bun runtime artifact | `coakka-v2-connector-bun` tarball | npm `1.4.6`, source `37816322` | `1.4.1+9e02a51d` |
+| Electron runtime artifact | `coakka-v2-connector-electron` tarball | npm `1.4.6`, source `37816322` | via matching Node artifact |
 | Go runtime artifact | `coakka-v2-connector-go` archive | `1.4.1` | `1.4.1+9e02a51d` |
 | C# runtime artifact | `CoAkka.Runtime` package file | `1.4.7` | `1.4.1+9e02a51d` |
 | Rust runtime artifact | `coakka-runtime-rs` package | `1.4.1` | `1.4.1+9e02a51d` |

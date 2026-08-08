@@ -18,3 +18,9 @@ Current coordinates:
 
 The current manifest is [`current.json`](current.json). Public samples consume
 these coordinates directly.
+
+Runtime `1.4.1` contains verified native payloads for Linux ARM64/x86-64,
+macOS ARM64, and Windows ARM64/x86-64. Swift request/reply, transport, TLS
+reload, and consumer execution pass on macOS ARM64. Linux C-bridge compilation
+and native payload verification pass; the current Linux guests do not contain
+a Swift toolchain. See [package and platform evidence](../../docs/runtime-package-platform-evidence.md).
