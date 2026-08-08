@@ -48,6 +48,12 @@ capabilities, lifecycle rules, and connector examples:
 
 - [TLS and mTLS](docs/tls-and-mtls.md)
 - [Connection strategies](docs/connection-strategies.md)
+- [Runtime file transfer](docs/runtime-file-transfer.md)
+
+Runtime `2.1.0` prepares a bounded, verified file-transfer lane for large
+point-to-point files. This repository does not mark it current until the exact
+five-platform native artifacts, connector packages, manifests, hashes, and
+platform evidence complete release intake.
 
 ## Runtime Test
 
