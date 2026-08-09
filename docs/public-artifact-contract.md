@@ -1,7 +1,7 @@
 # Public Artifact Contract
 
-This document defines the public boundary for artifacts released from this
-repository.
+This document defines the public boundary for versioned artifacts distributed
+from this repository.
 
 ## Current Surface
 
@@ -69,10 +69,24 @@ instead of living as separate manual notes.
 
 ## Distribution Channels
 
-The current canonical distribution channels are GitHub Release assets, raw
-GitHub artifact URLs, the checked-in Maven layout, release-local manifests and
-checksums, `artifacts/public-artifacts.tsv`, and npm registry packages for the
-JavaScript runtime/logger lanes.
+`coakka-publish` is a versioned artifact warehouse and catalog, not a single
+product and not an aggregate release unit. It does not publish GitHub Releases.
+
+The canonical distribution channels are immutable checked-in artifact paths,
+raw GitHub URLs for those paths, the checked-in Maven layout, lane-local
+manifests and checksums, `artifacts/public-artifacts.tsv`, and official package
+registries. Git tags may record immutable intake or publication receipts, but a
+tag does not create a repository-wide product version.
+
+Registry-native channels are npm for JavaScript packages, PyPI for Python,
+NuGet for C#, and the checked-in Maven layout for JVM coordinates. Official Go
+and Swift source-package repositories use semantic Git tags and may keep
+GitHub Release pages because those repositories are package-manager source
+coordinates outside this warehouse.
+
+Historical GitHub Release metadata that is not reproducible from a retained tag
+is stored under `artifacts/release-receipts/<tag>/`. Receipt snapshots are
+evidence only and never replace the root current-artifact index.
 
 Package-manager lanes must not weaken the public artifact contract:
 
@@ -82,6 +96,7 @@ Package-manager lanes must not weaken the public artifact contract:
 - end users must not have to install separate native implementation packages
 - package-manager coordinates must be reflected in public docs and verification
   before samples present them as current
+- no lane may require a `coakka-publish` GitHub Release attachment URL
 
 Current package-manager coordinates and consumption rules are summarized in
 [`package-manager-roadmap.md`](package-manager-roadmap.md).

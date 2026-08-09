@@ -323,5 +323,6 @@ artifacts, manifests, hashes, connector packages, and platform evidence listed
 by the public compatibility matrix. Source-level evidence is not a published
 artifact claim.
 
-This document is the canonical public file-lane contract. Connector READMEs
-link here for connector-specific entry points and blocking behavior.
+This document is projected identically from the CoAkka documentation authority.
+Connector READMEs link to its public `coakka-publish` copy for connector-specific
+entry points and blocking behavior.

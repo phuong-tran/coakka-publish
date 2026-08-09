@@ -51,7 +51,7 @@ It contains all five libraries, the public headers including
 | --- | --- | --- | --- |
 | JVM/JNA/JNI | `coakka.v2:coakka-jvm-native-runtime-v2:2.1.0-g60ddf70d-4782dcd` | All five | JVM checks, embedded-native verification, packaged runtime smoke, Spring Boot tests, and Quarkus tests pass. The implementation uses JNA over the C ABI; JNI names the JVM native-bridge category. |
 | Node.js | `runtime/node/releases/2.1.0+60ddf70d-4782dcd/` | All five | Build, unit tests, package-surface verification, and packaged request/reply pass on macOS ARM64. |
-| Bun | `runtime/bun/releases/2.1.0+60ddf70d-4782dcd/` | All five | Runtime request/reply, file-lane FFI test, package-surface verification, and packaged request/reply pass on macOS ARM64. |
+| Bun | `runtime/bun/releases/2.1.0+60ddf70d-4782dcd/` | All five | Runtime request/reply, file-lane native-call test, package-surface verification, and packaged request/reply pass on macOS ARM64. |
 | Electron | `runtime/electron/releases/2.1.0+60ddf70d-4782dcd/` | Via exact Node package | Packaged Electron main/preload intent smoke passes. |
 | Python | `runtime/python/releases/2.1.0+60ddf70d-34d15e7/` | All five | 29 tests plus four subtests pass. The PyPI JSON SHA-256 matches the staged wheel, and the registry-downloaded package loads runtime 2.1.0 and completes request/reply on macOS ARM64. |
 | Go | `runtime/go/releases/2.1.0+60ddf70d-4782dcd/` | All five | Packaged request/reply and `go test ./...` pass. Public module patch `v1.5.1` uses the canonical file-lane contract. |

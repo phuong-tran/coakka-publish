@@ -43,6 +43,11 @@ Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-inte
 Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.md)
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
 
+This repository is a versioned artifact warehouse and catalog for independent
+CoAkka components. It has no aggregate product version and does not publish
+GitHub Releases. Select an exact lane path or package-manager coordinate, then
+verify its manifest and checksum evidence.
+
 ## Runtime Transport
 
 Runtime transport configuration is available through the full host-language
@@ -163,12 +168,11 @@ Public docs:
 and
 [Repository Boundaries](docs/repository-boundaries.md).
 
-Latest GitHub Release page with attached public artifacts:
-[CoAkka Public Artifacts 2.1.0](https://github.com/phuong-tran/coakka-publish/releases/tag/coakka-public-artifacts-v2.1.0).
-
 Use [`artifacts/public-artifacts.tsv`](artifacts/public-artifacts.tsv) and
 [`docs/compatibility-matrix.md`](docs/compatibility-matrix.md) as the current
-public artifact index.
+public artifact index. Versioned files are downloaded from their immutable lane
+paths in this repository; npm, NuGet, and PyPI packages are downloaded from
+their registries.
 
 Current runtime release note:
 [2026-08-09 runtime 2.1.0](docs/releases/2026-08-09-runtime-2.1.0-60ddf70d.md).
@@ -185,7 +189,7 @@ Current runtime tools release note:
 Last documented coakka-runtime-inspect Docker Hub release note:
 [2026-07-25 runtime tooling stop backpressure hotfix 0da8c2d9](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md).
 
-Latest GitHub Release boundary note:
+Historical GitHub Release boundary note:
 [2026-07-18 public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
 
 Current language connector release notes:
@@ -344,13 +348,13 @@ surfaces in the current train. The current published package surface bundles
 macOS, Linux, and Windows runtime natives. Linux remains the normal deployment
 path for release, soak, and operator-readiness claims.
 
-Consumer-facing downloads are attached to the GitHub Release page and listed
-in `artifacts/public-artifacts.tsv`. Integrity metadata is checksum-based for
-this surface: release manifests, `SHA256SUMS`, Maven checksum sidecars, and
-the root artifact manifest. Signature, SBOM, and attestation files are not part
-of this release surface yet. The manifest also keeps explicit provenance
-comments for public Mojo/Zig source-package lanes so the connector source
-commit is visible at the package list boundary.
+Consumer-facing warehouse downloads live at immutable versioned paths and are
+listed in `artifacts/public-artifacts.tsv`. Integrity metadata is checksum-based
+for this surface: lane manifests, `SHA256SUMS`, Maven checksum sidecars, and the
+root artifact manifest. Signature, SBOM, and attestation files are not part of
+this artifact surface yet. The manifest also keeps explicit provenance comments
+for public Mojo/Zig source-package lanes so the connector source commit is
+visible at the package list boundary.
 
 The current npm coordinates are listed per package because Node.js, Bun, and
 Electron can advance independently; this release aligns all three at `2.1.1`.
