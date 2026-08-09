@@ -15,6 +15,16 @@ These three published coordinates use native generation `1.4.1+9e02a51d` and
 connector source `37816322`. Their immutable pre-publication artifacts and
 checksums remain recorded under `candidates/37816322/`.
 
+## Runtime 2.1.0 Artifacts
+
+The public artifact mirror contains Node.js, Bun, and Electron `2.1.0` packages
+from connector source `4782dcd` over native generation `2.1.0+60ddf70d`.
+Each package is checksum-pinned in `artifacts/public-artifacts.tsv`; Node.js and
+Bun include Linux ARM64/x86-64, macOS ARM64, and Windows ARM64/x86-64 native
+payloads. Packaged consumer smokes load runtime `2.1.0` and complete real
+request/reply. These artifacts are not described as npm-registry releases
+until npm publication and clean-registry installation verification complete.
+
 The Node.js registry package executes request/reply on macOS ARM64 and Linux
 ARM64/x86-64. See the exact [package and platform evidence](../../docs/runtime-package-platform-evidence.md)
 before selecting another host target.

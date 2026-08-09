@@ -15,6 +15,16 @@ identities.
 The machine-readable release receipt is [`current.json`](current.json).
 Superseded versions are yanked rather than deleted; pin the versions above.
 
+## Runtime 2.1.0 Artifact
+
+The artifact mirror contains `coakka_v2_connector-2.1.0-py3-none-any.whl` from
+connector source `4782dcd` over native generation `2.1.0+60ddf70d`. The wheel
+contains Linux ARM64/x86-64, macOS ARM64, and Windows ARM64/x86-64 libraries,
+passes package and digest gates, and completes a packaged request/reply smoke
+on macOS ARM64. It also contains the Windows `PeekNamedPipe` waiter correction
+and the file-lane API. It is not a PyPI coordinate until upload and a clean
+install from `https://pypi.org/simple` are verified.
+
 ## Runtime Platforms And Evidence
 
 The runtime wheel contains native payloads for Linux ARM64/x86-64, macOS
@@ -46,8 +56,9 @@ bash run.sh runtime python basic
 
 The sample prints both connector-facing runtime version `1.4.1` and native git
 identity `9e02a51d7f0e4a231e2f71fe6d19ce02724277c9` before the response and
-counters. Do not generate file-lane calls for this wheel: the file-lane ABI
-starts with the native `2.1.0` release train.
+counters. Do not generate file-lane calls for the registry `1.4.6` wheel. Use
+the exact `2.1.0` artifact or a later verified registry release for file-lane
+code.
 
 ## Verification
 

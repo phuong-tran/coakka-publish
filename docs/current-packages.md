@@ -14,12 +14,11 @@ package, PyPI package, Go module, and SwiftPM tag do not need to share the same
 version number. Each lane follows the release cadence of its connector,
 packaging surface, and native payload.
 
-The file-transfer lane begins with native source generation `2.1.0`. The
-package coordinates below remain the current public generation and do not
-contain that ABI. Do not generate or enable file-lane calls against these
-packages. Use the [Runtime File Transfer guide](runtime-file-transfer.md) for
-the `2.1.0` contract and enable it only when the compatibility matrix names an
-exact promoted `2.1.0+<core-commit>` artifact.
+The promoted file-transfer generation is `2.1.0+60ddf70d`. Its native,
+JVM, Spring Boot, Quarkus, connector-archive, Go, and Swift entrypoints are
+listed below. npm, PyPI, and NuGet retain their older registry versions until
+their separately authenticated publications complete; those immutable older
+packages do not expose the file-lane ABI.
 
 For exact package contents, matching-host execution, and known platform gaps,
 use [Runtime Package And Platform Evidence](runtime-package-platform-evidence.md).
@@ -33,8 +32,28 @@ use [Runtime Package And Platform Evidence](runtime-package-platform-evidence.md
 | npm (Bun) | [`coakka-v2-connector-bun` 1.4.6](https://www.npmjs.com/package/coakka-v2-connector-bun/v/1.4.6) | [`coakka-logger-bun` 1.2.6](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.6) | `bash run.sh runtime bun basic` |
 | npm (Electron) | [`coakka-v2-connector-electron` 1.4.6](https://www.npmjs.com/package/coakka-v2-connector-electron/v/1.4.6) | [`coakka-logger-electron` 1.2.6](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.6) | `bash run.sh runtime electron basic` |
 | PyPI | [`coakka-v2-connector` 1.4.6](https://pypi.org/project/coakka-v2-connector/1.4.6/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) | `bash run.sh runtime python basic` |
-| Go modules | [`coakka-runtime-go` v1.4.1](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.4.1) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) | `bash run.sh runtime go basic` |
-| SwiftPM | [`coakka-runtime-swift` v1.4.1](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v1.4.1) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) | `bash run.sh runtime swift basic` |
+| Go modules | [`coakka-runtime-go` v1.5.0](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.5.0) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) | `bash run.sh runtime go basic` |
+| SwiftPM | [`coakka-runtime-swift` v2.1.0](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v2.1.0) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) | `bash run.sh runtime swift basic` |
+
+The 2.1.0 source coordinates are
+`github.com/phuong-tran/coakka-runtime-go@v1.5.0` and
+`github.com/phuong-tran/coakka-runtime-swift@v2.1.0`. Go remains on semantic
+major `v1` because its established module path does not carry a `/v2`
+suffix.
+
+## Runtime 2.1.0 Artifact Entrypoints
+
+| Surface | Exact coordinate |
+| --- | --- |
+| Native C ABI | `runtime/native/releases/2.1.0+60ddf70d/coakka-runtime-native-v2-2.1.0.tar.gz` |
+| JVM | `coakka.v2:coakka-jvm-native-runtime-v2:2.1.0-g60ddf70d-4782dcd` |
+| Spring Boot | `coakka.spring:coakka-spring-boot-starter:2.1.0-g60ddf70d-4782dcd` |
+| Quarkus | `coakka.quarkus:coakka-quarkus-extension:2.1.0-g60ddf70d-4782dcd` |
+| Connector archives | `runtime/<lane>/releases/2.1.0+60ddf70d-4782dcd/` |
+| Go module | `github.com/phuong-tran/coakka-runtime-go@v1.5.0` |
+| SwiftPM | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.1.0` |
+| coakka-client | `coakka-tools/coakka-client/releases/2.1.0+60ddf70d/` |
+| coakka-runtime-inspect | `coakka-tools/coakka-runtime-inspect/releases/2.1.0+60ddf70d/` |
 
 ## Main Public Repositories
 

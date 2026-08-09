@@ -22,6 +22,12 @@ dotnet add package CoAkka.Runtime --version 1.4.7
 dotnet add package CoAkka.Logger --version 1.2.2
 ```
 
+The artifact mirror also contains `CoAkka.Runtime.2.1.0.nupkg` from connector
+source `4782dcd` over native generation `2.1.0+60ddf70d`. Its five RID assets,
+package metadata, checksums, and packaged request/reply/deadletter smoke pass.
+This file is not presented as a NuGet.org coordinate until registry upload and
+clean-feed verification complete.
+
 The runtime package bundles native assets under `runtimes/<rid>/native` for:
 
 - `osx-arm64`
