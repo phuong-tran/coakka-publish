@@ -1,0 +1,9 @@
+{
+  "assets": [],
+  "body": "Published npm README first-run smoke patch release. Runtime packages: coakka-v2-connector-node/bun/electron@1.3.4. Logger packages: coakka-logger-node/bun/electron@1.2.3. Native generations remain runtime 1.3.1+bda2ef5 and logger 1.2.1+f50756ebff0d. Registry verification passed from package-manager/npm/candidates/f3e25ec/manifest.json.",
+  "isDraft": false,
+  "isPrerelease": false,
+  "name": "npm packages runtime 1.3.4 logger 1.2.3",
+  "publishedAt": "2026-07-24T18:40:14Z",
+  "tagName": "coakka-npm-packages-runtime-v1.3.4-logger-v1.2.3"
+}
