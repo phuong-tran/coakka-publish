@@ -9,9 +9,9 @@ its native runtime generation.
 
 | Channel | Runtime | Logger |
 | --- | --- | --- |
-| npm | [`coakka-v2-connector-node@1.4.6`](https://www.npmjs.com/package/coakka-v2-connector-node/v/1.4.6) | [`coakka-logger-node@1.2.6`](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
-| npm (Bun) | [`coakka-v2-connector-bun@1.4.6`](https://www.npmjs.com/package/coakka-v2-connector-bun/v/1.4.6) | [`coakka-logger-bun@1.2.6`](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.6) |
-| npm (Electron) | [`coakka-v2-connector-electron@1.4.6`](https://www.npmjs.com/package/coakka-v2-connector-electron/v/1.4.6) | [`coakka-logger-electron@1.2.6`](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.6) |
+| npm | [`coakka-v2-connector-node@2.1.0`](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.1.0) | [`coakka-logger-node@1.2.6`](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
+| npm (Bun) | [`coakka-v2-connector-bun@2.1.0`](https://www.npmjs.com/package/coakka-v2-connector-bun/v/2.1.0) | [`coakka-logger-bun@1.2.6`](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.6) |
+| npm (Electron) | [`coakka-v2-connector-electron@2.1.0`](https://www.npmjs.com/package/coakka-v2-connector-electron/v/2.1.0) | [`coakka-logger-electron@1.2.6`](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.6) |
 | PyPI | [`coakka-v2-connector==1.4.6`](https://pypi.org/project/coakka-v2-connector/1.4.6/) | [`coakka-logger==1.2.2`](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go@v1.5.0`](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.5.0) | [`coakka-logger-go@v1.2.5`](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
 | SwiftPM | [`coakka-runtime-swift` v2.1.0](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v2.1.0) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |

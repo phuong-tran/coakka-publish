@@ -3,6 +3,17 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-09
+
+- Published and registry-verified Node.js, Bun, and Electron runtime packages
+  at `2.1.0` over native generation `2.1.0+60ddf70d`. Registry tarballs match
+  the staged SHA-256 values byte-for-byte; clean Node.js and Bun installs pass
+  package-surface and native request/reply smoke, and Electron resolves its
+  exact Node.js `2.1.0` dependency.
+- Promoted the complete native/JVM/connector/tool artifact train and public
+  file-lane documentation. The public release contains all five native
+  libraries and exact Maven, Go, Swift, and connector coordinates.
+
 ## 2026-08-08
 
 - Reconciled current package metadata with the registry-verified runtime train:

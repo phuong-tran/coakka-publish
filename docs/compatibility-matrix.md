@@ -101,7 +101,7 @@ All logger connector lanes below align to logger native generation
 
 | Channel | Available surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron runtime/logger packages | current; registry verified |
+| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.1.0`, logger `1.2.6`; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==1.4.6` and logger `coakka-logger==1.2.2` current |
 | Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.5.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
 | SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.1.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
@@ -115,9 +115,9 @@ Runtime npm packages are published for the sealed package boundary:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@1.4.6` | `1.4.1+9e02a51d` |
-| Bun runtime | `coakka-v2-connector-bun@1.4.6` | `1.4.1+9e02a51d` |
-| Electron runtime | `coakka-v2-connector-electron@1.4.6` | via `coakka-v2-connector-node@1.4.6` |
+| Node.js runtime | `coakka-v2-connector-node@2.1.0` | `2.1.0+60ddf70d` |
+| Bun runtime | `coakka-v2-connector-bun@2.1.0` | `2.1.0+60ddf70d` |
+| Electron runtime | `coakka-v2-connector-electron@2.1.0` | via `coakka-v2-connector-node@2.1.0` |
 | Node.js logger | `coakka-logger-node@1.2.6` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.6` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.6` | via `coakka-logger-node@1.2.6` |
