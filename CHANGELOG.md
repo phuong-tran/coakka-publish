@@ -5,6 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-09
 
+- Published npm runtime patch `2.1.1` for Node.js, Bun, and Electron. The
+  package README now links to the canonical public file-lane contract, the
+  stale "next runtime" wording is removed, and packaged-doc regression gates
+  reject non-public connector repository links.
 - Published and registry-verified Node.js, Bun, and Electron runtime packages
   at `2.1.0` over native generation `2.1.0+60ddf70d`. Registry tarballs match
   the staged SHA-256 values byte-for-byte; clean Node.js and Bun installs pass

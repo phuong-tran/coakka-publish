@@ -7,13 +7,17 @@ contract as the JVM, Python, Go, C#, Rust, Swift, and other connector lanes.
 
 | Host | Current runtime package |
 | --- | --- |
-| Node.js | `coakka-v2-connector-node@2.1.0` |
-| Bun | `coakka-v2-connector-bun@2.1.0` |
-| Electron | `coakka-v2-connector-electron@2.1.0` |
+| Node.js | `coakka-v2-connector-node@2.1.1` |
+| Bun | `coakka-v2-connector-bun@2.1.1` |
+| Electron | `coakka-v2-connector-electron@2.1.1` |
 
 These published coordinates use native generation `2.1.0+60ddf70d` and
-connector source `4782dcd`. Their immutable publication receipt, registry
-integrity values, artifacts, and checksums are under `candidates/4782dcd/`.
+connector source `80cdd77`. Their immutable publication receipt, registry
+integrity values, artifacts, and checksums are under `candidates/80cdd77/`.
+
+`2.1.1` is the documentation patch for the initial `2.1.0` file-lane release.
+It replaces a link to a non-public source repository with the canonical public
+contract and corrects wording about the already bundled native generation.
 
 ## Runtime 2.1.0 Artifacts
 
