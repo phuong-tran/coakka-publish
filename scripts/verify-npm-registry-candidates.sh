@@ -2,7 +2,7 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-manifest="${repo_root}/package-manager/npm/candidates/b052a3f/manifest.json"
+manifest="${repo_root}/package-manager/npm/candidates/4782dcd/manifest.json"
 tag="latest"
 only_label=""
 

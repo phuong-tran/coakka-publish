@@ -10,8 +10,11 @@
   "packages": [
     {
       "label": "runtime-node",
+      "product": "runtime",
+      "role": "node",
       "package_name": "coakka-v2-connector-node",
       "version": "2.1.0",
+      "expected_native_generation": "2.1.0+60ddf70d",
       "relative_path": "runtime/node/coakka-v2-connector-node-2.1.0.tgz",
       "sha256": "770e1db352c00918b01ef01545d3e8f83326ff9f2da746bcad01e375f8e842ff",
       "registry_shasum": "6550f88ba1151af5a5568bc8e33331b2d2c64611",
@@ -20,8 +23,11 @@
     },
     {
       "label": "runtime-bun",
+      "product": "runtime",
+      "role": "bun",
       "package_name": "coakka-v2-connector-bun",
       "version": "2.1.0",
+      "expected_native_generation": "2.1.0+60ddf70d",
       "relative_path": "runtime/bun/coakka-v2-connector-bun-2.1.0.tgz",
       "sha256": "775702aec53838647176438cac8d3443462585be95f7198b5600c7900eed9331",
       "registry_shasum": "8d10318b793abbf6fd3ff98fb2f5c079033871ca",
@@ -30,13 +36,16 @@
     },
     {
       "label": "runtime-electron",
+      "product": "runtime",
+      "role": "electron",
       "package_name": "coakka-v2-connector-electron",
       "version": "2.1.0",
+      "expected_native_generation": "2.1.0+60ddf70d",
       "relative_path": "runtime/electron/coakka-v2-connector-electron-2.1.0.tgz",
       "sha256": "7175efe1eedb79625e5800b129cad5eaaacaf579a1a56952b1da2637c9b316d5",
       "registry_shasum": "d35f53800eba22b97ab626043cd41b7ae376d20b",
       "registry_integrity": "sha512-OXdvyUGnhpmK15JzDz9uX1x4u2QukA/06bnyu/m54F5Od8/7Ol1jcLE7t8M/bSDzEz6TwCOOuIgzVsP+lF192w==",
-      "expected_internal_dependency": "coakka-v2-connector-node@2.1.0"
+      "expected_internal_dependency": "coakka-v2-connector-node"
     }
   ]
 }

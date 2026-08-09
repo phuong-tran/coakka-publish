@@ -328,4 +328,4 @@ Cross-language demo web lives under `examples/` when that workspace is present.
 
 `OpenFileLane(...)` exposes the independent native bulk-transfer lane with
 concurrent wait/cancel and draining `Close()`. See the shared
-[file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md) before packaging it with a native runtime.
+[file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md) before packaging it with a native runtime.

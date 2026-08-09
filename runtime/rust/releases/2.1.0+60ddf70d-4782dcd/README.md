@@ -73,4 +73,4 @@ matching Rust-on-Windows execution claim.
 
 `FileLane::open(...)` exposes a `Send + Sync` independent native bulk-transfer
 lane with checked ABI snapshot projection and draining `Drop`. See the shared
-[file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md).
+[file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md).

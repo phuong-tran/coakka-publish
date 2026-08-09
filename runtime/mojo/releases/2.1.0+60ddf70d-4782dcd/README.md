@@ -63,4 +63,4 @@ COAKKA_RUNTIME_STAGING_ROOT=/path/to/exact/native/staging \
 
 `scripts/file-lane-smoke.sh` runs the standalone Mojo/C-shim round trip. This
 is exploratory smoke infrastructure, not a stable application API. See the
-shared [file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md).
+shared [file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md).

@@ -139,4 +139,4 @@ supported platform tuple. Contact: `gabrielgun1983@gmail.com`.
 
 The Node dependency exposes `FileLane` to trusted Electron main-process code.
 Do not forward raw file paths, authorization tokens, or lane methods through
-preload/renderer IPC. See the shared [file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md).
+preload/renderer IPC. See the shared [file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md).

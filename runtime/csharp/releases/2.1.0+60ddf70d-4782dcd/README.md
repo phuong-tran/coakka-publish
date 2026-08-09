@@ -236,4 +236,4 @@ Current NuGet coordinates and release evidence live in the public
 
 `FileLane.Open(...)` returns an `IDisposable` independent bulk-transfer lane.
 Run blocking waits off UI threads and use only a sendfile-capable native
-runtime. See the shared [file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md).
+runtime. See the shared [file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md).

@@ -68,4 +68,4 @@ The public package is published under
 
 The WebView intent API intentionally does not expose file paths, transfer
 tokens, or native file-lane methods. Trusted Rust host state may use the Rust
-connector directly under the shared [file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md).
+connector directly under the shared [file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md).

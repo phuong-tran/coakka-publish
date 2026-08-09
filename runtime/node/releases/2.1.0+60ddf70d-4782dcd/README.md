@@ -249,5 +249,5 @@ compatibility matrix for packaged platform coverage. Support contact:
 ## File Lane
 
 `FileLane.open(...)` provides native bulk transfer and uses Koffi's async call
-path for blocking waits. It requires the next sendfile-capable native runtime;
-see the shared [file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md).
+path for blocking waits. This artifact includes the sendfile-capable native
+runtime `2.1.0+60ddf70d`; see the shared [file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md).

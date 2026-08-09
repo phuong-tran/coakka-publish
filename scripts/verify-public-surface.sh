@@ -38,6 +38,19 @@ verify_artifact_license() {
   fi
 }
 
+verify_public_document_links() {
+  local leaked_links
+
+  leaked_links="$(
+    git -C "${repo_root}" grep -n -F \
+      'https://github.com/phuong-tran/coakkaJVMConnector' -- '*.md' || true
+  )"
+  if [[ -n "${leaked_links}" ]]; then
+    printf '%s\n' "${leaked_links}" >&2
+    fail "public documentation links to the non-public connector source repository"
+  fi
+}
+
 verify_sha256_file() {
   local dir="$1"
   local sums="${repo_root}/${dir}/SHA256SUMS"
@@ -518,6 +531,7 @@ require_file "SHA256SUMS"
 
 verify_current_runtime_native_matrix
 verify_artifact_license
+verify_public_document_links
 
 (cd "${repo_root}" && shasum -a 256 -c SHA256SUMS >/dev/null)
 

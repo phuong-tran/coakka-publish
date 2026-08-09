@@ -66,8 +66,8 @@ Release intake checks the PyPI JSON version, filename, yanked state, and
 SHA-256, then installs from `https://pypi.org/simple` in a clean environment.
 Payload presence is not used as a substitute for matching-host execution.
 
-For connector APIs and runnable Python code, use the
-[`coakka-v2-connector` source README](https://github.com/phuong-tran/coakkaJVMConnector/tree/main/python)
+For connector APIs and runnable Python code, use the public
+[`coakka-v2-connector` artifact README](../../runtime/python/releases/2.1.0+60ddf70d-4782dcd/README.md)
 and the [Python samples](https://github.com/phuong-tran/coakka-samples/tree/main/runtime/python).
 For loader, architecture, certificate, and publisher-trust failures, use
 [Troubleshooting](../../docs/troubleshooting.md).

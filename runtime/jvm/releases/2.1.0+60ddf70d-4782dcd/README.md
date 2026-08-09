@@ -145,5 +145,5 @@ share the legacy mixed response lane under concurrent ask traffic.
 ## File Lane
 
 `FileLane.open(...)` exposes the independent native bulk-transfer lane. It is
-not owned by `RuntimeHost`; see the shared [file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md)
+not owned by `RuntimeHost`; see the shared [file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md)
 for lifecycle, security, native-version, and conformance requirements.

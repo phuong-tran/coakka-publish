@@ -66,5 +66,5 @@ registry or public release state.
 ## File Lane
 
 `NativeRuntime.openFileLane(...)` exposes exact file-lane ABI layouts and
-explicit shutdown ownership. See the shared [file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md)
+explicit shutdown ownership. See the shared [file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md)
 and use a native runtime that exports the complete file-lane symbol set.

@@ -114,7 +114,7 @@ with RuntimeHost.start(start_spec=start_spec) as runtime:
 
 `FileLane.open(...)` is a context-managed independent native bulk-transfer
 lane. Its waits are blocking and `close()` stops the lane before draining
-active calls. See the shared [file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md).
+active calls. See the shared [file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md).
 
 Current package shape:
 

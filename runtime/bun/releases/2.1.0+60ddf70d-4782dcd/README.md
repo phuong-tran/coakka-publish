@@ -102,4 +102,4 @@ Contact: `gabrielgun1983@gmail.com`.
 
 `FileLane.open(...)` is available through a Bun-native FFI adapter. Its native
 wait blocks the calling event loop, so run waits in a Worker or dedicated
-process. See the shared [file-lane contract](https://github.com/phuong-tran/coakkaJVMConnector/blob/main/FILE_LANE.md).
+process. See the shared [file-lane contract](https://github.com/phuong-tran/coakka-publish/blob/main/docs/runtime-file-transfer.md).
