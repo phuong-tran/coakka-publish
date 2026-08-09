@@ -5,6 +5,9 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-09
 
+- Published and registry-verified `coakka-v2-connector==2.1.0` to PyPI. The
+  registry wheel matches the staged SHA-256, contains all five native platform
+  payloads, exposes file-lane, and passes readiness plus clean request/reply.
 - Published and registry-verified `CoAkka.Runtime==2.1.0` to NuGet with all
   five native RID assets, file-lane, repository-signature verification, and
   packaged request/reply/deadletter execution.

@@ -1,16 +1,17 @@
 {
   "lane": "pypi",
   "status": "current",
-  "released_at": "2026-08-03",
+  "released_at": "2026-08-09",
   "packages": [
     {
       "surface": "runtime",
       "package": "coakka-v2-connector",
-      "version": "1.4.6",
-      "url": "https://pypi.org/project/coakka-v2-connector/1.4.6/",
-      "artifact": "coakka_v2_connector-1.4.6-py3-none-any.whl",
-      "sha256": "09285c8310a44e3c4e590239d478a2dab48e7ab1a2abc940884690dab1db43cf",
-      "native_generation": "1.4.1+9e02a51d",
+      "version": "2.1.0",
+      "url": "https://pypi.org/project/coakka-v2-connector/2.1.0/",
+      "artifact": "coakka_v2_connector-2.1.0-py3-none-any.whl",
+      "connector_source": "34d15e78426550709897e758af495b500bde1044",
+      "sha256": "fb9b06a060336f3d663fe5241f1a6085a138ca55c3b9d0b6c64abce287195bf0",
+      "native_generation": "2.1.0+60ddf70d",
       "platforms": [
         "linux-aarch64",
         "linux-x86_64",

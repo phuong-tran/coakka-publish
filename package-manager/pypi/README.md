@@ -9,21 +9,21 @@ identities.
 
 | Surface | Install | Native generation |
 | --- | --- | --- |
-| Runtime | `python -m pip install coakka-v2-connector==1.4.6` | `1.4.1+9e02a51d` |
+| Runtime | `python -m pip install coakka-v2-connector==2.1.0` | `2.1.0+60ddf70d` |
 | Logger | `python -m pip install coakka-logger==1.2.2` | `1.2.1+f50756ebff0d` |
 
 The machine-readable release receipt is [`current.json`](current.json).
 Superseded versions are yanked rather than deleted; pin the versions above.
 
-## Runtime 2.1.0 Artifact
+## Runtime 2.1.0
 
-The artifact mirror contains `coakka_v2_connector-2.1.0-py3-none-any.whl` from
-connector source `4782dcd` over native generation `2.1.0+60ddf70d`. The wheel
+PyPI and the artifact mirror contain `coakka_v2_connector-2.1.0-py3-none-any.whl`
+from connector source `34d15e7` over native generation `2.1.0+60ddf70d`. The wheel
 contains Linux ARM64/x86-64, macOS ARM64, and Windows ARM64/x86-64 libraries,
 passes package and digest gates, and completes a packaged request/reply smoke
 on macOS ARM64. It also contains the Windows `PeekNamedPipe` waiter correction
-and the file-lane API. It is not a PyPI coordinate until upload and a clean
-install from `https://pypi.org/simple` are verified.
+and the file-lane API. Its PyPI JSON SHA-256 matches the staged wheel exactly,
+and a clean registry wheel completes request/reply on macOS ARM64.
 
 ## Runtime Platforms And Evidence
 
@@ -31,12 +31,9 @@ The runtime wheel contains native payloads for Linux ARM64/x86-64, macOS
 ARM64, and Windows ARM64/x86-64. All five payloads pass package, binary-format,
 architecture, and digest verification.
 
-Exact PyPI `1.4.6` request/reply executes on macOS ARM64 and Linux
-ARM64/x86-64. On Windows 11 ARM64, the wheel loads native runtime `1.4.1`, but
-its published reader uses `select()` with CRT pipe descriptors and times out
-before receiving the reply. Current connector source uses `PeekNamedPipe` and
-passes the same Windows ARM64 request/reply smoke; that fix is not part of the
-immutable `1.4.6` wheel. Windows x86-64 connector execution is not claimed.
+Exact PyPI `2.1.0` request/reply executes on macOS ARM64. The wheel contains the
+`PeekNamedPipe` waiter correction and all five platform payloads. Cross-platform
+execution claims remain limited to the evidence recorded for each host.
 
 See [Runtime Package And Platform Evidence](../../docs/runtime-package-platform-evidence.md)
 for the exact distinction between published, contained, verified, executed,
@@ -54,11 +51,9 @@ cd coakka-samples
 bash run.sh runtime python basic
 ```
 
-The sample prints both connector-facing runtime version `1.4.1` and native git
-identity `9e02a51d7f0e4a231e2f71fe6d19ce02724277c9` before the response and
-counters. Do not generate file-lane calls for the registry `1.4.6` wheel. Use
-the exact `2.1.0` artifact or a later verified registry release for file-lane
-code.
+The sample prints connector-facing runtime version `2.1.0` and native git
+identity `60ddf70d63b94750bb76c8284923e73199788c2e` before the response and
+counters. The registry `2.1.0` wheel exposes file-lane.
 
 ## Verification
 
@@ -67,7 +62,7 @@ SHA-256, then installs from `https://pypi.org/simple` in a clean environment.
 Payload presence is not used as a substitute for matching-host execution.
 
 For connector APIs and runnable Python code, use the public
-[`coakka-v2-connector` artifact README](../../runtime/python/releases/2.1.0+60ddf70d-4782dcd/README.md)
+[`coakka-v2-connector` artifact README](../../runtime/python/releases/2.1.0+60ddf70d-34d15e7/README.md)
 and the [Python samples](https://github.com/phuong-tran/coakka-samples/tree/main/runtime/python).
 For loader, architecture, certificate, and publisher-trust failures, use
 [Troubleshooting](../../docs/troubleshooting.md).
