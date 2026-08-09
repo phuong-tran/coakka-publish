@@ -15,6 +15,9 @@ The source is intentionally small and separated by responsibility:
 
 - `evidence_config.c`: bounded command-line input parsing;
 - `evidence_runtime.c`: request/reply, pressure, stress, and soak workload;
+- `file_lane_main.c`: a 9 MiB multi-quantum direct-profile file transfer through
+  only the published file-lane C ABI, including digest, receipt, progress, and
+  counter checks;
 - `connection_strategy_contract.c`: capability-aware connection policy,
   atomic rejection, lifecycle, and post-start immutability checks;
 - `concurrency_runtime.c`: multi-producer request/reply, submit-versus-stop,
@@ -43,10 +46,15 @@ configuration directory:
 ```sh
 ./build/coakka_runtime_v2_native_evidence smoke
 ./build/coakka_runtime_v2_connection_strategy_evidence
+./build/coakka_runtime_v2_file_lane_evidence
 ./build/coakka_runtime_v2_concurrency_evidence race --threads 4 --requests 256
 ./build/coakka_runtime_v2_concurrency_evidence hot-reload \
   --threads 4 --requests 256 --generations 64
 ```
+
+Set `COAKKA_NATIVE_EVIDENCE_REQUIRE_FILE_LANE=ON` when file-lane evidence is a
+required gate. This fails configuration when the selected artifact predates
+`coakka/v2/file_lane.h`; otherwise CMake omits only that compatibility target.
 
 For a multi-configuration generator, use `build/Release/` instead.
 
