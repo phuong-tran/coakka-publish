@@ -36,8 +36,8 @@ ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 | Node, Bun, Electron, Go, Rust, Swift, Mojo, Zig, Tauri archives | `runtime/<lane>/releases/2.1.0+60ddf70d-4782dcd/` | `2.1.0` | `2.1.0+60ddf70d` |
 | Python archive and PyPI | `runtime/python/releases/2.1.0+60ddf70d-34d15e7/` and `coakka-v2-connector==2.1.0` | `2.1.0` | `2.1.0+60ddf70d` |
 | C# archive and NuGet | `runtime/csharp/releases/2.1.0+60ddf70d-99bb16c/` and `CoAkka.Runtime==2.1.0` | `2.1.0` | `2.1.0+60ddf70d` |
-| Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.5.0` | `2.1.0+60ddf70d` |
-| SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.1.0` | `2.1.0+60ddf70d` |
+| Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.5.1` | `2.1.0+60ddf70d` |
+| SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.1.1` | `2.1.0+60ddf70d` |
 
 The artifact mirror is complete independently of npm, PyPI, and NuGet. Exact
 registry coordinates and authenticated publication receipts are listed below.
@@ -104,8 +104,8 @@ All logger connector lanes below align to logger native generation
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.1.1`, logger `1.2.6`; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.1.0` and logger `coakka-logger==1.2.2`; registry verified |
-| Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.5.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
-| SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.1.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
+| Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.5.1`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
+| SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.1.1`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
 | NuGet | C# runtime/logger packages | current; runtime `CoAkka.Runtime==2.1.0`, logger `CoAkka.Logger==1.2.2` |
 
 PyPI superseded versions are yanked, not deleted:
@@ -146,7 +146,7 @@ SwiftPM packages:
 
 | Surface | SwiftPM coordinate | Native generation |
 | --- | --- | --- |
-| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.1.0` | `2.1.0+60ddf70d` |
+| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.1.1` | `2.1.0+60ddf70d` |
 | Swift logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1` | `1.2.1+f50756ebff0d` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for current

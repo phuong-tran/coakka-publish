@@ -31,12 +31,12 @@ use [Runtime Package And Platform Evidence](runtime-package-platform-evidence.md
 | npm (Bun) | [`coakka-v2-connector-bun` 2.1.1](https://www.npmjs.com/package/coakka-v2-connector-bun/v/2.1.1) | [`coakka-logger-bun` 1.2.6](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.6) | `bash run.sh runtime bun basic` |
 | npm (Electron) | [`coakka-v2-connector-electron` 2.1.1](https://www.npmjs.com/package/coakka-v2-connector-electron/v/2.1.1) | [`coakka-logger-electron` 1.2.6](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.6) | `bash run.sh runtime electron basic` |
 | PyPI | [`coakka-v2-connector` 2.1.0](https://pypi.org/project/coakka-v2-connector/2.1.0/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) | `bash run.sh runtime python basic` |
-| Go modules | [`coakka-runtime-go` v1.5.0](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.5.0) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) | `bash run.sh runtime go basic` |
-| SwiftPM | [`coakka-runtime-swift` v2.1.0](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v2.1.0) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) | `bash run.sh runtime swift basic` |
+| Go modules | [`coakka-runtime-go` v1.5.1](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.5.1) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) | `bash run.sh runtime go basic` |
+| SwiftPM | [`coakka-runtime-swift` v2.1.1](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v2.1.1) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) | `bash run.sh runtime swift basic` |
 
 The 2.1.0 source coordinates are
-`github.com/phuong-tran/coakka-runtime-go@v1.5.0` and
-`github.com/phuong-tran/coakka-runtime-swift@v2.1.0`. Go remains on semantic
+`github.com/phuong-tran/coakka-runtime-go@v1.5.1` and
+`github.com/phuong-tran/coakka-runtime-swift@v2.1.1`. Go remains on semantic
 major `v1` because its established module path does not carry a `/v2`
 suffix.
 
@@ -51,8 +51,8 @@ suffix.
 | Connector archives except Python and C# | `runtime/<lane>/releases/2.1.0+60ddf70d-4782dcd/` |
 | Python wheel | `runtime/python/releases/2.1.0+60ddf70d-34d15e7/` |
 | C# package | `runtime/csharp/releases/2.1.0+60ddf70d-99bb16c/` |
-| Go module | `github.com/phuong-tran/coakka-runtime-go@v1.5.0` |
-| SwiftPM | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.1.0` |
+| Go module | `github.com/phuong-tran/coakka-runtime-go@v1.5.1` |
+| SwiftPM | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.1.1` |
 | coakka-client | `coakka-tools/coakka-client/releases/2.1.0+60ddf70d/` |
 | coakka-runtime-inspect | `coakka-tools/coakka-runtime-inspect/releases/2.1.0+60ddf70d/` |
 

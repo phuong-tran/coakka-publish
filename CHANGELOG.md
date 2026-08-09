@@ -5,6 +5,9 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-09
 
+- Published Go `v1.5.1` and SwiftPM `v2.1.1` documentation-integrity patches.
+  Both keep native generation `2.1.0+60ddf70d`, replace private file-lane links
+  with the canonical public contract, and add package regression gates.
 - Published and registry-verified `coakka-v2-connector==2.1.0` to PyPI. The
   registry wheel matches the staged SHA-256, contains all five native platform
   payloads, exposes file-lane, and passes readiness plus clean request/reply.

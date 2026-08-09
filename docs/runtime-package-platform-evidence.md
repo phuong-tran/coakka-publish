@@ -54,10 +54,10 @@ It contains all five libraries, the public headers including
 | Bun | `runtime/bun/releases/2.1.0+60ddf70d-4782dcd/` | All five | Runtime request/reply, file-lane FFI test, package-surface verification, and packaged request/reply pass on macOS ARM64. |
 | Electron | `runtime/electron/releases/2.1.0+60ddf70d-4782dcd/` | Via exact Node package | Packaged Electron main/preload intent smoke passes. |
 | Python | `runtime/python/releases/2.1.0+60ddf70d-34d15e7/` | All five | 29 tests plus four subtests pass. The PyPI JSON SHA-256 matches the staged wheel, and the registry-downloaded package loads runtime 2.1.0 and completes request/reply on macOS ARM64. |
-| Go | `runtime/go/releases/2.1.0+60ddf70d-4782dcd/` | All five | Packaged request/reply and `go test ./...` pass. |
+| Go | `runtime/go/releases/2.1.0+60ddf70d-4782dcd/` | All five | Packaged request/reply and `go test ./...` pass. Public module patch `v1.5.1` uses the canonical file-lane contract. |
 | C# | `runtime/csharp/releases/2.1.0+60ddf70d-99bb16c/` | Five RID assets | NuGet readiness, repository-signature verification, and packaged request/reply/deadletter pass on macOS ARM64. |
 | Rust | `runtime/rust/releases/2.1.0+60ddf70d-4782dcd/` | All five | Package readiness and packaged request/reply/deadletter pass on macOS ARM64. The historical Linux loader constant defect is corrected. |
-| Swift | `runtime/swift/releases/2.1.0+60ddf70d-4782dcd/` | All five | Swift build, tests, runtime request/reply, transport, and packaged-consumer smokes pass on macOS ARM64. |
+| Swift | `runtime/swift/releases/2.1.0+60ddf70d-4782dcd/` | All five | Swift build, tests, runtime request/reply, transport, and packaged-consumer smokes pass on macOS ARM64. SwiftPM patch `v2.1.1` uses the canonical file-lane contract. |
 | Mojo | `runtime/mojo/releases/2.1.0+60ddf70d-4782dcd/` | All five | Strict source/platform gates and native lifecycle, request/reply, deadletter smoke pass. |
 | Zig | `runtime/zig/releases/2.1.0+60ddf70d-4782dcd/` | All five | Linux ARM64 and Windows x86-64 compile/link gates plus native lifecycle, request/reply, and deadletter smoke pass. |
 | Tauri | `runtime/tauri/releases/2.1.0+60ddf70d-4782dcd/` | All five through Rust | Source package generation and dependency lock complete; Electron and Tauri keep UI code outside the native runtime owner. |
