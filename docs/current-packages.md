@@ -16,9 +16,9 @@ packaging surface, and native payload.
 
 The promoted file-transfer generation is `2.1.0+60ddf70d`. Its native,
 JVM, Spring Boot, Quarkus, connector-archive, Go, and Swift entrypoints are
-listed below. npm `2.1.1` is published and exposes file-lane. PyPI and NuGet
-retain their older registry versions until their separately authenticated
-publications complete; those immutable older packages do not expose the
+listed below. npm `2.1.1` and NuGet `2.1.0` are published and expose file-lane.
+PyPI retains its older registry version until its separately authenticated
+publication completes; that immutable older package does not expose the
 file-lane ABI.
 
 For exact package contents, matching-host execution, and known platform gaps,
@@ -28,7 +28,7 @@ use [Runtime Package And Platform Evidence](runtime-package-platform-evidence.md
 
 | Channel | Runtime package | Logger package | Sample command |
 | --- | --- | --- | --- |
-| NuGet | [`CoAkka.Runtime` 1.4.7](https://www.nuget.org/packages/CoAkka.Runtime/1.4.7) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) | `bash run.sh runtime csharp basic` |
+| NuGet | [`CoAkka.Runtime` 2.1.0](https://www.nuget.org/packages/CoAkka.Runtime/2.1.0) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) | `bash run.sh runtime csharp basic` |
 | npm | [`coakka-v2-connector-node` 2.1.1](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.1.1) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) | `bash run.sh runtime node basic` |
 | npm (Bun) | [`coakka-v2-connector-bun` 2.1.1](https://www.npmjs.com/package/coakka-v2-connector-bun/v/2.1.1) | [`coakka-logger-bun` 1.2.6](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.6) | `bash run.sh runtime bun basic` |
 | npm (Electron) | [`coakka-v2-connector-electron` 2.1.1](https://www.npmjs.com/package/coakka-v2-connector-electron/v/2.1.1) | [`coakka-logger-electron` 1.2.6](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.6) | `bash run.sh runtime electron basic` |

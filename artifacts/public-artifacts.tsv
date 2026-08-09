@@ -32,7 +32,7 @@ public	runtime Node package 1.4.5	runtime/node/releases/1.4.0+2cee86bf-2c0c598/c
 public	runtime Bun package 1.4.5	runtime/bun/releases/1.4.0+2cee86bf-2c0c598/coakka-v2-connector-bun-1.4.5.tgz	2b75cfe6d8d7b2d3ce1eaf2d087f0ec777af58275f9446561bf9bd564664a866
 public	runtime Electron package 1.4.5	runtime/electron/releases/1.4.0+2cee86bf-2c0c598/coakka-v2-connector-electron-1.4.5.tgz	d3c1948ca3428de369472fbc432daf3724d1836bccdc93b76429bc63e47a1ad9
 public	runtime Go package	runtime/go/releases/2.1.0+60ddf70d-4782dcd/coakka-v2-connector-go-2.1.0.tar.gz	6003380644a05c307fc96ac9c4a1c9520ce0d3f011c9ef6f4fb87e96ffd1203d
-public	runtime C# package	runtime/csharp/releases/2.1.0+60ddf70d-4782dcd/CoAkka.Runtime.2.1.0.nupkg	09626394b16d07221fb83bab6aface801dc0f1848e0ce3859f9c76fd7a2490ba
+public	runtime C# package	runtime/csharp/releases/2.1.0+60ddf70d-99bb16c/CoAkka.Runtime.2.1.0.nupkg	7a0a5fbc26d26dd282be2bdc01adb38bafd54dc5c00acfb945e1ec7f0cb01c95
 public	runtime C# package 1.4.5	runtime/csharp/releases/1.4.0+2cee86bf-562028d/CoAkka.Runtime.1.4.5.nupkg	bead296453e17304f90ecdc04aaabbd3f81d2f99c6c6bae5bb3636ad3651c191
 public	runtime C# package 1.4.6	runtime/csharp/releases/1.4.0+2cee86bf-693f122/CoAkka.Runtime.1.4.6.nupkg	04bda5dd20f3398bf299ddc128c0fe4a2dc399d93dd75066ac40897ad827545d
 public	runtime Rust package	runtime/rust/releases/2.1.0+60ddf70d-4782dcd/coakka-runtime-rs-2.1.0.tar.gz	d92d07aeac111efa9a5c5c982fa91c2a02896c64f9d1b8f1a4b84630099cf300

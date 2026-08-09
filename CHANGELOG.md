@@ -5,6 +5,9 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-09
 
+- Published and registry-verified `CoAkka.Runtime==2.1.0` to NuGet with all
+  five native RID assets, file-lane, repository-signature verification, and
+  packaged request/reply/deadletter execution.
 - Published npm runtime patch `2.1.1` for Node.js, Bun, and Electron. The
   package README now links to the canonical public file-lane contract, the
   stale "next runtime" wording is removed, and packaged-doc regression gates

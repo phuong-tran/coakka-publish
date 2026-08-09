@@ -129,7 +129,7 @@ version number.
 
 | Channel | Runtime package | Logger package |
 | --- | --- | --- |
-| NuGet | [`CoAkka.Runtime` 1.4.7](https://www.nuget.org/packages/CoAkka.Runtime/1.4.7) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
+| NuGet | [`CoAkka.Runtime` 2.1.0](https://www.nuget.org/packages/CoAkka.Runtime/2.1.0) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
 | npm | [`coakka-v2-connector-node` 2.1.1](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.1.1) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
 | PyPI | [`coakka-v2-connector` 1.4.6](https://pypi.org/project/coakka-v2-connector/1.4.6/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.5.0](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.5.0) | [`coakka-logger-go` v1.2.5](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
@@ -175,7 +175,7 @@ Current runtime release note:
 
 Current package-manager release notes:
 [2026-08-09 npm JavaScript runtime 2.1.1](docs/releases/2026-08-09-npm-runtime-2.1.1.md),
-[2026-08-03 NuGet C# runtime 1.4.7](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.7.md),
+[2026-08-09 NuGet C# runtime 2.1.0](docs/releases/2026-08-09-nuget-csharp-runtime-2.1.0.md),
 and
 [2026-08-03 PyPI Python runtime 1.4.6](docs/releases/2026-08-03-pypi-python-runtime-1.4.6.md).
 
@@ -189,7 +189,7 @@ Latest GitHub Release boundary note:
 
 Current language connector release notes:
 [2026-07-26 Go module native payload cleanup](docs/releases/2026-07-26-go-module-native-payload-cleanup.md),
-[2026-08-03 C# runtime NuGet 1.4.7](docs/releases/2026-08-03-nuget-csharp-runtime-1.4.7.md),
+[2026-08-09 C# runtime NuGet 2.1.0](docs/releases/2026-08-09-nuget-csharp-runtime-2.1.0.md),
 [2026-07-28 C# logger NuGet 1.2.2](docs/releases/2026-07-28-csharp-logger-nuget-1.2.2.md),
 [2026-07-25 runtime language packages 1.3.2 caff6d6d 6d5ea58](docs/releases/2026-07-25-runtime-language-packages-1.3.2-caff6d6d-6d5ea58.md),
 [2026-07-25 npm runtime package b46f705](docs/releases/2026-07-25-npm-runtime-native-bridge-b46f705.md),
@@ -265,8 +265,8 @@ Current public Node.js, Bun, and Electron npm runtime packages:
 `coakka-v2-connector-{node,bun,electron}@2.1.1`.
 Current public Python PyPI runtime package:
 `coakka-v2-connector==1.4.6`, over native generation `1.4.1+9e02a51d`.
-Current public C# runtime NuGet package: `CoAkka.Runtime@1.4.7`, over native
-generation `1.4.1+9e02a51d`.
+Current public C# runtime NuGet package: `CoAkka.Runtime@2.1.0`, over native
+generation `2.1.0+60ddf70d`.
 Current public C# logger NuGet package: `CoAkka.Logger@1.2.2`.
 Current public Mojo/Zig source connector generation:
 `2.1.0+60ddf70d-4782dcd`.
@@ -325,12 +325,12 @@ The current root native runtime package is `2.1.0+60ddf70d`. The artifact
 mirror publishes JVM runtime, Spring Boot, and Quarkus as
 `2.1.0-g60ddf70d-4782dcd`. Source connector artifacts use release directory
 `2.1.0+60ddf70d-4782dcd`. npm `2.1.1` is registry-published from connector
-source `80cdd77`; NuGet `1.4.7` and Python `1.4.6` remain registry-published
-from sources `af244b1e` and `603a3728`. All three channels are registry-verified.
+source `80cdd77`; NuGet `2.1.0` and Python `1.4.6` are registry-published
+from sources `99bb16c` and `603a3728`. All three channels are registry-verified.
 
 Package-manager registries are separate publication channels. npm Node.js,
 Bun, and Electron are current at `2.1.1`. PyPI runtime is current at `1.4.6`,
-and NuGet runtime is current at `CoAkka.Runtime` `1.4.7`.
+and NuGet runtime is current at `CoAkka.Runtime` `2.1.0`.
 Go modules advance through `coakka-runtime-go@v1.5.0`; the module stays on
 semantic major `v1` because its path has no `/v2` suffix. SwiftPM advances
 through `coakka-runtime-swift@v2.1.0`.
@@ -397,7 +397,7 @@ Current published lanes:
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.1.0`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1`
-- `NuGet: CoAkka.Runtime@1.4.7`
+- `NuGet: CoAkka.Runtime@2.1.0`
 - `NuGet: CoAkka.Logger@1.2.2`
 - `npm: coakka-logger-node@1.2.6`
 - `npm: coakka-logger-bun@1.2.6`
@@ -588,11 +588,12 @@ envelope/transport policy last.
 
 Release docs and samples present a helper only when the published artifact
 contains it. The 2.1.0 artifact mirror uses connector source `4782dcd` for JVM
-and source packages. The registry-published Python `1.4.6`, npm `2.1.1`, and NuGet `1.4.7`
-packages use sources `603a3728`, `80cdd77`, and `af244b1e` respectively.
+and source packages. The registry-published Python `1.4.6`, npm `2.1.1`, and NuGet `2.1.0`
+packages use sources `603a3728`, `80cdd77`, and `99bb16c` respectively.
 The npm packages use native generation `2.1.0+60ddf70d` and expose file-lane.
-Python and NuGet still use native generation `1.4.1+9e02a51d`; their 2.1.0
-candidates remain distinct until registry publication and verification complete.
+NuGet uses native generation `2.1.0+60ddf70d` and exposes file-lane. Python
+still uses native generation `1.4.1+9e02a51d` until its 2.1.0 registry
+publication and verification complete.
 
 Validation gates run before publishing:
 
