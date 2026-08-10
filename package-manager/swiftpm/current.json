@@ -1,15 +1,15 @@
 {
   "lane": "swiftpm",
   "status": "current",
-  "released_at": "2026-08-09",
+  "released_at": "2026-08-10",
   "packages": [
     {
       "surface": "runtime",
       "repository": "https://github.com/phuong-tran/coakka-runtime-swift.git",
-      "tag": "v2.1.1",
-      "exact_version": "2.1.1",
-      "commit": "45375fbfc540932a9708d520112efe1346c52d07",
-      "native_generation": "2.1.0+60ddf70d",
+      "tag": "v2.3.0",
+      "exact_version": "2.3.0",
+      "commit": "d5be89e0a4a98a6cc94aaa992292393765e715f7",
+      "native_generation": "2.3.0+a83ab412",
       "platforms": ["linux-aarch64", "linux-x86_64", "macos-aarch64", "windows-aarch64", "windows-x86_64"]
     },
     {
@@ -23,7 +23,7 @@
     }
   ],
   "verification": [
-    "swift test and packaged consumer smoke against coakka-runtime-swift exact 2.1.1 on macos-aarch64",
+    "native payload verification, swift test, and packaged consumer smoke against coakka-runtime-swift exact 2.3.0 on macos-aarch64",
     "swift run ConsumerSmoke against https://github.com/phuong-tran/coakka-logger-swift.git exact 1.2.1",
     "coakka-samples runtime/swift/basic",
     "coakka-samples logger/swift/basic"
