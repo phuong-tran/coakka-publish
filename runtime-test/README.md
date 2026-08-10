@@ -19,7 +19,7 @@ The source is intentionally small and separated by responsibility:
   only the published File Lane contract, including digest, receipt, final
   progress, monotonic observed update cursors, and counter checks;
 - `stream_lane_main.c`: 97 ordered variable-size frames through independent
-  publisher/subscriber lanes, including metadata, drops, pressure, non-blocking
+  publisher/subscriber lanes, including metadata, drops, pressure, nonblocking
   waits, counters, and forget lifecycle;
 - `connection_strategy_contract.c`: capability-aware connection policy,
   atomic rejection, lifecycle, and post-start immutability checks;
@@ -60,10 +60,20 @@ Set `COAKKA_NATIVE_EVIDENCE_REQUIRE_FILE_LANE=ON` when file-lane evidence is a
 required gate. This fails configuration when the selected artifact predates
 `coakka/v2/file_lane.h`; otherwise CMake omits only that compatibility target.
 
-Set `COAKKA_NATIVE_EVIDENCE_REQUIRE_STREAM_LANE=ON` when Stream Lane evidence is
-mandatory. Until the matching package is promoted, configure with
-`COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR` pointing at the exact source
-candidate.
+Stream Lane is not present in the published `2.1.0` package train. Configure
+its evidence target against the exact matching source candidate:
+
+```sh
+cmake -S . -B build-stream \
+  -DCOAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR=/path/to/exact/runtime/source \
+  -DCOAKKA_NATIVE_EVIDENCE_REQUIRE_STREAM_LANE=ON
+cmake --build build-stream --config Release
+./build-stream/coakka_runtime_v2_stream_lane_evidence
+```
+
+This target verifies ordered frames, metadata, source-reported drops, pressure,
+terminal state, stats, forget, and stop. Do not present it as execution against
+a published `2.1.0` package.
 
 For a multi-configuration generator, use `build/Release/` instead.
 

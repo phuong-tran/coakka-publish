@@ -40,6 +40,7 @@ Quarkus: [docs/coakka-quarkus.md](docs/coakka-quarkus.md)
 Runtime glossary: [docs/runtime-glossary.md](docs/runtime-glossary.md)
 Envelope and deadletter map: [docs/envelope-deadletter-map.md](docs/envelope-deadletter-map.md)
 Runtime integration guide: [docs/runtime-integration-guide.md](docs/runtime-integration-guide.md)
+AI-assisted integration: [docs/ai-assisted-integration.md](docs/ai-assisted-integration.md)
 Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.md)
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
 
@@ -58,6 +59,7 @@ capabilities, lifecycle rules, and connector examples:
 - [Connection strategies](docs/connection-strategies.md)
 - [Runtime file transfer](docs/runtime-file-transfer.md)
 - [Runtime streaming](docs/runtime-streaming.md)
+- [AI-assisted integration](docs/ai-assisted-integration.md)
 - [Envelope and deadletter map](docs/envelope-deadletter-map.md)
 - [Message and routing model](docs/runtime-message-and-routing-model.md)
 
