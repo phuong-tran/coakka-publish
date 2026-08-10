@@ -1,0 +1,70 @@
+{
+  "status": "published_to_npm",
+  "connector_commit": "3a84c7b",
+  "payload_staging_commit": "7708105",
+  "created_date": "2026-08-10",
+  "published_date": "2026-08-10",
+  "verified_date": "2026-08-10",
+  "registry": "https://registry.npmjs.org/",
+  "native_runtime_generation": "2.3.0+a83ab412",
+  "release_reason": "publish the runtime 2.3 Stream Lane connector train",
+  "publish_order": [
+    "runtime-node",
+    "runtime-bun",
+    "runtime-electron"
+  ],
+  "packages": [
+    {
+      "label": "runtime-node",
+      "product": "runtime",
+      "role": "node",
+      "package_name": "coakka-v2-connector-node",
+      "version": "2.3.0",
+      "expected_native_generation": "2.3.0+a83ab412",
+      "relative_path": "runtime/node/coakka-v2-connector-node-2.3.0.tgz",
+      "sha256": "42c54d722f86d87ef238414f4aecfe340035b42cdbf1cc08201b8f1e2272c4c6",
+      "registry_shasum": "9f1dc43dd05b3044a5c09fc60cce21c8e2a2d30a",
+      "registry_integrity": "sha512-u8zWaoUtd+43O8+v21yWlfY4qGwAEA1fyE+BBH7iIUkJiVupTieX68UwETVZh0l1P3Hsxt876InJkQZeNf6BqQ==",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ]
+    },
+    {
+      "label": "runtime-bun",
+      "product": "runtime",
+      "role": "bun",
+      "package_name": "coakka-v2-connector-bun",
+      "version": "2.3.0",
+      "expected_native_generation": "2.3.0+a83ab412",
+      "relative_path": "runtime/bun/coakka-v2-connector-bun-2.3.0.tgz",
+      "sha256": "54a3b94d54c38a69d872a9eda0b2e059a4547d39f7df7fcbe9d8a4c830a94596",
+      "registry_shasum": "b311a3f916c17de32b5950062a77336ec3f672d0",
+      "registry_integrity": "sha512-VPBOYtNiMCW4dn/G3i6DPU93eD41ffIDa7IAlhueSb3m/+nDY2LmEqDhJdhGhbQZjLCEJbNksi7ZJaW1jYbE4Q==",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ]
+    },
+    {
+      "label": "runtime-electron",
+      "product": "runtime",
+      "role": "electron",
+      "package_name": "coakka-v2-connector-electron",
+      "version": "2.3.0",
+      "expected_native_generation": "2.3.0+a83ab412",
+      "relative_path": "runtime/electron/coakka-v2-connector-electron-2.3.0.tgz",
+      "sha256": "9db73bf92da31e0c2e09ab768d320b20434e179c3e01438041eb326dcb16e547",
+      "registry_shasum": "7b8973616b90b4d173b47b4e455510b7266bc058",
+      "registry_integrity": "sha512-zh9LkSKX+OmOcwUK9m4bHBOf2dQIIYAJYO5686RzuVc3F574AgDTn7PBbXq8rruu/g3ChfHVE5KA+9tIRL9xUQ==",
+      "expected_internal_dependency": "coakka-v2-connector-node",
+      "expected_internal_dependency_spec": "coakka-v2-connector-node@2.3.0"
+    }
+  ]
+}

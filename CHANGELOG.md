@@ -3,6 +3,14 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-10
+
+- Published and registry-verified Node.js, Bun, and Electron runtime packages
+  at `2.3.0` over native generation `2.3.0+a83ab412`. The npm lane now exposes
+  the official Stream Lane connector surface; its receipt records exact
+  tarball digests, registry integrity, platform payloads, and Electron's exact
+  Node.js dependency.
+
 ## 2026-08-09
 
 - Published Go `v1.5.1` and SwiftPM `v2.1.1` documentation-integrity patches.
