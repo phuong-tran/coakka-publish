@@ -5,6 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-10
 
+- Published and registry-verified `CoAkka.Runtime==2.3.0` to NuGet over native
+  generation `2.3.0+a83ab412`. The repository-signed download differs from
+  the staged candidate only by `.signature.p7s`; clean request/reply/deadletter
+  and C# File/Stream Lane smokes pass.
 - Published and registry-verified Node.js, Bun, and Electron runtime packages
   at `2.3.0` over native generation `2.3.0+a83ab412`. The npm lane now exposes
   the official Stream Lane connector surface; its receipt records exact
