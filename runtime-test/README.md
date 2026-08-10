@@ -16,8 +16,11 @@ The source is intentionally small and separated by responsibility:
 - `evidence_config.c`: bounded command-line input parsing;
 - `evidence_runtime.c`: request/reply, pressure, stress, and soak workload;
 - `file_lane_main.c`: a 9 MiB multi-quantum direct-profile file transfer through
-  only the published file-lane C ABI, including digest, receipt, progress, and
-  counter checks;
+  only the published File Lane contract, including digest, receipt, final
+  progress, monotonic observed update cursors, and counter checks;
+- `stream_lane_main.c`: 97 ordered variable-size frames through independent
+  publisher/subscriber lanes, including metadata, drops, pressure, non-blocking
+  waits, counters, and forget lifecycle;
 - `connection_strategy_contract.c`: capability-aware connection policy,
   atomic rejection, lifecycle, and post-start immutability checks;
 - `concurrency_runtime.c`: multi-producer request/reply, submit-versus-stop,
@@ -47,6 +50,7 @@ configuration directory:
 ./build/coakka_runtime_v2_native_evidence smoke
 ./build/coakka_runtime_v2_connection_strategy_evidence
 ./build/coakka_runtime_v2_file_lane_evidence
+./build/coakka_runtime_v2_stream_lane_evidence
 ./build/coakka_runtime_v2_concurrency_evidence race --threads 4 --requests 256
 ./build/coakka_runtime_v2_concurrency_evidence hot-reload \
   --threads 4 --requests 256 --generations 64
@@ -55,6 +59,11 @@ configuration directory:
 Set `COAKKA_NATIVE_EVIDENCE_REQUIRE_FILE_LANE=ON` when file-lane evidence is a
 required gate. This fails configuration when the selected artifact predates
 `coakka/v2/file_lane.h`; otherwise CMake omits only that compatibility target.
+
+Set `COAKKA_NATIVE_EVIDENCE_REQUIRE_STREAM_LANE=ON` when Stream Lane evidence is
+mandatory. Until the matching package is promoted, configure with
+`COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR` pointing at the exact source
+candidate.
 
 For a multi-configuration generator, use `build/Release/` instead.
 

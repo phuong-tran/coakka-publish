@@ -11,6 +11,8 @@ option(COAKKA_NATIVE_EVIDENCE_REQUIRE_CONNECTION_STRATEGY
        "Fail configure when the runtime artifact lacks the connection-strategy ABI" OFF)
 option(COAKKA_NATIVE_EVIDENCE_REQUIRE_FILE_LANE
        "Fail configure when the runtime artifact lacks the file-lane ABI" OFF)
+option(COAKKA_NATIVE_EVIDENCE_REQUIRE_STREAM_LANE
+       "Fail configure when the runtime artifact lacks the stream-lane ABI" OFF)
 set(COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR "" CACHE PATH
     "Optional CoAkka v2 source directory for an instrumented core evidence build")
 
@@ -48,7 +50,11 @@ if(WIN32 AND MSVC AND NOT COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR)
     IMPORTED_IMPLIB
   )
   if(NOT _coakka_native_evidence_import_library)
-    if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64|ARM64)$")
+    if(CMAKE_GENERATOR_PLATFORM MATCHES "^(ARM64|arm64)$")
+      set(_coakka_native_evidence_machine ARM64)
+    elseif(CMAKE_GENERATOR_PLATFORM MATCHES "^(x64|X64)$")
+      set(_coakka_native_evidence_machine X64)
+    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64|ARM64)$")
       set(_coakka_native_evidence_machine ARM64)
     else()
       set(_coakka_native_evidence_machine X64)
@@ -236,6 +242,42 @@ if(COAKKA_NATIVE_EVIDENCE_FILE_LANE_INCLUDE_DIR)
 elseif(COAKKA_NATIVE_EVIDENCE_REQUIRE_FILE_LANE)
   message(FATAL_ERROR
           "The selected runtime artifact does not expose file_lane.h")
+endif()
+
+unset(COAKKA_NATIVE_EVIDENCE_STREAM_LANE_INCLUDE_DIR)
+unset(COAKKA_NATIVE_EVIDENCE_STREAM_LANE_INCLUDE_DIR CACHE)
+if(COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR AND
+   EXISTS "${COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR}/include/coakka/v2/stream_lane.h")
+  set(COAKKA_NATIVE_EVIDENCE_STREAM_LANE_INCLUDE_DIR
+      "${COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR}/include")
+else()
+  find_path(
+    COAKKA_NATIVE_EVIDENCE_STREAM_LANE_INCLUDE_DIR
+    NAMES coakka/v2/stream_lane.h
+    PATHS ${_coakka_native_include_dirs}
+    NO_DEFAULT_PATH
+  )
+endif()
+if(COAKKA_NATIVE_EVIDENCE_STREAM_LANE_INCLUDE_DIR)
+  add_executable(
+    coakka_runtime_v2_stream_lane_evidence
+    stream_lane_main.c
+  )
+  coakka_configure_native_evidence_target(
+    coakka_runtime_v2_stream_lane_evidence
+  )
+  if(MSVC)
+    target_compile_options(coakka_runtime_v2_stream_lane_evidence PRIVATE /UNDEBUG)
+  else()
+    target_compile_options(coakka_runtime_v2_stream_lane_evidence PRIVATE -UNDEBUG)
+  endif()
+  target_link_libraries(
+    coakka_runtime_v2_stream_lane_evidence
+    PRIVATE CoAkkaRuntimeNativeV2::runtime_v2
+  )
+elseif(COAKKA_NATIVE_EVIDENCE_REQUIRE_STREAM_LANE)
+  message(FATAL_ERROR
+          "The selected runtime artifact does not expose stream_lane.h")
 endif()
 
 find_path(
