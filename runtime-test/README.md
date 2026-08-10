@@ -60,12 +60,12 @@ Set `COAKKA_NATIVE_EVIDENCE_REQUIRE_FILE_LANE=ON` when file-lane evidence is a
 required gate. This fails configuration when the selected artifact predates
 `coakka/v2/file_lane.h`; otherwise CMake omits only that compatibility target.
 
-Stream Lane is not present in the published `2.1.0` package train. Configure
-its evidence target against the exact matching source candidate:
+Stream Lane is present in the `2.3.0` native package. Require the header and
+target explicitly so an older or incomplete package fails during configuration:
 
 ```sh
 cmake -S . -B build-stream \
-  -DCOAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR=/path/to/exact/runtime/source \
+  -DCMAKE_PREFIX_PATH=/path/to/coakka-runtime-native-v2-2.3.0 \
   -DCOAKKA_NATIVE_EVIDENCE_REQUIRE_STREAM_LANE=ON
 cmake --build build-stream --config Release
 ./build-stream/coakka_runtime_v2_stream_lane_evidence

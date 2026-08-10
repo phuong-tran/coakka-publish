@@ -63,7 +63,7 @@ capabilities, lifecycle rules, and connector examples:
 - [Envelope and deadletter map](docs/envelope-deadletter-map.md)
 - [Message and routing model](docs/runtime-message-and-routing-model.md)
 
-Runtime `2.1.0` adds the bounded file lane for large point-to-point files. The
+Runtime `2.3.0` contains the bounded file lane for large point-to-point files. The
 sender reads from a file descriptor and the receiver writes to an
 application-approved storage path. Direct transport can use the operating
 system file-transfer primitive; TLS and mTLS use encrypted streaming. This is
@@ -72,14 +72,12 @@ writes storage. The current release contains native artifacts for Linux
 ARM64/x86-64, macOS ARM64, and Windows ARM64/x86-64, plus the matching
 connector, framework, tool, sample, manifest, and checksum surfaces.
 
-The `2.2.0` source candidate promotes stream lane to an official native
-contract and reports the `stream_lane` runtime feature. It is not retroactively
-part of the currently published `2.1.0` generation; see
-[Runtime streaming](docs/runtime-streaming.md) for its bounded frame,
-backpressure, lifecycle, security, and artifact-availability contract.
-The additive `2.3.0` source candidate adds neutral publisher/subscriber
-pressure snapshots and waits without changing stream wire version 1; no exact
-`2.3.0` artifact train is claimed as published yet.
+Runtime `2.3.0` also contains the official Stream Lane contract and reports the
+`stream_lane` runtime feature. It carries bounded frames, backpressure,
+lifecycle, security, and neutral publisher/subscriber pressure signals without
+changing stream wire version 1. See
+[Runtime streaming](docs/runtime-streaming.md) for the application boundary and
+artifact-availability contract.
 
 ## Runtime Test
 
