@@ -134,9 +134,15 @@ manifest_release="$(jq -er '.release' "${native_manifest}")"
   fail "native manifest release mismatch: ${manifest_release}"
 
 connector_source="${COAKKA_CONNECTOR_SOURCE:-$(git -C "${connector_root}" rev-parse --short=7 HEAD)}"
+payload_staging_source="${COAKKA_PAYLOAD_STAGING_SOURCE:-$(git -C "${connector_root}" rev-parse --short=7 HEAD)}"
 connector_version="${COAKKA_CONNECTOR_VERSION:-${native_version}}"
 release_directory="${native_release}-${connector_source}"
 platforms_json="$(jq -c '.platforms' "${native_manifest}")"
+
+git -C "${connector_root}" rev-parse --verify "${connector_source}^{commit}" >/dev/null 2>&1 ||
+  fail "COAKKA_CONNECTOR_SOURCE does not resolve to a connector commit: ${connector_source}"
+git -C "${connector_root}" rev-parse --verify "${payload_staging_source}^{commit}" >/dev/null 2>&1 ||
+  fail "COAKKA_PAYLOAD_STAGING_SOURCE does not resolve to a connector commit: ${payload_staging_source}"
 
 tmp_parent="${repo_root}/.tmp"
 mkdir -p "${tmp_parent}"
@@ -163,13 +169,25 @@ stage_lane() {
 
   mkdir -p "${staged}"
   cp "${artifact_path}" "${staged}/"
-  cp "${docs_root}/README.md" "${staged}/README.md"
-  if [[ -f "${docs_root}/CONSUMING.md" ]]; then
-    cp "${docs_root}/CONSUMING.md" "${staged}/CONSUMING.md"
+  while IFS= read -r package_doc; do
+    cp "${package_doc}" "${staged}/"
+  done < <(find "${docs_root}" -maxdepth 1 -type f -name '*.md' | LC_ALL=C sort)
+  if [[ -f "${docs_root}/LICENSE" ]]; then
+    cp "${docs_root}/LICENSE" "${staged}/LICENSE"
   fi
-  if [[ -f "${docs_root}/RELEASE_NOTES.md" ]]; then
-    cp "${docs_root}/RELEASE_NOTES.md" "${staged}/RELEASE_NOTES.md"
-  fi
+  case "${lane}" in
+    jvm)
+      cp "${connector_root}/v2/jvm/RELEASE.md" "${staged}/RELEASE.md"
+      mkdir -p "${staged}/consumer-smoke"
+      cp "${connector_root}/v2/jvm/consumer-smoke/README.md" \
+        "${staged}/consumer-smoke/README.md"
+      ;;
+    swift)
+      mkdir -p "${staged}/Sources/CoAkkaRuntimeC/include"
+      cp "${connector_root}/swift/Sources/CoAkkaRuntimeC/include/coakka_runtime_bridge.h" \
+        "${staged}/Sources/CoAkkaRuntimeC/include/coakka_runtime_bridge.h"
+      ;;
+  esac
 
   jq -n \
     --arg lane "${lane}" \
@@ -179,6 +197,7 @@ stage_lane() {
     --arg native_release "${native_release}" \
     --arg native_source "${native_source}" \
     --arg connector_source "${connector_source}" \
+    --arg payload_staging_source "${payload_staging_source}" \
     --argjson platforms "${platforms_json}" \
     --argjson source_package "${source_package}" \
     '{
@@ -197,12 +216,12 @@ stage_lane() {
         + if $source_package then {source_package: true} else {} end
       ),
       connector_source_git_commit: $connector_source,
-      payload_staging_git_commit: $connector_source
+      payload_staging_git_commit: $payload_staging_source
     }' >"${staged}/manifest.json"
 
   (
     cd "${staged}"
-    find . -maxdepth 1 -type f ! -name SHA256SUMS -print |
+    find . -type f ! -name SHA256SUMS -print |
       LC_ALL=C sort |
       sed 's#^./##' |
       xargs shasum -a 256 >"${staged_sums}"

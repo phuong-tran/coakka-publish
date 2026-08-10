@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "python",
+  "release_directory": "2.3.0+a83ab412-3a84c7b",
+  "version": "2.3.0",
+  "artifact": {
+    "name": "coakka_v2_connector-2.3.0-py3-none-any.whl",
+    "bundled_native_package_version": "2.3.0+a83ab412",
+    "bundled_native_git_commit": "a83ab412",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ]
+  },
+  "connector_source_git_commit": "3a84c7b",
+  "payload_staging_git_commit": "7708105"
+}

@@ -1,0 +1,7 @@
+# Public artifact manifest v1.
+# Columns: status	label	relative_path	sha256
+public	coakka-runtime-inspect linux-aarch64	runtime-inspect/native/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-linux-aarch64.tar.gz	774197302c36e27074f22be75f4bc08644cd815dc17290dbd12c5f20fa28d6f6
+public	coakka-runtime-inspect linux-x86_64	runtime-inspect/native/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-linux-x86_64.tar.gz	a2068ede400edb97a7c8420337074d1bde84f5238450abf03586ec8ea428b197
+public	coakka-runtime-inspect macos-aarch64	runtime-inspect/native/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-macos-aarch64.tar.gz	2e06582717cd6365c3f3db9d7c9141022407146fb8c0a0563653f5d5d99dd984
+public	coakka-runtime-inspect windows-aarch64	runtime-inspect/native/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-windows-aarch64.tar.gz	710e8bd56cd9a9663c3d48a541aae413ab934f5628ce181ad55edc9dfc531172
+public	coakka-runtime-inspect windows-x86_64	runtime-inspect/native/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-windows-x86_64.tar.gz	c69d1c2e8f630eed6d076b31f67bccc28015087b05adaff687ffd7b98c95c729

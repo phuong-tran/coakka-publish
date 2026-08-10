@@ -10,8 +10,10 @@
 extern "C" {
 #endif
 
+/** Opaque lane owned by the caller from create through stop and destroy. */
 typedef struct coakka_v2_file_lane_t coakka_v2_file_lane_t;
 
+/** Stable limits, capability flags, digest size, and progress scale. */
 enum {
   COAKKA_V2_FILE_LANE_ENABLE_SENDER = 1u << 0,
   COAKKA_V2_FILE_LANE_ENABLE_RECEIVER = 1u << 1,
@@ -23,17 +25,20 @@ enum {
   COAKKA_V2_FILE_LANE_MAX_WORKERS = 4u
 };
 
+/** Transport protection selected once when the lane is created. */
 typedef enum coakka_v2_file_lane_security_mode_t {
   COAKKA_V2_FILE_LANE_SECURITY_DIRECT = COAKKA_V2_TCP_SECURITY_PLAINTEXT,
   COAKKA_V2_FILE_LANE_SECURITY_TLS = COAKKA_V2_TCP_SECURITY_TLS,
   COAKKA_V2_FILE_LANE_SECURITY_MUTUAL_TLS = COAKKA_V2_TCP_SECURITY_MUTUAL_TLS
 } coakka_v2_file_lane_security_mode_t;
 
+/** Sender or receiver side of one retained transfer record. */
 typedef enum coakka_v2_file_transfer_direction_t {
   COAKKA_V2_FILE_TRANSFER_DIRECTION_SEND = 1u,
   COAKKA_V2_FILE_TRANSFER_DIRECTION_RECEIVE = 2u
 } coakka_v2_file_transfer_direction_t;
 
+/** Observable lifecycle state for one transfer side. */
 typedef enum coakka_v2_file_transfer_state_t {
   COAKKA_V2_FILE_TRANSFER_STATE_PREPARED = 1u,
   COAKKA_V2_FILE_TRANSFER_STATE_QUEUED = 2u,
@@ -47,6 +52,7 @@ typedef enum coakka_v2_file_transfer_state_t {
   COAKKA_V2_FILE_TRANSFER_STATE_CANCELED = 10u
 } coakka_v2_file_transfer_state_t;
 
+/** Stable terminal result reported independently by each transfer side. */
 typedef enum coakka_v2_file_transfer_result_t {
   COAKKA_V2_FILE_TRANSFER_RESULT_NONE = 0u,
   COAKKA_V2_FILE_TRANSFER_RESULT_OK = 1u,
@@ -200,30 +206,97 @@ typedef struct coakka_v2_file_lane_stats_t {
   uint64_t completed_receive_bytes;
 } coakka_v2_file_lane_stats_t;
 
+/**
+ * Creates a stopped lane, or returns NULL on invalid config or allocation
+ * failure. Prefer create_ex when the exact status is required. The caller owns
+ * the returned lane and must destroy it after stop.
+ *
+ * @param config Borrowed configuration copied before this call returns.
+ * @return Owned stopped lane, or NULL on invalid input or allocation failure.
+ */
 coakka_v2_file_lane_t *
 coakka_v2_file_lane_create(const coakka_v2_file_lane_config_t *config);
 
-/** Status-returning factory. On success, caller owns *out_lane. */
+/**
+ * Status-returning factory. On success, caller owns *out_lane.
+ *
+ * @param config Borrowed configuration copied before this call returns.
+ * @param out_lane Receives the owned stopped lane on success or NULL on failure.
+ * @return Stable runtime status.
+ */
 coakka_v2_status_t
 coakka_v2_file_lane_create_ex(const coakka_v2_file_lane_config_t *config,
                               coakka_v2_file_lane_t **out_lane);
+
+/**
+ * Releases a stopped lane. Passing NULL is allowed. The caller must prevent
+ * concurrent API calls and call stop before destroying a started lane.
+ *
+ * @param lane Owned stopped lane or NULL.
+ */
 void coakka_v2_file_lane_destroy(coakka_v2_file_lane_t *lane);
 
+/**
+ * Starts enabled workers and the receiver listener.
+ *
+ * @param lane Owned stopped lane.
+ * @return COAKKA_V2_OK on transition to started, otherwise a stable status.
+ */
 coakka_v2_status_t coakka_v2_file_lane_start(coakka_v2_file_lane_t *lane);
+
+/**
+ * Requests stop, wakes transfer waits, joins workers, and rejects new work.
+ * Repeated calls are safe.
+ *
+ * @param lane Owned lane to stop.
+ * @return COAKKA_V2_OK for a valid lane, including repeated stop calls.
+ */
 coakka_v2_status_t coakka_v2_file_lane_stop(coakka_v2_file_lane_t *lane);
 
+/**
+ * Reads the active receiver port after start; output is unchanged on error.
+ *
+ * @param lane Borrowed started receiver-capable lane.
+ * @param out_port Receives the bound host-order port on success.
+ * @return Stable runtime status.
+ */
 coakka_v2_status_t
 coakka_v2_file_lane_get_bound_port(coakka_v2_file_lane_t *lane,
                                    uint16_t *out_port);
 
+/**
+ * Registers one receiver authorization and destination. Admission is bounded;
+ * the spec is copied and no file bytes are transferred by this call.
+ *
+ * @param lane Borrowed started receiver-capable lane.
+ * @param spec Borrowed authorization copied before this call returns.
+ * @return COAKKA_V2_OK on admission or a stable rejection status.
+ */
 coakka_v2_status_t
 coakka_v2_file_lane_prepare_receive(coakka_v2_file_lane_t *lane,
                                     const coakka_v2_file_receive_spec_t *spec);
 
+/**
+ * Opens and validates the source synchronously, then queues one bounded send.
+ * Queue rejection does not retain the job or its source handle.
+ *
+ * @param lane Borrowed started sender-capable lane.
+ * @param spec Borrowed send job copied before this call returns.
+ * @return COAKKA_V2_OK on admission or a stable rejection status.
+ */
 coakka_v2_status_t
 coakka_v2_file_lane_submit_send(coakka_v2_file_lane_t *lane,
                                 const coakka_v2_file_send_spec_t *spec);
 
+/**
+ * Copies the latest projection for one retained direction/transfer record.
+ *
+ * @param lane Borrowed started or stopped lane retaining the record.
+ * @param transfer_id Borrowed NUL-terminated application transfer ID.
+ * @param direction COAKKA_V2_FILE_TRANSFER_DIRECTION_SEND or RECEIVE.
+ * @param out_snapshot Caller-owned output initialized with struct_size.
+ * @return COAKKA_V2_OK on copy; output is unspecified on failure.
+ */
 coakka_v2_status_t coakka_v2_file_lane_get_transfer(
     coakka_v2_file_lane_t *lane, const char *transfer_id, uint32_t direction,
     coakka_v2_file_transfer_snapshot_t *out_snapshot);
@@ -231,27 +304,67 @@ coakka_v2_status_t coakka_v2_file_lane_get_transfer(
 /**
  * Waits until update_sequence advances beyond after_update_sequence.
  * timeout_ms=0 performs a non-blocking read and returns WOULD_BLOCK when no
- * newer update exists.
+ * newer update exists. Stop wakes the wait. On OK, out_snapshot is a complete
+ * copied projection; on error its contents are unspecified.
+ *
+ * @param lane Borrowed lane retaining the record.
+ * @param transfer_id Borrowed NUL-terminated application transfer ID.
+ * @param direction Sender or receiver record to observe.
+ * @param after_update_sequence Last update already processed.
+ * @param timeout_ms Bounded wait in milliseconds; zero is non-blocking.
+ * @param out_snapshot Caller-owned output initialized with struct_size.
+ * @return COAKKA_V2_OK, WOULD_BLOCK, CLOSED, or another stable status.
  */
 coakka_v2_status_t coakka_v2_file_lane_wait_transfer(
     coakka_v2_file_lane_t *lane, const char *transfer_id, uint32_t direction,
     uint64_t after_update_sequence, uint32_t timeout_ms,
     coakka_v2_file_transfer_snapshot_t *out_snapshot);
 
-/** Requests cancellation. Queued/prepared work is canceled synchronously. */
+/**
+ * Requests cancellation. Queued/prepared work is canceled synchronously;
+ * active I/O observes the request asynchronously. Wait for terminal state
+ * before forgetting the record.
+ *
+ * @param lane Borrowed lane retaining the record.
+ * @param transfer_id Borrowed NUL-terminated application transfer ID.
+ * @param direction Sender or receiver record to cancel.
+ * @return Stable runtime status for the cancellation request.
+ */
 coakka_v2_status_t coakka_v2_file_lane_cancel_transfer(
     coakka_v2_file_lane_t *lane, const char *transfer_id, uint32_t direction);
 
-/** Removes one inactive transfer record and its prepared receive state. */
+/**
+ * Removes one terminal transfer record and its prepared receive state. Active
+ * records cannot be forgotten. A successful call invalidates its wait cursor.
+ *
+ * @param lane Borrowed lane retaining the terminal record.
+ * @param transfer_id Borrowed NUL-terminated application transfer ID.
+ * @param direction Sender or receiver record to release.
+ * @return COAKKA_V2_OK on release or BAD_STATE for non-terminal work.
+ */
 coakka_v2_status_t coakka_v2_file_lane_forget_transfer(
     coakka_v2_file_lane_t *lane, const char *transfer_id, uint32_t direction);
 
-/** Reads bounded operational counters without exposing file semantics. */
+/**
+ * Reads bounded operational counters without exposing file semantics.
+ *
+ * @param lane Borrowed lane.
+ * @param out_stats Caller-owned output initialized with struct_size.
+ * @return COAKKA_V2_OK on copy; output is unspecified on failure.
+ */
 coakka_v2_status_t
 coakka_v2_file_lane_get_stats(coakka_v2_file_lane_t *lane,
                               coakka_v2_file_lane_stats_t *out_stats);
 
-/** Computes the digest and size used by prepare/send contracts. */
+/**
+ * Computes the digest and size used by prepare/send contracts. The path is
+ * borrowed only for the call. Both outputs are written only on success.
+ *
+ * @param path Borrowed NUL-terminated local file path.
+ * @param out_sha256 Caller-owned 32-byte digest output.
+ * @param out_size Caller-owned byte-count output.
+ * @return COAKKA_V2_OK on a stable read or a storage/argument status.
+ */
 coakka_v2_status_t
 coakka_v2_file_sha256_path(const char *path,
                            uint8_t out_sha256[COAKKA_V2_FILE_LANE_SHA256_BYTES],
