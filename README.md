@@ -57,6 +57,7 @@ capabilities, lifecycle rules, and connector examples:
 - [TLS and mTLS](docs/tls-and-mtls.md)
 - [Connection strategies](docs/connection-strategies.md)
 - [Runtime file transfer](docs/runtime-file-transfer.md)
+- [Runtime streaming](docs/runtime-streaming.md)
 - [Envelope and deadletter map](docs/envelope-deadletter-map.md)
 - [Message and routing model](docs/runtime-message-and-routing-model.md)
 
@@ -68,6 +69,15 @@ not an end-to-end zero-copy claim because receiver-side persistence still
 writes storage. The current release contains native artifacts for Linux
 ARM64/x86-64, macOS ARM64, and Windows ARM64/x86-64, plus the matching
 connector, framework, tool, sample, manifest, and checksum surfaces.
+
+The `2.2.0` source candidate promotes stream lane to an official native
+contract and reports the `stream_lane` runtime feature. It is not retroactively
+part of the currently published `2.1.0` generation; see
+[Runtime streaming](docs/runtime-streaming.md) for its bounded frame,
+backpressure, lifecycle, security, and artifact-availability contract.
+The additive `2.3.0` source candidate adds neutral publisher/subscriber
+pressure snapshots and waits without changing stream wire version 1; no exact
+`2.3.0` artifact train is claimed as published yet.
 
 ## Runtime Test
 
