@@ -102,7 +102,7 @@ All logger connector lanes below align to logger native generation
 | Channel | Available surface | Status |
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.3.0`, logger `1.2.6`; registry verified |
-| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.1.0` and logger `coakka-logger==1.2.2`; registry verified |
+| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.3.0` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.6.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
 | SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.3.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
 | NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.3.0`, logger `CoAkka.Logger==1.2.2`; registry verified |
@@ -126,7 +126,7 @@ Runtime PyPI package:
 
 | Surface | PyPI coordinate | Native generation |
 | --- | --- | --- |
-| Python runtime | `coakka-v2-connector==2.1.0` | `2.1.0+60ddf70d` |
+| Python runtime | `coakka-v2-connector==2.3.0` | `2.3.0+a83ab412` |
 
 Logger PyPI package:
 
