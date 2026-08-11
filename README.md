@@ -50,6 +50,17 @@ CoAkka components. It has no aggregate product version and does not publish
 GitHub Releases. Select an exact lane path or package-manager coordinate, then
 verify its manifest and checksum evidence.
 
+## Featured Binary Lanes
+
+These binaries are committed directly to this repository and become public
+when the reviewed change is merged to `main`. They are not GitHub Release
+attachments.
+
+| Product | Binary lane | Source and consumer |
+| --- | --- | --- |
+| [SFTP artifact publisher](runtime-addons/artifact-publisher-sftp/README.md) | `runtime-addons/artifact-publisher-sftp/native/releases/1.1.0+42841ae2/` | [`coakka-samples/runtime-addons/artifact-publisher-sftp/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-addons/artifact-publisher-sftp) |
+| [Raspberry Pi camera livestream](samples/runtime/native/rpi-camera/README.md) | `samples/runtime/native/rpi-camera/releases/1.1.0/` | [`coakka-samples/runtime/native/rpi-camera/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime/native/rpi-camera) |
+
 ## Runtime Addons
 
 [`runtime-addons/`](runtime-addons/README.md) is the independent artifact family
@@ -312,7 +323,7 @@ Current public coakka-client Docker Linux bundle generation: `1.3.2+caff6d6d`.
 Current public coakka-runtime-inspect native generation: `2.3.0+a83ab412` on
 all five supported native platforms.
 Docker Hub image tags are not part of the current release ledger yet; the
-GitHub demo bundles above are the captured public sample artifacts.
+Repository-hosted demo bundles above are the captured public sample artifacts.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |

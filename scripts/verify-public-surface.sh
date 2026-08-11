@@ -265,6 +265,7 @@ verify_public_artifact_manifest() {
   local seen_labels=$'\n'
   local status label relative_path expected_sha extra actual_sha
   local addon_release_manifest addon_release_archive
+  local sample_release_manifest sample_release_archive
 
   while IFS=$'\t' read -r status label relative_path expected_sha extra || [[ -n "${status:-}" ]]; do
     line_no=$((line_no + 1))
@@ -295,6 +296,27 @@ PY
 )"
         if [[ "$(basename "${relative_path}")" != "${addon_release_archive}" ]]; then
           fail "runtime addon public row does not name its manifest archive: ${relative_path}"
+        fi
+        ;;
+      samples/runtime/native/*/releases/*/*)
+        sample_release_manifest="${repo_root}/$(dirname "${relative_path}")/manifest.json"
+        if [[ ! -f "${sample_release_manifest}" ]]; then
+          fail "native sample artifact has no release manifest: ${relative_path}"
+        fi
+        sample_release_archive="$(python3 - "${sample_release_manifest}" "$(basename "${relative_path}")" <<'PY'
+import json
+import sys
+
+manifest_path, archive_name = sys.argv[1:]
+with open(manifest_path, "r", encoding="utf-8") as handle:
+    artifacts = json.load(handle).get("artifacts", [])
+
+matches = [item for item in artifacts if item.get("name") == archive_name]
+print(archive_name if len(matches) == 1 else "")
+PY
+)"
+        if [[ -z "${sample_release_archive}" ]]; then
+          fail "native sample public row is not declared exactly once in its release manifest: ${relative_path}"
         fi
         ;;
       logger/*/releases/*|runtime/*/releases/*|runtime-inspect/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|coakka-tools/*/releases/*|maven/coakka/*/*/*/*.jar)
@@ -563,7 +585,7 @@ if ! find "${repo_root}/runtime/native/releases" -mindepth 2 -maxdepth 2 \
 fi
 
 release_roots=()
-for release_root in logger runtime runtime-addons cli demo; do
+for release_root in logger runtime runtime-addons cli demo samples; do
   if [[ -d "${repo_root}/${release_root}" ]]; then
     release_roots+=("${repo_root}/${release_root}")
   fi
@@ -608,6 +630,7 @@ scanner_inputs=(
   "${repo_root}/docs"
   "${repo_root}/include"
   "${repo_root}/runtime-addons"
+  "${repo_root}/samples"
   "${repo_root}/scripts"
   "${repo_root}/artifacts/public-artifacts.tsv"
 )
