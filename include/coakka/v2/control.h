@@ -14,10 +14,11 @@ extern "C" {
  * Endpoint metadata inside a runtime route snapshot.
  *
  * For endpoints marked COAKKA_V2_ENDPOINT_FLAG_LOCAL, host/port are diagnostic
- * metadata only; the runtime does not bind or listen on that socket.
+ * metadata only; the runtime does not use that tuple for same-process
+ * delivery. Explicit-network hosts may set port to zero. Legacy hosts may
+ * retain a non-zero port while migrating away from route-derived listeners.
  *
- * Endpoint host must be concrete and endpoint port must be non-zero in control
- * snapshots accepted by the current runtime.
+ * Remote endpoint host must be concrete and its port must be non-zero.
  */
 typedef struct coakka_v2_endpoint_t {
     const char *host;

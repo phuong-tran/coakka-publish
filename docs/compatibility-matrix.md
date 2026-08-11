@@ -20,20 +20,20 @@ Across those surfaces, polyglot connectors preserve one target,
 request/reply, bounded-admission, deadletter, capability, and configuration
 contract instead of inventing language-specific runtime semantics.
 
-## Runtime 2.3.0 Train
+## Runtime 2.4.0 Artifact Train
 
-The current artifact mirror aligns every runtime connector lane, the JVM
-framework adapters, and both native tools to native generation
-`2.3.0+a83ab412`. It contains exactly five runtime libraries: Linux
+The current artifact mirror aligns every runtime connector lane and the JVM
+framework adapters to native generation `2.4.0+c2f53117`. Runtime tools retain
+their separately listed 2.3.0 generation. The runtime train contains five libraries: Linux
 ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 
 | Surface | Public artifact or coordinate | Public generation | Native generation |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/2.3.0+a83ab412/coakka-runtime-native-v2-2.3.0.tar.gz` | `2.3.0+a83ab412` | `2.3.0+a83ab412` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `2.3.0-ga83ab412-3a84c7b` | `2.3.0+a83ab412` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `2.3.0-ga83ab412-3a84c7b` | via JVM runtime |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `2.3.0-ga83ab412-3a84c7b` | via JVM runtime |
-| Language connector archives | `runtime/<lane>/releases/2.3.0+a83ab412-3a84c7b/` | `2.3.0` | `2.3.0+a83ab412` |
+| Native C ABI | `runtime/native/releases/2.4.0+c2f53117/coakka-runtime-native-v2-2.4.0.tar.gz` | `2.4.0+c2f53117` | `2.4.0+c2f53117` |
+| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `2.4.0-gc2f53117-0afb5e9` | `2.4.0+c2f53117` |
+| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `2.4.0-gc2f53117-0afb5e9` | via JVM runtime |
+| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `2.4.0-gc2f53117-0afb5e9` | via JVM runtime |
+| Language connector archives | `runtime/<lane>/releases/2.4.0+c2f53117-0afb5e9/` | `2.4.0` | `2.4.0+c2f53117` |
 | npm | `coakka-v2-connector-{node,bun,electron}@2.3.0` | `2.3.0` | `2.3.0+a83ab412` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.6.0` | `2.3.0+a83ab412` |
 | SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.3.0` | `2.3.0+a83ab412` |

@@ -1,0 +1,150 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "coakka.v2",
+    "module": "coakka-jvm-native-runtime-v2",
+    "version": "2.4.0-gc2f53117-0afb5e9",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib"
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "net.java.dev.jna",
+          "module": "jna",
+          "version": {
+            "requires": "5.17.0"
+          }
+        },
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-java",
+          "version": {
+            "requires": "4.31.1"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-jvm-native-runtime-v2-2.4.0-gc2f53117-0afb5e9.jar",
+          "url": "coakka-jvm-native-runtime-v2-2.4.0-gc2f53117-0afb5e9.jar",
+          "size": 16718300,
+          "sha512": "e12770b3d5596fdabd13a5120c2e02a28caf78e4a98ec786999872c68ab535229d0368f31eedd2c22539fdff55770729c451f81a1aaa79d13b7b1a5888c97ba5",
+          "sha256": "1ef463adcc3a27a8cf8d99bc43434f7641ce9cd30ade0fd8188f2a3ab9029c41",
+          "sha1": "580abf41c9b3657694fa3da8ef3a2318d2eac7c6",
+          "md5": "985ae96a58757588ac70e3d067f6ecae"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-jdk8",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-serialization-json",
+          "version": {
+            "requires": "1.7.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib"
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.10.2"
+          }
+        },
+        {
+          "group": "net.java.dev.jna",
+          "module": "jna",
+          "version": {
+            "requires": "5.17.0"
+          }
+        },
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-java",
+          "version": {
+            "requires": "4.31.1"
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.3.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-jvm-native-runtime-v2-2.4.0-gc2f53117-0afb5e9.jar",
+          "url": "coakka-jvm-native-runtime-v2-2.4.0-gc2f53117-0afb5e9.jar",
+          "size": 16718300,
+          "sha512": "e12770b3d5596fdabd13a5120c2e02a28caf78e4a98ec786999872c68ab535229d0368f31eedd2c22539fdff55770729c451f81a1aaa79d13b7b1a5888c97ba5",
+          "sha256": "1ef463adcc3a27a8cf8d99bc43434f7641ce9cd30ade0fd8188f2a3ab9029c41",
+          "sha1": "580abf41c9b3657694fa3da8ef3a2318d2eac7c6",
+          "md5": "985ae96a58757588ac70e3d067f6ecae"
+        }
+      ]
+    }
+  ]
+}

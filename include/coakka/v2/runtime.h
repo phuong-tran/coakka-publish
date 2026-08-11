@@ -438,6 +438,28 @@ coakka_v2_status_t coakka_v2_runtime_get_tcp_connection_config(
     coakka_v2_tcp_connection_config_snapshot_t *out_config
 );
 
+/** Validates one startup network policy without mutating runtime state. */
+coakka_v2_status_t coakka_v2_runtime_validate_network_options(
+    const coakka_v2_network_options_t *options,
+    coakka_v2_network_validation_t *out_validation
+);
+
+/**
+ * Applies one explicit network participation policy while runtime is CREATED
+ * and before the initial control snapshot is installed. Repeated successful
+ * calls in that window are allowed; the last policy is selected.
+ */
+coakka_v2_status_t coakka_v2_runtime_apply_network_options(
+    coakka_v2_runtime_t *rt,
+    const coakka_v2_network_options_t *options
+);
+
+/** Reads the current effective network policy for one runtime instance. */
+coakka_v2_status_t coakka_v2_runtime_get_network_config(
+    coakka_v2_runtime_t *rt,
+    coakka_v2_network_config_snapshot_t *out_config
+);
+
 /**
  * Validates one TCP security policy shape and compiled capability without
  * loading credentials or consulting runtime lifecycle/generation state.

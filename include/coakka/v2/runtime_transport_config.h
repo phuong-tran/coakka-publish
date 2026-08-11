@@ -15,6 +15,90 @@ enum {
   COAKKA_V2_TCP_BOUNDED_POOL_DEFAULT_IDLE_TIMEOUT_MS = 30000u
 };
 
+/*
+ * Runtime network participation is independent from route locality.
+ *
+ * LEGACY_ROUTE_DERIVED is reported only when an older host did not apply an
+ * explicit policy. New hosts should always select one of the three explicit
+ * modes before applying their initial control snapshot.
+ */
+typedef enum coakka_v2_network_mode_t {
+  COAKKA_V2_NETWORK_LEGACY_ROUTE_DERIVED = 0,
+  COAKKA_V2_NETWORK_EMBEDDED = 1,
+  COAKKA_V2_NETWORK_OUTBOUND_ONLY = 2,
+  COAKKA_V2_NETWORK_NODE = 3
+} coakka_v2_network_mode_t;
+
+enum {
+  COAKKA_V2_NETWORK_FIELD_MODE = UINT64_C(1) << 0,
+  COAKKA_V2_NETWORK_FIELD_BIND_HOST = UINT64_C(1) << 1,
+  COAKKA_V2_NETWORK_FIELD_BIND_PORT = UINT64_C(1) << 2,
+  COAKKA_V2_NETWORK_FIELD_ADVERTISE_HOST = UINT64_C(1) << 3,
+  COAKKA_V2_NETWORK_FIELD_ADVERTISE_PORT = UINT64_C(1) << 4
+};
+
+#define COAKKA_V2_NETWORK_ALL_FIELDS                                          \
+  (COAKKA_V2_NETWORK_FIELD_MODE | COAKKA_V2_NETWORK_FIELD_BIND_HOST |         \
+   COAKKA_V2_NETWORK_FIELD_BIND_PORT |                                        \
+   COAKKA_V2_NETWORK_FIELD_ADVERTISE_HOST |                                   \
+   COAKKA_V2_NETWORK_FIELD_ADVERTISE_PORT)
+
+/*
+ * Additive startup-only network policy.
+ *
+ * EMBEDDED rejects remote endpoints and does not create a listener.
+ * OUTBOUND_ONLY permits remote endpoints but does not create a listener.
+ * NETWORK_NODE requires explicit bind and advertised endpoints. bind_host is
+ * the local IPv4 address passed to bind(2); advertise_host is connector-owned
+ * identity and must not be a wildcard address. Strings are borrowed only for
+ * the synchronous apply call and are copied by the runtime.
+ */
+typedef struct coakka_v2_network_options_t {
+  size_t struct_size;
+  uint64_t fields;
+  uint32_t mode;
+  uint32_t reserved;
+  const char *bind_host;
+  const char *advertise_host;
+  uint16_t bind_port;
+  uint16_t advertise_port;
+  uint32_t reserved2;
+} coakka_v2_network_options_t;
+
+typedef enum coakka_v2_network_validation_code_t {
+  COAKKA_V2_NETWORK_VALID = 0,
+  COAKKA_V2_NETWORK_INVALID_STRUCT_SIZE = 1,
+  COAKKA_V2_NETWORK_UNKNOWN_FIELD = 2,
+  COAKKA_V2_NETWORK_MODE_REQUIRED = 3,
+  COAKKA_V2_NETWORK_UNKNOWN_MODE = 4,
+  COAKKA_V2_NETWORK_RESERVED_NONZERO = 5,
+  COAKKA_V2_NETWORK_FIELD_OUTSIDE_STRUCT = 6,
+  COAKKA_V2_NETWORK_FIELD_NOT_APPLICABLE = 7,
+  COAKKA_V2_NETWORK_REQUIRED_FIELD_MISSING = 8,
+  COAKKA_V2_NETWORK_INVALID_BIND_HOST = 9,
+  COAKKA_V2_NETWORK_INVALID_ADVERTISE_HOST = 10,
+  COAKKA_V2_NETWORK_VALUE_WITHOUT_FIELD = 11
+} coakka_v2_network_validation_code_t;
+
+typedef struct coakka_v2_network_validation_t {
+  size_t struct_size;
+  uint32_t code;
+  uint32_t reserved;
+  uint64_t field;
+} coakka_v2_network_validation_t;
+
+/* Runtime-owned strings remain valid until the next apply or runtime destroy. */
+typedef struct coakka_v2_network_config_snapshot_t {
+  size_t struct_size;
+  uint32_t mode;
+  uint32_t explicit_policy;
+  const char *bind_host;
+  const char *advertise_host;
+  uint16_t bind_port;
+  uint16_t advertise_port;
+  uint32_t reserved;
+} coakka_v2_network_config_snapshot_t;
+
 typedef enum coakka_v2_tcp_connection_mode_t {
   COAKKA_V2_TCP_CONNECTION_PER_EXCHANGE = 0,
   COAKKA_V2_TCP_CONNECTION_BOUNDED_POOL = 1,

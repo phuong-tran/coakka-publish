@@ -1,0 +1,45 @@
+# Runtime Go Release Checklist
+
+Package identity:
+
+- Go package: `2.4.0`
+- native runtime core: `2.4.0`
+- connector source checkpoint: `0afb5e9`
+- native generation: `2.4.0+c2f53117`
+
+Publisher signing is absent. Platform execution evidence is recorded
+separately from source compilation and bundled native payloads.
+
+Release checklist:
+
+```sh
+cd go
+bash scripts/stage-runtime-natives.sh
+go test ./...
+bash scripts/smoke-packaged-package.sh
+bash scripts/verify-native-payload.sh
+```
+
+For host-specific consumer verification:
+
+```sh
+COAKKA_V2_HOST_RUNTIME_LIB=/abs/path/to/libcoakka_runtime_v2.dylib \
+  bash scripts/smoke-packaged-package.sh
+```
+
+Host-only output is evidence for that host only, not multi-platform execution
+evidence.
+
+Public Go module export checklist:
+
+```sh
+cd go
+bash scripts/export-module-repo.sh /tmp/coakka-runtime-go-module
+cd /tmp/coakka-runtime-go-module
+go test ./...
+```
+
+The exported module is suitable for clean-consumer verification. Bundled
+payload presence and cross-compilation do not claim Linux/Windows execution.
+Contact `gabrielgun1983@gmail.com` and see
+[common troubleshooting](https://github.com/phuong-tran/coakka-publish/blob/main/docs/troubleshooting.md).
