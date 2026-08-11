@@ -3,35 +3,57 @@
 ## Requirements
 
 - Android API 24 or newer;
+- compile SDK Android API 36.1 or newer;
 - `arm64-v8a` device or `x86_64` device/emulator;
 - an Android app or started/bound service that owns one runtime lifecycle;
 - Kotlin standard library `2.2.10` and protobuf-javalite `4.31.1`, as recorded
   in the release POM.
 
-## Add The Candidate AAR
+## Add The Candidate From Maven
 
-Copy the AAR into the consuming Android module:
+Add the CoAkka static Maven repository to the existing repository block in
+`settings.gradle.kts`:
 
-```sh
-mkdir -p app/libs
-cp path/to/coakka-publish/maven/android/releases/1.1.0+345e97b2/coakka-runtime-android-1.1.0.aar app/libs/
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            name = "CoAkkaCandidates"
+            url = uri("https://raw.githubusercontent.com/phuong-tran/coakka-publish/main/maven")
+            content {
+                includeModule("coakka.v2", "coakka-runtime-android")
+            }
+        }
+    }
+}
 ```
 
-Add the exact dependencies to `app/build.gradle.kts`:
+Add the exact coordinate to `app/build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation(files("libs/coakka-runtime-android-1.1.0.aar"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.2.10")
-    implementation("com.google.protobuf:protobuf-javalite:4.31.1")
+    implementation("coakka.v2:coakka-runtime-android:1.1.0")
 }
 ```
+
+The POM and Gradle module metadata resolve Kotlin standard library `2.2.10`
+and protobuf-javalite `4.31.1` transitively. Do not also copy the AAR into
+`app/libs`.
 
 Keep both packaged ABIs during candidate evaluation:
 
 ```kotlin
 android {
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
+
     defaultConfig {
+        minSdk = 24
         ndk {
             abiFilters += listOf("arm64-v8a", "x86_64")
         }

@@ -59,7 +59,8 @@ following claims are therefore intentionally not made:
 
 ## Promotion Gate
 
-Promote this AAR into `artifacts/public-artifacts.tsv` and the checked-in Maven
-layout only after the exact AAR digest passes a named device or emulator smoke
+Promote this AAR into `artifacts/public-artifacts.tsv` and the supported-package
+index only after the exact AAR digest passes a named device or emulator smoke
 that covers open, route application, start, one terminal request outcome, and
-close. Record the host image, API level, ABI, command, result, and AAR digest.
+close. The Maven coordinate is an evaluation channel and does not waive this
+gate. Record the host image, API level, ABI, command, result, and AAR digest.

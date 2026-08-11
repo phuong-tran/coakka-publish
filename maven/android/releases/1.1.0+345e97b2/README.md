@@ -6,9 +6,11 @@ immutable release payload, not a Gradle source workspace.
 ## Candidate Status
 
 Version `1.1.0` is packaged and host-build verified, but it is not listed in
-`artifacts/public-artifacts.tsv`. Do not present it as a current supported
-coordinate until the exact AAR passes lifecycle and runtime smoke tests on a
-named Android device or emulator image.
+`artifacts/public-artifacts.tsv`. The evaluation coordinate
+`coakka.v2:coakka-runtime-android:1.1.0` resolves from the checked-in Maven
+repository, but it must not be presented as a current supported artifact until
+the exact AAR passes lifecycle and runtime smoke tests on a named Android
+device or emulator image.
 
 ## Artifacts
 
@@ -24,6 +26,9 @@ The AAR contains both `libcoakka_android_jni.so` and
 
 - `arm64-v8a`, intended for physical ARM64 Android devices;
 - `x86_64`, intended for compatible emulators and industrial x86 Android.
+
+Consumers need Android API `36.1` or newer as their compile SDK and may retain
+`minSdk = 24` for the packaged runtime floor.
 
 The AAR metadata at `assets/coakka/runtime-package.json` records connector
 version `1.1.0`, native package generation `2.3.0+345e97b2`, the full native

@@ -22,10 +22,12 @@ The current public release surface contains:
 - coakka-runtime-inspect native UI archives under
   `coakka-tools/coakka-runtime-inspect/releases/`
 
-Android AAR candidates may be staged under `maven/android/releases/`. An AAR
-does not join the current public surface until it passes runtime intake, its
-exact device or emulator lifecycle path is recorded, and its row is added to
-`artifacts/public-artifacts.tsv`.
+Android AAR candidates may be staged under `maven/android/releases/` and
+mirrored into a Maven coordinate under `maven/coakka/v2/` for natural Gradle
+evaluation. A resolvable candidate coordinate is distribution evidence, not
+matching-host execution evidence. An AAR does not join the current supported
+surface until it passes runtime intake, its exact device or emulator lifecycle
+path is recorded, and its row is added to `artifacts/public-artifacts.tsv`.
 
 Consumer-facing package downloads are listed in
 `artifacts/public-artifacts.tsv`. Public samples should pin against that

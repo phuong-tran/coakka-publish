@@ -559,12 +559,13 @@ verify_current_bun_tauri_public_boundary() {
 }
 
 verify_android_maven_candidates() {
-  local manifest release_dir artifact_name native_version
+  local manifest release_dir artifact_name native_version version coordinate_dir
+  local candidate_file coordinate_file algorithm metadata
 
   [[ -d "${repo_root}/maven/android/releases" ]] || return 0
   while IFS= read -r -d '' manifest; do
     release_dir="$(dirname "${manifest}")"
-    IFS=$'\t' read -r artifact_name native_version < <(
+    IFS=$'\t' read -r artifact_name native_version version < <(
       python3 - "${manifest}" <<'PY'
 import json
 import sys
@@ -574,11 +575,12 @@ with open(sys.argv[1], "r", encoding="utf-8") as handle:
 artifact = manifest.get("artifact") or {}
 print(
     f"{artifact.get('name', '')}\t"
-    f"{artifact.get('bundled_native_package_version', '')}"
+    f"{artifact.get('bundled_native_package_version', '')}\t"
+    f"{manifest.get('version', '')}"
 )
 PY
     )
-    [[ -n "${artifact_name}" && -n "${native_version}" ]] ||
+    [[ -n "${artifact_name}" && -n "${native_version}" && -n "${version}" ]] ||
       fail "Android Maven candidate manifest is missing artifact identity: ${manifest#"${repo_root}/"}"
     [[ -f "${release_dir}/${artifact_name}" ]] ||
       fail "Android Maven candidate artifact is missing: ${release_dir#"${repo_root}/"}/${artifact_name}"
@@ -587,6 +589,50 @@ PY
       --artifact "${release_dir}/${artifact_name}" \
       --expected-native-version "${native_version}" \
       --scanner "${repo_root}/scripts/scan-public-surface.sh"
+
+    coordinate_dir="${repo_root}/maven/coakka/v2/coakka-runtime-android/${version}"
+    for candidate_file in \
+      "${artifact_name}" \
+      "coakka-runtime-android-${version}-sources.jar" \
+      "coakka-runtime-android-${version}.pom" \
+      "coakka-runtime-android-${version}.module"; do
+      coordinate_file="${coordinate_dir}/${candidate_file}"
+      [[ -f "${release_dir}/${candidate_file}" ]] ||
+        fail "Android candidate release file is missing: ${release_dir#"${repo_root}/"}/${candidate_file}"
+      [[ -f "${coordinate_file}" ]] ||
+        fail "Android Maven coordinate file is missing: ${coordinate_file#"${repo_root}/"}"
+      cmp -s "${release_dir}/${candidate_file}" "${coordinate_file}" ||
+        fail "Android Maven coordinate drifted from its candidate: ${coordinate_file#"${repo_root}/"}"
+      for algorithm in md5 sha1 sha256 sha512; do
+        [[ -f "${coordinate_file}.${algorithm}" ]] ||
+          fail "Android Maven coordinate checksum is missing: ${coordinate_file#"${repo_root}/"}.${algorithm}"
+      done
+    done
+
+    metadata="${repo_root}/maven/coakka/v2/coakka-runtime-android/maven-metadata.xml"
+    [[ -f "${metadata}" ]] || fail "Android Maven metadata is missing"
+    python3 - "${metadata}" "${version}" <<'PY'
+import sys
+import xml.etree.ElementTree as ET
+
+metadata_path, expected_version = sys.argv[1:]
+root = ET.parse(metadata_path).getroot()
+
+if root.findtext("groupId") != "coakka.v2":
+    raise SystemExit("Android Maven metadata has an unexpected groupId")
+if root.findtext("artifactId") != "coakka-runtime-android":
+    raise SystemExit("Android Maven metadata has an unexpected artifactId")
+versioning = root.find("versioning")
+if versioning is None:
+    raise SystemExit("Android Maven metadata has no versioning element")
+if versioning.findtext("latest") != expected_version:
+    raise SystemExit("Android Maven metadata latest version is stale")
+if versioning.findtext("release") != expected_version:
+    raise SystemExit("Android Maven metadata release version is stale")
+versions = [node.text for node in versioning.findall("./versions/version")]
+if versions != [expected_version]:
+    raise SystemExit(f"Android Maven metadata versions are unexpected: {versions}")
+PY
   done < <(
     find "${repo_root}/maven/android/releases" \
       -mindepth 2 -maxdepth 2 -name manifest.json -print0
@@ -675,6 +721,9 @@ scanner_inputs=(
 )
 if [[ -d "${repo_root}/maven/android" ]]; then
   scanner_inputs+=("${repo_root}/maven/android")
+fi
+if [[ -d "${repo_root}/maven/coakka/v2/coakka-runtime-android" ]]; then
+  scanner_inputs+=("${repo_root}/maven/coakka/v2/coakka-runtime-android")
 fi
 
 while IFS= read -r -d '' release_file; do

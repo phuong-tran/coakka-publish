@@ -4,6 +4,10 @@ Android connector `1.1.0` is staged under
 `maven/android/releases/1.1.0+345e97b2/` as an AAR, sources JAR, POM, Gradle
 module metadata, manifest, checksums, and consuming guide.
 
+The same immutable AAR, sources JAR, POM, and Gradle module metadata are
+mirrored into the checked-in Maven coordinate
+`coakka.v2:coakka-runtime-android:1.1.0` for Gradle-based candidate evaluation.
+
 The AAR carries native runtime generation `2.3.0+345e97b2` and both
 `arm64-v8a` and `x86_64` runtime/JNI pairs. Host-side build, unit-test, lint,
 package-content, intake, and public-surface gates cover the packaged file. The
@@ -14,6 +18,7 @@ provides a blocking monitor wait, and keeps explicit listener policy independent
 of route metadata.
 
 This is a candidate, not a current supported package. It is deliberately
-absent from `artifacts/public-artifacts.tsv` and the checked-in Maven layout
-because no matching Android device or emulator execution is recorded. Its
-release-local `RELEASE.md` defines the exact promotion gate.
+absent from `artifacts/public-artifacts.tsv` and the supported-package index
+because no matching Android device or emulator execution is recorded. Maven
+resolution is distribution evidence only; its release-local `RELEASE.md`
+defines the exact promotion gate.
