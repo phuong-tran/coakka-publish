@@ -23,17 +23,15 @@ use [Runtime Package And Platform Evidence](runtime-package-platform-evidence.md
 
 ## Runtime Addons
 
-The repository defines an independent `runtime-addons/` release family for
-optional capabilities that compose with Runtime without entering the default
-runtime package.
+[`runtime-addons/`](runtime-addons.md) is the independent release family for
+optional native capabilities that compose with Runtime without entering the
+default runtime package. Addons carry their own versions, compatibility
+manifests, native dependency closure, and matching-host evidence.
 
-No runtime addon is currently published. In particular, the SFTP artifact
-publisher is a source candidate with a release contract and package template,
-not an installable coordinate. Do not generate consumer imports or sample
-commands against the current `2.3.0` runtime packages yet.
-
-See [Runtime Addons](../runtime-addons/README.md) and the
-[SFTP addon release contract](../runtime-addons/artifact-publisher-sftp/README.md).
+No runtime addon is currently published. The SFTP artifact publisher is a
+source candidate with a release contract and package template, not an
+installable coordinate. Do not generate consumer imports or sample commands
+until an addon archive appears in `artifacts/public-artifacts.tsv`.
 
 ## Package Manager Entrypoints
 

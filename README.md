@@ -33,6 +33,7 @@ Runtime client: [docs/coakka-runtime-client.md](docs/coakka-runtime-client.md)
 Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md)
 Compatibility matrix: [docs/compatibility-matrix.md](docs/compatibility-matrix.md)
 Package and platform evidence: [docs/runtime-package-platform-evidence.md](docs/runtime-package-platform-evidence.md)
+Runtime addons: [docs/runtime-addons.md](docs/runtime-addons.md)
 Package manager availability: [docs/package-manager-roadmap.md](docs/package-manager-roadmap.md)
 PyPI package lane: [package-manager/pypi/README.md](package-manager/pypi/README.md)
 Spring Boot: [docs/coakka-spring-boot.md](docs/coakka-spring-boot.md)
@@ -48,6 +49,22 @@ This repository is a versioned artifact warehouse and catalog for independent
 CoAkka components. It has no aggregate product version and does not publish
 GitHub Releases. Select an exact lane path or package-manager coordinate, then
 verify its manifest and checksum evidence.
+
+## Runtime Addons
+
+[`runtime-addons/`](runtime-addons/README.md) is the independent artifact family
+for optional native capabilities that compose with CoAkka Runtime without
+entering the default runtime package. Addons have their own versions,
+compatibility manifests, dependency closure, checksums, and matching-host
+evidence.
+
+The first defined lane is the
+[`artifact-publisher-sftp`](runtime-addons/artifact-publisher-sftp/README.md)
+workflow: Service A acquires and verifies an artifact over SFTP, then publishes
+it through File Lane. It is currently a release contract and package template,
+not an installable public coordinate. Read the common
+[Runtime Addons](docs/runtime-addons.md) guide before generating integration
+code.
 
 ## Runtime Transport
 
@@ -175,6 +192,7 @@ Public docs:
 [Production Readiness](docs/production-readiness.md),
 [Production Evidence](docs/production-evidence.md),
 [Runtime Package And Platform Evidence](docs/runtime-package-platform-evidence.md),
+[Runtime Addons](docs/runtime-addons.md),
 and
 [Repository Boundaries](docs/repository-boundaries.md).
 
