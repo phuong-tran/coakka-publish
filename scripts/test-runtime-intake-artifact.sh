@@ -76,7 +76,7 @@ make_android_aar() {
     "${root}/jni/arm64-v8a" \
     "${root}/jni/x86_64"
   cat >"${root}/assets/coakka/runtime-package.json" <<EOF
-{"connector_version":"1.1.0","bundled_native_package_version":"${native_version}","included_android_abis":["arm64-v8a","x86_64"]}
+{"connector_version":"1.1.0","bundled_native_package_version":"${native_version}","source_tree_dirty":false,"included_android_abis":["arm64-v8a","x86_64"]}
 EOF
   printf 'aarFormatVersion=1.0\n' >"${root}/META-INF/com/android/build/gradle/aar-metadata.properties"
   for abi in arm64-v8a x86_64; do
@@ -163,6 +163,22 @@ verify_intake "clean JVM jar" jvm "${good_jvm}"
 good_android="${tmp_root}/coakka-runtime-android-1.1.0.aar"
 make_android_aar "${good_android}" "0.1.0+63c346e" "public runtime binary placeholder"
 verify_intake "clean Android AAR" android "${good_android}"
+
+dirty_android="${tmp_root}/coakka-runtime-android-1.1.0-dirty.aar"
+dirty_android_root="${tmp_root}/android-dirty-root"
+mkdir -p "${dirty_android_root}"
+unzip -q "${good_android}" -d "${dirty_android_root}"
+sed -i.bak 's/"source_tree_dirty":false/"source_tree_dirty":true/' \
+  "${dirty_android_root}/assets/coakka/runtime-package.json"
+rm "${dirty_android_root}/assets/coakka/runtime-package.json.bak"
+(cd "${dirty_android_root}" && zip -qr "${dirty_android}" .)
+expect_failure \
+  "Android AAR built from a dirty source tree" \
+  "${repo_root}/scripts/verify-runtime-intake-artifact.py" \
+  --lane android \
+  --artifact "${dirty_android}" \
+  --expected-native-version "0.1.0+63c346e"
+grep -Fq "source_tree_dirty=false" "${test_output}"
 
 bad_android_bridge="${tmp_root}/coakka-runtime-android-1.1.0-missing-bridge.aar"
 cp "${good_android}" "${bad_android_bridge}"

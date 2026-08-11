@@ -26,7 +26,7 @@ The AAR contains both `libcoakka_android_jni.so` and
 - `x86_64`, intended for compatible emulators and industrial x86 Android.
 
 The AAR metadata at `assets/coakka/runtime-package.json` records connector
-version `1.1.0`, native package generation `2.3.0+6516990e`, the full native
+version `1.1.0`, native package generation `2.3.0+345e97b2`, the full native
 source commit, and both packaged ABIs.
 
 ## Boundary

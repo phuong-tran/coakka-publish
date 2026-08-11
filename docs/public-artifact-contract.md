@@ -225,8 +225,8 @@ For JVM, Android, Python, Node.js, Bun, Electron, Go, C#, Rust, Mojo, Zig, and T
 - public samples must use the language artifact directly
 
 An Android AAR must also record its connector version, bundled native package
-generation, native source commit, and included Android ABIs in
-`assets/coakka/runtime-package.json`. Every declared ABI must contain both
+generation, native source commit, clean-source state, and included Android ABIs
+in `assets/coakka/runtime-package.json`. Every declared ABI must contain both
 `libcoakka_runtime_v2.so` and the thin `libcoakka_android_jni.so` bridge.
 
 Mojo and Zig are currently published as source connector packages with bundled

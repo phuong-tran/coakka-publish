@@ -144,11 +144,14 @@ def android_native_version(artifact: Path) -> tuple[str, list[str]]:
 
     connector_version = metadata.get("connector_version")
     native_version = metadata.get("bundled_native_package_version")
+    source_tree_dirty = metadata.get("source_tree_dirty")
     declared_abis = metadata.get("included_android_abis")
     if not isinstance(connector_version, str) or not connector_version:
         fail("Android package metadata does not declare connector_version")
     if not isinstance(native_version, str) or not native_version:
         fail("Android package metadata does not declare bundled_native_package_version")
+    if source_tree_dirty is not False:
+        fail("Android package metadata must declare source_tree_dirty=false")
     if not isinstance(declared_abis, list) or not all(isinstance(abi, str) for abi in declared_abis):
         fail("Android package metadata does not declare included_android_abis")
 

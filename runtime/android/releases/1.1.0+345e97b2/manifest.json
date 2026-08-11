@@ -2,13 +2,15 @@
   "schema_version": 1,
   "product_lane": "runtime",
   "language_lane": "android",
-  "release_directory": "1.1.0+6516990e",
+  "release_directory": "1.1.0+345e97b2",
   "release_status": "candidate",
   "version": "1.1.0",
   "artifact": {
     "name": "coakka-runtime-android-1.1.0.aar",
-    "bundled_native_package_version": "2.3.0+6516990e",
-    "bundled_native_git_commit": "6516990e78c772818ec21e2a9c751326941a4355",
+    "sha256": "3ce799885322c9ac92664bf028591bc77432960e7b2d85ecbd3c4e73362bf3cb",
+    "bundled_native_package_version": "2.3.0+345e97b2",
+    "bundled_native_git_commit": "345e97b29a95b19d7b24c2e899cd7909db0abd08",
+    "source_tree_dirty": false,
     "minimum_android_api": 24,
     "included_android_abis": [
       "arm64-v8a",
@@ -20,7 +22,7 @@
     "coakka-runtime-android-1.1.0.pom",
     "coakka-runtime-android-1.1.0.module"
   ],
-  "connector_source_git_commit": "6516990e78c772818ec21e2a9c751326941a4355",
+  "connector_source_git_commit": "345e97b29a95b19d7b24c2e899cd7909db0abd08",
   "matching_host_execution": false,
   "promotion_blocker": "No Android device or emulator lifecycle smoke is recorded for this exact AAR."
 }

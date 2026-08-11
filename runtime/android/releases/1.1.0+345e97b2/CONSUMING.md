@@ -14,7 +14,7 @@ Copy the AAR into the consuming Android module:
 
 ```sh
 mkdir -p app/libs
-cp path/to/coakka-publish/runtime/android/releases/1.1.0+6516990e/coakka-runtime-android-1.1.0.aar app/libs/
+cp path/to/coakka-publish/runtime/android/releases/1.1.0+345e97b2/coakka-runtime-android-1.1.0.aar app/libs/
 ```
 
 Add the exact dependencies to `app/build.gradle.kts`:
@@ -116,7 +116,12 @@ Use at most one blocking reader for each consumed output lane:
 - delivered requests;
 - responses;
 - deadletters;
-- monitor doorbell.
+- monitor doorbell through `waitForMonitorDoorbell()`.
+
+`waitForMonitorDoorbell()` blocks in the kernel without a periodic polling
+timeout and returns `null` during `close()`. Use `consumeMonitorDoorbell()` only
+for an immediate drain after another readiness signal. Call `readHealth()` after
+either method; monitor counts may coalesce and are not event IDs.
 
 Shutdown ordering is:
 

@@ -70,8 +70,8 @@ generation, and artifact name.
 ## Android Candidate Evidence
 
 Android connector `1.1.0` is staged at
-`runtime/android/releases/1.1.0+6516990e/`. Its AAR embeds native package
-generation `2.3.0+6516990e` and matching runtime/JNI libraries for
+`runtime/android/releases/1.1.0+345e97b2/`. Its AAR embeds native package
+generation `2.3.0+345e97b2` and matching runtime/JNI libraries for
 `arm64-v8a` and `x86_64`. The exact file passes build, unit-test, lint, intake,
 checksum, and recursive package-surface gates.
 
