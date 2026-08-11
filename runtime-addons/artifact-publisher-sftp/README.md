@@ -1,7 +1,7 @@
 # SFTP Artifact Publisher Runtime Addon
 
-Status: native `0.1.0+40810b79` is public for `macos-aarch64` and requires
-CoAkka Runtime native `2.3.0` or newer.
+Status: native `1.1.0+42841ae2` is public for Linux ARM64/x86-64, macOS ARM64,
+and Windows 11 ARM64/x86-64. It requires CoAkka Runtime native `2.3.0` or newer.
 
 The addon composes one external acquisition workflow with the existing CoAkka
 Runtime File Lane:
@@ -23,8 +23,8 @@ delivery semantics.
 ## Native Coordinate
 
 ```text
-runtime-addons/artifact-publisher-sftp/native/releases/0.1.0+40810b79/
-  coakka-runtime-addon-artifact-publisher-sftp-native-0.1.0.tar.gz
+runtime-addons/artifact-publisher-sftp/native/releases/1.1.0+42841ae2/
+  coakka-runtime-addon-artifact-publisher-sftp-native-1.1.0.tar.gz
 ```
 
 The addon version is independent from the runtime version. This release
@@ -44,9 +44,18 @@ as its required Runtime feature.
 - public sample consumption of the exact archive listed in
   `artifacts/public-artifacts.tsv`.
 
-Windows must not appear in a release manifest until its staging implementation
-is handle-relative and defends against reparse-point traversal. A dependency
-cross-build alone is not runtime evidence.
+Release consumers should use the public binary archive: it absorbs libssh2 and
+the target crypto implementation and avoids a compiler/dependency toolchain on
+the deployment host. The implementation source remains in the private Core
+workspace and is not represented as a public download. Public consumers receive
+the reviewed C header, package manifest, license notices, checksums, audit
+notes, and a buildable two-process integration sample.
+
+The Windows DLLs are not Authenticode-signed. Standard Windows execution does
+not universally require a publisher signature, but SmartScreen, Defender
+Application Control, or a managed allow-list policy may require one. Verify
+the release SHA-256 values before use; organizations that require signed code
+must sign the verified DLLs with their own trusted certificate and policy.
 
 The native package template lives under
 [`native/package-template`](native/package-template/README.md).

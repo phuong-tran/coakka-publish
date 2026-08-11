@@ -24,10 +24,10 @@ dependency_allowed() {
     libcoakka_runtime_v2.so|libcoakka_runtime_v2.dll|libcoakka_logger_core.so|libcoakka_logger_core.so.10|libcoakka_logger_core.dll)
       return 0
       ;;
-    libm.so.6|libc.so.6|libz.so.1|libzstd.so.1|ld-linux-x86-64.so.2|ld-linux-aarch64.so.1)
+    libm.so.6|libc.so.6|libstdc++.so.6|libgcc_s.so.1|libz.so.1|libzstd.so.1|ld-linux-x86-64.so.2|ld-linux-aarch64.so.1)
       return 0
       ;;
-    kernel32.dll|ntdll.dll|ws2_32.dll|advapi32.dll|crypt32.dll|user32.dll|iphlapi.dll|iphlpapi.dll|userenv.dll|shell32.dll|ole32.dll|dbghelp.dll)
+    kernel32.dll|ntdll.dll|ws2_32.dll|advapi32.dll|bcrypt.dll|crypt32.dll|user32.dll|iphlapi.dll|iphlpapi.dll|userenv.dll|shell32.dll|ole32.dll|dbghelp.dll)
       return 0
       ;;
     msvcp140.dll|msvcp140_atomic_wait.dll|vcruntime140.dll|vcruntime140_1.dll)

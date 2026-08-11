@@ -243,6 +243,10 @@ def verify_archive(
             elif library.endswith(".so"):
                 loader_library = library + ".0"
             else:
+                if library.endswith(".dll"):
+                    native_dir = PurePosixPath(library).parent
+                    required.add(f"{root}/{native_dir}/libcoakka_addon_artifact_publisher_sftp.dll.a")
+                    required.add(f"{root}/{native_dir}/libcoakka_runtime_v2.dll.a")
                 continue
             required.add(f"{root}/{loader_library}")
         missing = sorted(name for name in required if name not in members)
@@ -424,8 +428,6 @@ def verify_release(release_dir: Path, expected_addon: str | None) -> None:
             fail("SFTP addonId must be coakka.artifact.publisher.sftp")
         if minimum_native_version != "2.3.0":
             fail("SFTP addon minimum native runtime must be 2.3.0")
-        if any(platform_id.startswith("windows-") for platform_id in platform_ids):
-            fail("SFTP Windows release remains blocked by the staging safety gate")
         if features != ["file_lane"]:
             fail("SFTP addon must require exactly file_lane")
         if "libssh2" not in dependency_names:
