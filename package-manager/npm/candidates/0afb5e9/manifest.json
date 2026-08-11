@@ -1,0 +1,62 @@
+{
+  "status": "ready_for_npm_publish",
+  "connector_commit": "0afb5e9",
+  "payload_staging_commit": "ef40ada",
+  "created_date": "2026-08-12",
+  "verified_date": "2026-08-12",
+  "native_runtime_generation": "2.4.0+c2f53117",
+  "release_reason": "publish explicit runtime network modes with File Lane and Stream Lane",
+  "publish_order": [
+    "runtime-node",
+    "runtime-bun",
+    "runtime-electron"
+  ],
+  "packages": [
+    {
+      "label": "runtime-node",
+      "product": "runtime",
+      "role": "node",
+      "package_name": "coakka-v2-connector-node",
+      "version": "2.4.0",
+      "expected_native_generation": "2.4.0+c2f53117",
+      "relative_path": "runtime/node/coakka-v2-connector-node-2.4.0.tgz",
+      "sha256": "29259d649429e5bc3edd1044be37c5df598846bf99f8aa164bed8cdf0d2069db",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ]
+    },
+    {
+      "label": "runtime-bun",
+      "product": "runtime",
+      "role": "bun",
+      "package_name": "coakka-v2-connector-bun",
+      "version": "2.4.0",
+      "expected_native_generation": "2.4.0+c2f53117",
+      "relative_path": "runtime/bun/coakka-v2-connector-bun-2.4.0.tgz",
+      "sha256": "2093ed666433abd49ea342e08cc4dbae203c48fc390afee90488a02935926da7",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ]
+    },
+    {
+      "label": "runtime-electron",
+      "product": "runtime",
+      "role": "electron",
+      "package_name": "coakka-v2-connector-electron",
+      "version": "2.4.0",
+      "expected_native_generation": "2.4.0+c2f53117",
+      "relative_path": "runtime/electron/coakka-v2-connector-electron-2.4.0.tgz",
+      "sha256": "773048817b2520ff645e19ee9d775e20e483b6f6cb23e1956753911aba6077e7",
+      "expected_internal_dependency": "coakka-v2-connector-node",
+      "expected_internal_dependency_spec": "coakka-v2-connector-node@2.4.0"
+    }
+  ]
+}
