@@ -3,10 +3,10 @@
   "name": "coakka-runtime-addon-artifact-publisher-sftp-native",
   "addonId": "coakka.artifact.publisher.sftp",
   "version": "0.2.0",
-  "release": "0.2.0+0000000",
-  "sourceSnapshot": "0000000",
+  "release": "0.2.0+c5656cc8",
+  "sourceSnapshot": "c5656cc8",
   "archive": "coakka-runtime-addon-artifact-publisher-sftp-native-0.2.0.tar.gz",
-  "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "sha256": "fc96fc2900bd202f82b0c1147298da7520b7519e859e20a7a5f5531145540436",
   "runtimeCompatibility": {
     "abiMajor": 2,
     "minimumNativeVersion": "2.3.0",
@@ -14,7 +14,8 @@
   },
   "ownedStaticDependencies": [
     { "name": "libssh2", "version": "1.11.1" },
-    { "name": "crypto-provider", "version": "OpenSSL 3.5.7/3.6.2 or Windows WinCNG" }
+    { "name": "OpenSSL crypto (Linux)", "version": "3.5.7" },
+    { "name": "OpenSSL crypto (macOS)", "version": "3.6.2" }
   ],
   "userInstalledNativeDependencies": false,
   "cmakeConfig": "cmake/CoAkkaRuntimeAddonArtifactPublisherSftpConfig.cmake",

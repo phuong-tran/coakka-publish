@@ -9,6 +9,8 @@ addon release is promoted. It is not itself a released artifact.
 include/coakka/addons/artifact_publisher_sftp.h
 native/<platform>/libcoakka_addon_artifact_publisher_sftp.<suffix>
 native/<platform>/libcoakka_addon_artifact_publisher_sftp.<loader-suffix>
+native/windows-<arch>/libcoakka_addon_artifact_publisher_sftp.dll.a
+native/windows-<arch>/libcoakka_runtime_v2.dll.a
 cmake/CoAkkaRuntimeAddonArtifactPublisherSftpConfig.cmake
 share/coakka/runtime-addons/artifact-publisher-sftp/addon.manifest.json
 LICENSE.md
@@ -25,7 +27,17 @@ loader-facing `SOVERSION` filename (`.so.0` or `.0.dylib`). Archive intake
 rejects a package that omits either file; symlinks are not accepted inside the
 public archive.
 
+Windows packages carry the architecture-matched DLL plus GNU-compatible import
+libraries for the addon and the separately supplied Runtime `2.3.0` DLL. The
+Runtime import library is link metadata, not a bundled Runtime implementation.
+Release DLLs are not Authenticode-signed; verify the published SHA-256 and apply
+an organization signature after verification when local application-control
+policy requires one.
+
 Only platforms listed in the release manifest may be present. Every listed
 platform must have matching-host runtime-module and dynamic-dependency evidence.
+Linux addon mappings remain resident until process exit because the packaged
+ELF modules carry `DF_1_NODELETE`; publisher instances still support normal
+stop and destroy.
 
 See [`CONSUMING.md`](CONSUMING.md) for the native CMake integration shape.

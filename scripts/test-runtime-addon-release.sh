@@ -281,13 +281,44 @@ expect_failure "pending matching-host runtime test" \
   "${verifier}" --release-dir "${pending_runtime_release}"
 grep -Fq "matching-host runtime test has not passed" "${test_output}"
 
-windows_release="$(make_fixture windows-blocked)"
-python3 - "${windows_release}/manifest.json" <<'PY'
+windows_release="$(make_fixture windows-accepted)"
+python3 - \
+  "${windows_release}/coakka-runtime-addon-artifact-publisher-sftp-native-0.1.0.tar.gz" \
+  "${windows_release}/manifest.json" <<'PY'
+import io
 import json
 import pathlib
 import sys
+import tarfile
 
-path = pathlib.Path(sys.argv[1])
+archive = pathlib.Path(sys.argv[1])
+replacement = archive.with_suffix(".replacement")
+with tarfile.open(archive, "r:gz") as source, tarfile.open(
+    replacement, "w:gz"
+) as target:
+    for member in source.getmembers():
+        if member.name.endswith(".so.0"):
+            continue
+        member.name = member.name.replace(
+            "/native/linux-x86_64", "/native/windows-x86_64"
+        )
+        if member.name.endswith(".so"):
+            member.name = member.name.removesuffix(".so") + ".dll"
+        extracted = source.extractfile(member) if member.isfile() else None
+        target.addfile(member, extracted)
+    root = "coakka-runtime-addon-artifact-publisher-sftp-native-0.1.0"
+    for name in (
+        "libcoakka_addon_artifact_publisher_sftp.dll.a",
+        "libcoakka_runtime_v2.dll.a",
+    ):
+        payload = b"fixture import library\n"
+        info = tarfile.TarInfo(f"{root}/native/windows-x86_64/{name}")
+        info.size = len(payload)
+        info.mode = 0o644
+        target.addfile(info, io.BytesIO(payload))
+replacement.replace(archive)
+
+path = pathlib.Path(sys.argv[2])
 manifest = json.loads(path.read_text(encoding="utf-8"))
 manifest["platforms"][0]["id"] = "windows-x86_64"
 manifest["platforms"][0]["library"] = (
@@ -295,10 +326,10 @@ manifest["platforms"][0]["library"] = (
 )
 path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 PY
+update_archive_sha "${windows_release}"
 refresh_sums "${windows_release}"
-expect_failure "Windows staging safety gate" \
+expect_success "Windows release after staging safety evidence" \
   "${verifier}" --release-dir "${windows_release}"
-grep -Fq "Windows release remains blocked" "${test_output}"
 
 export_drift_release="$(make_fixture export-drift)"
 python3 - "${export_drift_release}/manifest.json" <<'PY'
