@@ -1,6 +1,6 @@
 # npm Runtime 2.4.0 Candidate
 
-Status: ready for npm publish.
+Status: published to npm and registry-verified on August 12, 2026.
 
 This directory records the Node.js, Bun, and Electron runtime `2.4.0`
 candidates from connector source `0afb5e9`, payload staging commit `ef40ada`,
@@ -29,7 +29,7 @@ scripts/publish-npm-package-manager-candidates.sh \
   --dry-run
 ```
 
-After publishing, verify registry metadata and exact tarball digests:
+Verify registry metadata and exact tarball digests:
 
 ```sh
 scripts/verify-npm-registry-candidates.sh \

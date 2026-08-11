@@ -1,9 +1,11 @@
 {
-  "status": "ready_for_npm_publish",
+  "status": "published_to_npm",
   "connector_commit": "0afb5e9",
   "payload_staging_commit": "ef40ada",
   "created_date": "2026-08-12",
+  "published_date": "2026-08-12",
   "verified_date": "2026-08-12",
+  "registry": "https://registry.npmjs.org/",
   "native_runtime_generation": "2.4.0+c2f53117",
   "release_reason": "publish explicit runtime network modes with File Lane and Stream Lane",
   "publish_order": [
@@ -21,6 +23,8 @@
       "expected_native_generation": "2.4.0+c2f53117",
       "relative_path": "runtime/node/coakka-v2-connector-node-2.4.0.tgz",
       "sha256": "29259d649429e5bc3edd1044be37c5df598846bf99f8aa164bed8cdf0d2069db",
+      "registry_shasum": "33b1d0f86ebed7af5fc004ffa66689070fab8c85",
+      "registry_integrity": "sha512-GFCmQqsHxKl/N36zRszo8Pp5RpY6CeIZ/960y6ul0iLVGKqNxxpnJX4D9HovSV4RwN81gm8VBEAChDUyKhI/Yg==",
       "expected_platforms": [
         "linux-aarch64",
         "linux-x86_64",
@@ -38,6 +42,8 @@
       "expected_native_generation": "2.4.0+c2f53117",
       "relative_path": "runtime/bun/coakka-v2-connector-bun-2.4.0.tgz",
       "sha256": "2093ed666433abd49ea342e08cc4dbae203c48fc390afee90488a02935926da7",
+      "registry_shasum": "b7bb157390da3c39830be3c15b11aa323839cf13",
+      "registry_integrity": "sha512-h93K7ezK9e21C1h0olECtY08/2gv8W7EUE6y1mVauGfYyr1DUQ24Sp4yYV00BAoBVSsRmLXysECAOMqso69tGA==",
       "expected_platforms": [
         "linux-aarch64",
         "linux-x86_64",
@@ -55,6 +61,8 @@
       "expected_native_generation": "2.4.0+c2f53117",
       "relative_path": "runtime/electron/coakka-v2-connector-electron-2.4.0.tgz",
       "sha256": "773048817b2520ff645e19ee9d775e20e483b6f6cb23e1956753911aba6077e7",
+      "registry_shasum": "96ff8d77f29a4d63ef9ddc14639bd07ea7627830",
+      "registry_integrity": "sha512-YsSUx7qLOWskfnX7XvJPCIUh6LCyUtfEXCofVgrVY0chVZCsKCNt1MLRbWBt/YweBC0HFenTIw23XrXy4gJRGg==",
       "expected_internal_dependency": "coakka-v2-connector-node",
       "expected_internal_dependency_spec": "coakka-v2-connector-node@2.4.0"
     }

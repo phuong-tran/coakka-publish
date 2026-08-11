@@ -7,29 +7,28 @@ contract as the JVM, Python, Go, C#, Rust, Swift, and other connector lanes.
 
 | Host | Current runtime package |
 | --- | --- |
-| Node.js | `coakka-v2-connector-node@2.3.0` |
-| Bun | `coakka-v2-connector-bun@2.3.0` |
-| Electron | `coakka-v2-connector-electron@2.3.0` |
+| Node.js | `coakka-v2-connector-node@2.4.0` |
+| Bun | `coakka-v2-connector-bun@2.4.0` |
+| Electron | `coakka-v2-connector-electron@2.4.0` |
 
-These published coordinates use native generation `2.3.0+a83ab412` and
-connector source `3a84c7b`. Their immutable publication receipt, registry
-integrity values, artifacts, and checksums are under `candidates/3a84c7b/`.
+These published coordinates use native generation `2.4.0+c2f53117` and
+connector source `0afb5e9`. Their immutable publication receipt, registry
+integrity values, artifacts, and checksums are under `candidates/0afb5e9/`.
 
-`2.3.0` adds the official Stream Lane connector surface while retaining File
-Lane, request/reply, deadletter, and lifecycle behavior. The runtime reports
-transport pressure and terminal state; adaptation policy remains in the
-app-host.
+`2.4.0` adds explicit embedded, outbound-only, and network-node participation
+modes while retaining File Lane, Stream Lane, request/reply, deadletter, and
+lifecycle behavior.
 
-## Runtime 2.3.0 Artifacts
+## Runtime 2.4.0 Artifacts
 
-The public artifact mirror contains Node.js, Bun, and Electron `2.3.0` packages
-from connector source `3a84c7b` over native generation `2.3.0+a83ab412`.
+The public artifact mirror contains Node.js, Bun, and Electron `2.4.0` packages
+from connector source `0afb5e9` over native generation `2.4.0+c2f53117`.
 Each package is checksum-pinned in `artifacts/public-artifacts.tsv`; Node.js and
-Bun include Linux ARM64/x86-64, macOS ARM64, and Windows ARM64/x86-64 native
-payloads. Packaged consumer smokes load runtime `2.3.0` and complete real
+Bundled native payloads cover Linux ARM64/x86-64, macOS ARM64, and Windows
+ARM64/x86-64. Clean registry smokes load runtime `2.4.0` and complete real
 request/reply. npm registry downloads match the staged tarballs byte-for-byte;
 clean Node.js and Bun installs complete request/reply, and Electron resolves
-its exact Node.js `2.3.0` dependency.
+its exact Node.js `2.4.0` dependency and completes the main-process intent path.
 
 The Node.js registry package executes request/reply on macOS ARM64 and Linux
 ARM64/x86-64. See the exact [package and platform evidence](../../docs/runtime-package-platform-evidence.md)
