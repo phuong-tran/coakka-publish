@@ -93,7 +93,7 @@ capabilities, lifecycle rules, and connector examples:
 - [Envelope and deadletter map](docs/envelope-deadletter-map.md)
 - [Message and routing model](docs/runtime-message-and-routing-model.md)
 
-Runtime `2.3.0` contains the bounded file lane for large point-to-point files. The
+Runtime `2.4.0` contains the bounded file lane for large point-to-point files. The
 sender reads from a file descriptor and the receiver writes to an
 application-approved storage path. Direct transport can use the operating
 system file-transfer primitive; TLS and mTLS use encrypted streaming. This is
@@ -102,7 +102,7 @@ writes storage. The current release contains native artifacts for Linux
 ARM64/x86-64, macOS ARM64, and Windows ARM64/x86-64, plus the matching
 connector, framework, tool, sample, manifest, and checksum surfaces.
 
-Runtime `2.3.0` also contains the official Stream Lane contract and reports the
+Runtime `2.4.0` also contains the official Stream Lane contract and reports the
 `stream_lane` runtime feature. It carries bounded frames, backpressure,
 lifecycle, security, and neutral publisher/subscriber pressure signals without
 changing stream wire version 1. See
@@ -226,7 +226,7 @@ Current package-manager release notes:
 and earlier package-manager receipts under [docs/releases/](docs/releases/).
 
 Current runtime tools release note:
-[2026-08-10 runtime 2.3.0](docs/releases/2026-08-10-runtime-2.3.0-a83ab412.md).
+[2026-08-12 runtime tools 2.4.0](docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md).
 Last documented coakka-runtime-inspect Docker Hub release note:
 [2026-07-25 runtime tooling stop backpressure hotfix 0da8c2d9](docs/releases/2026-07-25-runtime-tooling-stop-backpressure-hotfix-0da8c2d9.md).
 
@@ -320,10 +320,10 @@ Current public Mojo/Zig source connector generation:
 `2.4.0+c2f53117-0afb5e9`.
 Current public Tauri intent source connector generation:
 `2.4.0+c2f53117-0afb5e9`.
-Current public coakka-client generation: `2.3.0+a83ab412` on all five
+Current public coakka-client generation: `2.4.0+c2f53117` on all five
 supported native platforms.
 Current public coakka-client Docker Linux bundle generation: `1.3.2+caff6d6d`.
-Current public coakka-runtime-inspect native generation: `2.3.0+a83ab412` on
+Current public coakka-runtime-inspect native generation: `2.4.0+c2f53117` on
 all five supported native platforms.
 Docker Hub image tags are not part of the current release ledger yet; the
 Repository-hosted demo bundles above are the captured public sample artifacts.
@@ -481,15 +481,15 @@ Current published lanes:
 
 ## coakka-client Public Artifacts
 
-Current coakka-client source snapshot: `a83ab412`
+Current coakka-client source snapshot: `c2f53117`
 
 Package contents:
 
-- `coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-windows-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-x86_64.tar.gz`
 - `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz`
 - `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz`
 
@@ -504,19 +504,19 @@ convenience path recorded in the release notes that publish them; the canonical
 binary archives and checksums remain in the release artifacts above.
 
 Release note:
-[`docs/releases/2026-08-02-runtime-1.4.0-2cee86bf.md`](docs/releases/2026-08-02-runtime-1.4.0-2cee86bf.md)
+[`docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md`](docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md)
 
 ## coakka-runtime-inspect Public Artifacts
 
-Current coakka-runtime-inspect source snapshot: `a83ab412`
+Current coakka-runtime-inspect source snapshot: `c2f53117`
 
 Package contents:
 
-- `coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-windows-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-x86_64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
 CoAkka Runtime. It is the visual sibling of `coakka-client`: a way to read and
@@ -539,12 +539,17 @@ Current limits:
   path.
 - Remote read/observe remains a future runtime surface across all platforms.
 
+The macOS ARM64 and Linux ARM64/x86-64 packages completed matching-host command
+and `serve` smoke. Windows ARM64/x86-64 passed cross-build, PE architecture,
+dependency, archive, and checksum gates; this generation does not claim
+matching-host Windows execution.
+
 Release note:
-[`docs/releases/2026-08-02-runtime-1.4.0-2cee86bf.md`](docs/releases/2026-08-02-runtime-1.4.0-2cee86bf.md)
+[`docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md`](docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md)
 
 ## Runtime v2 Public Artifacts
 
-Core source snapshot: `a83ab41207821388eb5507be63d81ba721d6d585`
+Core source snapshot: `c2f53117f991f67f809a0bf46bac2ce26091eb78`
 
 Package contents:
 

@@ -5,6 +5,13 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-12
 
+- Published `coakka-client` and `coakka-runtime-inspect` native archives at
+  `2.4.0+c2f53117` for macOS ARM64, Linux ARM64/x86-64, and Windows
+  ARM64/x86-64. `coakka-client` command evidence passes on macOS ARM64 and its
+  Linux packages pass matching-architecture Docker build/dependency gates.
+  Inspect command plus `serve` evidence passes on macOS and Linux. Windows
+  packages pass cross-build, PE architecture, dependency, archive, and checksum
+  gates without a matching-host execution claim.
 - Published and registry-verified `coakka-v2-connector==2.4.0` to PyPI over
   native generation `2.4.0+c2f53117`. The downloaded registry wheel is
   byte-identical to the staged candidate and clean request/reply, matched

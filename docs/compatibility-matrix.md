@@ -95,9 +95,9 @@ All logger connector lanes below align to logger native generation
 
 | Surface | Public generation | Public location |
 | --- | --- | --- |
-| `coakka-client` native CLI | all five native platforms `2.3.0+a83ab412` | `coakka-tools/coakka-client/releases/2.3.0+a83ab412/` |
+| `coakka-client` native CLI | all five native platforms `2.4.0+c2f53117` | `coakka-tools/coakka-client/releases/2.4.0+c2f53117/` |
 | `coakka-client` Docker Linux bundle | `1.3.2+caff6d6d` | `coakka-tools/coakka-client/docker-demo/releases/` |
-| `coakka-runtime-inspect` native UI | all five native platforms `2.3.0+a83ab412` | `coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/` |
+| `coakka-runtime-inspect` native UI | all five native platforms `2.4.0+c2f53117` | `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/` |
 
 ## Package-Manager Channels
 
