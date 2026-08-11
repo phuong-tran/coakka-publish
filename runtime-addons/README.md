@@ -62,5 +62,5 @@ public artifact.
 ## Current Lanes
 
 - [`artifact-publisher-sftp`](artifact-publisher-sftp/README.md): native
-  `0.2.1+c5656cc8` is public for Linux ARM64/x86-64, macOS ARM64, and Windows
+  `1.1.0+42841ae2` is public for Linux ARM64/x86-64, macOS ARM64, and Windows
   11 ARM64/x86-64.
