@@ -38,4 +38,12 @@ if "${scanner}" "${tmp_root}/not-an-archive.tar.gz" >"${test_stdout}" 2>"${test_
 fi
 grep -q "forbidden marker" "${test_stderr}"
 
+printf '%s%s/private-camera-build/runtime.c marker\n' '/wo' 'rk' \
+  >"${tmp_root}/container-build-path.txt"
+if "${scanner}" "${tmp_root}/container-build-path.txt" >"${test_stdout}" 2>"${test_stderr}"; then
+  echo "[test-public-surface-scanner] expected container build path to fail" >&2
+  exit 1
+fi
+grep -q "forbidden marker" "${test_stderr}"
+
 echo "[test-public-surface-scanner] ok"

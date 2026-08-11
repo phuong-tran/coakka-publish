@@ -58,6 +58,7 @@ make_fixture() {
     "${fixture}/native/windows-x86_64" \
     "${fixture}/runtime/native/releases/0.1.0+63c346e" \
     "${fixture}/runtime-addons" \
+    "${fixture}/samples/runtime/native/example/releases/1.1.0" \
     "${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986" \
     "${fixture}/scripts"
 
@@ -90,6 +91,7 @@ EOF
   printf 'windows x86_64 native\n' >"${fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll"
   printf 'logger archive\n' >"${fixture}/logger/native/releases/test/coakka-logger-native-test.tar.gz"
   printf 'runtime archive\n' >"${fixture}/runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz"
+  printf 'native sample archive\n' >"${fixture}/samples/runtime/native/example/releases/1.1.0/example-linux-x86_64.tar.gz"
   cat >"${fixture}/runtime/native/releases/0.1.0+63c346e/manifest.json" <<'EOF'
 {
   "archive": "coakka-runtime-native-v2-0.1.0.tar.gz",
@@ -99,6 +101,15 @@ EOF
     "macos-aarch64",
     "windows-aarch64",
     "windows-x86_64"
+  ]
+}
+EOF
+  cat >"${fixture}/samples/runtime/native/example/releases/1.1.0/manifest.json" <<'EOF'
+{
+  "schema_version": 1,
+  "product_lane": "sample-binaries",
+  "artifacts": [
+    {"name": "example-linux-x86_64.tar.gz"}
   ]
 }
 EOF
@@ -131,6 +142,10 @@ EOF
       manifest.json >SHA256SUMS
   )
   (
+    cd "${fixture}/samples/runtime/native/example/releases/1.1.0"
+    shasum -a 256 example-linux-x86_64.tar.gz manifest.json >SHA256SUMS
+  )
+  (
     cd "${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986"
     shasum -a 256 coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz >SHA256SUMS
   )
@@ -143,12 +158,13 @@ EOF
     shasum -a 256 coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz >SHA256SUMS
   )
 
-  local logger_sha runtime_sha inspect_sha cli_sha demo_sha
+  local logger_sha runtime_sha inspect_sha cli_sha demo_sha sample_sha
   logger_sha="$(sha256_file "${fixture}/logger/native/releases/test/coakka-logger-native-test.tar.gz")"
   runtime_sha="$(sha256_file "${fixture}/runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz")"
   inspect_sha="$(sha256_file "${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz")"
   cli_sha="$(sha256_file "${fixture}/coakka-tools/coakka-client/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz")"
   demo_sha="$(sha256_file "${fixture}/coakka-tools/coakka-client/docker-demo/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz")"
+  sample_sha="$(sha256_file "${fixture}/samples/runtime/native/example/releases/1.1.0/example-linux-x86_64.tar.gz")"
   cat >"${fixture}/artifacts/public-artifacts.tsv" <<EOF
 # Public artifact manifest v1.
 # Columns: status	label	relative_path	sha256
@@ -157,6 +173,7 @@ public	runtime Native package	runtime/native/releases/0.1.0+63c346e/coakka-runti
 public	coakka-runtime-inspect macos-aarch64	coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986/coakka-runtime-inspect-v2-1.3.1-macos-aarch64.tar.gz	${inspect_sha}
 public	coakka-client Linux x86_64 CLI	coakka-tools/coakka-client/releases/1.3.1+2215b0f/coakka-client-v2-1.3.1-linux-x86_64.tar.gz	${cli_sha}
 public	coakka-client Docker demo Linux x86_64	coakka-tools/coakka-client/docker-demo/releases/1.3.1+2215b0f/coakka-client-docker-demo-v2-1.3.1-linux-x86_64.tar.gz	${demo_sha}
+public	native sample example Linux x86_64	samples/runtime/native/example/releases/1.1.0/example-linux-x86_64.tar.gz	${sample_sha}
 EOF
 
   printf '%s\n' "${fixture}"
@@ -194,6 +211,33 @@ expect_failure "runtime addon row without release manifest" env \
   COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
   "${addon_without_manifest_fixture}/scripts/verify-public-surface.sh"
 grep -Fq "runtime addon artifact has no release manifest" "${test_output}"
+
+sample_without_manifest_fixture="$(make_fixture sample-without-manifest)"
+rm "${sample_without_manifest_fixture}/samples/runtime/native/example/releases/1.1.0/manifest.json"
+(
+  cd "${sample_without_manifest_fixture}/samples/runtime/native/example/releases/1.1.0"
+  shasum -a 256 example-linux-x86_64.tar.gz >SHA256SUMS
+)
+expect_failure "native sample row without release manifest" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
+  "${sample_without_manifest_fixture}/scripts/verify-public-surface.sh"
+grep -Fq "native sample artifact has no release manifest" "${test_output}"
+
+sample_not_declared_fixture="$(make_fixture sample-not-declared)"
+sed -i.bak 's/example-linux-x86_64.tar.gz/other-linux-x86_64.tar.gz/' \
+  "${sample_not_declared_fixture}/samples/runtime/native/example/releases/1.1.0/manifest.json"
+(
+  cd "${sample_not_declared_fixture}/samples/runtime/native/example/releases/1.1.0"
+  shasum -a 256 example-linux-x86_64.tar.gz manifest.json >SHA256SUMS
+)
+expect_failure "native sample row absent from release manifest" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
+  "${sample_not_declared_fixture}/scripts/verify-public-surface.sh"
+grep -Fq "native sample public row is not declared exactly once" "${test_output}"
 
 duplicate_path_fixture="$(make_fixture duplicate-path)"
 runtime_sha="$(sha256_file "${duplicate_path_fixture}/runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz")"

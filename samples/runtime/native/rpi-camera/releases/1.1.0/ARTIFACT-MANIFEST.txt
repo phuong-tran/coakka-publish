@@ -1,0 +1,13 @@
+format=coakka-camera-sample-v1
+release=coakka-camera-sample-v1.1.0
+public_source_commit=ee7b781308e6845a66e784f92801206d30e47d05
+source_state=clean
+public_source_repository=https://github.com/phuong-tran/coakka-samples
+public_binary_repository=https://github.com/phuong-tran/coakka-publish
+public_binary_path=samples/runtime/native/rpi-camera/releases/1.1.0
+github_release_used=false
+windows_signing=unsigned
+pi-linux-arm64=hardware-capture-audio-smoke
+host-macos-arm64=live-control-video-audio-recording-smoke
+host-linux-x86_64=native-cli-smoke
+host-windows-x86_64=native-live-connect-ui-smoke
