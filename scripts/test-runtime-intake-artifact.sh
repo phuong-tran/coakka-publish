@@ -64,6 +64,28 @@ EOF
   (cd "${root}" && zip -qr "${target}" .)
 }
 
+make_android_aar() {
+  local target="$1"
+  local native_version="$2"
+  local marker="$3"
+  local root="${tmp_root}/android-root"
+  rm -rf "${root}"
+  mkdir -p \
+    "${root}/assets/coakka" \
+    "${root}/META-INF/com/android/build/gradle" \
+    "${root}/jni/arm64-v8a" \
+    "${root}/jni/x86_64"
+  cat >"${root}/assets/coakka/runtime-package.json" <<EOF
+{"connector_version":"1.1.0","bundled_native_package_version":"${native_version}","included_android_abis":["arm64-v8a","x86_64"]}
+EOF
+  printf 'aarFormatVersion=1.0\n' >"${root}/META-INF/com/android/build/gradle/aar-metadata.properties"
+  for abi in arm64-v8a x86_64; do
+    printf '%s\n' "${marker}" >"${root}/jni/${abi}/libcoakka_runtime_v2.so"
+    printf '%s\n' "${marker}" >"${root}/jni/${abi}/libcoakka_android_jni.so"
+  done
+  (cd "${root}" && zip -qr "${target}" .)
+}
+
 make_node_package() {
   local target="$1"
   local native_version="$2"
@@ -137,6 +159,21 @@ verify_intake() {
 good_jvm="${tmp_root}/coakka-jvm-native-runtime-v2-0.1.0.jar"
 make_jvm_jar "${good_jvm}" "0.1.0+63c346e" "public runtime binary placeholder"
 verify_intake "clean JVM jar" jvm "${good_jvm}"
+
+good_android="${tmp_root}/coakka-runtime-android-1.1.0.aar"
+make_android_aar "${good_android}" "0.1.0+63c346e" "public runtime binary placeholder"
+verify_intake "clean Android AAR" android "${good_android}"
+
+bad_android_bridge="${tmp_root}/coakka-runtime-android-1.1.0-missing-bridge.aar"
+cp "${good_android}" "${bad_android_bridge}"
+zip -qd "${bad_android_bridge}" "jni/x86_64/libcoakka_android_jni.so"
+expect_failure \
+  "Android AAR with mismatched JNI ABIs" \
+  "${repo_root}/scripts/verify-runtime-intake-artifact.py" \
+  --lane android \
+  --artifact "${bad_android_bridge}" \
+  --expected-native-version "0.1.0+63c346e"
+grep -Fq "JNI bridge ABI entries do not match" "${test_output}"
 
 jvm_sources="${tmp_root}/coakka-jvm-native-runtime-v2-0.1.0-sources.jar"
 jvm_sources_root="${tmp_root}/jvm-sources-root"

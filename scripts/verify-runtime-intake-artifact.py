@@ -31,6 +31,13 @@ FORBIDDEN_COMPONENTS = frozenset(
 )
 FORBIDDEN_NATIVE_NAME_FRAGMENTS = ("libcoakka_v2_transport_proto",)
 RUNTIME_NATIVE_PREFIX = "libcoakka_runtime_v2"
+ALLOWED_PACKAGING_ENTRIES = frozenset(
+    {
+        "META-INF/com/android/build",
+        "META-INF/com/android/build/gradle",
+        "META-INF/com/android/build/gradle/aar-metadata.properties",
+    }
+)
 
 
 def fail(message: str) -> None:
@@ -55,7 +62,8 @@ def require_no_forbidden_components(entries: list[str]) -> None:
     bad = [
         entry
         for entry in entries
-        if any(component in FORBIDDEN_COMPONENTS for component in path_components(entry))
+        if normalized(entry).rstrip("/") not in ALLOWED_PACKAGING_ENTRIES
+        and any(component in FORBIDDEN_COMPONENTS for component in path_components(entry))
     ]
     if bad:
         report_bad_entries("workspace/demo/test path leaked into package", bad)
@@ -122,6 +130,55 @@ def jvm_native_version(artifact: Path) -> tuple[str, list[str]]:
         parse_assignment(manifest_text, r"^Coakka-V2-Native-Package-Version:\s*(\S+)\s*$", "JVM native package version"),
         entries,
     )
+
+
+def android_native_version(artifact: Path) -> tuple[str, list[str]]:
+    metadata_path = "assets/coakka/runtime-package.json"
+    with ZipFile(artifact) as archive:
+        entries = archive.namelist()
+        try:
+            metadata = json.loads(archive.read(metadata_path).decode("utf-8"))
+        except KeyError as exc:
+            fail(f"{artifact.name} is missing {metadata_path}")
+            raise AssertionError from exc
+
+    connector_version = metadata.get("connector_version")
+    native_version = metadata.get("bundled_native_package_version")
+    declared_abis = metadata.get("included_android_abis")
+    if not isinstance(connector_version, str) or not connector_version:
+        fail("Android package metadata does not declare connector_version")
+    if not isinstance(native_version, str) or not native_version:
+        fail("Android package metadata does not declare bundled_native_package_version")
+    if not isinstance(declared_abis, list) or not all(isinstance(abi, str) for abi in declared_abis):
+        fail("Android package metadata does not declare included_android_abis")
+
+    runtime_abis = {
+        parts[1]
+        for entry in entries
+        if (parts := path_components(entry))
+        and len(parts) == 3
+        and parts[0] == "jni"
+        and parts[2] == "libcoakka_runtime_v2.so"
+    }
+    bridge_abis = {
+        parts[1]
+        for entry in entries
+        if (parts := path_components(entry))
+        and len(parts) == 3
+        and parts[0] == "jni"
+        and parts[2] == "libcoakka_android_jni.so"
+    }
+    if runtime_abis != set(declared_abis):
+        fail(
+            "Android runtime ABI entries do not match package metadata: "
+            f"entries={sorted(runtime_abis)} metadata={sorted(declared_abis)}"
+        )
+    if bridge_abis != runtime_abis:
+        fail(
+            "Android JNI bridge ABI entries do not match runtime ABI entries: "
+            f"bridge={sorted(bridge_abis)} runtime={sorted(runtime_abis)}"
+        )
+    return native_version, entries
 
 
 def python_native_version(artifact: Path) -> tuple[str, list[str]]:
@@ -221,6 +278,7 @@ def tauri_native_version(artifact: Path) -> tuple[str, list[str]]:
 
 
 LANE_READERS = {
+    "android": android_native_version,
     "bun": bun_native_version,
     "electron": electron_native_version,
     "jvm": jvm_native_version,

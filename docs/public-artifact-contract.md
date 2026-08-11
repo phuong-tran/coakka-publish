@@ -22,6 +22,11 @@ The current public release surface contains:
 - coakka-runtime-inspect native UI archives under
   `coakka-tools/coakka-runtime-inspect/releases/`
 
+Android AAR candidates may be staged under `runtime/android/releases/`. An AAR
+does not join the current public surface until it passes runtime intake, its
+exact device or emulator lifecycle path is recorded, and its row is added to
+`artifacts/public-artifacts.tsv`.
+
 Consumer-facing package downloads are listed in
 `artifacts/public-artifacts.tsv`. Public samples should pin against that
 manifest so sample metadata and publish contents do not drift silently. The
@@ -210,7 +215,7 @@ platform baseline allowlist.
 Language packages may expose language-native APIs and language dependencies,
 but they must not weaken the native runtime contract.
 
-For JVM, Python, Node.js, Bun, Electron, Go, C#, Rust, Mojo, Zig, and Tauri:
+For JVM, Android, Python, Node.js, Bun, Electron, Go, C#, Rust, Mojo, Zig, and Tauri:
 
 - the package may expose language-native APIs and language dependencies
 - the package must include or resolve exactly one native runtime library for the
@@ -218,6 +223,11 @@ For JVM, Python, Node.js, Bun, Electron, Go, C#, Rust, Mojo, Zig, and Tauri:
 - loading the native runtime must not require users to install extra native
   implementation packages
 - public samples must use the language artifact directly
+
+An Android AAR must also record its connector version, bundled native package
+generation, native source commit, and included Android ABIs in
+`assets/coakka/runtime-package.json`. Every declared ABI must contain both
+`libcoakka_runtime_v2.so` and the thin `libcoakka_android_jni.so` bridge.
 
 Mojo and Zig are currently published as source connector packages with bundled
 native runtime libraries. They are public source packages, not package-manager

@@ -1,0 +1,103 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "coakka.v2",
+    "module": "coakka-runtime-android",
+    "version": "1.1.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.5.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-runtime-android-1.1.0.aar",
+          "url": "coakka-runtime-android-1.1.0.aar",
+          "size": 2413975,
+          "sha512": "f37ab9c95bb2e66bf6a632763067ebd92a5afce6aa6b6335e23121a11f0616ec115beb180613a8afecf2b153d2b7c990ef0aed128e95d4a5cef8cfb843baaf49",
+          "sha256": "feec69784bc499875a0332770f85c113b0801baf312cfd9969ecc321649c9ae3",
+          "sha1": "a8803a00035c57e63d9830c40f40beb747486b45",
+          "md5": "bdc3c09245180cc32332d6e79ccb1d7d"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-javalite",
+          "version": {
+            "requires": "4.31.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.2.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "coakka-runtime-android-1.1.0.aar",
+          "url": "coakka-runtime-android-1.1.0.aar",
+          "size": 2413975,
+          "sha512": "f37ab9c95bb2e66bf6a632763067ebd92a5afce6aa6b6335e23121a11f0616ec115beb180613a8afecf2b153d2b7c990ef0aed128e95d4a5cef8cfb843baaf49",
+          "sha256": "feec69784bc499875a0332770f85c113b0801baf312cfd9969ecc321649c9ae3",
+          "sha1": "a8803a00035c57e63d9830c40f40beb747486b45",
+          "md5": "bdc3c09245180cc32332d6e79ccb1d7d"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "coakka-runtime-android-1.1.0-sources.jar",
+          "url": "coakka-runtime-android-1.1.0-sources.jar",
+          "size": 54945,
+          "sha512": "5c5cbfc5b8ea6a818b57acca10ed52d8fe4de114d5d0e6eb296b58b30af1b27416294216552282c792b10baa1c851f630cb4191ed520d3d80d35cfa379755f88",
+          "sha256": "146fb36fd6a7b667f3a8a8d810b91927c1d26fe92e4376d7d5d3ae74fe7b0350",
+          "sha1": "23b69d00d8c731a0e6dcdd0431c2049969735c26",
+          "md5": "740a69c76d6cb802f9f318cb515c99e4"
+        }
+      ]
+    }
+  ]
+}
