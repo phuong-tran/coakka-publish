@@ -38,7 +38,7 @@ ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 | PyPI | `coakka-v2-connector==2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
 | NuGet | `CoAkka.Runtime==2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.6.0` | `2.3.0+a83ab412` |
-| SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.3.0` | `2.3.0+a83ab412` |
+| SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.4.0` | `2.4.0+c2f53117` |
 
 The artifact mirror is complete independently of npm, PyPI, and NuGet. Exact
 registry coordinates and authenticated publication receipts are listed below.
@@ -147,7 +147,7 @@ SwiftPM packages:
 
 | Surface | SwiftPM coordinate | Native generation |
 | --- | --- | --- |
-| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.3.0` | `2.3.0+a83ab412` |
+| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.4.0` | `2.4.0+c2f53117` |
 | Swift logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.1` | `1.2.1+f50756ebff0d` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for current

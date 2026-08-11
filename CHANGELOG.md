@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-12
 
+- Published the tag-only SwiftPM runtime coordinate
+  `github.com/phuong-tran/coakka-runtime-swift@v2.4.0` over native generation
+  `2.4.0+c2f53117`. Package readiness and a clean remote-tag request/reply
+  consumer pass on macOS ARM64; all five bundled native payloads pass exact
+  digest and platform verification.
 - Published `coakka-client` and `coakka-runtime-inspect` native archives at
   `2.4.0+c2f53117` for macOS ARM64, Linux ARM64/x86-64, and Windows
   ARM64/x86-64. `coakka-client` command evidence passes on macOS ARM64 and its
