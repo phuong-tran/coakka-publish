@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
   "product_lane": "sample-binaries",
-  "sample": "runtime/native/rpi-camera",
+  "sample": "runtime-streaming-demo/rpi-camera",
   "version": "1.1.0",
   "release_path": "samples/runtime/native/rpi-camera/releases/1.1.0",
   "public_source_repository": "https://github.com/phuong-tran/coakka-samples",
-  "public_source_path": "runtime/native/rpi-camera",
+  "public_source_path_at_build": "runtime/native/rpi-camera",
+  "current_public_source_path": "runtime-streaming-demo/rpi-camera",
   "public_source_git_commit": "ee7b781308e6845a66e784f92801206d30e47d05",
   "github_release_used": false,
   "artifacts": [

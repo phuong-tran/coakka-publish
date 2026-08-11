@@ -34,5 +34,5 @@ if ($actual -ne $expected) { throw 'camera archive checksum mismatch' }
 ```
 
 Read `manifest.json` for source provenance and platform evidence. Use the
-[`coakka-samples` guide](https://github.com/phuong-tran/coakka-samples/tree/main/runtime/native/rpi-camera)
+[`coakka-samples` guide](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-streaming-demo/rpi-camera)
 for all CLI options and run commands.

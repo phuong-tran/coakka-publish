@@ -11,7 +11,7 @@ GitHub Release for them.
 
 | Sample | Version | Binary lane | Public source |
 | --- | --- | --- | --- |
-| [Raspberry Pi camera livestream](runtime/native/rpi-camera/README.md) | `1.1.0` | `runtime/native/rpi-camera/releases/1.1.0/` | [`coakka-samples/runtime/native/rpi-camera/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime/native/rpi-camera) |
+| [Raspberry Pi camera livestream](runtime/native/rpi-camera/README.md) | `1.1.0` | `runtime/native/rpi-camera/releases/1.1.0/` | [`coakka-samples/runtime-streaming-demo/rpi-camera/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-streaming-demo/rpi-camera) |
 
 Select one archive for the exact OS and CPU, verify it against the release
 `SHA256SUMS`, then follow the source repository's run guide. Binary evidence is
