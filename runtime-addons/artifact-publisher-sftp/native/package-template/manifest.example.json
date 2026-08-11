@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "name": "coakka-runtime-addon-artifact-publisher-sftp-native",
+  "addonId": "coakka.artifact.publisher.sftp",
+  "version": "0.1.0",
+  "release": "0.1.0+0000000",
+  "sourceSnapshot": "0000000",
+  "archive": "coakka-runtime-addon-artifact-publisher-sftp-native-0.1.0.tar.gz",
+  "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "runtimeCompatibility": {
+    "abiMajor": 2,
+    "minimumNativeVersion": "2.3.0",
+    "requiredFeatures": ["file_lane"]
+  },
+  "ownedStaticDependencies": [
+    { "name": "libssh2", "version": "1.11.1" },
+    { "name": "crypto-provider", "version": "target-package-defined" }
+  ],
+  "userInstalledNativeDependencies": false,
+  "cmakeConfig": "cmake/CoAkkaRuntimeAddonArtifactPublisherSftpConfig.cmake",
+  "headers": [
+    "include/coakka/addons/artifact_publisher_sftp.h"
+  ],
+  "exportedSymbols": [
+    "coakka_sftp_publisher_cancel",
+    "coakka_sftp_publisher_create",
+    "coakka_sftp_publisher_dependency_version",
+    "coakka_sftp_publisher_destroy",
+    "coakka_sftp_publisher_forget",
+    "coakka_sftp_publisher_get",
+    "coakka_sftp_publisher_get_target",
+    "coakka_sftp_publisher_start",
+    "coakka_sftp_publisher_stop",
+    "coakka_sftp_publisher_submit",
+    "coakka_sftp_publisher_wait"
+  ],
+  "platforms": [
+    {
+      "id": "linux-aarch64",
+      "library": "native/linux-aarch64/libcoakka_addon_artifact_publisher_sftp.so",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed"
+    },
+    {
+      "id": "linux-x86_64",
+      "library": "native/linux-x86_64/libcoakka_addon_artifact_publisher_sftp.so",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed"
+    },
+    {
+      "id": "macos-aarch64",
+      "library": "native/macos-aarch64/libcoakka_addon_artifact_publisher_sftp.dylib",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed"
+    }
+  ]
+}

@@ -15,6 +15,7 @@ Good contributions here include:
 - public artifact index fixes
 - documentation clarifications about published artifact scope
 - verifier improvements for the public artifact surface
+- runtime-addon release intake metadata produced by its source-owner repository
 
 ## What Should Go Somewhere Else
 
@@ -46,6 +47,11 @@ If a lane is refreshed, the corresponding public metadata should move together:
 - public artifact index rows
 - release note
 
+Optional runtime addons use the same rule under
+`runtime-addons/<addon>/native/releases/`. Addon implementation work remains in
+its source-owner repository; this repository accepts only release-shaped
+archives, manifests, checksums, compatibility evidence, and public docs.
+
 ## Version And Compatibility Rule
 
 Do not publish mixed artifact stories by accident.
@@ -66,6 +72,7 @@ Common checks:
 ```sh
 scripts/verify-public-surface.sh
 scripts/test-public-artifact-manifest.sh
+scripts/test-runtime-addon-release.sh
 ```
 
 If the change touches the JVM runtime bundle or Maven lane, also run:

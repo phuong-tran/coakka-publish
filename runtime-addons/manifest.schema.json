@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://coakka.dev/schemas/runtime-addon-native-release-v1.json",
+  "title": "CoAkka Runtime Addon Native Release Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "name",
+    "addonId",
+    "version",
+    "release",
+    "sourceSnapshot",
+    "archive",
+    "sha256",
+    "runtimeCompatibility",
+    "ownedStaticDependencies",
+    "userInstalledNativeDependencies",
+    "cmakeConfig",
+    "headers",
+    "exportedSymbols",
+    "platforms"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "name": { "type": "string", "pattern": "^coakka-runtime-addon-[a-z0-9-]+-native$" },
+    "addonId": { "type": "string", "pattern": "^coakka\\.[a-z0-9.]+$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "release": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+\\+[0-9a-f]{7,40}$" },
+    "sourceSnapshot": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "archive": { "type": "string", "pattern": "^coakka-runtime-addon-[a-z0-9-]+-native-[0-9]+\\.[0-9]+\\.[0-9]+\\.tar\\.gz$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "runtimeCompatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["abiMajor", "minimumNativeVersion", "requiredFeatures"],
+      "properties": {
+        "abiMajor": { "type": "integer", "minimum": 2 },
+        "minimumNativeVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "requiredFeatures": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" }
+        }
+      }
+    },
+    "ownedStaticDependencies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "version"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "version": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "userInstalledNativeDependencies": { "const": false },
+    "cmakeConfig": {
+      "type": "string",
+      "pattern": "^cmake/CoAkkaRuntimeAddon[A-Za-z0-9]+Config\\.cmake$"
+    },
+    "headers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^include/coakka/addons/[a-z0-9_]+\\.h$" }
+    },
+    "exportedSymbols": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^coakka_[a-z0-9_]+$" }
+    },
+    "platforms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "library", "matchingHostRuntimeTest", "dynamicDependencyAudit"],
+        "properties": {
+          "id": {
+            "enum": [
+              "linux-aarch64",
+              "linux-x86_64",
+              "macos-aarch64",
+              "windows-aarch64",
+              "windows-x86_64"
+            ]
+          },
+          "library": { "type": "string", "pattern": "^native/[a-z0-9_-]+/libcoakka_addon_[a-z0-9_]+\\.(so|dylib|dll)$" },
+          "matchingHostRuntimeTest": { "const": "passed" },
+          "dynamicDependencyAudit": { "const": "passed" }
+        }
+      }
+    }
+  }
+}

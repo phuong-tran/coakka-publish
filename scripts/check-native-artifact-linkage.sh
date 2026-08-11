@@ -18,7 +18,7 @@ require_command() {
 dependency_allowed() {
   local dep lower
   dep="$1"
-  lower="$(printf '%s' "${dep}" | tr 'A-Z' 'a-z')"
+  lower="$(printf '%s' "${dep}" | tr '[:upper:]' '[:lower:]')"
 
   case "${lower}" in
     libcoakka_runtime_v2.so|libcoakka_runtime_v2.dll|libcoakka_logger_core.so|libcoakka_logger_core.so.10|libcoakka_logger_core.dll)
@@ -93,11 +93,11 @@ require_command awk
 mkdir -p "${tmp_root}"
 trap 'rm -rf "${tmp_root}"' EXIT
 
-while IFS=$'\t' read -r row_status label relative_path expected_sha extra || [[ -n "${row_status:-}" ]]; do
+while IFS=$'\t' read -r row_status label relative_path _expected_sha _extra || [[ -n "${row_status:-}" ]]; do
   [[ -z "${row_status:-}" || "${row_status}" == \#* ]] && continue
   [[ "${row_status}" == "public" ]] || continue
   case "${relative_path}" in
-    logger/native/releases/*.tar.gz|runtime/native/releases/*.tar.gz|runtime-inspect/native/releases/*.tar.gz|cli/releases/*.tar.gz|demo/coakka-client/releases/*.tar.gz|coakka-tools/coakka-client/releases/*/*.tar.gz|coakka-tools/coakka-client/docker-demo/releases/*/*.tar.gz|coakka-tools/coakka-runtime-inspect/releases/*/*.tar.gz)
+    logger/native/releases/*.tar.gz|runtime/native/releases/*.tar.gz|runtime-addons/*/native/releases/*/*.tar.gz|runtime-inspect/native/releases/*.tar.gz|cli/releases/*.tar.gz|demo/coakka-client/releases/*.tar.gz|coakka-tools/coakka-client/releases/*/*.tar.gz|coakka-tools/coakka-client/docker-demo/releases/*/*.tar.gz|coakka-tools/coakka-runtime-inspect/releases/*/*.tar.gz)
       check_archive "${relative_path}"
       ;;
   esac

@@ -3,6 +3,15 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-11
+
+- Added the independent `runtime-addons/` release family and the unreleased
+  SFTP artifact-publisher package contract. The intake gate requires exact
+  runtime ABI/feature compatibility, reviewed exports, matching-host platform
+  evidence, self-contained native dependencies, safe archive layout, and
+  checksums before an addon can enter the public artifact manifest. No SFTP
+  addon binary or public install coordinate is claimed by this change.
+
 ## 2026-08-10
 
 - Published and registry-verified `coakka-v2-connector==2.3.0` to PyPI over

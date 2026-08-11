@@ -12,6 +12,9 @@ The current public release surface contains:
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`
 - runtime source connector packages under `runtime/{mojo,zig,tauri}/releases/`
+- independently versioned optional runtime addons under
+  `runtime-addons/<addon>/native/releases/` once a verified archive is present
+  in the root public artifact manifest
 - runtime JVM, Spring Boot, and Quarkus artifacts under `maven/`
 - coakka-client native CLI archives under `coakka-tools/coakka-client/releases/`
 - coakka-client Docker Linux bundles under
@@ -24,7 +27,8 @@ Consumer-facing package downloads are listed in
 manifest so sample metadata and publish contents do not drift silently. The
 manifest is intentionally limited to the current public release surface:
 `logger/*/releases/*`, `runtime/*/releases/*`, `coakka-tools/*/releases/*`,
-`coakka-tools/*/*/releases/*`, and selected Maven jars under `maven/coakka/`.
+`coakka-tools/*/*/releases/*`, `runtime-addons/*/native/releases/*/*`, and
+selected Maven jars under `maven/coakka/`.
 Older `cli/releases/`, `demo/coakka-client/releases/`, and
 `runtime-inspect/native/releases/` paths remain as compatibility history, not
 the current tool artifact surface.
@@ -53,6 +57,17 @@ anchor. If a sample pins a native package generation such as
 `0.1.0+<git-commit>`, every runtime language/framework lane used by that sample
 must either consume that same native package generation or document an explicit
 compatibility exception.
+
+Runtime addons version independently. Each addon release manifest must declare
+runtime ABI major, minimum native runtime version, and required runtime
+features. Matching addon and runtime version numbers are neither required nor
+sufficient evidence of compatibility.
+
+An addon archive must not embed another copy of CoAkka Runtime. It contains the
+addon C ABI and native module; the consumer supplies one compatible runtime
+package. Addon implementation dependencies must be statically absorbed where
+licensing permits, and every declared platform must carry matching-host runtime
+execution plus dynamic dependency audit evidence.
 
 ## Integrity Metadata
 

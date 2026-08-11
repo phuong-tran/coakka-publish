@@ -264,6 +264,7 @@ verify_public_artifact_manifest() {
   local seen_paths=$'\n'
   local seen_labels=$'\n'
   local status label relative_path expected_sha extra actual_sha
+  local addon_release_manifest addon_release_archive
 
   while IFS=$'\t' read -r status label relative_path expected_sha extra || [[ -n "${status:-}" ]]; do
     line_no=$((line_no + 1))
@@ -279,7 +280,24 @@ verify_public_artifact_manifest() {
       fail "unsafe artifact path in manifest row ${line_no}: ${relative_path}"
     fi
     case "${relative_path}" in
-      logger/*/releases/*|runtime/*/releases/*|runtime-inspect/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|coakka-tools/*/releases/*|coakka-tools/*/*/releases/*|maven/coakka/*/*/*/*.jar)
+      runtime-addons/*/native/releases/*/*)
+        addon_release_manifest="${repo_root}/$(dirname "${relative_path}")/manifest.json"
+        if [[ ! -f "${addon_release_manifest}" ]]; then
+          fail "runtime addon artifact has no release manifest: ${relative_path}"
+        fi
+        addon_release_archive="$(python3 - "${addon_release_manifest}" <<'PY'
+import json
+import sys
+
+with open(sys.argv[1], "r", encoding="utf-8") as handle:
+    print(json.load(handle).get("archive", ""))
+PY
+)"
+        if [[ "$(basename "${relative_path}")" != "${addon_release_archive}" ]]; then
+          fail "runtime addon public row does not name its manifest archive: ${relative_path}"
+        fi
+        ;;
+      logger/*/releases/*|runtime/*/releases/*|runtime-inspect/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|coakka-tools/*/releases/*|maven/coakka/*/*/*/*.jar)
         ;;
       *)
         fail "artifact path is outside the current public manifest surface in row ${line_no}: ${relative_path}"
@@ -522,6 +540,9 @@ require_file "README.md"
 require_file "LICENSE.md"
 require_file "docs/public-artifact-contract.md"
 require_file "artifacts/public-artifacts.tsv"
+require_file "runtime-addons/README.md"
+require_file "runtime-addons/manifest.schema.json"
+require_file "scripts/verify-runtime-addon-release.py"
 require_file "include/coakka/v2/client.h"
 require_file "include/coakka/v2/control.h"
 require_file "include/coakka/v2/runtime.h"
@@ -542,7 +563,7 @@ if ! find "${repo_root}/runtime/native/releases" -mindepth 2 -maxdepth 2 \
 fi
 
 release_roots=()
-for release_root in logger runtime cli demo; do
+for release_root in logger runtime runtime-addons cli demo; do
   if [[ -d "${repo_root}/${release_root}" ]]; then
     release_roots+=("${repo_root}/${release_root}")
   fi
@@ -554,6 +575,14 @@ while IFS= read -r -d '' sums_file; do
 done < <(find "${release_roots[@]}" -path '*/releases/*/SHA256SUMS' -print0)
 
 verify_maven_sidecars
+
+while IFS= read -r -d '' addon_manifest; do
+  "${repo_root}/scripts/verify-runtime-addon-release.py" \
+    --release-dir "$(dirname "${addon_manifest}")"
+done < <(
+  find "${repo_root}/runtime-addons" \
+    -path '*/native/releases/*/manifest.json' -print0
+)
 
 verify_public_artifact_manifest
 
@@ -578,6 +607,7 @@ scanner_inputs=(
   "${repo_root}/README.md"
   "${repo_root}/docs"
   "${repo_root}/include"
+  "${repo_root}/runtime-addons"
   "${repo_root}/scripts"
   "${repo_root}/artifacts/public-artifacts.tsv"
 )

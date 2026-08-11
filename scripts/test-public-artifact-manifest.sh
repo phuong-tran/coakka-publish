@@ -57,19 +57,27 @@ make_fixture() {
     "${fixture}/native/windows-aarch64" \
     "${fixture}/native/windows-x86_64" \
     "${fixture}/runtime/native/releases/0.1.0+63c346e" \
+    "${fixture}/runtime-addons" \
     "${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986" \
     "${fixture}/scripts"
 
   cp "${repo_root}/scripts/verify-public-surface.sh" "${fixture}/scripts/verify-public-surface.sh"
+  cp "${repo_root}/scripts/verify-runtime-addon-release.py" \
+    "${fixture}/scripts/verify-runtime-addon-release.py"
   cat >"${fixture}/scripts/scan-public-surface.sh" <<'EOF'
 #!/usr/bin/env bash
 echo "[public-artifact-surface] ok"
 EOF
-  chmod +x "${fixture}/scripts/scan-public-surface.sh" "${fixture}/scripts/verify-public-surface.sh"
+  chmod +x \
+    "${fixture}/scripts/scan-public-surface.sh" \
+    "${fixture}/scripts/verify-public-surface.sh" \
+    "${fixture}/scripts/verify-runtime-addon-release.py"
 
   printf '# Fixture\n' >"${fixture}/README.md"
   cp "${repo_root}/LICENSE.md" "${fixture}/LICENSE.md"
   printf '# Fixture contract\n' >"${fixture}/docs/public-artifact-contract.md"
+  printf '# Runtime addons\n' >"${fixture}/runtime-addons/README.md"
+  printf '{}\n' >"${fixture}/runtime-addons/manifest.schema.json"
   printf 'client header\n' >"${fixture}/include/coakka/v2/client.h"
   printf 'control header\n' >"${fixture}/include/coakka/v2/control.h"
   printf 'runtime header\n' >"${fixture}/include/coakka/v2/runtime.h"
@@ -171,6 +179,21 @@ expect_failure "path outside public manifest surface" env \
   COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
   "${bad_path_fixture}/scripts/verify-public-surface.sh"
 grep -Fq "unsafe artifact path" "${test_output}"
+
+addon_without_manifest_fixture="$(make_fixture addon-without-manifest)"
+addon_release_dir="${addon_without_manifest_fixture}/runtime-addons/example/native/releases/0.1.0+abcdef0"
+mkdir -p "${addon_release_dir}"
+printf 'addon archive\n' >"${addon_release_dir}/coakka-runtime-addon-example-native-0.1.0.tar.gz"
+addon_sha="$(sha256_file "${addon_release_dir}/coakka-runtime-addon-example-native-0.1.0.tar.gz")"
+cat >>"${addon_without_manifest_fixture}/artifacts/public-artifacts.tsv" <<EOF
+public	runtime addon example	runtime-addons/example/native/releases/0.1.0+abcdef0/coakka-runtime-addon-example-native-0.1.0.tar.gz	${addon_sha}
+EOF
+expect_failure "runtime addon row without release manifest" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
+  "${addon_without_manifest_fixture}/scripts/verify-public-surface.sh"
+grep -Fq "runtime addon artifact has no release manifest" "${test_output}"
 
 duplicate_path_fixture="$(make_fixture duplicate-path)"
 runtime_sha="$(sha256_file "${duplicate_path_fixture}/runtime/native/releases/0.1.0+63c346e/coakka-runtime-native-v2-0.1.0.tar.gz")"

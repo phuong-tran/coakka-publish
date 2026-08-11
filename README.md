@@ -121,7 +121,7 @@ CoAkka Logger is a separate bounded logging surface in the same ecosystem.
 | --- | --- |
 | Problem | Internal application work often becomes an HTTP-shaped handoff only to give capability code an address, spreading one contract across URLs, clients, retries, timeout mapping, status mapping, and logs. |
 | What CoAkka is | A runtime boundary for application capabilities: callers submit an identified payload to a stable target, route snapshots decide ownership, and replies/deadletters carry runtime diagnostics. |
-| What this repo is | The public artifact surface: packages, native archives, manifests, checksums, compatibility matrix, and release notes. |
+| What this repo is | The public artifact surface: packages, native archives, optional runtime-addon releases, manifests, checksums, compatibility matrix, and release notes. |
 | What it is not | Not the runnable sample repo and not a source-build repository. Use `coakka-samples` to run examples. |
 | How to adopt | Pick one painful internal boundary, keep legacy HTTP/gRPC edges intact, and migrate gradually where runtime targets make ownership clearer. |
 
@@ -662,6 +662,33 @@ the full artifact contents.
 For auxiliary artifacts that intentionally do not embed a native library, such
 as a JVM sources jar, add `--allow-no-native`. Main runtime connector packages
 must not use that flag.
+
+## Runtime Addon Artifacts
+
+Optional runtime capabilities release independently under
+[`runtime-addons/`](runtime-addons/README.md). They do not become part of the
+default runtime archive and must not make ordinary runtime consumers install
+their implementation dependencies.
+
+The first defined lane is
+[`runtime-addons/artifact-publisher-sftp`](runtime-addons/artifact-publisher-sftp/README.md).
+It currently contains a release contract and package template only. No SFTP
+addon archive is listed in `artifacts/public-artifacts.tsv`, so it is not a
+current public package coordinate.
+
+Before promotion, run:
+
+```bash
+scripts/verify-runtime-addon-release.py \
+  --release-dir runtime-addons/<addon>/native/releases/<release>
+scripts/test-runtime-addon-release.sh
+scripts/verify-public-surface.sh
+```
+
+The intake gate checks runtime ABI/feature compatibility, the reviewed C ABI,
+matching-host platform evidence, archive shape, checksums, exact static
+dependency versions, and absence of bundled runtime or implementation sidecar
+libraries. The full public-surface gate also inspects native linkage.
 
 ## Logger Artifacts
 

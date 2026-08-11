@@ -21,6 +21,20 @@ entrypoints expose both File Lane and Stream Lane.
 For exact package contents, matching-host execution, and known platform gaps,
 use [Runtime Package And Platform Evidence](runtime-package-platform-evidence.md).
 
+## Runtime Addons
+
+The repository defines an independent `runtime-addons/` release family for
+optional capabilities that compose with Runtime without entering the default
+runtime package.
+
+No runtime addon is currently published. In particular, the SFTP artifact
+publisher is a source candidate with a release contract and package template,
+not an installable coordinate. Do not generate consumer imports or sample
+commands against the current `2.3.0` runtime packages yet.
+
+See [Runtime Addons](../runtime-addons/README.md) and the
+[SFTP addon release contract](../runtime-addons/artifact-publisher-sftp/README.md).
+
 ## Package Manager Entrypoints
 
 | Channel | Runtime package | Logger package | Sample command |

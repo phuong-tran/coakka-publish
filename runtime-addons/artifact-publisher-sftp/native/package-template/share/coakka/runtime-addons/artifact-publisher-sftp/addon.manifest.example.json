@@ -1,0 +1,9 @@
+{
+  "manifest_version": 1,
+  "addon_id": "coakka.artifact.publisher.sftp",
+  "addon_kind": "bridge",
+  "addon_version": "0.1.0",
+  "runtime_family": "coakka-runtime-v2",
+  "required_runtime_features": ["file_lane"],
+  "entrypoint_symbol": "coakka_sftp_publisher_create"
+}
