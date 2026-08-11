@@ -42,22 +42,32 @@ public	runtime C# package 1.4.5	runtime/csharp/releases/1.4.0+2cee86bf-562028d/C
 public	runtime C# package 1.4.6	runtime/csharp/releases/1.4.0+2cee86bf-693f122/CoAkka.Runtime.1.4.6.nupkg	04bda5dd20f3398bf299ddc128c0fe4a2dc399d93dd75066ac40897ad827545d
 public	runtime Rust package	runtime/rust/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-rs-2.4.0.tar.gz	88914fb8968afb37624b63740e8f649cfbcfaaab8b5d2ef2e4a2e9017e9bc500
 public	runtime Swift package	runtime/swift/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-swift-2.4.0.tar.gz	0ff15bc33480bf68dace623777dc87154aed2855034b9148b9828a968590406e
-# Runtime source packages are built from connector source commit 3a84c7b
-# over runtime native package generation 2.3.0+a83ab412.
+# Runtime source packages are built from connector source commit 0afb5e9
+# over runtime native package generation 2.4.0+c2f53117.
 public	runtime Mojo source package	runtime/mojo/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-mojo-2.4.0-source.tar.gz	e8f46623d1b69d9ff6a6b4dc25740828bb93543ff7cdbc47acff47c0b759dc4e
 public	runtime Zig source package	runtime/zig/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-zig-2.4.0-source.tar.gz	4e9a9a750bdfaee47b5365e8e1c4de90bbcf720a9b18f1bdba8f15c3739da167
 public	runtime Tauri source package	runtime/tauri/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-tauri-intents-2.4.0-source.tar.gz	34f6cdcd7765584b49d434a42893bade483d0a40bc6aa23f48653be5e4faf3da
 public	Spring Boot starter Maven jar	maven/coakka/spring/coakka-spring-boot-starter/2.4.0-gc2f53117-0afb5e9/coakka-spring-boot-starter-2.4.0-gc2f53117-0afb5e9.jar	280d83a4c0987c9adb8db65ff5a4d4a70793e234e301c1ae689825a686839ab5
 public	Quarkus extension Maven jar	maven/coakka/quarkus/coakka-quarkus-extension/2.4.0-gc2f53117-0afb5e9/coakka-quarkus-extension-2.4.0-gc2f53117-0afb5e9.jar	6f5f06d09b84127983de5cb7567a35888080b9cc004bce30cfc91a78c54585c6
-public	coakka-client linux-x86_64	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-linux-x86_64.tar.gz	32a172e06e40716096d7d675a0ddbe272a1a22a257f19bc730b67a28133b7ab7
-public	coakka-client linux-aarch64	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-linux-aarch64.tar.gz	cc221a4cfed50ff1059457fd280f7c9e091d8b164ebdb8b1cd8f277633b0ed13
-public	coakka-client macos-aarch64	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-macos-aarch64.tar.gz	d7d485bad47446a8eb522c13fa89a25cdc4e1b04414775909d1a6f9f48a05a9f
-public	coakka-client windows-x86_64	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-windows-x86_64.tar.gz	8db7d8ad8ad59b4a0a8a9e71b2b98dc0e64d17bca4f9b14e485cd04e6202899c
-public	coakka-client windows-aarch64	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-windows-aarch64.tar.gz	b2834b4db3eac36085280411ac2d3dd89fae60294e5625c28e217a31b9b0b5fd
+public	coakka-client linux-x86_64 2.3.0	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-linux-x86_64.tar.gz	32a172e06e40716096d7d675a0ddbe272a1a22a257f19bc730b67a28133b7ab7
+public	coakka-client linux-aarch64 2.3.0	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-linux-aarch64.tar.gz	cc221a4cfed50ff1059457fd280f7c9e091d8b164ebdb8b1cd8f277633b0ed13
+public	coakka-client macos-aarch64 2.3.0	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-macos-aarch64.tar.gz	d7d485bad47446a8eb522c13fa89a25cdc4e1b04414775909d1a6f9f48a05a9f
+public	coakka-client windows-x86_64 2.3.0	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-windows-x86_64.tar.gz	8db7d8ad8ad59b4a0a8a9e71b2b98dc0e64d17bca4f9b14e485cd04e6202899c
+public	coakka-client windows-aarch64 2.3.0	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-windows-aarch64.tar.gz	b2834b4db3eac36085280411ac2d3dd89fae60294e5625c28e217a31b9b0b5fd
 public	coakka-client docker-demo linux-x86_64	coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz	97a0c6d3865cd550d8e2762ffdb1d90b2d6895449c888c5b70970bd568f18f01
 public	coakka-client docker-demo linux-aarch64	coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz	0bcd3a51969f993d886a85ee3366c1af3289ffda443027f2efb542da424fca11
-public	coakka-runtime-inspect linux-aarch64	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-linux-aarch64.tar.gz	774197302c36e27074f22be75f4bc08644cd815dc17290dbd12c5f20fa28d6f6
-public	coakka-runtime-inspect linux-x86_64	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-linux-x86_64.tar.gz	a2068ede400edb97a7c8420337074d1bde84f5238450abf03586ec8ea428b197
-public	coakka-runtime-inspect macos-aarch64	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-macos-aarch64.tar.gz	2e06582717cd6365c3f3db9d7c9141022407146fb8c0a0563653f5d5d99dd984
-public	coakka-runtime-inspect windows-aarch64	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-windows-aarch64.tar.gz	710e8bd56cd9a9663c3d48a541aae413ab934f5628ce181ad55edc9dfc531172
-public	coakka-runtime-inspect windows-x86_64	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-windows-x86_64.tar.gz	c69d1c2e8f630eed6d076b31f67bccc28015087b05adaff687ffd7b98c95c729
+public	coakka-runtime-inspect linux-aarch64 2.3.0	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-linux-aarch64.tar.gz	774197302c36e27074f22be75f4bc08644cd815dc17290dbd12c5f20fa28d6f6
+public	coakka-runtime-inspect linux-x86_64 2.3.0	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-linux-x86_64.tar.gz	a2068ede400edb97a7c8420337074d1bde84f5238450abf03586ec8ea428b197
+public	coakka-runtime-inspect macos-aarch64 2.3.0	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-macos-aarch64.tar.gz	2e06582717cd6365c3f3db9d7c9141022407146fb8c0a0563653f5d5d99dd984
+public	coakka-runtime-inspect windows-aarch64 2.3.0	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-windows-aarch64.tar.gz	710e8bd56cd9a9663c3d48a541aae413ab934f5628ce181ad55edc9dfc531172
+public	coakka-runtime-inspect windows-x86_64 2.3.0	coakka-tools/coakka-runtime-inspect/releases/2.3.0+a83ab412/coakka-runtime-inspect-v2-2.3.0-windows-x86_64.tar.gz	c69d1c2e8f630eed6d076b31f67bccc28015087b05adaff687ffd7b98c95c729
+public	coakka-client linux-x86_64	coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-x86_64.tar.gz	82ac987a2f3b312faaa3f3d412afa05b46728264687109cdc50f60197d167ba0
+public	coakka-client linux-aarch64	coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-aarch64.tar.gz	bb310f2072599daaff89fdb76321dc82af6c9527c576adfa1824879e1d916fb5
+public	coakka-client macos-aarch64	coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-macos-aarch64.tar.gz	51ac1cb2e394b13afb90e69a182a7af00c559cf77ce4e67e52abcb0dca307047
+public	coakka-client windows-x86_64	coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-x86_64.tar.gz	9f3223d6dcbc6ffd693a7f9b14b475394bee4021030748a2365449ff08cfd828
+public	coakka-client windows-aarch64	coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-aarch64.tar.gz	0cc4af837c4315ea12944097f6d0d1d7e056f7e351d1068c2627ca2933680a59
+public	coakka-runtime-inspect linux-aarch64	coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-aarch64.tar.gz	4806c7f14832ee6f439698e1047eeccf67e0c52dacd78f8ef0a22bfa217943ee
+public	coakka-runtime-inspect linux-x86_64	coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-x86_64.tar.gz	1aa7909cbef54e23b90011187752bb031ba2f956ecbdd612a98fbb2d2c0a4712
+public	coakka-runtime-inspect macos-aarch64	coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-macos-aarch64.tar.gz	d7ef0e3c8fdd998e8b53f68759b641d2571ef1456616e5e4101131e85fa34c8d
+public	coakka-runtime-inspect windows-aarch64	coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-aarch64.tar.gz	f62c300daa653a57d2adefbfd26e99dbc70161c0e2ed35a98842bdfc783f55c3
+public	coakka-runtime-inspect windows-x86_64	coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-x86_64.tar.gz	adbb266ed1f974b4ab87305c5dccf740f04087c1ba13d4abcfed72da2f964c36
