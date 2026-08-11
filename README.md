@@ -59,7 +59,7 @@ attachments.
 | Product | Binary lane | Source and consumer |
 | --- | --- | --- |
 | [SFTP artifact publisher](runtime-addons/artifact-publisher-sftp/README.md) | `runtime-addons/artifact-publisher-sftp/native/releases/1.1.0+42841ae2/` | [`coakka-samples/runtime-addons/artifact-publisher-sftp/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-addons/artifact-publisher-sftp) |
-| [Raspberry Pi camera livestream](samples/runtime/native/rpi-camera/README.md) | `samples/runtime/native/rpi-camera/releases/1.1.0/` | [`coakka-samples/runtime/native/rpi-camera/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime/native/rpi-camera) |
+| [Raspberry Pi camera livestream](samples/runtime/native/rpi-camera/README.md) | `samples/runtime/native/rpi-camera/releases/1.1.0/` | [`coakka-samples/runtime-streaming-demo/rpi-camera/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-streaming-demo/rpi-camera) |
 
 ## Runtime Addons
 
