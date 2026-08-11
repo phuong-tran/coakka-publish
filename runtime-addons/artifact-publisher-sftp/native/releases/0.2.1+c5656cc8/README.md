@@ -2,6 +2,9 @@
 
 Release generation: `0.2.1+c5656cc8`
 
+This release supersedes `0.2.0`; that package is retained only in its tagged
+GitHub Release for audit history and must not be distributed.
+
 Published archive:
 
 ```text
