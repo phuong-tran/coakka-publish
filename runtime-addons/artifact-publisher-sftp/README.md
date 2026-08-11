@@ -50,3 +50,9 @@ cross-build alone is not runtime evidence.
 
 The native package template lives under
 [`native/package-template`](native/package-template/README.md).
+
+The independent
+[native source-candidate sample](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-addons/artifact-publisher-sftp/native)
+builds this package contract against the promoted Runtime archive and exercises
+SFTP acquisition plus cross-process File Lane delivery. It is pre-release
+evidence, not an addon install coordinate or a root main-lane sample.
