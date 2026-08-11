@@ -5,6 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-12
 
+- Published and registry-verified `coakka-v2-connector==2.4.0` to PyPI over
+  native generation `2.4.0+c2f53117`. The downloaded registry wheel is
+  byte-identical to the staged candidate and clean request/reply, matched
+  deadletter, hot reload, and local desktop CRUD samples pass.
 - Published and registry-verified `CoAkka.Runtime==2.4.0` to NuGet over native
   generation `2.4.0+c2f53117`. NuGet.org adds only `.signature.p7s`; all 16
   staged package entries are byte-identical, the repository signature passes,
