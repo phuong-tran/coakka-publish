@@ -558,6 +558,41 @@ verify_current_bun_tauri_public_boundary() {
   verify_no_public_core_markers_in_archive "${repo_root}/${tauri_rel}" "runtime Tauri artifact"
 }
 
+verify_android_maven_candidates() {
+  local manifest release_dir artifact_name native_version
+
+  [[ -d "${repo_root}/maven/android/releases" ]] || return 0
+  while IFS= read -r -d '' manifest; do
+    release_dir="$(dirname "${manifest}")"
+    IFS=$'\t' read -r artifact_name native_version < <(
+      python3 - "${manifest}" <<'PY'
+import json
+import sys
+
+with open(sys.argv[1], "r", encoding="utf-8") as handle:
+    manifest = json.load(handle)
+artifact = manifest.get("artifact") or {}
+print(
+    f"{artifact.get('name', '')}\t"
+    f"{artifact.get('bundled_native_package_version', '')}"
+)
+PY
+    )
+    [[ -n "${artifact_name}" && -n "${native_version}" ]] ||
+      fail "Android Maven candidate manifest is missing artifact identity: ${manifest#"${repo_root}/"}"
+    [[ -f "${release_dir}/${artifact_name}" ]] ||
+      fail "Android Maven candidate artifact is missing: ${release_dir#"${repo_root}/"}/${artifact_name}"
+    "${repo_root}/scripts/verify-runtime-intake-artifact.py" \
+      --lane android \
+      --artifact "${release_dir}/${artifact_name}" \
+      --expected-native-version "${native_version}" \
+      --scanner "${repo_root}/scripts/scan-public-surface.sh"
+  done < <(
+    find "${repo_root}/maven/android/releases" \
+      -mindepth 2 -maxdepth 2 -name manifest.json -print0
+  )
+}
+
 require_file "README.md"
 require_file "LICENSE.md"
 require_file "docs/public-artifact-contract.md"
@@ -590,6 +625,9 @@ for release_root in logger runtime runtime-addons cli demo samples; do
     release_roots+=("${repo_root}/${release_root}")
   fi
 done
+if [[ -d "${repo_root}/maven/android" ]]; then
+  release_roots+=("${repo_root}/maven/android")
+fi
 
 while IFS= read -r -d '' sums_file; do
   release_dir="$(dirname "${sums_file}")"
@@ -607,6 +645,7 @@ done < <(
 )
 
 verify_public_artifact_manifest
+verify_android_maven_candidates
 
 if [[ "${COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY:-0}" != "1" ]]; then
   verify_current_bun_tauri_public_boundary
@@ -634,6 +673,9 @@ scanner_inputs=(
   "${repo_root}/scripts"
   "${repo_root}/artifacts/public-artifacts.tsv"
 )
+if [[ -d "${repo_root}/maven/android" ]]; then
+  scanner_inputs+=("${repo_root}/maven/android")
+fi
 
 while IFS= read -r -d '' release_file; do
   scanner_inputs+=("${release_file}")

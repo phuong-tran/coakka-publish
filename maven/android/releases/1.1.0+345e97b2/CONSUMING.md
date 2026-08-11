@@ -14,7 +14,7 @@ Copy the AAR into the consuming Android module:
 
 ```sh
 mkdir -p app/libs
-cp path/to/coakka-publish/runtime/android/releases/1.1.0+345e97b2/coakka-runtime-android-1.1.0.aar app/libs/
+cp path/to/coakka-publish/maven/android/releases/1.1.0+345e97b2/coakka-runtime-android-1.1.0.aar app/libs/
 ```
 
 Add the exact dependencies to `app/build.gradle.kts`:
