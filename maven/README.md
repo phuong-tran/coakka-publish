@@ -10,9 +10,12 @@ The complete Android `1.1.0` candidate unit is under
 It contains the AAR, sources JAR, POM, Gradle module metadata, manifest,
 checksums, and evidence notes in one Maven-owned lane.
 
-The candidate is not yet advertised as a normal Maven dependency coordinate
-because matching Android device or emulator lifecycle execution remains a
-promotion blocker. Follow its `CONSUMING.md` guide for direct AAR evaluation.
+The candidate is available to Gradle as
+`coakka.v2:coakka-runtime-android:1.1.0`. This makes evaluation natural for an
+Android project and lets Gradle resolve its Kotlin and protobuf dependencies.
+It remains a candidate, rather than a supported public artifact, because
+matching Android device or emulator lifecycle execution is still a promotion
+blocker. Follow its `CONSUMING.md` guide and preserve that evidence boundary.
 
 Gradle example:
 
@@ -25,6 +28,7 @@ repositories {
 }
 
 dependencies {
+    implementation("coakka.v2:coakka-runtime-android:1.1.0")
     implementation("coakka.logger:coakka-jvm-native-logger:1.2.1-gf50756ebff0d")
     implementation("coakka.v2:coakka-jvm-native-runtime-v2:1.3.3-g282f3ad-657ec79")
     implementation("coakka.spring:coakka-spring-boot-starter:1.3.3-g282f3ad-657ec79")
