@@ -83,6 +83,7 @@ make_fixture() {
   printf '# Third-party notices\n' >"${package_root}/THIRD_PARTY_NOTICES.md"
   printf '#pragma once\n' >"${package_root}/include/coakka/addons/artifact_publisher_sftp.h"
   printf 'fixture addon module\n' >"${package_root}/native/linux-x86_64/libcoakka_addon_artifact_publisher_sftp.so"
+  printf 'fixture loader module\n' >"${package_root}/native/linux-x86_64/libcoakka_addon_artifact_publisher_sftp.so.0"
   printf 'set(CoAkkaRuntimeAddonArtifactPublisherSftp_FOUND TRUE)\n' \
     >"${package_root}/cmake/CoAkkaRuntimeAddonArtifactPublisherSftpConfig.cmake"
   cat >"${package_root}/share/coakka/runtime-addons/artifact-publisher-sftp/addon.manifest.json" <<'JSON'
@@ -208,6 +209,29 @@ good_release="$(make_fixture good)"
 expect_success "complete runtime addon release" \
   "${verifier}" --release-dir "${good_release}" \
   --expected-addon artifact-publisher-sftp
+
+missing_loader_release="$(make_fixture missing-loader-name)"
+python3 - "${missing_loader_release}/coakka-runtime-addon-artifact-publisher-sftp-native-0.1.0.tar.gz" <<'PY'
+import pathlib
+import tarfile
+import sys
+
+archive = pathlib.Path(sys.argv[1])
+replacement = archive.with_suffix(".replacement")
+with tarfile.open(archive, "r:gz") as source, tarfile.open(
+    replacement, "w:gz"
+) as target:
+    for member in source.getmembers():
+        if member.name.endswith("libcoakka_addon_artifact_publisher_sftp.so.0"):
+            continue
+        extracted = source.extractfile(member) if member.isfile() else None
+        target.addfile(member, extracted)
+replacement.replace(archive)
+PY
+update_archive_sha "${missing_loader_release}"
+expect_failure "missing loader-facing SOVERSION file" \
+  "${verifier}" --release-dir "${missing_loader_release}"
+grep -Fq "libcoakka_addon_artifact_publisher_sftp.so.0" "${test_output}"
 
 ambient_dependency_release="$(make_fixture ambient-dependency)"
 python3 - "${ambient_dependency_release}/manifest.json" <<'PY'

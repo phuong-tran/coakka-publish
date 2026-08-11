@@ -61,10 +61,9 @@ evidence.
 The first defined lane is the
 [`artifact-publisher-sftp`](runtime-addons/artifact-publisher-sftp/README.md)
 workflow: Service A acquires and verifies an artifact over SFTP, then publishes
-it through File Lane. It is currently a release contract and package template,
-not an installable public coordinate. Read the common
-[Runtime Addons](docs/runtime-addons.md) guide before generating integration
-code.
+it through File Lane. Native `0.1.0+40810b79` is published for
+`macos-aarch64`. Read the common [Runtime Addons](docs/runtime-addons.md) guide
+before generating integration code.
 
 ## Runtime Transport
 
@@ -690,9 +689,9 @@ their implementation dependencies.
 
 The first defined lane is
 [`runtime-addons/artifact-publisher-sftp`](runtime-addons/artifact-publisher-sftp/README.md).
-It currently contains a release contract and package template only. No SFTP
-addon archive is listed in `artifacts/public-artifacts.tsv`, so it is not a
-current public package coordinate.
+Native `0.1.0+40810b79` is listed in `artifacts/public-artifacts.tsv` for
+`macos-aarch64`. It remains independent from the Runtime archive and every
+connector package.
 
 Before promotion, run:
 

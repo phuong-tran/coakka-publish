@@ -1,7 +1,7 @@
 # SFTP Artifact Publisher Runtime Addon
 
-Status: release contract and native package template only. There is currently
-no public SFTP addon archive or package coordinate in this repository.
+Status: native `0.1.0+40810b79` is public for `macos-aarch64` and requires
+CoAkka Runtime native `2.3.0` or newer.
 
 The addon composes one external acquisition workflow with the existing CoAkka
 Runtime File Lane:
@@ -20,16 +20,16 @@ policy, and business rollout decisions. The addon owns SFTP mechanics and the
 bounded fetch-to-send workflow. CoAkka Runtime continues to own File Lane
 delivery semantics.
 
-## Planned Native Coordinate
+## Native Coordinate
 
 ```text
-runtime-addons/artifact-publisher-sftp/native/releases/<version>+<source>/
-  coakka-runtime-addon-artifact-publisher-sftp-native-<version>.tar.gz
+runtime-addons/artifact-publisher-sftp/native/releases/0.1.0+40810b79/
+  coakka-runtime-addon-artifact-publisher-sftp-native-0.1.0.tar.gz
 ```
 
-The addon version is independent from the runtime version. The first release
-must declare runtime ABI major `2`, a minimum runtime version that includes
-File Lane, and `file_lane` as a required runtime feature.
+The addon version is independent from the runtime version. This release
+declares runtime ABI major `2`, minimum native Runtime `2.3.0`, and `file_lane`
+as its required Runtime feature.
 
 ## Release Gates
 
@@ -41,7 +41,7 @@ File Lane, and `file_lane` as a required runtime feature.
   collision, receiver rejection, partial fan-out, and cancellation evidence;
 - safe staging and crash-durability documentation for each platform;
 - archive intake through `scripts/verify-runtime-addon-release.py`;
-- public sample promotion only after the archive is listed in
+- public sample consumption of the exact archive listed in
   `artifacts/public-artifacts.tsv`.
 
 Windows must not appear in a release manifest until its staging implementation
@@ -52,7 +52,7 @@ The native package template lives under
 [`native/package-template`](native/package-template/README.md).
 
 The independent
-[native source-candidate sample](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-addons/artifact-publisher-sftp/native)
-builds this package contract against the promoted Runtime archive and exercises
-SFTP acquisition plus cross-process File Lane delivery. It is pre-release
-evidence, not an addon install coordinate or a root main-lane sample.
+[native sample](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-addons/artifact-publisher-sftp/native)
+consumes the immutable addon and Runtime archives, then exercises SFTP
+acquisition plus cross-process File Lane delivery. It remains outside the root
+main sample lane.

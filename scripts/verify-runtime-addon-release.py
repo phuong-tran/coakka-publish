@@ -236,6 +236,15 @@ def verify_archive(
         }
         required.update(f"{root}/{header}" for header in headers)
         required.update(f"{root}/{platform['library']}" for platform in platforms)
+        for platform in platforms:
+            library = platform["library"]
+            if library.endswith(".dylib"):
+                loader_library = library.removesuffix(".dylib") + ".0.dylib"
+            elif library.endswith(".so"):
+                loader_library = library + ".0"
+            else:
+                continue
+            required.add(f"{root}/{loader_library}")
         missing = sorted(name for name in required if name not in members)
         if missing:
             fail(f"archive is missing required members: {missing}")

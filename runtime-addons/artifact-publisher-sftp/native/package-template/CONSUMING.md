@@ -1,10 +1,7 @@
 # Consuming The SFTP Artifact Publisher Addon
 
-This document describes the planned native package boundary. Do not use these
-coordinates until a release archive is listed in `artifacts/public-artifacts.tsv`.
-
-Unpack the runtime native package and the independently versioned addon archive,
-then expose both CMake package directories:
+Unpack Runtime native `2.3.0` or newer and SFTP addon `0.1.0`. Expose both CMake
+package directories:
 
 ```sh
 cmake -S app -B build \
@@ -26,5 +23,7 @@ dependency. The app host still owns Runtime and File Lane lifecycle and must
 keep the borrowed sender lane alive until the publisher has stopped and been
 destroyed.
 
-No SFTP, libssh2, OpenSSL, or other addon implementation package should be
-installed on the target host.
+Keep both matching platform native directories on the process loader path. No
+SFTP, libssh2, OpenSSL, or other addon implementation package should be
+installed on the target host. Version `0.1.0` currently supports
+`macos-aarch64` only.

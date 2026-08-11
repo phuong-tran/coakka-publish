@@ -8,6 +8,7 @@ addon release is promoted. It is not itself a released artifact.
 ```text
 include/coakka/addons/artifact_publisher_sftp.h
 native/<platform>/libcoakka_addon_artifact_publisher_sftp.<suffix>
+native/<platform>/libcoakka_addon_artifact_publisher_sftp.<loader-suffix>
 cmake/CoAkkaRuntimeAddonArtifactPublisherSftpConfig.cmake
 share/coakka/runtime-addons/artifact-publisher-sftp/addon.manifest.json
 LICENSE.md
@@ -18,6 +19,11 @@ The archive contains the addon only. Consumers provide a compatible CoAkka
 Runtime native package separately. Libssh2 and its target crypto/compression
 closure are statically absorbed into the addon module and recorded in the
 release manifest and third-party notices.
+
+POSIX packages carry both the unversioned link-time filename and the regular
+loader-facing `SOVERSION` filename (`.so.0` or `.0.dylib`). Archive intake
+rejects a package that omits either file; symlinks are not accepted inside the
+public archive.
 
 Only platforms listed in the release manifest may be present. Every listed
 platform must have matching-host runtime-module and dynamic-dependency evidence.

@@ -55,10 +55,12 @@ A directory or package template is not a public release. Promotion requires:
 6. one `artifacts/public-artifacts.tsv` row and synchronized current-package
    documentation.
 
-Until all six are present, documentation must describe the lane as a source
-candidate or release template, not as an installable public artifact.
+Until all six are present for a platform, documentation must describe that
+platform as a source candidate or release template, not as supported by a
+public artifact.
 
 ## Current Lanes
 
-- [`artifact-publisher-sftp`](artifact-publisher-sftp/README.md): release
-  contract and package template only; no public artifact is currently listed.
+- [`artifact-publisher-sftp`](artifact-publisher-sftp/README.md): native
+  `0.1.0+40810b79` is public for `macos-aarch64`; Linux awaits matching-host
+  package evidence and Windows remains blocked by staging safety.
