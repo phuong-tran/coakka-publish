@@ -1,7 +1,7 @@
 # Android Runtime Connector 1.1.0 Candidate
 
 Android connector `1.1.0` is staged under
-`runtime/android/releases/1.1.0+345e97b2/` as an AAR, sources JAR, POM, Gradle
+`maven/android/releases/1.1.0+345e97b2/` as an AAR, sources JAR, POM, Gradle
 module metadata, manifest, checksums, and consuming guide.
 
 The AAR carries native runtime generation `2.3.0+345e97b2` and both

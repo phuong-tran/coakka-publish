@@ -3,6 +3,17 @@
 This directory is a public Maven repository layout for JVM artifacts published
 by `coakka-publish`.
 
+## Android Candidate
+
+The complete Android `1.1.0` candidate unit is under
+[`android/releases/1.1.0+345e97b2/`](android/releases/1.1.0+345e97b2/README.md).
+It contains the AAR, sources JAR, POM, Gradle module metadata, manifest,
+checksums, and evidence notes in one Maven-owned lane.
+
+The candidate is not yet advertised as a normal Maven dependency coordinate
+because matching Android device or emulator lifecycle execution remains a
+promotion blocker. Follow its `CONSUMING.md` guide for direct AAR evaluation.
+
 Gradle example:
 
 ```kotlin
