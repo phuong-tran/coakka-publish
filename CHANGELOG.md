@@ -3,6 +3,18 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-12
+
+- Published and registry-verified `CoAkka.Runtime==2.4.0` to NuGet over native
+  generation `2.4.0+c2f53117`. NuGet.org adds only `.signature.p7s`; all 16
+  staged package entries are byte-identical, the repository signature passes,
+  and both a clean registry request/reply/deadletter smoke and live Spring
+  Boot-to-C# CRUD exchange succeed.
+- Published and registry-verified Node.js, Bun, and Electron runtime packages
+  at `2.4.0` over native generation `2.4.0+c2f53117`. Clean registry installs
+  pass Node.js and Bun request/reply plus the Electron main-process intent
+  smoke.
+
 ## 2026-08-11
 
 - Added the independent `runtime-addons/` release family and the unreleased

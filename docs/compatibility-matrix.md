@@ -35,6 +35,7 @@ ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 | Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `2.4.0-gc2f53117-0afb5e9` | via JVM runtime |
 | Language connector archives | `runtime/<lane>/releases/2.4.0+c2f53117-0afb5e9/` | `2.4.0` | `2.4.0+c2f53117` |
 | npm | `coakka-v2-connector-{node,bun,electron}@2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
+| NuGet | `CoAkka.Runtime==2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.6.0` | `2.3.0+a83ab412` |
 | SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.3.0` | `2.3.0+a83ab412` |
 
@@ -105,7 +106,7 @@ All logger connector lanes below align to logger native generation
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.3.0` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.6.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.5` |
 | SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.3.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.1` |
-| NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.3.0`, logger `CoAkka.Logger==1.2.2`; registry verified |
+| NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.4.0`, logger `CoAkka.Logger==1.2.2`; registry verified |
 
 PyPI superseded versions are yanked, not deleted:
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
@@ -138,7 +139,7 @@ NuGet packages:
 
 | Surface | NuGet coordinate | Native generation |
 | --- | --- | --- |
-| C# runtime | `CoAkka.Runtime==2.3.0` | `2.3.0+a83ab412` |
+| C# runtime | `CoAkka.Runtime==2.4.0` | `2.4.0+c2f53117` |
 | C# logger | `CoAkka.Logger==1.2.2` | `1.2.1+f50756ebff0d` |
 
 SwiftPM packages:

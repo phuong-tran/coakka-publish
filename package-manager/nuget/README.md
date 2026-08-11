@@ -12,18 +12,18 @@ Current coordinates:
 
 | Surface | Coordinate | Native generation |
 | --- | --- | --- |
-| Runtime | `CoAkka.Runtime`, exact `2.3.0` | `2.3.0+a83ab412` |
+| Runtime | `CoAkka.Runtime`, exact `2.4.0` | `2.4.0+c2f53117` |
 | Logger | `CoAkka.Logger`, exact `1.2.2` | `1.2.1+f50756ebff0d` |
 
 Install:
 
 ```sh
-dotnet add package CoAkka.Runtime --version 2.3.0
+dotnet add package CoAkka.Runtime --version 2.4.0
 dotnet add package CoAkka.Logger --version 1.2.2
 ```
 
-The registry and artifact mirror contain `CoAkka.Runtime.2.3.0.nupkg` from
-connector source `3a84c7b` over native generation `2.3.0+a83ab412`. Its five
+The registry and artifact mirror contain `CoAkka.Runtime.2.4.0.nupkg` from
+connector source `0afb5e9` over native generation `2.4.0+c2f53117`. Its five
 RID assets, package metadata, checksums, packaged request/reply/deadletter,
 File Lane, and Stream Lane smokes pass. NuGet.org adds only its repository
 signature; every other ZIP entry is byte-identical to the staged candidate.
