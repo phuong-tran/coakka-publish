@@ -1,6 +1,6 @@
 # SFTP Artifact Publisher Runtime Addon
 
-Status: native `0.2.0+c5656cc8` is public for Linux ARM64/x86-64, macOS ARM64,
+Status: native `0.2.1+c5656cc8` is public for Linux ARM64/x86-64, macOS ARM64,
 and Windows 11 ARM64/x86-64. It requires CoAkka Runtime native `2.3.0` or newer.
 
 The addon composes one external acquisition workflow with the existing CoAkka
@@ -23,8 +23,8 @@ delivery semantics.
 ## Native Coordinate
 
 ```text
-runtime-addons/artifact-publisher-sftp/native/releases/0.2.0+c5656cc8/
-  coakka-runtime-addon-artifact-publisher-sftp-native-0.2.0.tar.gz
+runtime-addons/artifact-publisher-sftp/native/releases/0.2.1+c5656cc8/
+  coakka-runtime-addon-artifact-publisher-sftp-native-0.2.1.tar.gz
 ```
 
 The addon version is independent from the runtime version. This release
