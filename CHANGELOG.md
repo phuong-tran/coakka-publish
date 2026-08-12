@@ -5,6 +5,12 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-12
 
+- Reframed the current architecture guidance around CoAkka as a service-mesh
+  alternative for runtime traffic. The public docs now connect runtime
+  TLS/mTLS, connection strategies, cluster routing, failover, generations, and
+  observability directly, while keeping certificate issuance, firewall/CNI,
+  public ingress, and observability backends outside the runtime without making
+  sidecar proxies a prerequisite.
 - Added a startup development guide that begins with an embedded modular
   monolith, supports locally debugged polyglot processes without requiring a
   container build loop, and moves capabilities to independently deployed

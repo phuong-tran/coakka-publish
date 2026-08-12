@@ -77,8 +77,9 @@ The caller owns strings and secret-file lifecycle. Native code loads and
 validates them synchronously, then atomically publishes an immutable context.
 A rejected mismatch or stale generation leaves the previous active context.
 See the canonical [TLS/mTLS guide](https://github.com/phuong-tran/coakka-publish/blob/main/docs/tls-and-mtls.md)
-for Kubernetes ingress/service mesh, controlled networks, LAN/edge, RPi,
-BeagleBone, bare metal, industrial Android, and rotation semantics.
+for direct runtime TLS/mTLS without a service-mesh data plane, Kubernetes,
+controlled networks, LAN/edge, RPi, BeagleBone, bare metal, industrial Android,
+and rotation semantics.
 
 ## Platforms And Troubleshooting
 
