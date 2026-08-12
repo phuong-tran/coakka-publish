@@ -22,5 +22,7 @@ transport smokes, package readiness, and a clean request/reply consumer cloned
 from the remote tag pass on macOS ARM64. Payload presence is not matching-host
 Swift execution evidence for Linux or Windows.
 
-Publisher signing remains absent. The release is an annotated Git tag used by
-SwiftPM; no GitHub Release object is created.
+Publisher signing remains absent. The annotated tag is used by SwiftPM, and
+the matching GitHub Release object marks `v2.4.0` as the latest release. No
+duplicate binary assets are attached because the package already embeds the
+platform payloads.

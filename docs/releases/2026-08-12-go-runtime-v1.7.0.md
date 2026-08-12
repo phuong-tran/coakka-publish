@@ -27,5 +27,7 @@ verification. Source tests, package smoke, and a clean Go-proxy request/reply
 consumer pass on macOS ARM64. Payload presence is not matching-host Go
 execution evidence for Linux or Windows.
 
-Publisher signing remains absent. The release is an annotated Git tag consumed
-by Go modules; no GitHub Release object is created.
+Publisher signing remains absent. The annotated tag is consumed by Go modules,
+and the matching GitHub Release object marks `v1.7.0` as the latest release.
+No duplicate binary assets are attached because the module already embeds the
+platform payloads.
