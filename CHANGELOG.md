@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-12
 
+- Added a startup development guide that begins with an embedded modular
+  monolith, supports locally debugged polyglot processes without requiring a
+  container build loop, and moves capabilities to independently deployed
+  network nodes only when measured ownership, security, isolation, or scaling
+  needs justify the operational cost.
 - Published the tag-only SwiftPM runtime coordinate
   `github.com/phuong-tran/coakka-runtime-swift@v2.4.0` over native generation
   `2.4.0+c2f53117`. Package readiness and a clean remote-tag request/reply

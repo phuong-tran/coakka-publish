@@ -26,6 +26,7 @@ Contact: `gabrielgun1983@gmail.com`
 Changelog: [CHANGELOG.md](CHANGELOG.md)
 Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md)
 New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
+Startup development path: [docs/startup-development-path.md](docs/startup-development-path.md)
 Runtime field guide: [docs/runtime-field-guide.md](docs/runtime-field-guide.md)
 How it works: [docs/how-it-works.md](docs/how-it-works.md)
 Questions and answers: [docs/qna.md](docs/qna.md)
@@ -182,6 +183,7 @@ version number.
 
 Public docs:
 [New To CoAkka](docs/new-to-coakka.md),
+[Build The Product Before The Infrastructure](docs/startup-development-path.md),
 [Current Packages](docs/current-packages.md),
 [Runtime Field Guide](docs/runtime-field-guide.md),
 [How It Works](docs/how-it-works.md),
