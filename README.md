@@ -76,7 +76,10 @@ exact size and SHA-256, then distributes them through File Lane. Eleven addons
 are public at native `1.1.0+d1032f6d`; SFTP is public at replacement native
 `1.2.0+88b9a047`. Read the common
 [Runtime Addons](docs/runtime-addons.md) guide before generating integration
-code.
+code. This addon family is native-first. Addon-specific language connectors
+may be considered when demonstrated demand justifies their platform,
+packaging, testing, and maintenance cost; none is part of the current release
+contract or a committed roadmap.
 
 ## Runtime Transport
 
