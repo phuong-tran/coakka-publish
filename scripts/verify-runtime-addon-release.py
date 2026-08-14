@@ -49,18 +49,18 @@ REQUIRED_MANIFEST_FIELDS = {
     "exportedSymbols",
     "platforms",
 }
-SFTP_EXPORTS = [
-    "coakka_sftp_publisher_cancel",
-    "coakka_sftp_publisher_create",
-    "coakka_sftp_publisher_dependency_version",
-    "coakka_sftp_publisher_destroy",
-    "coakka_sftp_publisher_forget",
-    "coakka_sftp_publisher_get",
-    "coakka_sftp_publisher_get_target",
-    "coakka_sftp_publisher_start",
-    "coakka_sftp_publisher_stop",
-    "coakka_sftp_publisher_submit",
-    "coakka_sftp_publisher_wait",
+EXPORT_SUFFIXES = [
+    "cancel",
+    "create",
+    "dependency_version",
+    "destroy",
+    "forget",
+    "get",
+    "get_target",
+    "start",
+    "stop",
+    "submit",
+    "wait",
 ]
 
 
@@ -219,6 +219,8 @@ def verify_archive(
     addon_id: str,
     cmake_config: str,
     headers: list[str],
+    exports: list[str],
+    features: list[str],
     platforms: list[dict[str, Any]],
 ) -> None:
     root, members, bundle = archive_members(archive)
@@ -238,17 +240,30 @@ def verify_archive(
         required.update(f"{root}/{platform['library']}" for platform in platforms)
         for platform in platforms:
             library = platform["library"]
-            if library.endswith(".dylib"):
+            loader_library = platform.get("loaderLibrary")
+            import_library = platform.get("importLibrary")
+            runtime_import_library = platform.get("runtimeImportLibrary")
+            bundled_libraries = platform.get("bundledLibraries", [])
+            if loader_library is None and library.endswith(".dylib"):
                 loader_library = library.removesuffix(".dylib") + ".0.dylib"
-            elif library.endswith(".so"):
+            elif loader_library is None and library.endswith(".so"):
                 loader_library = library + ".0"
-            else:
-                if library.endswith(".dll"):
-                    native_dir = PurePosixPath(library).parent
-                    required.add(f"{root}/{native_dir}/libcoakka_addon_artifact_publisher_sftp.dll.a")
-                    required.add(f"{root}/{native_dir}/libcoakka_runtime_v2.dll.a")
-                continue
-            required.add(f"{root}/{loader_library}")
+            elif import_library is None and library.endswith(".dll"):
+                native_dir = PurePosixPath(library).parent
+                import_library = (
+                    f"{native_dir}/libcoakka_addon_artifact_publisher_sftp.dll.a"
+                )
+                runtime_import_library = (
+                    f"{native_dir}/libcoakka_runtime_v2.dll.a"
+                )
+            for optional_library in (
+                loader_library,
+                import_library,
+                runtime_import_library,
+                *bundled_libraries,
+            ):
+                if optional_library is not None:
+                    required.add(f"{root}/{optional_library}")
         missing = sorted(name for name in required if name not in members)
         if missing:
             fail(f"archive is missing required members: {missing}")
@@ -277,16 +292,15 @@ def verify_archive(
             fail("installed addon manifest addon_version does not match release version")
         if addon_manifest.get("runtime_family") != "coakka-runtime-v2":
             fail("installed addon manifest runtime_family must be coakka-runtime-v2")
-        if slug == "artifact-publisher-sftp":
-            if addon_manifest.get("addon_kind") != "bridge":
-                fail("installed SFTP addon kind must be bridge")
-            if addon_manifest.get("required_runtime_features") != ["file_lane"]:
-                fail("installed SFTP addon manifest must require file_lane")
-            if (
-                addon_manifest.get("entrypoint_symbol")
-                != "coakka_sftp_publisher_create"
-            ):
-                fail("installed SFTP addon entrypoint differs from the C ABI")
+        if addon_manifest.get("addon_kind") != "bridge":
+            fail("installed addon kind must be bridge")
+        if addon_manifest.get("required_runtime_features") != features:
+            fail("installed addon required features differ from release manifest")
+        create_exports = [symbol for symbol in exports if symbol.endswith("_create")]
+        if len(create_exports) != 1:
+            fail("release export list must contain exactly one create entrypoint")
+        if addon_manifest.get("entrypoint_symbol") != create_exports[0]:
+            fail("installed addon entrypoint differs from the reviewed C ABI")
     finally:
         bundle.close()
 
@@ -321,7 +335,9 @@ def verify_release(release_dir: Path, expected_addon: str | None) -> None:
     name = require_string(manifest["name"], "name", r"coakka-runtime-addon-[a-z0-9-]+-native")
     if name != f"coakka-runtime-addon-{slug}-native":
         fail("manifest name does not match addon directory")
-    addon_id = require_string(manifest["addonId"], "addonId", r"coakka\.[a-z0-9.]+")
+    addon_id = require_string(
+        manifest["addonId"], "addonId", r"coakka\.[a-z0-9.-]+"
+    )
     archive_name = require_string(
         manifest["archive"], "archive", r"[A-Za-z0-9._+-]+\.tar\.gz"
     )
@@ -357,8 +373,8 @@ def verify_release(release_dir: Path, expected_addon: str | None) -> None:
     )
 
     dependencies = manifest["ownedStaticDependencies"]
-    if not isinstance(dependencies, list) or not dependencies:
-        fail("ownedStaticDependencies must be a non-empty array")
+    if not isinstance(dependencies, list):
+        fail("ownedStaticDependencies must be an array")
     dependency_names: list[str] = []
     dependency_versions: dict[str, str] = {}
     for index, dependency in enumerate(dependencies):
@@ -375,8 +391,8 @@ def verify_release(release_dir: Path, expected_addon: str | None) -> None:
         dependency_versions[dependency_name] = dependency_version
     if len(dependency_names) != len(set(dependency_names)):
         fail("ownedStaticDependencies contains duplicate names")
-    if manifest["userInstalledNativeDependencies"] is not False:
-        fail("userInstalledNativeDependencies must be false")
+    if not isinstance(manifest["userInstalledNativeDependencies"], bool):
+        fail("userInstalledNativeDependencies must be a boolean")
     cmake_config = require_string(
         manifest["cmakeConfig"],
         "cmakeConfig",
@@ -398,21 +414,59 @@ def verify_release(release_dir: Path, expected_addon: str | None) -> None:
     for index, platform in enumerate(platforms_value):
         if not isinstance(platform, dict):
             fail(f"platforms[{index}] must be an object")
-        require_exact_keys(
-            platform,
-            {"id", "library", "matchingHostRuntimeTest", "dynamicDependencyAudit"},
-            "platform",
+        required_platform_fields = {
+            "id",
+            "library",
+            "matchingHostRuntimeTest",
+            "dynamicDependencyAudit",
+        }
+        optional_platform_fields = {
+            "loaderLibrary",
+            "importLibrary",
+            "runtimeImportLibrary",
+            "bundledLibraries",
+        }
+        actual_platform_fields = set(platform)
+        if not required_platform_fields.issubset(actual_platform_fields):
+            fail(
+                "platform fields differ: "
+                f"missing={sorted(required_platform_fields - actual_platform_fields)}"
+            )
+        extra_platform_fields = actual_platform_fields - (
+            required_platform_fields | optional_platform_fields
         )
+        if extra_platform_fields:
+            fail(f"platform has unsupported fields: {sorted(extra_platform_fields)}")
         platform_id = require_string(platform["id"], "platform id")
         if platform_id not in PLATFORMS:
             fail(f"unsupported platform id: {platform_id}")
         suffix = PLATFORM_SUFFIX[platform_id]
+        header_stem = PurePosixPath(headers[0]).stem
         expected_library = (
-            f"native/{platform_id}/libcoakka_addon_"
-            f"{slug.replace('-', '_')}{suffix}"
+            f"native/{platform_id}/libcoakka_addon_{header_stem}{suffix}"
         )
         if platform["library"] != expected_library:
             fail(f"platform library must be {expected_library}")
+        platform_prefix = f"native/{platform_id}/"
+        for field in ("loaderLibrary", "importLibrary", "runtimeImportLibrary"):
+            value = platform.get(field)
+            if value is not None:
+                require_string(value, f"platform {field}", r"native/[A-Za-z0-9_.-]+/[A-Za-z0-9_.+-]+")
+                if not value.startswith(platform_prefix):
+                    fail(f"platform {field} must stay below {platform_prefix}")
+        bundled_libraries = platform.get("bundledLibraries", [])
+        if not isinstance(bundled_libraries, list):
+            fail("platform bundledLibraries must be an array")
+        for bundled_library in bundled_libraries:
+            require_string(
+                bundled_library,
+                "bundled library",
+                r"native/[A-Za-z0-9_.-]+/[A-Za-z0-9_.+-]+",
+            )
+            if not bundled_library.startswith(platform_prefix):
+                fail(f"bundled library must stay below {platform_prefix}")
+        if len(bundled_libraries) != len(set(bundled_libraries)):
+            fail("platform bundledLibraries contains duplicates")
         if platform["matchingHostRuntimeTest"] != "passed":
             fail(f"matching-host runtime test has not passed: {platform_id}")
         if platform["dynamicDependencyAudit"] != "passed":
@@ -423,29 +477,51 @@ def verify_release(release_dir: Path, expected_addon: str | None) -> None:
     if platform_ids != expected_order or len(platform_ids) != len(set(platform_ids)):
         fail("platforms must be unique and in canonical order")
 
+    addon_name = slug.removeprefix("artifact-publisher-")
+    addon_symbol_name = addon_name.replace("-", "_")
+    expected_addon_id = f"coakka.artifact.publisher.{addon_name}"
+    expected_header = f"include/coakka/addons/artifact_publisher_{addon_symbol_name}.h"
+    cmake_name = "".join(part.title() for part in addon_name.split("-"))
+    expected_cmake_config = (
+        f"cmake/CoAkkaRuntimeAddonArtifactPublisher{cmake_name}Config.cmake"
+    )
+    expected_exports = [
+        f"coakka_{addon_symbol_name}_publisher_{suffix}"
+        for suffix in EXPORT_SUFFIXES
+    ]
+    if addon_id != expected_addon_id:
+        fail(f"addonId must be {expected_addon_id}")
+    if features != ["file_lane"]:
+        fail("artifact publisher addons must require exactly file_lane")
+    if cmake_config != expected_cmake_config:
+        fail(f"CMake package path must be {expected_cmake_config}")
+    if headers != [expected_header]:
+        fail(f"header list must contain only {expected_header}")
+    if exports != expected_exports:
+        fail("export list differs from the reviewed artifact publisher C ABI")
+
     if slug == "artifact-publisher-sftp":
-        if addon_id != "coakka.artifact.publisher.sftp":
-            fail("SFTP addonId must be coakka.artifact.publisher.sftp")
         if minimum_native_version != "2.3.0":
             fail("SFTP addon minimum native runtime must be 2.3.0")
-        if features != ["file_lane"]:
-            fail("SFTP addon must require exactly file_lane")
+        if manifest["userInstalledNativeDependencies"] is not False:
+            fail("SFTP addon may not require user-installed native dependencies")
         if "libssh2" not in dependency_names:
             fail("SFTP addon must record libssh2 as an owned static dependency")
         if dependency_versions["libssh2"] != "1.11.1":
             fail("SFTP addon release requires the reviewed libssh2 1.11.1")
-        if (
-            cmake_config
-            != "cmake/CoAkkaRuntimeAddonArtifactPublisherSftpConfig.cmake"
-        ):
-            fail("SFTP addon CMake package path differs from the public contract")
-        if headers != ["include/coakka/addons/artifact_publisher_sftp.h"]:
-            fail("SFTP addon header list differs from the public C ABI")
-        if exports != SFTP_EXPORTS:
-            fail("SFTP addon export list differs from the reviewed C ABI")
+    elif minimum_native_version != "2.4.0":
+        fail("artifact-source 1.1.0 addons require Runtime native 2.4.0")
 
     verify_archive(
-        archive, slug, version, addon_id, cmake_config, headers, platforms
+        archive,
+        slug,
+        version,
+        addon_id,
+        cmake_config,
+        headers,
+        exports,
+        features,
+        platforms,
     )
     verify_checksums(
         release_dir, {archive_name, "manifest.json", "README.md"}
