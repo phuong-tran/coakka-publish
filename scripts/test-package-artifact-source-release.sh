@@ -19,6 +19,7 @@ printf '# Fixture notices\n' >"${tmp_root}/THIRD_PARTY_NOTICES.md"
 cat >"${tmp_root}/dependencies.json" <<'JSON'
 {
   "ownedStaticDependencies": [
+    { "name": "libssh2", "version": "1.11.1" },
     { "name": "fixture dependency (Windows)", "version": "1.0" }
   ]
 }
@@ -29,7 +30,7 @@ platforms=(
   windows-aarch64 windows-x86_64
 )
 stems=(
-  https s3 local_drop azure_blob gcs webdav oci_registry
+  sftp https s3 local_drop azure_blob gcs webdav oci_registry
   huggingface_hub github_release google_drive dropbox
 )
 platform_args=()
@@ -49,7 +50,7 @@ for platform in "${platforms[@]}"; do
         ;;
       windows-*)
         printf 'fixture\n' >"${root}/libcoakka_addon_artifact_publisher_${stem}.dll"
-        printf 'fixture\n' >"${root}/libcoakka_addon_artifact_publisher_${stem}.lib"
+        printf 'fixture\n' >"${root}/coakka_addon_artifact_publisher_${stem}.lib"
         ;;
     esac
   done
@@ -58,7 +59,7 @@ done
 "${script_dir}/package-artifact-source-release.py" \
   --core-root "${core_root}" \
   --source-snapshot "${snapshot}" \
-  --network-third-party-notices "${tmp_root}/THIRD_PARTY_NOTICES.md" \
+  --third-party-notices "${tmp_root}/THIRD_PARTY_NOTICES.md" \
   --owned-dependencies "${tmp_root}/dependencies.json" \
   --output-root "${output_root}" \
   "${platform_args[@]}"
@@ -86,8 +87,22 @@ if [[ "${addon_count}" -ne 11 ]]; then
 fi
 
 local_drop_archive="${output_root}/runtime-addons/artifact-publisher-local-drop/native/releases/1.1.0+${snapshot}/coakka-runtime-addon-artifact-publisher-local-drop-native-1.1.0.tar.gz"
+local_drop_manifest="${output_root}/runtime-addons/artifact-publisher-local-drop/native/releases/1.1.0+${snapshot}/manifest.json"
 if tar -tzf "${local_drop_archive}" | grep -q '/native/windows-'; then
   echo "[artifact-source-package-test] Local Drop archive contains Windows binaries" >&2
+  exit 1
+fi
+python3 - "${local_drop_manifest}" <<'PY'
+import json
+import pathlib
+import sys
+
+manifest = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+assert manifest["ownedStaticDependencies"] == []
+assert manifest["userInstalledNativeDependencies"] is False
+PY
+if tar -xOzf "${local_drop_archive}" '*/CONSUMING.md' | grep -q 'load the platform libcurl'; then
+  echo "[artifact-source-package-test] Local Drop documentation requires libcurl" >&2
   exit 1
 fi
 
@@ -97,4 +112,19 @@ if ! tar -tzf "${s3_archive}" | grep -q '/native/linux-x86_64/libcoakka_addon_ar
   exit 1
 fi
 
-echo "[artifact-source-package-test] ok: ${addon_count} deterministic package fixtures"
+sftp_output_root="${tmp_root}/sftp-publish"
+mkdir -p "${sftp_output_root}"
+cp "${publish_root}/LICENSE.md" "${sftp_output_root}/LICENSE.md"
+"${script_dir}/package-artifact-source-release.py" \
+  --core-root "${core_root}" \
+  --source-snapshot "${snapshot}" \
+  --third-party-notices "${tmp_root}/THIRD_PARTY_NOTICES.md" \
+  --owned-dependencies "${tmp_root}/dependencies.json" \
+  --output-root "${sftp_output_root}" \
+  --sftp-version 1.2.0 \
+  "${platform_args[@]}"
+"${script_dir}/verify-runtime-addon-release.py" \
+  --release-dir "${sftp_output_root}/runtime-addons/artifact-publisher-sftp/native/releases/1.2.0+${snapshot}" \
+  --expected-addon artifact-publisher-sftp
+
+echo "[artifact-source-package-test] ok: ${addon_count} family fixtures plus SFTP"

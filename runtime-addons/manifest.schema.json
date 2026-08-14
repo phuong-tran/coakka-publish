@@ -24,7 +24,7 @@
   "properties": {
     "schemaVersion": { "const": 1 },
     "name": { "type": "string", "pattern": "^coakka-runtime-addon-[a-z0-9-]+-native$" },
-    "addonId": { "type": "string", "pattern": "^coakka\\.[a-z0-9.]+$" },
+    "addonId": { "type": "string", "pattern": "^coakka\\.[a-z0-9.-]+$" },
     "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
     "release": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+\\+[0-9a-f]{7,40}$" },
     "sourceSnapshot": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
@@ -47,7 +47,6 @@
     },
     "ownedStaticDependencies": {
       "type": "array",
-      "minItems": 1,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -58,7 +57,7 @@
         }
       }
     },
-    "userInstalledNativeDependencies": { "const": false },
+    "userInstalledNativeDependencies": { "type": "boolean" },
     "cmakeConfig": {
       "type": "string",
       "pattern": "^cmake/CoAkkaRuntimeAddon[A-Za-z0-9]+Config\\.cmake$"
@@ -93,6 +92,17 @@
             ]
           },
           "library": { "type": "string", "pattern": "^native/[a-z0-9_-]+/libcoakka_addon_[a-z0-9_]+\\.(so|dylib|dll)$" },
+          "loaderLibrary": { "type": "string", "pattern": "^native/[a-z0-9_-]+/libcoakka_addon_[a-z0-9_]+(\\.so\\.0|\\.0\\.dylib)$" },
+          "importLibrary": { "type": "string", "pattern": "^native/windows-(aarch64|x86_64)/(lib)?coakka_addon_[a-z0-9_]+\\.(lib|dll\\.a)$" },
+          "runtimeImportLibrary": { "type": "string", "pattern": "^native/windows-(aarch64|x86_64)/libcoakka_runtime_v2\\.(lib|dll\\.a)$" },
+          "bundledLibraries": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^native/[a-z0-9_-]+/libcoakka_addon_[a-z0-9_]+(\\.so|\\.so\\.0|\\.dylib|\\.0\\.dylib|\\.dll|\\.lib|\\.dll\\.a)$"
+            }
+          },
           "matchingHostRuntimeTest": { "const": "passed" },
           "dynamicDependencyAudit": { "const": "passed" }
         }

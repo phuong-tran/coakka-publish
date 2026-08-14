@@ -247,7 +247,8 @@ PY
 refresh_sums "${ambient_dependency_release}"
 expect_failure "ambient native dependency" \
   "${verifier}" --release-dir "${ambient_dependency_release}"
-grep -Fq "userInstalledNativeDependencies must be false" "${test_output}"
+grep -Fq "SFTP addon may not require user-installed native dependencies" \
+  "${test_output}"
 
 placeholder_dependency_release="$(make_fixture placeholder-dependency)"
 python3 - "${placeholder_dependency_release}/manifest.json" <<'PY'

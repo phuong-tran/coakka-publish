@@ -129,7 +129,7 @@ def library_names(stem: str, platform: str) -> tuple[str, str | None, str | None
         return f"lib{stem}.so", f"lib{stem}.so.0", None
     if platform == "macos-aarch64":
         return f"lib{stem}.dylib", f"lib{stem}.0.dylib", None
-    return f"lib{stem}.dll", None, f"lib{stem}.lib"
+    return f"lib{stem}.dll", None, f"{stem}.lib"
 
 
 def render_cmake(addon: dict[str, Any]) -> str:
@@ -147,7 +147,7 @@ def render_cmake(addon: dict[str, Any]) -> str:
     message(FATAL_ERROR "CoAkka {addon['display_name']} package has no Windows binary for ${{CMAKE_SYSTEM_PROCESSOR}}")
   endif()
   set(_coakka_addon_library_name "lib{stem}.dll")
-  set(_coakka_addon_implib_name "lib{stem}.lib")
+  set(_coakka_addon_implib_name "{stem}.lib")
 ''' if windows_supported else '''elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   message(FATAL_ERROR "CoAkka Local Drop addon does not support Windows")
 '''
@@ -200,7 +200,9 @@ set(CoAkkaRuntimeAddonArtifactPublisher{token}_NATIVE_LIBRARY "${{_coakka_addon_
 '''
 
 
-def render_package_readme(addon: dict[str, Any], version: str) -> str:
+def render_package_readme(
+    addon: dict[str, Any], version: str, minimum_runtime: str
+) -> str:
     bundled = addon["bundled_modules"]
     dependency_note = (
         "The archive also carries the private HTTPS engine required by this adapter; "
@@ -212,7 +214,7 @@ def render_package_readme(addon: dict[str, Any], version: str) -> str:
 
 Version `{version}` provides the reviewed public C header and native modules for
 the platforms declared by the release manifest. It requires CoAkka Runtime
-native `2.4.0` or newer with File Lane support.
+native `{minimum_runtime}` or newer with File Lane support.
 
 {addon["summary"]}
 
@@ -225,14 +227,32 @@ the small C ABI directly or provide their own wrapper. See `CONSUMING.md`.
 '''
 
 
-def render_consuming(addon: dict[str, Any], version: str) -> str:
+def render_consuming(
+    addon: dict[str, Any],
+    version: str,
+    minimum_runtime: str,
+    user_installed_dependencies: bool,
+) -> str:
     slug = addon["slug"]
     symbol = symbol_name(slug)
     token = cmake_token(slug)
-    deps = ", ".join(addon["system_dependencies"]) or "no protocol library"
+    if user_installed_dependencies:
+        dependency_text = (
+            "macOS and Linux load the platform libcurl/TLS stack declared by the "
+            "release manifest. Windows absorbs the reviewed curl/OpenSSL closure "
+            "and uses operating-system trust/security APIs; the compatible MSVC "
+            "runtime required by CoAkka Runtime must be present."
+        )
+    elif addon["slug"] == "artifact-publisher-sftp":
+        dependency_text = (
+            "The package absorbs libssh2 and its target crypto/compression "
+            "closure; no SFTP implementation library is installed separately."
+        )
+    else:
+        dependency_text = "Local Drop adds no protocol-library dependency."
     return f'''# Consuming {addon["display_name"]}
 
-Unpack Runtime native `2.4.0` or newer and addon `{version}`, then expose both
+Unpack Runtime native `{minimum_runtime}` or newer and addon `{version}`, then expose both
 CMake package directories:
 
 ```sh
@@ -249,7 +269,7 @@ target_link_libraries(app PRIVATE
 
 Keep the Runtime and addon native directories on the process loader path. The
 semantic adapters already carry their required private HTTPS module. Platform
-requirements are explicit in `manifest.json`; network builds use {deps}.
+requirements are explicit in `manifest.json`. {dependency_text}
 
 The host must keep the borrowed sender lane alive until every publisher instance
 has stopped and been destroyed. Cancellation, timeout, integrity validation,
@@ -257,12 +277,14 @@ no-clobber staging, and terminal job state are exposed by the C header contract.
 '''
 
 
-def render_top_readme(addon: dict[str, Any], release: str, archive_name: str) -> str:
+def render_top_readme(
+    addon: dict[str, Any], release: str, archive_name: str, minimum_runtime: str
+) -> str:
     platforms = ", ".join(f"`{item}`" for item in addon["platforms"])
     return f'''# {addon["display_name"]} Runtime Addon
 
 Status: native `{release}` is public for {platforms}. It requires CoAkka Runtime
-native `2.4.0` or newer with File Lane support.
+native `{minimum_runtime}` or newer with File Lane support.
 
 {addon["summary"]}
 
@@ -283,7 +305,13 @@ slice and is not implied by availability of this native archive.
 '''
 
 
-def render_release_readme(addon: dict[str, Any], version: str, release: str, archive_name: str) -> str:
+def render_release_readme(
+    addon: dict[str, Any],
+    version: str,
+    release: str,
+    archive_name: str,
+    minimum_runtime: str,
+) -> str:
     platforms = ", ".join(f"`{item}`" for item in addon["platforms"])
     return f'''# {addon["display_name"]} Native {version}
 
@@ -291,7 +319,7 @@ Release generation: `{release}`
 
 Published archive: `{archive_name}`
 
-Supported platforms: {platforms}. Minimum Runtime native version: `2.4.0`.
+Supported platforms: {platforms}. Minimum Runtime native version: `{minimum_runtime}`.
 
 ## Evidence
 
@@ -340,6 +368,8 @@ def package_addon(
     platform_roots: dict[str, Path],
     network_notices: str,
     owned_dependencies: list[dict[str, str]],
+    minimum_runtime: str,
+    user_installed_dependencies: bool,
 ) -> None:
     slug = addon["slug"]
     release = f"{version}+{snapshot}"
@@ -399,12 +429,19 @@ def package_addon(
         cmake_file = package_root / PurePosixPath(cmake_path)
         cmake_file.parent.mkdir(parents=True, exist_ok=True)
         cmake_file.write_text(render_cmake(addon), encoding="utf-8")
-        (package_root / "README.md").write_text(render_package_readme(addon, version), encoding="utf-8")
-        (package_root / "CONSUMING.md").write_text(render_consuming(addon, version), encoding="utf-8")
+        (package_root / "README.md").write_text(
+            render_package_readme(addon, version, minimum_runtime), encoding="utf-8"
+        )
+        (package_root / "CONSUMING.md").write_text(
+            render_consuming(
+                addon, version, minimum_runtime, user_installed_dependencies
+            ),
+            encoding="utf-8",
+        )
         copy_regular(publish_root / "LICENSE.md", package_root / "LICENSE.md")
         notices = (
             "# Third-Party Notices\n\nThis Local Drop addon contains no third-party implementation library.\n"
-            if not addon["system_dependencies"]
+            if not addon["system_dependencies"] and not owned_dependencies
             else network_notices
         )
         (package_root / "THIRD_PARTY_NOTICES.md").write_text(notices, encoding="utf-8")
@@ -438,11 +475,11 @@ def package_addon(
             "sha256": sha256(archive),
             "runtimeCompatibility": {
                 "abiMajor": 2,
-                "minimumNativeVersion": "2.4.0",
+                "minimumNativeVersion": minimum_runtime,
                 "requiredFeatures": ["file_lane"],
             },
-            "ownedStaticDependencies": owned_dependencies if addon["system_dependencies"] else [],
-            "userInstalledNativeDependencies": bool(addon["system_dependencies"]),
+            "ownedStaticDependencies": owned_dependencies,
+            "userInstalledNativeDependencies": user_installed_dependencies,
             "cmakeConfig": cmake_path,
             "headers": [f"include/coakka/addons/{addon['header']}"],
             "exportedSymbols": exports,
@@ -450,7 +487,10 @@ def package_addon(
         }
         write_json(release_dir / "manifest.json", manifest)
         (release_dir / "README.md").write_text(
-            render_release_readme(addon, version, release, archive_name), encoding="utf-8"
+            render_release_readme(
+                addon, version, release, archive_name, minimum_runtime
+            ),
+            encoding="utf-8",
         )
         checksum_names = [archive_name, "manifest.json", "README.md"]
         (release_dir / "SHA256SUMS").write_text(
@@ -459,7 +499,10 @@ def package_addon(
         )
         top_readme = publish_root / "runtime-addons" / slug / "README.md"
         top_readme.parent.mkdir(parents=True, exist_ok=True)
-        top_readme.write_text(render_top_readme(addon, release, archive_name), encoding="utf-8")
+        top_readme.write_text(
+            render_top_readme(addon, release, archive_name, minimum_runtime),
+            encoding="utf-8",
+        )
 
 
 def main() -> int:
@@ -467,9 +510,10 @@ def main() -> int:
     parser.add_argument("--core-root", required=True, type=Path)
     parser.add_argument("--source-snapshot", required=True)
     parser.add_argument("--platform-root", action="append", default=[])
-    parser.add_argument("--network-third-party-notices", required=True, type=Path)
+    parser.add_argument("--third-party-notices", required=True, type=Path)
     parser.add_argument("--owned-dependencies", required=True, type=Path)
     parser.add_argument("--output-root", type=Path)
+    parser.add_argument("--sftp-version")
     args = parser.parse_args()
     try:
         publish_root = (
@@ -484,24 +528,70 @@ def main() -> int:
         snapshot = args.source_snapshot
         if len(snapshot) != 8 or not head.startswith(snapshot):
             fail(f"source snapshot must be the 8-character prefix of Core HEAD {head}")
-        spec = read_json(core_root / "v2" / "addons" / "artifact-source-release.json")
-        version = spec.get("version")
-        addons = spec.get("addons")
-        if version != "1.1.0" or not isinstance(addons, list) or len(addons) != 11:
-            fail("release spec must declare the reviewed 11-addon version 1.1.0 wave")
         roots = parse_platform_roots(args.platform_root)
-        notices = args.network_third_party_notices.read_text(encoding="utf-8")
+        notices = args.third_party_notices.read_text(encoding="utf-8")
         dependencies = read_json(args.owned_dependencies).get("ownedStaticDependencies")
         if not isinstance(dependencies, list) or not dependencies:
             fail("owned dependency report must contain a non-empty ownedStaticDependencies array")
+        if args.sftp_version is not None:
+            if args.sftp_version != "1.2.0":
+                fail("the reviewed SFTP replacement version must be 1.2.0")
+            addons = [
+                {
+                    "slug": "artifact-publisher-sftp",
+                    "source_directory": "artifact-source-sftp",
+                    "display_name": "SFTP Artifact Publisher",
+                    "addon_id": "coakka.artifact.publisher.sftp",
+                    "library_stem": "coakka_addon_artifact_publisher_sftp",
+                    "header": "artifact_publisher_sftp.h",
+                    "symbol_prefix": "coakka_sftp_publisher_",
+                    "entrypoint_symbol": "coakka_sftp_publisher_create",
+                    "summary": "Fetches one pinned SFTP object, verifies size and SHA-256, stages without replacement, and distributes it through File Lane.",
+                    "platforms": PLATFORM_ORDER,
+                    "bundled_modules": [],
+                    "system_dependencies": [],
+                }
+            ]
+            version = args.sftp_version
+            minimum_runtime = "2.3.0"
+            user_installed_dependencies = False
+        else:
+            spec = read_json(
+                core_root / "v2" / "addons" / "artifact-source-release.json"
+            )
+            version = spec.get("version")
+            addons = spec.get("addons")
+            if version != "1.1.0" or not isinstance(addons, list) or len(addons) != 11:
+                fail("release spec must declare the reviewed 11-addon version 1.1.0 wave")
+            minimum_runtime = "2.4.0"
+            user_installed_dependencies = True
         for addon in addons:
+            addon_dependencies = (
+                dependencies
+                if addon["system_dependencies"] or args.sftp_version
+                else []
+            )
+            addon_user_installed_dependencies = (
+                user_installed_dependencies and bool(addon["system_dependencies"])
+            )
             package_addon(
-                publish_root, core_root, addon, version, snapshot, roots, notices, dependencies
+                publish_root,
+                core_root,
+                addon,
+                version,
+                snapshot,
+                roots,
+                notices,
+                addon_dependencies,
+                minimum_runtime,
+                addon_user_installed_dependencies,
             )
     except (OSError, PackageError) as error:
         print(f"[artifact-source-package] {error}", file=os.sys.stderr)
         return 1
-    print(f"[artifact-source-package] ok: 11 addons at 1.1.0+{args.source_snapshot}")
+    count = 1 if args.sftp_version else 11
+    version = args.sftp_version or "1.1.0"
+    print(f"[artifact-source-package] ok: {count} addon(s) at {version}+{args.source_snapshot}")
     return 0
 
 
