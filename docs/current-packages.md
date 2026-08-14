@@ -30,29 +30,21 @@ optional native capabilities that compose with Runtime without entering the
 default runtime package. Addons carry their own versions, compatibility
 manifests, native dependency closure, and matching-host evidence.
 
-Eleven artifact source addons are published at native generation
-`1.1.0+d1032f6d`: HTTPS, S3-compatible storage including MinIO, Local Drop,
-Azure Blob, GCS, WebDAV, OCI Distribution, Hugging Face Hub, GitHub release
-assets, Google Drive, and Dropbox. They require Runtime native `2.4.0` or
-newer and `file_lane`. Local Drop is POSIX-only; the other ten include all
-five native targets.
+The 11-addon artifact-source wave is published at native
+`1.1.0+d1032f6d`. HTTPS, S3/MinIO, Azure Blob, GCS, WebDAV, OCI Distribution,
+Hugging Face Hub, GitHub release assets, Google Drive, and Dropbox carry five
+native targets and require Runtime `2.4.0+`. Local Drop carries the three POSIX
+targets. SFTP is independently published at replacement native
+`1.2.0+88b9a047` and requires Runtime `2.3.0+`.
 
 ```text
 runtime-addons/artifact-publisher-<source>/native/releases/1.1.0+d1032f6d/
-  coakka-runtime-addon-artifact-publisher-<source>-native-1.1.0.tar.gz
-```
-
-SFTP is published separately at replacement generation `1.2.0+88b9a047` for
-all five targets and requires Runtime native `2.3.0` or newer. The withdrawn
-SFTP `1.1.0+42841ae2` archive is not a supported coordinate.
-
-```text
 runtime-addons/artifact-publisher-sftp/native/releases/1.2.0+88b9a047/
   coakka-runtime-addon-artifact-publisher-sftp-native-1.2.0.tar.gz
 ```
 
-These releases expose reviewed native C ABIs. High-level connector wrappers
-are not included and no existing Runtime connector coordinate changes.
+Run one exact native consumer with `bash run.sh runtime-addons <addon>` or the
+complete matrix with `bash run.sh runtime-addons all published`.
 
 ## Package Manager Entrypoints
 

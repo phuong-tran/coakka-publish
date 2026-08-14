@@ -119,18 +119,20 @@ An addon composes with Runtime; it does not become a new core lane or arrive in
 every runtime package.
 
 Check `artifacts/public-artifacts.tsv` before writing imports or install
-commands. Eleven artifact source addons are published at `1.1.0+d1032f6d`;
-SFTP is published at replacement coordinate `1.2.0+88b9a047`. They remain
-outside the root main lane and connector packages. These archives expose a C
-ABI and do not imply a high-level language wrapper:
+commands. Eleven artifact-source addons are published at native
+`1.1.0+d1032f6d`, and SFTP is published at replacement native
+`1.2.0+88b9a047`. They remain outside connector packages and currently expose
+native C ABIs only. Addon-specific language connectors may follow when
+demonstrated demand justifies their platform, packaging, testing, and
+maintenance cost; they are not part of the current release contract:
 
 ```sh
-cd runtime-addons/artifact-publisher-sftp/native
-bash run.sh published
+bash run.sh runtime-addons https
+bash run.sh runtime-addons sftp
 ```
 
-The SFTP sample command is retained as an integration shape; verify that its
-artifact pin names the current replacement coordinate before running it.
+Contributors can still run `bash run.sh source-candidate` to build the current
+Core source and test the next package candidate.
 
 ## Step 8: Read Production-Facing Notes
 
