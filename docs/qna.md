@@ -1150,10 +1150,9 @@ Current status:
 
 ```text
 runtime-addons release family: defined
-11 artifact source addons: public native 1.1.0+d1032f6d
-SFTP artifact publisher: public replacement native 1.2.0+88b9a047
-published platforms: five native targets, except POSIX-only Local Drop
-high-level addon connectors: not published
+artifact-source wave: public native 1.1.0+d1032f6d
+SFTP artifact publisher: replacement native 1.2.0+88b9a047
+native addon samples: exact immutable archive consumers
 connector package changes: none
 ```
 
