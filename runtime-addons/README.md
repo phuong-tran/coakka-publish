@@ -61,6 +61,15 @@ public artifact.
 
 ## Current Lanes
 
-- [`artifact-publisher-sftp`](artifact-publisher-sftp/README.md): native
-  `1.1.0+42841ae2` is public for Linux ARM64/x86-64, macOS ARM64, and Windows
-  11 ARM64/x86-64.
+- The 11-addon artifact-source wave is public at native
+  `1.1.0+d1032f6d`. HTTPS, S3/MinIO, Azure Blob, GCS, WebDAV, OCI
+  Distribution, Hugging Face Hub, GitHub release assets, Google Drive, and
+  Dropbox include five native targets. Local Drop includes Linux ARM64,
+  Linux x86-64, and macOS ARM64 because its anchored filesystem contract is
+  POSIX-only.
+- [`artifact-publisher-sftp`](artifact-publisher-sftp/README.md): replacement
+  native `1.2.0+88b9a047` for Linux ARM64/x86-64, macOS ARM64, and Windows
+  11 ARM64/x86-64. The withdrawn `1.1.0+42841ae2` coordinate is not retained.
+
+Each addon directory contains its exact archive coordinate, ownership model,
+platform set, Runtime compatibility, and current connector limitation.

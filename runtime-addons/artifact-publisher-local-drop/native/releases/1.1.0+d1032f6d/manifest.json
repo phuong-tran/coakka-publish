@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "name": "coakka-runtime-addon-artifact-publisher-local-drop-native",
+  "addonId": "coakka.artifact.publisher.local-drop",
+  "version": "1.1.0",
+  "release": "1.1.0+d1032f6d",
+  "sourceSnapshot": "d1032f6d",
+  "archive": "coakka-runtime-addon-artifact-publisher-local-drop-native-1.1.0.tar.gz",
+  "sha256": "68a9892595e401d0c4d613c091a44a8a8c0565ffa6a55134327c415ca12ab150",
+  "runtimeCompatibility": {
+    "abiMajor": 2,
+    "minimumNativeVersion": "2.4.0",
+    "requiredFeatures": [
+      "file_lane"
+    ]
+  },
+  "ownedStaticDependencies": [],
+  "userInstalledNativeDependencies": false,
+  "cmakeConfig": "cmake/CoAkkaRuntimeAddonArtifactPublisherLocalDropConfig.cmake",
+  "headers": [
+    "include/coakka/addons/artifact_publisher_local_drop.h"
+  ],
+  "exportedSymbols": [
+    "coakka_local_drop_publisher_cancel",
+    "coakka_local_drop_publisher_create",
+    "coakka_local_drop_publisher_dependency_version",
+    "coakka_local_drop_publisher_destroy",
+    "coakka_local_drop_publisher_forget",
+    "coakka_local_drop_publisher_get",
+    "coakka_local_drop_publisher_get_target",
+    "coakka_local_drop_publisher_start",
+    "coakka_local_drop_publisher_stop",
+    "coakka_local_drop_publisher_submit",
+    "coakka_local_drop_publisher_wait"
+  ],
+  "platforms": [
+    {
+      "id": "linux-aarch64",
+      "library": "native/linux-aarch64/libcoakka_addon_artifact_publisher_local_drop.so",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed",
+      "loaderLibrary": "native/linux-aarch64/libcoakka_addon_artifact_publisher_local_drop.so.0"
+    },
+    {
+      "id": "linux-x86_64",
+      "library": "native/linux-x86_64/libcoakka_addon_artifact_publisher_local_drop.so",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed",
+      "loaderLibrary": "native/linux-x86_64/libcoakka_addon_artifact_publisher_local_drop.so.0"
+    },
+    {
+      "id": "macos-aarch64",
+      "library": "native/macos-aarch64/libcoakka_addon_artifact_publisher_local_drop.dylib",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed",
+      "loaderLibrary": "native/macos-aarch64/libcoakka_addon_artifact_publisher_local_drop.0.dylib"
+    }
+  ]
+}

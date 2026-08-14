@@ -30,19 +30,29 @@ optional native capabilities that compose with Runtime without entering the
 default runtime package. Addons carry their own versions, compatibility
 manifests, native dependency closure, and matching-host evidence.
 
-SFTP artifact publisher `1.1.0+42841ae2` is published as an independent native
-archive for Linux ARM64/x86-64, macOS ARM64, and Windows 11 ARM64/x86-64. It
-requires Runtime native `2.3.0` or newer and the `file_lane` feature. It is not
-part of the Runtime archive and does not change any connector coordinate.
+Eleven artifact source addons are published at native generation
+`1.1.0+d1032f6d`: HTTPS, S3-compatible storage including MinIO, Local Drop,
+Azure Blob, GCS, WebDAV, OCI Distribution, Hugging Face Hub, GitHub release
+assets, Google Drive, and Dropbox. They require Runtime native `2.4.0` or
+newer and `file_lane`. Local Drop is POSIX-only; the other ten include all
+five native targets.
 
 ```text
-runtime-addons/artifact-publisher-sftp/native/releases/1.1.0+42841ae2/
-  coakka-runtime-addon-artifact-publisher-sftp-native-1.1.0.tar.gz
+runtime-addons/artifact-publisher-<source>/native/releases/1.1.0+d1032f6d/
+  coakka-runtime-addon-artifact-publisher-<source>-native-1.1.0.tar.gz
 ```
 
-Use the isolated native sample with
-`bash runtime-addons/artifact-publisher-sftp/native/run.sh published`. The root
-main sample lane remains reserved for Runtime and Logger packages.
+SFTP is published separately at replacement generation `1.2.0+88b9a047` for
+all five targets and requires Runtime native `2.3.0` or newer. The withdrawn
+SFTP `1.1.0+42841ae2` archive is not a supported coordinate.
+
+```text
+runtime-addons/artifact-publisher-sftp/native/releases/1.2.0+88b9a047/
+  coakka-runtime-addon-artifact-publisher-sftp-native-1.2.0.tar.gz
+```
+
+These releases expose reviewed native C ABIs. High-level connector wrappers
+are not included and no existing Runtime connector coordinate changes.
 
 ## Package Manager Entrypoints
 

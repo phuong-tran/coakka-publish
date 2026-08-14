@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "name": "coakka-runtime-addon-artifact-publisher-sftp-native",
   "addonId": "coakka.artifact.publisher.sftp",
-  "version": "1.1.0",
-  "release": "1.1.0+42841ae2",
-  "sourceSnapshot": "42841ae2",
-  "archive": "coakka-runtime-addon-artifact-publisher-sftp-native-1.1.0.tar.gz",
-  "sha256": "232e6ffbbd26945b6a478d3784c70e2c19a960e4c229f44026536ecee14f849b",
+  "version": "1.2.0",
+  "release": "1.2.0+88b9a047",
+  "sourceSnapshot": "88b9a047",
+  "archive": "coakka-runtime-addon-artifact-publisher-sftp-native-1.2.0.tar.gz",
+  "sha256": "6ed8fdc58a99df2fe79c909802007ba0dedcd55d9fca8f3f8f157887800f87fb",
   "runtimeCompatibility": {
     "abiMajor": 2,
     "minimumNativeVersion": "2.3.0",
@@ -20,16 +20,24 @@
       "version": "1.11.1"
     },
     {
-      "name": "OpenSSL crypto (Linux)",
-      "version": "3.0.13 (Ubuntu security-patched)"
-    },
-    {
-      "name": "OpenSSL crypto (macOS)",
+      "name": "OpenSSL crypto (macOS static)",
       "version": "3.6.2"
     },
     {
-      "name": "zlib (Linux)",
-      "version": "1.3.dfsg-3.1ubuntu2.1"
+      "name": "OpenSSL crypto (Ubuntu Linux static)",
+      "version": "3.5.5-1ubuntu3.3"
+    },
+    {
+      "name": "zlib (Ubuntu Linux static)",
+      "version": "1:1.3.dfsg+really1.3.1-1ubuntu3"
+    },
+    {
+      "name": "jitterentropy (Ubuntu Linux static)",
+      "version": "3.6.3-1"
+    },
+    {
+      "name": "zstd (Ubuntu Linux static)",
+      "version": "1.5.7+dfsg-3"
     }
   ],
   "userInstalledNativeDependencies": false,
@@ -55,31 +63,36 @@
       "id": "linux-aarch64",
       "library": "native/linux-aarch64/libcoakka_addon_artifact_publisher_sftp.so",
       "matchingHostRuntimeTest": "passed",
-      "dynamicDependencyAudit": "passed"
+      "dynamicDependencyAudit": "passed",
+      "loaderLibrary": "native/linux-aarch64/libcoakka_addon_artifact_publisher_sftp.so.0"
     },
     {
       "id": "linux-x86_64",
       "library": "native/linux-x86_64/libcoakka_addon_artifact_publisher_sftp.so",
       "matchingHostRuntimeTest": "passed",
-      "dynamicDependencyAudit": "passed"
+      "dynamicDependencyAudit": "passed",
+      "loaderLibrary": "native/linux-x86_64/libcoakka_addon_artifact_publisher_sftp.so.0"
     },
     {
       "id": "macos-aarch64",
       "library": "native/macos-aarch64/libcoakka_addon_artifact_publisher_sftp.dylib",
       "matchingHostRuntimeTest": "passed",
-      "dynamicDependencyAudit": "passed"
+      "dynamicDependencyAudit": "passed",
+      "loaderLibrary": "native/macos-aarch64/libcoakka_addon_artifact_publisher_sftp.0.dylib"
     },
     {
       "id": "windows-aarch64",
       "library": "native/windows-aarch64/libcoakka_addon_artifact_publisher_sftp.dll",
       "matchingHostRuntimeTest": "passed",
-      "dynamicDependencyAudit": "passed"
+      "dynamicDependencyAudit": "passed",
+      "importLibrary": "native/windows-aarch64/coakka_addon_artifact_publisher_sftp.lib"
     },
     {
       "id": "windows-x86_64",
       "library": "native/windows-x86_64/libcoakka_addon_artifact_publisher_sftp.dll",
       "matchingHostRuntimeTest": "passed",
-      "dynamicDependencyAudit": "passed"
+      "dynamicDependencyAudit": "passed",
+      "importLibrary": "native/windows-x86_64/coakka_addon_artifact_publisher_sftp.lib"
     }
   ]
 }

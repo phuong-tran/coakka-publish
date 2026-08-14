@@ -1150,9 +1150,10 @@ Current status:
 
 ```text
 runtime-addons release family: defined
-SFTP artifact publisher: public native 1.1.0+42841ae2
-published platforms: Linux ARM64/x86-64, macOS ARM64, Windows 11 ARM64/x86-64
-native SFTP-to-File-Lane sample: immutable archive consumer
+11 artifact source addons: public native 1.1.0+d1032f6d
+SFTP artifact publisher: public replacement native 1.2.0+88b9a047
+published platforms: five native targets, except POSIX-only Local Drop
+high-level addon connectors: not published
 connector package changes: none
 ```
 

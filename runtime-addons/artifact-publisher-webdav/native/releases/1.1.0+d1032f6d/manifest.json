@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "name": "coakka-runtime-addon-artifact-publisher-webdav-native",
+  "addonId": "coakka.artifact.publisher.webdav",
+  "version": "1.1.0",
+  "release": "1.1.0+d1032f6d",
+  "sourceSnapshot": "d1032f6d",
+  "archive": "coakka-runtime-addon-artifact-publisher-webdav-native-1.1.0.tar.gz",
+  "sha256": "7d5adee31956eac313f50ba715b46b2e548dd59c85a8363e4d66b2e939a363a9",
+  "runtimeCompatibility": {
+    "abiMajor": 2,
+    "minimumNativeVersion": "2.4.0",
+    "requiredFeatures": [
+      "file_lane"
+    ]
+  },
+  "ownedStaticDependencies": [
+    {
+      "name": "curl (Windows static-md, SSPI/SChannel)",
+      "version": "8.21.0#1"
+    },
+    {
+      "name": "zlib (Windows static-md)",
+      "version": "1.3.2#2"
+    }
+  ],
+  "userInstalledNativeDependencies": true,
+  "cmakeConfig": "cmake/CoAkkaRuntimeAddonArtifactPublisherWebdavConfig.cmake",
+  "headers": [
+    "include/coakka/addons/artifact_publisher_webdav.h"
+  ],
+  "exportedSymbols": [
+    "coakka_webdav_publisher_cancel",
+    "coakka_webdav_publisher_create",
+    "coakka_webdav_publisher_dependency_version",
+    "coakka_webdav_publisher_destroy",
+    "coakka_webdav_publisher_forget",
+    "coakka_webdav_publisher_get",
+    "coakka_webdav_publisher_get_target",
+    "coakka_webdav_publisher_start",
+    "coakka_webdav_publisher_stop",
+    "coakka_webdav_publisher_submit",
+    "coakka_webdav_publisher_wait"
+  ],
+  "platforms": [
+    {
+      "id": "linux-aarch64",
+      "library": "native/linux-aarch64/libcoakka_addon_artifact_publisher_webdav.so",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed",
+      "loaderLibrary": "native/linux-aarch64/libcoakka_addon_artifact_publisher_webdav.so.0",
+      "bundledLibraries": [
+        "native/linux-aarch64/libcoakka_addon_artifact_publisher_https.so",
+        "native/linux-aarch64/libcoakka_addon_artifact_publisher_https.so.0"
+      ]
+    },
+    {
+      "id": "linux-x86_64",
+      "library": "native/linux-x86_64/libcoakka_addon_artifact_publisher_webdav.so",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed",
+      "loaderLibrary": "native/linux-x86_64/libcoakka_addon_artifact_publisher_webdav.so.0",
+      "bundledLibraries": [
+        "native/linux-x86_64/libcoakka_addon_artifact_publisher_https.so",
+        "native/linux-x86_64/libcoakka_addon_artifact_publisher_https.so.0"
+      ]
+    },
+    {
+      "id": "macos-aarch64",
+      "library": "native/macos-aarch64/libcoakka_addon_artifact_publisher_webdav.dylib",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed",
+      "loaderLibrary": "native/macos-aarch64/libcoakka_addon_artifact_publisher_webdav.0.dylib",
+      "bundledLibraries": [
+        "native/macos-aarch64/libcoakka_addon_artifact_publisher_https.dylib",
+        "native/macos-aarch64/libcoakka_addon_artifact_publisher_https.0.dylib"
+      ]
+    },
+    {
+      "id": "windows-aarch64",
+      "library": "native/windows-aarch64/libcoakka_addon_artifact_publisher_webdav.dll",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed",
+      "importLibrary": "native/windows-aarch64/coakka_addon_artifact_publisher_webdav.lib",
+      "bundledLibraries": [
+        "native/windows-aarch64/libcoakka_addon_artifact_publisher_https.dll"
+      ]
+    },
+    {
+      "id": "windows-x86_64",
+      "library": "native/windows-x86_64/libcoakka_addon_artifact_publisher_webdav.dll",
+      "matchingHostRuntimeTest": "passed",
+      "dynamicDependencyAudit": "passed",
+      "importLibrary": "native/windows-x86_64/coakka_addon_artifact_publisher_webdav.lib",
+      "bundledLibraries": [
+        "native/windows-x86_64/libcoakka_addon_artifact_publisher_https.dll"
+      ]
+    }
+  ]
+}

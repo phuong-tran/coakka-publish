@@ -5,10 +5,11 @@ with CoAkka Runtime without becoming part of runtime core or the default runtime
 package. Each addon owns one focused external workflow or protocol family and
 uses stable runtime features such as File Lane when distribution is needed.
 
-> **Current status:** SFTP artifact publisher `1.1.0+42841ae2` is public for
-> Linux ARM64/x86-64, macOS ARM64, and Windows 11 ARM64/x86-64. It requires
-> Runtime native `2.3.0` or newer and remains separate from the default Runtime
-> package and connector lanes.
+> **Current status:** Eleven artifact source addons are public at
+> `1.1.0+d1032f6d` and require Runtime native `2.4.0` or newer. SFTP is public
+> at replacement coordinate `1.2.0+88b9a047` and requires Runtime native
+> `2.3.0` or newer. All remain separate from default Runtime and connector
+> packages.
 
 ## Where Addons Fit
 
@@ -79,7 +80,22 @@ with its manifest and `SHA256SUMS`.
 
 | Addon | Workflow | Public status |
 | --- | --- | --- |
-| [SFTP artifact publisher](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-sftp) | Service A fetches from a pinned SFTP source, verifies size and SHA-256, stages without replacement, and distributes through sender File Lane to one or more services. | Public native `1.1.0+42841ae2` archive for five targets; [two-process C11 sample](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-addons/artifact-publisher-sftp/native). |
+| [HTTPS](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-https) | Immutable URL, size and SHA-256 verification, no-clobber staging. | `1.1.0+d1032f6d`, five targets. |
+| [S3 / MinIO](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-s3) | Version-pinned object with SigV4. | `1.1.0+d1032f6d`, five targets. |
+| [Local Drop](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-local-drop) | Stable file under an anchored local directory. | `1.1.0+d1032f6d`, Linux ARM64/x86-64 and macOS ARM64. |
+| [Azure Blob](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-azure-blob) | Immutable blob version through caller-minted service SAS. | `1.1.0+d1032f6d`, five targets. |
+| [Google Cloud Storage](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-gcs) | Generation-pinned object through caller-minted V4 signed URL. | `1.1.0+d1032f6d`, five targets. |
+| [WebDAV](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-webdav) | Strong-ETag-pinned HTTPS resource. | `1.1.0+d1032f6d`, five targets. |
+| [OCI Distribution](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-oci-registry) | Digest-addressed registry blob. | `1.1.0+d1032f6d`, five targets. |
+| [Hugging Face Hub](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-huggingface-hub) | Full-commit-pinned Hub file with credential-isolated redirect. | `1.1.0+d1032f6d`, five targets. |
+| [GitHub Release](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-github-release) | Numeric-ID release asset with credential-isolated redirect. | `1.1.0+d1032f6d`, five targets. |
+| [Google Drive](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-google-drive) | Retained blob revision through OAuth. | `1.1.0+d1032f6d`, five targets. |
+| [Dropbox](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-dropbox) | Exact object revision through OAuth. | `1.1.0+d1032f6d`, five targets. |
+| [SFTP](https://github.com/phuong-tran/coakka-publish/tree/main/runtime-addons/artifact-publisher-sftp) | Host-key-pinned acquisition with size and SHA-256 verification. | Replacement `1.2.0+88b9a047`, five targets. |
+
+The archives expose small reviewed C ABIs. Go, Swift, JVM, Node, Python,
+.NET, and other connector wrappers are future independent slices, not part of
+these coordinates.
 
 The SFTP workflow composes existing boundaries:
 
@@ -105,18 +121,21 @@ it does not prove that it loads, transfers data, cancels, or shuts down on that
 platform. Package templates and source candidates must stay visibly distinct
 from promoted public coordinates.
 
-The current immutable coordinate is:
+The current immutable coordinates are:
 
 ```text
-runtime-addons/artifact-publisher-sftp/native/releases/1.1.0+42841ae2/
-  coakka-runtime-addon-artifact-publisher-sftp-native-1.1.0.tar.gz
+runtime-addons/artifact-publisher-<source>/native/releases/1.1.0+d1032f6d/
+  coakka-runtime-addon-artifact-publisher-<source>-native-1.1.0.tar.gz
+runtime-addons/artifact-publisher-sftp/native/releases/1.2.0+88b9a047/
+  coakka-runtime-addon-artifact-publisher-sftp-native-1.2.0.tar.gz
 ```
 
-Its matching-host evidence covers all five packaged modules, reviewed exports,
-dynamic dependencies, pinned-host SFTP failures, cancellation and shutdown
-paths, and File Lane delivery. Windows staging is directory-handle-relative and
-rejects reparse roots. Linux sanitizer evidence covers ASan plus UBSan and TSan
-on both architectures.
+Matching-host evidence covers every packaged module, reviewed exports, dynamic
+dependencies, protocol failures, cancellation and shutdown, integrity,
+no-clobber staging, and File Lane delivery. Windows SFTP staging rejects
+reparse roots. Linux family evidence covers ASan/LSan, UBSan, and TSan; static
+analysis and strict warning gates cover production and test sources. Live
+vendor-account certification and performance SLAs are not claimed.
 
 For exact current coordinates, read [Current Packages](current-packages.md).
 For ownership across repositories, read

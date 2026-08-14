@@ -60,7 +60,7 @@ attachments.
 
 | Product | Binary lane | Source and consumer |
 | --- | --- | --- |
-| [SFTP artifact publisher](runtime-addons/artifact-publisher-sftp/README.md) | `runtime-addons/artifact-publisher-sftp/native/releases/1.1.0+42841ae2/` | [`coakka-samples/runtime-addons/artifact-publisher-sftp/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-addons/artifact-publisher-sftp) |
+| [Artifact source addons](runtime-addons/README.md) | 11 native addons at `1.1.0+d1032f6d`; SFTP at `1.2.0+88b9a047` | Reviewed C ABI archives; high-level connector wrappers are not included yet |
 | [Raspberry Pi camera livestream](samples/runtime/native/rpi-camera/README.md) | `samples/runtime/native/rpi-camera/releases/1.1.0/` | [`coakka-samples/runtime-streaming-demo/rpi-camera/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-streaming-demo/rpi-camera) |
 
 ## Runtime Addons
@@ -71,13 +71,12 @@ entering the default runtime package. Addons have their own versions,
 compatibility manifests, dependency closure, checksums, and matching-host
 evidence.
 
-The first defined lane is the
-[`artifact-publisher-sftp`](runtime-addons/artifact-publisher-sftp/README.md)
-workflow: Service A acquires and verifies an artifact over SFTP, then publishes
-it through File Lane. Native `1.1.0+42841ae2` is published for Linux
-ARM64/x86-64, macOS ARM64, and Windows 11 ARM64/x86-64. Read the common
-[Runtime Addons](docs/runtime-addons.md) guide before generating integration
-code.
+The artifact source family covers HTTPS, S3-compatible storage including
+MinIO, Local Drop, Azure Blob, GCS, WebDAV, OCI Distribution, Hugging Face Hub,
+GitHub release assets, Google Drive, Dropbox, and SFTP. The 11-addon wave is
+published at `1.1.0+d1032f6d`; SFTP is published at replacement coordinate
+`1.2.0+88b9a047`. Read the common [Runtime Addons](docs/runtime-addons.md)
+guide before generating integration code.
 
 ## Runtime Transport
 
@@ -710,11 +709,11 @@ Optional runtime capabilities release independently under
 default runtime archive and must not make ordinary runtime consumers install
 their implementation dependencies.
 
-The first defined lane is
-[`runtime-addons/artifact-publisher-sftp`](runtime-addons/artifact-publisher-sftp/README.md).
-Native `1.1.0+42841ae2` is listed in `artifacts/public-artifacts.tsv` for all
-five supported targets. It remains independent from the Runtime archive and
-every connector package.
+The 12 artifact source lanes are listed in
+[`runtime-addons/`](runtime-addons/README.md). Eleven use release generation
+`1.1.0+d1032f6d`; SFTP uses replacement generation `1.2.0+88b9a047`.
+Every archive remains independent from the Runtime archive and connector
+packages.
 
 Before promotion, run:
 

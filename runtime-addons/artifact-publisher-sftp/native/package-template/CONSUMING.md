@@ -1,6 +1,6 @@
 # Consuming The SFTP Artifact Publisher Addon
 
-Unpack Runtime native `2.3.0` or newer and SFTP addon `1.1.0`. Expose both CMake
+Unpack Runtime native `2.3.0` or newer and SFTP addon `1.2.0`. Expose both CMake
 package directories:
 
 ```sh
@@ -25,7 +25,7 @@ destroyed.
 
 Keep both matching platform native directories on the process loader path. No
 SFTP, libssh2, OpenSSL, or other addon implementation package should be
-installed on the target host. Version `1.1.0` supports `linux-aarch64`,
+installed on the target host. Version `1.2.0` supports `linux-aarch64`,
 `linux-x86_64`, `macos-aarch64`, `windows-aarch64`, and `windows-x86_64`.
 
 On Windows, place `libcoakka_runtime_v2.dll` and

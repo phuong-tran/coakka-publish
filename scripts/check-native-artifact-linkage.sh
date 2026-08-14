@@ -16,8 +16,9 @@ require_command() {
 }
 
 dependency_allowed() {
-  local dep lower
+  local dep allowed_addon_dependencies lower allowed
   dep="$1"
+  allowed_addon_dependencies="${2:-}"
   lower="$(printf '%s' "${dep}" | tr '[:upper:]' '[:lower:]')"
 
   case "${lower}" in
@@ -27,7 +28,7 @@ dependency_allowed() {
     libm.so.6|libc.so.6|libstdc++.so.6|libgcc_s.so.1|libz.so.1|libzstd.so.1|ld-linux-x86-64.so.2|ld-linux-aarch64.so.1)
       return 0
       ;;
-    kernel32.dll|ntdll.dll|ws2_32.dll|advapi32.dll|bcrypt.dll|crypt32.dll|user32.dll|iphlapi.dll|iphlpapi.dll|userenv.dll|shell32.dll|ole32.dll|dbghelp.dll)
+    kernel32.dll|ntdll.dll|ws2_32.dll|advapi32.dll|bcrypt.dll|crypt32.dll|secur32.dll|user32.dll|iphlapi.dll|iphlpapi.dll|userenv.dll|shell32.dll|ole32.dll|dbghelp.dll)
       return 0
       ;;
     msvcp140.dll|msvcp140_atomic_wait.dll|vcruntime140.dll|vcruntime140_1.dll)
@@ -37,6 +38,12 @@ dependency_allowed() {
       return 0
       ;;
     *)
+      while IFS= read -r allowed; do
+        [[ -n "${allowed}" ]] || continue
+        if [[ "${lower}" == "$(printf '%s' "${allowed}" | tr '[:upper:]' '[:lower:]')" ]]; then
+          return 0
+        fi
+      done <<<"${allowed_addon_dependencies}"
       return 1
       ;;
   esac
@@ -45,6 +52,7 @@ dependency_allowed() {
 check_dependencies_for_file() {
   local file="$1"
   local label="$2"
+  local allowed_addon_dependencies="${3:-}"
   local report dep
 
   report="$(objdump -p "${file}" 2>/dev/null || true)"
@@ -52,7 +60,7 @@ check_dependencies_for_file() {
 
   while IFS= read -r dep; do
     [[ -n "${dep}" ]] || continue
-    dependency_allowed "${dep}" ||
+    dependency_allowed "${dep}" "${allowed_addon_dependencies}" ||
       fail "artifact declares non-allowed dynamic dependency ${dep}: ${label}"
   done < <(
     printf '%s\n' "${report}" |
@@ -66,28 +74,63 @@ check_dependencies_for_file() {
 check_tree() {
   local root="$1"
   local label_prefix="$2"
+  local allowed_addon_dependencies="${3:-}"
   local file rel
 
   while IFS= read -r -d '' file; do
     rel="${file#"${root}"/}"
-    check_dependencies_for_file "${file}" "${label_prefix}/${rel}"
+    check_dependencies_for_file \
+      "${file}" "${label_prefix}/${rel}" "${allowed_addon_dependencies}"
   done < <(find "${root}" -type f -print0)
+}
+
+addon_dependencies_for_archive() {
+  local relative_path="$1"
+  local release_manifest
+  release_manifest="${repo_root}/$(dirname "${relative_path}")/manifest.json"
+  [[ -f "${release_manifest}" ]] ||
+    fail "runtime addon archive has no adjacent manifest: ${relative_path}"
+
+  python3 - "${release_manifest}" <<'PY'
+import json
+import pathlib
+import sys
+
+manifest = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+names = {
+    pathlib.PurePosixPath(path).name
+    for platform in manifest.get("platforms", [])
+    for path in platform.get("bundledLibraries", [])
+}
+if manifest.get("userInstalledNativeDependencies") is True:
+    # The v1 addon manifest's only approved ambient implementation dependency
+    # is the documented POSIX libcurl contract. Windows packages absorb curl.
+    names.update({"libcurl.so.4", "libcurl.4.dylib"})
+for name in sorted(names):
+    print(name)
+PY
 }
 
 check_archive() {
   local relative_path="$1"
   local archive="${repo_root}/${relative_path}"
-  local dest
+  local dest allowed_addon_dependencies=""
 
   [[ -f "${archive}" ]] || fail "missing artifact: ${relative_path}"
+  case "${relative_path}" in
+    runtime-addons/*/native/releases/*/*.tar.gz)
+      allowed_addon_dependencies="$(addon_dependencies_for_archive "${relative_path}")"
+      ;;
+  esac
   dest="$(mktemp -d "${tmp_root}/archive.XXXXXX")"
   COPYFILE_DISABLE=1 tar -xzf "${archive}" -C "${dest}"
-  check_tree "${dest}" "${relative_path}"
+  check_tree "${dest}" "${relative_path}" "${allowed_addon_dependencies}"
 }
 
 require_command objdump
 require_command tar
 require_command awk
+require_command python3
 
 [[ -f "${manifest}" ]] || fail "missing manifest: artifacts/public-artifacts.tsv"
 mkdir -p "${tmp_root}"
