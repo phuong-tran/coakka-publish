@@ -27,6 +27,8 @@ bounded CoAkka request/reply boundary instead of becoming another internal HTTP
 service. Read
 [Keep HTTP At The Edge](docs/http-edge-runtime-boundary.md) and
 [Should I Choose Bun Over Node.js To Make CoAkka Faster?](docs/qna.md#should-i-choose-bun-over-nodejs-to-make-coakka-faster).
+For browser streaming, read
+[WebSocket Integration With CoAkka](docs/runtime-websocket-integration.md).
 
 Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 Support: [SUPPORT.md](SUPPORT.md)
@@ -39,6 +41,8 @@ Runtime field guide: [docs/runtime-field-guide.md](docs/runtime-field-guide.md)
 How it works: [docs/how-it-works.md](docs/how-it-works.md)
 HTTP edge and runtime boundary:
 [docs/http-edge-runtime-boundary.md](docs/http-edge-runtime-boundary.md)
+WebSocket integration:
+[docs/runtime-websocket-integration.md](docs/runtime-websocket-integration.md)
 Questions and answers: [docs/qna.md](docs/qna.md)
 Runtime client: [docs/coakka-runtime-client.md](docs/coakka-runtime-client.md)
 Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md)
@@ -102,6 +106,7 @@ capabilities, lifecycle rules, and connector examples:
 - [Runtime network modes](docs/runtime-network-modes.md)
 - [Runtime file transfer](docs/runtime-file-transfer.md)
 - [Runtime streaming](docs/runtime-streaming.md)
+- [WebSocket integration](docs/runtime-websocket-integration.md)
 - [AI-assisted integration](docs/ai-assisted-integration.md)
 - [Envelope and deadletter map](docs/envelope-deadletter-map.md)
 - [Message and routing model](docs/runtime-message-and-routing-model.md)
@@ -120,7 +125,9 @@ Runtime `2.4.0` also contains the official Stream Lane contract and reports the
 lifecycle, security, and neutral publisher/subscriber pressure signals without
 changing stream wire version 1. See
 [Runtime streaming](docs/runtime-streaming.md) for the application boundary and
-artifact-availability contract.
+artifact-availability contract. A WebSocket-facing host composes with that
+lane; it is not a Runtime WebSocket transport. See
+[WebSocket integration](docs/runtime-websocket-integration.md).
 
 ## Runtime Test
 
