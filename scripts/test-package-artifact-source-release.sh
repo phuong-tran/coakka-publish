@@ -127,4 +127,32 @@ cp "${publish_root}/LICENSE.md" "${sftp_output_root}/LICENSE.md"
   --release-dir "${sftp_output_root}/runtime-addons/artifact-publisher-sftp/native/releases/1.2.0+${snapshot}" \
   --expected-addon artifact-publisher-sftp
 
+bad_output_root="${tmp_root}/bad-publish"
+mkdir -p "${bad_output_root}"
+cp "${publish_root}/LICENSE.md" "${bad_output_root}/LICENSE.md"
+bad_macos_root="${tmp_root}/bad-macos-aarch64"
+cp -R "${tmp_root}/macos-aarch64/." "${bad_macos_root}/"
+printf '%s/%s/workspace/pkg/private.cc\n' "/Users" "builder" \
+  >"${bad_macos_root}/libcoakka_addon_artifact_publisher_https.dylib"
+bad_platform_args=()
+for platform in "${platforms[@]}"; do
+  root="${tmp_root}/${platform}"
+  if [[ "${platform}" == "macos-aarch64" ]]; then
+    root="${bad_macos_root}"
+  fi
+  bad_platform_args+=(--platform-root "${platform}=${root}")
+done
+if "${script_dir}/package-artifact-source-release.py" \
+  --core-root "${core_root}" \
+  --source-snapshot "${snapshot}" \
+  --third-party-notices "${tmp_root}/THIRD_PARTY_NOTICES.md" \
+  --owned-dependencies "${tmp_root}/dependencies.json" \
+  --output-root "${bad_output_root}" \
+  "${bad_platform_args[@]}" >"${tmp_root}/bad-package.stdout" \
+  2>"${tmp_root}/bad-package.stderr"; then
+  echo "[artifact-source-package-test] expected private build path rejection" >&2
+  exit 1
+fi
+grep -q "private build path after sanitization" "${tmp_root}/bad-package.stderr"
+
 echo "[artifact-source-package-test] ok: ${addon_count} family fixtures plus SFTP"

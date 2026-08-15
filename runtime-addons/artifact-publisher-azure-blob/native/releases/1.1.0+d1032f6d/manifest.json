@@ -6,7 +6,7 @@
   "release": "1.1.0+d1032f6d",
   "sourceSnapshot": "d1032f6d",
   "archive": "coakka-runtime-addon-artifact-publisher-azure-blob-native-1.1.0.tar.gz",
-  "sha256": "5c81f2e92ae3070d65fa6fc93ed046f416a505972d4b42c3e68e383c6c32e1ad",
+  "sha256": "755303710ccc61f76d3b16afd822789aff594007db3f1111c18a41d887d00456",
   "runtimeCompatibility": {
     "abiMajor": 2,
     "minimumNativeVersion": "2.4.0",

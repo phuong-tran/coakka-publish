@@ -6,7 +6,7 @@
   "release": "1.2.0+88b9a047",
   "sourceSnapshot": "88b9a047",
   "archive": "coakka-runtime-addon-artifact-publisher-sftp-native-1.2.0.tar.gz",
-  "sha256": "6ed8fdc58a99df2fe79c909802007ba0dedcd55d9fca8f3f8f157887800f87fb",
+  "sha256": "b2538b9468cc2136ccd0dc91b88ef5be161236df9767a6b10080e161f8e76b22",
   "runtimeCompatibility": {
     "abiMajor": 2,
     "minimumNativeVersion": "2.3.0",

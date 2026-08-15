@@ -9,6 +9,7 @@ import gzip
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import tarfile
@@ -38,6 +39,33 @@ EXPORT_SUFFIXES = [
     "wait",
 ]
 MAX_INPUT_FILE_BYTES = 256 * 1024 * 1024
+MACHO_MAGICS = {
+    bytes.fromhex(value)
+    for value in (
+        "feedface",
+        "cefaedfe",
+        "feedfacf",
+        "cffaedfe",
+        "cafebabe",
+        "bebafeca",
+        "cafebabf",
+        "bfbafeca",
+    )
+}
+PRIVATE_BUILD_PATH_RE = re.compile(
+    b"".join(
+        (
+            rb"(?:/",
+            rb"(?:Users|home)",
+            rb"/[^\s/]+/",
+            rb"(?:misc|study|workspace|workingDir|workingdir|src|dev)",
+            rb"/|/",
+            rb"wo",
+            rb"rk",
+            rb"/[^\s/]+/)",
+        )
+    )
+)
 
 
 class PackageError(RuntimeError):
@@ -114,6 +142,39 @@ def copy_regular(source: Path, destination: Path) -> None:
     with source.open("rb") as input_file, destination.open("xb") as output_file:
         shutil.copyfileobj(input_file, output_file, 1024 * 1024)
     os.chmod(destination, 0o644)
+
+
+def is_macho(path: Path) -> bool:
+    with path.open("rb") as handle:
+        return handle.read(4) in MACHO_MAGICS
+
+
+def remove_macho_debug_symbols(path: Path) -> None:
+    if not is_macho(path):
+        return
+    xcrun = shutil.which("xcrun")
+    if xcrun is None:
+        fail(f"xcrun is required to sanitize Mach-O input: {path.name}")
+    try:
+        subprocess.run(
+            [xcrun, "strip", "-S", str(path)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except subprocess.CalledProcessError as error:
+        fail(f"could not remove Mach-O debug symbols from {path.name}: {error.stderr.strip()}")
+
+
+def reject_private_build_path(path: Path) -> None:
+    if PRIVATE_BUILD_PATH_RE.search(path.read_bytes()) is not None:
+        fail(f"native input retains a private build path after sanitization: {path.name}")
+
+
+def copy_public_binary(source: Path, destination: Path) -> None:
+    copy_regular(source, destination)
+    remove_macho_debug_symbols(destination)
+    reject_private_build_path(destination)
 
 
 def cmake_token(slug: str) -> str:
@@ -395,7 +456,7 @@ def package_addon(
                 fail(f"missing --platform-root for {slug}: {platform}")
             library, loader, import_library = library_names(addon["library_stem"], platform)
             native_dir = package_root / "native" / platform
-            copy_regular(find_unique_file(input_root, library), native_dir / library)
+            copy_public_binary(find_unique_file(input_root, library), native_dir / library)
             entry: dict[str, Any] = {
                 "id": platform,
                 "library": f"native/{platform}/{library}",
@@ -403,10 +464,12 @@ def package_addon(
                 "dynamicDependencyAudit": "passed",
             }
             if loader:
-                copy_regular(find_unique_file(input_root, loader), native_dir / loader)
+                copy_public_binary(find_unique_file(input_root, loader), native_dir / loader)
                 entry["loaderLibrary"] = f"native/{platform}/{loader}"
             if import_library:
-                copy_regular(find_unique_file(input_root, import_library), native_dir / import_library)
+                copy_public_binary(
+                    find_unique_file(input_root, import_library), native_dir / import_library
+                )
                 entry["importLibrary"] = f"native/{platform}/{import_library}"
 
             bundled: list[str] = []
@@ -418,7 +481,7 @@ def package_addon(
                 )
                 for name in (https_library, https_loader):
                     if name:
-                        copy_regular(find_unique_file(input_root, name), native_dir / name)
+                        copy_public_binary(find_unique_file(input_root, name), native_dir / name)
                         bundled.append(f"native/{platform}/{name}")
             if bundled:
                 entry["bundledLibraries"] = bundled

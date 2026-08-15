@@ -20,6 +20,8 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Verify public surface
+        env:
+          PYTHONPYCACHEPREFIX: ${{ runner.temp }}/coakka-pycache
         run: |
           bash -n \
             scripts/scan-public-surface.sh \
@@ -35,6 +37,9 @@ jobs:
           python3 -m py_compile scripts/verify-runtime-intake-artifact.py
           python3 -m py_compile scripts/verify-runtime-addon-release.py
           python3 -m py_compile scripts/verify-npm-package-manager-artifact.py
+          python3 -m py_compile scripts/package-artifact-source-release.py
+          python3 -m py_compile scripts/test-package-artifact-source-sanitization.py
+          python3 scripts/test-package-artifact-source-sanitization.py
           scripts/test-public-surface-scanner.sh
           scripts/test-public-artifact-manifest.sh
           scripts/test-npm-package-manager-artifact.sh

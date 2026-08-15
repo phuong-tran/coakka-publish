@@ -6,7 +6,7 @@
   "release": "1.1.0+d1032f6d",
   "sourceSnapshot": "d1032f6d",
   "archive": "coakka-runtime-addon-artifact-publisher-webdav-native-1.1.0.tar.gz",
-  "sha256": "7d5adee31956eac313f50ba715b46b2e548dd59c85a8363e4d66b2e939a363a9",
+  "sha256": "179f6c393d38853d55d92e2fdb5a8107aca80fb0202cb80549d578fec0617f18",
   "runtimeCompatibility": {
     "abiMajor": 2,
     "minimumNativeVersion": "2.4.0",

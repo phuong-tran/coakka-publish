@@ -3,6 +3,15 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-15
+
+- Corrected the newly published native artifact-publisher archives by removing
+  local source and object paths retained in macOS debug symbol tables. The
+  recorded source snapshots, semantic versions, public C exports, linkage, and
+  Linux/Windows payloads are unchanged. Archive manifests and SHA-256 values
+  were refreshed; consumers of the earlier checksums must download and verify
+  the corrected archives again.
+
 ## 2026-08-12
 
 - Reframed the current architecture guidance around CoAkka as a service-mesh

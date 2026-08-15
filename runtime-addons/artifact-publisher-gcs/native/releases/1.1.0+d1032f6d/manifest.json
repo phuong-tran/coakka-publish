@@ -6,7 +6,7 @@
   "release": "1.1.0+d1032f6d",
   "sourceSnapshot": "d1032f6d",
   "archive": "coakka-runtime-addon-artifact-publisher-gcs-native-1.1.0.tar.gz",
-  "sha256": "744993b62312927615dfff8c477f8821b02945fa50c9da4e731aa216b443fb2e",
+  "sha256": "fe2de516b08baa49eec3a874232432fd6fb2bb66b3f9fa57690f5ad301f08e16",
   "runtimeCompatibility": {
     "abiMajor": 2,
     "minimumNativeVersion": "2.4.0",

@@ -6,7 +6,7 @@
   "release": "1.1.0+d1032f6d",
   "sourceSnapshot": "d1032f6d",
   "archive": "coakka-runtime-addon-artifact-publisher-github-release-native-1.1.0.tar.gz",
-  "sha256": "6de208481a8b9eeb9cdff2efe48d976ebba9f8b4aa0544da173a1e94e9c87e4c",
+  "sha256": "0050815023f975c7af83a76a8214153792f8ad05512489c4c132006589088cb5",
   "runtimeCompatibility": {
     "abiMajor": 2,
     "minimumNativeVersion": "2.4.0",

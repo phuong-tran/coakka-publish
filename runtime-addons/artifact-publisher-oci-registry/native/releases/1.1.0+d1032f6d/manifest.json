@@ -6,7 +6,7 @@
   "release": "1.1.0+d1032f6d",
   "sourceSnapshot": "d1032f6d",
   "archive": "coakka-runtime-addon-artifact-publisher-oci-registry-native-1.1.0.tar.gz",
-  "sha256": "4c1cb16b670a306c2e445a2742e2691edba52ea324191c2a9cb86950819acb41",
+  "sha256": "9128cd065b2beec93ac2503ddbd20b10bf8cd2267478705eaf51b6156ab7e73a",
   "runtimeCompatibility": {
     "abiMajor": 2,
     "minimumNativeVersion": "2.4.0",

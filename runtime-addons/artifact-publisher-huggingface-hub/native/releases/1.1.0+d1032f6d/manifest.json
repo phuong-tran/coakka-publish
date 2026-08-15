@@ -6,7 +6,7 @@
   "release": "1.1.0+d1032f6d",
   "sourceSnapshot": "d1032f6d",
   "archive": "coakka-runtime-addon-artifact-publisher-huggingface-hub-native-1.1.0.tar.gz",
-  "sha256": "e57c27dfa49a9aa9c87a726b77292a5ae2d55b72239c42283556ffa4d5a9247e",
+  "sha256": "dd1b98faba2a8257a5d48030016e04b55f9931379624d96c1d78b5aaf8f9d5fd",
   "runtimeCompatibility": {
     "abiMajor": 2,
     "minimumNativeVersion": "2.4.0",
