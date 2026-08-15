@@ -20,6 +20,14 @@ architecture-matched edge deployments. Start with the
 [Compatibility Matrix](docs/compatibility-matrix.md) for exact package, OS,
 CPU, and release-channel evidence.
 
+## Architecture Boundary
+
+HTTP remains the external API edge; selected application-owned work crosses a
+bounded CoAkka request/reply boundary instead of becoming another internal HTTP
+service. Read
+[Keep HTTP At The Edge](docs/http-edge-runtime-boundary.md) and
+[Should I Choose Bun Over Node.js To Make CoAkka Faster?](docs/qna.md#should-i-choose-bun-over-nodejs-to-make-coakka-faster).
+
 Contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
 Support: [SUPPORT.md](SUPPORT.md)
 Contact: `gabrielgun1983@gmail.com`
@@ -29,6 +37,8 @@ New to CoAkka: [docs/new-to-coakka.md](docs/new-to-coakka.md)
 Startup development path: [docs/startup-development-path.md](docs/startup-development-path.md)
 Runtime field guide: [docs/runtime-field-guide.md](docs/runtime-field-guide.md)
 How it works: [docs/how-it-works.md](docs/how-it-works.md)
+HTTP edge and runtime boundary:
+[docs/http-edge-runtime-boundary.md](docs/http-edge-runtime-boundary.md)
 Questions and answers: [docs/qna.md](docs/qna.md)
 Runtime client: [docs/coakka-runtime-client.md](docs/coakka-runtime-client.md)
 Runtime inspect: [docs/coakka-runtime-inspect.md](docs/coakka-runtime-inspect.md)
