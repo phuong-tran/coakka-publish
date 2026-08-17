@@ -50,6 +50,7 @@ missing or different target in addition to checking the SHA-256 digest.
   deployment-target gates for all six packages.
 
 The matching-host executions above ran on a newer macOS ARM64 host and do not
-claim execution on macOS 13. CI separately covers Node.js 22/24, Bun
-1.2/current, Electron 42/43, and Rust 1.77.2/stable; those matrix rows become
-evidence only after their workflow completes.
+claim execution on macOS 13. Connector CI run `32058042610` passes at source
+commit `f36c396`, covering Node.js 22/24, Bun 1.2/current, Electron 42/43,
+Rust 1.77.2/stable, Spring Boot, Quarkus, platform-source compilation, and the
+aggregate JVM, Python, Node.js, and NuGet gates.
