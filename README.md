@@ -329,9 +329,10 @@ Current public logger Tauri/Electron connector generation:
 Current public logger Mojo/Zig source connector generation:
 `1.2.1+f50756ebff0d-8264bba`.
 Current public native runtime generation: `2.4.0+c2f53117`.
-Current public JVM connector generation: `2.4.0-gc2f53117-0afb5e9`.
-Current public Spring Boot and Quarkus adapter generation:
-`2.4.0-gc2f53117-0afb5e9`.
+Current public JVM mirror generation: `2.4.0-gc2f53117-0afb5e9`; Maven Central
+publishes the independently versioned JVM distribution as `runtime:2.4.1`.
+Current public Spring Boot and Quarkus Maven Central adapter versions are
+`spring-boot-starter:2.4.1` and `quarkus-extension:2.4.1`.
 Current public source connector artifact generation:
 `2.4.0+c2f53117-0afb5e9`.
 Current public npm registry candidate generation: `2.4.0+c2f53117-0afb5e9`.
@@ -365,7 +366,7 @@ Repository-hosted demo bundles above are the captured public sample artifacts.
 | Runtime JVM, Python, Node.js, Bun, Electron, Go, C#, Rust, Swift | public artifacts | `runtime/{jvm,python,node,bun,electron,go,csharp,rust,swift}/releases/` |
 | Runtime SwiftPM | public package-manager lane | `https://github.com/phuong-tran/coakka-runtime-swift`, current registry/tag status below |
 | Runtime Mojo, Zig, and Tauri source connector lanes | public source packages | `runtime/{mojo,zig,tauri}/releases/` |
-| Runtime Spring Boot and Quarkus adapters | public | `maven/` |
+| Runtime Spring Boot and Quarkus adapters | public Maven Central packages | `io.github.phuong-tran.coakka:{spring-boot-starter,quarkus-extension}:2.4.1` |
 | Root runtime headers and native libraries | public | `include/` and `native/` |
 | coakka-client native CLI | public | `coakka-tools/coakka-client/releases/` |
 | coakka-client Docker Linux bundle | public Linux bundles | `coakka-tools/coakka-client/docker-demo/releases/` |
@@ -403,6 +404,11 @@ mirror publishes JVM runtime, Spring Boot, and Quarkus as
 from connector source `0afb5e9`; NuGet Runtime `2.4.1` and Logger `1.2.3`
 come from connector source `801a0a6`. All three runtime channels are
 registry-verified.
+
+Maven Central publishes the JVM Runtime, Spring Boot starter, and Quarkus
+extension as independently versioned `2.4.1` packages. The static mirror
+coordinates above remain immutable compatibility artifacts; new framework
+adapter consumers should use Maven Central.
 
 Package-manager registries are separate publication channels. npm Node.js,
 Bun, and Electron plus PyPI runtime are current at `2.4.0`; NuGet runtime is
@@ -499,7 +505,9 @@ Current published lanes:
   - `coakka.quarkus:coakka-quarkus-extension`
 - Maven Central coordinates
   `io.github.phuong-tran.coakka:runtime:2.4.1` and
-  `io.github.phuong-tran.coakka:logger:1.2.2`
+  `io.github.phuong-tran.coakka:logger:1.2.2`, plus Java 17 framework adapters
+  `io.github.phuong-tran.coakka:spring-boot-starter:2.4.1` and
+  `io.github.phuong-tran.coakka:quarkus-extension:2.4.1`
 - runtime v2 public `C` ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`
@@ -612,8 +620,10 @@ contract remains the same across profiles: targets, route generations,
 request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
-Runtime JVM uses `2.4.0-gc2f53117-0afb5e9` over native package
-`2.4.0+c2f53117`. Spring Boot and Quarkus use the same connector generation.
+The static Runtime JVM mirror uses `2.4.0-gc2f53117-0afb5e9` over native
+package `2.4.0+c2f53117`; its Spring Boot and Quarkus mirrors use the same
+connector generation. Maven Central publishes Runtime, Spring Boot, and
+Quarkus as `2.4.1` from their recorded release commits.
 Embedded-native coverage is Linux ARM64/x86-64, macOS ARM64, and Windows
 ARM64/x86-64. Every connector release directory has its own manifest and
 checksums.
@@ -659,8 +669,8 @@ These artifacts are the current public runtime set:
 | Mojo runtime | `runtime/mojo/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-mojo-2.4.0-source.tar.gz` | `2.4.0-source` | `2.4.0+c2f53117` |
 | Zig runtime | `runtime/zig/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-zig-2.4.0-source.tar.gz` | `2.4.0-source` | `2.4.0+c2f53117` |
 | Tauri runtime | `runtime/tauri/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-tauri-intents-2.4.0-source.tar.gz` | `2.4.0-source` | `2.4.0+c2f53117` |
-| Spring Boot adapter | `coakka.spring:coakka-spring-boot-starter` | `2.4.0-gc2f53117-0afb5e9` | via JVM runtime |
-| Quarkus adapter | `coakka.quarkus:coakka-quarkus-extension` | `2.4.0-gc2f53117-0afb5e9` | via JVM runtime |
+| Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.4.1` | via JVM runtime |
+| Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.4.1` | via JVM runtime |
 
 Do not mix runtime language packages from another native package generation
 unless a later release note explicitly declares that combination compatible.

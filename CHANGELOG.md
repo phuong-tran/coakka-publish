@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-17
 
+- Published the Spring Boot starter and Quarkus extension to Maven Central as
+  `io.github.phuong-tran.coakka:spring-boot-starter:2.4.1` and
+  `io.github.phuong-tran.coakka:quarkus-extension:2.4.1`. Both Java 17 adapter
+  bundles use Runtime `2.4.1`, leave framework BOM selection to the
+  application, and pass clean public-coordinate request/reply smokes.
 - Published and registry-verified `CoAkka.Runtime==2.4.1` and
   `CoAkka.Logger==1.2.3` to NuGet. Both packages target `net8.0`, and their
   exact repository-signed downloads execute on .NET 8, 9, and 10 while
