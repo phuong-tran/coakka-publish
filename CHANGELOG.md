@@ -5,6 +5,12 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-17
 
+- Published and registry-verified `CoAkka.Runtime==2.4.1` and
+  `CoAkka.Logger==1.2.3` to NuGet. Both packages target `net8.0`, and their
+  exact repository-signed downloads execute on .NET 8, 9, and 10 while
+  retaining native generations `2.4.0+c2f53117` and `1.2.1+f50756ebff0d`.
+  Every candidate ZIP entry remains byte-identical; NuGet.org adds only
+  `.signature.p7s`.
 - Published `coakka.logger` to Maven Central as
   `io.github.phuong-tran.coakka:logger:1.2.2`. The signed JVM distribution
   embeds frozen native generation `1.2.1+f50756ebff0d`, supports Java 8 and

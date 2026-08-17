@@ -15,7 +15,7 @@ its native runtime generation.
 | PyPI | [`coakka-v2-connector==2.4.0`](https://pypi.org/project/coakka-v2-connector/2.4.0/) | [`coakka-logger==1.2.2`](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go@v1.7.0`](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.7.0) | [`coakka-logger-go@v1.2.5`](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.5) |
 | SwiftPM | [`coakka-runtime-swift` v2.4.0](https://github.com/phuong-tran/coakka-runtime-swift/tree/v2.4.0) | [`coakka-logger-swift` v1.2.1](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.1) |
-| NuGet | [`CoAkka.Runtime` 2.4.0](https://www.nuget.org/packages/CoAkka.Runtime/2.4.0) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
+| NuGet | [`CoAkka.Runtime` 2.4.1](https://www.nuget.org/packages/CoAkka.Runtime/2.4.1) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
 
 JVM, Spring Boot, and Quarkus artifacts are also available through the checked-in
 Maven layout in this repository. Native archives and source-first connector

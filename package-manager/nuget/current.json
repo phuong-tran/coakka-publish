@@ -1,18 +1,19 @@
 {
   "lane": "nuget",
   "status": "current",
-  "released_at": "2026-08-12",
+  "released_at": "2026-08-17",
   "packages": [
     {
       "surface": "runtime",
       "package": "CoAkka.Runtime",
-      "version": "2.4.0",
-      "url": "https://www.nuget.org/packages/CoAkka.Runtime/2.4.0",
-      "connector_source": "0afb5e9a7c19d002ec4fd1cd2d1044e86b096d5e",
-      "payload_staging_source": "ef40ada4df41ee3fc7c9d21c2f4c4cad9c95b582",
+      "version": "2.4.1",
+      "url": "https://www.nuget.org/packages/CoAkka.Runtime/2.4.1",
+      "connector_source": "801a0a6e67152465568c72246b112beb299360a3",
       "native_generation": "2.4.0+c2f53117",
-      "candidate_sha256": "d0888ceb902641b141aabec9d8d650f9912dbe92583c1de870bdb97b1862df20",
-      "registry_sha256": "c00ecf62b691937f7ad05f8178ea45a383c9a1de093463e1914fb73a4210c182",
+      "minimum_dotnet_tfm": "net8.0",
+      "tested_dotnet_tfms": ["net8.0", "net9.0", "net10.0"],
+      "candidate_sha256": "c62304e1011a96a0a80fc288a0d0d55683401c49efb9823f7fa38eeaca959b94",
+      "registry_sha256": "c61d8bbc7b1c7343008988a4546cad1117aa810948bb7b61b8add00d19d2d6ae",
       "platforms": [
         "osx-arm64",
         "linux-arm64",
@@ -24,9 +25,14 @@
     {
       "surface": "logger",
       "package": "CoAkka.Logger",
-      "version": "1.2.2",
-      "url": "https://www.nuget.org/packages/CoAkka.Logger/1.2.2",
+      "version": "1.2.3",
+      "url": "https://www.nuget.org/packages/CoAkka.Logger/1.2.3",
+      "connector_source": "801a0a6e67152465568c72246b112beb299360a3",
       "native_generation": "1.2.1+f50756ebff0d",
+      "minimum_dotnet_tfm": "net8.0",
+      "tested_dotnet_tfms": ["net8.0", "net9.0", "net10.0"],
+      "candidate_sha256": "a929605a76631cff07c1488f8e60f09331e66bbeeb6d72fd8e1a1741922bb93c",
+      "registry_sha256": "f9501901ab71376feb027ccf97100f17de48792c45ddf5a843d88ec129a9639a",
       "platforms": [
         "osx-arm64",
         "linux-arm64",
@@ -37,17 +43,12 @@
     }
   ],
   "verification": [
-    "csharp/scripts/check-nuget-readiness.sh",
-    "csharp/scripts/smoke-packaged-package.sh",
-    "dotnet add package CoAkka.Runtime --version 2.4.0 from https://api.nuget.org/v3/index.json",
-    "dotnet nuget verify --all on the NuGet.org repository-signed package",
-    "all 16 staged ZIP entries match the registry package byte-for-byte; NuGet.org adds only .signature.p7s",
-    "clean consumer runtime host request/reply and route-miss deadletter smoke",
-    "live Spring Boot-to-C# diagnostics, route-miss, create, update, list, and delete over explicit network nodes",
-    "C# package readiness and clean registry request/reply/deadletter smoke against native generation 2.4.0+c2f53117",
-    "logger/csharp/scripts/check-nuget-readiness.sh",
-    "logger/csharp/scripts/smoke-packaged-package.sh",
-    "dotnet add package CoAkka.Logger --version 1.2.2 from https://api.nuget.org/v3/index.json",
-    "clean consumer logger host smoke"
+    "csharp/scripts/check-nuget-readiness.sh and logger/csharp/scripts/check-nuget-readiness.sh",
+    "the same immutable candidates execute packaged consumers for net8.0, net9.0, and net10.0",
+    "dotnet nuget verify --all passes both NuGet.org repository-signed packages",
+    "all candidate ZIP entries match each registry package byte-for-byte; NuGet.org adds only .signature.p7s",
+    "Runtime request/reply and route-miss deadletter execute on .NET 8, .NET 9, and .NET 10",
+    "Logger accepted write, drain, and bounded-pressure drop execute on .NET 8, .NET 9, and .NET 10",
+    "connector CI run 31992973586 passes all jobs"
   ]
 }
