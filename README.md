@@ -488,6 +488,9 @@ Current published lanes:
   - `coakka.v2:coakka-jvm-native-runtime-v2`
   - `coakka.spring:coakka-spring-boot-starter`
   - `coakka.quarkus:coakka-quarkus-extension`
+- Maven Central Runtime coordinate
+  `io.github.phuong-tran.coakka:runtime:2.4.1`; the logger coordinate is not
+  published in this channel yet
 - runtime v2 public `C` ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`
@@ -635,7 +638,7 @@ These artifacts are the current public runtime set:
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
 | Native C ABI | `runtime/native/releases/2.4.0+c2f53117/coakka-runtime-native-v2-2.4.0.tar.gz` | `2.4.0+c2f53117` | `2.4.0+c2f53117` |
-| JVM runtime | `coakka.v2:coakka-jvm-native-runtime-v2` | `2.4.0-gc2f53117-0afb5e9` | `2.4.0+c2f53117` |
+| JVM runtime | `io.github.phuong-tran.coakka:runtime` | `2.4.1` | `2.4.0+c2f53117` |
 | Python artifact mirror | `coakka_v2_connector` wheel | `2.4.0`, source `0afb5e9` | `2.4.0+c2f53117` |
 | Node.js artifact mirror | `coakka-v2-connector-node` tarball | `2.4.0`, source `0afb5e9` | `2.4.0+c2f53117` |
 | Bun artifact mirror | `coakka-v2-connector-bun` tarball | `2.4.0`, source `0afb5e9` | `2.4.0+c2f53117` |
