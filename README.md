@@ -194,6 +194,7 @@ version number.
 
 | Channel | Runtime package | Logger package |
 | --- | --- | --- |
+| Maven Central | [`coakka.runtime` 2.4.1](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/runtime/2.4.1) | [`coakka.logger` 1.2.2](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/logger/1.2.2) |
 | NuGet | [`CoAkka.Runtime` 2.4.0](https://www.nuget.org/packages/CoAkka.Runtime/2.4.0) | [`CoAkka.Logger` 1.2.2](https://www.nuget.org/packages/CoAkka.Logger/1.2.2) |
 | npm | [`coakka-v2-connector-node` 2.4.0](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.4.0) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
 | PyPI | [`coakka-v2-connector` 2.4.0](https://pypi.org/project/coakka-v2-connector/2.4.0/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
@@ -459,6 +460,8 @@ Repository rules:
 
 Current published lanes:
 
+- `Maven Central: io.github.phuong-tran.coakka:runtime:2.4.1`
+- `Maven Central: io.github.phuong-tran.coakka:logger:1.2.2`
 - `npm: coakka-v2-connector-node@2.4.0`
 - `npm: coakka-v2-connector-bun@2.4.0`
 - `npm: coakka-v2-connector-electron@2.4.0`
@@ -488,9 +491,9 @@ Current published lanes:
   - `coakka.v2:coakka-jvm-native-runtime-v2`
   - `coakka.spring:coakka-spring-boot-starter`
   - `coakka.quarkus:coakka-quarkus-extension`
-- Maven Central Runtime coordinate
-  `io.github.phuong-tran.coakka:runtime:2.4.1`; the logger coordinate is not
-  published in this channel yet
+- Maven Central coordinates
+  `io.github.phuong-tran.coakka:runtime:2.4.1` and
+  `io.github.phuong-tran.coakka:logger:1.2.2`
 - runtime v2 public `C` ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`

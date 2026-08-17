@@ -1,5 +1,16 @@
 # logger/jvm
 
+The current JVM logger is published on Maven Central as:
+
+```text
+io.github.phuong-tran.coakka:logger:1.2.2
+```
+
+Use [the runnable JVM logger samples](https://github.com/phuong-tran/coakka-samples/tree/main/logger/jvm)
+for Kotlin and Java basic/pressure flows. Release identity and verification
+evidence are recorded in
+[`docs/releases/2026-08-17-logger-jvm-maven-central-1.2.2.md`](../../docs/releases/2026-08-17-logger-jvm-maven-central-1.2.2.md).
+
 Published logger JVM drops live under `logger/jvm/releases/<release-dir>/`.
 
 Current release-directory bias:

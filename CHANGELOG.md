@@ -5,12 +5,17 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-17
 
+- Published `coakka.logger` to Maven Central as
+  `io.github.phuong-tran.coakka:logger:1.2.2`. The signed JVM distribution
+  embeds frozen native generation `1.2.1+f50756ebff0d`, supports Java 8 and
+  newer JVMs, and links users to the artifact catalog, canonical docs, and
+  runnable JVM logger samples.
 - Published `coakka.runtime` to Maven Central as
   `io.github.phuong-tran.coakka:runtime:2.4.1`. The signed JVM distribution
   embeds native generation `2.4.0+c2f53117`, supports Java 8 and newer JVMs,
   links its POM to `coakka-publish` and `coakka-samples`, and records the exact
-  connector source identity. No Maven Central logger artifact is included in
-  this release.
+  connector source identity. Runtime and Logger remain independently versioned
+  Maven Central components.
 
 ## 2026-08-15
 
