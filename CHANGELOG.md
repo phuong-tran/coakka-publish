@@ -5,6 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-17
 
+- Published SwiftPM Runtime `v2.4.1` and Logger `v1.2.2`. Both patch releases
+  rebuild only their bundled macOS ARM64 dylib with deployment target `13.0`,
+  preserve their Swift tools baseline and native generation, and pass public
+  CI plus clean consumers cloned from the remote annotated tags.
 - Published the Spring Boot starter and Quarkus extension to Maven Central as
   `io.github.phuong-tran.coakka:spring-boot-starter:2.4.1` and
   `io.github.phuong-tran.coakka:quarkus-extension:2.4.1`. Both Java 17 adapter
