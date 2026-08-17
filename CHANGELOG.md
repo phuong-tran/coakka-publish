@@ -8,8 +8,9 @@ remain under [docs/releases/](docs/releases/).
 - Published `coakka.runtime` to Maven Central as
   `io.github.phuong-tran.coakka:runtime:2.4.1`. The signed JVM distribution
   embeds native generation `2.4.0+c2f53117`, supports Java 8 and newer JVMs,
-  and links its POM to `coakka-publish`, `coakka-samples`, and the JVM connector
-  source. No Maven Central logger artifact is included in this release.
+  links its POM to `coakka-publish` and `coakka-samples`, and records the exact
+  connector source identity. No Maven Central logger artifact is included in
+  this release.
 
 ## 2026-08-15
 
