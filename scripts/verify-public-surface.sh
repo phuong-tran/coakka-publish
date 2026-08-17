@@ -481,45 +481,54 @@ if deps != expected:
     rendered = ", ".join(f"{name}={value}" for name, value in sorted(deps.items()))
     raise SystemExit(f"Electron package has unexpected runtime dependencies: {rendered}")
 
-for key in ("optionalDependencies", "peerDependencies"):
-    extra = package.get(key) or {}
-    if extra:
-        rendered = ", ".join(sorted(extra))
-        raise SystemExit(f"Electron package has dependency entries in {key}: {rendered}")
+optional = package.get("optionalDependencies") or {}
+if optional:
+    rendered = ", ".join(sorted(optional))
+    raise SystemExit(f"Electron package has dependency entries in optionalDependencies: {rendered}")
+peers = package.get("peerDependencies") or {}
+if peers != {"electron": ">=42"}:
+    raise SystemExit(f"Electron package has unexpected peerDependencies: {peers}")
 PY
   rm -rf "${tmp_root}"
 }
 
 verify_logger_electron_archive_has_expected_package_dependencies() {
   local artifact="$1"
-  local tmp_root package_json
+  local tmp_root package_json node_artifact_name expected_node_dependency
 
   tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/coakka-public-logger-electron.XXXXXX")"
   COPYFILE_DISABLE=1 tar -xzf "${artifact}" -C "${tmp_root}"
   package_json="${tmp_root}/package/package.json"
   [[ -f "${package_json}" ]] || fail "logger Electron package archive is missing package/package.json"
 
-  python3 - "${package_json}" <<'PY'
+  node_artifact_name="$(basename "$(public_manifest_path_for_label "logger Node package")")"
+  expected_node_dependency="${node_artifact_name#coakka-logger-node-}"
+  expected_node_dependency="${expected_node_dependency%.tgz}"
+
+  python3 - "${package_json}" "${expected_node_dependency}" <<'PY'
 import json
 import sys
 
 package_json = sys.argv[1]
+expected_node_dependency = sys.argv[2]
 with open(package_json, "r", encoding="utf-8") as fh:
     package = json.load(fh)
 
 deps = package.get("dependencies") or {}
 expected = {
-    "coakka-logger-node": "https://raw.githubusercontent.com/phuong-tran/coakka-publish/main/logger/node/releases/1.2.1+f50756ebff0d/coakka-logger-node-1.2.1.tgz"
+    "coakka-logger-node": expected_node_dependency
 }
 if deps != expected:
     rendered = ", ".join(f"{name}={value}" for name, value in sorted(deps.items()))
     raise SystemExit(f"logger Electron package has unexpected dependencies: {rendered}")
 
-for key in ("optionalDependencies", "peerDependencies"):
-    extra = package.get(key) or {}
-    if extra:
-        rendered = ", ".join(sorted(extra))
-        raise SystemExit(f"logger Electron package has dependency entries in {key}: {rendered}")
+optional = package.get("optionalDependencies") or {}
+if optional:
+    rendered = ", ".join(sorted(optional))
+    raise SystemExit(f"logger Electron package has dependency entries in optionalDependencies: {rendered}")
+peers = package.get("peerDependencies") or {}
+if peers != {"electron": ">=42"}:
+    raise SystemExit(f"logger Electron package has unexpected peerDependencies: {peers}")
 PY
   rm -rf "${tmp_root}"
 }

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "electron",
+  "release_directory": "1.2.1+f50756ebff0d-7718ce6",
+  "artifact": {
+    "package_name": "coakka-logger-electron",
+    "artifact_version": "1.2.7",
+    "bundled_native_core_version": "1.2.1",
+    "bundled_native_package_version": "1.2.1+f50756ebff0d",
+    "bundled_native_git_commit": "f50756ebff0d"
+  },
+  "included_platforms": ["linux-aarch64", "linux-x86_64", "macos-aarch64", "windows-aarch64", "windows-x86_64"],
+  "source": {"connector_repo": "coakkaJVMConnector@7718ce6", "generated_at_utc": "2026-08-17T18:39:10Z"},
+  "compatibility": {"node": ">=22", "electron": ">=42", "macos_deployment_target": "13.0 via coakka-logger-node"},
+  "public_boundary": {"direct_dependency": "coakka-logger-node@1.2.7", "no_external_native_runtime_dependencies": true, "no_public_core_dependency_names": true},
+  "files": [
+    {"name": "CONSUMING.md", "size_bytes": 609, "sha256": "72f86fa052a759583b296ba66f1f21df331a0d39ad575e767d6adb6144351b8c"},
+    {"name": "README.md", "size_bytes": 2694, "sha256": "c9c8e5e26f1a092cf93d4f0427f37a57ea2c75d7ab8a23014258b88961535773"},
+    {"name": "coakka-logger-electron-1.2.7.tgz", "size_bytes": 6207, "sha256": "a92e4cf969b5cd18166032ef664fccf787457e7d0dfcbc0b3954dcf8b2d116a2"}
+  ]
+}

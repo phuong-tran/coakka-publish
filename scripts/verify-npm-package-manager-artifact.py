@@ -4,6 +4,7 @@ import argparse
 import json
 import posixpath
 import re
+import struct
 import sys
 import tarfile
 from pathlib import Path
@@ -26,8 +27,10 @@ CURRENT_CANDIDATES = (
         "node",
         "coakka-v2-connector-node",
         "2.4.0+c2f53117",
-        "package-manager/npm/candidates/0afb5e9/runtime/node/coakka-v2-connector-node-2.4.0.tgz",
+        "package-manager/npm/candidates/7718ce6/runtime/node/coakka-v2-connector-node-2.4.1.tgz",
         None,
+        {"node": ">=22"},
+        {},
     ),
     (
         "runtime-bun",
@@ -35,8 +38,10 @@ CURRENT_CANDIDATES = (
         "bun",
         "coakka-v2-connector-bun",
         "2.4.0+c2f53117",
-        "package-manager/npm/candidates/0afb5e9/runtime/bun/coakka-v2-connector-bun-2.4.0.tgz",
+        "package-manager/npm/candidates/7718ce6/runtime/bun/coakka-v2-connector-bun-2.4.1.tgz",
         None,
+        {"bun": ">=1.2.0"},
+        {},
     ),
     (
         "runtime-electron",
@@ -44,8 +49,10 @@ CURRENT_CANDIDATES = (
         "electron",
         "coakka-v2-connector-electron",
         "2.4.0+c2f53117",
-        "package-manager/npm/candidates/0afb5e9/runtime/electron/coakka-v2-connector-electron-2.4.0.tgz",
+        "package-manager/npm/candidates/7718ce6/runtime/electron/coakka-v2-connector-electron-2.4.1.tgz",
         "coakka-v2-connector-node",
+        {"node": ">=22"},
+        {"electron": ">=42"},
     ),
     (
         "logger-node",
@@ -53,8 +60,10 @@ CURRENT_CANDIDATES = (
         "node",
         "coakka-logger-node",
         "1.2.1+f50756ebff0d",
-        "package-manager/npm/candidates/b052a3f/logger/node/coakka-logger-node-1.2.6.tgz",
+        "package-manager/npm/candidates/7718ce6/logger/node/coakka-logger-node-1.2.7.tgz",
         None,
+        {"node": ">=22"},
+        {},
     ),
     (
         "logger-bun",
@@ -62,8 +71,10 @@ CURRENT_CANDIDATES = (
         "bun",
         "coakka-logger-bun",
         "1.2.1+f50756ebff0d",
-        "package-manager/npm/candidates/b052a3f/logger/bun/coakka-logger-bun-1.2.6.tgz",
+        "package-manager/npm/candidates/7718ce6/logger/bun/coakka-logger-bun-1.2.7.tgz",
         None,
+        {"bun": ">=1.2.0"},
+        {},
     ),
     (
         "logger-electron",
@@ -71,8 +82,10 @@ CURRENT_CANDIDATES = (
         "electron",
         "coakka-logger-electron",
         "1.2.1+f50756ebff0d",
-        "package-manager/npm/candidates/b052a3f/logger/electron/coakka-logger-electron-1.2.6.tgz",
+        "package-manager/npm/candidates/7718ce6/logger/electron/coakka-logger-electron-1.2.7.tgz",
         "coakka-logger-node",
+        {"node": ">=22"},
+        {"electron": ">=42"},
     ),
 )
 
@@ -377,6 +390,64 @@ def verify_native_shape(
     fail(f"unsupported npm role: {role}")
 
 
+def macho_deployment_target(payload: bytes, member_name: str) -> tuple[int, int, int]:
+    if len(payload) < 32:
+        fail(f"Mach-O header is truncated: {member_name}")
+    magic = payload[:4]
+    if magic == b"\xcf\xfa\xed\xfe":
+        byte_order = "<"
+    elif magic == b"\xfe\xed\xfa\xcf":
+        byte_order = ">"
+    else:
+        fail(f"expected a thin 64-bit Mach-O binary: {member_name}")
+
+    command_count, commands_size = struct.unpack_from(f"{byte_order}II", payload, 16)
+    commands_end = 32 + commands_size
+    if commands_end > len(payload):
+        fail(f"Mach-O load commands are truncated: {member_name}")
+
+    offset = 32
+    for _ in range(command_count):
+        if offset + 8 > commands_end:
+            fail(f"Mach-O load command header is truncated: {member_name}")
+        command, command_size = struct.unpack_from(f"{byte_order}II", payload, offset)
+        if command_size < 8 or offset + command_size > commands_end:
+            fail(f"Mach-O load command has an invalid size: {member_name}")
+        if command == 0x32:
+            if command_size < 24:
+                fail(f"LC_BUILD_VERSION is truncated: {member_name}")
+            packed = struct.unpack_from(f"{byte_order}I", payload, offset + 12)[0]
+            return packed >> 16, (packed >> 8) & 0xFF, packed & 0xFF
+        if command == 0x24:
+            if command_size < 16:
+                fail(f"LC_VERSION_MIN_MACOSX is truncated: {member_name}")
+            packed = struct.unpack_from(f"{byte_order}I", payload, offset + 8)[0]
+            return packed >> 16, (packed >> 8) & 0xFF, packed & 0xFF
+        offset += command_size
+    fail(f"macOS deployment target load command is missing: {member_name}")
+
+
+def verify_macos_deployment_target(
+    archive: tarfile.TarFile,
+    names: list[str],
+    product: str,
+    role: str,
+    expected_native_generation: str,
+) -> None:
+    if role == "electron":
+        return
+    matches = native_members_by_platform(names, product, expected_native_generation)["macos-aarch64"]
+    if len(matches) != 1:
+        return
+    member = archive.extractfile(matches[0])
+    if member is None:
+        fail(f"macOS native payload is not a regular file: {matches[0]}")
+    actual = macho_deployment_target(member.read(), matches[0])
+    if actual != (13, 0, 0):
+        rendered = ".".join(str(part) for part in actual)
+        fail(f"macOS deployment target must be 13.0.0, found {rendered}: {matches[0]}")
+
+
 def verify_scripts(package: dict) -> None:
     scripts = package.get("scripts") or {}
     for script_name in INSTALL_LIFECYCLE_SCRIPTS:
@@ -421,7 +492,11 @@ def verify_dependency_spec(name: str, spec: str, expected_internal_dependency: s
         fail(f"first-party dependency must use an npm registry version spec: {name}={spec}")
 
 
-def verify_dependencies(package: dict, expected_internal_dependency: str | None) -> None:
+def verify_dependencies(
+    package: dict,
+    expected_internal_dependency: str | None,
+    expected_peer_dependencies: dict[str, str],
+) -> None:
     errors = []
     runtime_deps = dependency_bucket(package, "dependencies")
     optional_deps = dependency_bucket(package, "optionalDependencies")
@@ -451,10 +526,13 @@ def verify_dependencies(package: dict, expected_internal_dependency: str | None)
                 except VerificationError as exc:
                     errors.append(str(exc))
 
-    for bucket_name, deps in (("optionalDependencies", optional_deps), ("peerDependencies", peer_deps)):
-        if deps:
-            rendered = ", ".join(sorted(deps))
-            errors.append(f"package-manager artifact must not rely on {bucket_name}: {rendered}")
+    if optional_deps:
+        rendered = ", ".join(sorted(optional_deps))
+        errors.append(f"package-manager artifact must not rely on optionalDependencies: {rendered}")
+    if peer_deps != expected_peer_dependencies:
+        errors.append(
+            f"peerDependencies mismatch: expected={expected_peer_dependencies!r} actual={peer_deps!r}"
+        )
     if errors:
         fail("; ".join(errors))
 
@@ -522,6 +600,8 @@ def verify_package_json(
     package_name: str,
     role: str,
     expected_internal_dependency: str | None,
+    expected_engines: dict[str, str],
+    expected_peer_dependencies: dict[str, str],
     require_public_metadata: bool,
 ) -> None:
     errors = []
@@ -535,9 +615,13 @@ def verify_package_json(
         errors.append("package-manager artifact must declare main")
     if not package.get("types"):
         errors.append("package-manager artifact must declare types")
+    if package.get("engines", {}) != expected_engines:
+        errors.append(
+            f"package engines mismatch: expected={expected_engines!r} actual={package.get('engines', {})!r}"
+        )
     checks = [
         (verify_scripts, (package,)),
-        (verify_dependencies, (package, expected_internal_dependency)),
+        (verify_dependencies, (package, expected_internal_dependency, expected_peer_dependencies)),
         (verify_exports, (package, require_public_metadata or role == "electron")),
     ]
     if require_public_metadata:
@@ -560,6 +644,8 @@ def verify_artifact(
     expected_internal_dependency: str | None,
     require_public_metadata: bool = False,
     expected_platforms: tuple[str, ...] = PACKAGE_PLATFORMS,
+    expected_engines: dict[str, str] | None = None,
+    expected_peer_dependencies: dict[str, str] | None = None,
 ) -> None:
     if not artifact.is_file():
         fail(f"artifact does not exist: {artifact}")
@@ -572,13 +658,34 @@ def verify_artifact(
             text_content_error = str(exc)
         else:
             text_content_error = ""
+        try:
+            verify_macos_deployment_target(archive, names, product, role, expected_native_generation)
+        except VerificationError as exc:
+            macos_target_error = str(exc)
+        else:
+            macos_target_error = ""
 
     errors = []
     if text_content_error:
         errors.append(text_content_error)
+    if macos_target_error:
+        errors.append(macos_target_error)
+    expected_engines = expected_engines or {}
+    expected_peer_dependencies = expected_peer_dependencies or {}
     for check, check_args in (
         (verify_member_boundary, (names,)),
-        (verify_package_json, (package, package_name, role, expected_internal_dependency, require_public_metadata)),
+        (
+            verify_package_json,
+            (
+                package,
+                package_name,
+                role,
+                expected_internal_dependency,
+                expected_engines,
+                expected_peer_dependencies,
+                require_public_metadata,
+            ),
+        ),
         (verify_license, (package, names)),
         (
             verify_native_shape,
@@ -646,10 +753,29 @@ def parse_args() -> argparse.Namespace:
 
 def verify_current_candidates() -> int:
     failures = 0
-    for label, product, role, package_name, native_generation, relative_path, dependency in CURRENT_CANDIDATES:
+    for (
+        label,
+        product,
+        role,
+        package_name,
+        native_generation,
+        relative_path,
+        dependency,
+        engines,
+        peer_dependencies,
+    ) in CURRENT_CANDIDATES:
         artifact = REPO_ROOT / relative_path
         try:
-            verify_artifact(artifact, product, role, package_name, native_generation, dependency)
+            verify_artifact(
+                artifact,
+                product,
+                role,
+                package_name,
+                native_generation,
+                dependency,
+                expected_engines=engines,
+                expected_peer_dependencies=peer_dependencies,
+            )
         except VerificationError as exc:
             failures += 1
             print(f"[npm-package-manager] {label}: blocked: {exc}", file=sys.stderr)
@@ -672,6 +798,16 @@ def manifest_expected_platforms(entry: dict, label: str) -> tuple[str, ...]:
     if not isinstance(value, list) or not value or not all(isinstance(item, str) and item for item in value):
         fail(f"{label} manifest entry field 'expected_platforms' must be a non-empty string list")
     return tuple(value)
+
+
+def manifest_expected_string_map(entry: dict, key: str, label: str) -> dict[str, str]:
+    value = entry.get(key, {})
+    if not isinstance(value, dict) or not all(
+        isinstance(name, str) and name and isinstance(spec, str) and spec
+        for name, spec in value.items()
+    ):
+        fail(f"{label} manifest entry field {key!r} must be a string map")
+    return value
 
 
 def verify_candidate_manifest(manifest_path: Path, require_public_metadata: bool) -> int:
@@ -709,6 +845,10 @@ def verify_candidate_manifest(manifest_path: Path, require_public_metadata: bool
                 entry.get("expected_internal_dependency"),
                 require_public_metadata,
                 expected_platforms=manifest_expected_platforms(entry, label),
+                expected_engines=manifest_expected_string_map(entry, "expected_engines", label),
+                expected_peer_dependencies=manifest_expected_string_map(
+                    entry, "expected_peer_dependencies", label
+                ),
             )
         except VerificationError as exc:
             failures += 1

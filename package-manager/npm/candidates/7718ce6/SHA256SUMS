@@ -1,0 +1,8 @@
+979a41cd63c27dd02b61fcb0b59b6f298f01986f0525e5fd92b34a4e8c964bed  README.md
+2f46d5f4ed53e37c37c04fd6f0558e06f9a2f4f30c512fa2b6d33f302e59195b  manifest.json
+ce544f36548575d5b7ab159e0f6c897741f707cfc499540cf08352f5f64a1070  logger/bun/coakka-logger-bun-1.2.7.tgz
+a92e4cf969b5cd18166032ef664fccf787457e7d0dfcbc0b3954dcf8b2d116a2  logger/electron/coakka-logger-electron-1.2.7.tgz
+bcab76e1f290c256dcd44c66b532ea1fef0faec29d661b3065c544b8caa81f59  logger/node/coakka-logger-node-1.2.7.tgz
+2f59c01a1efc334517c9f9ab19fb16980f8424514b2b8ba65f86a668b7f9d66f  runtime/bun/coakka-v2-connector-bun-2.4.1.tgz
+05d011f6f686bdd59b80e6d43109ec4971e53e183967096337ac8d77b6b41e56  runtime/electron/coakka-v2-connector-electron-2.4.1.tgz
+035ff25660cdaf3ad117b39376a52ff365f5502f04221eeecfc5d8c659841d37  runtime/node/coakka-v2-connector-node-2.4.1.tgz

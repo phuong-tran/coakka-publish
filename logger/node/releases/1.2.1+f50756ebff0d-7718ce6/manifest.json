@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "product_lane": "logger",
+  "language_lane": "node",
+  "release_directory": "1.2.1+f50756ebff0d-7718ce6",
+  "artifact": {
+    "package_name": "coakka-logger-node",
+    "artifact_version": "1.2.7",
+    "bundled_native_core_version": "1.2.1",
+    "bundled_native_package_version": "1.2.1+f50756ebff0d",
+    "bundled_native_git_commit": "f50756ebff0d"
+  },
+  "included_platforms": ["linux-aarch64", "linux-x86_64", "macos-aarch64", "windows-aarch64", "windows-x86_64"],
+  "source": {"connector_repo": "coakkaJVMConnector@7718ce6", "generated_at_utc": "2026-08-17T18:39:10Z"},
+  "compatibility": {"node": ">=22", "macos_deployment_target": "13.0"},
+  "files": [
+    {"name": "CONSUMING.md", "size_bytes": 874, "sha256": "a2287e2e7e7470ab122707a4eb0128021d34b1e6344fb071d157a6e9de90b5b1"},
+    {"name": "README.md", "size_bytes": 2913, "sha256": "e61eb7a92380136e3a3be57d17cca2024a1ede47f45ee91c2d4f1fea5b973039"},
+    {"name": "coakka-logger-node-1.2.7.tgz", "size_bytes": 9193568, "sha256": "bcab76e1f290c256dcd44c66b532ea1fef0faec29d661b3065c544b8caa81f59"}
+  ]
+}

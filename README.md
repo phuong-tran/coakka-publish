@@ -241,6 +241,7 @@ Current runtime release note:
 [2026-08-11 runtime 2.4.0](docs/releases/2026-08-11-runtime-2.4.0-c2f53117.md).
 
 Current package-manager release notes:
+[2026-08-18 JavaScript and desktop host compatibility](docs/releases/2026-08-18-javascript-desktop-host-compatibility.md),
 [2026-08-17 NuGet .NET app-host baseline](docs/releases/2026-08-17-dotnet-nuget-app-host-baseline.md),
 [2026-08-12 npm JavaScript runtime 2.4.0](docs/releases/2026-08-12-npm-runtime-2.4.0.md),
 [2026-08-12 NuGet C# runtime 2.4.0](docs/releases/2026-08-12-nuget-csharp-runtime-2.4.0.md),

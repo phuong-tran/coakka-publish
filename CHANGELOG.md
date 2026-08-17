@@ -3,6 +3,14 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-18
+
+- Staged Node.js, Bun, Electron, and Tauri Runtime/Logger compatibility
+  patches from connector `7718ce6`. The artifact mirror and six-package npm
+  candidate restore macOS deployment target 13.0 and declare Node.js 22, Bun
+  1.2.0, Electron 42, and Rust 1.77.2 minimum hosts. npm publication remains
+  pending registry authentication.
+
 ## 2026-08-17
 
 - Published SwiftPM Runtime `v2.4.1` and Logger `v1.2.2`. Both patch releases

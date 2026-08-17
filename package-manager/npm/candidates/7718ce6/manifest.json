@@ -1,0 +1,103 @@
+{
+  "status": "staged",
+  "connector_commit": "7718ce6",
+  "created_date": "2026-08-18",
+  "registry": "https://registry.npmjs.org/",
+  "native_runtime_generation": "2.4.0+c2f53117",
+  "logger_native_generation": "1.2.1+f50756ebff0d",
+  "release_reason": "restore supported JavaScript and desktop host floors and correct macOS deployment targets",
+  "publish_order": [
+    "runtime-node",
+    "logger-node",
+    "runtime-bun",
+    "logger-bun",
+    "runtime-electron",
+    "logger-electron"
+  ],
+  "packages": [
+    {
+      "label": "runtime-node",
+      "product": "runtime",
+      "role": "node",
+      "package_name": "coakka-v2-connector-node",
+      "version": "2.4.1",
+      "expected_native_generation": "2.4.0+c2f53117",
+      "expected_engines": {"node": ">=22"},
+      "relative_path": "runtime/node/coakka-v2-connector-node-2.4.1.tgz",
+      "sha256": "035ff25660cdaf3ad117b39376a52ff365f5502f04221eeecfc5d8c659841d37",
+      "registry_shasum": "d2c6561f65394cddef666f299289f18c93df33ed",
+      "registry_integrity": "sha512-U/cr0RJz5FhmgBnWbakjtFoMoLDDUgH8jrpUtzR2AvUGBU5rafv14Bk+yx+KQjh9bFv2le4/ohhJ+VGHNUb1iw=="
+    },
+    {
+      "label": "logger-node",
+      "product": "logger",
+      "role": "node",
+      "package_name": "coakka-logger-node",
+      "version": "1.2.7",
+      "expected_native_generation": "1.2.1+f50756ebff0d",
+      "expected_engines": {"node": ">=22"},
+      "relative_path": "logger/node/coakka-logger-node-1.2.7.tgz",
+      "sha256": "bcab76e1f290c256dcd44c66b532ea1fef0faec29d661b3065c544b8caa81f59",
+      "registry_shasum": "bb62acf29ce88c0ef12bc29c35cd3b28e8a47eeb",
+      "registry_integrity": "sha512-QeSUbUi5wzaSKLlYzRWsW26tJ7S7E4GdF2WsH47FQjpyZ/cRwsh6fBG2f83m8Kbox0j5Z1Sl2EX6NAqGFLZcEg=="
+    },
+    {
+      "label": "runtime-bun",
+      "product": "runtime",
+      "role": "bun",
+      "package_name": "coakka-v2-connector-bun",
+      "version": "2.4.1",
+      "expected_native_generation": "2.4.0+c2f53117",
+      "expected_engines": {"bun": ">=1.2.0"},
+      "relative_path": "runtime/bun/coakka-v2-connector-bun-2.4.1.tgz",
+      "sha256": "2f59c01a1efc334517c9f9ab19fb16980f8424514b2b8ba65f86a668b7f9d66f",
+      "registry_shasum": "f49611863a3babd28c95a11c7ff1a72aa2bee693",
+      "registry_integrity": "sha512-S2cPwEfLwF/rG3MxzKGdC++BMgrB9V1zzznzoLL8ZBDg12WTtdJd25mlvb0MVdDTvEgjXNiNcC8Z1kJrGja5eg=="
+    },
+    {
+      "label": "logger-bun",
+      "product": "logger",
+      "role": "bun",
+      "package_name": "coakka-logger-bun",
+      "version": "1.2.7",
+      "expected_native_generation": "1.2.1+f50756ebff0d",
+      "expected_engines": {"bun": ">=1.2.0"},
+      "relative_path": "logger/bun/coakka-logger-bun-1.2.7.tgz",
+      "sha256": "ce544f36548575d5b7ab159e0f6c897741f707cfc499540cf08352f5f64a1070",
+      "registry_shasum": "11e21224abf868c7424b5a23caed8433457aa033",
+      "registry_integrity": "sha512-VIB47TULveaA3WnFFfK9GpFQUX87/MUbWT10wP94cyYa7iTBbfREL1O9a7jgZcG8z7hb7sMTnxr/LT7RVp3Z5g=="
+    },
+    {
+      "label": "runtime-electron",
+      "product": "runtime",
+      "role": "electron",
+      "package_name": "coakka-v2-connector-electron",
+      "version": "2.4.1",
+      "expected_native_generation": "2.4.0+c2f53117",
+      "expected_internal_dependency": "coakka-v2-connector-node",
+      "expected_internal_dependency_spec": "coakka-v2-connector-node@2.4.1",
+      "expected_engines": {"node": ">=22"},
+      "expected_peer_dependencies": {"electron": ">=42"},
+      "relative_path": "runtime/electron/coakka-v2-connector-electron-2.4.1.tgz",
+      "sha256": "05d011f6f686bdd59b80e6d43109ec4971e53e183967096337ac8d77b6b41e56",
+      "registry_shasum": "fd960a540d6247fc3a0c61c0b0984ca8d0269aa1",
+      "registry_integrity": "sha512-y1fuRf0hHVtnJ1AURtf5PRly2tdGR5iI4AW2m7Qdu1E5A36LHJCgZ3oOQKsVC9hIQARfw6Fa9zr5H6j/mqWQ9g=="
+    },
+    {
+      "label": "logger-electron",
+      "product": "logger",
+      "role": "electron",
+      "package_name": "coakka-logger-electron",
+      "version": "1.2.7",
+      "expected_native_generation": "1.2.1+f50756ebff0d",
+      "expected_internal_dependency": "coakka-logger-node",
+      "expected_internal_dependency_spec": "coakka-logger-node@1.2.7",
+      "expected_engines": {"node": ">=22"},
+      "expected_peer_dependencies": {"electron": ">=42"},
+      "relative_path": "logger/electron/coakka-logger-electron-1.2.7.tgz",
+      "sha256": "a92e4cf969b5cd18166032ef664fccf787457e7d0dfcbc0b3954dcf8b2d116a2",
+      "registry_shasum": "0c6b7062230a2a08580f50fc9a999636f66d280b",
+      "registry_integrity": "sha512-aUtKFpKgwup/kv+P3+7vuwClUCOsjoaMr3ERtngnJPl6KbeghLyXoxdPCJ5i3NRFO+Pz5e7auUumbIZLq5ninA=="
+    }
+  ]
+}
