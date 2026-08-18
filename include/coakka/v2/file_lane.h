@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "coakka/v2/lane_grant.h"
 #include "coakka/v2/runtime.h"
 
 #ifdef __cplusplus
@@ -127,6 +128,20 @@ typedef struct coakka_v2_file_lane_config_t {
 } coakka_v2_file_lane_config_t;
 
 /**
+ * Additive owner-aware creation config for replica-pinned grants.
+ *
+ * Embedding the complete legacy lane config keeps its ABI frozen. The nested
+ * configs are projected during create_owned; pointed-to strings and security
+ * inputs are borrowed only for that call. Callers initialize all three
+ * struct_size fields to the size of their respective type.
+ */
+typedef struct coakka_v2_file_lane_owned_config_t {
+  size_t struct_size;
+  coakka_v2_file_lane_config_t lane;
+  coakka_v2_lane_owner_config_t owner;
+} coakka_v2_file_lane_owned_config_t;
+
+/**
  * Receiver-side authorization prepared by the host after its control-plane
  * policy accepts a file offer. The lane copies every string and digest.
  * destination_path is local-only and is never sent over the wire.
@@ -157,6 +172,24 @@ typedef struct coakka_v2_file_send_spec_t {
   uint8_t expected_sha256[COAKKA_V2_FILE_LANE_SHA256_BYTES];
   uint32_t timeout_ms;
 } coakka_v2_file_send_spec_t;
+
+/**
+ * Receiver-issued capability for one prepared point-to-point transfer.
+ *
+ * The fixed-size value owns all text, including the secret token. Do not log
+ * or persist the token. owner names the exact receiver instance and listener;
+ * callers must not replace it with a replica-load-balancing service address.
+ * The owning receive record may reuse this capability for bounded resume and
+ * idempotent completed-status handling until forget, stop, or owner loss.
+ */
+typedef struct coakka_v2_file_receive_grant_t {
+  size_t struct_size;
+  coakka_v2_lane_owner_endpoint_t owner;
+  char transfer_id[COAKKA_V2_FILE_LANE_TRANSFER_ID_MAX_BYTES + 1u];
+  char authorization_token[COAKKA_V2_FILE_LANE_TOKEN_MAX_BYTES + 1u];
+  uint64_t expected_size;
+  uint8_t expected_sha256[COAKKA_V2_FILE_LANE_SHA256_BYTES];
+} coakka_v2_file_receive_grant_t;
 
 /**
  * Caller-owned point-in-time transfer projection.
@@ -229,6 +262,29 @@ coakka_v2_file_lane_create_ex(const coakka_v2_file_lane_config_t *config,
                               coakka_v2_file_lane_t **out_lane);
 
 /**
+ * Creates a stopped owner-aware lane for replica-pinned receive grants.
+ * The complete nested lane and owner configuration is copied before return.
+ * The caller owns a successful result and must stop it before destroy.
+ *
+ * @param config Borrowed owner-aware configuration copied during this call.
+ * @return Owned stopped lane, or NULL on validation or allocation failure.
+ */
+coakka_v2_file_lane_t *coakka_v2_file_lane_create_owned(
+    const coakka_v2_file_lane_owned_config_t *config);
+
+/**
+ * Status-returning owner-aware factory used by prepare_receive_grant.
+ * Caller output is set to NULL on failure and receives ownership on success.
+ *
+ * @param config Borrowed owner-aware configuration copied during this call.
+ * @param out_lane Receives the owned stopped lane on success or NULL on failure.
+ * @return COAKKA_V2_OK on success or a stable validation/allocation status.
+ */
+coakka_v2_status_t coakka_v2_file_lane_create_owned_ex(
+    const coakka_v2_file_lane_owned_config_t *config,
+    coakka_v2_file_lane_t **out_lane);
+
+/**
  * Releases a stopped lane. Passing NULL is allowed. The caller must prevent
  * concurrent API calls and call stop before destroying a started lane.
  *
@@ -237,7 +293,8 @@ coakka_v2_file_lane_create_ex(const coakka_v2_file_lane_config_t *config,
 void coakka_v2_file_lane_destroy(coakka_v2_file_lane_t *lane);
 
 /**
- * Starts enabled workers and the receiver listener.
+ * Starts enabled workers and the receiver listener. Start and stop transitions
+ * are internally serialized; admission is accepted only after start completes.
  *
  * @param lane Owned stopped lane.
  * @return COAKKA_V2_OK on transition to started, otherwise a stable status.
@@ -245,8 +302,9 @@ void coakka_v2_file_lane_destroy(coakka_v2_file_lane_t *lane);
 coakka_v2_status_t coakka_v2_file_lane_start(coakka_v2_file_lane_t *lane);
 
 /**
- * Requests stop, wakes transfer waits, joins workers, and rejects new work.
- * Repeated calls are safe.
+ * Requests stop, rejects new admission before cancellation begins, wakes
+ * transfer waits, and joins workers. Repeated and concurrent start/stop calls
+ * are internally serialized. Destroy still requires caller-side exclusion.
  *
  * @param lane Owned lane to stop.
  * @return COAKKA_V2_OK for a valid lane, including repeated stop calls.
@@ -275,6 +333,24 @@ coakka_v2_file_lane_get_bound_port(coakka_v2_file_lane_t *lane,
 coakka_v2_status_t
 coakka_v2_file_lane_prepare_receive(coakka_v2_file_lane_t *lane,
                                     const coakka_v2_file_receive_spec_t *spec);
+
+/**
+ * Prepares one receive and returns a replica-pinned transfer capability.
+ *
+ * The lane must be started with receiver capability and a valid owner config.
+ * On success the grant contains the lane's copied owner identity and actual
+ * bound port. The same owner may retain it for the receive record's bounded
+ * resume/idempotent law. Stop, forget, or owner loss invalidates it; another
+ * replica must prepare and issue a new grant rather than reuse this one.
+ *
+ * @param lane Borrowed started receiver-capable lane.
+ * @param spec Borrowed receive authorization copied by the lane.
+ * @param out_grant Caller-owned output initialized with struct_size.
+ * @return COAKKA_V2_OK, or a stable rejection without modifying out_grant.
+ */
+coakka_v2_status_t coakka_v2_file_lane_prepare_receive_grant(
+    coakka_v2_file_lane_t *lane, const coakka_v2_file_receive_spec_t *spec,
+    coakka_v2_file_receive_grant_t *out_grant);
 
 /**
  * Opens and validates the source synchronously, then queues one bounded send.

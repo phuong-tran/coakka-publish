@@ -52,14 +52,23 @@ make_jvm_jar() {
   local target="$1"
   local native_version="$2"
   local marker="$3"
+  local manifest_shape="${4:-plain}"
   local root="${tmp_root}/jvm-root"
   rm -rf "${root}"
   mkdir -p "${root}/META-INF" "${root}/native/macos-aarch64"
-  cat >"${root}/META-INF/MANIFEST.MF" <<EOF
+  if [[ "${manifest_shape}" == "folded" ]]; then
+    printf '%s\r\n' \
+      'Manifest-Version: 1.0' \
+      'Coakka-V2-Native-Package-Version: 0.1.0+' \
+      ' 63c346e' \
+      '' >"${root}/META-INF/MANIFEST.MF"
+  else
+    cat >"${root}/META-INF/MANIFEST.MF" <<EOF
 Manifest-Version: 1.0
 Coakka-V2-Native-Package-Version: ${native_version}
 
 EOF
+  fi
   printf '%s\n' "${marker}" >"${root}/native/macos-aarch64/libcoakka_runtime_v2.dylib"
   (cd "${root}" && zip -qr "${target}" .)
 }
@@ -159,6 +168,11 @@ verify_intake() {
 good_jvm="${tmp_root}/coakka-jvm-native-runtime-v2-0.1.0.jar"
 make_jvm_jar "${good_jvm}" "0.1.0+63c346e" "public runtime binary placeholder"
 verify_intake "clean JVM jar" jvm "${good_jvm}"
+
+folded_jvm="${tmp_root}/coakka-jvm-native-runtime-v2-0.1.0-folded.jar"
+make_jvm_jar \
+  "${folded_jvm}" "0.1.0+63c346e" "public runtime binary placeholder" folded
+verify_intake "folded-manifest JVM jar" jvm "${folded_jvm}"
 
 good_android="${tmp_root}/coakka-runtime-android-1.1.0.aar"
 make_android_aar "${good_android}" "0.1.0+63c346e" "public runtime binary placeholder"

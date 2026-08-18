@@ -129,6 +129,7 @@ parse_release_lanes
 
 native_version="$(jq -er '.version' "${native_manifest}")"
 native_source="$(jq -er '.sourceSnapshot' "${native_manifest}")"
+native_source_coordinate="${native_source:0:8}"
 manifest_release="$(jq -er '.release' "${native_manifest}")"
 [[ "${manifest_release}" == "${native_release}" ]] ||
   fail "native manifest release mismatch: ${manifest_release}"
@@ -235,7 +236,7 @@ stage_lane() {
   echo "[stage-runtime-connectors] staged runtime/${lane}/releases/${release_directory}"
 }
 
-jvm_version="${connector_version}-g${native_source}-${connector_source}"
+jvm_version="${connector_version}-g${native_source_coordinate}-${connector_source}"
 jvm_dist="${connector_root}/v2/jvm/build/dist/coakka-jvm-native-runtime-v2"
 
 if lane_selected jvm; then

@@ -108,6 +108,18 @@ def parse_assignment(text: str, pattern: str, label: str) -> str:
     return match.group(1)
 
 
+def unfold_jar_manifest(text: str) -> str:
+    logical_lines: list[str] = []
+    for line in text.replace("\r\n", "\n").split("\n"):
+        if line.startswith(" "):
+            if not logical_lines:
+                fail("JAR manifest begins with an invalid continuation line")
+            logical_lines[-1] += line[1:]
+        else:
+            logical_lines.append(line)
+    return "\n".join(logical_lines)
+
+
 def read_tar_member_text(archive: tarfile.TarFile, suffix: str) -> str:
     matches = [member for member in archive.getmembers() if member.name.endswith(suffix) and member.isfile()]
     if len(matches) != 1:
@@ -122,7 +134,9 @@ def jvm_native_version(artifact: Path) -> tuple[str, list[str]]:
     with ZipFile(artifact) as archive:
         entries = archive.namelist()
         try:
-            manifest_text = archive.read("META-INF/MANIFEST.MF").decode("utf-8")
+            manifest_text = unfold_jar_manifest(
+                archive.read("META-INF/MANIFEST.MF").decode("utf-8")
+            )
         except KeyError as exc:
             fail(f"{artifact.name} is missing META-INF/MANIFEST.MF")
             raise AssertionError from exc

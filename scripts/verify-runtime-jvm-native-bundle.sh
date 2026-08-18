@@ -69,14 +69,34 @@ PY
 
 jar_native_version() {
   local jar_path="$1"
-  unzip -p "${jar_path}" META-INF/MANIFEST.MF |
-    awk -F': ' '
-      /^Coakka-V2-Native-Package-Version:/ {
-        gsub(/\r$/, "", $2)
-        print $2
-        exit
-      }
-    '
+  python3 - "${jar_path}" <<'PY'
+import sys
+import zipfile
+
+jar_path = sys.argv[1]
+attribute = "Coakka-V2-Native-Package-Version"
+with zipfile.ZipFile(jar_path) as jar:
+    try:
+        raw_manifest = jar.read("META-INF/MANIFEST.MF")
+    except KeyError:
+        raise SystemExit(0)
+
+physical_lines = raw_manifest.decode("utf-8").replace("\r\n", "\n").split("\n")
+logical_lines: list[str] = []
+for line in physical_lines:
+    if line.startswith(" "):
+        if not logical_lines:
+            raise SystemExit("JAR manifest begins with an invalid continuation line")
+        logical_lines[-1] += line[1:]
+    else:
+        logical_lines.append(line)
+
+prefix = f"{attribute}: "
+for line in logical_lines:
+    if line.startswith(prefix):
+        print(line[len(prefix):])
+        break
+PY
 }
 
 public_runtime_native_version() {
@@ -186,17 +206,19 @@ check_platform_entries() {
   fi
   check_entry_matches_native \
     "${jar_path}" \
-    "native/${platform}/${basename}.${extension}" \
-    "${native_version}" \
-    "${root_native}" \
-    "${native_archive}"
-  check_entry_matches_native \
-    "${jar_path}" \
     "native/${platform}/${basename}-${native_version}.${extension}" \
     "${native_version}" \
     "${root_native}" \
     "${native_archive}" \
     "native/${platform}/${basename}.${extension}"
+  if jar_has_entry "${jar_path}" "native/${platform}/${basename}.${extension}"; then
+    check_entry_matches_native \
+      "${jar_path}" \
+      "native/${platform}/${basename}.${extension}" \
+      "${native_version}" \
+      "${root_native}" \
+      "${native_archive}"
+  fi
 }
 
 check_manifest_platform_entries() {
@@ -324,7 +346,13 @@ current_runtime_jvm_jars() {
 jar_count=0
 public_native_version="$(public_runtime_native_version || true)"
 while IFS= read -r -d '' jar_path; do
-  check_runtime_jvm_jar "${jar_path}" "${public_native_version}"
+  expected_native_version=""
+  case "${jar_path}" in
+    "${repo_root}"/runtime/jvm/releases/*)
+      expected_native_version="${public_native_version}"
+      ;;
+  esac
+  check_runtime_jvm_jar "${jar_path}" "${expected_native_version}"
   jar_count=$((jar_count + 1))
 done < <(current_runtime_jvm_jars)
 

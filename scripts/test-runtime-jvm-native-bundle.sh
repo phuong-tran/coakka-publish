@@ -107,6 +107,20 @@ make_native_archive() {
   )
 }
 
+fold_native_version_manifest_entry() {
+  local jar_path="$1"
+  local root="${tmp_root}/folded-manifest-root"
+
+  rm -rf "${root}"
+  mkdir -p "${root}/META-INF"
+  printf '%s\r\n' \
+    'Manifest-Version: 1.0' \
+    'Coakka-V2-Native-Package-Version: 0.1.0+' \
+    ' test' \
+    '' >"${root}/META-INF/MANIFEST.MF"
+  (cd "${root}" && zip -q "${jar_path}" META-INF/MANIFEST.MF)
+}
+
 write_public_manifest() {
   local fixture="$1"
   local native_version="$2"
@@ -175,6 +189,14 @@ printf 'macos-aarch64 newer root\n' >"${good_fixture}/native/macos-aarch64/libco
 printf 'windows-aarch64 newer root\n' >"${good_fixture}/native/windows-aarch64/libcoakka_runtime_v2.dll"
 printf 'windows-x86_64 newer root\n' >"${good_fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll"
 expect_success "matching runtime JVM bundle" "${good_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
+
+folded_manifest_fixture="$(make_fixture folded-manifest)"
+fold_native_version_manifest_entry \
+  "${folded_manifest_fixture}/runtime/jvm/releases/0.1.0+test/coakka-jvm-native-runtime-v2-0.1.0-test.jar"
+fold_native_version_manifest_entry \
+  "${folded_manifest_fixture}/maven/coakka/v2/coakka-jvm-native-runtime-v2/0.1.0-test/coakka-jvm-native-runtime-v2-0.1.0-test.jar"
+expect_success "folded JAR manifest native version" \
+  "${folded_manifest_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
 
 subset_fixture="$(make_fixture manifest-subset)"
 cat >"${subset_fixture}/runtime/native/releases/0.1.0+test/manifest.json" <<'EOF'

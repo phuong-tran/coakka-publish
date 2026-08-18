@@ -1,0 +1,29 @@
+{
+  "name": "coakka-runtime-native-v2",
+  "version": "2.5.0",
+  "release": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+  "sourceSnapshot": "4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+  "profile": "public-runtime",
+  "archive": "coakka-runtime-native-v2-2.5.0.tar.gz",
+  "sha256": "c9500525773a29d3a0430d185738608ec6cec45fa0e5a538d9c0dd027c2d6a84",
+  "platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ],
+  "headers": [
+    "include/coakka/v2/runtime.h",
+    "include/coakka/v2/control.h",
+    "include/coakka/v2/client.h",
+    "include/coakka/v2/file_lane.h",
+    "include/coakka/v2/lane_grant.h",
+    "include/coakka/v2/stream_lane.h",
+    "include/coakka/v2/runtime_auth.h",
+    "include/coakka/v2/runtime_distribution.h",
+    "include/coakka/v2/runtime_transport_config.h",
+    "include/coakka/v2/transport.h",
+    "include/coakka/v2/utils.h"
+  ]
+}
