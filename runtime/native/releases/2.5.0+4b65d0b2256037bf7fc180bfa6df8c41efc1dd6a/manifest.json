@@ -5,7 +5,7 @@
   "sourceSnapshot": "4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
   "profile": "public-runtime",
   "archive": "coakka-runtime-native-v2-2.5.0.tar.gz",
-  "sha256": "c9500525773a29d3a0430d185738608ec6cec45fa0e5a538d9c0dd027c2d6a84",
+  "sha256": "1a7c33f167e03554e7eaa137b92d87f697c8dcec7186fa42b12b70460006055c",
   "platforms": [
     "linux-aarch64",
     "linux-x86_64",

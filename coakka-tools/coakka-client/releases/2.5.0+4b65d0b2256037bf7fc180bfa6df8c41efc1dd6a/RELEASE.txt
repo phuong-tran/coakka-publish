@@ -5,12 +5,12 @@ source_commit=4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a
 release_id=2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a
 platform=linux-x86_64
 archive=coakka-client-v2-2.5.0-linux-x86_64.tar.gz
-sha256=8898e1e2b613b01a8e52d345302f73c64027efe97ffe1a1b67cc32d5d6c432f4
+sha256=2c79fc5ad9a2702109f81b6cd0210454977c71ff8166681ffe9229151882a422
 prefix=coakka-client-v2-2.5.0-linux-x86_64
 
 platform=linux-aarch64
 archive=coakka-client-v2-2.5.0-linux-aarch64.tar.gz
-sha256=0b4ef942e1834c238edc7da12c5a160b14f672713c8959e1ae7d709bc724c13d
+sha256=2cb213f01d263384e720ae8cd065778dbd469873cfce422cc8ff93383fe788a4
 prefix=coakka-client-v2-2.5.0-linux-aarch64
 
 platform=macos-aarch64

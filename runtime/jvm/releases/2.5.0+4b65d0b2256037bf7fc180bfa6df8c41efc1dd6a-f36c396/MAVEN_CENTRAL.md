@@ -25,7 +25,7 @@ use:
 
 ```kotlin
 dependencies {
-    implementation("io.github.phuong-tran.coakka:runtime:2.4.1")
+    implementation("io.github.phuong-tran.coakka:runtime:2.5.0")
 }
 ```
 
@@ -35,7 +35,7 @@ Maven consumers use:
 <dependency>
   <groupId>io.github.phuong-tran.coakka</groupId>
   <artifactId>runtime</artifactId>
-  <version>2.4.1</version>
+  <version>2.5.0</version>
 </dependency>
 ```
 
@@ -44,8 +44,9 @@ separate artifact for every JVM release. Optional newer-JVM implementations may
 be added behind the same API only after workload and compatibility evidence
 justify them.
 
-The `2.4.1` Central packaging release embeds exact native generation
-`2.4.0+c2f53117`. Consequently, `RuntimeInfo.runtimeVersion` reports `2.4.0`;
+The `2.5.0` Central packaging release embeds exact native generation
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Consequently,
+`RuntimeInfo.runtimeVersion` reports `2.5.0`;
 the Maven version identifies the immutable JVM distribution, while runtime
 identity continues to identify the native engine generation.
 
@@ -87,12 +88,12 @@ used. Keep the private key outside the repository and backed up securely.
 
 ## Build And Verify
 
-Choose the final clean version. `2.4.1` is the next candidate after the current
-`2.4.0` package train; replace it if the release train advances before upload.
+Choose the final clean version. The current candidate is `2.5.0`; replace it if
+the release train advances before upload.
 
 ```sh
 ./gradlew :v2:jvm:bundleRuntimeJvmForMavenCentral \
-  -PcoakkaV2JvmVersion=2.4.1 \
+  -PcoakkaV2JvmVersion=2.5.0 \
   -PcoakkaMavenCentralNamespaceVerified=true
 ```
 
@@ -104,14 +105,14 @@ empty sources/Javadoc, or an invalid package shape.
 Expected output:
 
 ```text
-v2/jvm/build/central/runtime-2.4.1-central-bundle.zip
+v2/jvm/build/central/runtime-2.5.0-central-bundle.zip
 ```
 
 Run the external Java 8 consumer against the exact staged Central publication:
 
 ```sh
 ./gradlew :v2:jvm:verifyRuntimeJvmCentralConsumerJava8 \
-  -PcoakkaV2JvmVersion=2.4.1 \
+  -PcoakkaV2JvmVersion=2.5.0 \
   -PcoakkaMavenCentralNamespaceVerified=true
 ```
 
@@ -119,7 +120,7 @@ Before upload, independently verify all five detached signatures with the
 production public key:
 
 ```sh
-artifact_dir=v2/jvm/build/central/bundle-root/io/github/phuong-tran/coakka/runtime/2.4.1
+artifact_dir=v2/jvm/build/central/bundle-root/io/github/phuong-tran/coakka/runtime/2.5.0
 for signature in "$artifact_dir"/*.asc; do
   gpg --verify "$signature" "${signature%.asc}"
 done
@@ -133,8 +134,8 @@ value only to the release shell:
 ```sh
 export CENTRAL_PUBLISHER_TOKEN='...'
 scripts/upload_maven_central_bundle.sh \
-  v2/jvm/build/central/runtime-2.4.1-central-bundle.zip \
-  coakka.runtime-2.4.1
+  v2/jvm/build/central/runtime-2.5.0-central-bundle.zip \
+  coakka.runtime-2.5.0
 ```
 
 The script always creates a `USER_MANAGED` deployment. Review Central's
