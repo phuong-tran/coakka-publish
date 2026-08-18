@@ -591,11 +591,11 @@ Current limits:
   path.
 - Remote read/observe remains a future runtime surface across all platforms.
 
-The macOS ARM64 and Linux ARM64/x86-64 packages completed matching-host command
-and `serve` smoke. Windows ARM64 completed matching-host command execution.
-Both Windows architectures passed cross-build, PE architecture, dependency,
-archive, and checksum gates; Windows x86-64 matching-host execution remains a
-release-day gate.
+All five packages completed matching-host command execution. macOS ARM64,
+Linux ARM64/x86-64, and Windows x86-64 also completed `serve` smoke. Both
+Windows architectures pass PE architecture, dependency, archive, and checksum
+gates. Windows x86-64 evidence is Core Actions run `32115663861` over exact
+Publish commit `d5cff2a7922470b4b33bd48cac2b472bb75acbc4`.
 
 Candidate note:
 [`docs/releases/2026-08-18-runtime-2.5.0-candidate.md`](docs/releases/2026-08-18-runtime-2.5.0-candidate.md)
