@@ -8,12 +8,10 @@ code.
 Current artifact generation:
 
 ```text
-native runtime:   2.4.0+c2f53117
-connector source: 0afb5e9
-JavaScript/Tauri patch source: 7718ce6
-JVM/Maven Central: 2.4.1
-source artifacts: 2.4.0+c2f53117-0afb5e9
-JavaScript/Tauri patch artifacts: 2.4.0+c2f53117-7718ce6
+native runtime:   2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a
+connector source: f36c396
+payload staging:  e75df01
+source artifacts: 2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396
 ```
 
 ## Evidence Terms
@@ -30,28 +28,29 @@ JavaScript/Tauri patch artifacts: 2.4.0+c2f53117-7718ce6
 the Windows 11 ARM64 test VM uses Microsoft x64 emulation and is identified as
 such; it is not presented as x86-64 hardware evidence.
 
-## Native 2.4.0 Matrix
+## Native 2.5.0 Matrix
 
 | Platform | Library | SHA-256 | Release evidence |
 | --- | --- | --- | --- |
-| Linux ARM64 | `libcoakka_runtime_v2.so` | `9ccd618dbb18fb32a0d7201f13a3163de175c7037c3e5325e84824bb32e1843c` | Native build, runtime identity, exact 133-export, dependency, archive, and package verification pass on the ARM64 UTM host. |
-| Linux x86-64 | `libcoakka_runtime_v2.so` | `465e831fa564cde87fe3af29390071e4241390e1edcd0153c55ce00017f2c248` | Native build, runtime identity, exact 133-export, dependency, archive, and package verification pass on the x86-64 UTM host. |
-| macOS ARM64 | `libcoakka_runtime_v2.dylib` | `5ca37b5f6d5182d4bd25284785c6b386114857074c91ab9dbefecf0dedda637c` | Native build, exact 133-export and dependency gates, full connector conformance, and packaged consumer smokes pass. |
-| Windows ARM64 | `libcoakka_runtime_v2.dll` | `ae26021aac51ae19d06e317b9ce5a43befa9ef1bc8997e6bbd238e09036df3f9` | Zig cross-build plus PE architecture, exact 133-export, dependency, digest, archive, and package gates pass; matching-host execution is not yet recorded for 2.4.0. |
-| Windows x86-64 | `libcoakka_runtime_v2.dll` | `795615adb861b74d9c017d480a377a08cd355e1fb83648f06b43ee85c5f049d6` | Zig cross-build plus PE architecture, exact 133-export, dependency, digest, archive, and package gates pass; matching-host execution is not yet recorded for 2.4.0. |
+| Linux ARM64 | `libcoakka_runtime_v2.so` | `9fae00b6361d185e2a6bc7c0c7a9c232b97dddd4c4e062f44cd4202cee6cfc12` | Native build, runtime identity, exact 139-export, dependency, archive, package, and matching-host execution gates pass. |
+| Linux x86-64 | `libcoakka_runtime_v2.so` | `cf25c7feba3caace786afd7203c311c7626e332a70ca2f07e2e2ff8caff3aa49` | Native build, runtime identity, exact 139-export, dependency, archive, package, and matching-host execution gates pass. |
+| macOS ARM64 | `libcoakka_runtime_v2.dylib` | `391d2256bd5276f7b9001ae9afa8900dd82c5d29e2d81bc0edc1949c509dc4c1` | Native build, exact 139-export and dependency gates, full connector conformance, and packaged consumer smokes pass. |
+| Windows ARM64 | `libcoakka_runtime_v2.dll` | `5662cd77be9e5446bf530c7aedbeccd4b22e5a08b3c96acd92825014abba020f` | Zig cross-build, PE architecture, exact 139-export, dependency, archive, package, and matching-host execution gates pass. |
+| Windows x86-64 | `libcoakka_runtime_v2.dll` | `45e4832d0a4c05cce36ec2dea9cc3e32695159b6bc8c741fce9d0bee583a938f` | Zig cross-build plus PE architecture, exact 139-export, dependency, digest, archive, and package gates pass; matching-host execution is a release-day gate. |
 
 The native archive is
-`runtime/native/releases/2.4.0+c2f53117/coakka-runtime-native-v2-2.4.0.tar.gz`
+`runtime/native/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-native-v2-2.5.0.tar.gz`
 with SHA-256
-`e121c691833beba44a53891130d75f2032cf50c7d37020b8c98f801d13a9ad32`.
+`c9500525773a29d3a0430d185738608ec6cec45fa0e5a538d9c0dd027c2d6a84`.
 It contains all five libraries, the public headers including
 `coakka/v2/file_lane.h` and `coakka/v2/stream_lane.h`, CMake metadata,
 manifest, and per-file checksums.
 
-## Runtime Tool 2.4.0 Matrix
+## Runtime Tool 2.5.0 Matrix
 
 `coakka-client` and `coakka-runtime-inspect` are published for the same five
-platforms under native generation `2.4.0+c2f53117`. Each archive is immutable
+platforms under native generation
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Each archive is immutable
 and checksum-pinned in `artifacts/public-artifacts.tsv`.
 
 | Tool | Matching-host execution | Additional verified payloads |
