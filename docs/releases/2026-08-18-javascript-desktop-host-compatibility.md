@@ -1,7 +1,6 @@
 # JavaScript And Desktop Host Compatibility
 
-Status: artifact mirror and npm candidate staged on August 18, 2026. npm
-registry publication remains pending registry authentication.
+Status: published and registry-verified on August 18, 2026.
 
 The Runtime and Logger Node.js, Bun, Electron, and Tauri lanes previously
 bundled macOS ARM64 dylibs built with an unintended macOS 26.0 deployment
@@ -48,6 +47,12 @@ missing or different target in addition to checking the SHA-256 digest.
 - npm candidate `package-manager/npm/candidates/7718ce6/` passes checksums,
   public metadata, package boundary, exact dependency, engine/peer range, and
   deployment-target gates for all six packages.
+- Registry metadata, SHA-1, integrity, and downloaded tarball bytes match the
+  candidate for all six npm packages. Clean Node.js and Bun consumers complete
+  Runtime request/reply and Logger emit/drain; Electron 42 consumers complete
+  the Runtime and Logger main/preload intent paths.
+- Runtime Tauri `2.4.1-source` passes command and desktop application consumers;
+  Logger Tauri `1.2.2-source` passes its Rust-owned log-intent consumer.
 
 The matching-host executions above ran on a newer macOS ARM64 host and do not
 claim execution on macOS 13. Connector CI run `32058042610` passes at source

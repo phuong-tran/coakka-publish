@@ -1,6 +1,6 @@
 # npm JavaScript And Desktop Compatibility Candidate
 
-Status: staged on August 18, 2026; npm publication remains gated.
+Status: published and registry-verified on August 18, 2026.
 
 This directory records six packages from connector source `7718ce6`:
 
@@ -27,7 +27,7 @@ scripts/publish-npm-package-manager-candidates.sh \
   --dry-run
 ```
 
-After publication, verify the registry metadata and exact tarball bytes:
+Verify the registry metadata and exact tarball bytes:
 
 ```sh
 scripts/verify-npm-registry-candidates.sh \

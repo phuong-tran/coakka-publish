@@ -5,11 +5,12 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-18
 
-- Staged Node.js, Bun, Electron, and Tauri Runtime/Logger compatibility
-  patches from connector `7718ce6`. The artifact mirror and six-package npm
-  candidate restore macOS deployment target 13.0 and declare Node.js 22, Bun
-  1.2.0, Electron 42, and Rust 1.77.2 minimum hosts. npm publication remains
-  pending registry authentication.
+- Published and registry-verified Node.js, Bun, and Electron Runtime `2.4.1`
+  and Logger `1.2.7`, plus Runtime Tauri `2.4.1-source` and Logger Tauri
+  `1.2.2-source`, from candidate `7718ce6`. The patch restores macOS deployment
+  target 13.0 and declares Node.js 22, Bun 1.2.0, Electron 42, and Rust 1.77.2
+  minimum hosts. Exact registry bytes and clean public-coordinate consumers
+  pass.
 
 ## 2026-08-17
 

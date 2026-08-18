@@ -1,7 +1,9 @@
 {
-  "status": "staged",
+  "status": "published_to_npm",
   "connector_commit": "7718ce6",
   "created_date": "2026-08-18",
+  "published_date": "2026-08-18",
+  "verified_date": "2026-08-18",
   "registry": "https://registry.npmjs.org/",
   "native_runtime_generation": "2.4.0+c2f53117",
   "logger_native_generation": "1.2.1+f50756ebff0d",

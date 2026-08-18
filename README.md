@@ -196,7 +196,7 @@ version number.
 | --- | --- | --- |
 | Maven Central | [`coakka.runtime` 2.4.1](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/runtime/2.4.1) | [`coakka.logger` 1.2.2](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/logger/1.2.2) |
 | NuGet | [`CoAkka.Runtime` 2.4.1](https://www.nuget.org/packages/CoAkka.Runtime/2.4.1) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
-| npm | [`coakka-v2-connector-node` 2.4.0](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.4.0) | [`coakka-logger-node` 1.2.6](https://www.npmjs.com/package/coakka-logger-node/v/1.2.6) |
+| npm | [`coakka-v2-connector-node` 2.4.1](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.4.1) | [`coakka-logger-node` 1.2.7](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
 | PyPI | [`coakka-v2-connector` 2.4.0](https://pypi.org/project/coakka-v2-connector/2.4.0/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.7.1](https://github.com/phuong-tran/coakka-runtime-go/tree/v1.7.1) | [`coakka-logger-go` v1.2.6](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.6) |
 | SwiftPM | [`coakka-runtime-swift` v2.4.1](https://github.com/phuong-tran/coakka-runtime-swift/tree/v2.4.1) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
@@ -326,9 +326,8 @@ branding.
 ## Public Status
 
 Current public logger native generation: `1.2.1+f50756ebff0d`.
-Current public logger Bun connector generation: `1.2.1+f50756ebff0d-6fdcc69`.
-Current public logger Tauri/Electron connector generation:
-`1.2.1+f50756ebff0d-3e8a6ae`.
+Current public logger Node.js/Bun/Electron/Tauri patch generation:
+`1.2.1+f50756ebff0d-7718ce6`.
 Current public logger Mojo/Zig source connector generation:
 `1.2.1+f50756ebff0d-8264bba`.
 Current public native runtime generation: `2.4.0+c2f53117`.
@@ -338,9 +337,10 @@ Current public Spring Boot and Quarkus Maven Central adapter versions are
 `spring-boot-starter:2.4.1` and `quarkus-extension:2.4.1`.
 Current public source connector artifact generation:
 `2.4.0+c2f53117-0afb5e9`.
-Current public npm registry candidate generation: `2.4.0+c2f53117-0afb5e9`.
+Current public JavaScript/Tauri patch generation:
+`2.4.0+c2f53117-7718ce6`.
 Current public Node.js, Bun, and Electron npm runtime packages:
-`coakka-v2-connector-{node,bun,electron}@2.4.0`.
+`coakka-v2-connector-{node,bun,electron}@2.4.1`.
 Current public Python PyPI runtime package:
 `coakka-v2-connector==2.4.0`, over native generation `2.4.0+c2f53117`.
 Current public C# runtime NuGet package: `CoAkka.Runtime@2.4.1`, over native
@@ -350,7 +350,7 @@ generation `1.2.1+f50756ebff0d`.
 Current public Mojo/Zig source connector generation:
 `2.4.0+c2f53117-0afb5e9`.
 Current public Tauri intent source connector generation:
-`2.4.0+c2f53117-0afb5e9`.
+`2.4.0+c2f53117-7718ce6`.
 Current public coakka-client generation: `2.4.0+c2f53117` on all five
 supported native platforms.
 Current public coakka-client Docker Linux bundle generation: `1.3.2+caff6d6d`.
@@ -402,11 +402,11 @@ Its release manifest is tracked under
 
 The current root native runtime package is `2.4.0+c2f53117`. The artifact
 mirror publishes JVM runtime, Spring Boot, and Quarkus as
-`2.4.0-gc2f53117-0afb5e9`. Connector artifacts use release directory
-`2.4.0+c2f53117-0afb5e9`. npm and PyPI remain registry-published at `2.4.0`
-from connector source `0afb5e9`; NuGet Runtime `2.4.1` and Logger `1.2.3`
-come from connector source `801a0a6`. All three runtime channels are
-registry-verified.
+`2.4.0-gc2f53117-0afb5e9`. Base connector artifacts use release directory
+`2.4.0+c2f53117-0afb5e9`. npm Runtime `2.4.1` and Logger `1.2.7` come from
+candidate `7718ce6`; PyPI Runtime remains `2.4.0` from connector source
+`0afb5e9`; NuGet Runtime `2.4.1` and Logger `1.2.3` come from connector source
+`801a0a6`. All three runtime channels are registry-verified.
 
 Maven Central publishes the JVM Runtime, Spring Boot starter, and Quarkus
 extension as independently versioned `2.4.1` packages. The static mirror
@@ -414,8 +414,8 @@ coordinates above remain immutable compatibility artifacts; new framework
 adapter consumers should use Maven Central.
 
 Package-manager registries are separate publication channels. npm Node.js,
-Bun, and Electron plus PyPI runtime are current at `2.4.0`; NuGet runtime is
-current at `2.4.1` and NuGet logger at `1.2.3`.
+Bun, and Electron are current at `2.4.1`; PyPI runtime is current at `2.4.0`;
+NuGet runtime is current at `2.4.1` and NuGet logger at `1.2.3`.
 Go modules advance through `coakka-runtime-go@v1.7.1`; the module stays on
 semantic major `v1` because its path has no `/v2` suffix. SwiftPM advances
 through `coakka-runtime-swift@v2.4.1`.
@@ -437,7 +437,7 @@ for public Mojo/Zig source-package lanes so the connector source commit is
 visible at the package list boundary.
 
 The current npm coordinates are listed per package because Node.js, Bun, and
-Electron can advance independently; this release aligns all three at `2.4.0`.
+Electron can advance independently; this release aligns all three at `2.4.1`.
 The Python runtime package
 `coakka-v2-connector==2.4.0` and logger package
 `coakka-logger==1.2.2` are published on PyPI. Superseded PyPI versions
@@ -477,18 +477,18 @@ Current published lanes:
 
 - `Maven Central: io.github.phuong-tran.coakka:runtime:2.4.1`
 - `Maven Central: io.github.phuong-tran.coakka:logger:1.2.2`
-- `npm: coakka-v2-connector-node@2.4.0`
-- `npm: coakka-v2-connector-bun@2.4.0`
-- `npm: coakka-v2-connector-electron@2.4.0`
+- `npm: coakka-v2-connector-node@2.4.1`
+- `npm: coakka-v2-connector-bun@2.4.1`
+- `npm: coakka-v2-connector-electron@2.4.1`
 - `PyPI: coakka-v2-connector==2.4.0`
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.4.1`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.2`
 - `NuGet: CoAkka.Runtime@2.4.1`
 - `NuGet: CoAkka.Logger@1.2.3`
-- `npm: coakka-logger-node@1.2.6`
-- `npm: coakka-logger-bun@1.2.6`
-- `npm: coakka-logger-electron@1.2.6`
+- `npm: coakka-logger-node@1.2.7`
+- `npm: coakka-logger-bun@1.2.7`
+- `npm: coakka-logger-electron@1.2.7`
 - `logger/jvm`
 - `logger/python`
 - `logger/node`
@@ -662,16 +662,16 @@ These artifacts are the current public runtime set:
 | Native C ABI | `runtime/native/releases/2.4.0+c2f53117/coakka-runtime-native-v2-2.4.0.tar.gz` | `2.4.0+c2f53117` | `2.4.0+c2f53117` |
 | JVM runtime | `io.github.phuong-tran.coakka:runtime` | `2.4.1` | `2.4.0+c2f53117` |
 | Python artifact mirror | `coakka_v2_connector` wheel | `2.4.0`, source `0afb5e9` | `2.4.0+c2f53117` |
-| Node.js artifact mirror | `coakka-v2-connector-node` tarball | `2.4.0`, source `0afb5e9` | `2.4.0+c2f53117` |
-| Bun artifact mirror | `coakka-v2-connector-bun` tarball | `2.4.0`, source `0afb5e9` | `2.4.0+c2f53117` |
-| Electron artifact mirror | `coakka-v2-connector-electron` tarball | `2.4.0`, source `0afb5e9` | `2.4.0+c2f53117` |
+| Node.js artifact mirror | `coakka-v2-connector-node` tarball | `2.4.1`, source `7718ce6` | `2.4.0+c2f53117` |
+| Bun artifact mirror | `coakka-v2-connector-bun` tarball | `2.4.1`, source `7718ce6` | `2.4.0+c2f53117` |
+| Electron artifact mirror | `coakka-v2-connector-electron` tarball | `2.4.1`, source `7718ce6` | `2.4.0+c2f53117` |
 | Go runtime artifact | `coakka-v2-connector-go` archive | `2.4.0` | `2.4.0+c2f53117` |
 | C# artifact mirror | `CoAkka.Runtime` package file | `2.4.0` | `2.4.0+c2f53117` |
 | Rust runtime artifact | `coakka-runtime-rs` package | `2.4.0` | `2.4.0+c2f53117` |
 | Swift runtime artifact | `coakka-runtime-swift` package | `2.4.1` | `2.4.0+c2f53117` |
 | Mojo runtime | `runtime/mojo/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-mojo-2.4.0-source.tar.gz` | `2.4.0-source` | `2.4.0+c2f53117` |
 | Zig runtime | `runtime/zig/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-zig-2.4.0-source.tar.gz` | `2.4.0-source` | `2.4.0+c2f53117` |
-| Tauri runtime | `runtime/tauri/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-tauri-intents-2.4.0-source.tar.gz` | `2.4.0-source` | `2.4.0+c2f53117` |
+| Tauri runtime | `runtime/tauri/releases/2.4.0+c2f53117-7718ce6/coakka-runtime-tauri-intents-2.4.1-source.tar.gz` | `2.4.1-source` | `2.4.0+c2f53117` |
 | Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.4.1` | via JVM runtime |
 | Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.4.1` | via JVM runtime |
 
@@ -687,10 +687,11 @@ local handler/ask first, explicit route snapshots second, custom
 envelope/transport policy last.
 
 Release docs and samples present a helper only when the published artifact
-contains it. The `2.4.0` artifact mirror uses connector source `0afb5e9`.
-The registry-published npm and PyPI `2.4.0` packages use connector source
-`0afb5e9`; NuGet Runtime `2.4.1` uses connector source `801a0a6`. All retain
-native generation `2.4.0+c2f53117` and expose File Lane and Stream Lane.
+contains it. The base `2.4.0` artifact mirror uses connector source `0afb5e9`.
+Registry-published npm Runtime `2.4.1` uses candidate `7718ce6`; PyPI `2.4.0`
+uses connector source `0afb5e9`; NuGet Runtime `2.4.1` uses connector source
+`801a0a6`. All retain native generation `2.4.0+c2f53117` and expose File Lane
+and Stream Lane.
 
 Validation gates run before publishing:
 

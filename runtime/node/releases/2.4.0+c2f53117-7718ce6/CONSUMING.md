@@ -36,7 +36,7 @@ Current embedded native package:
 - native core version: `2.4.0`
 - bundled native generation:
   `2.4.0+c2f53117`
-- exact npm `2.4.0` request/reply executes on macOS ARM64 and Linux
+- exact npm `2.4.1` request/reply executes on macOS ARM64 and Linux
   ARM64/x86-64
 - Windows ARM64/x86-64 payloads are verified package contents; matching
   Node.js-on-Windows execution is not recorded for this release

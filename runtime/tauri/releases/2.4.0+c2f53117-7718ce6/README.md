@@ -67,7 +67,7 @@ The package is a source archive with bundled native runtime libraries and a
 command-level smoke under `examples/intent-command`.
 
 The public package is published under
-`coakka-publish/runtime/tauri/releases/2.4.0+c2f53117-0afb5e9/`.
+`coakka-publish/runtime/tauri/releases/2.4.0+c2f53117-7718ce6/`.
 
 ## File Lane Boundary
 

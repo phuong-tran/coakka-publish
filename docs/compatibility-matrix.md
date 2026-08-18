@@ -34,7 +34,8 @@ ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 | Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.4.1` | via JVM runtime |
 | Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.4.1` | via JVM runtime |
 | Language connector archives | `runtime/<lane>/releases/2.4.0+c2f53117-0afb5e9/` | `2.4.0` | `2.4.0+c2f53117` |
-| npm | `coakka-v2-connector-{node,bun,electron}@2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
+| JavaScript/Tauri patch archives | `runtime/{node,bun,electron,tauri}/releases/2.4.0+c2f53117-7718ce6/` | npm `2.4.1`; Tauri `2.4.1-source` | `2.4.0+c2f53117` |
+| npm | `coakka-v2-connector-{node,bun,electron}@2.4.1` | `2.4.1` | `2.4.0+c2f53117` |
 | PyPI | `coakka-v2-connector==2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
 | NuGet | `CoAkka.Runtime==2.4.1` | `2.4.1` | `2.4.0+c2f53117` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.7.1` | `2.4.0+c2f53117` |
@@ -80,10 +81,10 @@ All logger connector lanes below align to logger native generation
 | Native C/C++ logger | `logger/native/releases/1.2.1+f50756ebff0d/coakka-logger-native-1.2.1.tar.gz` | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
 | JVM logger | `coakka.logger:coakka-jvm-native-logger` | `1.2.1-gf50756ebff0d` | `1.2.1+f50756ebff0d` |
 | Python logger | `coakka_logger` package | PyPI `1.2.2` | `1.2.1+f50756ebff0d` |
-| Node.js logger | `coakka-logger-node` package | npm `1.2.6` from connector `b052a3f` | `1.2.1+f50756ebff0d` |
-| Bun logger | `coakka-logger-bun` package | npm `1.2.6` from connector `b052a3f` | `1.2.1+f50756ebff0d` |
-| Electron logger | `coakka-logger-electron` package | npm `1.2.6` from connector `b052a3f` | via `coakka-logger-node@1.2.6` |
-| Tauri logger | `coakka-logger-tauri-intents` source package | `1.2.1+f50756ebff0d-3e8a6ae` | `1.2.1+f50756ebff0d` |
+| Node.js logger | `coakka-logger-node` package | npm `1.2.7` from connector `7718ce6` | `1.2.1+f50756ebff0d` |
+| Bun logger | `coakka-logger-bun` package | npm `1.2.7` from connector `7718ce6` | `1.2.1+f50756ebff0d` |
+| Electron logger | `coakka-logger-electron` package | npm `1.2.7` from connector `7718ce6` | via `coakka-logger-node@1.2.7` |
+| Tauri logger | `coakka-logger-tauri-intents` source package | `1.2.2-source` in `1.2.1+f50756ebff0d-7718ce6` | `1.2.1+f50756ebff0d` |
 | Go logger | `github.com/phuong-tran/coakka-logger-go` Go module | `v1.2.6` | `1.2.1+f50756ebff0d` |
 | C# logger | `CoAkka.Logger` NuGet package | `1.2.3` | `1.2.1+f50756ebff0d` |
 | Rust logger | `coakka-logger-rs` package | `1.2.1+f50756ebff0d` | `1.2.1+f50756ebff0d` |
@@ -103,7 +104,7 @@ All logger connector lanes below align to logger native generation
 
 | Channel | Available surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.4.0`, logger `1.2.6`; registry verified |
+| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.4.1`, logger `1.2.7`; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.4.0` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.7.1`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.4.1`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
@@ -117,12 +118,12 @@ Runtime npm packages are published for the sealed package boundary:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@2.4.0` | `2.4.0+c2f53117` |
-| Bun runtime | `coakka-v2-connector-bun@2.4.0` | `2.4.0+c2f53117` |
-| Electron runtime | `coakka-v2-connector-electron@2.4.0` | via `coakka-v2-connector-node@2.4.0` |
-| Node.js logger | `coakka-logger-node@1.2.6` | `1.2.1+f50756ebff0d` |
-| Bun logger | `coakka-logger-bun@1.2.6` | `1.2.1+f50756ebff0d` |
-| Electron logger | `coakka-logger-electron@1.2.6` | via `coakka-logger-node@1.2.6` |
+| Node.js runtime | `coakka-v2-connector-node@2.4.1` | `2.4.0+c2f53117` |
+| Bun runtime | `coakka-v2-connector-bun@2.4.1` | `2.4.0+c2f53117` |
+| Electron runtime | `coakka-v2-connector-electron@2.4.1` | via `coakka-v2-connector-node@2.4.1` |
+| Node.js logger | `coakka-logger-node@1.2.7` | `1.2.1+f50756ebff0d` |
+| Bun logger | `coakka-logger-bun@1.2.7` | `1.2.1+f50756ebff0d` |
+| Electron logger | `coakka-logger-electron@1.2.7` | via `coakka-logger-node@1.2.7` |
 
 Runtime PyPI package:
 
