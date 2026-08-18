@@ -86,14 +86,20 @@ compatibility manifests, dependency closure, checksums, and matching-host
 evidence.
 
 The artifact-source family acquires immutable external artifacts, verifies
-exact size and SHA-256, then distributes them through File Lane. Eleven addons
-are public at native `1.1.0+d1032f6d`; SFTP is public at replacement native
-`1.2.0+88b9a047`. Read the common
+exact size and SHA-256, then distributes them through File Lane. This family
+exists because File Lane transfers an already-realized local file; it does not
+authenticate to S3, Hugging Face, GitHub, Google Drive, SFTP, or another remote
+source to create that file. In an AI workflow, for example, a provider addon can
+acquire one pinned multi-gigabyte model before File Lane delivers it to the
+selected inference worker, without adding another internal HTTP file server.
+
+Eleven addons are public at native `1.1.0+d1032f6d`; SFTP is public at
+replacement native `1.2.0+88b9a047`. Read the common
 [Runtime Addons](docs/runtime-addons.md) guide before generating integration
 code. This addon family is native-first. Addon-specific language connectors
-may be considered when demonstrated demand justifies their platform,
-packaging, testing, and maintenance cost; none is part of the current release
-contract or a committed roadmap.
+are ready to wrap over the stable C ABI but are not currently released. They
+remain demand-driven because every host adds binding lifetime, packaging,
+credential mapping, platform-test, and maintenance work.
 
 ## Runtime Transport
 

@@ -9,6 +9,45 @@ of CoAkka Runtime, and the default runtime package must not acquire the addon's
 implementation dependencies. Each addon manifest declares the runtime ABI,
 minimum runtime package version, and required runtime features it consumes.
 
+## Why Artifact Source Addons Exist
+
+File Lane transfers a stable local file between CoAkka peers. Real workflows
+often begin before that file exists locally: an AI model may live at one pinned
+Hugging Face commit, a checkpoint in one S3 object version, or a diagnostic
+bundle behind SFTP or an immutable HTTPS URL.
+
+The current Artifact Source Addons, also described as file acquisition
+providers or provider-specific downloaders, own that upstream step:
+
+```text
+external provider identity
+  -> authenticate and acquire
+  -> verify exact size and SHA-256
+  -> stage locally without replacement
+  -> CoAkka File Lane
+  -> destination service
+```
+
+This keeps provider SDKs, credentials, redirect and retry rules, and remote
+identity semantics out of Runtime core. It also avoids creating a private HTTP
+file endpoint with custom body limits, temporary-file cleanup, integrity,
+resume, cancellation, and receiver-completion behavior for every service.
+HTTP remains appropriate for public/browser distribution and CDN-backed files;
+File Lane is the bounded point-to-point path for application-owned peers.
+
+If a file already exists locally, use File Lane directly; no source addon is
+needed. Read [Runtime Addons](../docs/runtime-addons.md) for the AI-era use
+case, provider selection, HTTP comparison, and ownership boundary.
+
+## Current Language Boundary
+
+Released addons currently expose native C ABIs and native C11 consumers only.
+The ABI is ready for JVM, Python, Node.js, Go, .NET, Swift, and other language
+wrappers without rewriting the provider engines, but no such high-level addon
+connector is currently released. Each connector still needs ownership-safe
+bindings, credential/error mapping, packaging, matching-host tests, and ongoing
+maintenance, so this work remains demand-driven.
+
 ## Release Layout
 
 ```text
