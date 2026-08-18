@@ -56,29 +56,28 @@ and checksum-pinned in `artifacts/public-artifacts.tsv`.
 
 | Tool | Matching-host execution | Additional verified payloads |
 | --- | --- | --- |
-| `coakka-client` | macOS ARM64 command and dependency gates pass. | Linux ARM64/x86-64 pass matching-architecture Docker build plus dependency, archive, and checksum gates. Windows ARM64/x86-64 pass cross-build, PE architecture, dependency, archive, and checksum gates. |
-| `coakka-runtime-inspect` | macOS ARM64 and Linux ARM64/x86-64 command plus `serve` smokes pass. | Windows ARM64/x86-64 pass cross-build, PE architecture, dependency, archive, and checksum gates. |
+| `coakka-client` | macOS ARM64, Linux ARM64/x86-64, and Windows ARM64 command execution pass. | All five archives pass dependency, architecture, archive, and checksum gates. |
+| `coakka-runtime-inspect` | macOS ARM64, Linux ARM64/x86-64, and Windows ARM64 command execution pass; macOS and Linux also pass `serve` smokes. | All five archives pass dependency, architecture, archive, and checksum gates. |
 
-Matching-host Linux or Windows command execution is not recorded for the
-`coakka-client` archives. Matching-host Windows execution is not recorded for
-the inspect archives.
+Windows x86-64 matching-host command execution remains a release-day evidence
+gate for both tools.
 
 ## Connector Artifact Matrix
 
 | Surface | Exact artifact coordinate | Native payloads | Current exact-artifact evidence |
 | --- | --- | --- | --- |
-| JVM | `io.github.phuong-tran.coakka:runtime:2.4.1` | All five | Signed Maven Central bundle validation, clean Java 8 and Java 26 consumers, JVM checks, embedded-native verification, packaged runtime smoke, Spring Boot tests, and Quarkus tests pass on macOS ARM64. |
-| Node.js | `runtime/node/releases/2.4.0+c2f53117-7718ce6/` | All five | npm `2.4.1` registry tarball matches the sealed candidate; clean Node 22 and 24 request/reply consumers pass on macOS ARM64. |
-| Bun | `runtime/bun/releases/2.4.0+c2f53117-7718ce6/` | All five | npm `2.4.1` registry tarball matches the sealed candidate; clean Bun 1.2 and current request/reply consumers pass on macOS ARM64. |
-| Electron | `runtime/electron/releases/2.4.0+c2f53117-7718ce6/` | All five through Node | npm `2.4.1` registry tarball matches the sealed candidate; clean Electron 42 and 43 main/preload intent smokes pass on macOS ARM64. |
-| Python | `runtime/python/releases/2.4.0+c2f53117-0afb5e9/` | All five | Source tests, package readiness, clean local wheel request/reply, and File/Stream Lane tests pass on macOS ARM64. |
-| Go | `runtime/go/releases/2.4.0+c2f53117-0afb5e9/` | All five | Packaged request/reply, Stream Lane tests, and `go test ./...` pass; public module publication remains separate. |
-| C# | `runtime/csharp/releases/2.4.0+c2f53117-0afb5e9/` | Five RID assets | Package readiness and clean local NuGet request/reply/deadletter execution pass on macOS ARM64. |
-| Rust | `runtime/rust/releases/2.4.0+c2f53117-0afb5e9/` | All five | Package readiness, packaged request/reply/deadletter, and Stream Lane tests pass on macOS ARM64. |
-| Swift | `runtime/swift/releases/2.4.0+c2f53117-0afb5e9/` | All five | Swift build, native-payload verification, runtime tests, and source-package smokes pass on macOS ARM64; SwiftPM publication remains separate. |
-| Mojo | `runtime/mojo/releases/2.4.0+c2f53117-0afb5e9/` | All five | Strict source/platform gates and native lifecycle, request/reply, and lane checks pass. |
-| Zig | `runtime/zig/releases/2.4.0+c2f53117-0afb5e9/` | All five | Cross-platform compile/link gates plus native lifecycle, request/reply, and lane checks pass. |
-| Tauri | `runtime/tauri/releases/2.4.0+c2f53117-7718ce6/` | All five through Rust | Runtime `2.4.1-source` command-source smoke and real Tauri v2 desktop scaffold tests/build pass on macOS ARM64. |
+| JVM | `runtime/jvm/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five | Java 8 through current JVM checks, embedded-native verification, packaged runtime smoke, Spring Boot tests, and Quarkus tests pass. |
+| Node.js | `runtime/node/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five | Package metadata, tarball contents, packaged request/reply, File Lane, and Stream Lane execution pass. |
+| Bun | `runtime/bun/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five | Package metadata, tarball contents, request/reply, File Lane, and bounded Stream Lane execution pass. |
+| Electron | `runtime/electron/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five through Node | Packaged main/preload/hidden-renderer execution passes. |
+| Python | `runtime/python/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five | Wheel readiness and installed-wheel request/reply, File Lane, and Stream Lane execution pass. |
+| Go | `runtime/go/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five | Native payload, package consumer, request/reply, File Lane, and Stream Lane gates pass. |
+| C# | `runtime/csharp/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | Five RID assets | Warnings-as-errors, NuGet readiness, and packaged .NET 8 execution pass. |
+| Rust | `runtime/rust/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five | Format, Clippy, rustdoc, package readiness, and packaged File/Stream Lane execution pass. |
+| Swift | `runtime/swift/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five | Swift build, native-payload verification, runtime, File Lane, Stream Lane, and source-package gates pass. |
+| Mojo | `runtime/mojo/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five | Strict source/platform gates and native lifecycle, request/reply, File Lane, and Stream Lane checks pass. |
+| Zig | `runtime/zig/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five | Cross-platform compile/link plus native lifecycle, request/reply, File Lane, and Stream Lane gates pass. |
+| Tauri | `runtime/tauri/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | All five through Rust | Runtime `2.5.0-source` command-source and Tauri v2 host tests pass. |
 
 Every release directory has a manifest and `SHA256SUMS`. The manifest records
 the five-platform matrix, native source generation, connector source

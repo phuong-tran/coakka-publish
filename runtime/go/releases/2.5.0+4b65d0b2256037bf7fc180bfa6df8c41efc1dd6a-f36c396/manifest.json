@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "go",
+  "release_directory": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396",
+  "version": "2.5.0",
+  "artifact": {
+    "name": "coakka-v2-connector-go-2.5.0.tar.gz",
+    "bundled_native_package_version": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+    "bundled_native_git_commit": "4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ]
+  },
+  "connector_source_git_commit": "f36c396",
+  "payload_staging_git_commit": "e75df01"
+}

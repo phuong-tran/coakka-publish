@@ -19,7 +19,6 @@ Published POM metadata links users to:
 
 - [canonical artifacts and documentation](https://github.com/phuong-tran/coakka-publish)
 - [runnable samples and learning material](https://github.com/phuong-tran/coakka-samples)
-- [JVM connector source](https://github.com/phuong-tran/coakkaJVMConnector)
 
 After the Portal reports the selected version as `PUBLISHED`, Gradle consumers
 use:

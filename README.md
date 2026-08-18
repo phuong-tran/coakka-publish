@@ -533,15 +533,15 @@ Current published lanes:
 
 ## coakka-client Public Artifacts
 
-Current coakka-client source snapshot: `c2f53117`
+Current coakka-client source snapshot: `4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`
 
 Package contents:
 
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-windows-x86_64.tar.gz`
 - `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz`
 - `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz`
 
@@ -555,20 +555,20 @@ them with the packaged `coakka-client`. Docker Hub sample images are a
 convenience path recorded in the release notes that publish them; the canonical
 binary archives and checksums remain in the release artifacts above.
 
-Release note:
-[`docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md`](docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md)
+Candidate note:
+[`docs/releases/2026-08-18-runtime-2.5.0-candidate.md`](docs/releases/2026-08-18-runtime-2.5.0-candidate.md)
 
 ## coakka-runtime-inspect Public Artifacts
 
-Current coakka-runtime-inspect source snapshot: `c2f53117`
+Current coakka-runtime-inspect source snapshot: `4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`
 
 Package contents:
 
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-windows-x86_64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
 CoAkka Runtime. It is the visual sibling of `coakka-client`: a way to read and
@@ -592,16 +592,17 @@ Current limits:
 - Remote read/observe remains a future runtime surface across all platforms.
 
 The macOS ARM64 and Linux ARM64/x86-64 packages completed matching-host command
-and `serve` smoke. Windows ARM64/x86-64 passed cross-build, PE architecture,
-dependency, archive, and checksum gates; this generation does not claim
-matching-host Windows execution.
+and `serve` smoke. Windows ARM64 completed matching-host command execution.
+Both Windows architectures passed cross-build, PE architecture, dependency,
+archive, and checksum gates; Windows x86-64 matching-host execution remains a
+release-day gate.
 
-Release note:
-[`docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md`](docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md)
+Candidate note:
+[`docs/releases/2026-08-18-runtime-2.5.0-candidate.md`](docs/releases/2026-08-18-runtime-2.5.0-candidate.md)
 
 ## Runtime v2 Public Artifacts
 
-Core source snapshot: `c2f53117f991f67f809a0bf46bac2ce26091eb78`
+Core source snapshot: `4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`
 
 Package contents:
 
@@ -621,7 +622,7 @@ Package contents:
 - `native/windows-aarch64/libcoakka_runtime_v2.dll`
 - `native/windows-x86_64/libcoakka_runtime_v2.dll`
 - `SHA256SUMS`
-- `runtime/native/releases/2.4.0+c2f53117/coakka-runtime-native-v2-2.4.0.tar.gz`
+- `runtime/native/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-native-v2-2.5.0.tar.gz`
 
 The staged native libraries include the runtime C ABI and scanner-clean
 platform libraries for the public artifact surface. The host-facing routing
@@ -629,10 +630,10 @@ contract remains the same across profiles: targets, route generations,
 request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
-The static Runtime JVM mirror uses `2.4.0-gc2f53117-0afb5e9` over native
-package `2.4.0+c2f53117`; its Spring Boot and Quarkus mirrors use the same
-connector generation. Maven Central publishes Runtime, Spring Boot, and
-Quarkus as `2.4.1` from their recorded release commits.
+The Runtime JVM candidate uses `2.5.0-g4b65d0b2-f36c396` over native package
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`; its Spring Boot and Quarkus
+mirrors use the same connector generation. Registry publication remains a
+separate coordinated release step.
 Embedded-native coverage is Linux ARM64/x86-64, macOS ARM64, and Windows
 ARM64/x86-64. Every connector release directory has its own manifest and
 checksums.
@@ -665,19 +666,19 @@ These artifacts are the current public runtime set:
 
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/2.4.0+c2f53117/coakka-runtime-native-v2-2.4.0.tar.gz` | `2.4.0+c2f53117` | `2.4.0+c2f53117` |
-| JVM runtime | `io.github.phuong-tran.coakka:runtime` | `2.4.1` | `2.4.0+c2f53117` |
-| Python artifact mirror | `coakka_v2_connector` wheel | `2.4.0`, source `0afb5e9` | `2.4.0+c2f53117` |
-| Node.js artifact mirror | `coakka-v2-connector-node` tarball | `2.4.1`, source `7718ce6` | `2.4.0+c2f53117` |
-| Bun artifact mirror | `coakka-v2-connector-bun` tarball | `2.4.1`, source `7718ce6` | `2.4.0+c2f53117` |
-| Electron artifact mirror | `coakka-v2-connector-electron` tarball | `2.4.1`, source `7718ce6` | `2.4.0+c2f53117` |
-| Go runtime artifact | `coakka-v2-connector-go` archive | `2.4.0` | `2.4.0+c2f53117` |
-| C# artifact mirror | `CoAkka.Runtime` package file | `2.4.0` | `2.4.0+c2f53117` |
-| Rust runtime artifact | `coakka-runtime-rs` package | `2.4.0` | `2.4.0+c2f53117` |
-| Swift runtime artifact | `coakka-runtime-swift` package | `2.4.1` | `2.4.0+c2f53117` |
-| Mojo runtime | `runtime/mojo/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-mojo-2.4.0-source.tar.gz` | `2.4.0-source` | `2.4.0+c2f53117` |
-| Zig runtime | `runtime/zig/releases/2.4.0+c2f53117-0afb5e9/coakka-runtime-zig-2.4.0-source.tar.gz` | `2.4.0-source` | `2.4.0+c2f53117` |
-| Tauri runtime | `runtime/tauri/releases/2.4.0+c2f53117-7718ce6/coakka-runtime-tauri-intents-2.4.1-source.tar.gz` | `2.4.1-source` | `2.4.0+c2f53117` |
+| Native C ABI | `runtime/native/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-native-v2-2.5.0.tar.gz` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` | same |
+| JVM runtime | `runtime/jvm/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | `2.5.0-g4b65d0b2-f36c396` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Python artifact mirror | `coakka_v2_connector` wheel | `2.5.0`, source `f36c396` | same native generation |
+| Node.js artifact mirror | `coakka-v2-connector-node` tarball | `2.5.0`, source `f36c396` | same native generation |
+| Bun artifact mirror | `coakka-v2-connector-bun` tarball | `2.5.0`, source `f36c396` | same native generation |
+| Electron artifact mirror | `coakka-v2-connector-electron` tarball | `2.5.0`, source `f36c396` | same native generation |
+| Go runtime artifact | `coakka-v2-connector-go` archive | `2.5.0` | same native generation |
+| C# artifact mirror | `CoAkka.Runtime` package file | `2.5.0` | same native generation |
+| Rust runtime artifact | `coakka-runtime-rs` package | `2.5.0` | same native generation |
+| Swift runtime artifact | `coakka-runtime-swift` package | `2.5.0` | same native generation |
+| Mojo runtime | `runtime/mojo/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/coakka-runtime-mojo-2.5.0-source.tar.gz` | `2.5.0-source` | same native generation |
+| Zig runtime | `runtime/zig/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/coakka-runtime-zig-2.5.0-source.tar.gz` | `2.5.0-source` | same native generation |
+| Tauri runtime | `runtime/tauri/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/coakka-runtime-tauri-intents-2.5.0-source.tar.gz` | `2.5.0-source` | same native generation |
 | Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.4.1` | via JVM runtime |
 | Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.4.1` | via JVM runtime |
 
@@ -692,12 +693,11 @@ It defines the intended progression for upcoming connector releases:
 local handler/ask first, explicit route snapshots second, custom
 envelope/transport policy last.
 
-Release docs and samples present a helper only when the published artifact
-contains it. The base `2.4.0` artifact mirror uses connector source `0afb5e9`.
-Registry-published npm Runtime `2.4.1` uses candidate `7718ce6`; PyPI `2.4.0`
-uses connector source `0afb5e9`; NuGet Runtime `2.4.1` uses connector source
-`801a0a6`. All retain native generation `2.4.0+c2f53117` and expose File Lane
-and Stream Lane.
+Release docs and samples present a helper only when the staged artifact
+contains it. The `2.5.0` artifact mirror uses connector source `f36c396` and
+payload-staging commit `e75df01`; all lanes retain exact native generation
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` and expose File Lane and
+Stream Lane. Registry coordinates remain on the prior train until release day.
 
 Validation gates run before publishing:
 
