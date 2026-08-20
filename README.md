@@ -202,8 +202,8 @@ version number.
 | --- | --- | --- |
 | Maven Central | [`coakka.runtime` 2.4.1](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/runtime/2.4.1) | [`coakka.logger` 1.2.2](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/logger/1.2.2) |
 | NuGet | [`CoAkka.Runtime` 2.5.0](https://www.nuget.org/packages/CoAkka.Runtime/2.5.0) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
-| npm | [`coakka-v2-connector-node` 2.4.1](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.4.1) | [`coakka-logger-node` 1.2.7](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
-| PyPI | [`coakka-v2-connector` 2.4.0](https://pypi.org/project/coakka-v2-connector/2.4.0/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
+| npm | [`coakka-v2-connector-node` 2.5.0](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.5.0) | [`coakka-logger-node` 1.2.7](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
+| PyPI | [`coakka-v2-connector` 2.5.0](https://pypi.org/project/coakka-v2-connector/2.5.0/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.8.0](https://github.com/phuong-tran/coakka-runtime-go/tree/v1.8.0) | [`coakka-logger-go` v1.2.6](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.6) |
 | SwiftPM | [`coakka-runtime-swift` v2.5.0](https://github.com/phuong-tran/coakka-runtime-swift/tree/v2.5.0) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
 
@@ -247,6 +247,7 @@ Current runtime release note:
 [2026-08-11 runtime 2.4.0](docs/releases/2026-08-11-runtime-2.4.0-c2f53117.md).
 
 Current package-manager release notes:
+[2026-08-20 PyPI Python Runtime 2.5.0](docs/releases/2026-08-20-python-runtime-2.5.0-pypi.md),
 [2026-08-20 NuGet C# Runtime 2.5.0](docs/releases/2026-08-20-nuget-csharp-runtime-2.5.0.md),
 [2026-08-20 Go runtime v1.8.0 and SwiftPM runtime v2.5.0](docs/releases/2026-08-20-runtime-go-v1.8.0-swiftpm-v2.5.0.md),
 [2026-08-18 JavaScript and desktop host compatibility](docs/releases/2026-08-18-javascript-desktop-host-compatibility.md),
@@ -348,9 +349,10 @@ Current public source connector artifact generation:
 Current public JavaScript/Tauri patch generation:
 `2.4.0+c2f53117-7718ce6`.
 Current public Node.js, Bun, and Electron npm runtime packages:
-`coakka-v2-connector-{node,bun,electron}@2.4.1`.
+`coakka-v2-connector-{node,bun,electron}@2.5.0`.
 Current public Python PyPI runtime package:
-`coakka-v2-connector==2.4.0`, over native generation `2.4.0+c2f53117`.
+`coakka-v2-connector==2.5.0`, over native generation
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`.
 Current public C# runtime NuGet package: `CoAkka.Runtime@2.5.0`, over native
 generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`.
 Current public C# logger NuGet package: `CoAkka.Logger@1.2.3`, over native
@@ -411,9 +413,9 @@ Its release manifest is tracked under
 The current root native runtime package is `2.4.0+c2f53117`. The artifact
 mirror publishes JVM runtime, Spring Boot, and Quarkus as
 `2.4.0-gc2f53117-0afb5e9`. Base connector artifacts use release directory
-`2.4.0+c2f53117-0afb5e9`. npm Runtime `2.4.1` and Logger `1.2.7` come from
-candidate `7718ce6`; PyPI Runtime remains `2.4.0` from connector source
-`0afb5e9`; NuGet Runtime `2.5.0` comes from connector source `6b56a27`, while
+`2.4.0+c2f53117-0afb5e9`. npm Runtime `2.5.0` and PyPI Runtime `2.5.0` come
+from connector source `6b56a27`; Logger npm `1.2.7` comes from candidate
+`7718ce6`; NuGet Runtime `2.5.0` comes from connector source `6b56a27`, while
 Logger `1.2.3` comes from `801a0a6`. All three runtime channels are
 registry-verified.
 
@@ -423,7 +425,7 @@ coordinates above remain immutable compatibility artifacts; new framework
 adapter consumers should use Maven Central.
 
 Package-manager registries are separate publication channels. npm Node.js,
-Bun, and Electron are current at `2.4.1`; PyPI runtime is current at `2.4.0`;
+Bun, and Electron are current at `2.5.0`; PyPI runtime is current at `2.5.0`;
 NuGet runtime is current at `2.5.0` and NuGet logger at `1.2.3`.
 Go modules advance through `coakka-runtime-go@v1.8.0`; the module stays on
 semantic major `v1` because its path has no `/v2` suffix. SwiftPM advances
@@ -448,9 +450,9 @@ for public Mojo/Zig source-package lanes so the connector source commit is
 visible at the package list boundary.
 
 The current npm coordinates are listed per package because Node.js, Bun, and
-Electron can advance independently; this release aligns all three at `2.4.1`.
+Electron can advance independently; this release aligns all three at `2.5.0`.
 The Python runtime package
-`coakka-v2-connector==2.4.0` and logger package
+`coakka-v2-connector==2.5.0` and logger package
 `coakka-logger==1.2.2` are published on PyPI. Superseded PyPI versions
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
 `coakka-logger==1.2.1` are yanked so ordinary installs resolve to the current
@@ -488,10 +490,10 @@ Current published lanes:
 
 - `Maven Central: io.github.phuong-tran.coakka:runtime:2.4.1`
 - `Maven Central: io.github.phuong-tran.coakka:logger:1.2.2`
-- `npm: coakka-v2-connector-node@2.4.1`
-- `npm: coakka-v2-connector-bun@2.4.1`
-- `npm: coakka-v2-connector-electron@2.4.1`
-- `PyPI: coakka-v2-connector==2.4.0`
+- `npm: coakka-v2-connector-node@2.5.0`
+- `npm: coakka-v2-connector-bun@2.5.0`
+- `npm: coakka-v2-connector-electron@2.5.0`
+- `PyPI: coakka-v2-connector==2.5.0`
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.0`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.2`
