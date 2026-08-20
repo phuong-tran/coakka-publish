@@ -7,6 +7,7 @@ connector_root="${1:-${repo_root}/../coakkaJVMConnector}"
 native_release="${COAKKA_NATIVE_RELEASE:-1.4.1+9e02a51d}"
 native_manifest="${repo_root}/runtime/native/releases/${native_release}/manifest.json"
 lanes_spec="${COAKKA_CONNECTOR_LANES-jvm node bun electron python go csharp rust swift tauri mojo zig}"
+update_public_ledger="${COAKKA_UPDATE_PUBLIC_LEDGER:-true}"
 supported_lanes=(jvm node bun electron python go csharp rust swift tauri mojo zig)
 release_lanes=()
 
@@ -73,7 +74,7 @@ refresh_artifact_ledger_row() {
   local ledger="${repo_root}/artifacts/public-artifacts.tsv"
   local label relative_path digest
   label="$(artifact_label_for_lane "${lane}")"
-  relative_path="${target_artifact#${repo_root}/}"
+  relative_path="${target_artifact#"${repo_root}"/}"
   [[ "${relative_path}" != "${target_artifact}" ]] || fail "artifact is outside publish root: ${target_artifact}"
   digest="$(shasum -a 256 "${target_artifact}" | awk '{print $1}')"
 
@@ -125,6 +126,8 @@ PY
 command -v jq >/dev/null 2>&1 || fail "jq is required"
 require_file "${native_manifest}"
 [[ -d "${connector_root}" ]] || fail "connector repo is missing: ${connector_root}"
+[[ "${update_public_ledger}" == "true" || "${update_public_ledger}" == "false" ]] ||
+  fail "COAKKA_UPDATE_PUBLIC_LEDGER must be true or false"
 parse_release_lanes
 
 native_version="$(jq -er '.version' "${native_manifest}")"
@@ -231,7 +234,9 @@ stage_lane() {
 
   mkdir -p "$(dirname "${target}")"
   mv "${staged}" "${target}"
-  refresh_artifact_ledger_row "${lane}" "${target}/$(basename "${artifact_path}")"
+  if [[ "${update_public_ledger}" == "true" ]]; then
+    refresh_artifact_ledger_row "${lane}" "${target}/$(basename "${artifact_path}")"
+  fi
   echo "[stage-runtime-connectors] staged runtime/${lane}/releases/${release_directory}"
 }
 
@@ -279,4 +284,4 @@ lane_selected zig && stage_lane zig "${connector_version}-source" \
   "${connector_root}/zig/coakka-runtime-zig-${connector_version}-source.tar.gz" \
   "${connector_root}/zig" true
 
-echo "[stage-runtime-connectors] release=${release_directory} lanes=${release_lanes[*]} platforms=${platforms_json}"
+echo "[stage-runtime-connectors] release=${release_directory} lanes=${release_lanes[*]} platforms=${platforms_json} update_public_ledger=${update_public_ledger}"

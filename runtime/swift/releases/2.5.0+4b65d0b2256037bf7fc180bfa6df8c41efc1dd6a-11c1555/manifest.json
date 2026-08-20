@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "product_lane": "runtime",
+  "language_lane": "swift",
+  "release_directory": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-11c1555",
+  "version": "2.5.1",
+  "artifact": {
+    "name": "coakka-runtime-swift-2.5.1.tar.gz",
+    "bundled_native_package_version": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+    "bundled_native_git_commit": "4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+    "included_platforms": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ],
+    "source_package": true
+  },
+  "connector_source_git_commit": "11c1555",
+  "payload_staging_git_commit": "11c1555"
+}
