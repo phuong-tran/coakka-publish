@@ -38,7 +38,7 @@ ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 | JavaScript/Tauri patch archives | `runtime/{node,bun,electron,tauri}/releases/2.4.0+c2f53117-7718ce6/` | npm `2.4.1`; Tauri `2.4.1-source` | `2.4.0+c2f53117` |
 | npm | `coakka-v2-connector-{node,bun,electron}@2.4.1` | `2.4.1` | `2.4.0+c2f53117` |
 | PyPI | `coakka-v2-connector==2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
-| NuGet | `CoAkka.Runtime==2.4.1` | `2.4.1` | `2.4.0+c2f53117` |
+| NuGet | `CoAkka.Runtime==2.5.0` | `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.8.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 
@@ -109,7 +109,7 @@ All logger connector lanes below align to logger native generation
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.4.0` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
-| NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.4.1`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
+| NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.5.0`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
 
 PyPI superseded versions are yanked, not deleted:
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
@@ -142,7 +142,7 @@ NuGet packages:
 
 | Surface | NuGet coordinate | Native generation |
 | --- | --- | --- |
-| C# runtime | `CoAkka.Runtime==2.4.1` (`net8.0`; verified on .NET 8/9/10) | `2.4.0+c2f53117` |
+| C# runtime | `CoAkka.Runtime==2.5.0` (`net8.0`; verified on .NET 8/9/10) | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | C# logger | `CoAkka.Logger==1.2.3` (`net8.0`; verified on .NET 8/9/10) | `1.2.1+f50756ebff0d` |
 
 SwiftPM packages:

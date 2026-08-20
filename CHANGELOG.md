@@ -5,6 +5,10 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-20
 
+- Published and registry-verified `CoAkka.Runtime==2.5.0` over exact native
+  generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. The repository-signed
+  download differs from the candidate only by `.signature.p7s`; request/reply
+  and route-miss deadletter consumers pass on .NET 8, 9, and 10.
 - Published Runtime Go `v1.8.0` and SwiftPM Runtime `v2.5.0` over exact native
   generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Both annotated
   remote tags, package gates, and clean macOS ARM64 remote-tag consumers pass.

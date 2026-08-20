@@ -12,20 +12,21 @@ Current coordinates:
 
 | Surface | Coordinate | Native generation |
 | --- | --- | --- |
-| Runtime | `CoAkka.Runtime`, exact `2.4.1` | `2.4.0+c2f53117` |
+| Runtime | `CoAkka.Runtime`, exact `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Logger | `CoAkka.Logger`, exact `1.2.3` | `1.2.1+f50756ebff0d` |
 
 Install:
 
 ```sh
-dotnet add package CoAkka.Runtime --version 2.4.1
+dotnet add package CoAkka.Runtime --version 2.5.0
 dotnet add package CoAkka.Logger --version 1.2.3
 ```
 
-The registry packages come from connector source
-`801a0a6e67152465568c72246b112beb299360a3`. Runtime `2.4.1` retains native
-generation `2.4.0+c2f53117`; Logger `1.2.3` retains native generation
-`1.2.1+f50756ebff0d`. Both contain one `lib/net8.0` managed asset plus native
+Runtime comes from connector source
+`6b56a27b2139c8abb26483a04c2e26b14c4ab2fd`; Logger comes from
+`801a0a6e67152465568c72246b112beb299360a3`. Runtime `2.5.0` embeds native
+generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`; Logger `1.2.3`
+retains `1.2.1+f50756ebff0d`. Both contain one `lib/net8.0` managed asset plus native
 assets for the five RIDs below. `net8.0` is the minimum supported application
 target, and the exact candidates execute on .NET 8, 9, and 10.
 
@@ -45,6 +46,6 @@ byte-identical in each public package. Both repository signatures pass
 `dotnet nuget verify --all`.
 
 See [package and platform evidence](../../docs/runtime-package-platform-evidence.md),
-the [NuGet release receipt](../../docs/releases/2026-08-17-dotnet-nuget-app-host-baseline.md),
+the [Runtime 2.5.0 NuGet release receipt](../../docs/releases/2026-08-20-nuget-csharp-runtime-2.5.0.md),
 [runnable C# samples](https://github.com/phuong-tran/coakka-samples/tree/main/runtime/csharp),
 and the [public artifact catalog](https://github.com/phuong-tran/coakka-publish).
