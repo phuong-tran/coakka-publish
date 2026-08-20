@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-20
 
+- Published npm, PyPI, and NuGet Runtime `2.5.1` from frozen connector source
+  `11c1555`, promoted all eleven non-JVM archive mirrors, and retained exact
+  native generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`.
+  Registry byte/signature audits and clean consumers pass; Maven Central remains
+  on `2.4.1` pending its independent signed release.
 - Published and registry-verified `coakka-v2-connector==2.5.0` to PyPI over
   exact native generation
   `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. The registry wheel is
