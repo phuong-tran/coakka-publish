@@ -41,9 +41,9 @@ public	runtime Native evidence runner windows-aarch64	runtime/evidence/native/re
 public	runtime Native evidence runner windows-x86_64	runtime/evidence/native/releases/1.3.4+dc6ec284/coakka-runtime-native-evidence-v2-1.3.4-windows-x86_64.zip	03c91235ccaab00d77ba0c192fb893dd14eac056efdb8ee17fbcdc4cfadd701e
 public	runtime JVM jar	runtime/jvm/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/coakka-jvm-native-runtime-v2-2.5.0-g4b65d0b2-f36c396.jar	877504d4445202fda0e2c9a10fb242aec53be5c884f8a1e990cf100f327846db
 public	runtime Python wheel	runtime/python/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/coakka_v2_connector-2.5.0-py3-none-any.whl	2c6f3512053606a4b600b66d8ea9142c394eb0b81323ec8e90439ae165d96f49
-public	runtime Node package	runtime/node/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/coakka-v2-connector-node-2.5.0.tgz	b22ece110782b75db4993371d68703085038f2cdc8afa77d8a4789aee4a5b9d1
-public	runtime Bun package	runtime/bun/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/coakka-v2-connector-bun-2.5.0.tgz	fe018fa724c0b87a53941aa0b986b35234e67c643d988a27338cb957b0c0ec8e
-public	runtime Electron package	runtime/electron/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/coakka-v2-connector-electron-2.5.0.tgz	327d94fbe0871c4cfc2db519fe597ae1e23cd187b61fddf5983aadf66be4a518
+public	runtime Node package	runtime/node/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-6b56a27/coakka-v2-connector-node-2.5.0.tgz	119530628d084732aa6067494df4d72bffbea4bda3046b5faf37fd95c4875d5a
+public	runtime Bun package	runtime/bun/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-6b56a27/coakka-v2-connector-bun-2.5.0.tgz	65f179690064cd302976b30e48952e550e806963b3f884d3549b4e30e66070eb
+public	runtime Electron package	runtime/electron/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-6b56a27/coakka-v2-connector-electron-2.5.0.tgz	d1efaccf3fa904217d1b2e9e7b31bd476add511f3fc559738619166da79d2953
 public	runtime Node package 1.4.5	runtime/node/releases/1.4.0+2cee86bf-2c0c598/coakka-v2-connector-node-1.4.5.tgz	c3464cd05b28368587779890503d3e9ec4af71b59af9bb4bec571f412297c7b0
 public	runtime Bun package 1.4.5	runtime/bun/releases/1.4.0+2cee86bf-2c0c598/coakka-v2-connector-bun-1.4.5.tgz	2b75cfe6d8d7b2d3ce1eaf2d087f0ec777af58275f9446561bf9bd564664a866
 public	runtime Electron package 1.4.5	runtime/electron/releases/1.4.0+2cee86bf-2c0c598/coakka-v2-connector-electron-1.4.5.tgz	d3c1948ca3428de369472fbc432daf3724d1836bccdc93b76429bc63e47a1ad9

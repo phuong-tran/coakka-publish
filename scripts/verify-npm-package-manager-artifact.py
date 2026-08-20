@@ -180,7 +180,13 @@ INSTALL_LIFECYCLE_SCRIPTS = (
     "postinstall",
 )
 
-LICENSE_VALUE = "SEE LICENSE IN LICENSE.md"
+LICENSE_VALUE = "SEE LICENSE IN PACKAGE-LICENSE.md"
+LICENSE_MEMBERS = (
+    "package/LICENSE",
+    "package/NATIVE-LICENSE.md",
+    "package/PACKAGE-LICENSE.md",
+    "package/NOTICE",
+)
 
 
 class VerificationError(Exception):
@@ -458,8 +464,9 @@ def verify_scripts(package: dict) -> None:
 def verify_license(package: dict, names: list[str]) -> None:
     if package.get("license") != LICENSE_VALUE:
         fail(f"package license must be {LICENSE_VALUE!r}")
-    if "package/LICENSE.md" not in names:
-        fail("package-manager artifact must include package/LICENSE.md")
+    missing = [member for member in LICENSE_MEMBERS if member not in names]
+    if missing:
+        fail(f"package-manager artifact is missing required license members: {missing}")
 
 
 def dependency_bucket(package: dict, bucket: str) -> dict:

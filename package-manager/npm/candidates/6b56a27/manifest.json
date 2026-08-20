@@ -1,0 +1,72 @@
+{
+  "status": "staged",
+  "connector_commit": "6b56a27",
+  "payload_staging_commit": "eb62ec8",
+  "created_date": "2026-08-20",
+  "registry": "https://registry.npmjs.org/",
+  "native_runtime_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+  "release_reason": "publish Runtime 2.5.0 with File Lane, Stream Lane, normalized package licensing, and public documentation links",
+  "publish_order": [
+    "runtime-node",
+    "runtime-bun",
+    "runtime-electron"
+  ],
+  "packages": [
+    {
+      "label": "runtime-node",
+      "product": "runtime",
+      "role": "node",
+      "package_name": "coakka-v2-connector-node",
+      "version": "2.5.0",
+      "expected_native_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+      "expected_engines": {"node": ">=22"},
+      "relative_path": "runtime/node/coakka-v2-connector-node-2.5.0.tgz",
+      "sha256": "119530628d084732aa6067494df4d72bffbea4bda3046b5faf37fd95c4875d5a",
+      "registry_shasum": "7c194d24584dd79277d28114464b3fcd4ff8494f",
+      "registry_integrity": "sha512-aYvmdSZjNPxNKW38EAxqmirvVdahB45Q4hsbyM5RLEGBCETnsdZGs0/u2/MVy3E6jFbY2gynqRYpbeYHPfW2Dg==",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ]
+    },
+    {
+      "label": "runtime-bun",
+      "product": "runtime",
+      "role": "bun",
+      "package_name": "coakka-v2-connector-bun",
+      "version": "2.5.0",
+      "expected_native_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+      "expected_engines": {"bun": ">=1.2.0"},
+      "relative_path": "runtime/bun/coakka-v2-connector-bun-2.5.0.tgz",
+      "sha256": "65f179690064cd302976b30e48952e550e806963b3f884d3549b4e30e66070eb",
+      "registry_shasum": "f1bce5f5f202e257b3ed54561b17cadfddf046dc",
+      "registry_integrity": "sha512-OHeYkXSr6RCytSAvHL+nlXl++BxlQoHqJfnPHQ0Sy4coA8V5nPvKiZ22EsmkJT5/EyKkpcyZEHo0QYlWf1VPEA==",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ]
+    },
+    {
+      "label": "runtime-electron",
+      "product": "runtime",
+      "role": "electron",
+      "package_name": "coakka-v2-connector-electron",
+      "version": "2.5.0",
+      "expected_native_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+      "expected_internal_dependency": "coakka-v2-connector-node",
+      "expected_internal_dependency_spec": "coakka-v2-connector-node@2.5.0",
+      "expected_engines": {"node": ">=22"},
+      "expected_peer_dependencies": {"electron": ">=42"},
+      "relative_path": "runtime/electron/coakka-v2-connector-electron-2.5.0.tgz",
+      "sha256": "d1efaccf3fa904217d1b2e9e7b31bd476add511f3fc559738619166da79d2953",
+      "registry_shasum": "c6c8e25b2a1063673a37b50d1c07c5eb3bedc81b",
+      "registry_integrity": "sha512-O64hw0giBECo8BcVQQs4Rp7hXkPVrAM5vZzDN1tEEvZIlJlVjxywZkWefUmEuR7YZYPxhNAWcB9+QVNhiffozg=="
+    }
+  ]
+}

@@ -42,7 +42,7 @@ make_package() {
   local dependency_name="${5:-}"
   local dependency_spec="${6:-}"
   local private_value="${7:-false}"
-  local license_value="${8:-SEE LICENSE IN LICENSE.md}"
+  local license_value="${8:-SEE LICENSE IN PACKAGE-LICENSE.md}"
   local include_proto="${9:-false}"
   local include_install="${10:-false}"
   local private_repo_metadata="${11:-false}"
@@ -104,7 +104,10 @@ make_package() {
 EOF
   printf 'export {};\n' >"${root}/dist/index.js"
   printf 'export {};\n' >"${root}/dist/index.d.ts"
-  printf '# CoAkka Public Artifact Test License 1.0\n' >"${root}/LICENSE.md"
+  printf 'Apache License fixture\n' >"${root}/LICENSE"
+  printf '# Native License fixture\n' >"${root}/NATIVE-LICENSE.md"
+  printf '# Package License fixture\n' >"${root}/PACKAGE-LICENSE.md"
+  printf 'Notice fixture\n' >"${root}/NOTICE"
 
   if [[ "${include_proto}" == "true" ]]; then
     mkdir -p "${root}/proto/coakka/v2"
@@ -127,7 +130,13 @@ EOF
         *) extension="so" ;;
       esac
       mkdir -p "${root}/native/${platform}"
-      printf 'native placeholder\n' >"${root}/native/${platform}/${lib_base}-${native_generation}.${extension}"
+      if [[ "${platform}" == "macos-aarch64" ]]; then
+        # Minimal thin ARM64 Mach-O with one LC_BUILD_VERSION command at macOS 13.0.
+        printf '\xcf\xfa\xed\xfe\x0c\x00\x00\x01\x00\x00\x00\x00\x06\x00\x00\x00\x01\x00\x00\x00\x18\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x32\x00\x00\x00\x18\x00\x00\x00\x01\x00\x00\x00\x00\x00\x0d\x00\x00\x00\x0d\x00\x00\x00\x00\x00' \
+          >"${root}/native/${platform}/${lib_base}-${native_generation}.${extension}"
+      else
+        printf 'native placeholder\n' >"${root}/native/${platform}/${lib_base}-${native_generation}.${extension}"
+      fi
       if [[ "${include_unversioned_alias}" == "true" ]]; then
         printf 'native placeholder\n' >"${root}/native/${platform}/${lib_base}.${extension}"
       fi
@@ -216,7 +225,7 @@ make_package \
   "" \
   "" \
   false \
-  "SEE LICENSE IN LICENSE.md" \
+  "SEE LICENSE IN PACKAGE-LICENSE.md" \
   false \
   false \
   false \
@@ -265,7 +274,7 @@ make_package \
   "" \
   "" \
   false \
-  "SEE LICENSE IN LICENSE.md" \
+  "SEE LICENSE IN PACKAGE-LICENSE.md" \
   false \
   false \
   false \
@@ -316,7 +325,7 @@ make_package \
   "" \
   "" \
   false \
-  "SEE LICENSE IN LICENSE.md" \
+  "SEE LICENSE IN PACKAGE-LICENSE.md" \
   false \
   false \
   false \
@@ -344,6 +353,19 @@ missing_license="${tmp_root}/coakka-logger-bun-missing-license.tgz"
 make_package "${missing_license}" logger bun coakka-logger-bun "" "" false UNLICENSED
 expect_failure "license mismatch" verify_fixture "${missing_license}" logger bun coakka-logger-bun
 grep -Fq "package license must be" "${test_output}"
+
+missing_package_license="${tmp_root}/coakka-logger-bun-missing-package-license.tgz"
+make_package "${missing_package_license}" logger bun coakka-logger-bun
+rm "${tmp_root}/pkg-root/package/PACKAGE-LICENSE.md"
+COPYFILE_DISABLE=1 tar -C "${tmp_root}/pkg-root" -czf "${missing_package_license}" package
+expect_failure \
+  "missing package license file" \
+  verify_fixture \
+  "${missing_package_license}" \
+  logger \
+  bun \
+  coakka-logger-bun
+grep -Fq "missing required license members" "${test_output}"
 
 protobuf_dep="${tmp_root}/coakka-v2-connector-node-protobuf.tgz"
 make_package "${protobuf_dep}" runtime node coakka-v2-connector-node protobufjs '^8.0.3'
@@ -388,7 +410,7 @@ expect_failure \
 grep -Fq "must resolve through registry metadata" "${test_output}"
 
 proto_leak="${tmp_root}/coakka-v2-connector-node-proto.tgz"
-make_package "${proto_leak}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN LICENSE.md" true
+make_package "${proto_leak}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN PACKAGE-LICENSE.md" true
 expect_failure "proto leak" verify_fixture "${proto_leak}" runtime node coakka-v2-connector-node
 grep -Fq "protobuf schema leaked" "${test_output}"
 
@@ -408,12 +430,12 @@ expect_failure "text wire codec leak" verify_fixture "${text_wire_leak}" runtime
 grep -Eq "public transport (codec member|framing implementation)" "${test_output}"
 
 install_script="${tmp_root}/coakka-v2-connector-node-install.tgz"
-make_package "${install_script}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN LICENSE.md" false true
+make_package "${install_script}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN PACKAGE-LICENSE.md" false true
 expect_failure "install lifecycle script" verify_fixture "${install_script}" runtime node coakka-v2-connector-node
 grep -Fq "lifecycle script" "${test_output}"
 
 private_repo_metadata="${tmp_root}/coakka-v2-connector-node-private-repo.tgz"
-make_package "${private_repo_metadata}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN LICENSE.md" false false true
+make_package "${private_repo_metadata}" runtime node coakka-v2-connector-node "" "" false "SEE LICENSE IN PACKAGE-LICENSE.md" false false true
 expect_failure "private repo metadata" verify_fixture "${private_repo_metadata}" runtime node coakka-v2-connector-node
 grep -Fq "private source repo marker leaked into npm metadata" "${test_output}"
 

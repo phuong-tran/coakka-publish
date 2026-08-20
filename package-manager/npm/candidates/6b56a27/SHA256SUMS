@@ -1,0 +1,5 @@
+d6b22990a1ffe43416e87cc17a793efdc744f0da3fa9df5e04de0aed03e06a1e  README.md
+27155f32726df6d72a1607c1c5bf292faa94c69712da03f9f7d3a3f64c9ae3ec  manifest.json
+65f179690064cd302976b30e48952e550e806963b3f884d3549b4e30e66070eb  runtime/bun/coakka-v2-connector-bun-2.5.0.tgz
+d1efaccf3fa904217d1b2e9e7b31bd476add511f3fc559738619166da79d2953  runtime/electron/coakka-v2-connector-electron-2.5.0.tgz
+119530628d084732aa6067494df4d72bffbea4bda3046b5faf37fd95c4875d5a  runtime/node/coakka-v2-connector-node-2.5.0.tgz
