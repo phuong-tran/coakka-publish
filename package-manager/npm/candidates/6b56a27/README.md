@@ -1,6 +1,6 @@
 # npm Runtime 2.5.0 Candidate
 
-Status: staged on August 20, 2026; npm publication remains gated.
+Status: published to npm and registry-verified on August 20, 2026.
 
 This directory records the Node.js, Bun, and Electron Runtime `2.5.0`
 packages rebuilt from clean connector commit `6b56a27`, payload staging commit

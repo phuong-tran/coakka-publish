@@ -22,9 +22,10 @@ contract instead of inventing language-specific runtime semantics.
 
 ## Runtime 2.4.0 Artifact Train
 
-The promoted artifact mirror and registry channels remain on their explicitly
-listed 2.4 generations. Go `v1.8.0` and SwiftPM `v2.5.0` independently advance
-to native generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Runtime tools retain
+The promoted native artifact pointer, Maven Central, and PyPI remain on their
+explicitly listed 2.4 generations. npm Runtime `2.5.0`, Go `v1.8.0`, SwiftPM
+`v2.5.0`, and NuGet Runtime `2.5.0` independently use native generation
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Runtime tools retain
 their separately listed 2.3.0 generation. The runtime train contains five libraries: Linux
 ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 
@@ -35,8 +36,8 @@ ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 | Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.4.1` | via JVM runtime |
 | Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.4.1` | via JVM runtime |
 | Language connector archives | `runtime/<lane>/releases/2.4.0+c2f53117-0afb5e9/` | `2.4.0` | `2.4.0+c2f53117` |
-| JavaScript/Tauri patch archives | `runtime/{node,bun,electron,tauri}/releases/2.4.0+c2f53117-7718ce6/` | npm `2.4.1`; Tauri `2.4.1-source` | `2.4.0+c2f53117` |
-| npm | `coakka-v2-connector-{node,bun,electron}@2.4.1` | `2.4.1` | `2.4.0+c2f53117` |
+| JavaScript archives | `runtime/{node,bun,electron}/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-6b56a27/` | npm `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| npm | `coakka-v2-connector-{node,bun,electron}@2.5.0` | `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | PyPI | `coakka-v2-connector==2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
 | NuGet | `CoAkka.Runtime==2.5.0` | `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.8.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
@@ -105,7 +106,7 @@ All logger connector lanes below align to logger native generation
 
 | Channel | Available surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.4.1`, logger `1.2.7`; registry verified |
+| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.5.0`, logger `1.2.7`; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.4.0` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
@@ -119,9 +120,9 @@ Runtime npm packages are published for the sealed package boundary:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@2.4.1` | `2.4.0+c2f53117` |
-| Bun runtime | `coakka-v2-connector-bun@2.4.1` | `2.4.0+c2f53117` |
-| Electron runtime | `coakka-v2-connector-electron@2.4.1` | via `coakka-v2-connector-node@2.4.1` |
+| Node.js runtime | `coakka-v2-connector-node@2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Bun runtime | `coakka-v2-connector-bun@2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Electron runtime | `coakka-v2-connector-electron@2.5.0` | via `coakka-v2-connector-node@2.5.0` |
 | Node.js logger | `coakka-logger-node@1.2.7` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.7` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.7` | via `coakka-logger-node@1.2.7` |
