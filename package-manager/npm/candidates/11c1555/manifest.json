@@ -1,0 +1,65 @@
+{
+  "status": "ready_for_npm_publish",
+  "connector_commit": "11c1555",
+  "payload_staging_commit": "11c1555",
+  "created_date": "2026-08-20",
+  "native_runtime_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+  "release_reason": "publish Runtime 2.5.1 with corrected public documentation links and Native Artifact License 1.2 file scopes",
+  "publish_order": [
+    "runtime-node",
+    "runtime-bun",
+    "runtime-electron"
+  ],
+  "packages": [
+    {
+      "label": "runtime-node",
+      "product": "runtime",
+      "role": "node",
+      "package_name": "coakka-v2-connector-node",
+      "version": "2.5.1",
+      "expected_native_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+      "expected_engines": {"node": ">=22"},
+      "relative_path": "runtime/node/coakka-v2-connector-node-2.5.1.tgz",
+      "sha256": "67af94b331b57e9ec4b791eae27380465ec5008319cf34afe677ae06e6465f55",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ]
+    },
+    {
+      "label": "runtime-bun",
+      "product": "runtime",
+      "role": "bun",
+      "package_name": "coakka-v2-connector-bun",
+      "version": "2.5.1",
+      "expected_native_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+      "expected_engines": {"bun": ">=1.2.0"},
+      "relative_path": "runtime/bun/coakka-v2-connector-bun-2.5.1.tgz",
+      "sha256": "c2f54ce2ead17649514248e0fd3efc17f92cea1ed42307dc7474df6b7a27ac35",
+      "expected_platforms": [
+        "linux-aarch64",
+        "linux-x86_64",
+        "macos-aarch64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ]
+    },
+    {
+      "label": "runtime-electron",
+      "product": "runtime",
+      "role": "electron",
+      "package_name": "coakka-v2-connector-electron",
+      "version": "2.5.1",
+      "expected_native_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+      "expected_internal_dependency": "coakka-v2-connector-node",
+      "expected_internal_dependency_spec": "coakka-v2-connector-node@2.5.1",
+      "expected_engines": {"node": ">=22"},
+      "expected_peer_dependencies": {"electron": ">=42"},
+      "relative_path": "runtime/electron/coakka-v2-connector-electron-2.5.1.tgz",
+      "sha256": "b8c6ebb48bcd898f99212517d99faa931672c51d41f2185b1503f0c7ca8f34b5"
+    }
+  ]
+}
