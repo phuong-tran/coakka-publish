@@ -20,14 +20,15 @@ Across those surfaces, polyglot connectors preserve one target,
 request/reply, bounded-admission, deadletter, capability, and configuration
 contract instead of inventing language-specific runtime semantics.
 
-## Runtime 2.4.0 Artifact Train
+## Current Runtime Artifact Train
 
-The promoted native artifact pointer and Maven Central remain on their
-explicitly listed 2.4 generations. npm Runtime `2.5.2`, PyPI Runtime `2.5.2`,
-Go `v1.8.2`, SwiftPM `v2.5.2`, and NuGet Runtime `2.5.2` use native generation
-`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Runtime tools retain
-their separately listed 2.3.0 generation. The runtime train contains five libraries: Linux
-ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
+The promoted native artifact pointer remains on its explicitly listed 2.4
+generation. Maven Central Runtime `2.5.2`, npm Runtime `2.5.2`, PyPI Runtime
+`2.5.2`, Go `v1.8.2`, SwiftPM `v2.5.2`, and NuGet Runtime `2.5.2` use native
+generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Runtime tools retain
+their separately listed `2.4.0+c2f53117` generation. The current Runtime
+package train contains five libraries: Linux ARM64/x86-64 `.so`, macOS ARM64
+`.dylib`, and Windows ARM64/x86-64 `.dll`.
 
 The `2.5.2` connectors expose typed File receive and Stream publish owner
 grants for replica-pinned lanes. ONE selects one enumerated owner; ALL creates
@@ -37,10 +38,10 @@ request does not implement ALL semantics.
 | Surface | Public artifact or coordinate | Public generation | Native generation |
 | --- | --- | --- | --- |
 | Native C ABI | `runtime/native/releases/2.4.0+c2f53117/coakka-runtime-native-v2-2.4.0.tar.gz` | `2.4.0+c2f53117` | `2.4.0+c2f53117` |
-| JVM runtime | `io.github.phuong-tran.coakka:runtime` | `2.4.1` | `2.4.0+c2f53117` |
+| JVM runtime | `io.github.phuong-tran.coakka:runtime` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.4.1` | via JVM runtime |
 | Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.4.1` | via JVM runtime |
-| JVM connector archive | `runtime/jvm/releases/2.4.0+c2f53117-0afb5e9/` | `2.4.0` | `2.4.0+c2f53117` |
+| JVM signed public tree | `https://repo1.maven.org/maven2/io/github/phuong-tran/coakka/runtime/2.5.2/` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Non-JVM connector archives | `runtime/<lane>/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | npm | `coakka-v2-connector-{node,bun,electron}@2.5.2` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | PyPI | `coakka-v2-connector==2.5.2` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
@@ -103,9 +104,9 @@ All logger connector lanes below align to logger native generation
 
 | Surface | Public generation | Public location |
 | --- | --- | --- |
-| `coakka-client` native CLI | all five native platforms `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` | `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/` |
+| `coakka-client` native CLI | all five native platforms `2.4.0+c2f53117` | `coakka-tools/coakka-client/releases/2.4.0+c2f53117/` |
 | `coakka-client` Docker Linux bundle | `1.3.2+caff6d6d` | `coakka-tools/coakka-client/docker-demo/releases/` |
-| `coakka-runtime-inspect` native UI | all five native platforms `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` | `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/` |
+| `coakka-runtime-inspect` native UI | all five native platforms `2.4.0+c2f53117` | `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/` |
 
 ## Package-Manager Channels
 

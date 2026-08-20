@@ -13,13 +13,13 @@ Current coordinates:
 
 | Surface | Coordinate | Native generation |
 | --- | --- | --- |
-| Runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.2` | `1.2.1+f50756ebff0d` |
 
-Runtime `2.4.1` and Logger `1.2.2` correct their bundled macOS ARM64 dylibs to
-deployment target `13.0` while preserving their native generations, public
-API/ABI, and Swift tools baselines. Native verification, package tests, smokes,
-and clean consumers cloned from both remote tags pass on macOS ARM64.
+Runtime `2.5.2` exposes typed replica-owner File and Stream Lane grants over
+the unchanged native `2.5.0` generation. Logger remains independently
+published at `1.2.2`. Native verification, package tests, smokes, and clean
+consumers cloned from both remote tags pass on macOS ARM64.
 
 The current manifest is [`current.json`](current.json). Public samples consume
 these coordinates directly.

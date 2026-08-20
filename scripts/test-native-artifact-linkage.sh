@@ -27,6 +27,14 @@ good_fixture="$(make_fixture declared-sibling)"
 COAKKA_NATIVE_LINKAGE_TMP_ROOT="${good_fixture}/.tmp/linkage" \
   "${good_fixture}/scripts/check-native-artifact-linkage.sh" >/dev/null
 
+parallel_fixture="$(make_fixture parallel-default-roots)"
+"${parallel_fixture}/scripts/check-native-artifact-linkage.sh" >/dev/null &
+first_pid=$!
+"${parallel_fixture}/scripts/check-native-artifact-linkage.sh" >/dev/null &
+second_pid=$!
+wait "${first_pid}"
+wait "${second_pid}"
+
 bad_fixture="$(make_fixture undeclared-sibling)"
 python3 - "${bad_fixture}/runtime-addons/artifact-publisher-azure-blob/native/releases/1.1.0+d1032f6d/manifest.json" <<'PY'
 import json

@@ -5,18 +5,25 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-20
 
+- Published and registry-audited JVM Runtime
+  `io.github.phuong-tran.coakka:runtime:2.5.2` to Maven Central from connector
+  source `3ae74f4`. All 50 public files match the production-signed candidate,
+  all five detached signatures verify, and clean Java 8/current-JVM consumers
+  pass over native generation
+  `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Spring Boot and Quarkus
+  adapters remain independently published at `2.4.1`.
 - Published the connector-first replica-owner Runtime train: npm, PyPI, and
   NuGet Runtime `2.5.2`, Go `v1.8.2`, and SwiftPM `v2.5.2` from connector
   source `3ae74f4`. Exact registry bytes or NuGet repository-signed entries,
   clean consumers, remote tags, owner-grant package surfaces, and replica
   workflow documentation pass. Native generation remains
-  `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`; Maven Central remains on
-  Runtime `2.4.1` pending its separately signed `2.5.2` release.
+  `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`; its separately signed Maven
+  Central publication is recorded above.
 - Published npm, PyPI, and NuGet Runtime `2.5.1` from frozen connector source
   `11c1555`, promoted all eleven non-JVM archive mirrors, and retained exact
   native generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`.
-  Registry byte/signature audits and clean consumers pass; Maven Central remains
-  on `2.4.1` pending its independent signed release.
+  Registry byte/signature audits and clean consumers pass; Maven Central was
+  not part of that intermediate patch publication.
 - Published and registry-verified `coakka-v2-connector==2.5.0` to PyPI over
   exact native generation
   `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. The registry wheel is

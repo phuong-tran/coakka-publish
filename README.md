@@ -200,7 +200,7 @@ version number.
 
 | Channel | Runtime package | Logger package |
 | --- | --- | --- |
-| Maven Central | [`coakka.runtime` 2.4.1](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/runtime/2.4.1) | [`coakka.logger` 1.2.2](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/logger/1.2.2) |
+| Maven Central | [`coakka.runtime` 2.5.2](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/runtime/2.5.2) | [`coakka.logger` 1.2.2](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/logger/1.2.2) |
 | NuGet | [`CoAkka.Runtime` 2.5.2](https://www.nuget.org/packages/CoAkka.Runtime/2.5.2) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
 | npm | [`coakka-v2-connector-node` 2.5.2](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.5.2) | [`coakka-logger-node` 1.2.7](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
 | PyPI | [`coakka-v2-connector` 2.5.2](https://pypi.org/project/coakka-v2-connector/2.5.2/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
@@ -247,6 +247,7 @@ Current runtime release note:
 [2026-08-11 runtime 2.4.0](docs/releases/2026-08-11-runtime-2.4.0-c2f53117.md).
 
 Current package-manager release notes:
+[2026-08-20 JVM Runtime Maven Central 2.5.2](docs/releases/2026-08-20-jvm-runtime-2.5.2-maven-central.md),
 [2026-08-20 npm Runtime 2.5.2](docs/releases/2026-08-20-npm-runtime-2.5.2.md),
 [2026-08-20 PyPI Python Runtime 2.5.2](docs/releases/2026-08-20-python-runtime-2.5.2-pypi.md),
 [2026-08-20 NuGet C# Runtime 2.5.2](docs/releases/2026-08-20-nuget-csharp-runtime-2.5.2.md),
@@ -343,9 +344,12 @@ Current public logger Node.js/Bun/Electron/Tauri patch generation:
 `1.2.1+f50756ebff0d-7718ce6`.
 Current public logger Mojo/Zig source connector generation:
 `1.2.1+f50756ebff0d-8264bba`.
-Current public native runtime generation: `2.4.0+c2f53117`.
-Current public JVM mirror generation: `2.4.0-gc2f53117-0afb5e9`; Maven Central
-publishes the independently versioned JVM distribution as `runtime:2.4.1`.
+Current promoted root native runtime pointer: `2.4.0+c2f53117`.
+Current Maven Central JVM Runtime is `runtime:2.5.2`, from connector source
+`3ae74f4` over native generation
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. The older static JVM mirror
+generation `2.4.0-gc2f53117-0afb5e9` remains an immutable compatibility
+artifact.
 Current public Spring Boot and Quarkus Maven Central adapter versions are
 `spring-boot-starter:2.4.1` and `quarkus-extension:2.4.1`.
 Current public non-JVM connector artifact generation:
@@ -360,9 +364,9 @@ generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`.
 Current public C# logger NuGet package: `CoAkka.Logger@1.2.3`, over native
 generation `1.2.1+f50756ebff0d`.
 Current public Mojo/Zig source connector generation:
-`2.4.0+c2f53117-0afb5e9`.
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4`.
 Current public Tauri intent source connector generation:
-`2.4.0+c2f53117-7718ce6`.
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4`.
 Current public coakka-client generation: `2.4.0+c2f53117` on all five
 supported native platforms.
 Current public coakka-client Docker Linux bundle generation: `1.3.2+caff6d6d`.
@@ -412,19 +416,17 @@ The NuGet lane is binary package-manager distribution for .NET consumers.
 Its release manifest is tracked under
 `package-manager/nuget/current.json`.
 
-The current root native runtime package is `2.4.0+c2f53117`. The artifact
-mirror publishes JVM runtime, Spring Boot, and Quarkus as
-`2.4.0-gc2f53117-0afb5e9`. Base connector artifacts use release directory
-`2.4.0+c2f53117-0afb5e9`. npm Runtime `2.5.2`, PyPI Runtime `2.5.2`, and
-NuGet Runtime `2.5.2` come from connector source `3ae74f4`; Logger npm `1.2.7` comes from candidate
-`7718ce6`, while
-Logger `1.2.3` comes from `801a0a6`. All three runtime channels are
-registry-verified.
+The promoted root native runtime pointer remains `2.4.0+c2f53117`. The static
+artifact mirror retains JVM runtime, Spring Boot, and Quarkus compatibility
+artifacts at `2.4.0-gc2f53117-0afb5e9`. Maven Central Runtime `2.5.2`, npm
+Runtime `2.5.2`, PyPI Runtime `2.5.2`, and NuGet Runtime `2.5.2` come from
+connector source `3ae74f4` and embed native generation
+`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Logger npm `1.2.7` comes
+from candidate `7718ce6`, while Logger `1.2.3` comes from `801a0a6`.
 
-Maven Central publishes the JVM Runtime, Spring Boot starter, and Quarkus
-extension as independently versioned `2.4.1` packages. The static mirror
-coordinates above remain immutable compatibility artifacts; new framework
-adapter consumers should use Maven Central.
+The Spring Boot starter and Quarkus extension remain independently published
+on Maven Central at `2.4.1` and depend on Runtime `2.4.1`. The static mirror
+coordinates above remain immutable compatibility artifacts.
 
 Package-manager registries are separate publication channels. npm Node.js,
 Bun, and Electron are current at `2.5.2`; PyPI runtime is current at `2.5.2`;
@@ -445,11 +447,12 @@ path for release, soak, and operator-readiness claims.
 
 Consumer-facing warehouse downloads live at immutable versioned paths and are
 listed in `artifacts/public-artifacts.tsv`. Integrity metadata is checksum-based
-for this surface: lane manifests, `SHA256SUMS`, Maven checksum sidecars, and the
-root artifact manifest. Signature, SBOM, and attestation files are not part of
-this artifact surface yet. The manifest also keeps explicit provenance comments
-for public Mojo/Zig source-package lanes so the connector source commit is
-visible at the package list boundary.
+for this warehouse surface: lane manifests, `SHA256SUMS`, static-Maven checksum
+sidecars, and the root artifact manifest. Signature, SBOM, and attestation files
+are not part of the warehouse ledger yet. The separate Maven Central Runtime
+`2.5.2` component carries five verified OpenPGP signatures. The manifest also
+keeps explicit provenance comments for public Mojo/Zig source-package lanes so
+the connector source commit is visible at the package list boundary.
 
 The current npm coordinates are listed per package because Node.js, Bun, and
 Electron can advance independently; this release aligns all three at `2.5.2`.
@@ -490,7 +493,7 @@ Repository rules:
 
 Current published lanes:
 
-- `Maven Central: io.github.phuong-tran.coakka:runtime:2.4.1`
+- `Maven Central: io.github.phuong-tran.coakka:runtime:2.5.2`
 - `Maven Central: io.github.phuong-tran.coakka:logger:1.2.2`
 - `npm: coakka-v2-connector-node@2.5.2`
 - `npm: coakka-v2-connector-bun@2.5.2`
@@ -522,7 +525,7 @@ Current published lanes:
   - `coakka.spring:coakka-spring-boot-starter`
   - `coakka.quarkus:coakka-quarkus-extension`
 - Maven Central coordinates
-  `io.github.phuong-tran.coakka:runtime:2.4.1` and
+  `io.github.phuong-tran.coakka:runtime:2.5.2` and
   `io.github.phuong-tran.coakka:logger:1.2.2`, plus Java 17 framework adapters
   `io.github.phuong-tran.coakka:spring-boot-starter:2.4.1` and
   `io.github.phuong-tran.coakka:quarkus-extension:2.4.1`
@@ -542,15 +545,15 @@ Current published lanes:
 
 ## coakka-client Public Artifacts
 
-Current coakka-client source snapshot: `4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`
+Current coakka-client source snapshot: `c2f53117f991f67f809a0bf46bac2ce26091eb78`
 
 Package contents:
 
-- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-windows-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-client-v2-2.5.0-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-x86_64.tar.gz`
 - `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz`
 - `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz`
 
@@ -564,20 +567,20 @@ them with the packaged `coakka-client`. Docker Hub sample images are a
 convenience path recorded in the release notes that publish them; the canonical
 binary archives and checksums remain in the release artifacts above.
 
-Candidate note:
-[`docs/releases/2026-08-18-runtime-2.5.0-candidate.md`](docs/releases/2026-08-18-runtime-2.5.0-candidate.md)
+Release receipt:
+[`docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md`](docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md)
 
 ## coakka-runtime-inspect Public Artifacts
 
-Current coakka-runtime-inspect source snapshot: `4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`
+Current coakka-runtime-inspect source snapshot: `c2f53117f991f67f809a0bf46bac2ce26091eb78`
 
 Package contents:
 
-- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-windows-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-inspect-v2-2.5.0-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-x86_64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
 CoAkka Runtime. It is the visual sibling of `coakka-client`: a way to read and
@@ -600,14 +603,13 @@ Current limits:
   path.
 - Remote read/observe remains a future runtime surface across all platforms.
 
-All five packages completed matching-host command execution. macOS ARM64,
-Linux ARM64/x86-64, and Windows x86-64 also completed `serve` smoke. Both
-Windows architectures pass PE architecture, dependency, archive, and checksum
-gates. Windows x86-64 evidence is Core Actions run `32115663861` over exact
-Publish commit `d5cff2a7922470b4b33bd48cac2b472bb75acbc4`.
+macOS ARM64 and Linux ARM64/x86-64 completed matching-host command and `serve`
+smokes. Both Windows architectures pass Zig cross-build, PE architecture,
+dependency, archive, and checksum gates; matching-host Windows execution is not
+recorded for this generation.
 
-Candidate note:
-[`docs/releases/2026-08-18-runtime-2.5.0-candidate.md`](docs/releases/2026-08-18-runtime-2.5.0-candidate.md)
+Release receipt:
+[`docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md`](docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md)
 
 ## Runtime v2 Public Artifacts
 
@@ -639,10 +641,12 @@ contract remains the same across profiles: targets, route generations,
 request/reply, deadletters, and diagnostics stay in the public runtime
 contract.
 
-The Runtime JVM candidate uses `2.5.0-g4b65d0b2-f36c396` over native package
+The earlier static Runtime JVM candidate uses
+`2.5.0-g4b65d0b2-f36c396` over native package
 `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`; its Spring Boot and Quarkus
-mirrors use the same connector generation. Registry publication remains a
-separate coordinated release step.
+mirrors use the same connector generation. Maven Central Runtime `2.5.2` from
+connector source `3ae74f4` supersedes that candidate as the current JVM
+package-manager entrypoint; the static files remain immutable.
 Embedded-native coverage is Linux ARM64/x86-64, macOS ARM64, and Windows
 ARM64/x86-64. Every connector release directory has its own manifest and
 checksums.
@@ -676,7 +680,7 @@ These artifacts are the current public runtime set:
 | Surface | Artifact | Version | Native package |
 | --- | --- | --- | --- |
 | Native C ABI | `runtime/native/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/coakka-runtime-native-v2-2.5.0.tar.gz` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` | same |
-| JVM runtime | `runtime/jvm/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-f36c396/` | `2.5.0-g4b65d0b2-f36c396` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| JVM runtime | `io.github.phuong-tran.coakka:runtime:2.5.2` | `2.5.2`, source `3ae74f4` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Python artifact mirror | `coakka_v2_connector` wheel | `2.5.2`, source `3ae74f4` | same native generation |
 | Node.js artifact mirror | `coakka-v2-connector-node` tarball | `2.5.2`, source `3ae74f4` | same native generation |
 | Bun artifact mirror | `coakka-v2-connector-bun` tarball | `2.5.2`, source `3ae74f4` | same native generation |
@@ -703,10 +707,11 @@ local handler/ask first, explicit route snapshots second, custom
 envelope/transport policy last.
 
 Release docs and samples present a helper only when the staged artifact
-contains it. The non-JVM `2.5.2` artifact mirror uses connector source `3ae74f4`;
-all lanes retain exact native generation
+contains it. Runtime `2.5.2` packages use connector source `3ae74f4`; all lanes
+retain exact native generation
 `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` and expose File Lane and
-Stream Lane. Maven Central remains on its independently published `2.4.1` train.
+Stream Lane. Maven Central Runtime `2.5.2` is signed, published, and
+registry-audited independently of the `2.4.1` framework adapters.
 
 Validation gates run before publishing:
 

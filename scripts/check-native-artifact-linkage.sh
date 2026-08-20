@@ -4,7 +4,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 manifest="${repo_root}/artifacts/public-artifacts.tsv"
-tmp_root="${COAKKA_NATIVE_LINKAGE_TMP_ROOT:-${repo_root}/.tmp/native-linkage}"
+tmp_root="${COAKKA_NATIVE_LINKAGE_TMP_ROOT:-}"
 
 fail() {
   echo "[native-artifact-linkage] $*" >&2
@@ -133,7 +133,12 @@ require_command awk
 require_command python3
 
 [[ -f "${manifest}" ]] || fail "missing manifest: artifacts/public-artifacts.tsv"
-mkdir -p "${tmp_root}"
+if [[ -n "${tmp_root}" ]]; then
+  mkdir -p "${tmp_root}"
+else
+  mkdir -p "${repo_root}/.tmp"
+  tmp_root="$(mktemp -d "${repo_root}/.tmp/native-linkage.XXXXXX")"
+fi
 trap 'rm -rf "${tmp_root}"' EXIT
 
 while IFS=$'\t' read -r row_status label relative_path _expected_sha _extra || [[ -n "${row_status:-}" ]]; do
