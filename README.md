@@ -204,8 +204,8 @@ version number.
 | NuGet | [`CoAkka.Runtime` 2.5.0](https://www.nuget.org/packages/CoAkka.Runtime/2.5.0) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
 | npm | [`coakka-v2-connector-node` 2.5.0](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.5.0) | [`coakka-logger-node` 1.2.7](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
 | PyPI | [`coakka-v2-connector` 2.5.0](https://pypi.org/project/coakka-v2-connector/2.5.0/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
-| Go modules | [`coakka-runtime-go` v1.8.0](https://github.com/phuong-tran/coakka-runtime-go/tree/v1.8.0) | [`coakka-logger-go` v1.2.6](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.6) |
-| SwiftPM | [`coakka-runtime-swift` v2.5.0](https://github.com/phuong-tran/coakka-runtime-swift/tree/v2.5.0) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
+| Go modules | [`coakka-runtime-go` v1.8.1](https://github.com/phuong-tran/coakka-runtime-go/tree/v1.8.1) | [`coakka-logger-go` v1.2.6](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.6) |
+| SwiftPM | [`coakka-runtime-swift` v2.5.1](https://github.com/phuong-tran/coakka-runtime-swift/tree/v2.5.1) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
 
 Public docs:
 [New To CoAkka](docs/new-to-coakka.md),
@@ -249,6 +249,7 @@ Current runtime release note:
 Current package-manager release notes:
 [2026-08-20 PyPI Python Runtime 2.5.0](docs/releases/2026-08-20-python-runtime-2.5.0-pypi.md),
 [2026-08-20 NuGet C# Runtime 2.5.0](docs/releases/2026-08-20-nuget-csharp-runtime-2.5.0.md),
+[2026-08-20 Go runtime v1.8.1 and SwiftPM runtime v2.5.1](docs/releases/2026-08-20-runtime-go-v1.8.1-swiftpm-v2.5.1.md),
 [2026-08-20 Go runtime v1.8.0 and SwiftPM runtime v2.5.0](docs/releases/2026-08-20-runtime-go-v1.8.0-swiftpm-v2.5.0.md),
 [2026-08-18 JavaScript and desktop host compatibility](docs/releases/2026-08-18-javascript-desktop-host-compatibility.md),
 [2026-08-17 NuGet .NET app-host baseline](docs/releases/2026-08-17-dotnet-nuget-app-host-baseline.md),
@@ -390,10 +391,10 @@ SwiftPM package-manager releases:
 
 | Lane | Coordinate | Native generation |
 | --- | --- | --- |
-| Swift runtime connector | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.0` | runtime native `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Swift runtime connector | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.1` | runtime native `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Swift logger connector | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.2` | logger native `1.2.1+f50756ebff0d` |
 
-The SwiftPM runtime tag `v2.5.0` contains all five native payloads and has matching-host
+The SwiftPM runtime tag `v2.5.1` contains all five native payloads and has matching-host
 Swift execution on macOS ARM64. Linux carries strict C-bridge and payload
 verification; Windows carries payload verification. The separately versioned
 Swift logger package remains macOS ARM64. The release manifest is tracked under
@@ -427,9 +428,9 @@ adapter consumers should use Maven Central.
 Package-manager registries are separate publication channels. npm Node.js,
 Bun, and Electron are current at `2.5.0`; PyPI runtime is current at `2.5.0`;
 NuGet runtime is current at `2.5.0` and NuGet logger at `1.2.3`.
-Go modules advance through `coakka-runtime-go@v1.8.0`; the module stays on
+Go modules advance through `coakka-runtime-go@v1.8.1`; the module stays on
 semantic major `v1` because its path has no `/v2` suffix. SwiftPM advances
-through `coakka-runtime-swift@v2.5.0`. Both packages embed native generation
+through `coakka-runtime-swift@v2.5.1`. Both packages embed native generation
 `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`; other package-manager
 channels remain on their separately listed coordinates.
 Do not mix language or framework runtime packages from another native package
@@ -457,7 +458,7 @@ The Python runtime package
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
 `coakka-logger==1.2.1` are yanked so ordinary installs resolve to the current
 patch versions. The Go runtime package
-`github.com/phuong-tran/coakka-runtime-go@v1.8.0` and logger package
+`github.com/phuong-tran/coakka-runtime-go@v1.8.1` and logger package
 `github.com/phuong-tran/coakka-logger-go@v1.2.6` are published as public Go
 modules. SwiftPM packages for Swift runtime/logger are published as public
 GitHub tag coordinates. NuGet packages for C# runtime/logger are published as
@@ -495,7 +496,7 @@ Current published lanes:
 - `npm: coakka-v2-connector-electron@2.5.0`
 - `PyPI: coakka-v2-connector==2.5.0`
 - `PyPI: coakka-logger==1.2.2`
-- `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.0`
+- `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.1`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.2`
 - `NuGet: CoAkka.Runtime@2.5.0`
 - `NuGet: CoAkka.Logger@1.2.3`
