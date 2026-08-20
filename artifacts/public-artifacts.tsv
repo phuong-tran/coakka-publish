@@ -95,3 +95,16 @@ public	runtime Swift package 2.5.1	runtime/swift/releases/2.5.0+4b65d0b2256037bf
 public	runtime Mojo source package 2.5.1	runtime/mojo/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-11c1555/coakka-runtime-mojo-2.5.1-source.tar.gz	8dd597b29a9b3c030006b7df47e54bc2479aec4f1269597ecd672701c3907547
 public	runtime Zig source package 2.5.1	runtime/zig/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-11c1555/coakka-runtime-zig-2.5.1-source.tar.gz	2df4e968a61822838bb09111a4a43ed7f7b121b97fdf0e6967b04ade51efb77c
 public	runtime Tauri source package 2.5.1	runtime/tauri/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-11c1555/coakka-runtime-tauri-intents-2.5.1-source.tar.gz	215bafd78003847a67ce5eec17d33cc81a52e88f6aa56a06a9ae3af554f40ee4
+# Runtime 2.5.2 non-JVM artifacts are frozen from connector source 3ae74f4
+# over unchanged native generation 2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a.
+public	runtime Node package 2.5.2	runtime/node/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka-v2-connector-node-2.5.2.tgz	d102314d75ab90603d42b4708e670665c8e46ead81cb08eaff68540dedd18b3a
+public	runtime Bun package 2.5.2	runtime/bun/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka-v2-connector-bun-2.5.2.tgz	537524c5d6cc6f8a1a877d8f340a6c22c419a5421fffc8e6434a14b8b8f24c1e
+public	runtime Electron package 2.5.2	runtime/electron/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka-v2-connector-electron-2.5.2.tgz	e68e10ae0b934a9f195113dae824c87400753edaa684d99fdcbe3bfdbaedf5ea
+public	runtime Python package 2.5.2	runtime/python/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka_v2_connector-2.5.2-py3-none-any.whl	d28123f38e60ee76fec8fb545e37b75ec94bf56ba7d2cbccd028f907aa1ae819
+public	runtime Go package 2.5.2	runtime/go/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka-v2-connector-go-2.5.2.tar.gz	d9a941ef8aaa1f86ce261fd5174f3dad4c1b78410f5ed930b080a3443210cb63
+public	runtime C# package 2.5.2	runtime/csharp/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/CoAkka.Runtime.2.5.2.nupkg	7e618e43d4405e94f4f21009bdab67f0e88ccae7e6459ba07fc2680ec2c3fed4
+public	runtime Rust package 2.5.2	runtime/rust/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka-runtime-rs-2.5.2.tar.gz	98e1550712c7994b42075e3d937ff0b3f29aa7cdd417659424e1b851d7db4aee
+public	runtime Swift package 2.5.2	runtime/swift/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka-runtime-swift-2.5.2.tar.gz	893f1814585044ab5afbd4e13aa146c16740f08318b1c452009079b3f76e944c
+public	runtime Mojo source package 2.5.2	runtime/mojo/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka-runtime-mojo-2.5.2-source.tar.gz	1402179d311be9c2423899191648bcc88e9f67c9a1372952c3e010bc1366af06
+public	runtime Zig source package 2.5.2	runtime/zig/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka-runtime-zig-2.5.2-source.tar.gz	55663f55a56ac777b0ffaacc50635403abec3275b82fa5bd35461b81e4f2a37f
+public	runtime Tauri source package 2.5.2	runtime/tauri/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/coakka-runtime-tauri-intents-2.5.2-source.tar.gz	b51098b06a6701430dd0fcabd43f63d9296a05c16bc6dfd8fcf22f834ac18ccd
