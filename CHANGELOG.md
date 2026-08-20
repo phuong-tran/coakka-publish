@@ -5,6 +5,11 @@ remain under [docs/releases/](docs/releases/).
 
 ## 2026-08-20
 
+- Published and registry-verified Node.js, Bun, and Electron Runtime `2.5.0`
+  over exact native generation
+  `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Registry downloads are
+  byte-identical to candidate `6b56a27`; clean Node.js and Bun request/reply
+  consumers and the Electron main-process intent path pass on macOS ARM64.
 - Published and registry-verified `CoAkka.Runtime==2.5.0` over exact native
   generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. The repository-signed
   download differs from the candidate only by `.signature.p7s`; request/reply
