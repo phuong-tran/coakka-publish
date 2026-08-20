@@ -22,9 +22,8 @@ contract instead of inventing language-specific runtime semantics.
 
 ## Runtime 2.4.0 Artifact Train
 
-The promoted artifact mirror and registry channels remain on their explicitly
-listed 2.4 generations. Go `v1.8.0` and SwiftPM `v2.5.0` independently advance
-to native generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Runtime tools retain
+The current artifact mirror aligns every runtime connector lane and the JVM
+framework adapters to native generation `2.4.0+c2f53117`. Runtime tools retain
 their separately listed 2.3.0 generation. The runtime train contains five libraries: Linux
 ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 
@@ -39,8 +38,8 @@ ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 | npm | `coakka-v2-connector-{node,bun,electron}@2.4.1` | `2.4.1` | `2.4.0+c2f53117` |
 | PyPI | `coakka-v2-connector==2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
 | NuGet | `CoAkka.Runtime==2.4.1` | `2.4.1` | `2.4.0+c2f53117` |
-| Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.8.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.7.1` | `2.4.0+c2f53117` |
+| SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.4.1` | `2.4.0+c2f53117` |
 
 The artifact mirror is complete independently of npm, PyPI, and NuGet. Exact
 registry coordinates and authenticated publication receipts are listed below.
@@ -97,9 +96,9 @@ All logger connector lanes below align to logger native generation
 
 | Surface | Public generation | Public location |
 | --- | --- | --- |
-| `coakka-client` native CLI | all five native platforms `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` | `coakka-tools/coakka-client/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/` |
+| `coakka-client` native CLI | all five native platforms `2.4.0+c2f53117` | `coakka-tools/coakka-client/releases/2.4.0+c2f53117/` |
 | `coakka-client` Docker Linux bundle | `1.3.2+caff6d6d` | `coakka-tools/coakka-client/docker-demo/releases/` |
-| `coakka-runtime-inspect` native UI | all five native platforms `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` | `coakka-tools/coakka-runtime-inspect/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a/` |
+| `coakka-runtime-inspect` native UI | all five native platforms `2.4.0+c2f53117` | `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/` |
 
 ## Package-Manager Channels
 
@@ -107,8 +106,8 @@ All logger connector lanes below align to logger native generation
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.4.1`, logger `1.2.7`; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.4.0` and logger `coakka-logger==1.2.2`; registry verified |
-| Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
-| SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
+| Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.7.1`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
+| SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.4.1`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
 | NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.4.1`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
 
 PyPI superseded versions are yanked, not deleted:
@@ -149,7 +148,7 @@ SwiftPM packages:
 
 | Surface | SwiftPM coordinate | Native generation |
 | --- | --- | --- |
-| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.4.1` | `2.4.0+c2f53117` |
 | Swift logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.2` | `1.2.1+f50756ebff0d` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for current

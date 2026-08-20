@@ -6,10 +6,10 @@
     {
       "surface": "runtime",
       "repository": "https://github.com/phuong-tran/coakka-runtime-swift.git",
-      "tag": "v2.5.0",
-      "exact_version": "2.5.0",
-      "commit": "27d2d8ee711017d62ef20a092c78bc8f32345c82",
-      "native_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+      "tag": "v2.4.1",
+      "exact_version": "2.4.1",
+      "commit": "8b94a6bb7962bd694d81ee90469aca08358ff156",
+      "native_generation": "2.4.0+c2f53117",
       "platforms": ["linux-aarch64", "linux-x86_64", "macos-aarch64", "windows-aarch64", "windows-x86_64"]
     },
     {
