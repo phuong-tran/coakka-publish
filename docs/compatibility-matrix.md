@@ -22,9 +22,9 @@ contract instead of inventing language-specific runtime semantics.
 
 ## Runtime 2.4.0 Artifact Train
 
-The promoted native artifact pointer, Maven Central, and PyPI remain on their
-explicitly listed 2.4 generations. npm Runtime `2.5.0`, Go `v1.8.0`, SwiftPM
-`v2.5.0`, and NuGet Runtime `2.5.0` independently use native generation
+The promoted native artifact pointer and Maven Central remain on their
+explicitly listed 2.4 generations. npm Runtime `2.5.0`, PyPI Runtime `2.5.0`,
+Go `v1.8.0`, SwiftPM `v2.5.0`, and NuGet Runtime `2.5.0` use native generation
 `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Runtime tools retain
 their separately listed 2.3.0 generation. The runtime train contains five libraries: Linux
 ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
@@ -38,7 +38,7 @@ ARM64/x86-64 `.so`, macOS ARM64 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 | Language connector archives | `runtime/<lane>/releases/2.4.0+c2f53117-0afb5e9/` | `2.4.0` | `2.4.0+c2f53117` |
 | JavaScript archives | `runtime/{node,bun,electron}/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-6b56a27/` | npm `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | npm | `coakka-v2-connector-{node,bun,electron}@2.5.0` | `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| PyPI | `coakka-v2-connector==2.4.0` | `2.4.0` | `2.4.0+c2f53117` |
+| PyPI | `coakka-v2-connector==2.5.0` | `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | NuGet | `CoAkka.Runtime==2.5.0` | `2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.8.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
@@ -107,7 +107,7 @@ All logger connector lanes below align to logger native generation
 | Channel | Available surface | Status |
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.5.0`, logger `1.2.7`; registry verified |
-| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.4.0` and logger `coakka-logger==1.2.2`; registry verified |
+| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.5.0` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
 | NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.5.0`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
@@ -131,7 +131,7 @@ Runtime PyPI package:
 
 | Surface | PyPI coordinate | Native generation |
 | --- | --- | --- |
-| Python runtime | `coakka-v2-connector==2.4.0` | `2.4.0+c2f53117` |
+| Python runtime | `coakka-v2-connector==2.5.0` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 
 Logger PyPI package:
 
