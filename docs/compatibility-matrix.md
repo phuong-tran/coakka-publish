@@ -23,15 +23,15 @@ contract instead of inventing language-specific runtime semantics.
 ## Current Runtime Artifact Train
 
 The promoted native artifact pointer remains on its explicitly listed 2.4
-generation. Native `2.5.1`, Maven Central Runtime `2.5.3`, Go `v1.8.3`,
-SwiftPM `v2.5.3`, and the checksum-pinned connector archives use Core
-`2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`. npm, PyPI, and NuGet Runtime
-remain at `2.5.2` over the preceding native generation until separately
-released. Runtime tools retain their listed `2.4.0+c2f53117` generation. The current Runtime
+generation. Native `2.5.1`, Maven Central Runtime `2.5.3`, npm Runtime `2.5.3`,
+PyPI Runtime `2.5.3`, NuGet Runtime `2.5.3`, Go `v1.8.3`, SwiftPM `v2.5.3`,
+and the checksum-pinned connector archives use Core
+`2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`. Runtime tools retain their
+listed `2.4.0+c2f53117` generation. The current Runtime
 package train contains five libraries: Linux ARM64/x86-64 `.so`, macOS ARM64
 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 
-The `2.5.2` connectors expose typed File receive and Stream publish owner
+The `2.5.3` connectors expose typed File receive and Stream publish owner
 grants for replica-pinned lanes. ONE selects one enumerated owner; ALL creates
 one independent grant and outcome per owner. Repeating a load-balanced Service
 request does not implement ALL semantics.
@@ -44,9 +44,9 @@ request does not implement ALL semantics.
 | Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.5.3` | Runtime `2.5.3` / Core `2.5.1+26f7944d` |
 | JVM signed public tree | `https://repo1.maven.org/maven2/io/github/phuong-tran/coakka/runtime/2.5.3/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | Connector archives | `runtime/<lane>/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
-| npm | `coakka-v2-connector-{node,bun,electron}@2.5.2` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| PyPI | `coakka-v2-connector==2.5.2` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| NuGet | `CoAkka.Runtime==2.5.2` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| npm | `coakka-v2-connector-{node,bun,electron}@2.5.3` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| PyPI | `coakka-v2-connector==2.5.3` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| NuGet | `CoAkka.Runtime==2.5.3` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.8.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 
@@ -113,11 +113,11 @@ All logger connector lanes below align to logger native generation
 
 | Channel | Available surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.5.2`, logger `1.2.7`; registry verified |
-| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.5.2` and logger `coakka-logger==1.2.2`; registry verified |
+| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.5.3`, logger `1.2.7`; registry verified |
+| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.5.3` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.3`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.3`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
-| NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.5.2`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
+| NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.5.3`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
 
 PyPI superseded versions are yanked, not deleted:
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
@@ -127,9 +127,9 @@ Runtime npm packages are published for the sealed package boundary:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| Bun runtime | `coakka-v2-connector-bun@2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| Electron runtime | `coakka-v2-connector-electron@2.5.2` | via `coakka-v2-connector-node@2.5.2` |
+| Node.js runtime | `coakka-v2-connector-node@2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| Bun runtime | `coakka-v2-connector-bun@2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| Electron runtime | `coakka-v2-connector-electron@2.5.3` | via `coakka-v2-connector-node@2.5.3` |
 | Node.js logger | `coakka-logger-node@1.2.7` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.7` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.7` | via `coakka-logger-node@1.2.7` |
@@ -138,7 +138,7 @@ Runtime PyPI package:
 
 | Surface | PyPI coordinate | Native generation |
 | --- | --- | --- |
-| Python runtime | `coakka-v2-connector==2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Python runtime | `coakka-v2-connector==2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 
 Logger PyPI package:
 
@@ -150,7 +150,7 @@ NuGet packages:
 
 | Surface | NuGet coordinate | Native generation |
 | --- | --- | --- |
-| C# runtime | `CoAkka.Runtime==2.5.2` (`net8.0`; verified on .NET 8/9/10) | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| C# runtime | `CoAkka.Runtime==2.5.3` (`net8.0`; verified on .NET 8/9/10) | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | C# logger | `CoAkka.Logger==1.2.3` (`net8.0`; verified on .NET 8/9/10) | `1.2.1+f50756ebff0d` |
 
 SwiftPM packages:

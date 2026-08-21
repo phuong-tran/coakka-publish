@@ -201,9 +201,9 @@ version number.
 | Channel | Runtime package | Logger package |
 | --- | --- | --- |
 | Maven Central | [`coakka.runtime` 2.5.3](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/runtime/2.5.3) | [`coakka.logger` 1.2.2](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/logger/1.2.2) |
-| NuGet | [`CoAkka.Runtime` 2.5.2](https://www.nuget.org/packages/CoAkka.Runtime/2.5.2) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
-| npm | [`coakka-v2-connector-node` 2.5.2](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.5.2) | [`coakka-logger-node` 1.2.7](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
-| PyPI | [`coakka-v2-connector` 2.5.2](https://pypi.org/project/coakka-v2-connector/2.5.2/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
+| NuGet | [`CoAkka.Runtime` 2.5.3](https://www.nuget.org/packages/CoAkka.Runtime/2.5.3) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
+| npm | [`coakka-v2-connector-node` 2.5.3](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.5.3) | [`coakka-logger-node` 1.2.7](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
+| PyPI | [`coakka-v2-connector` 2.5.3](https://pypi.org/project/coakka-v2-connector/2.5.3/) | [`coakka-logger` 1.2.2](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go` v1.8.3](https://github.com/phuong-tran/coakka-runtime-go/tree/v1.8.3) | [`coakka-logger-go` v1.2.6](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.6) |
 | SwiftPM | [`coakka-runtime-swift` v2.5.3](https://github.com/phuong-tran/coakka-runtime-swift/tree/v2.5.3) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
 
@@ -355,12 +355,12 @@ Maven Central Runtime `2.5.3`.
 Current public connector artifact generation:
 `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e`.
 Current public Node.js, Bun, and Electron npm runtime packages:
-`coakka-v2-connector-{node,bun,electron}@2.5.2`.
+`coakka-v2-connector-{node,bun,electron}@2.5.3`.
 Current public Python PyPI runtime package:
-`coakka-v2-connector==2.5.2`, over native generation
-`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`.
-Current public C# runtime NuGet package: `CoAkka.Runtime@2.5.2`, over native
-generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`.
+`coakka-v2-connector==2.5.3`, over native generation
+`2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`.
+Current public C# runtime NuGet package: `CoAkka.Runtime@2.5.3`, over native
+generation `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`.
 Current public C# logger NuGet package: `CoAkka.Logger@1.2.3`, over native
 generation `1.2.1+f50756ebff0d`.
 Current public Mojo/Zig source connector generation and Tauri intent source
@@ -407,26 +407,25 @@ NuGet package-manager releases:
 
 | Lane | Coordinate | Native generation |
 | --- | --- | --- |
-| C# runtime connector | `CoAkka.Runtime`, exact `2.5.2` (`net8.0`; verified on .NET 8/9/10) | runtime native `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| C# runtime connector | `CoAkka.Runtime`, exact `2.5.3` (`net8.0`; verified on .NET 8/9/10) | runtime native `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | C# logger connector | `CoAkka.Logger`, exact `1.2.3` (`net8.0`; verified on .NET 8/9/10) | logger native `1.2.1+f50756ebff0d` |
 
 The NuGet lane is binary package-manager distribution for .NET consumers.
 Its release manifest is tracked under
 `package-manager/nuget/current.json`.
 
-The promoted root native runtime pointer, Maven Central Runtime `2.5.3`, the
-static connector archives, Go `v1.8.3`, and SwiftPM `v2.5.3` use Core
-`2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`. npm Runtime `2.5.2`, PyPI
-Runtime `2.5.2`, and NuGet Runtime `2.5.2` remain on native generation
-`2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` until separately released. Logger npm `1.2.7` comes
+The promoted root native runtime pointer, Maven Central Runtime `2.5.3`, npm
+Runtime `2.5.3`, PyPI Runtime `2.5.3`, NuGet Runtime `2.5.3`, the static
+connector archives, Go `v1.8.3`, and SwiftPM `v2.5.3` use Core
+`2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`. Logger npm `1.2.7` comes
 from candidate `7718ce6`, while Logger `1.2.3` comes from `801a0a6`.
 
 The Spring Boot starter and Quarkus extension remain independently published
 on Maven Central at `2.5.3` and depend on Runtime `2.5.3`.
 
 Package-manager registries are separate publication channels. npm Node.js,
-Bun, and Electron are current at `2.5.2`; PyPI runtime is current at `2.5.2`;
-NuGet runtime is current at `2.5.2` and NuGet logger at `1.2.3`.
+Bun, and Electron are current at `2.5.3`; PyPI runtime is current at `2.5.3`;
+NuGet runtime is current at `2.5.3` and NuGet logger at `1.2.3`.
 Go modules advance through `coakka-runtime-go@v1.8.3`; the module stays on
 semantic major `v1` because its path has no `/v2` suffix. SwiftPM advances
 through `coakka-runtime-swift@v2.5.3`. Both packages embed native generation
@@ -446,19 +445,19 @@ listed in `artifacts/public-artifacts.tsv`. Integrity metadata is checksum-based
 for this warehouse surface: lane manifests, `SHA256SUMS`, static-Maven checksum
 sidecars, and the root artifact manifest. Signature, SBOM, and attestation files
 are not part of the warehouse ledger yet. The separate Maven Central Runtime
-`2.5.2` component carries five verified OpenPGP signatures. The manifest also
+`2.5.3` component carries five verified OpenPGP signatures. The manifest also
 keeps explicit provenance comments for public Mojo/Zig source-package lanes so
 the connector source commit is visible at the package list boundary.
 
 The current npm coordinates are listed per package because Node.js, Bun, and
-Electron can advance independently; this release aligns all three at `2.5.2`.
+Electron can advance independently; this release aligns all three at `2.5.3`.
 The Python runtime package
-`coakka-v2-connector==2.5.2` and logger package
+`coakka-v2-connector==2.5.3` and logger package
 `coakka-logger==1.2.2` are published on PyPI. Superseded PyPI versions
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
 `coakka-logger==1.2.1` are yanked so ordinary installs resolve to the current
 patch versions. The Go runtime package
-`github.com/phuong-tran/coakka-runtime-go@v1.8.2` and logger package
+`github.com/phuong-tran/coakka-runtime-go@v1.8.3` and logger package
 `github.com/phuong-tran/coakka-logger-go@v1.2.6` are published as public Go
 modules. SwiftPM packages for Swift runtime/logger are published as public
 GitHub tag coordinates. NuGet packages for C# runtime/logger are published as
@@ -491,14 +490,14 @@ Current published lanes:
 
 - `Maven Central: io.github.phuong-tran.coakka:runtime:2.5.3`
 - `Maven Central: io.github.phuong-tran.coakka:logger:1.2.2`
-- `npm: coakka-v2-connector-node@2.5.2`
-- `npm: coakka-v2-connector-bun@2.5.2`
-- `npm: coakka-v2-connector-electron@2.5.2`
-- `PyPI: coakka-v2-connector==2.5.2`
+- `npm: coakka-v2-connector-node@2.5.3`
+- `npm: coakka-v2-connector-bun@2.5.3`
+- `npm: coakka-v2-connector-electron@2.5.3`
+- `PyPI: coakka-v2-connector==2.5.3`
 - `PyPI: coakka-logger==1.2.2`
 - `SwiftPM: https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.3`
 - `SwiftPM: https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.2`
-- `NuGet: CoAkka.Runtime@2.5.2`
+- `NuGet: CoAkka.Runtime@2.5.3`
 - `NuGet: CoAkka.Logger@1.2.3`
 - `npm: coakka-logger-node@1.2.7`
 - `npm: coakka-logger-bun@1.2.7`
@@ -609,7 +608,7 @@ Release receipt:
 
 ## Runtime v2 Public Artifacts
 
-Core source snapshot: `4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`
+Core source snapshot: `26f7944de4a4e0598845a54e4775f9463a9e33be`
 
 Package contents:
 
@@ -691,9 +690,9 @@ local handler/ask first, explicit route snapshots second, custom
 envelope/transport policy last.
 
 Release docs and samples present a helper only when the staged artifact
-contains it. Runtime `2.5.3` static packages use connector source `0ba485e` and
-Core `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`; npm, PyPI, and NuGet
-retain their separately published `2.5.2` generation. Maven Central Runtime
+contains it. Runtime `2.5.3` static and registry packages use connector source
+`0ba485e` and Core `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`.
+Maven Central Runtime
 `2.5.3` is signed, published, and registry-audited together with the `2.5.3`
 framework adapters.
 
