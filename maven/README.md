@@ -11,11 +11,9 @@ It contains the AAR, sources JAR, POM, Gradle module metadata, manifest,
 checksums, and evidence notes in one historical Maven-owned lane.
 
 The current Android `1.2.0` source tag, exact four-ABI AAR, signatures, and API
-36 ARM64 release-minified smoke are frozen. Its intended Maven Central
-coordinate is `io.github.phuong-tran.coakka:coakka-runtime-android:1.2.0`, but
-no deployment has reached `PUBLISHED`; do not resolve or advertise that
-coordinate yet. The static repository entry above is historical and is not a
-substitute for the current Central release.
+36 ARM64 release-minified smoke are frozen as internal candidate evidence. No
+Maven Central publication is planned and no Android `1.2.0` coordinate is live.
+The static repository entry above remains historical evaluation material.
 
 Gradle example:
 
@@ -25,8 +23,6 @@ repositories {
 }
 
 dependencies {
-    // Add only after the Central deployment is PUBLISHED.
-    implementation("io.github.phuong-tran.coakka:coakka-runtime-android:1.2.0")
     implementation("coakka.logger:coakka-jvm-native-logger:1.2.1-gf50756ebff0d")
     implementation("coakka.v2:coakka-jvm-native-runtime-v2:1.3.3-g282f3ad-657ec79")
     implementation("coakka.spring:coakka-spring-boot-starter:1.3.3-g282f3ad-657ec79")
