@@ -108,6 +108,29 @@ def parse_assignment(text: str, pattern: str, label: str) -> str:
     return match.group(1)
 
 
+def manifest_attribute(text: str, name: str) -> str:
+    attributes: dict[str, str] = {}
+    current_name: str | None = None
+    for line in text.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
+        if line.startswith(" "):
+            if current_name is None:
+                fail("JVM manifest contains a continuation without an attribute")
+            attributes[current_name] += line[1:]
+            continue
+        current_name = None
+        if not line:
+            continue
+        key, separator, value = line.partition(": ")
+        if not separator or not key:
+            fail("JVM manifest contains an invalid attribute line")
+        attributes[key] = value
+        current_name = key
+    value = attributes.get(name)
+    if value is None or not value:
+        fail(f"could not read JVM manifest attribute {name}")
+    return value
+
+
 def read_tar_member_text(archive: tarfile.TarFile, suffix: str) -> str:
     matches = [member for member in archive.getmembers() if member.name.endswith(suffix) and member.isfile()]
     if len(matches) != 1:
@@ -127,7 +150,7 @@ def jvm_native_version(artifact: Path) -> tuple[str, list[str]]:
             fail(f"{artifact.name} is missing META-INF/MANIFEST.MF")
             raise AssertionError from exc
     return (
-        parse_assignment(manifest_text, r"^Coakka-V2-Native-Package-Version:\s*(\S+)\s*$", "JVM native package version"),
+        manifest_attribute(manifest_text, "Coakka-V2-Native-Package-Version"),
         entries,
     )
 

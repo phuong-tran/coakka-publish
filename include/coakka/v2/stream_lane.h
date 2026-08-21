@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "coakka/v2/lane_grant.h"
 #include "coakka/v2/runtime.h"
 
 #ifdef __cplusplus
@@ -223,6 +224,20 @@ typedef struct coakka_v2_stream_lane_config_t {
 } coakka_v2_stream_lane_config_t;
 
 /**
+ * Additive owner-aware creation config for replica-pinned grants.
+ *
+ * Embedding the complete legacy lane config keeps its ABI frozen. The nested
+ * configs are projected during create_owned; pointed-to strings and security
+ * inputs are borrowed only for that call. Callers initialize all three
+ * struct_size fields to the size of their respective type.
+ */
+typedef struct coakka_v2_stream_lane_owned_config_t {
+  size_t struct_size;
+  coakka_v2_stream_lane_config_t lane;
+  coakka_v2_lane_owner_config_t owner;
+} coakka_v2_stream_lane_owned_config_t;
+
+/**
  * Publisher authorization and source prepared by the source-owning app-host.
  *
  * prepare_publish copies session_id and authorization_token, then retains the
@@ -263,6 +278,25 @@ typedef struct coakka_v2_stream_subscribe_spec_t {
   coakka_v2_stream_consumer_fn consume;
   void *consumer_context;
 } coakka_v2_stream_subscribe_spec_t;
+
+/**
+ * Publisher-issued capability for one prepared point-to-point session.
+ *
+ * The fixed-size value owns all text, including the secret token. Do not log
+ * or persist the token. owner names the exact publisher instance and listener;
+ * callers must not replace it with a replica-load-balancing service address.
+ * The first valid OPEN consumes the capability before ACCEPT or frame delivery;
+ * transport failure after admission requires a fresh prepare and grant.
+ */
+typedef struct coakka_v2_stream_publish_grant_t {
+  size_t struct_size;
+  coakka_v2_lane_owner_endpoint_t owner;
+  char session_id[COAKKA_V2_STREAM_LANE_SESSION_ID_MAX_BYTES + 1u];
+  char authorization_token[COAKKA_V2_STREAM_LANE_TOKEN_MAX_BYTES + 1u];
+  uint64_t format_id;
+  uint32_t max_frame_bytes;
+  uint32_t reserved;
+} coakka_v2_stream_publish_grant_t;
 
 /**
  * Caller-owned point-in-time session projection.
@@ -378,6 +412,29 @@ coakka_v2_stream_lane_create_ex(const coakka_v2_stream_lane_config_t *config,
                                 coakka_v2_stream_lane_t **out_lane);
 
 /**
+ * Creates a stopped owner-aware lane for replica-pinned publish grants.
+ * The complete nested lane and owner configuration is copied before return.
+ * The caller owns a successful result and must stop it before destroy.
+ *
+ * @param config Borrowed owner-aware configuration copied during this call.
+ * @return Owned stopped lane, or NULL on validation or allocation failure.
+ */
+coakka_v2_stream_lane_t *coakka_v2_stream_lane_create_owned(
+    const coakka_v2_stream_lane_owned_config_t *config);
+
+/**
+ * Status-returning owner-aware factory used by prepare_publish_grant.
+ * Caller output is set to NULL on failure and receives ownership on success.
+ *
+ * @param config Borrowed owner-aware configuration copied during this call.
+ * @param out_lane Receives the owned stopped lane on success or NULL on failure.
+ * @return COAKKA_V2_OK on success or a stable validation/allocation status.
+ */
+coakka_v2_status_t coakka_v2_stream_lane_create_owned_ex(
+    const coakka_v2_stream_lane_owned_config_t *config,
+    coakka_v2_stream_lane_t **out_lane);
+
+/**
  * Releases a stopped lane. Passing NULL is allowed. The caller must first
  * prevent concurrent API calls and complete stop; destroy does not substitute
  * for lifecycle coordination.
@@ -387,7 +444,9 @@ coakka_v2_stream_lane_create_ex(const coakka_v2_stream_lane_config_t *config,
 void coakka_v2_stream_lane_destroy(coakka_v2_stream_lane_t *lane);
 
 /**
- * Starts workers and, for publisher lanes, the configured listener.
+ * Starts workers and, for publisher lanes, the configured listener. Start and
+ * stop transitions are internally serialized; admission is accepted only
+ * after start completes.
  *
  * @param lane Owned stopped lane.
  * @return COAKKA_V2_OK on transition to started, otherwise a stable status.
@@ -395,9 +454,11 @@ void coakka_v2_stream_lane_destroy(coakka_v2_stream_lane_t *lane);
 coakka_v2_status_t coakka_v2_stream_lane_start(coakka_v2_stream_lane_t *lane);
 
 /**
- * Requests stop, wakes blocked waits, joins workers, and prevents new work.
- * Repeated calls are safe. Callback contexts remain borrowed until records are
- * forgotten or the lane is destroyed.
+ * Requests stop, prevents new admission before cancellation begins, wakes
+ * blocked waits, and joins workers. Repeated and concurrent start/stop calls
+ * are internally serialized. Callback contexts remain borrowed until records
+ * are forgotten or the lane is destroyed; destroy still requires caller-side
+ * exclusion.
  *
  * @param lane Owned lane to stop.
  * @return COAKKA_V2_OK for a valid lane, including repeated stop calls.
@@ -425,6 +486,25 @@ coakka_v2_stream_lane_get_bound_port(coakka_v2_stream_lane_t *lane,
  */
 coakka_v2_status_t coakka_v2_stream_lane_prepare_publish(
     coakka_v2_stream_lane_t *lane, const coakka_v2_stream_publish_spec_t *spec);
+
+/**
+ * Prepares one publisher and returns a replica-pinned session capability.
+ *
+ * The lane must be started with publisher capability and a valid owner config.
+ * On success the grant contains the lane's copied owner identity and actual
+ * bound port. Stop or owner loss invalidates the capability; another replica
+ * must prepare and issue a new grant rather than reuse this one. The first
+ * valid OPEN consumes the grant even if ACCEPT or later delivery fails.
+ *
+ * @param lane Borrowed started publisher-capable lane.
+ * @param spec Borrowed publisher authorization copied by the lane.
+ * @param out_grant Caller-owned output initialized with struct_size.
+ * @return COAKKA_V2_OK, or a stable rejection without modifying out_grant.
+ */
+coakka_v2_status_t coakka_v2_stream_lane_prepare_publish_grant(
+    coakka_v2_stream_lane_t *lane,
+    const coakka_v2_stream_publish_spec_t *spec,
+    coakka_v2_stream_publish_grant_t *out_grant);
 
 /**
  * Queues one outbound subscriber job. Queue admission is bounded and may

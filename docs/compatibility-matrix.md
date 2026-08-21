@@ -23,10 +23,11 @@ contract instead of inventing language-specific runtime semantics.
 ## Current Runtime Artifact Train
 
 The promoted native artifact pointer remains on its explicitly listed 2.4
-generation. Maven Central Runtime `2.5.2`, npm Runtime `2.5.2`, PyPI Runtime
-`2.5.2`, Go `v1.8.2`, SwiftPM `v2.5.2`, and NuGet Runtime `2.5.2` use native
-generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a`. Runtime tools retain
-their separately listed `2.4.0+c2f53117` generation. The current Runtime
+generation. Native `2.5.1`, Maven Central Runtime `2.5.3`, Go `v1.8.3`,
+SwiftPM `v2.5.3`, and the checksum-pinned connector archives use Core
+`2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`. npm, PyPI, and NuGet Runtime
+remain at `2.5.2` over the preceding native generation until separately
+released. Runtime tools retain their listed `2.4.0+c2f53117` generation. The current Runtime
 package train contains five libraries: Linux ARM64/x86-64 `.so`, macOS ARM64
 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 
@@ -37,17 +38,17 @@ request does not implement ALL semantics.
 
 | Surface | Public artifact or coordinate | Public generation | Native generation |
 | --- | --- | --- | --- |
-| Native C ABI | `runtime/native/releases/2.4.0+c2f53117/coakka-runtime-native-v2-2.4.0.tar.gz` | `2.4.0+c2f53117` | `2.4.0+c2f53117` |
-| JVM runtime | `io.github.phuong-tran.coakka:runtime` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.5.2` | Runtime `2.5.2` / native `2.5.0+4b65d0b2` |
-| Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.5.2` | Runtime `2.5.2` / native `2.5.0+4b65d0b2` |
-| JVM signed public tree | `https://repo1.maven.org/maven2/io/github/phuong-tran/coakka/runtime/2.5.2/` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| Non-JVM connector archives | `runtime/<lane>/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Native C ABI | `runtime/native/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-runtime-native-v2-2.5.1.tar.gz` | `2.5.1` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| JVM runtime | `io.github.phuong-tran.coakka:runtime` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.5.3` | Runtime `2.5.3` / Core `2.5.1+26f7944d` |
+| Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.5.3` | Runtime `2.5.3` / Core `2.5.1+26f7944d` |
+| JVM signed public tree | `https://repo1.maven.org/maven2/io/github/phuong-tran/coakka/runtime/2.5.3/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| Connector archives | `runtime/<lane>/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | npm | `coakka-v2-connector-{node,bun,electron}@2.5.2` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | PyPI | `coakka-v2-connector==2.5.2` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | NuGet | `CoAkka.Runtime==2.5.2` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.8.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.8.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 
 The artifact mirror is complete independently of npm, PyPI, and NuGet. Exact
 registry coordinates and authenticated publication receipts are listed below.
@@ -114,8 +115,8 @@ All logger connector lanes below align to logger native generation
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.5.2`, logger `1.2.7`; registry verified |
 | PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.5.2` and logger `coakka-logger==1.2.2`; registry verified |
-| Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.2`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
-| SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.2`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
+| Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.3`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
+| SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.3`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
 | NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.5.2`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
 
 PyPI superseded versions are yanked, not deleted:
@@ -156,7 +157,7 @@ SwiftPM packages:
 
 | Surface | SwiftPM coordinate | Native generation |
 | --- | --- | --- |
-| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
+| Swift runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | Swift logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.2` | `1.2.1+f50756ebff0d` |
 
 See [package-manager-roadmap.md](package-manager-roadmap.md) for current

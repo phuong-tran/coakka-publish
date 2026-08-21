@@ -1,0 +1,46 @@
+# CoAkka Runtime Native v2 C ABI
+
+This package contains the public runtime v2 C ABI headers and prebuilt native
+runtime libraries for:
+
+- `linux-aarch64`
+- `linux-x86_64`
+- `macos-aarch64`
+- `windows-aarch64`
+- `windows-x86_64`
+
+Each platform directory contains exactly one loadable runtime shared library:
+`libcoakka_runtime_v2` with the platform suffix for that OS. Public packages do
+not ship sidecar third-party runtime libraries.
+
+The current public runtime profile includes the runtime C ABI plus the
+scanner-clean TCP frame transport profile used by the public cross-process
+samples.
+
+## Contents
+
+```text
+include/           Public C ABI headers
+native/<platform>/ Prebuilt runtime shared library
+cmake/             CMake package config
+LICENSE            Apache-2.0 terms
+NATIVE-LICENSE.md  CoAkka Native Artifact License 1.2 terms
+PACKAGE-LICENSE.md File-scoped package license map
+NOTICE             Package identity and license notice
+```
+
+The package uses file-scoped terms. Read `PACKAGE-LICENSE.md` for the exact
+mapping, `LICENSE` for Apache-2.0, and `NATIVE-LICENSE.md` for the native
+headers and prebuilt Runtime libraries.
+
+## CMake
+
+```cmake
+find_package(CoAkkaRuntimeNativeV2 CONFIG REQUIRED)
+
+add_executable(app main.c)
+target_link_libraries(app PRIVATE CoAkkaRuntimeNativeV2::runtime_v2)
+```
+
+At runtime, keep the platform native directory on the dynamic loader path, or
+copy the matching `libcoakka_runtime_v2` file next to your executable.

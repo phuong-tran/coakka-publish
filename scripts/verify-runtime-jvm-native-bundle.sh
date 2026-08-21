@@ -70,11 +70,28 @@ PY
 jar_native_version() {
   local jar_path="$1"
   unzip -p "${jar_path}" META-INF/MANIFEST.MF |
-    awk -F': ' '
-      /^Coakka-V2-Native-Package-Version:/ {
-        gsub(/\r$/, "", $2)
-        print $2
+    awk -v attribute='Coakka-V2-Native-Package-Version: ' '
+      {
+        sub(/\r$/, "")
+      }
+      collecting && /^ / {
+        value = value substr($0, 2)
+        next
+      }
+      collecting {
+        print value
+        printed = 1
+        collecting = 0
         exit
+      }
+      index($0, attribute) == 1 {
+        value = substr($0, length(attribute) + 1)
+        collecting = 1
+      }
+      END {
+        if (collecting && !printed) {
+          print value
+        }
       }
     '
 }
@@ -186,12 +203,6 @@ check_platform_entries() {
   fi
   check_entry_matches_native \
     "${jar_path}" \
-    "native/${platform}/${basename}.${extension}" \
-    "${native_version}" \
-    "${root_native}" \
-    "${native_archive}"
-  check_entry_matches_native \
-    "${jar_path}" \
     "native/${platform}/${basename}-${native_version}.${extension}" \
     "${native_version}" \
     "${root_native}" \
@@ -297,12 +308,14 @@ current_runtime_jvm_jars() {
   local metadata="${repo_root}/maven/coakka/v2/coakka-jvm-native-runtime-v2/maven-metadata.xml"
   local latest
 
-  if [[ -f "${manifest}" ]]; then
+  if [[ -f "${manifest}" ]] &&
+      awk -F '\t' '$2 == "runtime JVM jar" { found = 1 } END { exit !found }' "${manifest}"; then
     awk -F '\t' '$2 == "runtime JVM jar" { print }' "${manifest}" |
       while IFS=$'\t' read -r _status _label relative_path _sha; do
         [[ -n "${relative_path}" ]] || continue
         printf '%s\0' "${repo_root}/${relative_path}"
       done
+    return
   fi
 
   if [[ -f "${metadata}" ]]; then

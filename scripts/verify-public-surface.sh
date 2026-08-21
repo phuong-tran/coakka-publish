@@ -212,18 +212,33 @@ jar_manifest_attribute() {
 
 pom_runtime_jvm_dependency_version() {
   local pom_path="$1"
-  awk '
-    /<artifactId>coakka-jvm-native-runtime-v2<\/artifactId>/ {
-      in_runtime_dependency = 1
-      next
+  python3 - "${pom_path}" <<'PY'
+import sys
+import xml.etree.ElementTree as ET
+
+root = ET.parse(sys.argv[1]).getroot()
+
+def local_name(tag):
+    return tag.rsplit("}", 1)[-1]
+
+versions = []
+for dependency in root.iter():
+    if local_name(dependency.tag) != "dependency":
+        continue
+    values = {
+        local_name(child.tag): (child.text or "").strip()
+        for child in dependency
     }
-    in_runtime_dependency && /<version>/ {
-      gsub(/.*<version>/, "")
-      gsub(/<\/version>.*/, "")
-      print
-      exit
-    }
-  ' "${pom_path}"
+    coordinate = (values.get("groupId"), values.get("artifactId"))
+    if coordinate in {
+        ("coakka.v2", "coakka-jvm-native-runtime-v2"),
+        ("io.github.phuong-tran.coakka", "runtime"),
+    }:
+        versions.append(values.get("version", ""))
+
+if len(versions) == 1 and versions[0]:
+    print(versions[0])
+PY
 }
 
 verify_framework_adapter_runtime_dependency() {
@@ -249,9 +264,15 @@ verify_framework_adapter_runtime_dependency() {
 }
 
 verify_framework_adapter_dependencies() {
-  local runtime_jvm_latest
-  runtime_jvm_latest="$(maven_metadata_latest "maven/coakka/v2/coakka-jvm-native-runtime-v2/maven-metadata.xml")"
-  [[ -n "${runtime_jvm_latest}" ]] || fail "could not read runtime JVM latest Maven version"
+  local runtime_jvm_relative runtime_jvm_latest
+  runtime_jvm_relative="$(public_manifest_path_for_label "runtime JVM jar")"
+  require_file "${runtime_jvm_relative}"
+  runtime_jvm_latest="$(
+    jar_manifest_attribute \
+      "${repo_root}/${runtime_jvm_relative}" \
+      "Coakka-V2-Jvm-Version"
+  )"
+  [[ -n "${runtime_jvm_latest}" ]] || fail "could not read current runtime JVM version"
 
   verify_framework_adapter_runtime_dependency "Spring Boot starter Maven jar" "${runtime_jvm_latest}"
   verify_framework_adapter_runtime_dependency "Quarkus extension Maven jar" "${runtime_jvm_latest}"
@@ -319,7 +340,7 @@ PY
           fail "native sample public row is not declared exactly once in its release manifest: ${relative_path}"
         fi
         ;;
-      logger/*/releases/*|runtime/*/releases/*|runtime-inspect/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|coakka-tools/*/releases/*|maven/coakka/*/*/*/*.jar)
+      logger/*/releases/*|runtime/*/releases/*|runtime-inspect/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|coakka-tools/*/releases/*|maven/coakka/*/*/*/*.jar|maven/io/github/phuong-tran/coakka/*/*/*.jar)
         ;;
       *)
         fail "artifact path is outside the current public manifest surface in row ${line_no}: ${relative_path}"

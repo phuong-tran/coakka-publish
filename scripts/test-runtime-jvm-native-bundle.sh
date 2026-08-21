@@ -49,36 +49,27 @@ make_runtime_jar() {
     "${root}/native/windows-aarch64" \
     "${root}/native/windows-x86_64"
 
-  cat >"${root}/META-INF/MANIFEST.MF" <<EOF
-Manifest-Version: 1.0
-Coakka-V2-Native-Package-Version: ${native_version}
+  {
+    printf 'Manifest-Version: 1.0\n'
+    printf 'Coakka-V2-Native-Package-Version: %s\n' "${native_version:0:8}"
+    printf ' %s\n\n' "${native_version:8}"
+  } >"${root}/META-INF/MANIFEST.MF"
 
-EOF
-
-  cp "${fixture}/native/linux-aarch64/libcoakka_runtime_v2.so" \
-    "${root}/native/linux-aarch64/libcoakka_runtime_v2.so"
   cp "${fixture}/native/linux-aarch64/libcoakka_runtime_v2.so" \
     "${root}/native/linux-aarch64/libcoakka_runtime_v2-${native_version}.so"
-  cp "${fixture}/native/linux-x86_64/libcoakka_runtime_v2.so" \
-    "${root}/native/linux-x86_64/libcoakka_runtime_v2.so"
   cp "${fixture}/native/linux-x86_64/libcoakka_runtime_v2.so" \
     "${root}/native/linux-x86_64/libcoakka_runtime_v2-${native_version}.so"
 
   if [[ "${macos_marker}" == "stale" ]]; then
-    printf 'macos-aarch64 stale\n' >"${root}/native/macos-aarch64/libcoakka_runtime_v2.dylib"
+    printf 'macos-aarch64 stale\n' \
+      >"${root}/native/macos-aarch64/libcoakka_runtime_v2-${native_version}.dylib"
   else
     cp "${fixture}/native/macos-aarch64/libcoakka_runtime_v2.dylib" \
-      "${root}/native/macos-aarch64/libcoakka_runtime_v2.dylib"
+      "${root}/native/macos-aarch64/libcoakka_runtime_v2-${native_version}.dylib"
   fi
-  cp "${root}/native/macos-aarch64/libcoakka_runtime_v2.dylib" \
-    "${root}/native/macos-aarch64/libcoakka_runtime_v2-${native_version}.dylib"
 
   cp "${fixture}/native/windows-aarch64/libcoakka_runtime_v2.dll" \
-    "${root}/native/windows-aarch64/libcoakka_runtime_v2.dll"
-  cp "${fixture}/native/windows-aarch64/libcoakka_runtime_v2.dll" \
     "${root}/native/windows-aarch64/libcoakka_runtime_v2-${native_version}.dll"
-  cp "${fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll" \
-    "${root}/native/windows-x86_64/libcoakka_runtime_v2.dll"
   cp "${fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll" \
     "${root}/native/windows-x86_64/libcoakka_runtime_v2-${native_version}.dll"
 
@@ -126,7 +117,7 @@ make_fixture() {
   local name="$1"
   local release_marker="${2:-current}"
   local fixture="${tmp_root}/${name}"
-  local native_version="0.1.0+test"
+  local native_version="${3:-0.1.0+test}"
   local jvm_version="0.1.0-test"
   rm -rf "${fixture}"
 
@@ -175,6 +166,15 @@ printf 'macos-aarch64 newer root\n' >"${good_fixture}/native/macos-aarch64/libco
 printf 'windows-aarch64 newer root\n' >"${good_fixture}/native/windows-aarch64/libcoakka_runtime_v2.dll"
 printf 'windows-x86_64 newer root\n' >"${good_fixture}/native/windows-x86_64/libcoakka_runtime_v2.dll"
 expect_success "matching runtime JVM bundle" "${good_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
+
+folded_manifest_fixture="$(
+  make_fixture \
+    folded-manifest \
+    current \
+    2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be
+)"
+expect_success "folded full-source runtime JVM manifest" \
+  "${folded_manifest_fixture}/scripts/verify-runtime-jvm-native-bundle.sh"
 
 subset_fixture="$(make_fixture manifest-subset)"
 cat >"${subset_fixture}/runtime/native/releases/0.1.0+test/manifest.json" <<'EOF'

@@ -1,15 +1,15 @@
 {
   "lane": "swiftpm",
   "status": "current",
-  "released_at": "2026-08-20",
+  "released_at": "2026-08-21",
   "packages": [
     {
       "surface": "runtime",
       "repository": "https://github.com/phuong-tran/coakka-runtime-swift.git",
-      "tag": "v2.5.2",
-      "exact_version": "2.5.2",
-      "commit": "76f928e901f1621f443164523183908ce487a80e",
-      "native_generation": "2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a",
+      "tag": "v2.5.3",
+      "exact_version": "2.5.3",
+      "commit": "703e76c05f936d36d4566353f103c67d857bf6be",
+      "native_generation": "2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be",
       "platforms": ["linux-aarch64", "linux-x86_64", "macos-aarch64", "windows-aarch64", "windows-x86_64"]
     },
     {
@@ -23,7 +23,7 @@
     }
   ],
   "verification": [
-    "native payload verification, package tests, owner-grant tests, and clean remote-tag consumer smoke against coakka-runtime-swift exact 2.5.2 on macos-aarch64",
+    "native payload verification, package tests, owner-grant tests, and clean remote-tag consumer smoke against coakka-runtime-swift exact 2.5.3 on macos-aarch64",
     "native payload verification, package tests, and clean remote-tag consumer smoke against coakka-logger-swift exact 1.2.2 on macos-aarch64",
     "both bundled macOS ARM64 dylibs report Mach-O minos 13.0"
   ]

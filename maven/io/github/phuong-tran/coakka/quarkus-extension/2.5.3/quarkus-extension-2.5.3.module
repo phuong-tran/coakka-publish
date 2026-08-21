@@ -1,0 +1,118 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "io.github.phuong-tran.coakka",
+    "module": "quarkus-extension",
+    "version": "2.5.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.phuong-tran.coakka",
+          "module": "runtime",
+          "version": {
+            "requires": "2.5.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "quarkus-extension-2.5.3.jar",
+          "url": "quarkus-extension-2.5.3.jar",
+          "size": 19148,
+          "sha512": "6b889a5e403eac34bfdbb289a8a197a03c1cbf6bf43d41ecd9be7ea5423abfabdc03461003b77f9cd4aada1f8cad4847f630e695d0f684e92d2483dcc6e78d10",
+          "sha256": "0d7f6e2f259d6777d2f6e83d651b9d7d1bf09a77906639ecad2bcbc37314626a",
+          "sha1": "c1b859a01b9afc6728a8ca411b120fc2cd9e108b",
+          "md5": "34de7bece80cd466502d488abfe1a0b8"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.phuong-tran.coakka",
+          "module": "runtime",
+          "version": {
+            "requires": "2.5.3"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "quarkus-extension-2.5.3.jar",
+          "url": "quarkus-extension-2.5.3.jar",
+          "size": 19148,
+          "sha512": "6b889a5e403eac34bfdbb289a8a197a03c1cbf6bf43d41ecd9be7ea5423abfabdc03461003b77f9cd4aada1f8cad4847f630e695d0f684e92d2483dcc6e78d10",
+          "sha256": "0d7f6e2f259d6777d2f6e83d651b9d7d1bf09a77906639ecad2bcbc37314626a",
+          "sha1": "c1b859a01b9afc6728a8ca411b120fc2cd9e108b",
+          "md5": "34de7bece80cd466502d488abfe1a0b8"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "quarkus-extension-2.5.3-sources.jar",
+          "url": "quarkus-extension-2.5.3-sources.jar",
+          "size": 15256,
+          "sha512": "b662047a377c287ff28340be0a6e2cbfd57d361077b4b2931d2e8e9b0bba907012fb1147427deafd36dc804b46e88cb86352dd7eacce0a82a674c692fdafe94c",
+          "sha256": "0d2cb979113b6bba0540894f6452af0866a2a4ea340a89739d8950f01991cf2e",
+          "sha1": "c248621f7fbdd50f48937eef8443b9e87d5bf351",
+          "md5": "4be8769bb02da0e51d34edcd72da8f7f"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "quarkus-extension-2.5.3-javadoc.jar",
+          "url": "quarkus-extension-2.5.3-javadoc.jar",
+          "size": 104338,
+          "sha512": "32c54b61c23bfb5f48666b6983bffdb7df112859f7f364f5ac8751abef774b7748c499c46d87bf1b6fbc4d15a519a2b777ccd5c0c9dd3dc8592254cf00754f24",
+          "sha256": "2e0d73c1d06e9ad8b0608312944ee67abcbba60783586c24b949ef5832a43556",
+          "sha1": "7bc0f78e2174628e906cadfa1c27eb52b0e9963c",
+          "md5": "bcf17a6ab6405fecb7e949ecbc115edf"
+        }
+      ]
+    }
+  ]
+}

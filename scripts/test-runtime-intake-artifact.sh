@@ -55,11 +55,11 @@ make_jvm_jar() {
   local root="${tmp_root}/jvm-root"
   rm -rf "${root}"
   mkdir -p "${root}/META-INF" "${root}/native/macos-aarch64"
-  cat >"${root}/META-INF/MANIFEST.MF" <<EOF
-Manifest-Version: 1.0
-Coakka-V2-Native-Package-Version: ${native_version}
-
-EOF
+  {
+    printf 'Manifest-Version: 1.0\n'
+    printf 'Coakka-V2-Native-Package-Version: %s\n' "${native_version:0:8}"
+    printf ' %s\n\n' "${native_version:8}"
+  } >"${root}/META-INF/MANIFEST.MF"
   printf '%s\n' "${marker}" >"${root}/native/macos-aarch64/libcoakka_runtime_v2.dylib"
   (cd "${root}" && zip -qr "${target}" .)
 }
