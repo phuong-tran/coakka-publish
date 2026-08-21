@@ -365,13 +365,13 @@ Current public C# logger NuGet package: `CoAkka.Logger@1.2.3`, over native
 generation `1.2.1+f50756ebff0d`.
 Current public Mojo/Zig source connector generation and Tauri intent source
 generation are `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e`.
-Current public coakka-client generation: `2.4.0+c2f53117` on all five
-supported native platforms.
-Current public coakka-client Docker Linux bundle generation: `1.3.2+caff6d6d`.
-Current public coakka-runtime-inspect native generation: `2.4.0+c2f53117` on
-all five supported native platforms.
-Docker Hub image tags are not part of the current release ledger yet; the
-Repository-hosted demo bundles above are the captured public sample artifacts.
+Current public coakka-client generation:
+`2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` on all five supported native
+platforms. Its Docker Linux bundle uses the same generation.
+Current public coakka-runtime-inspect native generation is the same Runtime
+generation on all five supported native platforms. The published Client and
+Inspect Docker Hub tags and immutable digests are recorded in the Runtime tools
+2.5.1 release receipt.
 
 | Lane | Public status | Public location |
 | --- | --- | --- |
@@ -540,17 +540,18 @@ Current published lanes:
 
 ## coakka-client Public Artifacts
 
-Current coakka-client source snapshot: `c2f53117f991f67f809a0bf46bac2ce26091eb78`
+Current coakka-client Runtime source snapshot:
+`26f7944de4a4e0598845a54e4775f9463a9e33be`
 
 Package contents:
 
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-aarch64.tar.gz`
-- `coakka-tools/coakka-client/releases/2.4.0+c2f53117/coakka-client-v2-2.4.0-windows-x86_64.tar.gz`
-- `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-client/docker-demo/releases/1.3.2+caff6d6d/coakka-client-docker-demo-v2-1.3.2-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-client-v2-2.5.1-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-client-v2-2.5.1-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-client-v2-2.5.1-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-client-v2-2.5.1-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-client/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-client-v2-2.5.1-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-client/docker-demo/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-client-docker-demo-v2-2.5.1-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-client/docker-demo/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-client-docker-demo-v2-2.5.1-linux-aarch64.tar.gz`
 
 `coakka-client` is the CLI runtime client for diagnostics, request/reply
 `call`/`ask`, and bounded shell script mode over the current public TCP frame
@@ -558,24 +559,26 @@ profile. It is not the dashboard, inspect surface, topology authority, or a
 business schema registry.
 
 The Docker Linux bundle starts two native runtime service processes and drives
-them with the packaged `coakka-client`. Docker Hub sample images are a
-convenience path recorded in the release notes that publish them; the canonical
-binary archives and checksums remain in the release artifacts above.
+them with the packaged `coakka-client`. The published multi-architecture image
+is `docker.io/gabrielgun1983/coakka-runtime-client-demo:2.5.1-26f7944d-remote`
+at digest
+`sha256:30586188a7a400b8085a3eed475ad086761f1506816ac6d1b70887fe901958e6`.
 
 Release receipt:
-[`docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md`](docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md)
+[`docs/releases/2026-08-21-runtime-tools-2.5.1.md`](docs/releases/2026-08-21-runtime-tools-2.5.1.md)
 
 ## coakka-runtime-inspect Public Artifacts
 
-Current coakka-runtime-inspect source snapshot: `c2f53117f991f67f809a0bf46bac2ce26091eb78`
+Current coakka-runtime-inspect Runtime source snapshot:
+`26f7944de4a4e0598845a54e4775f9463a9e33be`
 
 Package contents:
 
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-linux-x86_64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-macos-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-aarch64.tar.gz`
-- `coakka-tools/coakka-runtime-inspect/releases/2.4.0+c2f53117/coakka-runtime-inspect-v2-2.4.0-windows-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-runtime-inspect-v2-2.5.1-linux-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-runtime-inspect-v2-2.5.1-linux-x86_64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-runtime-inspect-v2-2.5.1-macos-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-runtime-inspect-v2-2.5.1-windows-aarch64.tar.gz`
+- `coakka-tools/coakka-runtime-inspect/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-runtime-inspect-v2-2.5.1-windows-x86_64.tar.gz`
 
 `coakka-runtime-inspect` is the browser runtime explorer and route-try UI for
 CoAkka Runtime. It is the visual sibling of `coakka-client`: a way to read and
@@ -598,13 +601,15 @@ Current limits:
   path.
 - Remote read/observe remains a future runtime surface across all platforms.
 
-macOS ARM64 and Linux ARM64/x86-64 completed matching-host command and `serve`
-smokes. Both Windows architectures pass Zig cross-build, PE architecture,
-dependency, archive, and checksum gates; matching-host Windows execution is not
-recorded for this generation.
+All five archives pass exact Runtime identity, architecture, dependency,
+archive, and checksum gates. macOS ARM64 completed command and `serve` smoke.
+The published Linux amd64/arm64 Docker image
+`docker.io/gabrielgun1983/coakka-runtime-inspect-sample:2.5.1-26f7944d-remote`
+passed its smoke at digest
+`sha256:8dae4f4f392a83a2cbbc4d6d4e15b39ad4186996a469d36a11e0992334329ac3`.
 
 Release receipt:
-[`docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md`](docs/releases/2026-08-12-runtime-tools-2.4.0-c2f53117.md)
+[`docs/releases/2026-08-21-runtime-tools-2.5.1.md`](docs/releases/2026-08-21-runtime-tools-2.5.1.md)
 
 ## Runtime v2 Public Artifacts
 

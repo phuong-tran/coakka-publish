@@ -3,6 +3,15 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/releases/](docs/releases/).
 
+## 2026-08-21
+
+- Published `coakka-client` and `coakka-runtime-inspect` `2.5.1` native
+  archives for macOS ARM64, Linux amd64/arm64, and Windows amd64/arm64 over
+  exact Runtime generation
+  `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`. Published the Client Linux
+  Docker bundles and the Client/Inspect Docker Hub images; live image smoke
+  passes on Linux amd64 and arm64.
+
 ## 2026-08-20
 
 - Published and registry-audited JVM Runtime
