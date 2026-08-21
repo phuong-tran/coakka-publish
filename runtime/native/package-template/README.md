@@ -23,7 +23,15 @@ samples.
 include/           Public C ABI headers
 native/<platform>/ Prebuilt runtime shared library
 cmake/             CMake package config
+LICENSE            Apache-2.0 terms
+NATIVE-LICENSE.md  CoAkka Native Artifact License 1.2 terms
+PACKAGE-LICENSE.md File-scoped package license map
+NOTICE             Package identity and license notice
 ```
+
+The package uses file-scoped terms. Read `PACKAGE-LICENSE.md` for the exact
+mapping, `LICENSE` for Apache-2.0, and `NATIVE-LICENSE.md` for the native
+headers and prebuilt Runtime libraries.
 
 ## CMake
 

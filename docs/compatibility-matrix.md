@@ -39,8 +39,8 @@ request does not implement ALL semantics.
 | --- | --- | --- | --- |
 | Native C ABI | `runtime/native/releases/2.4.0+c2f53117/coakka-runtime-native-v2-2.4.0.tar.gz` | `2.4.0+c2f53117` | `2.4.0+c2f53117` |
 | JVM runtime | `io.github.phuong-tran.coakka:runtime` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.4.1` | via JVM runtime |
-| Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.4.1` | via JVM runtime |
+| Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `2.5.2` | Runtime `2.5.2` / native `2.5.0+4b65d0b2` |
+| Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.5.2` | Runtime `2.5.2` / native `2.5.0+4b65d0b2` |
 | JVM signed public tree | `https://repo1.maven.org/maven2/io/github/phuong-tran/coakka/runtime/2.5.2/` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | Non-JVM connector archives | `runtime/<lane>/releases/2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a-3ae74f4/` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
 | npm | `coakka-v2-connector-{node,bun,electron}@2.5.2` | `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
