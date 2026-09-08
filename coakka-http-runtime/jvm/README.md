@@ -1,15 +1,10 @@
 # CoAkka HTTP Runtime for JVM
 
-Status: implemented development draft. Registry publication is not open.
+Status: in development. Registry publication is not open and follows the
+native Request/Response baseline.
 
 The Java and Kotlin API is shaped around `HttpRequest`, `HttpResponse`,
-`HttpHandler`, `AsyncHttpHandler`, `HttpService` and `HttpClient`. The current
-draft includes buffered and streaming bodies, server events, WebSocket
-sessions, static and SPA delivery, outbound requests, TLS, HTTP/1.1, HTTP/2,
-form and multipart values, route updates, bounded inspection, cancellation and
-finite shutdown.
+`HttpHandler`, `AsyncHttpHandler`, `HttpService` and `HttpClient`.
 
-Current source verification includes Java 8 API compilation, real socket
-lifecycle tests and a macOS arm64 package candidate. Other target builds and
-release-sized verification remain open, so there is no Maven Central
-coordinate or installation snippet here yet.
+Capability completion and package evidence are still being prepared. No Maven
+Central coordinate or installation snippet is declared by this draft.

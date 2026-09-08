@@ -3,25 +3,24 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-typedef struct coakka_http_test_thread_gate {
+typedef struct test_thread_gate {
   pthread_mutex_t mutex;
   pthread_cond_t condition;
   size_t ready;
   size_t target;
   int released;
-} coakka_http_test_thread_gate_t;
+} test_thread_gate_t;
 
-typedef struct coakka_http_test_thread_start {
+typedef struct test_thread_start {
   coakka_http_test_thread_fn worker;
   void *context;
-  coakka_http_test_thread_gate_t *gate;
+  test_thread_gate_t *gate;
   int result;
-} coakka_http_test_thread_start_t;
+} test_thread_start_t;
 
-static void *coakka_http_test_thread_entry(void *opaque) {
-  coakka_http_test_thread_start_t *start =
-      (coakka_http_test_thread_start_t *)opaque;
-  coakka_http_test_thread_gate_t *gate = start->gate;
+static void *thread_entry(void *opaque) {
+  test_thread_start_t *start = (test_thread_start_t *)opaque;
+  test_thread_gate_t *gate = start->gate;
 
   if (pthread_mutex_lock(&gate->mutex) != 0) {
     start->result = -1;
@@ -29,38 +28,32 @@ static void *coakka_http_test_thread_entry(void *opaque) {
   }
   gate->ready += 1U;
   if (gate->ready == gate->target) {
-    /* The same condition owns both phases, so wake the coordinator as well as
-     * workers already waiting for release. Workers re-check released. */
     (void)pthread_cond_broadcast(&gate->condition);
   }
-  while (gate->released == 0) {
+  while (gate->released == 0 && start->result == 0) {
     if (pthread_cond_wait(&gate->condition, &gate->mutex) != 0) {
       start->result = -1;
-      break;
     }
   }
   if (pthread_mutex_unlock(&gate->mutex) != 0) {
     start->result = -1;
   }
-  if (start->result != 0) {
-    return NULL;
+  if (start->result == 0) {
+    start->result = start->worker(start->context);
   }
-  start->result = start->worker(start->context);
   return NULL;
 }
 
 int coakka_http_test_run_threads(coakka_http_test_thread_fn worker,
                                  void **contexts, size_t count) {
   pthread_t *threads;
-  coakka_http_test_thread_start_t *starts;
-  coakka_http_test_thread_gate_t gate;
+  test_thread_start_t *starts;
+  test_thread_gate_t gate;
   size_t started = 0U;
   int result = 0;
 
-  if (worker == NULL || contexts == NULL || count == 0U) {
-    return -1;
-  }
-  if (pthread_mutex_init(&gate.mutex, NULL) != 0) {
+  if (worker == NULL || contexts == NULL || count == 0U ||
+      pthread_mutex_init(&gate.mutex, NULL) != 0) {
     return -1;
   }
   if (pthread_cond_init(&gate.condition, NULL) != 0) {
@@ -71,19 +64,17 @@ int coakka_http_test_run_threads(coakka_http_test_thread_fn worker,
   gate.target = count;
   gate.released = 0;
   threads = (pthread_t *)calloc(count, sizeof(*threads));
-  starts = (coakka_http_test_thread_start_t *)calloc(count, sizeof(*starts));
+  starts = (test_thread_start_t *)calloc(count, sizeof(*starts));
   if (threads == NULL || starts == NULL) {
-    free(starts);
-    free(threads);
-    (void)pthread_cond_destroy(&gate.condition);
-    (void)pthread_mutex_destroy(&gate.mutex);
-    return -1;
+    result = -1;
+    goto cleanup;
   }
+
   for (started = 0U; started < count; ++started) {
     starts[started].worker = worker;
     starts[started].context = contexts[started];
     starts[started].gate = &gate;
-    if (pthread_create(&threads[started], NULL, coakka_http_test_thread_entry,
+    if (pthread_create(&threads[started], NULL, thread_entry,
                        &starts[started]) != 0) {
       result = -1;
       break;
@@ -115,6 +106,8 @@ int coakka_http_test_run_threads(coakka_http_test_thread_fn worker,
       result = -1;
     }
   }
+
+cleanup:
   free(starts);
   free(threads);
   if (pthread_cond_destroy(&gate.condition) != 0 ||

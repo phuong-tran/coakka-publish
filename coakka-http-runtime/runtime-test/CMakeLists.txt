@@ -1,78 +1,115 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(CoAkkaHttpRuntimeTest LANGUAGES C)
+project(CoAkkaHttpRuntimeTest LANGUAGES C CXX)
 
 include(CTest)
+find_package(CoAkkaHttp 1.1.0 EXACT REQUIRED CONFIG)
 find_package(Threads REQUIRED)
-find_package(CoAkkaHttpCore 1.1.0 EXACT REQUIRED CONFIG)
 
 option(COAKKA_HTTP_RUNTIME_TEST_WARNINGS_AS_ERRORS
        "Treat native test compiler warnings as errors" ON)
-option(COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN_UBSAN
-       "Instrument the native test harness with address and undefined checks" OFF)
-option(COAKKA_HTTP_RUNTIME_TEST_ENABLE_TSAN
-       "Instrument the native test harness with thread checks" OFF)
 
-if(COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN_UBSAN AND
-   COAKKA_HTTP_RUNTIME_TEST_ENABLE_TSAN)
-  message(FATAL_ERROR "Address/undefined and thread checks require separate builds")
-endif()
+add_executable(coakka_http_runtime_c_test native_runtime.c)
+set_target_properties(
+    coakka_http_runtime_c_test
+    PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_link_libraries(
+    coakka_http_runtime_c_test PRIVATE CoAkkaHttp::runtime)
 
-set(thread_source test_threads_posix.c)
-if(WIN32)
-  set(thread_source test_threads_windows.c)
-endif()
+add_executable(coakka_http_runtime_cpp_test cpp_header_smoke.cc)
+set_target_properties(
+    coakka_http_runtime_cpp_test
+    PROPERTIES CXX_STANDARD 20 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
+target_link_libraries(
+    coakka_http_runtime_cpp_test PRIVATE CoAkkaHttp::runtime)
+
+add_executable(coakka_http_runtime_contract_test native_contract.c)
+set_target_properties(
+    coakka_http_runtime_contract_test
+    PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+target_link_libraries(
+    coakka_http_runtime_contract_test PRIVATE CoAkkaHttp::runtime)
 
 add_executable(
-    coakka_http_runtime_test
-    core_abi.c
-    test_support.c
-    "${thread_source}")
+    coakka_http_runtime_concurrency_test
+    native_concurrency.c
+    test_threads.h
+    $<$<PLATFORM_ID:Windows>:test_threads_windows.c>
+    $<$<NOT:$<PLATFORM_ID:Windows>>:test_threads_posix.c>)
 set_target_properties(
-    coakka_http_runtime_test
-    PROPERTIES
-        C_STANDARD 11
-        C_STANDARD_REQUIRED YES
-        C_EXTENSIONS NO)
+    coakka_http_runtime_concurrency_test
+    PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
 target_link_libraries(
-    coakka_http_runtime_test
-    PRIVATE CoAkkaHttp::core Threads::Threads)
+    coakka_http_runtime_concurrency_test
+    PRIVATE CoAkkaHttp::runtime Threads::Threads)
 
 if(MSVC)
   target_compile_options(
-      coakka_http_runtime_test
+      coakka_http_runtime_c_test
       PRIVATE /W4 $<$<BOOL:${COAKKA_HTTP_RUNTIME_TEST_WARNINGS_AS_ERRORS}>:/WX>)
+  target_compile_options(
+      coakka_http_runtime_cpp_test
+      PRIVATE /W4 $<$<BOOL:${COAKKA_HTTP_RUNTIME_TEST_WARNINGS_AS_ERRORS}>:/WX>)
+  foreach(target IN ITEMS coakka_http_runtime_contract_test
+                          coakka_http_runtime_concurrency_test)
+    target_compile_options(
+        ${target}
+        PRIVATE /W4 /experimental:c11atomics
+                $<$<BOOL:${COAKKA_HTTP_RUNTIME_TEST_WARNINGS_AS_ERRORS}>:/WX>)
+  endforeach()
+  target_link_libraries(
+      coakka_http_runtime_c_test PRIVATE ws2_32)
+  target_link_libraries(
+      coakka_http_runtime_concurrency_test PRIVATE ws2_32)
 else()
-  target_compile_options(
-      coakka_http_runtime_test
-      PRIVATE
-          -Wall
-          -Wextra
-          -Wpedantic
-          -Wconversion
-          -Wshadow
-          -Wsign-conversion
-          -Wstrict-prototypes
-          $<$<BOOL:${COAKKA_HTTP_RUNTIME_TEST_WARNINGS_AS_ERRORS}>:-Werror>)
+  foreach(target IN ITEMS coakka_http_runtime_c_test
+                          coakka_http_runtime_cpp_test
+                          coakka_http_runtime_contract_test
+                          coakka_http_runtime_concurrency_test)
+    target_compile_options(
+        ${target}
+        PRIVATE
+            -Wall
+            -Wextra
+            -Wpedantic
+            -Wconversion
+            -Wshadow
+            -Wsign-conversion
+            $<$<BOOL:${COAKKA_HTTP_RUNTIME_TEST_WARNINGS_AS_ERRORS}>:-Werror>)
+  endforeach()
+  foreach(target IN ITEMS coakka_http_runtime_c_test
+                          coakka_http_runtime_contract_test
+                          coakka_http_runtime_concurrency_test)
+    target_compile_options(${target} PRIVATE -Wstrict-prototypes)
+  endforeach()
 endif()
 
-if(COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN_UBSAN OR
-   COAKKA_HTTP_RUNTIME_TEST_ENABLE_TSAN)
-  if(NOT CMAKE_C_COMPILER_ID MATCHES "Clang|GNU")
-    message(FATAL_ERROR "Native test instrumentation requires Clang or GCC")
-  endif()
-  if(COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN_UBSAN)
-    set(sanitizers address,undefined)
-  else()
-    set(sanitizers thread)
-  endif()
-  target_compile_options(
-      coakka_http_runtime_test PRIVATE -fno-omit-frame-pointer
-                                       -fno-sanitize-recover=all
-                                       "-fsanitize=${sanitizers}")
-  target_link_options(
-      coakka_http_runtime_test PRIVATE "-fsanitize=${sanitizers}")
+if(WIN32)
+  foreach(target IN ITEMS coakka_http_runtime_c_test
+                          coakka_http_runtime_cpp_test
+                          coakka_http_runtime_contract_test
+                          coakka_http_runtime_concurrency_test)
+    add_custom_command(
+        TARGET ${target}
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                $<TARGET_FILE:CoAkkaHttp::runtime>
+                $<TARGET_FILE_DIR:${target}>
+        VERBATIM)
+  endforeach()
 endif()
 
-add_test(NAME coakka_http_runtime_test COMMAND coakka_http_runtime_test)
-set_tests_properties(coakka_http_runtime_test PROPERTIES TIMEOUT 180)
+add_test(NAME coakka_http_runtime_c_test COMMAND coakka_http_runtime_c_test)
+add_test(NAME coakka_http_runtime_cpp_test COMMAND coakka_http_runtime_cpp_test)
+add_test(
+    NAME coakka_http_runtime_contract_test
+    COMMAND coakka_http_runtime_contract_test)
+add_test(
+    NAME coakka_http_runtime_concurrency_test
+    COMMAND coakka_http_runtime_concurrency_test)
+set_tests_properties(
+    coakka_http_runtime_c_test
+    coakka_http_runtime_cpp_test
+    coakka_http_runtime_contract_test
+    coakka_http_runtime_concurrency_test
+    PROPERTIES TIMEOUT 30)
