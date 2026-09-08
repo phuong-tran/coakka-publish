@@ -1,0 +1,68 @@
+{
+  "schema": "coakka.http.jvm-draft.v1",
+  "version": "0.1.0-private.0",
+  "status": "development-draft",
+  "registry_publication": false,
+  "connector_source_commit": "e39ccff16c068aaf9b46f8c60f6fcfd420259fd3",
+  "core_source_commit": "3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0",
+  "core_abi_version": 1,
+  "java_class_version": 52,
+  "capabilities": {
+    "buffered_request_response": true,
+    "request_body_stream": true,
+    "response_stream": true,
+    "server_events": true,
+    "websocket": true,
+    "static_and_spa": true,
+    "outbound_client": true,
+    "tls": true,
+    "http_1_1": true,
+    "http_2": true,
+    "form_and_multipart": true,
+    "route_rebinding": true,
+    "health_monitor_and_inspection": true,
+    "cancellation": true,
+    "finite_shutdown": true
+  },
+  "verification": {
+    "unit_api_suite": "pass",
+    "installed_socket_suite": "pass",
+    "java_8_consumer_compilation": "pass",
+    "native_architecture_and_exports": "pass",
+    "dependency_closure": "pass",
+    "private_vocabulary_scan": "pass",
+    "reproducible_package_build": "pass"
+  },
+  "targets": [
+    {
+      "name": "macos-aarch64",
+      "file": "coakka-http-jvm-0.1.0-private.0-macos-aarch64.jar",
+      "size": 212212,
+      "sha256": "6ae4a0ea69aca97b4e09e57e388e5c2de255a761b97cd72e801ea9f1cb62b49f"
+    },
+    {
+      "name": "linux-aarch64",
+      "file": "coakka-http-jvm-0.1.0-private.0-linux-aarch64.jar",
+      "size": 216480,
+      "sha256": "233a8972e8318df9645ecfcc9c19ef8fb724f3ea968a5f54d5f3983d0275eea4"
+    },
+    {
+      "name": "linux-x86_64",
+      "file": "coakka-http-jvm-0.1.0-private.0-linux-x86_64.jar",
+      "size": 215412,
+      "sha256": "e2852522d238ff4a3a00d39147257305424fe6a2bb24394ba69707fd7d1a6aff"
+    },
+    {
+      "name": "windows-aarch64",
+      "file": "coakka-http-jvm-0.1.0-private.0-windows-aarch64.jar",
+      "size": 295571,
+      "sha256": "55dd19107a4c29ea2d1d6c470b8b8f91328973c6ad581c76151f385f8fa0377d"
+    },
+    {
+      "name": "windows-x86_64",
+      "file": "coakka-http-jvm-0.1.0-private.0-windows-x86_64.jar",
+      "size": 311759,
+      "sha256": "700f7069a90f3a171dda875e6f7641af4acce95a8320c91f84f870b1daa3de19"
+    }
+  ]
+}

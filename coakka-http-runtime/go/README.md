@@ -7,4 +7,4 @@ server and client concepts. Capability completion, package assembly, platform
 verification and runnable consumer samples are still in progress.
 
 No public Go module version or installation command is declared by this
-preview.
+development draft.
