@@ -30,6 +30,17 @@ server events, WebSocket sessions, static and SPA delivery, outbound requests,
 TLS, supported HTTP protocol selection, form and multipart values, route
 updates, bounded inspection, cancellation and finite shutdown.
 
+## Native Test
+
+The source-visible [runtime-test](runtime-test/README.md) is a strict C11
+black-box harness for the installed CoAkka HTTP Core ABI. It checks route
+contract identity, borrowing, bounds, failure classification and concurrent
+independent calls without access to runtime source.
+
+The test source is available for review at the GitHub repository level. A
+matching native binary package has not been promoted, so the build commands
+currently require a separately supplied development prefix.
+
 ## Release Plan
 
 1. Complete the language-native API and capability tests for each connector.
