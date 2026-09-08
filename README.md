@@ -41,6 +41,8 @@ Runtime field guide: [docs/runtime-field-guide.md](docs/runtime-field-guide.md)
 How it works: [docs/how-it-works.md](docs/how-it-works.md)
 HTTP edge and runtime boundary:
 [docs/http-edge-runtime-boundary.md](docs/http-edge-runtime-boundary.md)
+CoAkka HTTP Runtime development preview:
+[coakka-http-runtime/](coakka-http-runtime/README.md)
 WebSocket integration:
 [docs/runtime-websocket-integration.md](docs/runtime-websocket-integration.md)
 Questions and answers: [docs/qna.md](docs/qna.md)
