@@ -11,9 +11,9 @@ package and is not available from npm, Maven
 Central or PyPI. API details, package names and platform coverage may change
 before the first release.
 
-The native C/C++, JVM and Python drafts are available for review. The public
-contracts use Request/Response vocabulary; private runtime and build contracts
-are not part of this repository surface.
+The native C/C++, JVM, Python and JavaScript drafts are available for review.
+The public contracts use Request/Response vocabulary; private runtime and build
+contracts are not part of this repository surface.
 
 ## Language Plans
 
@@ -22,7 +22,7 @@ are not part of this repository surface.
 | Native C/C++ | ABI 1 development draft with verified artifacts | [native](native/README.md) |
 | JVM / Java / Kotlin | Complete capability draft with five verified targets | [jvm](jvm/README.md) |
 | Python | Complete capability draft with five verified targets | [python](python/README.md) |
-| JavaScript / Node / Bun | In development | [javascript](javascript/README.md) |
+| JavaScript / Node / Bun | Complete capability draft with five verified targets | [javascript](javascript/README.md) |
 | Go | In development | [go](go/README.md) |
 
 Each connector is expected to present the same HTTP capabilities in a form
