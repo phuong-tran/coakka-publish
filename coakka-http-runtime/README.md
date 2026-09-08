@@ -11,7 +11,7 @@ package and is not available from npm, Maven
 Central or PyPI. API details, package names and platform coverage may change
 before the first release.
 
-The native C/C++, JVM, Python and JavaScript drafts are available for review.
+The native C/C++, JVM, Python, JavaScript and Go drafts are available for review.
 The public contracts use Request/Response vocabulary; private runtime and build
 contracts are not part of this repository surface.
 
@@ -23,7 +23,7 @@ contracts are not part of this repository surface.
 | JVM / Java / Kotlin | Complete capability draft with five verified targets | [jvm](jvm/README.md) |
 | Python | Complete capability draft with five verified targets | [python](python/README.md) |
 | JavaScript / Node / Bun | Complete capability draft with five verified targets | [javascript](javascript/README.md) |
-| Go | In development | [go](go/README.md) |
+| Go | Complete capability draft with five verified targets | [go](go/README.md) |
 
 Each connector is expected to present the same HTTP capabilities in a form
 natural to its language: buffered and streaming bodies, asynchronous handlers,
