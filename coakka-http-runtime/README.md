@@ -11,7 +11,7 @@ package and is not available from npm, Maven
 Central or PyPI. API details, package names and platform coverage may change
 before the first release.
 
-The native C/C++ draft and the JVM draft are available for review. The public
+The native C/C++, JVM and Python drafts are available for review. The public
 contracts use Request/Response vocabulary; private runtime and build contracts
 are not part of this repository surface.
 
@@ -21,7 +21,7 @@ are not part of this repository surface.
 | --- | --- | --- |
 | Native C/C++ | ABI 1 development draft with verified artifacts | [native](native/README.md) |
 | JVM / Java / Kotlin | Complete capability draft with five verified targets | [jvm](jvm/README.md) |
-| Python | In development | [python](python/README.md) |
+| Python | Complete capability draft with five verified targets | [python](python/README.md) |
 | JavaScript / Node / Bun | In development | [javascript](javascript/README.md) |
 | Go | In development | [go](go/README.md) |
 
