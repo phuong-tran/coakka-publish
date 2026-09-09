@@ -11,6 +11,40 @@ permissions:
   contents: read
 
 jobs:
+  http-native-runtime:
+    name: HTTP native runtime (${{ matrix.platform }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            platform: linux-x86_64
+          - runner: windows-latest
+            platform: windows-x86_64
+    steps:
+      - name: Check out artifacts
+        uses: actions/checkout@v6
+
+      - name: Configure public ABI test
+        run: >-
+          cmake
+          -S coakka-http-runtime/runtime-test
+          -B build/coakka-http-runtime-test
+          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/coakka-http-runtime/native/releases/1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431/${{ matrix.platform }}
+
+      - name: Build public ABI test
+        run: cmake --build build/coakka-http-runtime-test --config Release --parallel
+
+      - name: Run public ABI test
+        run: >-
+          ctest
+          --test-dir build/coakka-http-runtime-test
+          -C Release
+          --repeat until-fail:5
+          --output-on-failure
+
   verify:
     name: verify public artifacts
     runs-on: ubuntu-latest

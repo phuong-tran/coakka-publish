@@ -23,7 +23,9 @@ typedef int test_socket_t;
 typedef struct test_state {
   uint32_t calls;
   uint32_t failures;
+  uint32_t request_headers;
   uint32_t limit_rejections;
+  uint32_t invalid_response_rejections;
 } test_state_t;
 
 #define CHECK(expression)                                                      \
@@ -48,6 +50,46 @@ static int bytes_equal(coakka_http_bytes_t value, const char *expected) {
           memcmp(value.data, expected, expected_size) == 0);
 }
 
+static int ascii_name_equal(coakka_http_bytes_t value, const char *expected) {
+  const size_t expected_size = strlen(expected);
+  size_t index;
+  if (value.size != (uint64_t)expected_size) {
+    return 0;
+  }
+  for (index = 0U; index < expected_size; ++index) {
+    uint8_t actual = value.data[index];
+    uint8_t wanted = (uint8_t)expected[index];
+    if (actual >= (uint8_t)'A' && actual <= (uint8_t)'Z') {
+      actual = (uint8_t)(actual + ((uint8_t)'a' - (uint8_t)'A'));
+    }
+    if (wanted >= (uint8_t)'A' && wanted <= (uint8_t)'Z') {
+      wanted = (uint8_t)(wanted + ((uint8_t)'a' - (uint8_t)'A'));
+    }
+    if (actual != wanted) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+static int header_equal(coakka_http_header_t header, const char *name,
+                        const char *value) {
+  return ascii_name_equal(header.name, name) &&
+         bytes_equal(header.value, value);
+}
+
+static void expect_invalid_response(test_state_t *state,
+                                    coakka_http_request_t *request,
+                                    const coakka_http_response_t *response) {
+  const coakka_http_result_t result =
+      coakka_http_request_respond(request, response);
+  if (result.code == COAKKA_HTTP_RESULT_INVALID_ARGUMENT) {
+    state->invalid_response_rejections += 1U;
+  } else {
+    state->failures += 1U;
+  }
+}
+
 static void handle_request(void *opaque, coakka_http_request_t *request) {
   static const uint8_t oversized_body[1025] = {0U};
   test_state_t *state = (test_state_t *)opaque;
@@ -55,12 +97,32 @@ static void handle_request(void *opaque, coakka_http_request_t *request) {
   coakka_http_header_t header;
   coakka_http_result_t submitted;
   const uint64_t route_id = coakka_http_request_route_id(request);
+  const uint32_t header_count = coakka_http_request_header_count(request);
+  uint32_t index;
+  int saw_content_type = 0;
+  int saw_test_header = 0;
 
   state->calls += 1U;
   if (!bytes_equal(coakka_http_request_method(request), "POST") ||
+      !bytes_equal(coakka_http_request_scheme(request), "http") ||
+      !bytes_equal(coakka_http_request_authority(request), "127.0.0.1") ||
       coakka_http_request_cancelled(request) != 0U) {
     state->failures += 1U;
   }
+  for (index = 0U; index < header_count; ++index) {
+    if (coakka_http_request_header(request, index, &header) == 0U) {
+      state->failures += 1U;
+      continue;
+    }
+    saw_content_type |= header_equal(header, "content-type", "text/plain");
+    saw_test_header |= header_equal(header, "x-coakka-test", "request-surface");
+  }
+  if (header_count < 2U || saw_content_type == 0 || saw_test_header == 0 ||
+      coakka_http_request_header(request, header_count, &header) != 0U ||
+      coakka_http_request_header(request, 0U, NULL) != 0U) {
+    state->failures += 1U;
+  }
+  state->request_headers += header_count;
 
   if (route_id == UINT64_C(42)) {
     if (!bytes_equal(coakka_http_request_target(request), "/limit")) {
@@ -89,20 +151,67 @@ static void handle_request(void *opaque, coakka_http_request_t *request) {
     state->failures += 1U;
   }
 
-  header.name = bytes("content-type");
-  header.value = bytes("text/plain");
-  coakka_http_response_init(&response);
-  response.status_code = 201U;
-  response.headers = &header;
-  response.header_count = 1U;
-  response.body = bytes("coakka-native-ready");
-  submitted = coakka_http_request_respond(request, &response);
-  if (submitted.code != COAKKA_HTTP_RESULT_OK) {
-    state->failures += 1U;
-  }
-  submitted = coakka_http_request_respond(request, &response);
-  if (submitted.code != COAKKA_HTTP_RESULT_INVALID_STATE) {
-    state->failures += 1U;
+  {
+    uint8_t response_header_name[] = "content-type";
+    uint8_t response_header_value[] = "text/plain";
+    uint8_t response_body[] = "coakka-native-ready";
+    header.name.data = response_header_name;
+    header.name.size = sizeof(response_header_name) - 1U;
+    header.value.data = response_header_value;
+    header.value.size = sizeof(response_header_value) - 1U;
+
+    coakka_http_response_init(&response);
+    response.struct_size = 0U;
+    expect_invalid_response(state, request, &response);
+    coakka_http_response_init(&response);
+    response.status_code = 99U;
+    expect_invalid_response(state, request, &response);
+    response.status_code = 600U;
+    expect_invalid_response(state, request, &response);
+    coakka_http_response_init(&response);
+    response.header_count = 101U;
+    expect_invalid_response(state, request, &response);
+    response.header_count = 1U;
+    expect_invalid_response(state, request, &response);
+    coakka_http_response_init(&response);
+    response.body.data = NULL;
+    response.body.size = 1U;
+    expect_invalid_response(state, request, &response);
+    coakka_http_response_init(&response);
+    response.headers = &header;
+    response.header_count = 1U;
+    header.name = bytes(NULL);
+    expect_invalid_response(state, request, &response);
+    header.name.data = NULL;
+    header.name.size = 1U;
+    expect_invalid_response(state, request, &response);
+    header.name.data = response_header_name;
+    header.name.size = sizeof(response_header_name) - 1U;
+    header.value.data = NULL;
+    header.value.size = 1U;
+    expect_invalid_response(state, request, &response);
+
+    header.value.data = response_header_value;
+    header.value.size = sizeof(response_header_value) - 1U;
+    coakka_http_response_init(&response);
+    response.status_code = 201U;
+    response.headers = &header;
+    response.header_count = 1U;
+    response.body.data = response_body;
+    response.body.size = sizeof(response_body) - 1U;
+    submitted = coakka_http_request_respond(request, &response);
+    if (submitted.code != COAKKA_HTTP_RESULT_OK) {
+      state->failures += 1U;
+    }
+
+    /* A successful call owns its copy before returning. */
+    memset(response_header_name, 'x', sizeof(response_header_name) - 1U);
+    memset(response_header_value, 'x', sizeof(response_header_value) - 1U);
+    memset(response_body, 'x', sizeof(response_body) - 1U);
+    submitted = coakka_http_request_respond(request, &response);
+    if (submitted.code != COAKKA_HTTP_RESULT_INVALID_STATE) {
+      state->failures += 1U;
+    }
   }
 }
 
@@ -207,18 +316,24 @@ int main(void) {
   static const char request_data[] = "POST /echo?source=abi HTTP/1.1\r\n"
                                      "Host: 127.0.0.1\r\n"
                                      "Content-Type: text/plain\r\n"
+                                     "X-CoAkka-Test: request-surface\r\n"
                                      "Content-Length: 12\r\n"
                                      "Connection: close\r\n\r\n"
                                      "request-body";
   static const char limit_request[] = "POST /limit HTTP/1.1\r\n"
                                       "Host: 127.0.0.1\r\n"
+                                      "Content-Type: text/plain\r\n"
+                                      "X-CoAkka-Test: request-surface\r\n"
                                       "Content-Length: 0\r\n"
                                       "Connection: close\r\n\r\n";
+  static const char missing_request[] = "GET /missing HTTP/1.1\r\n"
+                                        "Host: 127.0.0.1\r\n"
+                                        "Connection: close\r\n\r\n";
   coakka_http_server_options_t options;
   coakka_http_route_t routes[2];
   coakka_http_server_t *server = NULL;
   coakka_http_result_t operation;
-  test_state_t state = {0U, 0U, 0U};
+  test_state_t state = {0U, 0U, 0U, 0U, 0U};
   uint16_t port = 0U;
   test_socket_t client;
   char response_data[4096];
@@ -279,8 +394,26 @@ int main(void) {
                       "limit-recovered"));
   close_socket(client);
   CHECK(strstr(response_data, "HTTP/1.1 200") != NULL);
+  client = connect_loopback(port);
+  CHECK(client != TEST_INVALID_SOCKET);
+  CHECK(send_all(client, missing_request, sizeof(missing_request) - 1U));
+  CHECK(read_response(client, response_data, sizeof(response_data),
+                      "HTTP/1.1 404"));
+  close_socket(client);
+  if (state.calls != 2U || state.request_headers < 4U ||
+      state.limit_rejections != 1U || state.invalid_response_rejections != 9U ||
+      state.failures != 0U) {
+    fprintf(stderr,
+            "request state mismatch: calls=%u headers=%u "
+            "limit_rejections=%u invalid_response_rejections=%u "
+            "failures=%u\n",
+            state.calls, state.request_headers, state.limit_rejections,
+            state.invalid_response_rejections, state.failures);
+  }
   CHECK(state.calls == 2U);
+  CHECK(state.request_headers >= 4U);
   CHECK(state.limit_rejections == 1U);
+  CHECK(state.invalid_response_rejections == 9U);
   CHECK(state.failures == 0U);
 
   CHECK(coakka_http_server_stop(server).code == COAKKA_HTTP_RESULT_OK);
@@ -289,8 +422,11 @@ int main(void) {
   CHECK(server == NULL);
   socket_runtime_stop();
 
-  printf("coakka_http_runtime_c_test=pass requests=%u limit_rejections=%u "
-         "abi=%u\n",
-         state.calls, state.limit_rejections, coakka_http_abi_version());
+  printf("{\"schema\":\"coakka.http.native-runtime.v1\","
+         "\"requests\":%u,\"request_headers\":%u,"
+         "\"limit_rejections\":%u,\"invalid_response_rejections\":%u,"
+         "\"abi\":%u,\"status\":\"pass\"}\n",
+         state.calls, state.request_headers, state.limit_rejections,
+         state.invalid_response_rejections, coakka_http_abi_version());
   return EXIT_SUCCESS;
 }

@@ -2,6 +2,8 @@
 
 #include "test_threads.h"
 
+#include <errno.h>
+#include <limits.h>
 #include <stdatomic.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -23,7 +25,24 @@ typedef int test_socket_t;
 #define TEST_INVALID_SOCKET (-1)
 #endif
 
-enum { TEST_WORKERS = 4, TEST_REQUESTS_PER_WORKER = 32 };
+enum {
+  TEST_DEFAULT_CLIENTS = 4,
+  TEST_DEFAULT_REQUESTS_PER_CLIENT = 32,
+  TEST_DEFAULT_SERVER_WORKERS = 4,
+  TEST_MAX_CLIENTS = 32,
+  TEST_MAX_REQUESTS_PER_CLIENT = 10000,
+  TEST_MAX_SERVER_WORKERS = 32,
+  TEST_MAX_CYCLES = 1000
+};
+
+#define TEST_MAX_TOTAL_REQUESTS UINT64_C(1000000)
+
+typedef struct test_config {
+  uint32_t clients;
+  uint32_t requests_per_client;
+  uint32_t server_workers;
+  uint32_t cycles;
+} test_config_t;
 
 typedef struct server_state {
   atomic_uint calls;
@@ -35,6 +54,71 @@ typedef struct client_state {
   uint32_t requests;
   uint32_t failures;
 } client_state_t;
+
+static void usage(const char *program) {
+  fprintf(stderr,
+          "usage: %s [--clients 1..32] [--requests-per-client 1..10000] "
+          "[--server-workers 1..32] [--cycles 1..1000]\n",
+          program);
+}
+
+static int parse_u32(const char *text, uint32_t minimum, uint32_t maximum,
+                     uint32_t *out) {
+  char *end = NULL;
+  unsigned long parsed;
+  if (text == NULL || text[0] == '\0' || out == NULL) {
+    return -1;
+  }
+  errno = 0;
+  parsed = strtoul(text, &end, 10);
+  if (errno != 0 || end == text || *end != '\0' || parsed > UINT32_MAX ||
+      parsed < (unsigned long)minimum || parsed > (unsigned long)maximum) {
+    return -1;
+  }
+  *out = (uint32_t)parsed;
+  return 0;
+}
+
+static int parse_config(int argc, char **argv, test_config_t *config) {
+  int index;
+  if (config == NULL) {
+    return -1;
+  }
+  config->clients = TEST_DEFAULT_CLIENTS;
+  config->requests_per_client = TEST_DEFAULT_REQUESTS_PER_CLIENT;
+  config->server_workers = TEST_DEFAULT_SERVER_WORKERS;
+  config->cycles = 1U;
+  for (index = 1; index < argc; index += 2) {
+    uint32_t maximum;
+    uint32_t *target;
+    if (index + 1 >= argc) {
+      return -1;
+    }
+    if (strcmp(argv[index], "--clients") == 0) {
+      maximum = TEST_MAX_CLIENTS;
+      target = &config->clients;
+    } else if (strcmp(argv[index], "--requests-per-client") == 0) {
+      maximum = TEST_MAX_REQUESTS_PER_CLIENT;
+      target = &config->requests_per_client;
+    } else if (strcmp(argv[index], "--server-workers") == 0) {
+      maximum = TEST_MAX_SERVER_WORKERS;
+      target = &config->server_workers;
+    } else if (strcmp(argv[index], "--cycles") == 0) {
+      maximum = TEST_MAX_CYCLES;
+      target = &config->cycles;
+    } else {
+      return -1;
+    }
+    if (parse_u32(argv[index + 1], 1U, maximum, target) != 0) {
+      return -1;
+    }
+  }
+  if ((uint64_t)config->clients * config->requests_per_client * config->cycles >
+      TEST_MAX_TOTAL_REQUESTS) {
+    return -1;
+  }
+  return 0;
+}
 
 static coakka_http_bytes_t bytes(const char *value) {
   coakka_http_bytes_t result;
@@ -166,32 +250,30 @@ static int client_worker(void *opaque) {
   return state->failures == 0U ? 0 : -1;
 }
 
-int main(void) {
+static int run_cycle(const test_config_t *config, uint32_t cycle,
+                     uint64_t *completed_requests) {
   coakka_http_server_options_t options;
   coakka_http_route_t route;
   coakka_http_server_t *server = NULL;
   coakka_http_result_t result;
   server_state_t state;
-  client_state_t clients[TEST_WORKERS];
-  void *contexts[TEST_WORKERS];
+  client_state_t clients[TEST_MAX_CLIENTS];
+  void *contexts[TEST_MAX_CLIENTS];
   uint16_t port = 0U;
   size_t index;
   int thread_result;
-#if defined(_WIN32)
-  WSADATA socket_data;
-  if (WSAStartup(MAKEWORD(2, 2), &socket_data) != 0) {
-    return EXIT_FAILURE;
-  }
-#endif
+  const uint32_t expected_requests =
+      config->clients * config->requests_per_client;
+  const uint32_t connection_capacity = config->clients * 2U;
 
   atomic_init(&state.calls, 0U);
   atomic_init(&state.failures, 0U);
   coakka_http_server_options_init(&options);
-  options.worker_count = TEST_WORKERS;
-  options.max_connections = 64U;
-  options.max_active_requests = 64U;
-  options.request_queue_capacity = 64U;
-  options.response_queue_capacity = 64U;
+  options.worker_count = config->server_workers;
+  options.max_connections = connection_capacity;
+  options.max_active_requests = connection_capacity;
+  options.request_queue_capacity = connection_capacity;
+  options.response_queue_capacity = connection_capacity;
   options.max_request_body_bytes = 1024U;
   options.max_response_body_bytes = 1024U;
   options.request_timeout_ms = 5000U;
@@ -206,70 +288,96 @@ int main(void) {
 
   result = coakka_http_server_create(&options, &route, 1U, &server);
   if (result.code != COAKKA_HTTP_RESULT_OK || server == NULL) {
-    fprintf(stderr, "create failed: %s detail=%s actual=%llu limit=%llu\n",
-            coakka_http_result_code_name(result.code), result.detail,
-            (unsigned long long)result.actual,
-            (unsigned long long)result.limit);
+    fprintf(
+        stderr, "cycle %u create failed: %s detail=%s actual=%llu limit=%llu\n",
+        cycle, coakka_http_result_code_name(result.code), result.detail,
+        (unsigned long long)result.actual, (unsigned long long)result.limit);
     (void)coakka_http_server_destroy(&server);
-#if defined(_WIN32)
-    (void)WSACleanup();
-#endif
-    return EXIT_FAILURE;
+    return -1;
   }
   result = coakka_http_server_start(server);
   if (result.code != COAKKA_HTTP_RESULT_OK) {
-    fprintf(stderr, "start failed: %s detail=%s actual=%llu limit=%llu\n",
-            coakka_http_result_code_name(result.code), result.detail,
-            (unsigned long long)result.actual,
-            (unsigned long long)result.limit);
+    fprintf(
+        stderr, "cycle %u start failed: %s detail=%s actual=%llu limit=%llu\n",
+        cycle, coakka_http_result_code_name(result.code), result.detail,
+        (unsigned long long)result.actual, (unsigned long long)result.limit);
     (void)coakka_http_server_destroy(&server);
-#if defined(_WIN32)
-    (void)WSACleanup();
-#endif
-    return EXIT_FAILURE;
+    return -1;
   }
   result = coakka_http_server_port(server, &port);
   if (result.code != COAKKA_HTTP_RESULT_OK || port == 0U) {
-    fprintf(stderr, "port failed: %s port=%u\n",
+    fprintf(stderr, "cycle %u port failed: %s port=%u\n", cycle,
             coakka_http_result_code_name(result.code), (unsigned int)port);
     (void)coakka_http_server_destroy(&server);
-#if defined(_WIN32)
-    (void)WSACleanup();
-#endif
-    return EXIT_FAILURE;
+    return -1;
   }
 
-  for (index = 0U; index < TEST_WORKERS; ++index) {
+  for (index = 0U; index < (size_t)config->clients; ++index) {
     clients[index].port = port;
-    clients[index].requests = TEST_REQUESTS_PER_WORKER;
+    clients[index].requests = config->requests_per_client;
     clients[index].failures = 0U;
     contexts[index] = &clients[index];
   }
   thread_result =
-      coakka_http_test_run_threads(client_worker, contexts, TEST_WORKERS);
+      coakka_http_test_run_threads(client_worker, contexts, config->clients);
   result = coakka_http_server_destroy(&server);
-#if defined(_WIN32)
-  (void)WSACleanup();
-#endif
 
   if (thread_result != 0 || result.code != COAKKA_HTTP_RESULT_OK ||
       server != NULL ||
       atomic_load_explicit(&state.calls, memory_order_relaxed) !=
-          TEST_WORKERS * TEST_REQUESTS_PER_WORKER ||
+          expected_requests ||
       atomic_load_explicit(&state.failures, memory_order_relaxed) != 0U) {
     fprintf(stderr,
-            "concurrency failed: threads=%d destroy=%s callbacks=%u "
-            "handler_failures=%u clients=%u,%u,%u,%u\n",
-            thread_result, coakka_http_result_code_name(result.code),
+            "cycle %u failed: threads=%d destroy=%s callbacks=%u/%u "
+            "handler_failures=%u\n",
+            cycle, thread_result, coakka_http_result_code_name(result.code),
             atomic_load_explicit(&state.calls, memory_order_relaxed),
-            atomic_load_explicit(&state.failures, memory_order_relaxed),
-            clients[0].failures, clients[1].failures, clients[2].failures,
-            clients[3].failures);
+            expected_requests,
+            atomic_load_explicit(&state.failures, memory_order_relaxed));
+    for (index = 0U; index < (size_t)config->clients; ++index) {
+      if (clients[index].failures != 0U) {
+        fprintf(stderr, "client %u failures=%u\n", (unsigned int)index,
+                clients[index].failures);
+      }
+    }
+    return -1;
+  }
+  *completed_requests += expected_requests;
+  return 0;
+}
+
+int main(int argc, char **argv) {
+  test_config_t config;
+  uint64_t completed_requests = 0U;
+  uint32_t cycle;
+#if defined(_WIN32)
+  WSADATA socket_data;
+#endif
+
+  if (parse_config(argc, argv, &config) != 0) {
+    usage(argv[0]);
+    return 64;
+  }
+#if defined(_WIN32)
+  if (WSAStartup(MAKEWORD(2, 2), &socket_data) != 0) {
     return EXIT_FAILURE;
   }
+#endif
+  for (cycle = 1U; cycle <= config.cycles; ++cycle) {
+    if (run_cycle(&config, cycle, &completed_requests) != 0) {
+#if defined(_WIN32)
+      (void)WSACleanup();
+#endif
+      return EXIT_FAILURE;
+    }
+  }
+#if defined(_WIN32)
+  (void)WSACleanup();
+#endif
   printf("{\"schema\":\"coakka.http.native-concurrency.v1\","
-         "\"workers\":%u,\"requests\":%u,\"status\":\"pass\"}\n",
-         (unsigned int)TEST_WORKERS,
-         (unsigned int)(TEST_WORKERS * TEST_REQUESTS_PER_WORKER));
+         "\"clients\":%u,\"server_workers\":%u,\"cycles\":%u,"
+         "\"requests\":%llu,\"status\":\"pass\"}\n",
+         config.clients, config.server_workers, config.cycles,
+         (unsigned long long)completed_requests);
   return EXIT_SUCCESS;
 }

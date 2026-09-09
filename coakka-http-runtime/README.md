@@ -49,9 +49,9 @@ updates, bounded inspection, cancellation and finite shutdown.
 ## Native Test
 
 The source-visible [runtime-test](runtime-test/README.md) is a strict C11
-black-box harness for the installed CoAkka HTTP Core ABI. It checks route
-contract identity, borrowing, bounds, failure classification and concurrent
-independent calls without access to runtime source.
+black-box harness for the installed CoAkka HTTP Runtime public ABI. It checks
+server lifecycle, Request/Response ownership, routes, bounds, failure
+classification and concurrent real HTTP calls without access to runtime source.
 
 The test source is available for review in this repository and can be run
 against each matching native release artifact.
