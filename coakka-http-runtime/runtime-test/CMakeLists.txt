@@ -8,14 +8,18 @@ find_package(Threads REQUIRED)
 
 option(COAKKA_HTTP_RUNTIME_TEST_WARNINGS_AS_ERRORS
        "Treat native test compiler warnings as errors" ON)
-option(COAKKA_HTTP_RUNTIME_TEST_ENABLE_SANITIZERS
-       "Instrument the native test harness with ASan and UBSan" OFF)
+option(COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN
+       "Instrument the native test harness with AddressSanitizer" OFF)
+option(COAKKA_HTTP_RUNTIME_TEST_ENABLE_UBSAN
+       "Instrument the native test harness with UndefinedBehaviorSanitizer" OFF)
 option(COAKKA_HTTP_RUNTIME_TEST_ENABLE_TSAN
        "Instrument the native test harness with ThreadSanitizer" OFF)
 
-if(COAKKA_HTTP_RUNTIME_TEST_ENABLE_SANITIZERS AND
+if((COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN OR
+    COAKKA_HTTP_RUNTIME_TEST_ENABLE_UBSAN) AND
    COAKKA_HTTP_RUNTIME_TEST_ENABLE_TSAN)
-  message(FATAL_ERROR "ASan/UBSan and ThreadSanitizer require separate builds")
+  message(FATAL_ERROR
+          "Address/undefined sanitizers and ThreadSanitizer require separate builds")
 endif()
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
@@ -55,6 +59,14 @@ set_target_properties(
 target_link_libraries(
     coakka_http_runtime_concurrency_test
     PRIVATE CoAkkaHttp::runtime Threads::Threads)
+if(UNIX)
+  target_compile_definitions(
+      coakka_http_runtime_concurrency_test PRIVATE _POSIX_C_SOURCE=200809L)
+endif()
+if(APPLE)
+  target_compile_definitions(
+      coakka_http_runtime_concurrency_test PRIVATE _DARWIN_C_SOURCE)
+endif()
 
 set(
     COAKKA_HTTP_RUNTIME_TEST_TARGETS
@@ -101,17 +113,27 @@ else()
   endforeach()
 endif()
 
-if(COAKKA_HTTP_RUNTIME_TEST_ENABLE_SANITIZERS)
+if(COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN OR
+   COAKKA_HTTP_RUNTIME_TEST_ENABLE_UBSAN)
   if(NOT CMAKE_C_COMPILER_ID MATCHES "Clang|GNU" OR
      NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    message(FATAL_ERROR "ASan/UBSan requires Clang or GCC")
+    message(FATAL_ERROR "Sanitizer instrumentation requires Clang or GCC")
   endif()
+  set(_coakka_http_runtime_sanitizers "")
+  if(COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN)
+    list(APPEND _coakka_http_runtime_sanitizers address)
+  endif()
+  if(COAKKA_HTTP_RUNTIME_TEST_ENABLE_UBSAN)
+    list(APPEND _coakka_http_runtime_sanitizers undefined)
+  endif()
+  list(JOIN _coakka_http_runtime_sanitizers "," _coakka_http_runtime_sanitize_flag)
   foreach(target IN LISTS COAKKA_HTTP_RUNTIME_TEST_TARGETS)
     target_compile_options(
         ${target}
         PRIVATE -fno-omit-frame-pointer -fno-sanitize-recover=all
-                -fsanitize=address,undefined)
-    target_link_options(${target} PRIVATE -fsanitize=address,undefined)
+                "-fsanitize=${_coakka_http_runtime_sanitize_flag}")
+    target_link_options(
+        ${target} PRIVATE "-fsanitize=${_coakka_http_runtime_sanitize_flag}")
   endforeach()
 elseif(COAKKA_HTTP_RUNTIME_TEST_ENABLE_TSAN)
   if(WIN32 OR NOT CMAKE_C_COMPILER_ID MATCHES "Clang|GNU" OR
@@ -147,10 +169,20 @@ add_test(
     COMMAND coakka_http_runtime_contract_test)
 add_test(
     NAME coakka_http_runtime_concurrency_test
-    COMMAND coakka_http_runtime_concurrency_test)
+    COMMAND coakka_http_runtime_concurrency_test smoke)
+add_test(
+    NAME coakka_http_runtime_stress_test
+    COMMAND coakka_http_runtime_concurrency_test stress)
+add_test(
+    NAME coakka_http_runtime_race_test
+    COMMAND coakka_http_runtime_concurrency_test race)
 set_tests_properties(
     coakka_http_runtime_c_test
     coakka_http_runtime_cpp_test
     coakka_http_runtime_contract_test
     coakka_http_runtime_concurrency_test
     PROPERTIES TIMEOUT 30)
+set_tests_properties(
+    coakka_http_runtime_stress_test
+    coakka_http_runtime_race_test
+    PROPERTIES TIMEOUT 120)

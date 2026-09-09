@@ -155,10 +155,7 @@ static void handle_request(void *opaque, coakka_http_request_t *request) {
     uint8_t response_header_name[] = "content-type";
     uint8_t response_header_value[] = "text/plain";
     uint8_t response_body[] = "coakka-native-ready";
-    header.name.data = response_header_name;
-    header.name.size = sizeof(response_header_name) - 1U;
-    header.value.data = response_header_value;
-    header.value.size = sizeof(response_header_value) - 1U;
+    coakka_http_header_t response_header;
 
     coakka_http_response_init(&response);
     response.struct_size = 0U;
@@ -177,25 +174,43 @@ static void handle_request(void *opaque, coakka_http_request_t *request) {
     response.body.data = NULL;
     response.body.size = 1U;
     expect_invalid_response(state, request, &response);
-    coakka_http_response_init(&response);
-    response.headers = &header;
-    response.header_count = 1U;
-    header.name = bytes(NULL);
-    expect_invalid_response(state, request, &response);
-    header.name.data = NULL;
-    header.name.size = 1U;
-    expect_invalid_response(state, request, &response);
-    header.name.data = response_header_name;
-    header.name.size = sizeof(response_header_name) - 1U;
-    header.value.data = NULL;
-    header.value.size = 1U;
-    expect_invalid_response(state, request, &response);
+    {
+      coakka_http_header_t invalid_header;
+      invalid_header.name = bytes(NULL);
+      invalid_header.value = bytes("value");
+      coakka_http_response_init(&response);
+      response.headers = &invalid_header;
+      response.header_count = 1U;
+      expect_invalid_response(state, request, &response);
+    }
+    {
+      coakka_http_header_t invalid_header;
+      invalid_header.name.data = NULL;
+      invalid_header.name.size = 1U;
+      invalid_header.value = bytes("value");
+      coakka_http_response_init(&response);
+      response.headers = &invalid_header;
+      response.header_count = 1U;
+      expect_invalid_response(state, request, &response);
+    }
+    {
+      coakka_http_header_t invalid_header;
+      invalid_header.name = bytes("content-type");
+      invalid_header.value.data = NULL;
+      invalid_header.value.size = 1U;
+      coakka_http_response_init(&response);
+      response.headers = &invalid_header;
+      response.header_count = 1U;
+      expect_invalid_response(state, request, &response);
+    }
 
-    header.value.data = response_header_value;
-    header.value.size = sizeof(response_header_value) - 1U;
+    response_header.name.data = response_header_name;
+    response_header.name.size = sizeof(response_header_name) - 1U;
+    response_header.value.data = response_header_value;
+    response_header.value.size = sizeof(response_header_value) - 1U;
     coakka_http_response_init(&response);
     response.status_code = 201U;
-    response.headers = &header;
+    response.headers = &response_header;
     response.header_count = 1U;
     response.body.data = response_body;
     response.body.size = sizeof(response_body) - 1U;

@@ -45,6 +45,49 @@ jobs:
           --repeat until-fail:5
           --output-on-failure
 
+  http-native-sanitizers:
+    name: HTTP native ${{ matrix.sanitizer }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - sanitizer: ASan
+            cmake_option: COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN
+          - sanitizer: UBSan
+            cmake_option: COAKKA_HTTP_RUNTIME_TEST_ENABLE_UBSAN
+          - sanitizer: TSan
+            cmake_option: COAKKA_HTTP_RUNTIME_TEST_ENABLE_TSAN
+    steps:
+      - name: Check out artifacts
+        uses: actions/checkout@v6
+
+      - name: Configure instrumented public ABI test
+        run: >-
+          cmake
+          -S coakka-http-runtime/runtime-test
+          -B build/coakka-http-runtime-${{ matrix.sanitizer }}
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/coakka-http-runtime/native/releases/1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431/linux-x86_64
+          -D${{ matrix.cmake_option }}=ON
+
+      - name: Build instrumented public ABI test
+        run: >-
+          cmake
+          --build build/coakka-http-runtime-${{ matrix.sanitizer }}
+          --parallel
+
+      - name: Run instrumented public ABI test
+        env:
+          ASAN_OPTIONS: halt_on_error=1:detect_leaks=1
+          UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
+          TSAN_OPTIONS: halt_on_error=1
+        run: >-
+          ctest
+          --test-dir build/coakka-http-runtime-${{ matrix.sanitizer }}
+          --output-on-failure
+
   verify:
     name: verify public artifacts
     runs-on: ubuntu-latest
