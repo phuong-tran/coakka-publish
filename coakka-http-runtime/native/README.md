@@ -14,11 +14,16 @@ No runtime source, private header, generated type or language connector is part
 of the native package.
 
 Release artifacts are under
-[releases/1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431](releases/1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431/).
+[releases/1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785](releases/1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785/).
 The suffix identifies the exact native source snapshot; the package version
 remains `1.0.0`. The verified targets are macOS arm64, Linux arm64, Linux
 x86_64, Windows arm64 and Windows x86_64. Each target passed the same
 installed-package tests and exact 21-symbol export check.
+
+The public test campaign includes bounded stress, active-request stop races,
+independent concurrent server lifecycles and repeated teardown. Fully
+instrumented internal builds additionally pass ASan with leak detection,
+UBSan and TSan; sanitizer profiles are run separately.
 
 ## Current Contract
 
@@ -48,7 +53,7 @@ target_link_libraries(my_server PRIVATE CoAkkaHttp::runtime)
 
 ```sh
 cmake -S . -B build \
-  -DCMAKE_PREFIX_PATH=/path/to/coakka-http-runtime/native/releases/1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431/<platform>
+  -DCMAKE_PREFIX_PATH=/path/to/coakka-http-runtime/native/releases/1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785/<platform>
 cmake --build build
 ```
 

@@ -12,7 +12,7 @@ The four executables cover every public ABI 1 function:
 - invalid pointers, structure sizes, byte views, route declarations, duplicate
   route identities, configuration relationships and aggregate-size overflow;
 - create, start, bound-port, repeated stop, destroy and invalid lifecycle
-  transitions;
+  transitions, including 128 stop-before-start teardown cycles in one process;
 - real loopback Request method, scheme, authority, target, headers and body;
 - invalid Response rejection without consuming the valid terminal operation;
 - copied Response header/body ownership, response-size rejection with recovery,
@@ -104,15 +104,17 @@ cmake -S . -B build-tsan \
   -DCMAKE_PREFIX_PATH=/path/to/installed/coakka-http-runtime \
   -DCOAKKA_HTTP_RUNTIME_TEST_ENABLE_TSAN=ON
 cmake --build build-tsan
-TSAN_OPTIONS=halt_on_error=1 \
+TSAN_OPTIONS=halt_on_error=1:ignore_noninstrumented_modules=1 \
   ctest --test-dir build-tsan --output-on-failure
 ```
 
 These options instrument this public consumer, including its thread gates,
-socket ownership, counters, and lifecycle coordination. A finding-free run does
-not claim that an ordinary closed release library was itself instrumented. The
-hosted Linux jobs run all three configurations; matching-host execution remains
-required for each advertised artifact.
+socket ownership, counters, and lifecycle coordination. The thread profile
+ignores observations originating only inside the ordinary release library; its
+result therefore applies to the consumer harness, not to the library's internal
+concurrency. Internal race evidence requires a separately instrumented library
+build. The hosted Linux jobs run all three consumer configurations;
+matching-host execution remains required for each advertised artifact.
 
 This test surface accompanies GitHub release `1.0.0`. A platform is verified
 only after its own artifact has passed this black-box test and binary inspection

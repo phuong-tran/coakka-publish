@@ -32,7 +32,7 @@ jobs:
           cmake
           -S coakka-http-runtime/runtime-test
           -B build/coakka-http-runtime-test
-          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/coakka-http-runtime/native/releases/1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431/${{ matrix.platform }}
+          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/coakka-http-runtime/native/releases/1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785/${{ matrix.platform }}
 
       - name: Build public ABI test
         run: cmake --build build/coakka-http-runtime-test --config Release --parallel
@@ -42,7 +42,7 @@ jobs:
           ctest
           --test-dir build/coakka-http-runtime-test
           -C Release
-          --repeat until-fail:5
+          --repeat until-fail:20
           --output-on-failure
 
   http-native-sanitizers:
@@ -69,7 +69,7 @@ jobs:
           -S coakka-http-runtime/runtime-test
           -B build/coakka-http-runtime-${{ matrix.sanitizer }}
           -DCMAKE_BUILD_TYPE=RelWithDebInfo
-          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/coakka-http-runtime/native/releases/1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431/linux-x86_64
+          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/coakka-http-runtime/native/releases/1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785/linux-x86_64
           -D${{ matrix.cmake_option }}=ON
 
       - name: Build instrumented public ABI test
@@ -82,7 +82,7 @@ jobs:
         env:
           ASAN_OPTIONS: halt_on_error=1:detect_leaks=1
           UBSAN_OPTIONS: halt_on_error=1:print_stacktrace=1
-          TSAN_OPTIONS: halt_on_error=1
+          TSAN_OPTIONS: halt_on_error=1:ignore_noninstrumented_modules=1
         run: >-
           ctest
           --test-dir build/coakka-http-runtime-${{ matrix.sanitizer }}

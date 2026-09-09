@@ -8,6 +8,8 @@
 static uint64_t checks = 0U;
 static uint64_t failures = 0U;
 
+enum { COAKKA_HTTP_UNSTARTED_LIFECYCLE_CYCLES = 128 };
+
 #define CHECK(expression)                                                      \
   do {                                                                         \
     checks += 1U;                                                              \
@@ -233,6 +235,18 @@ int main(void) {
   CHECK(server == NULL);
   CHECK(coakka_http_server_destroy(&server).code ==
         COAKKA_HTTP_RESULT_INVALID_ARGUMENT);
+
+  /* A server that never starts still owns a complete native graph. Repeating
+   * the exact stop/destroy path in one process makes retained lifecycle state
+   * visible to leak instrumentation instead of hiding it at process exit. */
+  for (index = 0U; index < COAKKA_HTTP_UNSTARTED_LIFECYCLE_CYCLES; ++index) {
+    CHECK(coakka_http_server_create(&options, routes, 1U, &server).code ==
+          COAKKA_HTTP_RESULT_OK);
+    CHECK(server != NULL);
+    CHECK(coakka_http_server_stop(server).code == COAKKA_HTTP_RESULT_OK);
+    CHECK(coakka_http_server_destroy(&server).code == COAKKA_HTTP_RESULT_OK);
+    CHECK(server == NULL);
+  }
 
   valid_options(&options);
   CHECK(coakka_http_server_create(&options, routes, 1U, &server).code ==

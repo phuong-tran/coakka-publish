@@ -10,7 +10,7 @@ Version `1.0.0` is released from this GitHub repository. Package versions and
 artifact filenames remain `1.0.0`; release-directory suffixes identify the
 exact source snapshots used for the immutable artifact set:
 
-- native: `1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431`;
+- native: `1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785`;
 - JVM, Python, JavaScript and Go:
   `1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-7e24ee5`.
 
@@ -51,7 +51,8 @@ updates, bounded inspection, cancellation and finite shutdown.
 The source-visible [runtime-test](runtime-test/README.md) is a strict C11
 black-box harness for the installed CoAkka HTTP Runtime public ABI. It checks
 server lifecycle, Request/Response ownership, routes, bounds, failure
-classification and concurrent real HTTP calls without access to runtime source.
+classification, stress and stop-race convergence with concurrent real HTTP
+calls without access to runtime source.
 
 The test source is available for review in this repository and can be run
 against each matching native release artifact.

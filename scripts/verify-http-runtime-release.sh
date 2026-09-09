@@ -4,7 +4,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 release_root="${repo_root}/coakka-http-runtime"
-native_release="1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431"
+native_release="1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785"
 connector_release="1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-7e24ee5"
 
 fail() {
@@ -48,7 +48,7 @@ import zipfile
 release_root, native_release, connector_release = sys.argv[1:]
 repo_root = os.path.dirname(release_root)
 version = "1.0.0"
-native_source = "df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431"
+native_source = "c7976fb0560539ff7cde4465c808f5faf542e785"
 core_source = "3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0"
 connector_source = "7e24ee5773bdc5b5564b352fad8270e6e14b9aa5"
 
