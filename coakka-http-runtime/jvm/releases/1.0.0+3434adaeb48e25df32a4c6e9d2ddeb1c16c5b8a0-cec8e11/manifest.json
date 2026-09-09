@@ -33,7 +33,21 @@
     "native_architecture_and_exports": "pass",
     "dependency_closure": "pass",
     "private_vocabulary_scan": "pass",
-    "reproducible_package_build": "pass"
+    "reproducible_package_build": "pass",
+    "maven_repository_structure": "pass",
+    "maven_java_8_clean_cache_consumer": "pass"
+  },
+  "maven_repository": {
+    "repository_path": "maven",
+    "group": "coakka.http",
+    "artifact": "coakka-http-jvm",
+    "version": "1.0.0",
+    "assembly_source_commit": "5afd91ed5ffb5abd73212b6d76dbb306d3ce2519",
+    "jar": {
+      "file": "maven/coakka/http/coakka-http-jvm/1.0.0/coakka-http-jvm-1.0.0.jar",
+      "size": 441560,
+      "sha256": "94f35864c5f61708bcc9de164214eb7f10ff882fb72233a5d895fad0c13069b2"
+    }
   },
   "targets": [
     {

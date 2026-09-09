@@ -1,0 +1,103 @@
+{
+    "formatVersion": "1.1",
+    "component": {
+        "group": "coakka.http",
+        "module": "coakka-http-jvm",
+        "version": "1.0.0",
+        "attributes": {
+            "org.gradle.status": "release"
+        }
+    },
+    "createdBy": {
+        "gradle": {
+            "version": "9.2.1"
+        }
+    },
+    "variants": [
+        {
+            "name": "apiElements",
+            "attributes": {
+                "org.gradle.category": "library",
+                "org.gradle.dependency.bundling": "external",
+                "org.gradle.jvm.environment": "standard-jvm",
+                "org.gradle.jvm.version": 8,
+                "org.gradle.libraryelements": "jar",
+                "org.gradle.usage": "java-api",
+                "org.jetbrains.kotlin.platform.type": "jvm"
+            },
+            "dependencies": [
+                {
+                    "group": "org.jetbrains.kotlin",
+                    "module": "kotlin-stdlib",
+                    "version": {
+                        "requires": "2.3.10"
+                    }
+                }
+            ],
+            "files": [
+                {
+                    "name": "coakka-http-jvm-1.0.0.jar",
+                    "url": "coakka-http-jvm-1.0.0.jar",
+                    "size": 441560,
+                    "sha512": "96e345a90e59659646ffb6f63fa943be70ab99ebb8b420cab6229af7cb39e64a0954e0ad8aa043b017893f07b059954cfdb64c45d2eb2b790e1ba5311405e915",
+                    "sha256": "94f35864c5f61708bcc9de164214eb7f10ff882fb72233a5d895fad0c13069b2",
+                    "sha1": "ae5989ebc8c1abcde17503b6ec9d6c20a0295450",
+                    "md5": "95fc795e9cbfb31544b557adad46f819"
+                }
+            ]
+        },
+        {
+            "name": "runtimeElements",
+            "attributes": {
+                "org.gradle.category": "library",
+                "org.gradle.dependency.bundling": "external",
+                "org.gradle.jvm.environment": "standard-jvm",
+                "org.gradle.jvm.version": 8,
+                "org.gradle.libraryelements": "jar",
+                "org.gradle.usage": "java-runtime",
+                "org.jetbrains.kotlin.platform.type": "jvm"
+            },
+            "dependencies": [
+                {
+                    "group": "org.jetbrains.kotlin",
+                    "module": "kotlin-stdlib",
+                    "version": {
+                        "requires": "2.3.10"
+                    }
+                },
+                {
+                    "group": "io.netty",
+                    "module": "netty-codec-http",
+                    "version": {
+                        "requires": "4.1.137.Final"
+                    }
+                },
+                {
+                    "group": "io.netty",
+                    "module": "netty-codec-http2",
+                    "version": {
+                        "requires": "4.1.137.Final"
+                    }
+                },
+                {
+                    "group": "io.netty",
+                    "module": "netty-handler",
+                    "version": {
+                        "requires": "4.1.137.Final"
+                    }
+                }
+            ],
+            "files": [
+                {
+                    "name": "coakka-http-jvm-1.0.0.jar",
+                    "url": "coakka-http-jvm-1.0.0.jar",
+                    "size": 441560,
+                    "sha512": "96e345a90e59659646ffb6f63fa943be70ab99ebb8b420cab6229af7cb39e64a0954e0ad8aa043b017893f07b059954cfdb64c45d2eb2b790e1ba5311405e915",
+                    "sha256": "94f35864c5f61708bcc9de164214eb7f10ff882fb72233a5d895fad0c13069b2",
+                    "sha1": "ae5989ebc8c1abcde17503b6ec9d6c20a0295450",
+                    "md5": "95fc795e9cbfb31544b557adad46f819"
+                }
+            ]
+        }
+    ]
+}

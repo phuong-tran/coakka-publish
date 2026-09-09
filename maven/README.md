@@ -3,6 +3,33 @@
 This directory is a public Maven repository layout for JVM artifacts published
 by `coakka-publish`.
 
+## CoAkka HTTP Runtime
+
+CoAkka HTTP Runtime for JVM `1.0.0` is available from the immutable GitHub
+release tag:
+
+```text
+https://raw.githubusercontent.com/phuong-tran/coakka-publish/coakka-http-runtime-v1.0.0/maven
+```
+
+Gradle example:
+
+```kotlin
+repositories {
+    maven {
+        url = uri("https://raw.githubusercontent.com/phuong-tran/coakka-publish/coakka-http-runtime-v1.0.0/maven")
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation("coakka.http:coakka-http-jvm:1.0.0")
+}
+```
+
+The coordinate resolves one Java 8-compatible JAR with all five released
+native targets. Maven Central is not yet a mirror for this package.
+
 ## Android
 
 The complete Android `1.1.0` evaluation candidate remains under

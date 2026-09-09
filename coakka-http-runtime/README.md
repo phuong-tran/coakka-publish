@@ -21,6 +21,10 @@ Native C/C++, JVM, Python, JavaScript and Go are included in this release. The
 public contracts use Request/Response vocabulary; implementation and build
 contracts are not part of this repository surface.
 
+The JVM package is also available from the GitHub-hosted Maven repository at
+the coordinate `coakka.http:coakka-http-jvm:1.0.0`. Maven Central remains a
+separate future mirror.
+
 ## Language Plans
 
 | Language | Status | Release |

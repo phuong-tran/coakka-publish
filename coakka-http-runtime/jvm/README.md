@@ -1,6 +1,7 @@
 # CoAkka HTTP Runtime for JVM
 
-Status: GitHub release `1.0.0`. Maven Central mirror not yet available.
+Status: GitHub release `1.0.0`, including a GitHub-hosted Maven repository.
+Maven Central is not yet a mirror.
 
 The Java and Kotlin API is shaped around `HttpRequest`, `HttpResponse`,
 `HttpHandler`, `AsyncHttpHandler`, `HttpService` and `HttpClient`. Release
@@ -18,6 +19,42 @@ the installed real-socket capability suite, native architecture and export
 inspection, dependency checks, extracted-content vocabulary checks, an
 isolated Java consumer, and a clean reproducibility rebuild.
 
-These files are the GitHub-hosted release. Additional sanitizer, race, fault,
-stress and soak coverage remains planned; Maven Central publication is a
-separate future distribution step.
+## Gradle
+
+```kotlin
+repositories {
+    maven {
+        url = uri("https://raw.githubusercontent.com/phuong-tran/coakka-publish/coakka-http-runtime-v1.0.0/maven")
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation("coakka.http:coakka-http-jvm:1.0.0")
+}
+```
+
+## Maven
+
+```xml
+<repositories>
+  <repository>
+    <id>coakka-http-github</id>
+    <url>https://raw.githubusercontent.com/phuong-tran/coakka-publish/coakka-http-runtime-v1.0.0/maven</url>
+  </repository>
+</repositories>
+
+<dependencies>
+  <dependency>
+    <groupId>coakka.http</groupId>
+    <artifactId>coakka-http-jvm</artifactId>
+    <version>1.0.0</version>
+  </dependency>
+</dependencies>
+```
+
+The Maven coordinate resolves one JAR containing the complete five-target
+release payload. Its POM, Gradle module metadata, artifact metadata and checksum
+sidecars are stored under `maven/coakka/http/coakka-http-jvm/` in this
+repository. Additional sanitizer, race, fault, stress and soak coverage remains
+planned; Maven Central publication is a separate future distribution step.

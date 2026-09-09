@@ -60,6 +60,7 @@ public	runtime Zig source package	runtime/zig/releases/2.5.1+26f7944de4a4e059884
 public	runtime Tauri source package	runtime/tauri/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e/coakka-runtime-tauri-intents-2.5.3-source.tar.gz	d03755b4059a8dde31bac8e40f8d59d26fa26070d2dfaeb4fa6917e2a5d2f40e
 public	Spring Boot starter Maven jar	maven/io/github/phuong-tran/coakka/spring-boot-starter/2.5.3/spring-boot-starter-2.5.3.jar	528978b1cb3f71cedc0aa9b588a56f2a94aed7a887677efa3cbf282bd8fb9cd9
 public	Quarkus extension Maven jar	maven/io/github/phuong-tran/coakka/quarkus-extension/2.5.3/quarkus-extension-2.5.3.jar	0d7f6e2f259d6777d2f6e83d651b9d7d1bf09a77906639ecad2bcbc37314626a
+public	CoAkka HTTP JVM Maven jar	maven/coakka/http/coakka-http-jvm/1.0.0/coakka-http-jvm-1.0.0.jar	94f35864c5f61708bcc9de164214eb7f10ff882fb72233a5d895fad0c13069b2
 public	coakka-client linux-x86_64 2.3.0	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-linux-x86_64.tar.gz	32a172e06e40716096d7d675a0ddbe272a1a22a257f19bc730b67a28133b7ab7
 public	coakka-client linux-aarch64 2.3.0	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-linux-aarch64.tar.gz	cc221a4cfed50ff1059457fd280f7c9e091d8b164ebdb8b1cd8f277633b0ed13
 public	coakka-client macos-aarch64 2.3.0	coakka-tools/coakka-client/releases/2.3.0+a83ab412/coakka-client-v2-2.3.0-macos-aarch64.tar.gz	d7d485bad47446a8eb522c13fa89a25cdc4e1b04414775909d1a6f9f48a05a9f
