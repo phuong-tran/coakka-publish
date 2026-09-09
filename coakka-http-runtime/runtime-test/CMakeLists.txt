@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 project(CoAkkaHttpRuntimeTest LANGUAGES C CXX)
 
 include(CTest)
-find_package(CoAkkaHttp 1.1.0 EXACT REQUIRED CONFIG)
+find_package(CoAkkaHttp 1.0.0 EXACT REQUIRED CONFIG)
 find_package(Threads REQUIRED)
 
 option(COAKKA_HTTP_RUNTIME_TEST_WARNINGS_AS_ERRORS

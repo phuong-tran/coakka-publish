@@ -1,0 +1,49 @@
+{
+  "format": 1,
+  "product": "coakka-http-runtime",
+  "language": "javascript",
+  "package": "@coakka/http",
+  "version": "1.0.0",
+  "status": "released",
+  "distribution": "github",
+  "source_commit": "cec8e116ba09f76f215311167c866213194051ee",
+  "core_source_commit": "3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0",
+  "registry_mirrors": [],
+  "capabilities": [
+    "buffered-request-response",
+    "request-streaming",
+    "response-streaming",
+    "server-events",
+    "websocket",
+    "static-spa",
+    "outbound-http",
+    "tls",
+    "http-1.1",
+    "http-2",
+    "form-multipart",
+    "route-rebinding",
+    "health-monitor-inspection",
+    "shutdown-cancellation"
+  ],
+  "verification": {
+    "installed_node_suite": "pass-five-targets",
+    "installed_bun_suite": "pass-five-targets",
+    "typescript_consumer": "pass",
+    "native_architecture_and_exports": "pass",
+    "dependency_closure": "pass",
+    "integrity_and_private_vocabulary": "pass",
+    "deterministic_pack": "pass"
+  },
+  "artifact": {
+    "file": "coakka-http-1.0.0.tgz",
+    "size": 189656,
+    "sha256": "5ed5583ce5f6c3896e228794aa557b22acd9c20277fcc43a778774e6f0c20bc5",
+    "targets": [
+      "macos-aarch64",
+      "linux-aarch64",
+      "linux-x86_64",
+      "windows-aarch64",
+      "windows-x86_64"
+    ]
+  }
+}

@@ -1,22 +1,21 @@
 # CoAkka HTTP Runtime for JVM
 
-Status: complete capability development draft. Registry publication is not
-open.
+Status: GitHub release `1.0.0`. Maven Central mirror not yet available.
 
 The Java and Kotlin API is shaped around `HttpRequest`, `HttpResponse`,
-`HttpHandler`, `AsyncHttpHandler`, `HttpService` and `HttpClient`. The current
-draft includes buffered and streaming bodies, server events, WebSocket
+`HttpHandler`, `AsyncHttpHandler`, `HttpService` and `HttpClient`. Release
+`1.0.0` includes buffered and streaming bodies, server events, WebSocket
 sessions, static and SPA delivery, outbound requests, TLS, HTTP/1.1, HTTP/2,
 form and multipart values, route updates, bounded inspection, cancellation and
 finite shutdown.
 
-The exact review candidates are under
-[0.1.0-private.0](0.1.0-private.0/manifest.json) for macOS arm64, Linux arm64,
+The exact release artifacts are under
+[releases/1.0.0](releases/1.0.0/manifest.json) for macOS arm64, Linux arm64,
 Linux x86_64, Windows arm64 and Windows x86_64. Every target passed the unit
 and API suite, the installed real-socket capability suite, native architecture
 and export inspection, dependency checks, extracted-content vocabulary checks,
 an isolated Java consumer, and a clean reproducibility rebuild.
 
-These files are GitHub-level evaluation artifacts. Release-sized sanitizer,
-race, fault, stress and soak evidence remains open, so there is no Maven
-Central coordinate or installation snippet in this draft.
+These files are the GitHub-hosted release. Additional sanitizer, race, fault,
+stress and soak coverage remains planned; Maven Central publication is a
+separate future distribution step.

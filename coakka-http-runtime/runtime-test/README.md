@@ -16,6 +16,6 @@ cmake --build build --config Release
 ctest --test-dir build -C Release --output-on-failure
 ```
 
-The package and this test surface are development drafts. A platform is ready
+This test surface accompanies GitHub release `1.0.0`. A platform is verified
 only after its own artifact has passed this black-box test and binary inspection
 on that operating system and architecture.

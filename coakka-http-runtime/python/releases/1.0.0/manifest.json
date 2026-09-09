@@ -1,0 +1,65 @@
+{
+  "format": 1,
+  "product": "coakka-http-runtime",
+  "language": "python",
+  "package": "coakka-http",
+  "version": "1.0.0",
+  "status": "released",
+  "distribution": "github",
+  "source_commit": "cec8e116ba09f76f215311167c866213194051ee",
+  "core_source_commit": "3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0",
+  "registry_mirrors": [],
+  "capabilities": [
+    "buffered-request-response",
+    "request-streaming",
+    "response-streaming",
+    "server-events",
+    "websocket",
+    "static-spa",
+    "outbound-http",
+    "tls",
+    "http-1.1",
+    "http-2",
+    "form-multipart",
+    "route-rebinding",
+    "health-monitor-inspection",
+    "shutdown-cancellation"
+  ],
+  "artifacts": [
+    {
+      "platform": "macos-aarch64",
+      "file": "coakka_http-1.0.0-py3-none-macosx_11_0_arm64.whl",
+      "size": 25621,
+      "sha256": "60af59cd078ae4d8cb3857ecac45f7378b57b069088648c263e2eb4fc0eeca90",
+      "execution": "native"
+    },
+    {
+      "platform": "linux-aarch64",
+      "file": "coakka_http-1.0.0-py3-none-linux_aarch64.whl",
+      "size": 28065,
+      "sha256": "1e56b855b6527132f1181745a0a1404fd3db0f8ea8203124dbd9ae818732a6ff",
+      "execution": "native"
+    },
+    {
+      "platform": "linux-x86_64",
+      "file": "coakka_http-1.0.0-py3-none-linux_x86_64.whl",
+      "size": 27593,
+      "sha256": "3ffbebc13c38e84d34aac26d17a22b3f54ffc4e38bbc2072127c09e25b291053",
+      "execution": "emulated"
+    },
+    {
+      "platform": "windows-aarch64",
+      "file": "coakka_http-1.0.0-py3-none-win_arm64.whl",
+      "size": 66247,
+      "sha256": "e84f32815c5b186f3d50653e91f2dcdead23790a0f5c171e038026099638a4a2",
+      "execution": "native"
+    },
+    {
+      "platform": "windows-x86_64",
+      "file": "coakka_http-1.0.0-py3-none-win_amd64.whl",
+      "size": 74572,
+      "sha256": "819c702aa159e2a096f97fadf17c49b912667eca41b64013932e077044731aa6",
+      "execution": "emulated"
+    }
+  ]
+}

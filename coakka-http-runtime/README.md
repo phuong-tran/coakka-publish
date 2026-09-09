@@ -1,29 +1,29 @@
 # CoAkka HTTP Runtime
 
-CoAkka HTTP Runtime is the upcoming CoAkka product surface for HTTP servers and
-clients. Its API uses the familiar Request, Response, Handler, Server and Client
+CoAkka HTTP Runtime is the CoAkka product surface for HTTP servers and clients.
+Its APIs use the familiar Request, Response, Handler, Server and Client
 concepts already used in everyday application code.
 
-## Development Status
+## Release Status
 
-This directory is a GitHub-level development draft. It is not a released
-package and is not available from npm, Maven
-Central or PyPI. API details, package names and platform coverage may change
-before the first release.
+Version `1.0.0` is released from this GitHub repository. The exact artifacts,
+manifests and checksums are stored below each language's `releases/1.0.0`
+directory. They are not currently mirrored to npm, Maven Central, PyPI or the
+Go module proxy.
 
-The native C/C++, JVM, Python, JavaScript and Go drafts are available for review.
-The public contracts use Request/Response vocabulary; private runtime and build
+Native C/C++, JVM, Python, JavaScript and Go are included in this release. The
+public contracts use Request/Response vocabulary; implementation and build
 contracts are not part of this repository surface.
 
 ## Language Plans
 
-| Language | Status | Draft |
+| Language | Status | Release |
 | --- | --- | --- |
-| Native C/C++ | ABI 1 development draft with verified artifacts | [native](native/README.md) |
-| JVM / Java / Kotlin | Complete capability draft with five verified targets | [jvm](jvm/README.md) |
-| Python | Complete capability draft with five verified targets | [python](python/README.md) |
-| JavaScript / Node / Bun | Complete capability draft with five verified targets | [javascript](javascript/README.md) |
-| Go | Complete capability draft with five verified targets | [go](go/README.md) |
+| Native C/C++ | ABI 1 with five verified targets | [native](native/README.md) |
+| JVM / Java / Kotlin | Complete capability surface with five verified targets | [jvm](jvm/README.md) |
+| Python | Complete capability surface with five verified targets | [python](python/README.md) |
+| JavaScript / Node / Bun | Complete capability surface with five verified targets | [javascript](javascript/README.md) |
+| Go | Complete capability surface with five verified targets | [go](go/README.md) |
 
 Each connector is expected to present the same HTTP capabilities in a form
 natural to its language: buffered and streaming bodies, asynchronous handlers,
@@ -38,18 +38,14 @@ black-box harness for the installed CoAkka HTTP Core ABI. It checks route
 contract identity, borrowing, bounds, failure classification and concurrent
 independent calls without access to runtime source.
 
-The test source is available for review at the GitHub repository level and can
-be run against each matching native draft artifact.
+The test source is available for review in this repository and can be run
+against each matching native release artifact.
 
 ## Release Plan
 
-1. Complete the language-native API and capability tests for each connector.
-2. Rebuild and run matching-host package verification for every advertised
-   operating system and architecture.
-3. Complete sanitizer, pressure, fault, stress and soak evidence.
-4. Add runnable consumer samples only after an exact package is approved.
-5. Publish to package registries only through a separate release decision.
+1. Add more matching-host sanitizer, pressure, fault, stress and soak evidence.
+2. Expand runnable consumer samples around the exact GitHub artifacts.
+3. Mirror packages to language registries through a separate release decision.
 
-Until those gates close, this directory is roadmap and development-status
-documentation. It must not be used as evidence that a registry package or
-production support claim exists.
+GitHub is the distribution channel for `1.0.0`; future registry publication
+will mirror the same language surfaces.
