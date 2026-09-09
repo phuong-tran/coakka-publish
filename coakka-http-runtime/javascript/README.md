@@ -10,12 +10,13 @@ multipart values, route updates, bounded inspection, cancellation and finite
 shutdown.
 
 The exact release artifact is under
-[releases/1.0.0](releases/1.0.0/manifest.json). One deterministic tarball
-contains macOS arm64, Linux arm64/x64 and Windows arm64/x64 payloads. Every
-target passed the same installed real-socket capability suite on Node and Bun,
-plus integrity, architecture, export and dependency checks. The x64 Linux and
-Windows executions used emulation and are not physical-host performance
-evidence.
+[releases/1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11](releases/1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11/manifest.json).
+The suffix identifies the exact Core and connector source snapshots; the
+package version remains `1.0.0`. One deterministic tarball contains macOS
+arm64, Linux arm64/x64 and Windows arm64/x64 payloads. Every target passed the
+same installed real-socket capability suite on Node and Bun, plus integrity,
+architecture, export and dependency checks. The x64 Linux and Windows
+executions used emulation and are not physical-host performance evidence.
 
 These files are the GitHub-hosted release. Additional dynamic, race, fault,
 stress and soak coverage remains planned; npm publication is a separate future

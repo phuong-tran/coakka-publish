@@ -1,6 +1,7 @@
 {
   "schema": "coakka.http.native-release.v1",
   "version": "1.0.0",
+  "release_directory": "1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431",
   "abi_version": 1,
   "implementation_source_commit": "df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431",
   "release_source_commit": "d04cda06df852423fab6221cfc564a7c13c1ecfc",

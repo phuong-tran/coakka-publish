@@ -1,6 +1,7 @@
 {
   "schema": "coakka.http.jvm-release.v1",
   "version": "1.0.0",
+  "release_directory": "1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11",
   "status": "released",
   "distribution": "github",
   "registry_mirrors": [],

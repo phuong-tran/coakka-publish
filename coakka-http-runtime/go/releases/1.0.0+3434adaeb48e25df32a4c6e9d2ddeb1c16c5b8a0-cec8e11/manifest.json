@@ -1,9 +1,10 @@
 {
   "format": 1,
   "product": "coakka-http-runtime",
-  "language": "javascript",
-  "package": "@coakka/http",
+  "language": "go",
+  "package": "coakka-http-go",
   "version": "1.0.0",
+  "release_directory": "1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11",
   "status": "released",
   "distribution": "github",
   "source_commit": "cec8e116ba09f76f215311167c866213194051ee",
@@ -26,18 +27,18 @@
     "shutdown-cancellation"
   ],
   "verification": {
-    "installed_node_suite": "pass-five-targets",
-    "installed_bun_suite": "pass-five-targets",
-    "typescript_consumer": "pass",
-    "native_architecture_and_exports": "pass",
-    "dependency_closure": "pass",
+    "installed_suite": "pass-five-targets",
+    "go_race": "pass-macos-and-linux-targets",
+    "go_vet": "pass-macos-and-linux-targets",
+    "ubsan": "pass-macos-aarch64",
+    "native_architecture_and_surface": "pass",
     "integrity_and_private_vocabulary": "pass",
-    "deterministic_pack": "pass"
+    "deterministic_archive": "pass"
   },
   "artifact": {
-    "file": "coakka-http-1.0.0.tgz",
-    "size": 189656,
-    "sha256": "5ed5583ce5f6c3896e228794aa557b22acd9c20277fcc43a778774e6f0c20bc5",
+    "file": "coakka-http-go-1.0.0.tar.gz",
+    "size": 86031,
+    "sha256": "8001b5f7b6d2e302ce5d56518b99a4a6846a6dafbf7091c627a70433818163f6",
     "targets": [
       "macos-aarch64",
       "linux-aarch64",

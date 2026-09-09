@@ -41,7 +41,7 @@ Runtime field guide: [docs/runtime-field-guide.md](docs/runtime-field-guide.md)
 How it works: [docs/how-it-works.md](docs/how-it-works.md)
 HTTP edge and runtime boundary:
 [docs/http-edge-runtime-boundary.md](docs/http-edge-runtime-boundary.md)
-CoAkka HTTP Runtime development draft:
+CoAkka HTTP Runtime GitHub release:
 [coakka-http-runtime/](coakka-http-runtime/README.md)
 WebSocket integration:
 [docs/runtime-websocket-integration.md](docs/runtime-websocket-integration.md)
@@ -64,9 +64,10 @@ Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.m
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
 
 This repository is a versioned artifact warehouse and catalog for independent
-CoAkka components. It has no aggregate product version and does not publish
-GitHub Releases. Select an exact lane path or package-manager coordinate, then
-verify its manifest and checksum evidence.
+CoAkka components. It has no aggregate product version. A product-scoped
+GitHub Release identifies one exact artifact set; it does not create a shared
+version across unrelated products. Select an exact lane path or package-manager
+coordinate, then verify its manifest and checksum evidence.
 
 ## Featured Binary Lanes
 

@@ -6,10 +6,16 @@ concepts already used in everyday application code.
 
 ## Release Status
 
-Version `1.0.0` is released from this GitHub repository. The exact artifacts,
-manifests and checksums are stored below each language's `releases/1.0.0`
-directory. They are not currently mirrored to npm, Maven Central, PyPI or the
-Go module proxy.
+Version `1.0.0` is released from this GitHub repository. Package versions and
+artifact filenames remain `1.0.0`; release-directory suffixes identify the
+exact source snapshots used for the immutable artifact set:
+
+- native: `1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431`;
+- JVM, Python, JavaScript and Go:
+  `1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11`.
+
+They are not currently mirrored to npm, Maven Central, PyPI or the Go module
+proxy.
 
 Native C/C++, JVM, Python, JavaScript and Go are included in this release. The
 public contracts use Request/Response vocabulary; implementation and build
