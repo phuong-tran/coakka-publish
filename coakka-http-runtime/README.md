@@ -25,8 +25,8 @@ contracts are not part of this repository surface.
 | JavaScript / Node / Bun | Complete capability surface with five verified targets | [javascript](javascript/README.md) |
 | Go | Complete capability surface with five verified targets | [go](go/README.md) |
 
-Each connector is expected to present the same HTTP capabilities in a form
-natural to its language: buffered and streaming bodies, asynchronous handlers,
+Each connector presents the same HTTP capabilities in a form natural to its
+language: buffered and streaming bodies, asynchronous handlers,
 server events, WebSocket sessions, static and SPA delivery, outbound requests,
 TLS, supported HTTP protocol selection, form and multipart values, route
 updates, bounded inspection, cancellation and finite shutdown.
