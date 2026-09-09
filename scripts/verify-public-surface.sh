@@ -744,6 +744,7 @@ scanner_inputs=(
   "${repo_root}/README.md"
   "${repo_root}/docs"
   "${repo_root}/include"
+  "${repo_root}/coakka-http-runtime"
   "${repo_root}/runtime-addons"
   "${repo_root}/samples"
   "${repo_root}/scripts"

@@ -4,10 +4,10 @@
   "language": "python",
   "package": "coakka-http",
   "version": "1.0.0",
-  "release_directory": "1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11",
+  "release_directory": "1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-7e24ee5",
   "status": "released",
   "distribution": "github",
-  "source_commit": "cec8e116ba09f76f215311167c866213194051ee",
+  "source_commit": "7e24ee5773bdc5b5564b352fad8270e6e14b9aa5",
   "core_source_commit": "3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0",
   "registry_mirrors": [],
   "capabilities": [

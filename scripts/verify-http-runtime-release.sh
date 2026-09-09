@@ -5,7 +5,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 release_root="${repo_root}/coakka-http-runtime"
 native_release="1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431"
-connector_release="1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11"
+connector_release="1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-7e24ee5"
 
 fail() {
   echo "[http-runtime-release] $*" >&2
@@ -41,6 +41,7 @@ import hashlib
 import json
 import os
 import sys
+import tarfile
 import xml.etree.ElementTree as ET
 import zipfile
 
@@ -49,7 +50,7 @@ repo_root = os.path.dirname(release_root)
 version = "1.0.0"
 native_source = "df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431"
 core_source = "3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0"
-connector_source = "cec8e116ba09f76f215311167c866213194051ee"
+connector_source = "7e24ee5773bdc5b5564b352fad8270e6e14b9aa5"
 
 
 def fail(message: str) -> None:
@@ -120,6 +121,43 @@ for lane in ("jvm", "python", "javascript", "go"):
         fail(f"{lane} manifest has no artifacts")
     for item in items:
         verify_file(root, item)
+
+go_root, go_manifest = read_manifest("go", connector_release)
+go_module_root = os.path.join(release_root, "go")
+go_module = "github.com/phuong-tran/coakka-publish/coakka-http-runtime/go"
+if go_manifest.get("module") != go_module:
+    fail("Go module path differs from the public GitHub path")
+if go_manifest.get("module_tag") != "coakka-http-runtime/go/v1.0.0":
+    fail("Go module tag differs from the nested semantic tag")
+with open(os.path.join(go_module_root, "go.mod"), "r", encoding="utf-8") as handle:
+    if handle.readline().strip() != f"module {go_module}":
+        fail("Go module metadata differs from the release manifest")
+
+go_archive = os.path.join(go_root, go_manifest["artifact"]["file"])
+with tarfile.open(go_archive, "r:gz") as archive:
+    prefix = "coakka-http-go-1.0.0/"
+    members = [member for member in archive.getmembers() if member.isfile()]
+    if any(member.issym() or member.islnk() for member in archive.getmembers()):
+        fail("Go release archive contains a link")
+    projected = {
+        member.name[len(prefix):]: member
+        for member in members
+        if member.name.startswith(prefix) and member.name != f"{prefix}README.md"
+    }
+    expected = {
+        name
+        for name in os.listdir(go_module_root)
+        if name.endswith((".go", ".syso")) or name in {"go.mod", "go.sum"}
+    }
+    if set(projected) != expected:
+        fail("Go module source set differs from the release archive")
+    for name, member in projected.items():
+        archived = archive.extractfile(member)
+        if archived is None:
+            fail(f"cannot read Go archive member {name}")
+        with open(os.path.join(go_module_root, name), "rb") as handle:
+            if archived.read() != handle.read():
+                fail(f"Go module file differs from the release archive: {name}")
 
 jvm_root, jvm = read_manifest("jvm", connector_release)
 maven = jvm.get("maven_repository", {})

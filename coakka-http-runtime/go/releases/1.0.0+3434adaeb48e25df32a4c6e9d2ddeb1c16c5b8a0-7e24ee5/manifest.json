@@ -4,12 +4,14 @@
   "language": "go",
   "package": "coakka-http-go",
   "version": "1.0.0",
-  "release_directory": "1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11",
+  "release_directory": "1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-7e24ee5",
   "status": "released",
   "distribution": "github",
-  "source_commit": "cec8e116ba09f76f215311167c866213194051ee",
+  "source_commit": "7e24ee5773bdc5b5564b352fad8270e6e14b9aa5",
   "core_source_commit": "3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0",
   "registry_mirrors": [],
+  "module": "github.com/phuong-tran/coakka-publish/coakka-http-runtime/go",
+  "module_tag": "coakka-http-runtime/go/v1.0.0",
   "capabilities": [
     "buffered-request-response",
     "request-streaming",
@@ -37,8 +39,8 @@
   },
   "artifact": {
     "file": "coakka-http-go-1.0.0.tar.gz",
-    "size": 86031,
-    "sha256": "8001b5f7b6d2e302ce5d56518b99a4a6846a6dafbf7091c627a70433818163f6",
+    "size": 51433,
+    "sha256": "c3b23000fcbe8fc189e16babe1f6af7829f2412fa5b5ff2bd1869921f84b507b",
     "targets": [
       "macos-aarch64",
       "linux-aarch64",

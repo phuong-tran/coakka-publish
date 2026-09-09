@@ -12,7 +12,7 @@ exact source snapshots used for the immutable artifact set:
 
 - native: `1.0.0+df1a9e76c3d928e3eebdb82fdee9f8a2ef30b431`;
 - JVM, Python, JavaScript and Go:
-  `1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11`.
+  `1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-7e24ee5`.
 
 They are not currently mirrored to npm, Maven Central, PyPI or the Go module
 proxy.
@@ -24,6 +24,11 @@ contracts are not part of this repository surface.
 The JVM package is also available from the GitHub-hosted Maven repository at
 the coordinate `coakka.http:coakka-http-jvm:1.0.0`. Maven Central remains a
 separate future mirror.
+
+Python installs a matching wheel directly from the immutable GitHub tag.
+Node and Bun install the same five-target package directly from that tag. Go
+installs the nested module at `coakka-http-runtime/go/v1.0.0`. Each language
+README contains the exact command.
 
 ## Language Plans
 
