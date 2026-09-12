@@ -1,0 +1,4 @@
+# Preserve upstream legal texts and matching-host generated Windows package
+# metadata byte-for-byte. Their source formatting is part of the release input.
+coakka-http-runtime/**/third-party-licenses/** -text -diff
+coakka-http-runtime/native/releases/*/windows-*/lib/cmake/CoAkkaHttp/*.cmake -text -diff

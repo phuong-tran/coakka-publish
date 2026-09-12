@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "product_lane": "coakka-http-runtime",
+  "language_lane": "go",
+  "version": "1.0.0",
+  "release_directory": "1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1",
+  "core_source_git_commit": "d8deb6b821cdd90b69fa7d8e1c85629aac164315",
+  "connector_source_git_commit": "26a28a1c4af3eb65334993532b4eaa082fc75438",
+  "module": "github.com/phuong-tran/coakka-http-runtime-go",
+  "artifact": {
+    "name": "coakka-http-go-1.0.0.tar.gz",
+    "sha256": "974c28962ede1a7ecd7ddd77a06dcab9ea38989fcd4c9eb0a4c0163cf926fa0f"
+  },
+  "included_platforms": ["macos-aarch64", "linux-aarch64", "linux-x86_64", "windows-aarch64", "windows-x86_64"]
+}

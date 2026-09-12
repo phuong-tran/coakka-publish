@@ -1,67 +1,44 @@
-# CoAkka HTTP Runtime
+# CoAkka HTTP Runtime 1.0.0
 
-CoAkka HTTP Runtime is the CoAkka product surface for HTTP servers and clients.
-Its APIs use the familiar Request, Response, Handler, Server and Client
-concepts already used in everyday application code.
+This directory is the public GitHub distribution for CoAkka HTTP Core and its
+Go, Kotlin/JVM, Python, and JavaScript connectors. Core owns listeners,
+connections, protocols, files, outbound I/O, deadlines, pressure and shutdown.
+Connectors translate language values and application work; they never replace
+Core with a host-language HTTP server or client.
 
-## Release Status
+## Release
 
-Version `1.0.0` is released from this GitHub repository. Package versions and
-artifact filenames remain `1.0.0`; release-directory suffixes identify the
-exact source snapshots used for the immutable artifact set:
+Source identities:
 
-- native: `1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785`;
-- JVM, Python, JavaScript and Go:
-  `1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-7e24ee5`.
+- Core: `coakka-http-runtime@d8deb6b821cdd90b69fa7d8e1c85629aac164315`
+- connectors: `coakka-http-runtime-connector@26a28a1c4af3eb65334993532b4eaa082fc75438`
 
-They are not currently mirrored to npm, Maven Central, PyPI or the Go module
-proxy.
-
-Native C/C++, JVM, Python, JavaScript and Go are included in this release. The
-public contracts use Request/Response vocabulary; implementation and build
-contracts are not part of this repository surface.
-
-The JVM package is also available from the GitHub-hosted Maven repository at
-the coordinate `coakka.http:coakka-http-jvm:1.0.0`. Maven Central remains a
-separate future mirror.
-
-Python installs a matching wheel directly from the immutable GitHub tag.
-Node and Bun install the same five-target package directly from that tag. Go
-installs the nested module at `coakka-http-runtime/go/v1.0.0`. Each language
-README contains the exact command.
-
-## Language Plans
-
-| Language | Status | Release |
+| Lane | GitHub artifact | Current release |
 | --- | --- | --- |
-| Native C/C++ | ABI 1 with five verified targets | [native](native/README.md) |
-| JVM / Java / Kotlin | Complete capability surface with five verified targets | [jvm](jvm/README.md) |
-| Python | Complete capability surface with five verified targets | [python](python/README.md) |
-| JavaScript / Node / Bun | Complete capability surface with five verified targets | [javascript](javascript/README.md) |
-| Go | Complete capability surface with five verified targets | [go](go/README.md) |
+| [Native C/C++](native/README.md) | five installed SDK trees | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315` |
+| [Go](go/README.md) | source archive with five embedded Core images | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
+| [Kotlin/JVM](jvm/README.md) | one five-target JAR | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
+| [Python](python/README.md) | five platform wheels | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
+| [JavaScript](javascript/README.md) | one Node/Bun tarball with five prebuilds | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
 
-Each connector presents the same HTTP capabilities in a form natural to its
-language: buffered and streaming bodies, asynchronous handlers,
-server events, WebSocket sessions, static and SPA delivery, outbound requests,
-TLS, supported HTTP protocol selection, form and multipart values, route
-updates, bounded inspection, cancellation and finite shutdown.
+Supported targets are `macos-aarch64`, `linux-aarch64`, `linux-x86_64`,
+`windows-aarch64`, and `windows-x86_64`. Every shared Core library statically
+contains its non-OS native dependency closure. Linux has a GLIBC 2.28 ceiling;
+Windows uses the static MSVC runtime.
 
-## Native Test
+The sole public native header is `coakka/http/http.h`. ABI revision 2 exposes
+exactly 125 C symbols and 20 capability families. All four connectors project
+that complete low-level capability surface. Their buffered `Service` APIs are
+smaller convenience layers for ordinary request/reply applications.
 
-The source-visible [runtime-test](runtime-test/README.md) is a strict C11
-black-box harness for the installed CoAkka HTTP Runtime public ABI. It checks
-server lifecycle, Request/Response ownership, routes, bounds, failure
-classification, stress and stop-race convergence with concurrent real HTTP
-calls without access to runtime source.
+## Evidence And Licenses
 
-The test source is available for review in this repository and can be run
-against each matching native release artifact.
+Every target passed architecture, export, dependency and installed real-HTTP
+checks on a matching operating system. Windows x86-64 ran through Windows 11
+ARM64's x64 emulation layer, so no physical-x86-64 performance claim is made.
+The source-visible [native black-box test](runtime-test/README.md) is included.
 
-## Release Plan
-
-1. Add more matching-host sanitizer, pressure, fault, stress and soak evidence.
-2. Expand runnable consumer samples around the exact GitHub artifacts.
-3. Mirror packages to language registries through a separate release decision.
-
-GitHub is the distribution channel for `1.0.0`; future registry publication
-will mirror the same language surfaces.
+Each release directory contains its own manifests, checksums, consumption
+instructions and license files. [Third-party notices](THIRD-PARTY-NOTICES.md)
+record the exact compiled dependency set. npm, Maven Central, PyPI and a tagged
+public Go module remain separate publication gates.

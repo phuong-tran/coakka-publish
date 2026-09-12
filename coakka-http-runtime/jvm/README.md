@@ -1,60 +1,8 @@
-# CoAkka HTTP Runtime for JVM
+# CoAkka HTTP Runtime for Kotlin/JVM
 
-Status: GitHub release `1.0.0`, including a GitHub-hosted Maven repository.
-Maven Central is not yet a mirror.
+Current GitHub release:
+[`1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1`](releases/1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1/README.md).
 
-The Java and Kotlin API is shaped around `HttpRequest`, `HttpResponse`,
-`HttpHandler`, `AsyncHttpHandler`, `HttpService` and `HttpClient`. Release
-`1.0.0` includes buffered and streaming bodies, server events, WebSocket
-sessions, static and SPA delivery, outbound requests, TLS, HTTP/1.1, HTTP/2,
-form and multipart values, route updates, bounded inspection, cancellation and
-finite shutdown.
-
-The exact release artifacts are under
-[releases/1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11](releases/1.0.0+3434adaeb48e25df32a4c6e9d2ddeb1c16c5b8a0-cec8e11/manifest.json)
-for macOS arm64, Linux arm64, Linux x86_64, Windows arm64 and Windows x86_64.
-The suffix identifies the exact Core and connector source snapshots; the
-package version remains `1.0.0`. Every target passed the unit and API suite,
-the installed real-socket capability suite, native architecture and export
-inspection, dependency checks, extracted-content vocabulary checks, an
-isolated Java consumer, and a clean reproducibility rebuild.
-
-## Gradle
-
-```kotlin
-repositories {
-    maven {
-        url = uri("https://raw.githubusercontent.com/phuong-tran/coakka-publish/coakka-http-runtime-v1.0.0/maven")
-    }
-    mavenCentral()
-}
-
-dependencies {
-    implementation("coakka.http:coakka-http-jvm:1.0.0")
-}
-```
-
-## Maven
-
-```xml
-<repositories>
-  <repository>
-    <id>coakka-http-github</id>
-    <url>https://raw.githubusercontent.com/phuong-tran/coakka-publish/coakka-http-runtime-v1.0.0/maven</url>
-  </repository>
-</repositories>
-
-<dependencies>
-  <dependency>
-    <groupId>coakka.http</groupId>
-    <artifactId>coakka-http-jvm</artifactId>
-    <version>1.0.0</version>
-  </dependency>
-</dependencies>
-```
-
-The Maven coordinate resolves one JAR containing the complete five-target
-release payload. Its POM, Gradle module metadata, artifact metadata and checksum
-sidecars are stored under `maven/coakka/http/coakka-http-jvm/` in this
-repository. Additional sanitizer, race, fault, stress and soak coverage remains
-planned; Maven Central publication is a separate future distribution step.
+One JAR contains documented Kotlin/Java APIs and exact JNI/Core pairs for all
+five targets. The loader selects the process architecture and verifies every
+native resource before loading. No Maven coordinate is published yet.

@@ -1,0 +1,12 @@
+CoAkka HTTP Runtime 1.0.0
+
+Copyright 2026 Phuong Tran.
+
+This distribution uses file-scoped licenses. Connector source, type
+declarations and documentation are covered by Apache-2.0. Compiled CoAkka
+native artifacts, the public native header and native-only provenance are
+covered by the CoAkka Native Artifact License 1.2. See PACKAGE-LICENSE.md in
+each release directory.
+
+Third-party components and their exact notices are listed in
+THIRD-PARTY-NOTICES.md and third-party-licenses/.

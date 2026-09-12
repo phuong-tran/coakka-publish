@@ -1,67 +1,11 @@
-# CoAkka HTTP Runtime for native C/C++
+# CoAkka HTTP Runtime for Native C/C++
 
-Status: ABI 1, GitHub release `1.0.0`.
+Current GitHub release:
+[`1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315`](releases/1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315/README.md).
 
-## Package
+The release contains five installed SDK trees. Each has the sole public header
+`coakka/http/http.h`, relocatable CMake metadata and one dependency-closed Core
+shared library. Windows also carries the matching import library.
 
-The native package contains:
-
-- `include/coakka/http/http.h`, the only public header;
-- one closed shared library for the selected operating system and CPU; and
-- relocatable CMake metadata exporting `CoAkkaHttp::runtime`.
-
-No runtime source, private header, generated type or language connector is part
-of the native package.
-
-Release artifacts are under
-[releases/1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785](releases/1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785/).
-The suffix identifies the exact native source snapshot; the package version
-remains `1.0.0`. The verified targets are macOS arm64, Linux arm64, Linux
-x86_64, Windows arm64 and Windows x86_64. Each target passed the same
-installed-package tests and exact 21-symbol export check.
-
-The public test campaign includes bounded stress, active-request stop races,
-independent concurrent server lifecycles and repeated teardown. Fully
-instrumented internal builds additionally pass ASan with leak detection,
-UBSan and TSan; sanitizer profiles are run separately.
-
-## Current Contract
-
-ABI 1 is a buffered HTTP server Request/Response baseline. It provides bounded
-server configuration, route registration, Request method/target/header/body
-views, one copied Response, typed failures and explicit
-create/start/stop/destroy lifecycle.
-
-Request views are valid only during the handler callback. Route configuration
-is copied by create. Handler context remains caller-owned until destroy
-returns. Response headers and body are copied before a successful response call
-returns.
-
-Streaming bodies, WebSocket sessions, static-file delivery, outbound client
-requests and TLS are not exposed by ABI 1. Their internal availability is not a
-public API promise; each capability must receive its own public contract and
-evidence before it can be added.
-
-## CMake
-
-Point CMake at the platform directory and link the imported target:
-
-```cmake
-find_package(CoAkkaHttp 1.0.0 EXACT REQUIRED CONFIG)
-target_link_libraries(my_server PRIVATE CoAkkaHttp::runtime)
-```
-
-```sh
-cmake -S . -B build \
-  -DCMAKE_PREFIX_PATH=/path/to/coakka-http-runtime/native/releases/1.0.0+c7976fb0560539ff7cde4465c808f5faf542e785/<platform>
-cmake --build build
-```
-
-The [runtime-test](../runtime-test/README.md) directory is the reviewable
-black-box consumer for the installed package.
-
-## Distribution Boundary
-
-These are the `1.0.0` GitHub release files. They are not currently mirrored to
-a native package registry. The release makes no performance claim; use the
-checksums and run the black-box consumer on the deployment target.
+Use the [source-visible black-box consumer](../runtime-test/README.md) to verify
+an installed tree without access to private runtime headers or schemas.

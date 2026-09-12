@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "product_lane": "coakka-http-runtime",
+  "language_lane": "jvm",
+  "version": "1.0.0",
+  "release_directory": "1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1",
+  "core_source_git_commit": "d8deb6b821cdd90b69fa7d8e1c85629aac164315",
+  "connector_source_git_commit": "26a28a1c4af3eb65334993532b4eaa082fc75438",
+  "artifact": {
+    "name": "coakka-http-jvm-1.0.0.jar",
+    "sha256": "9ffb0c79271e935081d237816a7703cf4deb8a558bd1ecf56615475e082992c7"
+  },
+  "included_platforms": ["macos-aarch64", "linux-aarch64", "linux-x86_64", "windows-aarch64", "windows-x86_64"]
+}
