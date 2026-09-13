@@ -1,6 +1,6 @@
 # CoAkka HTTP Runtime for Native C/C++
 
-Current GitHub release:
+Current repository release:
 [`1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315`](releases/1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315/README.md).
 
 The release contains five installed SDK trees. Each has the sole public header

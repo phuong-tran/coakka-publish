@@ -1,7 +1,7 @@
 # CoAkka HTTP Runtime 1.0.0
 
-This directory is the public GitHub distribution for CoAkka HTTP Core and its
-Go, Kotlin/JVM, Python, and JavaScript connectors. Core owns listeners,
+This directory is the public Git-repository distribution for CoAkka HTTP Core
+and its Go, Kotlin/JVM, Python, and JavaScript connectors. Core owns listeners,
 connections, protocols, files, outbound I/O, deadlines, pressure and shutdown.
 Connectors translate language values and application work; they never replace
 Core with a host-language HTTP server or client.
@@ -13,13 +13,18 @@ Source identities:
 - Core: `coakka-http-runtime@d8deb6b821cdd90b69fa7d8e1c85629aac164315`
 - connectors: `coakka-http-runtime-connector@26a28a1c4af3eb65334993532b4eaa082fc75438`
 
-| Lane | GitHub artifact | Current release |
+| Lane | Repository artifact | Current release |
 | --- | --- | --- |
 | [Native C/C++](native/README.md) | five installed SDK trees | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315` |
 | [Go](go/README.md) | source archive with five embedded Core images | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
 | [Kotlin/JVM](jvm/README.md) | one five-target JAR | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
 | [Python](python/README.md) | five platform wheels | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
 | [JavaScript](javascript/README.md) | one Node/Bun tarball with five prebuilds | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
+
+Committed release directories are authoritative. The annotated
+`coakka-http-runtime-v1.0.0` tag freezes this artifact snapshot; consumers
+should pin that tag or its peeled commit instead of mutable `main`. GitHub
+Release pages and duplicate release assets are intentionally not used.
 
 Supported targets are `macos-aarch64`, `linux-aarch64`, `linux-x86_64`,
 `windows-aarch64`, and `windows-x86_64`. Every shared Core library statically
