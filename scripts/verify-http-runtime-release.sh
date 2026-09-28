@@ -568,9 +568,23 @@ with tarfile.open(js_archive, "r:gz") as archive:
 
 # Cross-format symbol, architecture and dependency inspection uses LLVM because
 # the verifier runs all five object formats from one host.
-llvm_nm = shutil.which("llvm-nm") or "/opt/homebrew/opt/llvm/bin/llvm-nm"
-llvm_readobj = shutil.which("llvm-readobj") or "/opt/homebrew/opt/llvm/bin/llvm-readobj"
-if not Path(llvm_nm).is_file() or not Path(llvm_readobj).is_file():
+def find_llvm_tool(name: str) -> str | None:
+    unversioned = shutil.which(name)
+    if unversioned:
+        return unversioned
+    homebrew = Path("/opt/homebrew/opt/llvm/bin") / name
+    if homebrew.is_file():
+        return str(homebrew)
+    for major in range(24, 10, -1):
+        versioned = shutil.which(f"{name}-{major}")
+        if versioned:
+            return versioned
+    return None
+
+
+llvm_nm = find_llvm_tool("llvm-nm")
+llvm_readobj = find_llvm_tool("llvm-readobj")
+if llvm_nm is None or llvm_readobj is None:
     fail("LLVM llvm-nm/llvm-readobj are required for five-format inspection")
 
 
