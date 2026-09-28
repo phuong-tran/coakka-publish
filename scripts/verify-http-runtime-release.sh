@@ -656,10 +656,13 @@ for target, markers in architectures.items():
     if not all(marker in description for marker in markers):
         fail(f"{target} architecture mismatch: {description.strip()}")
 
-mach_dependencies = {
-    line.strip().split()[0]
-    for line in run("otool", "-L", str(core_files["macos-aarch64"])).splitlines()[1:]
-}
+mach_output = run(
+    llvm_readobj,
+    "--needed-libs",
+    str(core_files["macos-aarch64"]),
+)
+mach_block = mach_output.split("NeededLibraries [", 1)[1].split("]", 1)[0]
+mach_dependencies = set(mach_block.split())
 require_equal(
     mach_dependencies,
     {
