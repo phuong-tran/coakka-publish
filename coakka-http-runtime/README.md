@@ -1,49 +1,335 @@
-# CoAkka HTTP Runtime 1.0.0
+# CoAkka HTTP Runtime
 
-This directory is the public Git-repository distribution for CoAkka HTTP Core
-and its Go, Kotlin/JVM, Python, and JavaScript connectors. Core owns listeners,
-connections, protocols, files, outbound I/O, deadlines, pressure and shutdown.
-Connectors translate language values and application work; they never replace
-Core with a host-language HTTP server or client.
+**One HTTP runtime. Familiar programming in every supported language.**
 
-## Release
+CoAkka HTTP Runtime lets C, C++, Java, Kotlin, Python, JavaScript, TypeScript,
+and Go build HTTP services with the programming style developers already use
+in that ecosystem. It can serve backend APIs, built frontend files, streams,
+server events, and WebSocket sessions while making capacity, pressure,
+health, monitoring, live handler changes, and shutdown explicit.
 
-Source identities:
+Applications use the normal service path for their language. Handlers execute
+in the App Host using its native values and scheduling model; users do not have
+to choose an execution mode.
 
-- Core: `coakka-http-runtime@d8deb6b821cdd90b69fa7d8e1c85629aac164315`
-- connectors: `coakka-http-runtime-connector@26a28a1c4af3eb65334993532b4eaa082fc75438`
+CoAkka HTTP Runtime supplies one shared HTTP contract. Language packages
+project it through each App Host without changing how application handlers are
+written.
 
-| Lane | Repository artifact | Current release |
+Release `1.0.0` is an immutable private candidate. Native and all four
+language-package lanes bind exact source snapshots; repository verification
+covers hashes, archives, exported API, dependencies, legal closure, metadata,
+and an installed consumer. Registry upload, production signing, public sample
+promotion, and performance claims remain separate actions.
+
+## Contents
+
+- [Why CoAkka HTTP Runtime Exists](#why-coakka-http-runtime-exists)
+- [Where It Fits In CoAkka](#where-it-fits-in-coakka)
+- [Start With Familiar Code](#start-with-familiar-code)
+- [Application Model](#application-model)
+- [What It Supports](#what-it-supports)
+- [Frontend And Backend In One Service](#frontend-and-backend-in-one-service)
+- [Queues And Backpressure](#queues-and-backpressure)
+- [Observability And Monitoring](#observability-and-monitoring)
+- [TLS, mTLS, And Live Handler Changes](#tls-mtls-and-live-handler-changes)
+- [Framework Experiences Belong In Addons](#framework-experiences-belong-in-addons)
+- [Compare With Familiar Platforms](#compare-with-familiar-platforms)
+- [Languages And Hosts](#languages-and-hosts)
+- [Benchmark Policy](#benchmark-policy)
+- [Documentation](#documentation)
+- [Private Release Gate](#private-release-gate)
+
+## Why CoAkka HTTP Runtime Exists
+
+HTTP server work is fragmented. Each language grows its own routing,
+streaming, overload, monitoring, and shutdown conventions. Improvements made
+for one host rarely benefit another, and operational behavior drifts as a
+system becomes polyglot.
+
+CoAkka keeps two things together:
+
+- one shared HTTP contract for routing, bounds, pressure, lifecycle, health,
+  monitoring, files, streaming, and realtime work;
+- an idiomatic language connector so application code still feels like Go,
+  Kotlin, Java, Python, JavaScript, TypeScript, C, or C++.
+
+The goal is not to make every language look identical. The goal is to give
+each language a strong native experience without rebuilding the operational
+contract from zero.
+
+## Where It Fits In CoAkka
+
+CoAkka HTTP Runtime is the HTTP product in the wider CoAkka ecosystem. It can
+run independently as a frontend/backend service. In a larger system, a handler
+can also send application work through CoAkka Runtime and emit operational
+records through `coakka-logger`; each product keeps its own ownership,
+lifecycle, and release identity.
+
+```mermaid
+flowchart LR
+    Client[Browser or HTTP client]
+    HTTP[CoAkka HTTP Runtime]
+    Handler[Application handler]
+    Runtime[CoAkka Runtime]
+    Target[Application target]
+    Logger[coakka-logger]
+
+    Client <--> HTTP <--> Handler
+    Handler <--> Runtime <--> Target
+    HTTP -. operational records .-> Logger
+    Handler -. application records .-> Logger
+```
+
+## Start With Familiar Code
+
+```javascript
+import { Builder, Response } from "@coakka/http";
+
+const service = await new Builder()
+  .listen("127.0.0.1", 3000)
+  .get("/api/hello", () => Response.text("Hello from CoAkka"))
+  .get("/health", () => Response.text("ok"))
+  .start();
+
+console.log(`http://127.0.0.1:${service.port}`);
+```
+
+The handlers are ordinary JavaScript functions. CoAkka adds the service
+contract around them: frozen routes, bounded admission, typed pressure,
+health, monitoring, cancellation, and finite close. Streaming, realtime,
+outbound, TLS/mTLS, handler swap, and full monitor control are available
+through the complete `CoAkka HTTP Runtime` surface in the same package.
+
+See the same shape in [C/C++](native/README.md),
+[Java/Kotlin](jvm/README.md), [Python](python/README.md),
+[JavaScript/TypeScript](javascript/README.md), and [Go](go/README.md).
+
+## Application Model
+
+An **App Host** is the process environment running application code, such as a
+JVM, CPython, Node.js, Bun, Go, or a native process. A connector maps CoAkka's
+service contract into that host's normal handlers, values, concurrency, and
+HTTP facilities.
+
+```mermaid
+flowchart LR
+    Client[Client or browser]
+    Service[CoAkka HTTP service]
+    Connector[Language connector]
+    runtime[CoAkka HTTP Runtime]
+    Handler[Application handler]
+    Monitor[Health and monitoring surface]
+    Addon[Optional framework addon]
+
+    Client <--> Service
+    Service <--> Connector
+    Connector <--> runtime
+    Connector <--> Handler
+    Connector -. bounded observations .-> Monitor
+    Addon --> Connector
+```
+
+Startup freezes and validates the service declaration before listening. On
+each request, the connector projects bounded HTTP values into the App Host,
+invokes the application handler there, and returns the response through the
+same service. The App Host keeps ownership of business state and application
+scheduling; `CoAkka HTTP Runtime` keeps ownership of its HTTP resources,
+limits, protocol state, operational truth, and ordered shutdown.
+
+Read [How It Works](docs/how-it-works.md) and
+[App Host And Connectors](docs/app-host-and-connectors.md) for the lifecycle and
+ownership diagrams.
+
+## What It Supports
+
+| Area | Public service contract |
+| --- | --- |
+| Server and routing | HTTP/1.1, HTTP/2, HTTP/3 where available, method/path routing, captures, query values, headers, forms, multipart, route rebinding |
+| Responses | Buffered text, bytes and JSON, streamed bodies, headers, status, cancellation |
+| Realtime | Server-Sent Events and WebSocket sessions |
+| Frontend delivery | Static files, index files, cache policy, byte ranges, validators, and SPA fallback |
+| Outbound HTTP | Service-owned client surface with bounded lifecycle |
+| Capacity | Finite connections, active handlers, bodies, chunks, routes, sessions, diagnostics, and retained bytes |
+| Backpressure | Explicit rejection or pause/resume behavior instead of unbounded accumulation |
+| Observability | Non-blocking health, fresh liveness probes, coherent snapshots, typed failures, route generation, pressure and lifecycle truth |
+| Monitoring | Startup-reserved aggregates and event history, cursor reads, missed-event counts, coalesced notification, live policy updates, and finite wait/interrupt |
+| Security | Feature-gated TLS and mutual TLS with file-backed identity/trust configuration and fail-closed validation |
+| Live change | Generation- and revision-checked handler swap without dropping already-admitted work |
+| Linux I/O | Platform-default backend plus explicit `io_uring` for supported HTTP/2 and HTTP/3 configurations |
+
+The [capability matrix](docs/capabilities.md) records the exact per-language
+surface. An API name by itself is not evidence that every host implements the
+same mechanism.
+
+## Frontend And Backend In One Service
+
+CoAkka can serve a built React, Vue, Svelte, or plain HTML application beside
+its APIs and realtime routes. It serves the frontend build; it does not replace
+the frontend framework.
+
+```mermaid
+flowchart TD
+    Request[Browser request] --> Service[CoAkka service]
+    Service --> Choice{Route selection}
+    Choice -->|/api/*| API[Application handler]
+    Choice -->|/assets/*| Asset[Built asset]
+    Choice -->|navigation| Index[index.html fallback]
+    Choice -->|/events| SSE[Server-Sent Events]
+    Choice -->|/ws| WS[WebSocket session]
+```
+
+Application routes take precedence over static fallback. File roots, active
+files, byte counts, and cache behavior remain explicit and bounded. See
+[Frontend And Backend](docs/frontend-and-backend.md).
+
+## Queues And Backpressure
+
+CoAkka makes overload visible instead of quietly growing memory:
+
+- connection, active-handler, body, stream, session, and retained-byte
+  capacities are finite;
+- connectors with dispatch queues bound both item count and retained bytes;
+- stream readers and writers pause or reject at declared limits;
+- pressure, timeout, cancellation, closed state, and application failure stay
+  distinguishable;
+- shutdown stops admission, converges accepted work, interrupts waiters, and
+  finishes within a caller-owned deadline.
+
+Not every host uses the same queue. The exact mechanism may be a finite worker
+queue, active-exchange admission, or stream writability, while the public law
+stays the same: retained work is bounded and pressure is visible.
+
+## Observability And Monitoring
+
+Observability and monitoring are related, but they are not synonyms in CoAkka.
+
+- **Observability** is the truth the service can expose: health, a fresh
+  liveness probe, counters, active and retained work, typed pressure outcomes,
+  route/binding generation, latency buckets, and lifecycle state.
+- **Monitoring** is the bounded facility that collects selected aggregates and
+  recent operational events, then lets an operator poll, wait, read by cursor,
+  and detect overwritten history.
+
+The monitor is built into `CoAkka HTTP Runtime`, projected by the Go, JVM,
+Python, JavaScript, TypeScript, C, and C++ surfaces, and disabled by default so
+collection cost is explicit. Event saturation never blocks HTTP traffic or
+changes an exchange result. Request bodies, credentials, cookies, certificate
+material, and arbitrary application labels are not retained.
+
+Read [Observability And Monitoring](docs/observability-and-monitoring.md) for
+the data model, monitor channel, operational loop, and language API map.
+
+## TLS, mTLS, And Live Handler Changes
+
+CoAkka supports plaintext, server-authenticated TLS, and mutual TLS. Listener
+identity, trust roots, credential identity, and credential generation are
+copied and validated at startup; invalid or unsupported combinations fail
+before the service reports ready.
+
+A running service can also switch one route to a prepared handler binding by
+supplying the expected route generation and current binding revision. Requests
+already admitted continue on the binding they captured, while new requests use
+the accepted revision. Replayed activation identifiers are idempotent, and a
+stale update is rejected without partially changing the route.
+
+See [TLS And mTLS](docs/tls-and-mtls.md) and
+[Handler Swap And Hot Reload](docs/handler-swap-and-hot-reload.md). The atomic
+binding change is the runtime foundation for hot reload. Source watching,
+compilation, module loading, and deployment policy stay in the App Host or an
+addon.
+
+## Framework Experiences Belong In Addons
+
+CoAkka is not limited to its builder API. A Spring-like, decorator-driven,
+middleware-driven, generated, or domain-specific experience belongs above the
+connector as an addon.
+
+```mermaid
+flowchart LR
+    App[Application code]
+    Addon[Framework-style addon]
+    Connector[language connector]
+    Service[CoAkka HTTP service]
+
+    App --> Addon --> Connector --> Service
+```
+
+This lets richer developer experiences evolve without weakening CoAkka's
+capacity, pressure, monitoring, or shutdown contract. Addons can advance
+independently above the stable connector boundary.
+
+## Compare With Familiar Platforms
+
+The comparison snapshot is dated **2026-09-13**. It is a mental-model map, not
+a feature score and not benchmark evidence.
+
+| Ecosystem | Comparisons |
+| --- | --- |
+| JavaScript | [Node.js](docs/comparisons/nodejs.md), [Bun](docs/comparisons/bun.md) |
+| JVM | [Spring Boot](docs/comparisons/spring-boot.md), [Netty](docs/comparisons/netty.md), [Tomcat](docs/comparisons/tomcat.md), [Jetty](docs/comparisons/jetty.md) |
+| Go | [`net/http`](docs/comparisons/go-net-http.md), [Chi](docs/comparisons/chi.md), [Gin](docs/comparisons/gin.md) |
+| Python | [FastAPI and Uvicorn](docs/comparisons/fastapi-uvicorn.md) |
+
+Start with the [comparison index](docs/comparisons/README.md) or the
+[cross-platform snapshot](docs/comparison-2026-09-13.md).
+
+## Languages And Hosts
+
+| Language | App Host | Developer surface |
 | --- | --- | --- |
-| [Native C/C++](native/README.md) | five installed SDK trees | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315` |
-| [Go](go/README.md) | source archive with five embedded Core images | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
-| [Kotlin/JVM](jvm/README.md) | one five-target JAR | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
-| [Python](python/README.md) | five platform wheels | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
-| [JavaScript](javascript/README.md) | one Node/Bun tarball with five prebuilds | `1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315-26a28a1` |
+| C | Native process | Explicit builder plus complete runtime lifecycle and monitoring |
+| C++ | Native process | The stable native service surface from C++20 |
+| Java | JVM | `ServiceBuilder`, Java lambdas, JVM-owned values, and advanced service control |
+| Kotlin | JVM | Idiomatic builder calls and typed service events |
+| Python | CPython | Async buffered handlers plus typed runtime events and context-managed leases |
+| JavaScript | Node.js or Bun | Synchronous buffered handlers plus typed runtime events |
+| TypeScript | Node.js or Bun | The JavaScript surface with declarations |
+| Go | Go process | Builder, ordinary functions, Go-owned values, and typed runtime control |
 
-Committed release directories are authoritative. The annotated
-`coakka-http-runtime-v1.0.0` tag freezes this artifact snapshot; consumers
-should pin that tag or its peeled commit instead of mutable `main`. GitHub
-Release pages and duplicate release assets are intentionally not used.
+The rebuilt candidate target matrix covers macOS ARM64, Linux ARM64, Linux
+x86-64, Windows ARM64, and Windows x86-64. Exact host floors and verified
+capabilities belong in each language guide.
 
-Supported targets are `macos-aarch64`, `linux-aarch64`, `linux-x86_64`,
-`windows-aarch64`, and `windows-x86_64`. Every shared Core library statically
-contains its non-OS native dependency closure. Linux has a GLIBC 2.28 ceiling;
-Windows uses the static MSVC runtime.
+## Benchmark Policy
 
-The sole public native header is `coakka/http/http.h`. ABI revision 2 exposes
-exactly 125 C symbols and 20 capability families. All four connectors project
-that complete low-level capability surface. Their buffered `Service` APIs are
-smaller convenience layers for ordinary request/reply applications.
+Every language comparison measures the same public service path that an
+application normally uses.
 
-## Evidence And Licenses
+- C and C++ are reported as standalone native references.
+- Other languages are paired separately with direct HTTP and familiar
+  frameworks in their own ecosystem.
+- Source, package identity, host state, raw output, p99, CPU, memory, and
+  shutdown evidence accompany every number.
+- Linux `io_uring` is measured as a same-language HTTP/2 TLS A/B against the
+  platform-default backend. It is not mixed into HTTP/1.1 framework rankings.
+- A result without verified application-path identity is invalid, even if the
+  command ran successfully.
 
-Every target passed architecture, export, dependency and installed real-HTTP
-checks on a matching operating system. Windows x86-64 ran through Windows 11
-ARM64's x64 emulation layer, so no physical-x86-64 performance claim is made.
-The source-visible [native black-box test](runtime-test/README.md) is included.
+See the [Raspberry Pi 5 protocol](docs/benchmark-rpi5.md).
 
-Each release directory contains its own manifests, checksums, consumption
-instructions and license files. [Third-party notices](THIRD-PARTY-NOTICES.md)
-record the exact compiled dependency set. npm, Maven Central, PyPI and a tagged
-public Go module remain separate publication gates.
+## Documentation
+
+| Guide | Purpose |
+| --- | --- |
+| [How It Works](docs/how-it-works.md) | Request, pressure, monitoring, and lifecycle flow |
+| [App Host And Connectors](docs/app-host-and-connectors.md) | Responsibilities, ownership, and addon boundary |
+| [Frontend And Backend](docs/frontend-and-backend.md) | Static build, APIs, SSE, and WebSocket in one service |
+| [Capabilities](docs/capabilities.md) | Exact feature state by host |
+| [Operations](docs/operations.md) | Bounds, pressure, health, monitoring, and shutdown |
+| [Observability And Monitoring](docs/observability-and-monitoring.md) | Health, liveness, aggregates, event channel, loss, and operator integration |
+| [TLS And mTLS](docs/tls-and-mtls.md) | Installation, listener identity, trust, protocol selection, and samples |
+| [Handler Swap And Hot Reload](docs/handler-swap-and-hot-reload.md) | Atomic handler activation, generation checks, draining, and reload ownership |
+| [Comparisons](docs/comparisons/README.md) | Dated platform-by-platform maps |
+| [Raspberry Pi 5 Benchmark](docs/benchmark-rpi5.md) | Reproducible application benchmark protocol |
+| [Native](native/README.md) | C and C++ usage |
+| [JVM](jvm/README.md) | Java and Kotlin usage |
+| [Python](python/README.md) | Python usage |
+| [JavaScript](javascript/README.md) | Node.js, Bun, and TypeScript usage |
+| [Go](go/README.md) | Go usage |
+
+## Private Release Gate
+
+The private `1.0.0` candidate is complete in this repository. Registry upload,
+production signing, public sample promotion, and performance-result publication
+remain closed until their independent gates are opened.

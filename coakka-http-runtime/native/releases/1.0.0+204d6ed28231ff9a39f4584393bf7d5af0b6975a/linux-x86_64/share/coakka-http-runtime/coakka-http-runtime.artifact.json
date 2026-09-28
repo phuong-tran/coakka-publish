@@ -1,0 +1,9 @@
+{
+  "schema": "coakka.http.artifact-metadata.v1",
+  "product": "coakka-http-runtime",
+  "source_revision": "204d6ed28231ff9a39f4584393bf7d5af0b6975a",
+  "target": "linux-x86_64",
+  "file": "libcoakka_http_runtime.so.1.0.0",
+  "size": 12488584,
+  "sha256": "0f5208841f331c62dc10cb55e776a161093ead8e01aaa7a3ef0c353bf3a77f79"
+}

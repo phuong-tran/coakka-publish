@@ -60,6 +60,58 @@ static coakka_http_bytes_t bytes(const char *value) {
   return result;
 }
 
+static int wait_for_exchange_reap(coakka_http_core_t *core,
+                                  coakka_http_health_t *health) {
+  const uint64_t budget_ns = UINT64_C(2000000000);
+  uint64_t deadline_ns;
+  coakka_http_result_t result;
+  coakka_http_health_init(health);
+  result = coakka_http_core_health(core, health);
+  if (result.code != COAKKA_HTTP_RESULT_OK) {
+    (void)fprintf(stderr, "health read failed: %s\n",
+                  coakka_http_result_code_name(result.code));
+    return 0;
+  }
+  if (health->observed_monotonic_ns == UINT64_C(0) ||
+      health->observed_monotonic_ns > UINT64_MAX - budget_ns) {
+    (void)fprintf(stderr, "health observation clock is unavailable\n");
+    return 0;
+  }
+  deadline_ns = health->observed_monotonic_ns + budget_ns;
+  /* Terminal observation and request release precede event-loop slot reaping.
+   * Probe ACK can itself precede reap in a turn, so inspect each fresh snapshot
+   * until the gauge converges, within one deadline and a finite turn budget. */
+  for (uint32_t attempt = 0U; attempt <= 128U; ++attempt) {
+    uint64_t remaining_ms;
+    uint64_t previous_ns;
+    if (health->failed_components != 0U ||
+        health->observed_monotonic_ns >= deadline_ns) {
+      break;
+    }
+    if (health->server_active_exchanges == 0U) {
+      return 1;
+    }
+    if (attempt == 128U) {
+      break;
+    }
+    remaining_ms =
+        (deadline_ns - health->observed_monotonic_ns + UINT64_C(999999)) /
+        UINT64_C(1000000);
+    previous_ns = health->observed_monotonic_ns;
+    result = coakka_http_core_probe_liveness(core, remaining_ms, health);
+    if (result.code != COAKKA_HTTP_RESULT_OK ||
+        health->observed_monotonic_ns < previous_ns) {
+      (void)fprintf(stderr, "health convergence probe failed: %s\n",
+                    coakka_http_result_code_name(result.code));
+      return 0;
+    }
+  }
+  (void)fprintf(stderr, "exchange reap did not converge: active=%u failed=%u\n",
+                (unsigned int)health->server_active_exchanges,
+                (unsigned int)health->failed_components);
+  return 0;
+}
+
 static int bytes_equal(coakka_http_bytes_t value, const char *expected) {
   const size_t expected_size = strlen(expected);
   return value.size == (uint64_t)expected_size &&
@@ -276,6 +328,7 @@ int main(void) {
   coakka_http_monitor_event_page_view_t monitor_page;
   coakka_http_health_t health;
   coakka_http_health_t probe;
+  coakka_http_runtime_info_t runtime_info;
   coakka_http_event_t request_event;
   coakka_http_event_t terminal_event;
   coakka_http_terminal_summary_t terminal_summary;
@@ -307,19 +360,30 @@ int main(void) {
   REQUIRE(coakka_http_abi_version() == COAKKA_HTTP_ABI_VERSION);
   REQUIRE((coakka_http_features() & COAKKA_HTTP_CAPABILITY_INBOUND) != 0U);
   REQUIRE((coakka_http_features() & COAKKA_HTTP_CAPABILITY_HEALTH) != 0U);
-#if defined(_WIN32)
-  REQUIRE((coakka_http_features() & COAKKA_HTTP_CAPABILITY_STATIC_FILES) == 0U);
-  REQUIRE((coakka_http_features() & COAKKA_HTTP_CAPABILITY_STATIC_FRONTEND) ==
-          0U);
-  REQUIRE((coakka_http_features() & COAKKA_HTTP_CAPABILITY_APPLICATION_FILES) ==
-          0U);
-#else
+  coakka_http_runtime_info_init(&runtime_info);
+  REQUIRE_OK(coakka_http_runtime_get_info(&runtime_info));
+  REQUIRE(runtime_info.struct_size == sizeof(runtime_info));
+  REQUIRE(runtime_info.info_version == COAKKA_HTTP_RUNTIME_INFO_VERSION);
+  REQUIRE(runtime_info.abi_version == COAKKA_HTTP_ABI_VERSION);
+  REQUIRE(runtime_info.features == coakka_http_features());
+  REQUIRE(runtime_info.requested_io_backend == 0U);
+  REQUIRE(runtime_info.effective_io_backend == 0U);
+  REQUIRE(runtime_info.fallback_reason == COAKKA_HTTP_IO_BACKEND_FALLBACK_NONE);
+  REQUIRE(runtime_info.core_started == 0U);
+  REQUIRE(runtime_info.io_uring_supported == 0U ||
+          runtime_info.io_uring_compiled != 0U);
+  REQUIRE((runtime_info.io_uring_supported != 0U) ==
+          (runtime_info.io_uring_probe_error == 0));
+#if !defined(__linux__)
+  REQUIRE(runtime_info.io_uring_compiled == 0U);
+  REQUIRE(runtime_info.io_uring_supported == 0U);
+  REQUIRE(runtime_info.io_uring_probe_error != 0);
+#endif
   REQUIRE((coakka_http_features() & COAKKA_HTTP_CAPABILITY_STATIC_FILES) != 0U);
   REQUIRE((coakka_http_features() & COAKKA_HTTP_CAPABILITY_STATIC_FRONTEND) !=
           0U);
   REQUIRE((coakka_http_features() & COAKKA_HTTP_CAPABILITY_APPLICATION_FILES) !=
           0U);
-#endif
   REQUIRE(socket_runtime_start());
   sockets_started = 1;
 
@@ -354,14 +418,26 @@ int main(void) {
   monitor_options.signal_reserved = 1U;
   REQUIRE_OK(
       coakka_http_configuration_set_monitor(configuration, &monitor_options));
+  REQUIRE_OK(coakka_http_configuration_set_io_backend(configuration,
+                                                      COAKKA_HTTP_IO_URING));
 
   REQUIRE_OK(coakka_http_core_create(configuration, &core));
   REQUIRE(core != NULL);
+  coakka_http_runtime_info_init(&runtime_info);
+  REQUIRE_OK(coakka_http_core_get_runtime_info(core, &runtime_info));
+  REQUIRE(runtime_info.requested_io_backend == COAKKA_HTTP_IO_URING);
+  REQUIRE(runtime_info.effective_io_backend == COAKKA_HTTP_IO_PLATFORM_DEFAULT);
+  REQUIRE(runtime_info.fallback_reason ==
+          COAKKA_HTTP_IO_BACKEND_FALLBACK_CONFIGURATION);
+  REQUIRE(runtime_info.core_started == 0U);
   /* Core copied the complete configuration, so its builder can now die. */
   REQUIRE_OK(coakka_http_configuration_destroy(&configuration));
   REQUIRE(configuration == NULL);
   REQUIRE_OK(coakka_http_core_start(core));
   core_started = 1;
+  coakka_http_runtime_info_init(&runtime_info);
+  REQUIRE_OK(coakka_http_core_get_runtime_info(core, &runtime_info));
+  REQUIRE(runtime_info.core_started != 0U);
   REQUIRE_OK(coakka_http_core_bound_port(core, &port));
   REQUIRE(port != 0U);
 
@@ -490,9 +566,7 @@ int main(void) {
   REQUIRE(terminal_event.private_owner == NULL);
   REQUIRE(terminal_event.private_lease == UINT64_C(0));
 
-  coakka_http_health_init(&health);
-  REQUIRE_OK(coakka_http_core_health(core, &health));
-  REQUIRE(health.failed_components == 0U);
+  REQUIRE(wait_for_exchange_reap(core, &health));
   REQUIRE(health.server_active_exchanges == 0U);
 
   coakka_http_monitor_config_view_init(&monitor_config);
@@ -534,7 +608,42 @@ int main(void) {
   REQUIRE(monitor_outcome.effective.policy.collection ==
           COAKKA_HTTP_MONITOR_AGGREGATES);
 
-  /* Leave a second terminal queued to exercise the stopped-state handoff. */
+  /* A terminal observation cannot retire a still-borrowed request. */
+  client_context.port = port;
+  thread_contexts[0] = &client_context;
+  thread_result =
+      coakka_http_test_run_threads(client_send_request, thread_contexts, 1U);
+  client = client_context.socket_value;
+  client_context.socket_value = TEST_INVALID_SOCKET;
+  REQUIRE(thread_result == 0);
+  REQUIRE(client != TEST_INVALID_SOCKET);
+  REQUIRE_OK(coakka_http_core_take_event(core, UINT64_C(5000), &request_event));
+  request_leased = 1;
+  REQUIRE(request_event.kind == COAKKA_HTTP_EVENT_REQUEST);
+  exchange = request_event.exchange;
+  REQUIRE_OK(coakka_http_core_respond(core, exchange, &response));
+  REQUIRE(read_response(client, response_data, sizeof(response_data),
+                        "core-runtime-ready"));
+  close_socket(client);
+  client = TEST_INVALID_SOCKET;
+  REQUIRE_OK(
+      coakka_http_core_take_event(core, UINT64_C(5000), &terminal_event));
+  terminal_leased = 1;
+  REQUIRE(terminal_event.kind == COAKKA_HTTP_EVENT_TERMINAL);
+  REQUIRE(terminal_event.exchange.slot == exchange.slot);
+  REQUIRE(terminal_event.exchange.generation == exchange.generation);
+  REQUIRE_OK(coakka_http_core_release_event(core, &terminal_event));
+  terminal_leased = 0;
+  coakka_http_health_init(&health);
+  REQUIRE_OK(coakka_http_core_probe_liveness(core, UINT64_C(2000), &health));
+  REQUIRE(health.failed_components == 0U);
+  REQUIRE(health.server_active_exchanges == 1U);
+  REQUIRE_OK(coakka_http_core_release_event(core, &request_event));
+  request_leased = 0;
+  REQUIRE(wait_for_exchange_reap(core, &health));
+  REQUIRE(health.server_active_exchanges == 0U);
+
+  /* Leave a third terminal queued to exercise the stopped-state handoff. */
   client_context.port = port;
   thread_contexts[0] = &client_context;
   thread_result =
@@ -592,8 +701,12 @@ int main(void) {
   socket_runtime_stop();
   sockets_started = 0;
 
-  (void)printf("coakka_http_core_runtime_test=pass abi=%u port=%u\n",
-               coakka_http_abi_version(), (unsigned int)port);
+  (void)printf("coakka_http_core_runtime_test=pass abi=%u port=%u "
+               "io_uring_compiled=%u io_uring_supported=%u io_uring_error=%d\n",
+               coakka_http_abi_version(), (unsigned int)port,
+               (unsigned int)runtime_info.io_uring_compiled,
+               (unsigned int)runtime_info.io_uring_supported,
+               (int)runtime_info.io_uring_probe_error);
   exit_code = EXIT_SUCCESS;
 
 cleanup:

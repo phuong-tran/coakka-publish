@@ -22,8 +22,10 @@ typedef int test_socket_t;
 
 typedef struct test_state {
   uint32_t calls;
+  uint32_t rebound_calls;
   uint32_t failures;
   uint32_t limit_rejections;
+  uint32_t stream_calls;
 } test_state_t;
 
 #define CHECK(expression)                                                      \
@@ -53,6 +55,7 @@ static void handle_request(void *opaque, coakka_http_request_t *request) {
   test_state_t *state = (test_state_t *)opaque;
   coakka_http_response_t response;
   coakka_http_header_t header;
+  coakka_http_header_t trailer;
   coakka_http_result_t submitted;
   const uint64_t route_id = coakka_http_request_route_id(request);
 
@@ -83,9 +86,72 @@ static void handle_request(void *opaque, coakka_http_request_t *request) {
     return;
   }
 
+  if (route_id == UINT64_C(43)) {
+    char streamed[64];
+    size_t streamed_size = 0U;
+    uint32_t trailer_seen = 0U;
+    uint32_t ended = 0U;
+    uint32_t turn;
+    state->stream_calls += 1U;
+    if (coakka_http_request_body_delivery(request) !=
+            COAKKA_HTTP_BODY_STREAM ||
+        coakka_http_request_body(request).size != 0U) {
+      state->failures += 1U;
+    }
+    for (turn = 0U; turn < 16U && ended == 0U; ++turn) {
+      coakka_http_request_body_event_t event;
+      coakka_http_request_body_event_init(&event);
+      submitted = coakka_http_request_body_read(request, 2000U, &event);
+      if (submitted.code != COAKKA_HTTP_RESULT_OK) {
+        state->failures += 1U;
+        break;
+      }
+      if (event.kind == COAKKA_HTTP_REQUEST_BODY_DATA) {
+        if (event.data.size > sizeof(streamed) - streamed_size) {
+          state->failures += 1U;
+          break;
+        }
+        memcpy(streamed + streamed_size, event.data.data,
+               (size_t)event.data.size);
+        streamed_size += (size_t)event.data.size;
+      } else if (event.kind == COAKKA_HTTP_REQUEST_BODY_TRAILERS) {
+        coakka_http_header_t stream_trailer;
+        if (coakka_http_request_body_event_trailer_count(&event) != 1U ||
+            coakka_http_request_body_event_trailer(&event, 0U,
+                                                   &stream_trailer) == 0U ||
+            !bytes_equal(stream_trailer.name, "x-checksum") ||
+            !bytes_equal(stream_trailer.value, "stream-ok")) {
+          state->failures += 1U;
+        }
+        trailer_seen = 1U;
+      } else if (event.kind == COAKKA_HTTP_REQUEST_BODY_END) {
+        ended = 1U;
+      } else {
+        state->failures += 1U;
+        break;
+      }
+    }
+    if (streamed_size != strlen("stream-request-body") ||
+        memcmp(streamed, "stream-request-body", streamed_size) != 0 ||
+        trailer_seen == 0U || ended == 0U) {
+      state->failures += 1U;
+    }
+    coakka_http_response_init(&response);
+    response.body = bytes("coakka-native-stream-ready");
+    if (coakka_http_request_respond(request, &response).code !=
+        COAKKA_HTTP_RESULT_OK) {
+      state->failures += 1U;
+    }
+    return;
+  }
+
   if (route_id != UINT64_C(41) ||
       !bytes_equal(coakka_http_request_target(request), "/echo?source=abi") ||
-      !bytes_equal(coakka_http_request_body(request), "request-body")) {
+      !bytes_equal(coakka_http_request_body(request), "request-body") ||
+      coakka_http_request_trailer_count(request) != 1U ||
+      coakka_http_request_trailer(request, 0U, &trailer) == 0U ||
+      !bytes_equal(trailer.name, "x-checksum") ||
+      !bytes_equal(trailer.value, "ok")) {
     state->failures += 1U;
   }
 
@@ -102,6 +168,20 @@ static void handle_request(void *opaque, coakka_http_request_t *request) {
   }
   submitted = coakka_http_request_respond(request, &response);
   if (submitted.code != COAKKA_HTTP_RESULT_INVALID_STATE) {
+    state->failures += 1U;
+  }
+}
+
+static void handle_rebound(void *opaque, coakka_http_request_t *request) {
+  test_state_t *state = (test_state_t *)opaque;
+  coakka_http_response_t response;
+  state->calls += 1U;
+  state->rebound_calls += 1U;
+  coakka_http_response_init(&response);
+  response.status_code = 202U;
+  response.body = bytes("coakka-native-rebound");
+  if (coakka_http_request_respond(request, &response).code !=
+      COAKKA_HTTP_RESULT_OK) {
     state->failures += 1U;
   }
 }
@@ -207,18 +287,32 @@ int main(void) {
   static const char request_data[] = "POST /echo?source=abi HTTP/1.1\r\n"
                                      "Host: 127.0.0.1\r\n"
                                      "Content-Type: text/plain\r\n"
-                                     "Content-Length: 12\r\n"
+                                     "Transfer-Encoding: chunked\r\n"
+                                     "Trailer: X-Checksum\r\n"
                                      "Connection: close\r\n\r\n"
-                                     "request-body";
+                                     "c\r\nrequest-body\r\n"
+                                     "0\r\nX-Checksum: ok\r\n\r\n";
   static const char limit_request[] = "POST /limit HTTP/1.1\r\n"
                                       "Host: 127.0.0.1\r\n"
                                       "Content-Length: 0\r\n"
                                       "Connection: close\r\n\r\n";
+  static const char stream_request[] =
+      "POST /stream HTTP/1.1\r\n"
+      "Host: 127.0.0.1\r\n"
+      "Content-Type: text/plain\r\n"
+      "Transfer-Encoding: chunked\r\n"
+      "Trailer: X-Checksum\r\n"
+      "Connection: close\r\n\r\n"
+      "7\r\nstream-\r\n"
+      "c\r\nrequest-body\r\n"
+      "0\r\nX-Checksum: stream-ok\r\n\r\n";
   coakka_http_server_options_t options;
-  coakka_http_route_t routes[2];
+  coakka_http_route_t routes[3];
   coakka_http_server_t *server = NULL;
   coakka_http_result_t operation;
-  test_state_t state = {0U, 0U, 0U};
+  coakka_http_route_rebind_t rebind;
+  coakka_http_route_rebind_outcome_t rebind_outcome;
+  test_state_t state = {0U, 0U, 0U, 0U, 0U};
   uint16_t port = 0U;
   test_socket_t client;
   char response_data[4096];
@@ -250,8 +344,15 @@ int main(void) {
   routes[1].path = bytes("/limit");
   routes[1].context = &state;
   routes[1].handler = handle_request;
+  coakka_http_route_init(&routes[2]);
+  routes[2].body_delivery = COAKKA_HTTP_BODY_STREAM;
+  routes[2].route_id = UINT64_C(43);
+  routes[2].method = bytes("POST");
+  routes[2].path = bytes("/stream");
+  routes[2].context = &state;
+  routes[2].handler = handle_request;
 
-  operation = coakka_http_server_create(&options, routes, 2U, &server);
+  operation = coakka_http_server_create(&options, routes, 3U, &server);
   if (operation.code != COAKKA_HTTP_RESULT_OK) {
     fprintf(stderr, "create failed: code=%s actual=%llu limit=%llu detail=%s\n",
             coakka_http_result_code_name(operation.code),
@@ -279,18 +380,64 @@ int main(void) {
                       "limit-recovered"));
   close_socket(client);
   CHECK(strstr(response_data, "HTTP/1.1 200") != NULL);
-  CHECK(state.calls == 2U);
+  client = connect_loopback(port);
+  CHECK(client != TEST_INVALID_SOCKET);
+  CHECK(send_all(client, stream_request, sizeof(stream_request) - 1U));
+  if (!read_response(client, response_data, sizeof(response_data),
+                     "coakka-native-stream-ready")) {
+    fprintf(stderr,
+            "stream response missing: response=%s calls=%u stream_calls=%u "
+            "failures=%u\n",
+            response_data, state.calls, state.stream_calls, state.failures);
+    return EXIT_FAILURE;
+  }
+  close_socket(client);
+  CHECK(strstr(response_data, "HTTP/1.1 200") != NULL);
+  CHECK(state.calls == 3U);
   CHECK(state.limit_rejections == 1U);
+  CHECK(state.stream_calls == 1U);
   CHECK(state.failures == 0U);
 
-  CHECK(coakka_http_server_stop(server).code == COAKKA_HTTP_RESULT_OK);
+  CHECK(coakka_http_server_prepare_handler(server, UINT64_C(9002), &state,
+                                           handle_rebound)
+            .code == COAKKA_HTTP_RESULT_OK);
+  coakka_http_route_rebind_init(&rebind);
+  rebind.activation_id = 1U;
+  rebind.expected_route_generation = 1U;
+  rebind.route_id = UINT64_C(41);
+  rebind.expected_binding_revision = 1U;
+  rebind.new_handler_binding_id = UINT64_C(9002);
+  coakka_http_route_rebind_outcome_init(&rebind_outcome);
+  CHECK(
+      coakka_http_server_rebind_handler(server, &rebind, 2000U, &rebind_outcome)
+          .code == COAKKA_HTTP_RESULT_OK);
+  CHECK(rebind_outcome.code == COAKKA_HTTP_ROUTE_REBIND_APPLIED &&
+        rebind_outcome.changed != 0U);
+  client = connect_loopback(port);
+  CHECK(client != TEST_INVALID_SOCKET);
+  CHECK(send_all(client, request_data, sizeof(request_data) - 1U));
+  CHECK(read_response(client, response_data, sizeof(response_data),
+                      "coakka-native-rebound"));
+  close_socket(client);
+  CHECK(strstr(response_data, "HTTP/1.1 202") != NULL);
+  CHECK(state.rebound_calls == 1U && state.failures == 0U);
+
+  operation = coakka_http_server_stop(server);
+  if (operation.code != COAKKA_HTTP_RESULT_OK) {
+    fprintf(stderr, "stop failed: code=%s actual=%llu limit=%llu detail=%s\n",
+            coakka_http_result_code_name(operation.code),
+            (unsigned long long)operation.actual,
+            (unsigned long long)operation.limit, operation.detail);
+  }
+  CHECK(operation.code == COAKKA_HTTP_RESULT_OK);
   CHECK(coakka_http_server_stop(server).code == COAKKA_HTTP_RESULT_OK);
   CHECK(coakka_http_server_destroy(&server).code == COAKKA_HTTP_RESULT_OK);
   CHECK(server == NULL);
   socket_runtime_stop();
 
   printf("coakka_http_runtime_c_test=pass requests=%u limit_rejections=%u "
-         "abi=%u\n",
-         state.calls, state.limit_rejections, coakka_http_abi_version());
+         "stream_calls=%u abi=%u\n",
+         state.calls, state.limit_rejections, state.stream_calls,
+         coakka_http_abi_version());
   return EXIT_SUCCESS;
 }

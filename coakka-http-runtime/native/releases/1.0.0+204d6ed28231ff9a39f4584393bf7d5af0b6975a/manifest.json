@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "product_lane": "coakka-http-runtime",
+  "language_lane": "native",
+  "version": "1.0.0",
+  "release_directory": "1.0.0+204d6ed28231ff9a39f4584393bf7d5af0b6975a",
+  "core_source_git_commit": "204d6ed28231ff9a39f4584393bf7d5af0b6975a",
+  "abi_revision": 8,
+  "export_count": 176,
+  "export_allowlist": {
+    "path": "ABI-EXPORTS.txt",
+    "sha256": "bde4759dfc4b5c0399d608e300038c4a5f01e9b1edbf813390ee7ad8695d9a39"
+  },
+  "public_header": {
+    "path": "include/coakka/http/http.h",
+    "sha256": "c9072f66c466a56d44784cf3f3c1054f796ebf44bc431d06ece9fed7358a9bd2"
+  },
+  "dependency_closure": {
+    "non_os_dependencies_static": true,
+    "linux_glibc_max": "2.28",
+    "windows_crt": "static",
+    "macos_minimum": "11.0"
+  },
+  "platforms": [
+    {"id": "macos-aarch64", "library": "lib/libcoakka_http_runtime.1.0.0.dylib", "size": 6951952, "sha256": "027bcabeb06bd7b2810b33a015853c205600466f998816860ebc08115ed4331e"},
+    {"id": "linux-aarch64", "library": "lib/libcoakka_http_runtime.so.1.0.0", "size": 11582120, "sha256": "22a7bfe646699c5770ca1b83407efa65df4222bbd758dd9bbe00a462108a35f2"},
+    {"id": "linux-x86_64", "library": "lib/libcoakka_http_runtime.so.1.0.0", "size": 12488584, "sha256": "0f5208841f331c62dc10cb55e776a161093ead8e01aaa7a3ef0c353bf3a77f79"},
+    {"id": "windows-aarch64", "library": "bin/coakka_http_runtime.dll", "size": 7063552, "sha256": "9bc1f29ee84baa23e713258da2f922f9a7334bfd1f2a049901841078288b6990", "import_library_sha256": "cecba5aa55d437cc642de59005f7f19c996feacd4eff9878c09240041a9f6f07"},
+    {"id": "windows-x86_64", "library": "bin/coakka_http_runtime.dll", "size": 8794624, "sha256": "94d9ef20d45eadba479dfecf50cdcb773b1aa764524c7d901299b0d9aabba0bc", "import_library_sha256": "7165a3dbe414f891b9815a83626ea397b8bfdb9cb216be02e1645e86a1507816"}
+  ]
+}
+

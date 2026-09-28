@@ -1,0 +1,202 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "coakka-http-runtime-1.0.0-macos-aarch64",
+  "documentNamespace": "https://coakka.dev/spdx/coakka-http-runtime/1.0.0/204d6ed28231ff9a39f4584393bf7d5af0b6975a/macos-aarch64",
+  "creationInfo": {
+    "created": "2026-09-28T03:55:00Z",
+    "creators": ["Tool: CoAkkaHttpReleaseMetadata.cmake"]
+  },
+  "documentDescribes": ["SPDXRef-Package-CoAkkaHttpRuntime"],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-CoAkkaHttpRuntime",
+      "name": "coakka-http-runtime",
+      "versionInfo": "1.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LicenseRef-CoAkka-Native-Artifact-1.2",
+      "licenseDeclared": "LicenseRef-CoAkka-Native-Artifact-1.2",
+      "copyrightText": "Copyright 2026 Phuong Tran and contributors",
+      "sourceInfo": "Source revision 204d6ed28231ff9a39f4584393bf7d5af0b6975a; target macos-aarch64"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-libuv",
+      "name": "libuv",
+      "versionInfo": "1.52.1",
+      "downloadLocation": "https://github.com/libuv/libuv.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: 1cfa32ff59c076ffb6ed735bbc8c18361558661f; license SHA-256: 16de0c32b265cb7d46a6d3bd614f259dd4d693a5e26b3407b04aae8d73041f0c"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-usockets",
+      "name": "uSockets",
+      "versionInfo": "git",
+      "downloadLocation": "https://github.com/uNetworking/uSockets.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: 86097c490263ab662d62e8e7b541390bdec7d149; license SHA-256: c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-uwebsockets",
+      "name": "uWebSockets",
+      "versionInfo": "20.79.0-coakka-http1.7",
+      "downloadLocation": "https://github.com/phuong-tran/uWebSockets.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: 1542e0730d5942d9359d765c98689b4c80b8a223; license SHA-256: c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-boost",
+      "name": "Boost.URL",
+      "versionInfo": "1.91.0",
+      "downloadLocation": "https://archives.boost.io/release/1.91.0/source/boost_1_91_0.tar.bz2",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSL-1.0",
+      "licenseDeclared": "BSL-1.0",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: 1a80576db6b70828803819fb6925132193bc5d0e, URL 000476c66a10efd723e22138135f9c8d6f713a31; license SHA-256: c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-protobuf",
+      "name": "Protobuf",
+      "versionInfo": "6.34.0",
+      "downloadLocation": "https://github.com/protocolbuffers/protobuf.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "BSD-3-Clause",
+      "licenseDeclared": "BSD-3-Clause",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: ee9f0bccf0950e07070e43d8d53ca70876fa050a; license SHA-256: 6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-abseil",
+      "name": "Abseil",
+      "versionInfo": "20250512.1",
+      "downloadLocation": "https://github.com/abseil/abseil-cpp.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: 76bb24329e8bf5f39704eb10d21b9a80befa7c81; license SHA-256: c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-utf8-range",
+      "name": "utf8_range",
+      "versionInfo": "protobuf-submodule",
+      "downloadLocation": "https://github.com/protocolbuffers/protobuf.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: ee9f0bccf0950e07070e43d8d53ca70876fa050a; license SHA-256: 02de69b64fc36d9e938f418e52723e42f0b2b226d58a9cb3c8dcbdf7059f5074"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-openssl",
+      "name": "OpenSSL",
+      "versionInfo": "3.5.8",
+      "downloadLocation": "https://github.com/openssl/openssl/releases/download/openssl-3.5.8/openssl-3.5.8.tar.gz",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: sha256:a8f84a39918ec6415ce765d9b429d313ba97b8143169c172e734b9514464f5b2; license SHA-256: 7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-curl",
+      "name": "curl",
+      "versionInfo": "8.21.0",
+      "downloadLocation": "https://curl.se/download/curl-8.21.0.tar.xz",
+      "filesAnalyzed": false,
+      "licenseConcluded": "curl",
+      "licenseDeclared": "curl",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: sha256:aa1b66a70eace83dc624508745646c08ae561de512ab403adffb93ac87fc72e6; license SHA-256: 82f2f4427d6545ee5aaac4f0b80428da6cc8ba41c2cf5da3a03680ec327b9681"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-c-ares",
+      "name": "c-ares",
+      "versionInfo": "1.34.8",
+      "downloadLocation": "https://github.com/c-ares/c-ares/releases/download/v1.34.8/c-ares-1.34.8.tar.gz",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: sha256:c222b6d681096f9444d2c4863d2c1174019e27cacca0a4a5c114d36dd7d7bf78; license SHA-256: 460f5e768fda3752ca2169a95df062578a10fb126bfd65f3b9b1a1bed2f84807"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-nghttp2",
+      "name": "nghttp2",
+      "versionInfo": "1.70.0",
+      "downloadLocation": "https://github.com/nghttp2/nghttp2.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: 85e300c79fb6dbcfa9c1013215c8710c1c2cd3d2; license SHA-256: 6b94f3abc1aabd0c72a7c7d92a77f79dda7c8a0cb3df839a97890b4116a2de2a"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-ngtcp2",
+      "name": "ngtcp2",
+      "versionInfo": "1.25.0",
+      "downloadLocation": "https://github.com/ngtcp2/ngtcp2.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: f9e9ff01ad2c8116bc09de4f644b0028a61486a6; license SHA-256: 542dd526d2ea23565f0571cc68df6f05ed11248a90ff0f32de19d8ba589db513"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-nghttp3",
+      "name": "nghttp3",
+      "versionInfo": "1.18.0",
+      "downloadLocation": "https://github.com/ngtcp2/nghttp3.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: dbfc24286138cb0b6490160e7ca87fe1ce6722a0; license SHA-256: 58cc3fc8c6d6cb2485ab35eb5918e849b5bf1e56522974e106d7a39a88d61dcd"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-sfparse",
+      "name": "sfparse",
+      "versionInfo": "git",
+      "downloadLocation": "https://github.com/ngtcp2/sfparse.git",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "sourceInfo": "Frozen source identity: 4b313cfd2e1b389ae632b36dcd50402307289af2; license SHA-256: cd6d5feeacf9406fe915d3c23b85a6bf86deecfa1661396b63d2d2188b90beda"
+    }
+  ],
+  "relationships": [
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-libuv"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-usockets"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-uwebsockets"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-boost"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-protobuf"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-abseil"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-utf8-range"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-openssl"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-curl"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-c-ares"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-nghttp2"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-ngtcp2"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-nghttp3"},
+    {"spdxElementId": "SPDXRef-Package-CoAkkaHttpRuntime", "relationshipType": "STATIC_LINK", "relatedSpdxElement": "SPDXRef-Package-sfparse"}
+  ],
+  "hasExtractedLicensingInfos": [
+    {
+      "licenseId": "LicenseRef-CoAkka-Native-Artifact-1.2",
+      "name": "CoAkka Native Artifact License 1.2",
+      "extractedText": "See share/licenses/coakka-http-runtime/NATIVE-LICENSE.md in this package."
+    }
+  ]
+}

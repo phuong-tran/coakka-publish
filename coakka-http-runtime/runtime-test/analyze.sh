@@ -15,6 +15,7 @@ if [[ ! -f "${include_dir}/coakka/http/http.h" ]]; then
   exit 66
 fi
 sources=(native_runtime.c native_contract.c native_concurrency.c \
+         native_pressure.c core_runtime.c \
          test_threads_posix.c)
 warnings=(-std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow \
           -Wsign-conversion -Wstrict-prototypes -Werror)

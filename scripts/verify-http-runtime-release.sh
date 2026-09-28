@@ -4,8 +4,8 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 product_root="${repo_root}/coakka-http-runtime"
-native_id="1.0.0+d8deb6b821cdd90b69fa7d8e1c85629aac164315"
-connector_id="${native_id}-26a28a1"
+native_id="1.0.0+204d6ed28231ff9a39f4584393bf7d5af0b6975a"
+connector_id="${native_id}-7cbe256"
 native_release="${product_root}/native/releases/${native_id}"
 
 fail() {
@@ -47,8 +47,8 @@ import zipfile
 product = Path(sys.argv[1]).resolve()
 native_id = sys.argv[2]
 connector_id = sys.argv[3]
-core_commit = "d8deb6b821cdd90b69fa7d8e1c85629aac164315"
-connector_commit = "26a28a1c4af3eb65334993532b4eaa082fc75438"
+core_commit = "204d6ed28231ff9a39f4584393bf7d5af0b6975a"
+connector_commit = "7cbe25630e73750f13e477999b6fca2e3ced1541"
 targets = (
     "macos-aarch64",
     "linux-aarch64",
@@ -73,46 +73,46 @@ core_files = {
     "windows-x86_64": release_dirs["native"] / "windows-x86_64/bin/coakka_http_runtime.dll",
 }
 core_hashes = {
-    "macos-aarch64": "ee6e602692f71905b76f90205ad020409d667d429cd31bba29d62f8d4c60a009",
-    "linux-aarch64": "ece8a618e763c10e23edea90bdd5fe968bf448fd5186b8c05d47f025f76b912b",
-    "linux-x86_64": "eaa502ed5ccd0398ffdd463a6930f38def4796e8cd87b81c9cb8c3d847c959e6",
-    "windows-aarch64": "1378347cb9ff27fee165e0711980ce2d8695f0c92a7ec61479788fedbc3ad043",
-    "windows-x86_64": "1bf2220891e35893b8d47725345ba3bc4740d532eac288b022f2d0f52cdc6e69",
+    "macos-aarch64": "027bcabeb06bd7b2810b33a015853c205600466f998816860ebc08115ed4331e",
+    "linux-aarch64": "22a7bfe646699c5770ca1b83407efa65df4222bbd758dd9bbe00a462108a35f2",
+    "linux-x86_64": "0f5208841f331c62dc10cb55e776a161093ead8e01aaa7a3ef0c353bf3a77f79",
+    "windows-aarch64": "9bc1f29ee84baa23e713258da2f922f9a7334bfd1f2a049901841078288b6990",
+    "windows-x86_64": "94d9ef20d45eadba479dfecf50cdcb773b1aa764524c7d901299b0d9aabba0bc",
 }
 artifact_hashes = {
     "go": (
         "coakka-http-go-1.0.0.tar.gz",
-        "974c28962ede1a7ecd7ddd77a06dcab9ea38989fcd4c9eb0a4c0163cf926fa0f",
+        "5e965659bfd995d0a2dbe43d0a51cec15483217d880bfb8ece47bd5cb1742228",
     ),
     "jvm": (
         "coakka-http-jvm-1.0.0.jar",
-        "9ffb0c79271e935081d237816a7703cf4deb8a558bd1ecf56615475e082992c7",
+        "1963e289662032b2c305f890e04af9480fc0a4b52fd71eea483d40ddddec7a59",
     ),
     "javascript": (
         "coakka-http-1.0.0.tgz",
-        "650c26c3cb49ce1de626032e58dd8e308c956921e43c7b7f5d139de915329fd0",
+        "a05e02ab79f28a91f93ef05329c07ba1535f6113f1ceccd83cc008bf6dc44345",
     ),
 }
 wheel_hashes = {
     "coakka_http-1.0.0-py3-none-macosx_11_0_arm64.whl": (
         "macos-aarch64",
-        "0bde567fee863e9b15037625e580c3e6cbdd39525e97242bc237504a99130695",
+        "42b6f13d628d40ceef5bbc906a702be3d3e833ab8500c773ccec8274405bb397",
     ),
     "coakka_http-1.0.0-py3-none-manylinux_2_28_aarch64.whl": (
         "linux-aarch64",
-        "8bc4d8e12e86b852884ab660f587bca925a8775cea9356e12d23912527b709f9",
+        "b3f54d6ca372e09d767ebfb823737caad3ce77ed8093d80af5c9cdf44836abe5",
     ),
     "coakka_http-1.0.0-py3-none-manylinux_2_28_x86_64.whl": (
         "linux-x86_64",
-        "c952f131b118d86fe7b82c225db0c6c8a26c2fcf14acc538104e7440a523c682",
+        "b2c491c8a9205ac1b00cfec94e73264d613606b7e8ca3b1dcfb7d700609337d3",
     ),
     "coakka_http-1.0.0-py3-none-win_arm64.whl": (
         "windows-aarch64",
-        "25f7ecf8f17456192b74b3102cea52007263e8f280911f0e085a396bf2c86e12",
+        "5e52a3a1bbaf626e8f4da403c10b6efb0c5bcd30d50d0a8f4dfa5b9a0621dfc6",
     ),
     "coakka_http-1.0.0-py3-none-win_amd64.whl": (
         "windows-x86_64",
-        "7d79823fdaf8ae114375d3fb2c0ced0fb4140caa72f42a84fe726e086af2bc5f",
+        "61af98ad2cad61f5f5baad008c5fbc43f4593709de0596e55134e0c2d36c6b4e",
     ),
 }
 
@@ -184,6 +184,11 @@ for lane, release in release_dirs.items():
     require_equal(manifest.get("core_source_git_commit"), core_commit, f"{lane} Core commit")
     if lane != "native":
         require_equal(
+            manifest.get("status"),
+            "application-candidate",
+            f"{lane} application publication status",
+        )
+        require_equal(
             manifest.get("connector_source_git_commit"),
             connector_commit,
             f"{lane} connector commit",
@@ -215,7 +220,7 @@ for target, path in core_files.items():
     header = release_dirs["native"] / target / "include/coakka/http/http.h"
     require_equal(
         digest_file(header),
-        "ad95d1369b9851eb3a5299a9b7c108e3a3628b87347c3915233976fbda456a6b",
+        "c9072f66c466a56d44784cf3f3c1054f796ebf44bc431d06ece9fed7358a9bd2",
         f"{target} public header",
     )
     cmake_dir = release_dirs["native"] / target / "lib/cmake/CoAkkaHttp"
@@ -230,14 +235,113 @@ for target, path in core_files.items():
         f"{target} CMake metadata",
     )
 
+    metadata_root = release_dirs["native"] / target / "share/coakka-http-runtime"
+    target_legal_root = (
+        release_dirs["native"] / target / "share/licenses/coakka-http-runtime"
+    )
+    release_metadata = read_json(
+        metadata_root / "coakka-http-runtime.release.json"
+    )
+    require_equal(
+        release_metadata.get("schema"),
+        "coakka.http.release-metadata.v1",
+        f"{target} release metadata schema",
+    )
+    require_equal(release_metadata.get("product"), "coakka-http-runtime", f"{target} product")
+    require_equal(release_metadata.get("version"), "1.0.0", f"{target} version")
+    require_equal(
+        release_metadata.get("source_revision"), core_commit, f"{target} source revision"
+    )
+    require_equal(release_metadata.get("target"), target, f"{target} metadata target")
+    created = release_metadata.get("created")
+    if not isinstance(created, str) or not re.fullmatch(
+        r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", created
+    ):
+        fail(f"{target} release metadata has an invalid creation time")
+
+    legal = release_metadata.get("legal")
+    if not isinstance(legal, list):
+        fail(f"{target} release metadata has no legal inventory")
+    actual_legal = {
+        entry.get("file"): entry.get("sha256")
+        for entry in legal
+        if isinstance(entry, dict)
+    }
+    expected_legal = {
+        name: digest_file(target_legal_root / name)
+        for name in ("LICENSE", "NATIVE-LICENSE.md", "NOTICE", "PACKAGE-LICENSE.md")
+    }
+    require_equal(actual_legal, expected_legal, f"{target} installed legal metadata")
+
+    components = release_metadata.get("components")
+    if not isinstance(components, list):
+        fail(f"{target} release metadata has no component inventory")
+    expected_component_ids = {
+        "abseil", "boost", "c-ares", "curl", "libuv", "nghttp2", "nghttp3",
+        "ngtcp2", "openssl", "protobuf", "sfparse", "usockets", "utf8-range",
+        "uwebsockets",
+    }
+    actual_component_ids = {
+        component.get("id") for component in components if isinstance(component, dict)
+    }
+    require_equal(actual_component_ids, expected_component_ids, f"{target} component inventory")
+    require_equal(len(components), 14, f"{target} component count")
+    for component in components:
+        if not isinstance(component, dict):
+            fail(f"{target} component metadata contains a non-object")
+        license_path = component.get("license_path")
+        if not isinstance(license_path, str):
+            fail(f"{target} component has no license path")
+        installed_license = target_legal_root / license_path
+        if not installed_license.is_file():
+            fail(f"{target} component license is missing: {license_path}")
+        require_equal(
+            digest_file(installed_license),
+            component.get("license_sha256"),
+            f"{target} component license {license_path}",
+        )
+
+    artifact_metadata = read_json(
+        metadata_root / "coakka-http-runtime.artifact.json"
+    )
+    require_equal(
+        artifact_metadata.get("schema"),
+        "coakka.http.artifact-metadata.v1",
+        f"{target} artifact metadata schema",
+    )
+    require_equal(artifact_metadata.get("product"), "coakka-http-runtime", f"{target} artifact product")
+    require_equal(
+        artifact_metadata.get("source_revision"), core_commit, f"{target} artifact source"
+    )
+    require_equal(artifact_metadata.get("target"), target, f"{target} artifact target")
+    require_equal(artifact_metadata.get("file"), path.name, f"{target} artifact filename")
+    require_equal(artifact_metadata.get("size"), path.stat().st_size, f"{target} artifact size")
+    require_equal(artifact_metadata.get("sha256"), core_hashes[target], f"{target} artifact hash")
+
+    spdx = read_json(metadata_root / "coakka-http-runtime.spdx.json")
+    packages = spdx.get("packages")
+    relationships = spdx.get("relationships")
+    expected_spdx_dependencies = 15 if target.startswith("linux-") else 14
+    require_equal(spdx.get("name"), f"coakka-http-runtime-1.0.0-{target}", f"{target} SPDX name")
+    require_equal(
+        len(packages) if isinstance(packages, list) else -1,
+        expected_spdx_dependencies + 1,
+        f"{target} SPDX packages",
+    )
+    require_equal(
+        len(relationships) if isinstance(relationships, list) else -1,
+        expected_spdx_dependencies,
+        f"{target} SPDX relationships",
+    )
+
 require_equal(
     digest_file(release_dirs["native"] / "windows-aarch64/lib/coakka_http_runtime.lib"),
-    "a9c60ac5a4de014d4c08789b28f5443b540bcdbaa58f2c2d77fa6fcfa5fa047d",
+    "cecba5aa55d437cc642de59005f7f19c996feacd4eff9878c09240041a9f6f07",
     "Windows ARM64 import library",
 )
 require_equal(
     digest_file(release_dirs["native"] / "windows-x86_64/lib/coakka_http_runtime.lib"),
-    "900ead4802551e821eb7d6417803b13634bba58c669965709583e2ecf3d0e675",
+    "7165a3dbe414f891b9815a83626ea397b8bfdb9cb216be02e1645e86a1507816",
     "Windows x86-64 import library",
 )
 
@@ -261,7 +365,7 @@ reference_third_party = {
     for path in (reference_release / "third-party-licenses").rglob("*")
     if path.is_file()
 }
-require_equal(len(reference_third_party), 11, "third-party license count")
+require_equal(len(reference_third_party), 14, "third-party license count")
 for lane, release in release_dirs.items():
     for name in license_names:
         require_equal(
@@ -295,6 +399,10 @@ with tarfile.open(go_archive, "r:gz") as archive:
         b"module github.com/phuong-tran/coakka-http-runtime-go\n"
     ):
         fail("Go archive has the wrong module identity")
+    for fixture in ("ca.pem", "server.pem", "server.key", "client.pem", "client.key"):
+        fixture_path = f"coakka-http-go-1.0.0/test-fixtures/tls/{fixture}"
+        if fixture_path not in names:
+            fail(f"Go archive is missing its self-contained TLS fixture: {fixture}")
     for target, name in go_core_paths.items():
         member = archive.extractfile(name)
         if member is None:
@@ -317,23 +425,23 @@ jvm_core_paths = {
 jvm_bridge_paths = {
     "macos-aarch64": (
         "native/macos-aarch64/libcoakka_http_jvm.dylib",
-        "82c8cebc1d92e43b3d0f83265e0f7b0d1294a6c3591fe5c45d7cab8b924a0cbf",
+        "c3cfb30eddff96ad69d1ec4aaee164b5da4186669f0d9b712e2839c446f7606e",
     ),
     "linux-aarch64": (
         "native/linux-aarch64/libcoakka_http_jvm.so",
-        "d92ac75770c45ce719b8bfee44b52612ad866d64fd147218d48b380d4ddead79",
+        "d1531dc116cdc2df372948f180b937fc4349498a70c60839ab049a44d2f1d175",
     ),
     "linux-x86_64": (
         "native/linux-x86_64/libcoakka_http_jvm.so",
-        "d5b7699c284e44ee7d61452e72bd28425688a13b125139ca130a2bf036f8c984",
+        "5a130dc9512e583c1439a4fef984f262a8f2d0575311b2b6c3a9f69a88f1a38e",
     ),
     "windows-aarch64": (
         "native/windows-aarch64/coakka_http_jvm.dll",
-        "f955b1cdd54eca4a7f2585b47096a75451b3e6eb1a5f9baff5c5efa27f75e559",
+        "1fbae8b2aeb6c935ffab530dd66f37ebb18221a88f602bdcf5ec243d8d312d15",
     ),
     "windows-x86_64": (
         "native/windows-x86_64/coakka_http_jvm.dll",
-        "3306ac7328a6c689772b3d1a8300d64761289b1ee565aab452634eeea902267b",
+        "a043f38c38ae1c7a24816f2181f06ae4b737cabf4c07f8ac8bb4375c4a3aff2d",
     ),
 }
 with zipfile.ZipFile(jvm_archive) as archive:
@@ -396,27 +504,27 @@ js_platforms = {
     "macos-aarch64": (
         "darwin-arm64",
         "libcoakka_http_runtime.1.dylib",
-        "28e50b51ab0020b400f40a746beb76c48cc70bd7847d8f8a698ddd55e55693a9",
+        "604329d3c3819d3423c19bfe36c8f5024db4fc27a792be78a09dcdfd1a435e26",
     ),
     "linux-aarch64": (
         "linux-arm64",
         "libcoakka_http_runtime.so.1",
-        "72a338b737d48a9734e77416568342dadb30505df37050e300be29a9eeabf9be",
+        "13d5d12ffd70f74b58beb6574dea1ea1563f04d501b358b664e5b6fe2a19bf86",
     ),
     "linux-x86_64": (
         "linux-x64",
         "libcoakka_http_runtime.so.1",
-        "96fde3ac9f9ab13176145fc19bf752100af1083a7ef4b1be3ab4f6ceba6a8faa",
+        "c517b2ee5f656ed7172f63e5b847e332ce31bcb2099ea4b1dc08cb288c3abc12",
     ),
     "windows-aarch64": (
         "win32-arm64",
         "coakka_http_runtime.dll",
-        "be46053d8e42d307dbfb19a5ed003a03737f2b89c1de3ee7db7005365eb53b80",
+        "fe11ad0c990a491cbb58c5988d8b016173461caed7424d55fbb20dd38051073d",
     ),
     "windows-x86_64": (
         "win32-x64",
         "coakka_http_runtime.dll",
-        "47d5becc73581586a68be5a49a8c05a356530626cbbf695909cafb0b51eda9a0",
+        "9aa8aa9c6f170329aed7fe2a859a6fe80a2ef97e93e51d929f3a4a77b42f464f",
     ),
 }
 with tarfile.open(js_archive, "r:gz") as archive:
@@ -482,7 +590,7 @@ def run(*command: str) -> str:
 allowlist_path = release_dirs["native"] / "ABI-EXPORTS.txt"
 require_equal(
     digest_file(allowlist_path),
-    "379e57f24719225890e99a74851d3884b7e169c3cb94e18581e19756259a66b2",
+    "bde4759dfc4b5c0399d608e300038c4a5f01e9b1edbf813390ee7ad8695d9a39",
     "ABI export allow-list",
 )
 expected_exports = {
@@ -490,7 +598,7 @@ expected_exports = {
     for line in allowlist_path.read_text(encoding="ascii").splitlines()
     if line
 }
-require_equal(len(expected_exports), 125, "ABI export allow-list count")
+require_equal(len(expected_exports), 176, "ABI export allow-list count")
 
 mach_symbols = {
     line.split()[-1].removeprefix("_")
@@ -545,6 +653,7 @@ require_equal(
         "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
         "/usr/lib/libSystem.B.dylib",
         "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libresolv.9.dylib",
     },
     "macOS dependency closure",
 )
@@ -583,13 +692,26 @@ for target, expected in linux_dependencies.items():
 
 windows_dependencies = {
     "windows-aarch64": {
+        "advapi32.dll",
+        "api-ms-win-core-synch-l1-2-0.dll",
+        "crypt32.dll",
+        "dbghelp.dll",
+        "iphlpapi.dll",
+        "kernel32.dll",
+        "ntdll.dll",
         "user32.dll",
         "ws2_32.dll",
-        "dbghelp.dll",
-        "kernel32.dll",
-        "api-ms-win-core-synch-l1-2-0.dll",
     },
-    "windows-x86_64": {"user32.dll", "ws2_32.dll", "dbghelp.dll", "kernel32.dll"},
+    "windows-x86_64": {
+        "advapi32.dll",
+        "crypt32.dll",
+        "dbghelp.dll",
+        "iphlpapi.dll",
+        "kernel32.dll",
+        "ntdll.dll",
+        "user32.dll",
+        "ws2_32.dll",
+    },
 }
 for target, expected in windows_dependencies.items():
     output = run(llvm_readobj, "--coff-imports", str(core_files[target]))

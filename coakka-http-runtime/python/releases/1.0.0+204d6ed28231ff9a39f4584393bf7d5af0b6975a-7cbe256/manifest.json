@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "product_lane": "coakka-http-runtime",
+  "language_lane": "python",
+  "version": "1.0.0",
+  "status": "application-candidate",
+  "release_directory": "1.0.0+204d6ed28231ff9a39f4584393bf7d5af0b6975a-7cbe256",
+  "core_source_git_commit": "204d6ed28231ff9a39f4584393bf7d5af0b6975a",
+  "connector_source_git_commit": "7cbe25630e73750f13e477999b6fca2e3ced1541",
+  "minimum_python": "3.11",
+  "artifacts": [
+    {"target": "macos-aarch64", "name": "coakka_http-1.0.0-py3-none-macosx_11_0_arm64.whl", "sha256": "42b6f13d628d40ceef5bbc906a702be3d3e833ab8500c773ccec8274405bb397"},
+    {"target": "linux-aarch64", "name": "coakka_http-1.0.0-py3-none-manylinux_2_28_aarch64.whl", "sha256": "b3f54d6ca372e09d767ebfb823737caad3ce77ed8093d80af5c9cdf44836abe5"},
+    {"target": "linux-x86_64", "name": "coakka_http-1.0.0-py3-none-manylinux_2_28_x86_64.whl", "sha256": "b2c491c8a9205ac1b00cfec94e73264d613606b7e8ca3b1dcfb7d700609337d3"},
+    {"target": "windows-aarch64", "name": "coakka_http-1.0.0-py3-none-win_arm64.whl", "sha256": "5e52a3a1bbaf626e8f4da403c10b6efb0c5bcd30d50d0a8f4dfa5b9a0621dfc6"},
+    {"target": "windows-x86_64", "name": "coakka_http-1.0.0-py3-none-win_amd64.whl", "sha256": "61af98ad2cad61f5f5baad008c5fbc43f4593709de0596e55134e0c2d36c6b4e"}
+  ]
+}
+
