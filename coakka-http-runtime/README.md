@@ -306,7 +306,8 @@ application normally uses.
 - A result without verified application-path identity is invalid, even if the
   command ran successfully.
 
-See the [Raspberry Pi 5 protocol](docs/benchmark-rpi5.md).
+See the [Raspberry Pi 5 protocol](docs/benchmark-rpi5.md) and the
+[result status](docs/benchmark-results-rpi5.md).
 
 ## Documentation
 
@@ -322,6 +323,7 @@ See the [Raspberry Pi 5 protocol](docs/benchmark-rpi5.md).
 | [Handler Swap And Hot Reload](docs/handler-swap-and-hot-reload.md) | Atomic handler activation, generation checks, draining, and reload ownership |
 | [Comparisons](docs/comparisons/README.md) | Dated platform-by-platform maps |
 | [Raspberry Pi 5 Benchmark](docs/benchmark-rpi5.md) | Reproducible application benchmark protocol |
+| [Raspberry Pi 5 Results](docs/benchmark-results-rpi5.md) | Current result status and measured-machine record |
 | [Native](native/README.md) | C and C++ usage |
 | [JVM](jvm/README.md) | Java and Kotlin usage |
 | [Python](python/README.md) | Python usage |
