@@ -33,6 +33,8 @@ QUALIFIED_BINARY_SHA256 = {
     "windows-x86_64": "f62a7d45096eebc28e280849282226df422c362faf9851a075b3bfedca45353e",
 }
 QUALIFIED_HEADER_SHA256 = "bebde4948d58598e4b2b6491ff6fa9b1c078e80ad5050021fe39ac58d3f1ae2d"
+# Pin this only after the cooled physical-board campaign is reviewed.
+QUALIFIED_BENCHMARK_SHA256: str | None = None
 LEGAL_FILES = ("LICENSE", "NATIVE-LICENSE.md", "NOTICE", "PACKAGE-LICENSE.md")
 CMAKE_FILES = (
     "CoAkkaHttpHostConfig.cmake",
@@ -301,8 +303,12 @@ def main() -> None:
     benchmark_path = benchmark.get("document")
     if benchmark_path != "docs/benchmark-results-rpi5.md":
         fail("benchmark document path is invalid")
+    if QUALIFIED_BENCHMARK_SHA256 is None:
+        fail("physical-board benchmark has not been qualified")
     benchmark_document = product / benchmark_path
-    require_equal(digest(benchmark_document), benchmark.get("sha256"), "benchmark document")
+    benchmark_hash = digest(benchmark_document)
+    require_equal(benchmark_hash, QUALIFIED_BENCHMARK_SHA256, "qualified benchmark document")
+    require_equal(benchmark_hash, benchmark.get("sha256"), "manifest benchmark document")
 
     expected_header_hash: str | None = None
     for target in TARGETS:
