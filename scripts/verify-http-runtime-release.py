@@ -176,6 +176,13 @@ def verify_no_dependency_inventory(product: Path) -> None:
             fail(f"dependency inventory is forbidden in the release surface: {path}")
 
 
+def verify_release_record(release: Path) -> None:
+    """Require an explicit final decision, not merely present release notes."""
+    record = (release / "RELEASE.md").read_text(encoding="utf-8")
+    statuses = re.findall(r"^Status: ([^\r\n]+)$", record, flags=re.MULTILINE)
+    require_equal(statuses, ["ready-to-release"], "release record status")
+
+
 def verify_target(
     release: Path,
     target: str,
@@ -273,6 +280,7 @@ def main() -> None:
     missing = sorted(name for name in required_release_files if not (release / name).is_file())
     if missing:
         fail(f"native release is missing: {', '.join(missing)}")
+    verify_release_record(release)
 
     manifest = read_json(release / "manifest.json")
     require_equal(manifest.get("schema"), "coakka.http.native-release.v1", "manifest schema")
