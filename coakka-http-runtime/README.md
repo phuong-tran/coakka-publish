@@ -16,11 +16,11 @@ CoAkka HTTP Runtime supplies one shared HTTP contract. Language packages
 project it through each App Host without changing how application handlers are
 written.
 
-Release `1.0.0` is an immutable private candidate. Native and all four
-language-package lanes bind exact source snapshots; repository verification
-covers hashes, archives, exported API, dependencies, legal closure, metadata,
-and an installed consumer. Registry upload, production signing, public sample
-promotion, and performance claims remain separate actions.
+Release `1.0.0` is still being qualified. Native packages have passed on macOS
+ARM64, Linux x86-64, Windows ARM64, and Windows x86-64. Linux ARM64 still needs
+its clean Raspberry Pi OS Trixie run, followed by the cooled Raspberry Pi 5
+benchmark and final assembly verification. The language connectors are source
+candidates only; npm, Maven, PyPI, and Go registry layouts are later work.
 
 ## Contents
 
@@ -86,7 +86,7 @@ flowchart LR
 ```javascript
 import { Builder, Response } from "@coakka/http";
 
-const service = await new Builder()
+const service = new Builder()
   .listen("127.0.0.1", 3000)
   .get("/api/hello", () => Response.text("Hello from CoAkka"))
   .get("/health", () => Response.text("ok"))
@@ -278,12 +278,12 @@ Start with the [comparison index](docs/comparisons/README.md) or the
 
 | Language | App Host | Developer surface |
 | --- | --- | --- |
-| C | Native process | Explicit builder plus complete runtime lifecycle and monitoring |
-| C++ | Native process | The stable native service surface from C++20 |
-| Java | JVM | `ServiceBuilder`, Java lambdas, JVM-owned values, and advanced service control |
-| Kotlin | JVM | Idiomatic builder calls and typed service events |
-| Python | CPython | Async buffered handlers plus typed runtime events and context-managed leases |
-| JavaScript | Node.js or Bun | Synchronous buffered handlers plus typed runtime events |
+| C | Native process | Explicit service lifecycle through the public host API |
+| C++ | Native process | The same stable host API from C++20 |
+| Java | JVM | `ServiceBuilder`, Java handlers, and JVM-owned values |
+| Kotlin | JVM | Idiomatic builder calls, handlers, and typed events |
+| Python | CPython | Buffered or streaming handlers plus typed events and context-managed ownership |
+| JavaScript | Node.js or Bun | Synchronous or asynchronous handlers plus typed events |
 | TypeScript | Node.js or Bun | The JavaScript surface with declarations |
 | Go | Go process | Builder, ordinary functions, Go-owned values, and typed runtime control |
 
@@ -296,9 +296,9 @@ capabilities belong in each language guide.
 Every language comparison measures the same public service path that an
 application normally uses.
 
-- C and C++ are reported as standalone native references.
-- Other languages are paired separately with direct HTTP and familiar
-  frameworks in their own ecosystem.
+- Every CoAkka lane uses its public host-inlined application surface.
+- Comparisons use frameworks developers actually choose in the same ecosystem;
+  language-standard HTTP servers are intentionally excluded.
 - Source, package identity, host state, raw output, p99, CPU, memory, and
   shutdown evidence accompany every number.
 - Linux `io_uring` is measured as a same-language HTTP/2 TLS A/B against the
@@ -330,6 +330,8 @@ See the [Raspberry Pi 5 protocol](docs/benchmark-rpi5.md).
 
 ## Private Release Gate
 
-The private `1.0.0` candidate is complete in this repository. Registry upload,
-production signing, public sample promotion, and performance-result publication
-remain closed until their independent gates are opened.
+The private `1.0.0` candidate is not complete yet. The remaining gates are a
+clean Linux ARM64 qualification on the updated Raspberry Pi 5, the cooled
+host-inlined benchmark, and verification of the final native-only assembly in
+`coakka-publish`. Registry upload, production signing, and language-specific
+package publication are outside this release-preparation step.

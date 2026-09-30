@@ -57,10 +57,10 @@ provider silently appear.
 
 | Language | Advanced service entry | Events and copied values | Monitor channel | Handler swap |
 | --- | --- | --- | --- | --- |
-| C/C++ | `coakka_http_core_t` | Explicit leased C values | `monitor_read/wait/interrupt` | `coakka_http_core_rebind` |
-| Java/Kotlin | `HttpCore` | JVM-owned sealed/data values | `readMonitorEvents/waitForMonitor/interruptMonitorWaiter` | `rebind` |
-| Python | `Configuration.create_core()` | Typed context-managed leases | `monitor_read/monitor_wait/monitor_interrupt` | `rebind` |
-| JavaScript/TypeScript | `createCore()` | JavaScript-owned copied objects | `monitorRead/monitorWait/monitorInterrupt` | `rebind` |
+| C/C++ | `coakka_http_host_service_t` | Explicit leased C values | `coakka_http_host_monitor_read/wait/interrupt` | `coakka_http_host_rebind` |
+| Java/Kotlin | `HttpRuntime` | JVM-owned sealed/data values | `readMonitorEvents/waitForMonitor/interruptMonitorWaiter` | `rebind` |
+| Python | `Runtime(RuntimeConfig(...))` | Typed context-managed leases | `monitor_read/monitor_wait/monitor_interrupt` | `rebind` |
+| JavaScript/TypeScript | `createRuntime()` | JavaScript-owned copied objects | `monitorRead/monitorWait/monitorInterrupt` | `rebind` |
 | Go | `Open()` | Go-owned structs and slices | `ReadMonitorEvents/WaitMonitor/InterruptMonitor` | `Rebind` |
 
 All five projections cover the complete runtime capability vocabulary. Their
@@ -73,10 +73,10 @@ capability ceiling.
 
 | Language | Builder | Current convenience scope |
 | --- | --- | --- |
-| C/C++ | `coakka_http_server_*` | Buffered callbacks, finite workers/queues, explicit lifecycle |
+| C/C++ | `coakka_http_host_*` | Explicit leased events, finite bounds, and explicit lifecycle |
 | Java/Kotlin | `ServiceBuilder` | Direct buffered handlers with finite event loops, active-handler admission, and body/header/route bounds |
 | Python | `Builder` | Async buffered handlers with finite connection, active-handler, header, body, response, route, and backlog bounds |
-| JavaScript/TypeScript | `Builder` | Synchronous buffered handlers on Node.js or Bun with finite active-handler, body, and route bounds plus Promise close |
+| JavaScript/TypeScript | `Builder` | Synchronous or asynchronous handlers on Node.js or Bun with finite active-handler, body, and route bounds plus Promise close |
 | Go | `NewBuilder()` | Buffered handlers with finite connection, active-handler, body, header, stream, session, and diagnostic bounds |
 
 Use the builder for normal request/reply. Use the complete runtime owner when the
@@ -128,8 +128,9 @@ deployment shape.
 
 - The private target matrix contains macOS ARM64, Linux ARM64, Linux x86-64,
   Windows ARM64, and Windows x86-64 packages.
-- Static and SPA serving is verified on all five `1.0.0` targets; applications
-  must still check the loaded capability and use a confined file root.
+- Static and SPA serving has passed on macOS ARM64, Linux x86-64, Windows ARM64,
+  and Windows x86-64. Linux ARM64 remains pending on the clean Trixie host;
+  applications must still check the loaded capability and use a confined root.
 - Explicit `io_uring` is Linux only and currently belongs to eligible HTTP/2
   and HTTP/3 configurations, not HTTP/1.1.
 - Protocol, security, outbound, and filesystem support must be checked through

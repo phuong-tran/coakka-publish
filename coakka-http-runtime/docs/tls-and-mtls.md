@@ -115,7 +115,7 @@ PEM, key mismatch, or unsupported protocol/security combination fails closed.
 | --- | --- | --- | --- |
 | Java/Kotlin | `Listener` | `ListenerProtocol.HTTP_1_1`, `HTTP_2`, `HTTP_3` | `TransportSecurity.PLAINTEXT`, `TLS`, `MUTUAL_TLS` |
 | Python | `Listener` | `ListenerProtocol.HTTP_1_1`, `HTTP_2`, `HTTP_3` | `TransportSecurity.PLAINTEXT`, `TLS`, `MUTUAL_TLS` |
-| JavaScript/TypeScript | `createCore({ listener: ... })` | `ListenerProtocol.HTTP_1_1`, `HTTP_2`, `HTTP_3` | `TransportSecurity.PLAINTEXT`, `TLS`, `MUTUAL_TLS` |
+| JavaScript/TypeScript | `createRuntime({ listener: ... })` | `ListenerProtocol.HTTP_1_1`, `HTTP_2`, `HTTP_3` | `TransportSecurity.PLAINTEXT`, `TLS`, `MUTUAL_TLS` |
 | Go | `Listener` in `Config.Listeners` | `ProtocolHTTP11`, `ProtocolHTTP2`, `ProtocolHTTP3` | `SecurityPlaintext`, `SecurityTLS`, `SecurityMutualTLS` |
 | C/C++ | `coakka_http_listener_t` | Public listener protocol constants | Public transport security constants |
 

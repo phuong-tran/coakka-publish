@@ -1,9 +1,0 @@
-{
-  "schema": "coakka.http.artifact-metadata.v1",
-  "product": "coakka-http-runtime",
-  "source_revision": "204d6ed28231ff9a39f4584393bf7d5af0b6975a",
-  "target": "macos-aarch64",
-  "file": "libcoakka_http_runtime.1.0.0.dylib",
-  "size": 6951952,
-  "sha256": "027bcabeb06bd7b2810b33a015853c205600466f998816860ebc08115ed4331e"
-}

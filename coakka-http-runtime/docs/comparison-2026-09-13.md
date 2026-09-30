@@ -72,19 +72,15 @@ that experience; they are not a workaround for an incapable runtime.
 
 ## Benchmark Boundary
 
-Architecture tables do not prove speed. Every non-native CoAkka measurement
-must run the same public service path used by normal applications and compare it
-separately with:
+Architecture tables do not prove speed. Every CoAkka measurement runs the same
+public host-inlined service path used by normal applications. Each language is
+compared only with the named frameworks developers commonly choose in that
+ecosystem; language-standard HTTP servers are intentionally excluded.
 
-1. the language's direct non-framework HTTP server;
-2. each named framework/server combination for that ecosystem.
-
-Native C and C++ remain standalone reference lanes. Source, versions, raw
-results, p99 latency, CPU, memory, host state, and shutdown evidence accompany
-every number. Every CoAkka language row uses its ordinary public application
-API. A separate HTTP/2 TLS pair measures platform-default versus explicit
-`io_uring` in Go, JVM, Python, Node.js, and Bun without mixing backend results
-into the HTTP/1.1 framework tables.
+Source, versions, raw results, p99 latency, CPU, memory, host state, and
+shutdown evidence accompany every number. A separate HTTP/2 TLS pair measures
+platform-default versus explicit `io_uring` without mixing backend results into
+the HTTP/1.1 framework tables.
 
 See the [comparison index](comparisons/README.md) and
 [Raspberry Pi 5 protocol](benchmark-rpi5.md).

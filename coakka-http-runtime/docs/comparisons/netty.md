@@ -67,7 +67,7 @@ event-loop and application task admission remain part of the system design.
 
 CoAkka defines finite connection, handler, body, stream, session, and
 diagnostic capacities, explicit pressure outcomes, health, and bounded service
-snapshots. The packaged `HttpCore` API also exposes a bounded monitor event
+snapshots. The packaged `HttpRuntime` API also exposes a bounded monitor event
 channel with cursor and missed-history accounting.
 
 ## Choose By Responsibility

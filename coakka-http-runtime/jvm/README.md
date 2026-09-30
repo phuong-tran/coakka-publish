@@ -1,134 +1,156 @@
-# CoAkka HTTP For Java And Kotlin
+# CoAkka HTTP for Kotlin/JVM
 
-One JVM package serves Java and Kotlin. It provides a buffered service builder
-for ordinary handlers and a complete typed `CoAkka HTTP Runtime` surface
-for protocols, streaming, realtime traffic, security, live control, and
-monitoring.
+This module provides an idiomatic Kotlin service API and a lower-level typed
+runtime API over the host-inlined CoAkka HTTP native library. Java consumers use
+the same public classes without Kotlin-only call syntax.
 
-## Contents
+The connector JAR contains managed classes only. It does not embed or extract a
+native library. Native package layout and Maven publication are intentionally
+outside this development slice.
 
-- [Install](#install)
-- [Java Quick Start](#java-quick-start)
-- [Kotlin Quick Start](#kotlin-quick-start)
-- [Two Useful API Levels](#two-useful-api-levels)
-- [Capacity And Backpressure](#capacity-and-backpressure)
-- [Observability And Monitoring](#observability-and-monitoring)
-- [TLS, mTLS, And Live Handler Changes](#tls-mtls-and-live-handler-changes)
-- [Lifecycle](#lifecycle)
-- [Targets And Current Gate](#targets-and-current-gate)
+## Requirements
 
-## Install
+- Java 8 or newer at runtime;
+- JDK 17 to build the Kotlin and native adapter sources;
+- an installed CoAkka HTTP host package containing `coakka/http/host.h` and the
+  matching shared library;
+- the matching native adapter built from this module.
 
-The current JAR remains private. Place the exact staged artifact under `libs/`:
+The host library and native adapter must be on the operating system library path.
+Tests may instead provide absolute regular-file paths with
+`coakka.http.host.path` and `coakka.http.bridge.path`. Both properties are
+required together.
 
-```kotlin
-dependencies {
-    implementation(files("libs/coakka-http-jvm-1.0.0.jar"))
-}
-```
-
-The JAR selects and verifies the matching target image at runtime. No separate
-native runtime installation is required.
-
-## Java Quick Start
-
-```java
-import coakka.http.server.Responses;
-import coakka.http.server.Service;
-import coakka.http.server.ServiceBuilder;
-
-Service service = new ServiceBuilder()
-    .listen("127.0.0.1", 8080)
-    .concurrency(2)
-    .get("/hello", request -> Responses.text("Hello from CoAkka"))
-    .start();
-
-Runtime.getRuntime().addShutdownHook(new Thread(service::close));
-```
-
-Handlers use Java lambdas and public signatures contain CoAkka and JDK values.
-
-## Kotlin Quick Start
+## Buffered service
 
 ```kotlin
-import coakka.http.server.Handler
-import coakka.http.server.Responses
-import coakka.http.server.ServiceBuilder
-
 val service = ServiceBuilder()
     .listen("127.0.0.1", 8080)
     .concurrency(2)
-    .get("/hello", Handler { Responses.text("Hello from CoAkka") })
+    .post("/echo", Handler { request ->
+        Responses.bytes(request.bytes(), status = 201)
+    })
     .start()
+
+service.use {
+    println("listening on ${it.port}")
+}
 ```
 
-Java and Kotlin share the same service lifecycle and capability set.
+`ServiceBuilder` is single-use. `Service` owns one native runtime, one inbound
+event reader, a fixed worker pool, and bounded queues. Application handlers do
+not run on the native event-loop thread. `close()` is idempotent and preserves
+an unfinished native owner if an admitted handler has not stopped by the
+configured deadline, so a later close can complete safely.
 
-## Two Useful API Levels
+Header names are indexed case-insensitively for average O(1) lookup. Route and
+handler identities are also map-backed; dispatch never scans the route list.
 
-| API | Best fit |
-| --- | --- |
-| `ServiceBuilder` and `Service` | Direct buffered JVM handlers over finite event loops, active-handler admission, and body/header/route bounds |
-| `CoreConfiguration` and `HttpCore` | HTTP/1.1, HTTP/2, HTTP/3 where available, streams, trailers, SSE, WebSocket, files, outbound HTTP, TLS/mTLS, `io_uring`, inspection, handler swap, health, liveness, and monitoring |
+### I/O backend
 
-The direct service exposes CoAkka `Request` and `Response` values rather than
-network-library types. Request views are valid during the synchronous handler;
-`request.bytes()` copies a body that must outlive the call, and response
-factories copy caller-owned bytes. Every event and byte value returned by
-`HttpCore` is copied into JVM-owned storage before the native lease is released.
-One reader owns each inbound, WebSocket, outbound-terminal, or monitor-wait
-lane.
+The default is the platform backend. Linux therefore uses epoll unless the
+application explicitly opts in:
 
-## Capacity And Backpressure
+```kotlin
+val service = ServiceBuilder()
+    .ioBackend(IoBackend.IO_URING)
+    .get("/health", Handler { Responses.empty() })
+    .start()
 
-The direct service owns finite event loops and bounds active handlers, request
-targets, headers, request bodies, response bodies, and routes. The runtime also bounds
-connections, active exchanges, chunks, sessions, files, outbound work, monitor
-history, terminal observations, and shutdown waits. Pressure, limits, timeout,
-cancellation, and closed state remain distinct outcomes.
+val info = service.runtimeInfo()
+println("requested=${info.ioUringRequested}")
+println("effective=${info.ioUringEffective}")
+println("fallback=${info.fallbackReason}")
+```
 
-Application executors, coroutine scopes, database pools, and retries also need
-finite ownership. The connector cannot bound work after an application submits
-it to an unrelated executor.
+The connector only forwards the preference. The native runtime owns support
+detection, protocol eligibility, startup, and fallback to epoll. Connector code
+does not inspect the operating system or issue a probe syscall. Benchmark code
+must check `ioUringEffective` before describing a result as io_uring.
 
-## Observability And Monitoring
+## Supported service features
 
-`HttpCore` exposes `health()`, `probeLiveness()`, `monitorConfiguration()`,
-`monitorSnapshot()`, generation-checked `applyMonitorPolicy()`, cursor-based
-`readMonitorEvents()`, `waitForMonitor()`, and `interruptMonitorWaiter()`.
+The same `Service` surface supports:
 
-The monitor channel is bounded, reports missed history, and never retains HTTP
-payloads or credentials. Read
-[Observability And Monitoring](../docs/observability-and-monitoring.md) for the
-data model and operator lifecycle.
+- HTTP/1.1, HTTP/2, and HTTP/3 listeners with plaintext, TLS, or mutual TLS as
+  allowed by the selected protocol;
+- buffered and incremental request bodies, including request trailers;
+- buffered responses, response streams, response trailers, and SSE;
+- WebSocket upgrade, ordered frame callbacks, ping/pong, and bounded close;
+- static mounts, SPA fallback, and confined application-selected files;
+- logical outbound targets with bounded DNS, pooling, TLS trust, mutual-TLS
+  identity, cancellation, and terminal events;
+- generation-checked handler rebinding and structural route publication;
+- health, active liveness probes, route snapshots, and bounded monitoring.
 
-## TLS, mTLS, And Live Handler Changes
+Unsupported features fail explicitly. The connector does not emulate native
+transport behavior.
 
-`CoreConfiguration.listener(Listener(...))` accepts HTTP protocol, TLS or
-mutual TLS, credential identity/generation, certificate chain, private key,
-and trust roots. Supported Linux HTTP/2 and HTTP/3 configurations may select
-`IoBackend.IO_URING`.
+## Lower-level Kotlin API
 
-`HttpCore.rebind(...)` switches an existing route to a prepared JVM handler
-binding under generation and revision checks. See
-[TLS And mTLS](../docs/tls-and-mtls.md) and
-[Live Handler Changes](../docs/handler-swap-and-hot-reload.md).
+Use `httpRuntime {}` when the application needs direct event-lane control:
 
-## Lifecycle
+```kotlin
+val runtime = httpRuntime {
+    limits(RuntimeLimits(eventLoopThreads = 1))
+    listener(Listener(port = 0))
+    route(RuntimeRoute(id = 41, method = "POST", path = "/items/{id}"))
+}
 
-`Service` and `HttpCore` are `AutoCloseable`. The owner stops admission while
-accepted handlers converge, closes active connections, stops its event loops,
-and releases the runtime within a finite deadline. Do not block an event-loop handler
-on unrelated work or call `close()` from that handler.
+runtime.start()
+try {
+    when (val event = runtime.takeEvent(5_000)) {
+        is RuntimeEvent.RequestReady ->
+            runtime.respond(event.exchange, Responses.text("accepted", 202))
+        else -> Unit
+    }
+} finally {
+    runtime.close()
+}
+```
 
-Use `try`/`finally` or try-with-resources around the lifecycle owner. Importing
-the JAR does not install application signal policy.
+Java callers use `RuntimeConfiguration` and `createRuntime()` directly. Every
+native lease is copied before the adapter call returns. No borrowed pointer crosses
+the JVM boundary. Each blocking event lane permits one reader.
 
-## Targets And Current Gate
+## Resource and failure behavior
 
-The private JAR contains target selections for macOS ARM64, Linux ARM64, Linux
-x86-64, Windows ARM64, and Windows x86-64. Query `HttpRuntime.capabilities()`
-before selecting an optional feature on the running target.
+Construction-time limits are finite. A zero field in `RuntimeLimits` selects a
+bounded native default; it does not mean unbounded. The connector additionally
+bounds projected headers, event items, byte values, worker queues, retained
+stream items, monitor pages, and wait durations.
 
-Maven publication, public sample promotion, and portable performance claims
-remain closed until the corrected package and matching-host JVM evidence agree.
+Native operation failures are reported as `HttpRuntimeException` with a typed
+`ResultCode`. Asynchronous handler and stream failures enter the bounded service
+error queue and remain available through `pollError()`.
+
+Monitoring is disabled by default. Enabling it reserves fixed storage before
+startup. Live policy changes are generation-checked and a rejected change
+leaves the effective policy unchanged.
+
+## Build and verification
+
+```bash
+./gradlew :connectors:jvm:runtime:check \
+  -PcoakkaHttpPrefix=/absolute/path/to/installed-host \
+  -PcoakkaHttpBuildDir=/absolute/path/to/external-build
+```
+
+`check` compiles the native adapter with warnings as errors, runs the Kotlin and
+Java consumer tests on Java 8, exercises the class-only JAR against externally
+supplied native libraries, verifies public KDoc, and checks Java 8 bytecode.
+On Windows, pass `-PcoakkaHttpPython=C:\\absolute\\path\\to\\python.exe` when
+`python.exe` is not already on `PATH`; the same property can select a reviewed
+Python interpreter on every platform.
+
+The test runtime defaults to Azul Java 8. Windows ARM64 has no matching Java 8
+toolchain in the supported test inventory, so that target uses
+`-PcoakkaHttpTestJavaVersion=17` with a native ARM64 JDK. The independent
+class-file gate still requires every packaged class to use Java 8 bytecode.
+
+Release verification also shrinks the managed artifact and executes a native
+call to prove that only the required runtime lookup names are retained.
+
+The [App Host and connector guide](../docs/app-host-and-connectors.md) describes
+ownership and threading. Release evidence remains a gate of the assembled
+candidate rather than a promise inferred from this API guide.

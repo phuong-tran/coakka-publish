@@ -52,34 +52,20 @@ when deployments need browsers to discover a new frontend version promptly.
 
 ## Complete Python Example
 
-This is the complete runtime shape: `/api/health` runs a Python handler, existing
-files come from `web/dist`, and unmatched browser navigation receives
+This is the complete service shape: `/api/health` runs a Python handler,
+existing files come from `web/dist`, and unmatched browser navigation receives
 `index.html`.
 
 ```python
-from coakka_http import (
-    Configuration,
-    EventKind,
-    Listener,
-    Response,
-    Route,
-    StaticMount,
-)
+from coakka_http import Builder, Response, StaticMount
 
 
-with Configuration() as configuration:
-    configuration.add_listener(Listener(port=3000))
-    configuration.add_route(
-        Route(
-            id=1,
-            method="GET",
-            pattern="/api/health",
-            handler_binding_id=1,
-        )
-    )
-    configuration.add_static_mount(
+service = (
+    Builder()
+    .listen("127.0.0.1", 3000)
+    .get("/api/health", lambda _request: Response.text("ok"))
+    .static_mount(
         StaticMount(
-            mount_id=1,
             url_prefix="/",
             root_path="./web/dist",
             index_file="index.html",
@@ -87,20 +73,12 @@ with Configuration() as configuration:
             spa_fallback_file="index.html",
         )
     )
-    runtime = configuration.create_core()
-
-runtime.start()
+    .start()
+)
 try:
-    while True:
-        lease = runtime.take_event(1_000)
-        if lease is None:
-            continue
-        with lease:
-            if lease.kind is EventKind.REQUEST:
-                request = lease.request()
-                runtime.respond(request.exchange, Response.text("ok"))
+    print(f"listening on http://127.0.0.1:{service.port}")
 finally:
-    runtime.close()
+    service.close()
 ```
 
 Production code adds signal ownership and uses the ordered finite shutdown
@@ -108,41 +86,34 @@ sequence described in [Operations](operations.md).
 
 ## JavaScript And TypeScript
 
-`createCore()` accepts the same route and mount declaration as JavaScript
-objects:
+`Builder` accepts the same route and mount declaration as JavaScript objects:
 
 ```javascript
-const runtime = createCore({
-  listener: { host: "127.0.0.1", port: 3000 },
-  routes: [{
-    id: 1n,
-    method: "GET",
-    pattern: "/api/health",
-    handlerBindingId: 1n,
-  }],
-  staticMounts: [{
-    id: 1n,
+const service = new Builder()
+  .listen("127.0.0.1", 3000)
+  .get("/api/health", () => Response.text("ok"))
+  .staticMount({
     urlPrefix: "/",
     rootPath: "./web/dist",
     indexFile: "index.html",
     cacheControl: "public, max-age=60",
     spaFallbackFile: "index.html",
-  }],
-});
+  })
+  .start();
 ```
 
-Run one bounded event pump for application routes. Static responses are served
-inside the same runtime lifecycle and do not invoke the application handler.
+The connector runs one bounded event pump for application routes. Static
+responses are served inside the same service lifecycle and do not invoke the
+application handler.
 
 ## Kotlin
 
 ```kotlin
-val configuration = CoreConfiguration()
-    .listener(Listener(id = 1, port = 3000))
-    .route(CoreRoute(id = 1, method = "GET", path = "/api/health"))
+val service = ServiceBuilder()
+    .listen("127.0.0.1", 3000)
+    .get("/api/health", Handler { Responses.text("ok") })
     .staticMount(
         StaticMount(
-            id = 1,
             urlPrefix = "/",
             rootPath = "./web/dist",
             indexFile = "index.html",
@@ -150,13 +121,10 @@ val configuration = CoreConfiguration()
             spaFallbackFile = "index.html",
         )
     )
-
-val runtime = configuration.createCore()
-configuration.close()
-runtime.start()
+    .start()
 ```
 
-Java uses the same JVM values and `HttpCore` lifecycle.
+Java uses the same JVM values and `Service` lifecycle.
 
 ## Go
 
@@ -185,8 +153,8 @@ After `Open`, start runtime and run one bounded event reader for Go handlers.
 
 ## C And C++
 
-The native API adds `coakka_http_static_mount_t` values to the copied runtime
-configuration before start. C and C++ use the same route precedence, confined
+The native API adds `coakka_http_host_static_mount_t` values to the copied
+service configuration before start. C and C++ use the same route precedence, confined
 filesystem authority, event-reader ownership, and shutdown contract. See the
 [native guide](../native/README.md).
 
@@ -199,8 +167,9 @@ filesystem authority, event-reader ownership, and shutdown contract. See the
 - response bytes, active files, indexed files, and file work are bounded;
 - range and validator behavior stays inside the same HTTP service;
 - health, monitoring, pressure, and shutdown include frontend delivery;
-- static/SPA support is verified on all five `1.0.0` targets; applications must
-  still check the loaded package capability and use a confined file root.
+- static/SPA support has passed on macOS ARM64, Linux x86-64, Windows ARM64, and
+  Windows x86-64; Linux ARM64 remains pending on the clean Trixie host, and
+  applications must still check the loaded capability and use a confined root.
 
 For file-backed TLS, see [TLS And mTLS](tls-and-mtls.md). For limits, pressure,
 and shutdown, see [Operations](operations.md).

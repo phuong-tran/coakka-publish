@@ -150,8 +150,8 @@ or Go/native deployment controller without weakening the shared route law.
 
 | Language | Activation API | Command value |
 | --- | --- | --- |
-| C/C++ | `coakka_http_core_rebind` | `coakka_http_route_rebind_t` |
-| Java/Kotlin | `HttpCore.rebind(...)` | `RouteRebind` |
+| C/C++ | `coakka_http_host_rebind` | `coakka_http_host_rebind_request_t` |
+| Java/Kotlin | `HttpRuntime.rebind(...)` | `RouteRebind` |
 | Python | `runtime.rebind(...)` | `RouteRebind` |
 | JavaScript/TypeScript | `runtime.rebind(...)` | Plain object with activation/generation/route/revision/binding fields |
 | Go | `runtime.Rebind(...)` | `RebindRequest` |

@@ -219,7 +219,7 @@ loop and must have their own finite queue and deadline.
 
 | Language | Health and liveness | Aggregates and policy | Event channel |
 | --- | --- | --- | --- |
-| C/C++ | `coakka_http_core_health`, `coakka_http_core_probe_liveness` | `coakka_http_core_monitor_config`, `coakka_http_core_monitor_snapshot`, `coakka_http_core_monitor_apply` | `coakka_http_core_monitor_read`, `coakka_http_core_monitor_wait`, `coakka_http_core_monitor_interrupt` |
+| C/C++ | `coakka_http_host_service_health`, `coakka_http_host_probe_liveness` | `coakka_http_host_monitor_config`, `coakka_http_host_monitor_snapshot`, `coakka_http_host_monitor_apply` | `coakka_http_host_monitor_read`, `coakka_http_host_monitor_wait`, `coakka_http_host_monitor_interrupt` |
 | Java/Kotlin | `health()`, `probeLiveness()` | `monitorConfiguration()`, `monitorSnapshot()`, `applyMonitorPolicy()` | `readMonitorEvents()`, `waitForMonitor()`, `interruptMonitorWaiter()` |
 | Python | `health()`, `probe_liveness()` | `monitor_config()`, `monitor_snapshot()`, `monitor_apply()` | `monitor_read()`, `monitor_wait()`, `monitor_interrupt()` |
 | JavaScript/TypeScript | `health()`, `probeLiveness()` | `monitorConfig()`, `monitorSnapshot()`, `monitorApply()` | `monitorRead()`, `monitorWait()`, `monitorInterrupt()` |

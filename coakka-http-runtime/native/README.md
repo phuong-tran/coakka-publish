@@ -1,202 +1,138 @@
-# CoAkka HTTP Runtime For Native C And C++
+# CoAkka HTTP Runtime for C and C++
 
-The native SDK is the direct, stable C and C++ entrypoint to CoAkka HTTP Runtime.
-C and C++ share the same public API and ownership contract.
+The native package exposes one focused C API in `<coakka/http/host.h>`. C++
+applications use the same API. The shared library owns listeners, protocol I/O,
+routing, static and application-selected files, outbound calls, deadlines,
+monitoring, and orderly shutdown.
 
-## Contents
+The `1.0.0` candidate is not published yet. macOS ARM64, Linux x86-64, Windows
+ARM64, and Windows x86-64 have passed their matching-host package gates. Linux
+ARM64 still requires its clean Raspberry Pi OS Trixie qualification before the
+five-target assembly can be declared ready.
 
-- [Current Artifact](#current-artifact)
-- [Install](#install)
-- [How Native Fits](#how-native-fits)
-- [Choose A Surface](#choose-a-surface)
-- [Buffered C Service](#buffered-c-service)
-- [Advanced API](#advanced-api)
-- [Observability And Monitoring](#observability-and-monitoring)
-- [TLS, mTLS, And Live Handler Changes](#tls-mtls-and-live-handler-changes)
-- [Ownership And Shutdown](#ownership-and-shutdown)
-- [Targets](#targets)
-- [Verification](#verification)
+## Installed package
 
-## Current Artifact
+Every target package contains only:
 
-Version `1.0.0` is staged privately as immutable release
-`1.0.0+204d6ed28231ff9a39f4584393bf7d5af0b6975a`.
+- `include/coakka/http/host.h`;
+- the target shared library and required import/link metadata;
+- `CoAkkaHttpHost` CMake package files; and
+- the legally required `LICENSE` and `NOTICE` material.
 
-Each installed SDK tree contains the public C/C++ API, target-specific shared
-library, build-system metadata, release metadata, SBOM, and usage/license
-information.
+Internal build headers, generated schemas, private symbols, tests, debug data,
+developer paths, dependency inventories, and language packages are not part of
+the installed tree.
 
-## Install
+## CMake use
 
-Extract the private SDK for the exact target and point CMake at its prefix:
+Extract the package for the exact operating system and architecture, then point
+CMake at that prefix:
+
+```cmake
+find_package(CoAkkaHttpHost 1.0.0 EXACT REQUIRED CONFIG)
+
+add_executable(example main.c)
+target_link_libraries(example PRIVATE CoAkka::HttpHost)
+```
 
 ```sh
-cmake -S . -B build -DCMAKE_PREFIX_PATH=/absolute/path/to/coakka-http-sdk
+cmake -S . -B build -DCMAKE_PREFIX_PATH=/absolute/path/to/coakka-http-host
 cmake --build build
 ```
 
-Consume only the installed package and `<coakka/http/http.h>`. The target runtime
-library is part of the SDK; applications do not need to build its dependencies.
+No private dependency include directory or library belongs in a consumer build.
 
-## How Native Fits
+## Service lifecycle
 
-Native C and C++ use the same runtime contract that every connector projects.
-An application can choose the compact handler-based server or take direct
-control of event lanes, streams, realtime sessions, pressure, health, and
-monitoring without introducing a second HTTP engine.
+A service follows one explicit ownership sequence:
 
-Read [How It Works](../docs/how-it-works.md) for the request and pressure flows,
-[App Host And Connectors](../docs/app-host-and-connectors.md) for ownership, and
-[Frontend And Backend](../docs/frontend-and-backend.md) for the combined static,
-API, SSE, and WebSocket application shape.
+1. initialize a `coakka_http_host_configuration_t` and its bounded limits;
+2. declare routes, listener security, file authorities, outbound targets, and
+   optional monitor reservation;
+3. create the service, which copies the complete declaration;
+4. start it and read each enabled event lane from exactly one owner thread;
+5. answer, fail, stream, or release every admitted event exactly once;
+6. begin drain, interrupt readers, stop, and destroy in order.
 
-## Choose A Surface
+Request and event views are borrowed until their matching release call.
+Successful response and control submissions copy borrowed input. Applications
+must keep their own business state and handler scheduling outside the native
+event-loop thread.
 
-The header exposes two public levels:
+The runnable [C](https://github.com/phuong-tran/coakka-samples/tree/coakka-http-runtime-samples/coakka-http-runtime/c)
+and [C++](https://github.com/phuong-tran/coakka-samples/tree/coakka-http-runtime-samples/coakka-http-runtime/cpp)
+samples show the complete startup, request, health, monitoring, drain, and
+shutdown sequence.
 
-| Surface | Use it for |
-| --- | --- |
-| `coakka_http_server_*` | Direct buffered C/C++ services with callback handlers and finite worker/queue options |
-| `coakka_http_core_*` | Advanced event API for streams, SSE, WebSocket, files, outbound HTTP, live route changes, health, and monitoring |
+## Capabilities
 
-Both surfaces use copied configuration, finite limits, typed results, and
-ordered shutdown. The handler-based server is the normal request/reply entry;
-the event API exposes the complete operational contract used by language
-packages.
+The public host API includes:
 
-## Buffered C Service
+- HTTP/1.1, HTTP/2, and HTTP/3 listener declarations;
+- plaintext, TLS, and mutual TLS configuration;
+- buffered and streamed requests and responses, trailers, SSE, and WebSocket;
+- immutable static mounts, SPA fallback, and confined file responses;
+- logical outbound targets, cancellation, and terminal delivery;
+- route snapshots, handler activation, and complete route publication;
+- health, fresh liveness, and bounded monitoring; and
+- typed failures, explicit pressure, finite deadlines, and finite shutdown.
 
-```c
-#include <coakka/http/http.h>
-#include <stdio.h>
-#include <string.h>
+Availability is checked through the published capability and service-planning
+API. A declaration that cannot be supported fails before the service reports
+ready; no partial owner or partial route generation is published.
 
-static coakka_http_bytes_t bytes(const char *text) {
-  coakka_http_bytes_t value = {
-      .data = (const uint8_t *)text,
-      .size = (uint64_t)strlen(text),
-  };
-  return value;
-}
+## I/O backend selection
 
-static void echo(void *context, coakka_http_request_t *request) {
-  (void)context;
-  coakka_http_response_t response;
-  coakka_http_response_init(&response);
-  response.status_code = 200;
-  response.body = coakka_http_request_body(request);
-  (void)coakka_http_request_respond(request, &response);
-}
+Platform I/O is the default. On Linux this is the normal epoll path. `io_uring`
+is used only when the application explicitly requests it and native startup
+accepts the selected protocol and operating-system capabilities. If the probe
+or initialization cannot be used, startup falls back safely to epoll and
+reports requested, probed, effective, and typed fallback state through
+`coakka_http_host_service_info`.
 
-int main(void) {
-  coakka_http_server_options_t options;
-  coakka_http_route_t route;
-  coakka_http_server_t *server = NULL;
+Consumers forward the preference. They must not duplicate kernel-version
+checks, probe syscalls, or fallback logic.
 
-  coakka_http_server_options_init(&options);
-  options.bind_address = bytes("127.0.0.1");
-  options.port = 8080;
+## Bounds and lookups
 
-  coakka_http_route_init(&route);
-  route.route_id = 1;
-  route.method = bytes("POST");
-  route.path = bytes("/echo");
-  route.handler = echo;
+Connections, active exchanges, request and completion queues, header and body
+bytes, stream slots, files, route-control work, monitor history, and shutdown
+waits are finite. Zero-valued optional limits select documented bounded
+defaults; they do not mean unbounded.
 
-  coakka_http_result_t result =
-      coakka_http_server_create(&options, &route, 1, &server);
-  if (result.code != COAKKA_HTTP_RESULT_OK)
-    return 1;
-  result = coakka_http_server_start(server);
-  if (result.code != COAKKA_HTTP_RESULT_OK) {
-    (void)coakka_http_server_destroy(&server);
-    return 1;
-  }
+Route and handler identity dispatch is indexed. Header, query, and path values
+remain available in wire/declaration order while language connectors may add
+case-normalized or named indexes for average O(1) lookup.
 
-  /* A production process replaces this with its owned signal/event loop. */
-  (void)getchar();
-  return coakka_http_server_destroy(&server).code == COAKKA_HTTP_RESULT_OK
-             ? 0
-             : 1;
-}
-```
+## Monitoring and route changes
 
-The snippet shows API shape, not a complete process signal loop. Handler
-contexts remain caller-owned through destroy. Request views are borrowed only
-during the callback, and `request_respond` copies response bytes before a
-successful return.
+Monitoring is disabled by default. Construction reserves the maximum storage
+that a later policy may enable. Signals are coalesced hints; applications pull
+immutable configuration, health, aggregate, and event snapshots. Monitoring
+pressure never blocks HTTP work or changes an exchange result.
 
-## Advanced API
-
-The advanced API follows this shape:
-
-1. initialize and populate `coakka_http_configuration_t`;
-2. add listeners, routes, limits, file, and monitor policy;
-3. create the service owner, then destroy the now-copied configuration;
-4. start the service and run exactly one reader per required event lane;
-5. respond, stream, accept WebSockets, rebind, or inspect health/monitor state;
-6. release every leased event exactly once;
-7. drain, interrupt readers, stop, and destroy.
-
-Call `coakka_http_features()` before selecting an optional capability. The
-`1.0.0` runtime surface exposes HTTP/1.1, feature-gated HTTP/2 and HTTP/3,
-request/response streams, trailers, write timeouts, SSE, WebSocket, route
-rebind, health, and monitoring. All five release targets execute static, SPA,
-and application-file serving. See the [capability matrix](../docs/capabilities.md).
-
-## Observability And Monitoring
-
-The native runtime exposes non-blocking health, a fresh liveness probe, effective
-monitor configuration, bounded aggregate snapshots, generation-checked live
-policy, cursor-based recent events, missed-history counts, and one finite
-wait/interrupt lane. Monitoring is disabled by default and never retains HTTP
-payloads, credentials, cookies, or certificate material.
-
-Read [Observability And Monitoring](../docs/observability-and-monitoring.md) for
-the complete data model and operator lifecycle.
-
-## TLS, mTLS, And Live Handler Changes
-
-Listeners support plaintext, TLS, and mutual TLS with explicit credential
-identity/generation, certificate chain, private key, and trust roots. Eligible
-Linux HTTP/2 and HTTP/3 configurations can select the feature-gated
-`io_uring` backend.
-
-`coakka_http_core_rebind` atomically switches one existing route to a prepared
-handler binding under expected route generation and binding revision. Existing
-requests finish on the binding captured at admission. See
-[TLS And mTLS](../docs/tls-and-mtls.md) and
-[Live Handler Changes](../docs/handler-swap-and-hot-reload.md).
-
-## Ownership And Shutdown
-
-- configuration and successful response submissions copy borrowed input;
-- a request/event lease keeps runtime storage alive until exact release;
-- only one reader may own each inbound, WebSocket, outbound, or monitor lane;
-- destroy must not overlap another call or an outstanding lease;
-- pressure returns typed results such as `QUEUE_FULL` or `LIMIT_EXCEEDED`;
-- all lifecycle waits use configured finite bounds and monotonic progress;
-- stop closes admission and wakes readers before owner destruction.
-
-The [operations guide](../docs/operations.md) documents queue and monitor
-semantics shared with every connector.
+Handler activation changes only the selected binding revision. Complete route
+publication atomically replaces one immutable structural generation. Rejected
+compare-and-apply operations leave the previous effective state unchanged, and
+already admitted work finishes through the binding it captured.
 
 ## Targets
 
-| Installed target | Library |
+| Target | Shared library |
 | --- | --- |
-| macOS ARM64 | `libcoakka_http_runtime.1.0.0.dylib` |
-| Linux ARM64 | `libcoakka_http_runtime.so.1.0.0` |
-| Linux x86-64 | `libcoakka_http_runtime.so.1.0.0` |
-| Windows ARM64 | `coakka_http_runtime.dll` plus import library |
-| Windows x86-64 | `coakka_http_runtime.dll` plus import library |
+| macOS ARM64 | `libcoakka_http_host.1.0.0.dylib` |
+| Linux ARM64 | `libcoakka_http_host.so.1.0.0` |
+| Linux x86-64 | `libcoakka_http_host.so.1.0.0` |
+| Windows ARM64 | `coakka_http_host.dll` plus import library |
+| Windows x86-64 | `coakka_http_host.dll` plus import library |
 
 Linux requires glibc 2.28 or newer. Windows uses the static MSVC runtime.
-macOS x86-64 is not included.
+macOS x86-64 is not part of this candidate.
 
-## Verification
+## Release verification
 
-Use the [installed-package verification suite](../runtime-test/README.md)
-to verify an installed tree through public package inputs. It configures the runtime,
-starts a real loopback listener, drives an HTTP request, checks health and
-monitoring, consumes terminal state, and performs idempotent shutdown.
+Each target gate verifies the exact installed tree rather than a build-tree
+substitute. It checks the focused header, public export allow-list, dynamic
+dependency allow-list, stripped paths and debug data, package contents, legal
+files, C and C++ consumers, service startup, loopback traffic, and shutdown.
+Hashes and source identities are recorded by the final assembly verifier.

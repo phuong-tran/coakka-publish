@@ -1,133 +1,236 @@
-# CoAkka HTTP For JavaScript And TypeScript
+# CoAkka HTTP for JavaScript
 
-One ESM package runs on Node.js and Bun, with TypeScript declarations included.
-It provides a direct buffered builder and the complete
-`CoAkka HTTP Runtime` surface. JavaScript owns handlers and application
-state; the runtime owns its HTTP resources, protocol state, limits, monitoring, and
-shutdown.
+CoAkka HTTP gives Node.js and Bun applications a JavaScript-native service API
+while the native runtime owns listeners, protocol I/O, bounded queues, route
+matching, streaming, files, WebSockets, outbound connections, and monitoring.
 
-## Contents
-
-- [Install](#install)
-- [Quick Start](#quick-start)
-- [Node.js And Bun](#nodejs-and-bun)
-- [Two Useful API Levels](#two-useful-api-levels)
-- [Capacity And Backpressure](#capacity-and-backpressure)
-- [Observability And Monitoring](#observability-and-monitoring)
-- [TLS, mTLS, And Live Handler Changes](#tls-mtls-and-live-handler-changes)
-- [Lifecycle](#lifecycle)
-- [Targets And Current Gate](#targets-and-current-gate)
-
-## Install
-
-The current package remains private. Install the exact staged tarball:
+The connector does not embed or extract native binaries. Packaging for npm and
+other JavaScript registries is intentionally handled by a later platform-specific
+release step. A source or development build selects the addon explicitly:
 
 ```sh
-npm install ./coakka-http-1.0.0.tgz
-# or
-bun add ./coakka-http-1.0.0.tgz
+export COAKKA_HTTP_JAVASCRIPT_ADDON=/absolute/path/to/coakka_http_javascript.node
 ```
 
-The package selects and verifies its matching target image at load time. No
-compiler or separately installed native runtime is required.
+## Basic server
 
-## Quick Start
-
-```javascript
+```js
 import { Builder, Response } from "@coakka/http";
 
-const service = await new Builder()
+const service = new Builder()
   .listen("127.0.0.1", 8080)
-  .concurrency(2)
-  .get("/hello", () => Response.text("Hello from CoAkka"))
-  .get("/health", () => Response.text("ok"))
+  .get("/hello/{name}", async (request) => {
+    const name = Buffer.from(request.pathParameters[0].encodedValue).toString();
+    return Response.text(`Hello, ${name}!`);
+  })
   .start();
 
-console.log(`http://127.0.0.1:${service.port}`);
-```
+console.log(`Listening on http://127.0.0.1:${service.port}`);
 
-Version `1.0.0` buffered handlers are synchronous and must return a `Response`.
-Promises are rejected rather than allowed to create ambiguous lifetime or
-shutdown behavior.
-
-## Node.js And Bun
-
-Imports and application code stay the same on Node.js and Bun. Benchmark and
-support evidence always name the host and version; a result from one host is
-not relabeled as evidence for the other.
-
-Blocking work must not run on the main JavaScript event loop. Use the host's
-normal Worker/task mechanism and keep its queue, retained bytes, cancellation,
-and shutdown bounded.
-
-## Two Useful API Levels
-
-| API | Best fit |
-| --- | --- |
-| `Builder` and `Service` | Synchronous buffered handlers on the host event loop, finite active-handler/body/route bounds, and Promise close |
-| `createCore()` advanced service | HTTP/1.1, HTTP/2, HTTP/3 where available, streaming, SSE, WebSocket, files, outbound HTTP, TLS/mTLS, `io_uring`, handler swap, health, liveness, and monitor control |
-
-Runtime event values are copied into JavaScript before they are returned. Use
-zero-timeout polling on the event loop or a dedicated Worker for blocking take
-or wait calls. Only one reader owns each inbound, WebSocket, outbound-terminal,
-or monitor-wait lane.
-
-## Capacity And Backpressure
-
-Connections, active exchanges, request and response queues, bodies, headers,
-chunks, routes, sessions, outbound work, retained diagnostics, monitor events,
-and shutdown waits have finite ceilings. Exhausted capacity produces a stable
-typed refusal, cancellation, or timeout instead of unbounded accumulation.
-
-Buffered handler failures produce a stable `500`. Applications that need the
-complete health, failure aggregates, recent-event history, or operator wait
-lane use the typed runtime surface described below.
-
-## Observability And Monitoring
-
-The complete runtime surface exposes `health()`, `probeLiveness()`,
-`monitorConfig()`, `monitorSnapshot()`, generation-checked `monitorApply()`,
-cursor-based `monitorRead()`, `monitorWait()`, and `monitorInterrupt()`.
-
-The event channel reports overwrite/drop and missed-history truth. It never
-retains request bodies, credentials, cookies, or certificate material. Read
-[Observability And Monitoring](../docs/observability-and-monitoring.md) for the
-collection model and complete language map.
-
-## TLS, mTLS, And Live Handler Changes
-
-`createCore({ listener: ... })` accepts the protocol, TLS/mTLS mode, credential
-identity/generation, certificate chain, private key, and trust roots. On
-supported Linux HTTP/2 and HTTP/3 configurations it can select `IoBackend.IO_URING`.
-
-`runtime.rebind(...)` atomically changes one stable route to a prepared handler
-binding under route-generation and binding-revision checks. See
-[TLS And mTLS](../docs/tls-and-mtls.md) and
-[Live Handler Changes](../docs/handler-swap-and-hot-reload.md).
-
-## Lifecycle
-
-`service.close()` returns one idempotent Promise that stops admission, drains
-callbacks, and releases the service. Importing the package does not take over
-process signals:
-
-```javascript
-process.once("SIGTERM", async () => {
+process.once("SIGINT", async () => {
   await service.close();
 });
 ```
 
-For direct runtime use, call `runtime.drain()` while the event reader continues
-completing accepted work. After active work converges, interrupt and join every
-Worker or reader, call `runtime.stop()`, then `runtime.close()`. Do not overlap runtime
-destruction with another runtime operation.
+Handlers may return a response directly or through a promise. Header lookup is
+case-insensitive and average O(1); declaration order and duplicate fields remain
+available through iteration and `Headers.getAll()`.
 
-## Targets And Current Gate
+## io_uring selection
 
-The private package contains verified target selections for macOS ARM64, Linux
-ARM64, Linux x86-64, Windows ARM64, and Windows x86-64. Capability bits from
-the loaded target are authoritative.
+`io_uring` is opt-in and disabled by default:
 
-npm publication, public sample promotion, and portable performance claims
-remain closed until Node.js and Bun matching-host evidence agrees with the
-corrected package and documentation.
+```js
+const service = new Builder()
+  .ioUring(true)
+  .get("/ready", () => Response.empty())
+  .start();
+
+console.log(service.runtimeInfo());
+```
+
+JavaScript only sends the boolean preference. Native code decides whether the
+listener is eligible, performs the platform probe when appropriate, and falls
+back to `epoll` when `io_uring` cannot be used. `runtimeInfo()` reports separate
+`ioUringRequested`, `ioUringProbed`, `ioUringEffective`, and `fallbackReason`
+fields. The connector never performs an operating-system probe.
+
+## Request bodies
+
+Ordinary routes receive a completely copied request:
+
+```js
+const service = new Builder()
+  .post("/echo", (request) => Response.bytes(request.bytes()))
+  .start();
+```
+
+Large or incremental bodies use a stream route. Events for concurrent requests
+carry distinct generation-checked IDs:
+
+```js
+const chunks = new Map();
+const key = (event) => `${event.id.slot}:${event.id.generation}`;
+
+const service = new Builder()
+  .postStream("/upload", (event) => {
+    const id = key(event);
+    if (event.kind === "start") chunks.set(id, []);
+    if (event.kind === "data") chunks.get(id).push(event.data);
+    if (event.kind === "end") {
+      const body = Buffer.concat(chunks.get(id));
+      chunks.delete(id);
+      return Response.text(String(body.length));
+    }
+    return undefined;
+  })
+  .start();
+```
+
+Only the `end` event returns a response. The application must keep any
+per-request state bounded.
+
+## Streaming responses and SSE
+
+```js
+import { Builder, StreamingResponse, sse } from "@coakka/http";
+
+const service = new Builder()
+  .get("/download", () => new StreamingResponse(async (writer) => {
+    await writer.write("first\n");
+    await writer.write("second\n");
+  }), { response: "stream" })
+  .get("/events", () => sse([
+    { event: "state", id: "1", retry: 1000n, data: "ready" },
+  ]), { response: "sse" })
+  .start();
+```
+
+The stream writer copies each submitted chunk. When the bounded native queue is
+full, it waits for a writable event up to the configured response-write timeout.
+
+## WebSocket
+
+```js
+import { Builder, websocket } from "@coakka/http";
+
+const service = new Builder()
+  .get("/socket", () => websocket({
+    open(session) {
+      session.send("ready");
+    },
+    message(session, message) {
+      if (message.type === "text") session.send(message.data);
+    },
+  }), { response: "websocket" })
+  .start();
+```
+
+Callbacks for each session execute in order. Callback errors are retained in the
+service's bounded diagnostic queue and can be pulled with `pollError()`.
+
+## Static and application-selected files
+
+Static trees are immutable construction-time declarations:
+
+```js
+const service = new Builder()
+  .staticMount({ urlPrefix: "/assets", rootPath: "/srv/app/assets" })
+  .start();
+```
+
+Application-selected files use an explicit authority and remain confined below
+its root:
+
+```js
+import { Builder, FileResponse } from "@coakka/http";
+
+const service = new Builder()
+  .fileAuthority({
+    id: 1,
+    rootPath: "/srv/downloads",
+    maxActiveFiles: 16,
+    maxFileBytes: 8 * 1024 * 1024,
+  })
+  .get("/download", () => new FileResponse(1, "/manual.pdf"), {
+    response: "file",
+  })
+  .start();
+```
+
+Filesystem traversal and file reads do not run on the JavaScript or HTTP event
+loop.
+
+## Outbound requests
+
+Logical targets are immutable construction-time snapshots. Calls select a target
+by name instead of accepting an arbitrary destination from request data:
+
+```js
+const service = new Builder()
+  .outboundTarget({
+    name: "users",
+    generation: 1,
+    endpoints: [{
+      nodeId: "users-1",
+      connectHost: "127.0.0.1",
+      connectPort: 9000,
+      httpAuthority: "users.internal",
+      security: 1,
+    }],
+  })
+  .start();
+
+const call = service.outboundSubmit({
+  logicalTarget: "users",
+  method: "GET",
+  target: "/ready",
+});
+const completion = await service.takeOutbound(3000);
+```
+
+`takeOutbound()` polls without blocking the JavaScript event loop and returns a
+copied terminal value or `null` on timeout.
+
+## Route updates
+
+Prepare a handler before publishing its binding ID. Dispatch uses the binding
+captured by the request, so an in-flight request never jumps to a newer handler:
+
+```js
+service.prepareHandler(2, () => Response.text("new"));
+const snapshot = service.routeSnapshot();
+const outcome = service.rebindHandler({
+  activationId: 1,
+  expectedRouteGeneration: snapshot.routeGeneration,
+  routeId: 1,
+  expectedBindingRevision: snapshot.routes[0].bindingRevision,
+  newHandlerBindingId: 2,
+});
+```
+
+Use `publishRoutes()` only for structural changes such as adding or removing a
+route or changing its method, path, or body policy. Both operations use expected
+generation values and return the complete effective outcome.
+
+## Monitoring and lifecycle
+
+Monitoring is disabled unless storage and an initial policy are declared with
+`Builder.monitor()`. Health and route snapshots remain pullable independently.
+Monitor signals are hints; callers always pull immutable truth with
+`monitorConfig()`, `monitorSnapshot()`, or `monitorRead()`.
+
+`close()` is idempotent from the application perspective. It stops admission
+and keeps the sole event reader alive until every admitted request has reached
+a terminal state. It then interrupts the reader, runs bounded native shutdown,
+and releases native state. The reader owns exactly one scheduled Node handle at
+a time and cancels that handle with the matching timer API. A failed bounded
+drain retains the service so a later `close()` can retry safely. Applications
+should still stop creating new work before closing the service.
+
+## Advanced runtime surface
+
+`createRuntime()` exposes the complete low-level pull API for integrations that
+need to own event dispatch themselves. Each successful take operation already
+returns JavaScript-owned copies, and each lane permits one reader. Do not overlap
+blocking reads on the same lane.
