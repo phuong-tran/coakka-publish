@@ -23,6 +23,16 @@ TARGETS = (
     "windows-aarch64",
     "windows-x86_64",
 )
+# These identities come from matching-host package gates, not from the
+# release manifest being checked. Add the Linux ARM64 value only after its
+# refreshed package passes on the physical Raspberry Pi 5.
+QUALIFIED_BINARY_SHA256 = {
+    "macos-aarch64": "51b392029a37aa4a079e289e121a636dfe8b258f64822d7e69429cf9f11a2c4b",
+    "linux-x86_64": "19d55ca26a07e7a47ac066726417e804ee0a74943eda0f560f9ef43402b70cc0",
+    "windows-aarch64": "e295de7b89e61fd1f6f12124f39bec2566cfc10b9a017645fd9fe37fb6e35ca4",
+    "windows-x86_64": "f62a7d45096eebc28e280849282226df422c362faf9851a075b3bfedca45353e",
+}
+QUALIFIED_HEADER_SHA256 = "bebde4948d58598e4b2b6491ff6fa9b1c078e80ad5050021fe39ac58d3f1ae2d"
 LEGAL_FILES = ("LICENSE", "NATIVE-LICENSE.md", "NOTICE", "PACKAGE-LICENSE.md")
 CMAKE_FILES = (
     "CoAkkaHttpHostConfig.cmake",
@@ -182,6 +192,7 @@ def verify_target(
 
     header = target_root / "include/coakka/http/host.h"
     header_hash = digest(header)
+    require_equal(header_hash, QUALIFIED_HEADER_SHA256, f"{target} qualified public header")
     if expected_header_hash is not None:
         require_equal(header_hash, expected_header_hash, f"{target} public header")
     if b"COAKKA_HTTP_HOST_ABI_VERSION UINT32_C(4)" not in header.read_bytes():
@@ -206,7 +217,9 @@ def verify_target(
     }[target]
     require_equal(binary_relative, expected_binary, f"{target} primary binary path")
     binary = release / binary_relative
-    require_equal(digest(binary), target_manifest.get("sha256"), f"{target} binary hash")
+    binary_hash = digest(binary)
+    require_equal(binary_hash, QUALIFIED_BINARY_SHA256[target], f"{target} qualified binary")
+    require_equal(binary_hash, target_manifest.get("sha256"), f"{target} manifest binary hash")
     require_equal(binary.stat().st_size, target_manifest.get("size"), f"{target} binary size")
     require_equal(target_manifest.get("installed_entries"), len(expected_target_inventory(target)), f"{target} entry count")
     require_equal(target_manifest.get("export_count"), 102, f"{target} export count")
@@ -279,6 +292,7 @@ def main() -> None:
     if not isinstance(targets, dict):
         fail("manifest targets must be an object")
     require_equal(tuple(targets), TARGETS, "manifest target order")
+    require_equal(set(QUALIFIED_BINARY_SHA256), set(TARGETS), "qualified target inventory")
 
     benchmark = manifest.get("benchmark")
     if not isinstance(benchmark, dict):
