@@ -27,6 +27,16 @@ class ReleaseRecordTest(unittest.TestCase):
             with self.assertRaisesRegex(SystemExit, "release record status"):
                 VERIFIER.verify_release_record(release)
 
+    def test_final_status_cannot_leave_pending_body(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="coakka-http-release-test-") as path:
+            release = Path(path)
+            (release / "RELEASE.md").write_text(
+                "# Release\n\nStatus: ready-to-release\n\n"
+                "Linux ARM64 is pending. Do not distribute.\n"
+            )
+            with self.assertRaisesRegex(SystemExit, "draft content"):
+                VERIFIER.verify_release_record(release)
+
     def test_unique_final_status_is_required(self) -> None:
         with tempfile.TemporaryDirectory(prefix="coakka-http-release-test-") as path:
             release = Path(path)

@@ -181,6 +181,8 @@ def verify_release_record(release: Path) -> None:
     record = (release / "RELEASE.md").read_text(encoding="utf-8")
     statuses = re.findall(r"^Status: ([^\r\n]+)$", record, flags=re.MULTILINE)
     require_equal(statuses, ["ready-to-release"], "release record status")
+    if re.search(r"\b(?:pending|not ready|do not distribute)\b", record, re.IGNORECASE):
+        fail("release record retains draft content")
 
 
 def verify_target(
