@@ -24,10 +24,10 @@ TARGETS = (
     "windows-x86_64",
 )
 # These identities come from matching-host package gates, not from the
-# release manifest being checked. Add the Linux ARM64 value only after its
-# refreshed package passes on the physical Raspberry Pi 5.
+# release manifest being checked. Performance acceptance remains separate.
 QUALIFIED_BINARY_SHA256 = {
     "macos-aarch64": "51b392029a37aa4a079e289e121a636dfe8b258f64822d7e69429cf9f11a2c4b",
+    "linux-aarch64": "b71dcdf1975475c79e0738da4b0d549480fd9fc32f7721b9411940795decd1fe",
     "linux-x86_64": "19d55ca26a07e7a47ac066726417e804ee0a74943eda0f560f9ef43402b70cc0",
     "windows-aarch64": "e295de7b89e61fd1f6f12124f39bec2566cfc10b9a017645fd9fe37fb6e35ca4",
     "windows-x86_64": "f62a7d45096eebc28e280849282226df422c362faf9851a075b3bfedca45353e",

@@ -5,10 +5,11 @@ applications use the same API. The shared library owns listeners, protocol I/O,
 routing, static and application-selected files, outbound calls, deadlines,
 monitoring, and orderly shutdown.
 
-The `1.0.0` candidate is not published yet. macOS ARM64, Linux x86-64, Windows
-ARM64, and Windows x86-64 have passed their matching-host package gates. Linux
-ARM64 still requires its clean Raspberry Pi OS Trixie qualification before the
-five-target assembly can be declared ready.
+The `1.0.0` candidate is not published yet. All five native targets have passed
+their matching-host component and installed-consumer gates, including Linux
+ARM64 on a clean physical Raspberry Pi 5 Trixie installation. Its refreshed
+language connector matrix and cooled Pi benchmark remain pending, so the
+five-target assembly is not ready to release.
 
 ## Installed package
 
