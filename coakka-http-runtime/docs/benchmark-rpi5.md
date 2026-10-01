@@ -22,12 +22,13 @@ content-type: application/octet-stream
 body: 0123456789abcdef0123456789abcdef
 ```
 
-The runner uses loopback HTTP/1.1 with 64 persistent connections, two load
-threads, and one in-flight request per connection. It first sends a fixed
-calibration set, derives a request count targeting ten measured seconds, and
-rejects any run with a failed, errored, timed-out, or incomplete request.
-Calibration and measurement both enable the same per-request timing log;
-otherwise log overhead could make the calibrated request rate misleading.
+The runner uses loopback HTTP/1.1 with 64 persistent connections, three load
+threads, and one in-flight request per connection. Each lane warms those same
+connections for five seconds, then measures a fixed ten-second interval with
+`h2load --duration` and `--warm-up-time`. Warm-up requests are excluded from
+the measured request count and latency log. The runner rejects a shortened
+interval, a failed, errored, timed-out, incomplete, or over-ceiling request
+set, and any mismatch between completed requests and 2xx observations.
 
 CoAkka lanes use the end-user host-inlined API for their language. The C and
 C++ lanes use the public C host surface directly. No lane calls an internal
@@ -62,9 +63,10 @@ realistic integration boundary.
 | Campaign boot storage | SanDisk USB 3.2Gen1 250 GB; `/dev/sda2` root during Trixie qualification |
 | Required OS baseline | Current Raspberry Pi OS Lite 64-bit (Debian 13 Trixie), clean install |
 | Kernel at campaign preparation | `6.18.50+rpt-rpi-2712`; final campaign captures the then-current kernel |
-| Server placement | CPUs `0-1` |
-| Load generator placement | CPUs `2-3`, two load threads |
+| Server placement | CPU `0` |
+| Load generator placement | CPUs `1-3`, three load threads |
 | Load generator | `h2load --h1` from nghttp2-client |
+| Cooling policy | Pi5 firmware fan first stage at 40 C, PWM 250; original boot config retained for rollback |
 
 The campaign output records the exact OS, kernel, CPU model, memory, tool
 versions, source identities, source manifest digest, and built executable
@@ -73,15 +75,30 @@ specific result.
 
 Do not measure on the prior Bookworm installation or perform an in-place major
 upgrade. The clean Trixie installation now boots from the separate SanDisk USB;
-the prior NVMe remains outside the campaign. Result tables remain pending until
-short qualification and the full campaign pass on that exact installation.
+the prior NVMe remains outside the campaign. An earlier short qualification
+passed, but its two-second figures are diagnostic only. A later three-round
+fixed-request campaign passed response and cooldown checks but is rejected as
+release evidence: its 20,000-request calibration underestimated connection
+startup, so some supposed ten-second intervals lasted only about two to six
+seconds. Result tables remain pending until the revised time-based short
+qualification and three-round campaign pass and their performance gaps are
+reviewed.
 
 An initial single-generator-CPU qualification was rejected when it reached
-91.8% busy in one framework lane, above the declared 90% ceiling. No result
-from that incomplete run is publishable. Before any complete qualification,
-the protocol was revised to reserve two CPUs for the server and two isolated
-CPUs for the generator. The same revised placement applies to every lane; the
-busiest generator CPU, not a two-CPU average, must remain below the ceiling.
+91.8% busy in one framework lane, above the declared 90% ceiling. After an
+HTTP/1.1 persistent-connection correction in the framework sample, two
+generator CPUs still reached 97.1% busy in its fast lane. Neither incomplete
+run is publishable. The reviewed protocol reserves one CPU for every server
+and three isolated CPUs for the generator. The busiest generator CPU, not an
+average across CPUs, must remain below the ceiling in every lane.
+The stock fan profile could not reach the unchanged 50 C idle gate under the
+performance governor, so the documented firmware fan parameters now start its
+first stage at 40 C with PWM 250. This is a fixed machine baseline, not a
+per-lane adjustment. The original boot configuration is retained for rollback.
+The framework sample's initial callback had also closed every HTTP/1.1
+connection. It now queues its response on the later callback as specified by
+[libmicrohttpd's callback lifecycle](https://git.gnunet.org/gnunet/libmicrohttpd/file/doc/chapters/hellobrowser.inc.html),
+and a two-request socket-reuse probe passes on the Pi.
 
 ## Fairness And Cooldown
 
@@ -93,18 +110,22 @@ The runner applies the same controls to every lane:
    idle sample before the campaign starts.
 3. Randomize lane order independently in each round using a recorded,
    deterministic seed from the checked-in workload configuration.
-4. Start the server on CPUs `0-1`; keep two `h2load` threads on CPUs `2-3`.
+4. Start the server on CPU `0`; keep three `h2load` threads on CPUs `1-3`.
    Every CoAkka lane uses the native runtime's single bounded event loop.
-   Idiomatic connector samples use three bounded application workers where the
-   language facade provides them; all server processes remain inside the same
-   two-CPU placement as their ecosystem peers.
-5. Check the exact response before calibration.
-6. Run calibration, then pass the same temperature, power, and CPU-idle gate
-   after at least 15 seconds before the measured request set.
-7. Reject the sample if any request fails, firmware reports power or thermal
-   throttling, or either load-generator CPU is above 90% non-idle during the
-   measured request set. I/O wait counts as non-idle: logging must not become
-   a hidden client-side bottleneck.
+   Language connectors may own bounded application workers, but every server
+   process and its workers share the same one-CPU placement as its ecosystem
+   peers.
+5. Check the exact response and prove two requests reuse one HTTP/1.1 socket
+   before measurement. A close/reconnect lane is rejected rather than compared
+   against persistent-connection lanes.
+6. Warm the measured connections for five seconds, then measure the next ten
+   seconds in the same `h2load` process. Require the declared timing interval
+   and exactly one timing-log row per measured successful request.
+7. Reject the sample if any request fails, status observations do not match
+   successful request accounting, firmware reports power or thermal
+   throttling, or any load-generator CPU is above 90% non-idle across warm-up
+   and measurement. I/O wait counts as non-idle: logging must not become a
+   hidden client-side bottleneck.
 8. Stop the server, pass the same cooldown and CPU-idle gate after at least 15
    seconds, and only then start the next lane.
 9. Restore the original governor on success or failure.
@@ -120,9 +141,11 @@ server process group. Server RSS is the sum of their resident-page counts; for
 multi-process servers this intentionally counts each process and may count
 shared pages more than once. The result table also records that process count.
 The runner rejects a measured sample if group membership changes during the
-request set. These definitions are identical for every lane.
+combined warm-up and measurement. CPU and RSS observations cover both phases;
+throughput and latency cover measurement only. These definitions are identical
+for every lane.
 
-`h2load` writes per-request latency rows during calibration and measurement
+`h2load` writes per-request latency rows during measurement only
 to a capacity-checked `/dev/shm` tmpfs. The runner refuses a disk-backed or
 undersized temporary mount: request-log writes to the boot USB could otherwise
 cap the fastest lane and distort the comparison. It reduces the rows to p50,
@@ -155,6 +178,7 @@ COAKKA_HTTP_CONNECTOR_ROOT
 COAKKA_COMMONS_ROOT
 COAKKA_HTTP_RUNTIME_REF  exact frozen 40-hex runtime commit; paired with qualified build
 COAKKA_HTTP_QUALIFIED_BUILD_DIR  qualified CMake build directory on the Pi
+COAKKA_HTTP_QUALIFIED_BINARY_SHA256  independently qualified host-library digest
 ```
 
 Deployment copies the benchmark plus the runtime and connector source trees.
@@ -163,11 +187,15 @@ from that same on-board qualification root. Otherwise it exports the exact
 `coakka-commons` commit named by the runtime dependency lock. The Pi therefore
 needs no private repository credential, and a newer local `coakka-commons`
 checkout cannot silently change the measured binary.
+Qualified-build mode checks the independently recorded host-library SHA-256
+before and after installation; a relink or different installed binary stops
+preparation before any measurement.
 Preparation then:
 
-- installs the required Linux build tools, Node.js, and comparison libraries;
-- installs the pinned Go 1.27.1 and Bun 1.4.2 ARM64 binaries after checking
-  their published SHA-256 digests; the Bun lanes invoke that exact local binary;
+- installs the required Linux build tools, JDK 21, and comparison libraries;
+- installs pinned Node.js 22.23.3, Go 1.27.1, and Bun 1.4.2 ARM64 binaries
+  after checking their published SHA-256 digests; Node and Bun invoke those
+  exact local binaries;
 - installs the focused native host from the qualified build when supplied,
   after checking the source commit and byte-for-byte source tree; otherwise it
   builds the host from the deployed source;
@@ -190,11 +218,10 @@ Run one short round before spending time on the full campaign:
 
 ```sh
 cd /home/pi5/coakka-http-runtime-benchmark-20261001
-taskset -c 2-3 python3 scripts/run-rpi5.py \
+taskset -c 1-3 python3 scripts/run-rpi5.py \
   --output evidence/qualification \
   --rounds 1 \
-  --duration 2 \
-  --calibration-requests 5000
+  --duration 2
 python3 scripts/summarize.py \
   evidence/qualification/campaign.json \
   --output evidence/qualification/RESULTS.md
@@ -212,9 +239,9 @@ remove a rejected task-owned directory deliberately before rerunning.
 To isolate one or more lanes while diagnosing, repeat `--lane`:
 
 ```sh
-taskset -c 2-3 python3 scripts/run-rpi5.py \
+taskset -c 1-3 python3 scripts/run-rpi5.py \
   --output evidence/qualification-go \
-  --rounds 1 --duration 2 --calibration-requests 5000 \
+  --rounds 1 --duration 2 \
   --lane go-coakka --lane go-chi --lane go-gin
 ```
 
@@ -223,7 +250,7 @@ taskset -c 2-3 python3 scripts/run-rpi5.py \
 After qualification and a fresh cooldown:
 
 ```sh
-taskset -c 2-3 python3 scripts/run-rpi5.py \
+taskset -c 1-3 python3 scripts/run-rpi5.py \
   --output evidence/campaign
 python3 scripts/summarize.py \
   evidence/campaign/campaign.json \

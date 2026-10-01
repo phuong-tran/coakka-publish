@@ -8,13 +8,21 @@ substitute for performance qualification.
 
 The first short benchmark qualification was rejected before completion: one
 framework lane drove its dedicated load-generator CPU to 91.8% busy, above the
-declared 90% ceiling. None of its partial measurements is a publishable result.
-The protocol now reserves two CPUs for the load generator and two for the
-server, applies that partition identically to every lane, and checks the
-busiest generator CPU. A complete short qualification and all three full
-rounds must be rerun before any result is entered below.
+declared 90% ceiling. Two generator CPUs still reached 97.1% busy after the
+framework sample's persistent-connection correction. None of those partial
+measurements is publishable. The protocol now reserves CPU `0` for every
+server and CPUs `1-3` for three load threads. The complete 19-lane short
+qualification passed its validity gates, but its two-second values are
+diagnostic only. A subsequent three-round campaign completed all 57 samples
+with clean responses, cooldowns, governor restoration, and no throttling. It
+is nevertheless rejected as release evidence: fixed-request calibration
+underestimated connection startup, so some supposed ten-second measurement
+intervals lasted only about two to six seconds. The runner now uses a
+five-second same-connection warm-up followed by a fixed ten-second interval.
+A fresh short qualification, three full randomized rounds, and performance
+review remain required before any result is entered below.
 
-The [measurement protocol](benchmark-rpi5.md) defines the fixed request,
+The [measurement protocol](benchmark-rpi5.md) defines the fixed response,
 host-inlined CoAkka lanes, framework comparisons, CPU placement, cooldown,
 qualification, and evidence requirements. Each ecosystem is compared only with
 frameworks in that ecosystem; the tables do not rank languages against one
@@ -31,10 +39,10 @@ another. Language-standard HTTP servers are not comparison lanes.
 | Required OS | Raspberry Pi OS Lite 64-bit, Debian 13 Trixie; clean installation and full update complete |
 | Kernel and firmware | `6.18.50+rpt-rpi-2712`; no throttle reported during preparation or rejected qualification; final campaign recaptures both |
 | Boot storage | SanDisk USB 250 GB (`/dev/sda2` root); prior SK hynix NVMe unmounted |
-| Native host component | Installed ELF SHA-256 `b71dcdf1975475c79e0738da4b0d549480fd9fc32f7721b9411940795decd1fe`; benchmark source digest refreshed before the next qualification |
-| CPU placement | Server `0-1`; two load threads on `2-3`; busiest load CPU must stay at or below 90% busy |
-| Qualification | Prior single-generator-CPU attempt rejected; revised complete qualification pending |
-| Full campaign | Pending |
+| Native host component | Installed ELF SHA-256 `9b74f5b3730b207a2449cf933156881b9781d8cbcaf14734f6c47feb664384c8`; exact-source component gate passed |
+| CPU placement | Server `0`; three load threads on `1-3`; busiest load CPU must stay at or below 90% busy |
+| Qualification | Earlier 19-lane short validity gate passed under a superseded measurement method; revised qualification pending |
+| Full campaign | Earlier 57-sample fixed-request campaign rejected for unequal measured durations; revised three-round campaign pending |
 
 ## Per-Ecosystem Results
 
@@ -53,8 +61,8 @@ from the checked-in summarizer, preserving its machine and evidence record.
 | Node.js | Host-inlined | Express, Fastify | Pending |
 | Bun | Host-inlined | Elysia, Hono | Pending |
 
-The final result is eligible only after a clean short qualification, three
-matched full rounds, the cooldown gate after calibration and between every
-lane, exact responses, zero request failures, no power or thermal throttling,
-and a complete evidence archive. A surprising result is investigated before
-publication rather than averaged away.
+The final result is eligible only after a clean revised short qualification,
+three matched fixed-duration rounds with same-connection warm-up, the cooldown
+gate before the campaign and between every lane, exact responses, zero request
+failures, no power or thermal throttling, and a complete evidence archive. A
+surprising result is investigated before publication rather than averaged away.
