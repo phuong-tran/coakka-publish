@@ -26,17 +26,38 @@
 
 ### Native C baseline
 
-No competitor is included. This is the installed public C callback surface;
+No competitor is included. This is the installed public C host-inlined event-reader surface;
 C++ samples reference these C measurements, not an independently measured C++ server.
 
 | Application | CPUs | Req/s median (range) | p50 / p95 / p99 ms | CPU % | RSS mean / sampled peak MiB | Errors / timeouts |
 | --- | ---: | --- | --- | ---: | --- | --- |
-| Native C + CoAkka | 1 | 61,248.1 (60,692.4–61,400.1) | 1.051 / 1.302 / 1.411 | 99.6 | 9.2 / 9.2 | 0 / 0 |
-| Native C + CoAkka | 2 | 93,072.7 (91,968.4–93,349.7) | 0.679 / 0.726 / 0.988 | 151.7 | 9.2 / 9.2 | 0 / 0 |
+| Native C + CoAkka | 1 | 88,255.1 (87,753.3–88,939.2) | 0.715 / 0.756 / 0.943 | 99.7 | 12.9 / 12.9 | 0 / 0 |
+| Native C + CoAkka | 2 | 158,854.4 (158,021.3–158,903.7) | 0.375 / 0.547 / 0.640 | 195.6 | 17.1 / 17.1 | 0 / 0 |
 
-Both CPU profiles use the runtime-reported one event loop and notification
-batches 8/8. CPU budget is not an event-loop count. These results do not
-reuse historical throughput peaks from different workloads.
+The C application explicitly requests one/two loops for the one/two-CPU
+profiles, with notification batches 64/32 and completion batch 64.
+Full terminal events remain enabled. The reader handles the fixed response
+outside Core I/O threads. All other unset limits retain Core defaults.
+This profile uses plaintext HTTP/1.1 without optional feature reservations;
+it is not a universal production configuration or a connector loop override.
+Core reports actual loop/batch settings; direct native construction does
+not report CPU selection. The harness separately verifies process/thread
+affinity. No Core or connector binary was rebuilt.
+
+Earlier callback-default observations (61,248.1 / 93,072.7 req/s) used
+one loop, 8/8 notifications and a different application dispatch surface.
+They are not equivalent configurations, and this difference is not a claim
+of a Core code optimization. The current table contains fresh package runs,
+not a substituted historical peak.
+
+A separate unchanged two-CPU repeat produced 158,679.8 / 159,290.1 /
+159,485.1 req/s (median **159,290.1**, CPU 195.7%, p99 0.639 ms).
+All 4,774,550 measured responses succeeded with zero errors/timeouts and three
+clean shutdowns. The first cohort above remains unchanged; the median across
+all six two-CPU runs is **158,879.05 req/s**. Neither cohort establishes 170k.
+Repeat campaign SHA-256:
+`9d44c1418eaa130463a49d252b2e66fb252e7d2dc61b659d1e162e3ff2290aae`.
+
 
 These are three-run **localhost observations**, not unconstrained capacity or
 a universal framework ranking. All rows use installed packages admitted as
@@ -69,7 +90,8 @@ Undertow are intentionally not rerun. There is no public Netty comparison.
 | CPU budget | 1 CPU: server 0, generator 1–3; 2 CPUs: server 0–1, generator 2–3 |
 | Duration | Three fresh-process runs; 10s measured; 5s warm-up, JVM 30s |
 | Cooldown | At least 30s, <=50°C and busiest CPU <=5%, three consecutive clean samples before each run |
-| Runtime settings | Ordinary host-inlined package defaults; no application loop override; notification batches 8/8 |
+| Connector settings | Ordinary host-inlined package defaults; no application loop override; notification batches 8/8 |
+| Native C settings | Explicit 1/2 loops for 1/2 CPUs; request/terminal notifications 64/32; completion batch 64; 512 connections; 256 active exchanges and each request/completion/terminal queue |
 | Tools | Go 1.27.1; Node 22.23.3; Bun 1.4.2; Python 3.13.5; OpenJDK 21.0.12.1; h2load 1.64.0 |
 | Native consumer | C11, GCC 14.2.0, Release with -O3 -DNDEBUG; installed r3 library unchanged |
 
@@ -102,8 +124,8 @@ Response. Both use the same Bun binary. CoAkka/Bun.serve median ratios are
 | Bun + CoAkka | 2 | 66,225.1 / 65,502.2 / 66,026.3 |
 | Bun.serve | 2 | 46,557.1 / 46,521.7 / 46,263.5 |
 | Kotlin/JVM + CoAkka | 2 | 94,639.6 / 94,918.3 / 95,380.8 |
-| Native C + CoAkka | 1 | 61,400.1 / 61,248.1 / 60,692.4 |
-| Native C + CoAkka | 2 | 91,968.4 / 93,072.7 / 93,349.7 |
+| Native C + CoAkka | 1 | 88,939.2 / 87,753.3 / 88,255.1 |
+| Native C + CoAkka | 2 | 158,903.7 / 158,021.3 / 158,854.4 |
 
 ## Evidence identities
 
@@ -119,5 +141,5 @@ Package hashes are independently listed in each r3 warehouse checksum ledger.
 | Bun paired study / 1 CPUs | `4c24cae2dc93fdd4c580b236e6b5454e7dbf262f456e9dd043ffff27ee022636` |
 | Bun paired study / 2 CPUs | `355f41ae0d0ebf885bfa065a8b44136be982f8557ab14a2961d77cae42c30d20` |
 | JVM selected package / 2 CPUs | `90b38a76fa723bf6f6af7c50133f7f16a481c84ebbd7404dbfa00cd3a303e433` |
-| Native C package / 1 CPUs | `05f393733416a5cd62aec42b7abfc4049a9524ef905494dc8b3fcb8ce5f9cfa5` |
-| Native C package / 2 CPUs | `469307472211cdb9076c4561a8671c6ed787491ba05297b30026a2096c004852` |
+| Native C package / 1 CPUs | `2eeb093c5b36c983640f091829dcc1d4b16d88e312b5f8cbb630b55daddbc41c` |
+| Native C package / 2 CPUs | `a6d85bf9a7c4a68b8ede635b9658d5530f41877af6e514f7e1262a7c62341153` |
