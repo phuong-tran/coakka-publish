@@ -1,11 +1,25 @@
 # CoAkka HTTP for Go
 
 `coakkahttp` is the idiomatic Go connector for CoAkka HTTP Runtime. The module
-links directly to the installed host library; it contains no native payload and
-does not extract a library at runtime.
+links directly to the matching library supplied beside the Go module. It does
+not extract or download a library at runtime.
 
-Status: development source candidate. A tagged Go module and registry-oriented
-package layout are separate release gates.
+Status: five packaged branch candidates, not a tagged module or registry
+release. Download from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/) and verify
+[SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). Each bundle supplies `go/` and
+`native/` together, installation instructions and legal material.
+
+## Contents
+
+- [Requirements](#requirements)
+- [Quick start](#quick-start)
+- [I/O backend selection](#io-backend-selection)
+- [Supported service features](#supported-service-features)
+- [Response compression](#response-compression)
+- [Low-level example](#low-level-example)
+- [Monitoring](#monitoring)
+- [Route changes](#route-changes)
+- [Shutdown](#shutdown)
 
 ## Requirements
 
@@ -14,18 +28,22 @@ package layout are separate release gates.
 - `coakka/http/host.h`
 - `libcoakka_http_host` for the current target
 
-For a non-system installation, pass its include and library directories to
-cgo and make the library discoverable when running tests:
+From an application module on macOS/Linux, use the extracted bundle:
 
 ```sh
-CGO_CFLAGS="-I$COAKKA_HTTP_PREFIX/include" \
-CGO_LDFLAGS="-L$COAKKA_HTTP_PREFIX/lib" \
-go test ./...
+export COAKKA_HTTP_PACKAGE=/absolute/path/to/extracted-bundle
+go mod edit -require=github.com/phuong-tran/coakka-http-runtime-go@v0.0.0
+go mod edit -replace=github.com/phuong-tran/coakka-http-runtime-go="$COAKKA_HTTP_PACKAGE/go"
+export CGO_ENABLED=1
+export CGO_CFLAGS="-I$COAKKA_HTTP_PACKAGE/native/include"
+export CGO_LDFLAGS="-L$COAKKA_HTTP_PACKAGE/native/lib -Wl,-rpath,$COAKKA_HTTP_PACKAGE/native/lib"
+go build -trimpath .
 ```
 
-Use the platform loader setting appropriate for the target during development,
-for example `DYLD_LIBRARY_PATH` on macOS or `LD_LIBRARY_PATH` on Linux. A final
-package-manager layout is intentionally not defined here.
+Use an application-owned library location when deploying; do not retain a
+developer path. Windows needs a cgo-capable compiler for the selected process
+architecture, `native/include`, `native/lib`, and `native/bin` on the process
+`PATH` (or the DLL beside the executable). Follow the included platform guide.
 
 ## Quick start
 
@@ -33,12 +51,17 @@ package-manager layout is intentionally not defined here.
 package main
 
 import (
+    "context"
     "log"
+    "os"
+    "os/signal"
 
     coakkahttp "github.com/phuong-tran/coakka-http-runtime-go"
 )
 
 func main() {
+    ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+    defer stop()
     service, err := coakkahttp.NewBuilder().
         Get("/hello/{name}", func(request *coakkahttp.Request) (coakkahttp.Response, error) {
             name := request.PathParameters[0].EncodedValue
@@ -48,20 +71,42 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    defer func() { _ = service.Close() }()
-
     port, err := service.Port()
     if err != nil {
-        log.Fatal(err)
+        closeErr := service.Close()
+        log.Fatalf("read port: %v; close: %v", err, closeErr)
     }
     log.Printf("listening on http://127.0.0.1:%d", port)
-    select {}
+    <-ctx.Done()
+    if err := service.Close(); err != nil {
+        log.Fatal(err)
+    }
 }
 ```
 
 `Builder` supplies a bounded request/reply facade. `Runtime` is the lower-level
 pull API for applications that need direct ownership of events and commands.
 Both use the same host API and the same native service.
+
+## Response compression
+
+Configure ordinary host-inlined handlers with
+`builder.Compression(&coakkahttp.Compression{Mode: coakkahttp.CompressionGZIP, MinimumBodyBytes: 1, GZIPLevel: 6})`
+before startup. The builder copies the optional value; `Compression(nil)`
+removes an earlier override. Explicit disable uses
+`&coakkahttp.Compression{Mode: coakkahttp.CompressionDisabled}` without GZIP-only
+tuning fields. Core rejects incompatible settings rather than ignoring them.
+
+Core owns response eligibility, resource ceilings and negotiation. Handlers
+return normal application values; do not add another compression layer. The
+Go boundary rejects an unknown mode that cannot be represented by the native
+boolean. Numeric bounds and capability decisions remain Core-owned. This is
+startup configuration, not a live change to existing connections.
+
+The transform applies to eligible buffered responses, not response streams or
+SSE. Streams remain uncompressed and bounded; an identity-refusing client
+receives HTTP406 before an unencoded stream starts when this policy is enabled.
+Application-supplied content encoding remains application-owned.
 
 ## I/O backend selection
 
@@ -165,6 +210,12 @@ Monitor saturation never changes an HTTP exchange result.
 
 ## Route changes
 
+`Service.Routes()` and `Runtime.Routes()` return `(RouteSnapshot, error)` from
+Core: one complete structural generation, binding-change sequence and bounded
+route/binding list. The caller owns the copy; mutation cannot change routing.
+Monitoring need not be enabled. Refusal or unresolved control returns no partial
+snapshot. This unreleased contract replaces the old local-declaration getter.
+
 Prepare a new handler binding before publishing it. `RebindHandler` changes only
 the selected route's binding revision; `PublishRoutes` replaces one complete
 immutable structural generation. Admitted requests continue through the
@@ -176,8 +227,18 @@ route identity lookup remain native-owned.
 
 ## Shutdown
 
-`Runtime.Close` interrupts readers, waits for active calls, drains and stops the
-native service, then destroys it. `Service.Close` additionally joins its fixed
-worker set and stream/WebSocket helpers. User handlers must return; Go cannot
-forcibly stop arbitrary application code. A timed-out close retains the owner
-so cleanup can be retried safely.
+Outbound terminals preserve typed `OutboundReason`, `OutboundPhase`,
+`OutboundRetry` and `OutboundCertainty`, including unknown numbers. Use named
+constants: HTTP404/500 can be `OutboundResponse`, while cancellation and deadline
+expiry remain distinct causes. `Reason.String()` derives a code without storing
+a duplicate name. Retry disposition does not authorize replaying business work;
+the application owns idempotency and retry budgets. Never expose operator
+diagnostics automatically in an HTTP response.
+
+`Service.Close` stops admission, observes drain outcome and joins Go work before
+destruction. Application handlers must return. Inspect
+`*CloseError.RuntimeRetained` after refusal and retain the service when cleanup
+needs retry. `*DrainError` preserves forced expiry or abort even after cleanup.
+Low-level `Runtime.Close` is forced cleanup: graceful low-level use requires
+`Drain`, progressing readers and handlers, then `WaitDrained` first. A timed wait
+is not proof of completion; an expired drain is not graceful success.

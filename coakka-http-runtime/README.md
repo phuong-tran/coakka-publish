@@ -16,11 +16,38 @@ CoAkka HTTP Runtime supplies one shared HTTP contract. Language packages
 project it through each App Host without changing how application handlers are
 written.
 
-Release `1.0.0` is still being qualified. Native packages have passed on macOS
-ARM64, Linux x86-64, Windows ARM64, and Windows x86-64. Linux ARM64 still needs
-its clean Raspberry Pi OS Trixie run, followed by the cooled Raspberry Pi 5
-benchmark and final assembly verification. The language connectors are source
-candidates only; npm, Maven, PyPI, and Go registry layouts are later work.
+Version `1.0.0` is distributed through this repository as checksum-pinned
+archives with synchronized documentation and samples. The earlier native package layout is superseded and is not
+the installation baseline for this train. Do not use an older archive with
+the new APIs.
+
+Native, JVM, Go, JavaScript, and Python local package candidates have completed
+their recorded platform checks and artifact-backed sample synchronization.
+The optional Inspect application has two separately qualified packages.
+Distribution uses repository files, not a GitHub Release. There is no HTTP
+Runtime publication to npm, Maven, PyPI or Go package repositories in this train.
+
+## Package files on this branch
+
+| Application language | Package directory | Archives |
+| --- | --- | ---: |
+| C/C++ | [Native candidate](native/candidates/2026-10-08-r3/) | 5 |
+| Go | [Go candidate](go/candidates/2026-10-08-r3/) | 5 |
+| Java/Kotlin | [JVM candidate](jvm/candidates/2026-10-08-r3/) | 5 |
+| Node.js/Bun/TypeScript | [JavaScript candidate](javascript/candidates/2026-10-08-r3/) | 5 shared packages |
+| Python | [Python candidate](python/candidates/2026-10-08-r3/) | 5 |
+| Optional inspection application | [Inspect guide and packages](inspect/README.md) | 2: macOS ARM64, Linux ARM64 |
+
+Each available directory includes `SHA256SUMS`. Node.js and Bun use the same
+JavaScript package, not separate downloads. These are branch candidates, not
+registry releases. From this checkout, verify the admitted archives with:
+
+```sh
+bash scripts/verify-http-runtime-release.sh --all-candidates
+```
+
+This checks candidate bytes and payload checksums, not final three-repository
+release approval.
 
 ## Contents
 
@@ -38,7 +65,7 @@ candidates only; npm, Maven, PyPI, and Go registry layouts are later work.
 - [Languages And Hosts](#languages-and-hosts)
 - [Benchmark Policy](#benchmark-policy)
 - [Documentation](#documentation)
-- [Private Release Gate](#private-release-gate)
+- [Release Status](#release-status)
 
 ## Why CoAkka HTTP Runtime Exists
 
@@ -329,11 +356,13 @@ See the [Raspberry Pi 5 protocol](docs/benchmark-rpi5.md) and the
 | [Python](python/README.md) | Python usage |
 | [JavaScript](javascript/README.md) | Node.js, Bun, and TypeScript usage |
 | [Go](go/README.md) | Go usage |
+| [HTTP Runtime Inspect](inspect/README.md) | Local browser inspection, packages, security and lifecycle |
 
-## Private Release Gate
+## Release Status
 
-The private `1.0.0` candidate is not complete yet. The remaining gates are a
-clean Linux ARM64 qualification on the updated Raspberry Pi 5, the cooled
-host-inlined benchmark, and verification of the final native-only assembly in
-`coakka-publish`. Registry upload, production signing, and language-specific
-package publication are outside this release-preparation step.
+The branch contains 25 service-package candidates and two independently
+qualified Inspect candidates. Exact package identities, platform evidence,
+documentation and consumer samples are checked together before the three
+repository branches merge. Old benchmark results do not qualify a new package.
+Inspect is restricted to the two platforms and local development scope in its
+guide. Registry upload and production signing are outside this preparation step.

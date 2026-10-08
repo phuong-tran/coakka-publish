@@ -7,7 +7,7 @@ private key, and, for mutual TLS, client trust roots.
 
 ## Contents
 
-- [Install The Private Candidate](#install-the-private-candidate)
+- [Install The Repository Package](#install-the-repository-package)
 - [Security Modes](#security-modes)
 - [TLS Sample](#tls-sample)
 - [mTLS Sample](#mtls-sample)
@@ -16,18 +16,18 @@ private key, and, for mutual TLS, client trust roots.
 - [Credential Operations](#credential-operations)
 - [Verification Checklist](#verification-checklist)
 
-## Install The Private Candidate
+## Install The Repository Package
 
-The current `1.0.0` train remains private. Install the exact staged artifact
-from a local release directory; do not substitute a public registry package.
+Install the exact `1.0.0` archive for your platform from the repository.
+Do not substitute a similarly named registry package.
 
-| Language | Private installation shape |
+| Language | Installation guide |
 | --- | --- |
-| Python | `python -m pip install ./coakka_http-1.0.0-<platform>.whl` |
-| Node.js/Bun | `npm install ./coakka-http-1.0.0.tgz` or `bun add ./coakka-http-1.0.0.tgz` |
-| JVM | Place `coakka-http-jvm-1.0.0.jar` under `libs/` and use `implementation(files("libs/coakka-http-jvm-1.0.0.jar"))` |
-| Go | Extract the source artifact and use a temporary `replace github.com/phuong-tran/coakka-http-runtime-go => /absolute/extracted/path` while the module publication gate is closed |
-| C/C++ | Point `CMAKE_PREFIX_PATH` at the extracted target SDK and consume its installed CMake package |
+| Python | [Extracted module and matching library](../python/README.md); no wheel is published in this train |
+| Node.js/Bun | [Shared JavaScript archive](../javascript/README.md) |
+| JVM | [JAR and matching native libraries](../jvm/README.md) |
+| Go | [Module and native bundle](../go/README.md) |
+| C/C++ | [Installed CMake package](../native/README.md) |
 
 Match the artifact to the operating system and architecture. Package presence
 alone is not protocol evidence; check the packaged capability bits and run a

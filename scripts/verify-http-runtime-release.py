@@ -1,339 +1,239 @@
 #!/usr/bin/env python3
-"""Verify the native-only CoAkka HTTP Runtime release candidate."""
+"""Admit exact HTTP native candidate archives without implying release approval.
 
-from __future__ import annotations
+Pins are independent of the candidate's manifest. No archive is extracted and
+no private source is required. Candidate admission is not branch-merge or
+publication authorization; the owning coordinated audit records those gates.
+"""
 
+import argparse
 import hashlib
 import json
-import os
+import posixpath
 from pathlib import Path, PurePosixPath
 import re
+import subprocess
 import sys
+import tarfile
 
 
-SOURCE_REVISION = "b986565104b6cc9ca4750374ce965ddd2a482ba5"
-CONNECTOR_REVISION = "70e7d160282b7547146b63c27bc08baa174561b4"
-SAMPLES_REVISION = "b43ca59257664a493368577443625f47aab2d809"
-DOCUMENTATION_REVISION = "cb671a643b0d3baf62f4e2b0b69922854a60cc64"
-RELEASE_ID = f"1.0.0+{SOURCE_REVISION}"
-TARGETS = (
-    "macos-aarch64",
-    "linux-aarch64",
-    "linux-x86_64",
-    "windows-aarch64",
-    "windows-x86_64",
-)
-# These identities come from matching-host package gates, not from the
-# release manifest being checked. Performance acceptance remains separate.
-QUALIFIED_BINARY_SHA256 = {
-    "macos-aarch64": "51b392029a37aa4a079e289e121a636dfe8b258f64822d7e69429cf9f11a2c4b",
-    "linux-aarch64": "b71dcdf1975475c79e0738da4b0d549480fd9fc32f7721b9411940795decd1fe",
-    "linux-x86_64": "19d55ca26a07e7a47ac066726417e804ee0a74943eda0f560f9ef43402b70cc0",
-    "windows-aarch64": "e295de7b89e61fd1f6f12124f39bec2566cfc10b9a017645fd9fe37fb6e35ca4",
-    "windows-x86_64": "f62a7d45096eebc28e280849282226df422c362faf9851a075b3bfedca45353e",
+CANDIDATE = "2026-10-08-r3"
+# Admitted archive identities from the completed five-target package gates.
+QUALIFIED = {
+    "linux-aarch64": "4225febd7681d550b3f85feeb0254ed72d6332fc37079210a8f3c940ed4c148a",
+    "linux-x86_64": "7c0b63bcca23d984ea630eb2c8ee6561b7f7ceea7850eb2f810b1edbfc817634",
+    "macos-aarch64": "a3260760511e18334c1e680ff46b45b043acd305243cd98463be1c9aaa74356b",
+    "windows-aarch64": "470030b59e5a2dd674749e6973ccf6dd98d15972157a6dd75edf79bc6d71ca10",
+    "windows-x86_64": "cede881af8fc24c45fe58409a17417abcdda78bf8e4b88182093f9bb38e9e914"
 }
-QUALIFIED_HEADER_SHA256 = "bebde4948d58598e4b2b6491ff6fa9b1c078e80ad5050021fe39ac58d3f1ae2d"
-# Pin this only after the cooled physical-board campaign is reviewed.
-QUALIFIED_BENCHMARK_SHA256: str | None = None
-LEGAL_FILES = ("LICENSE", "NATIVE-LICENSE.md", "NOTICE", "PACKAGE-LICENSE.md")
-CMAKE_FILES = (
-    "CoAkkaHttpHostConfig.cmake",
-    "CoAkkaHttpHostConfigVersion.cmake",
-    "CoAkkaHttpHostTargets-release.cmake",
-    "CoAkkaHttpHostTargets.cmake",
-)
-UNIX_LIBRARIES = {
-    "macos-aarch64": (
-        "lib/libcoakka_http_host.dylib",
-        "lib/libcoakka_http_host.1.dylib",
-        "lib/libcoakka_http_host.1.0.0.dylib",
-    ),
-    "linux-aarch64": (
-        "lib/libcoakka_http_host.so",
-        "lib/libcoakka_http_host.so.1",
-        "lib/libcoakka_http_host.so.1.0.0",
-    ),
-    "linux-x86_64": (
-        "lib/libcoakka_http_host.so",
-        "lib/libcoakka_http_host.so.1",
-        "lib/libcoakka_http_host.so.1.0.0",
-    ),
-}
-WINDOWS_LIBRARIES = (
-    "bin/coakka_http_host.dll",
-    "lib/coakka_http_host.lib",
-)
-PUBLIC_DOC_FORBIDDEN = re.compile(
-    r"black[- ]?box|callback-free|canonical|conformance|internal execution|"
-    r"libuv|usockets|uwebsockets|protobuf|ctypes|node-api|jni|private header|"
-    r"wire schema|dependency[ ._-]?closure|coakka-http-runtime-core|"
-    r"http-runtime-core|\bcore\b|\babi\b",
-    re.IGNORECASE,
-)
-PACKAGE_FORBIDDEN = re.compile(
-    rb"coakka.?http.?core|coakka.?core|runtime.?core|core.?configuration|"
-    rb"canonical|black.?box|protobuf|libuv|usockets?|uwebsockets?|boost|absl|"
-    rb"openssl|boringssl|nghttp[23]|ngtcp2|curl|c-?ares|liburing|sfparse|"
-    rb"utf8.?range|zlib|google(::|/)|coakka\.http\.v[0-9]+\.|"
-    rb"coakka-(build|source)|native.?poller|runtime\.h|/Users/|"
-    rb"C:\\Work\\|/home/phuong/|coakka-http-host-inlined",
-    re.IGNORECASE,
-)
 
 
-def fail(message: str) -> None:
-    raise SystemExit(f"[http-runtime-release] {message}")
+def digest(path):
+    with path.open("rb") as stream:
+        result = hashlib.sha256()
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            result.update(chunk)
+        return result.hexdigest()
 
 
-def digest(path: Path) -> str:
-    with path.open("rb") as source:
-        return hashlib.file_digest(source, "sha256").hexdigest()
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
 
 
-def read_json(path: Path) -> dict[str, object]:
-    try:
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
-        fail(f"cannot read JSON {path}: {error}")
-    if not isinstance(value, dict):
-        fail(f"JSON root must be an object: {path}")
-    return value
+def archive_name(target):
+    return f"coakka-http-native-1.0.0-candidate-{target}.tar.gz"
 
 
-def require_equal(actual: object, expected: object, context: str) -> None:
-    if actual != expected:
-        fail(f"{context}: expected {expected!r}, found {actual!r}")
-
-
-def relative_inventory(root: Path) -> set[str]:
-    return {
-        path.relative_to(root).as_posix()
-        for path in root.rglob("*")
-        if path.is_file() or path.is_symlink()
-    }
-
-
-def expected_target_inventory(target: str) -> set[str]:
-    result = {"include/coakka/http/host.h"}
-    result.update(f"lib/cmake/CoAkkaHttpHost/{name}" for name in CMAKE_FILES)
-    result.update(
-        f"share/licenses/coakka-http-runtime/{name}" for name in LEGAL_FILES
-    )
-    if target in UNIX_LIBRARIES:
-        result.update(UNIX_LIBRARIES[target])
+def layout(target):
+    """Exact installed SDK inventory; Unix links are checked separately."""
+    files = {f"include/coakka/http/{name}.h"
+             for name in ("http", "execution", "request_control")}
+    files.update(f"lib/cmake/CoAkkaHttp/CoAkkaHttp{name}.cmake" for name in
+                 ("Config", "ConfigVersion", "Targets-release", "Targets"))
+    files.update(f"share/licenses/coakka-http-runtime/{name}" for name in
+                 ("LICENSE", "NATIVE-LICENSE.md", "PACKAGE-LICENSE.md", "NOTICE"))
+    files.add("share/coakka-http-runtime/coakka-http-runtime.artifact.json")
+    links = {}
+    if target.startswith("windows-"):
+        binary = "bin/coakka_http_runtime.dll"
+        files.add("lib/coakka_http_runtime.lib")
+    elif target.startswith("macos-"):
+        binary = "lib/libcoakka_http_runtime.1.0.0.dylib"
+        links = {"lib/libcoakka_http_runtime.dylib": "libcoakka_http_runtime.1.dylib",
+                 "lib/libcoakka_http_runtime.1.dylib": "libcoakka_http_runtime.1.0.0.dylib"}
     else:
-        result.update(WINDOWS_LIBRARIES)
-    return result
+        binary = "lib/libcoakka_http_runtime.so.1.0.0"
+        links = {"lib/libcoakka_http_runtime.so": "libcoakka_http_runtime.so.1",
+                 "lib/libcoakka_http_runtime.so.1": "libcoakka_http_runtime.so.1.0.0"}
+    return files | {binary}, links, binary
 
 
-def verify_safe_links(root: Path) -> None:
-    resolved_root = root.resolve()
-    for path in root.rglob("*"):
-        if not path.is_symlink():
-            continue
-        target = os.readlink(path)
-        if os.path.isabs(target):
-            fail(f"absolute symlink is forbidden: {path} -> {target}")
-        try:
-            path.resolve(strict=True).relative_to(resolved_root)
-        except (FileNotFoundError, ValueError):
-            fail(f"unsafe or broken symlink: {path} -> {target}")
+def verify_members(archive, target):
+    """Reject duplicates, extras and non-regular entries before reading payloads."""
+    members = archive.getmembers()
+    files, links, binary = layout(target)
+    names = [entry.name for entry in members]
+    require(len(names) == len(set(names)), "duplicate archive member")
+    require(set(names) == files | set(links), "unexpected installed inventory")
+    for entry in members:
+        path = PurePosixPath(entry.name)
+        require(not path.is_absolute() and ".." not in path.parts, "unsafe archive path")
+        if entry.name in links:
+            require(entry.issym() and entry.linkname == links[entry.name], "unsafe library link")
+        else:
+            require(entry.isfile() and 0 <= entry.size <= 32 * 1024 * 1024,
+                    "unsupported archive entry or size")
+    metadata = json.load(archive.extractfile(
+        "share/coakka-http-runtime/coakka-http-runtime.artifact.json"))
+    require(isinstance(metadata, dict), "artifact identity must be an object")
+    require(metadata.get("schema") == "coakka.http.artifact-metadata.v1"
+            and metadata.get("product") == "coakka-http-runtime"
+            and metadata.get("target") == target, "artifact identity mismatch")
+    data = archive.extractfile(binary).read()
+    require(metadata.get("file") == PurePosixPath(binary).name
+            and type(metadata.get("size")) is int and metadata["size"] == len(data)
+            and metadata.get("sha256") == hashlib.sha256(data).hexdigest(),
+            "artifact binary mismatch")
+    header = archive.extractfile("include/coakka/http/http.h").read()
+    require(b"COAKKA_HTTP_ABI_VERSION UINT32_C(12)" in header, "wrong application header")
 
 
-def verify_checksums(release: Path) -> None:
-    checksum_path = release / "SHA256SUMS"
-    recorded: dict[str, str] = {}
-    for line in checksum_path.read_text(encoding="utf-8").splitlines():
-        match = re.fullmatch(r"([0-9a-f]{64})  (\./[^\r\n]+)", line)
-        if match is None or match.group(2) in recorded:
-            fail(f"malformed or duplicate SHA256SUMS entry: {line!r}")
-        pure = PurePosixPath(match.group(2)[2:])
-        if pure.is_absolute() or ".." in pure.parts:
-            fail(f"unsafe checksum path: {match.group(2)}")
-        recorded[match.group(2)] = match.group(1)
-
-    expected = {
-        f"./{name}"
-        for name in relative_inventory(release)
-        if name != "SHA256SUMS"
-    }
-    require_equal(set(recorded), expected, "checksum inventory")
-    for relative, expected_hash in recorded.items():
-        require_equal(digest(release / relative[2:]), expected_hash, relative)
-
-
-def verify_public_docs(product: Path) -> None:
-    for path in product.rglob("*.md"):
-        match = PUBLIC_DOC_FORBIDDEN.search(path.read_text(encoding="utf-8"))
-        if match is not None:
-            fail(f"public documentation exposes private vocabulary: {path}: {match.group(0)}")
-
-
-def verify_no_dependency_inventory(product: Path) -> None:
+def verify_candidate(product):
+    root = product / "native/candidates" / CANDIDATE
+    require(not (product / "native/releases").exists(), "obsolete native assembly remains")
     for path in product.rglob("*"):
-        lowered = path.name.lower().replace("_", "-")
-        if "third-party" in lowered or "thirdparty" in lowered or "spdx" in lowered:
-            fail(f"dependency inventory is forbidden in the release surface: {path}")
+        name = path.name.lower().replace("_", "-")
+        require("third-party" not in name and "thirdparty" not in name,
+                "dependency inventory is not a distributable artifact")
+    for path in (product / "native/candidate.json", root / "SHA256SUMS"):
+        for entry in (path, *path.parents):
+            require(not entry.is_symlink(), "linked candidate path")
+            if entry == product:
+                break
+    manifest = json.loads((product / "native/candidate.json").read_text())
+    require(manifest == {"schema": "coakka.http.native-candidate.v1",
+                         "candidate": CANDIDATE, "status": "candidate",
+                         "archives": {archive_name(t): h for t, h in QUALIFIED.items()}},
+            "candidate manifest does not match admitted archives")
+    expected = {archive_name(t) for t in QUALIFIED} | {"SHA256SUMS"}
+    require(root.is_dir() and not root.is_symlink(), "missing or linked candidate")
+    require({p.name for p in root.iterdir()} == expected, "candidate file inventory")
+    sums = "".join(f"{QUALIFIED[t]}  {archive_name(t)}\n" for t in sorted(QUALIFIED))
+    require((root / "SHA256SUMS").read_text() == sums, "checksum ledger mismatch")
+    for target, sha in QUALIFIED.items():
+        path = root / archive_name(target)
+        require(path.is_file() and not path.is_symlink(), "archive must be a regular file")
+        require(digest(path) == sha, f"unqualified archive: {target}")
+        with tarfile.open(path, "r:gz") as archive:
+            verify_members(archive, target)
+            for name in ("LICENSE", "NOTICE", "NATIVE-LICENSE.md", "PACKAGE-LICENSE.md"):
+                # Exact archive hashes above preserve producer bytes. Windows
+                # NOTICE uses CRLF; the repository copy uses LF. Compare text
+                # with only that line-ending distinction, never strip clauses.
+                packaged = archive.extractfile(f"share/licenses/coakka-http-runtime/{name}").read()
+                require(packaged.replace(b"\r\n", b"\n")
+                        == (product / name).read_bytes().replace(b"\r\n", b"\n"),
+                        f"product legal material differs: {name}")
 
 
-def verify_release_record(release: Path) -> None:
-    """Require an explicit final decision, not merely present release notes."""
-    record = (release / "RELEASE.md").read_text(encoding="utf-8")
-    statuses = re.findall(r"^Status: ([^\r\n]+)$", record, flags=re.MULTILINE)
-    require_equal(statuses, ["ready-to-release"], "release record status")
-    if re.search(r"\b(?:pending|not ready|do not distribute)\b", record, re.IGNORECASE):
-        fail("release record retains draft content")
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--candidate", action="store_true",
+                        help="verify native candidate only, not release readiness")
+    parser.add_argument("--all-candidates", action="store_true",
+                        help="verify native, connector and Inspect candidates, not publication approval")
+    args = parser.parse_args()
+    product = Path(__file__).resolve().parent.parent / "coakka-http-runtime"
+    try:
+        verify_candidate(product)
+        if args.all_candidates:
+            pins = json.loads(Path(__file__).with_name("http-runtime-connector-candidates.json").read_text())
+            require(set(pins) == {"go", "jvm", "javascript", "python"}, "connector candidate lane inventory")
+            for lane, record in pins.items():
+                verify_connector_candidate(product, lane, record)
+            subprocess.run([sys.executable, str(Path(__file__).with_name(
+                "verify-http-inspect-candidate.py"))], check=True)
+        if not (args.candidate or args.all_candidates):
+            raise ValueError("publication is separate; use --all-candidates for archive admission")
+    except (OSError, ValueError, tarfile.TarError, subprocess.CalledProcessError) as error:
+        parser.exit(1, f"[http-runtime-release] {error}\n")
+    count = 27 if args.all_candidates else 5
+    print(f"[http-runtime-release] candidate admission verified: {count} exact archives; NOT release approval")
 
 
-def verify_target(
-    release: Path,
-    target: str,
-    target_manifest: object,
-    expected_header_hash: str | None,
-) -> str:
-    if not isinstance(target_manifest, dict):
-        fail(f"target manifest must be an object: {target}")
-    target_root = release / target
-    require_equal(
-        relative_inventory(target_root),
-        expected_target_inventory(target),
-        f"{target} installed inventory",
-    )
-    verify_safe_links(target_root)
+def verify_connector_payload(archive, prefix):
+    """Check safe archive members and each inner checksum without extraction.
 
-    header = target_root / "include/coakka/http/host.h"
-    header_hash = digest(header)
-    require_equal(header_hash, QUALIFIED_HEADER_SHA256, f"{target} qualified public header")
-    if expected_header_hash is not None:
-        require_equal(header_hash, expected_header_hash, f"{target} public header")
-    if b"COAKKA_HTTP_HOST_ABI_VERSION UINT32_C(4)" not in header.read_bytes():
-        fail(f"{target} public header does not declare host interface version 4")
-
-    cmake_root = target_root / "lib/cmake/CoAkkaHttpHost"
-    require_equal(
-        sorted(path.name for path in cmake_root.glob("*.cmake")),
-        list(CMAKE_FILES),
-        f"{target} CMake metadata",
-    )
-
-    binary_relative = target_manifest.get("binary")
-    if not isinstance(binary_relative, str):
-        fail(f"{target} binary path is missing")
-    expected_binary = {
-        "macos-aarch64": "macos-aarch64/lib/libcoakka_http_host.1.0.0.dylib",
-        "linux-aarch64": "linux-aarch64/lib/libcoakka_http_host.so.1.0.0",
-        "linux-x86_64": "linux-x86_64/lib/libcoakka_http_host.so.1.0.0",
-        "windows-aarch64": "windows-aarch64/bin/coakka_http_host.dll",
-        "windows-x86_64": "windows-x86_64/bin/coakka_http_host.dll",
-    }[target]
-    require_equal(binary_relative, expected_binary, f"{target} primary binary path")
-    binary = release / binary_relative
-    binary_hash = digest(binary)
-    require_equal(binary_hash, QUALIFIED_BINARY_SHA256[target], f"{target} qualified binary")
-    require_equal(binary_hash, target_manifest.get("sha256"), f"{target} manifest binary hash")
-    require_equal(binary.stat().st_size, target_manifest.get("size"), f"{target} binary size")
-    require_equal(target_manifest.get("installed_entries"), len(expected_target_inventory(target)), f"{target} entry count")
-    require_equal(target_manifest.get("export_count"), 102, f"{target} export count")
-    for gate in ("package_gate", "matching_host_gate", "connector_gate"):
-        require_equal(target_manifest.get(gate), "pass", f"{target} {gate}")
-
-    for relative in ("include/coakka/http/host.h", *(
-        f"lib/cmake/CoAkkaHttpHost/{name}" for name in CMAKE_FILES
-    )):
-        path = target_root / relative
-        match = PACKAGE_FORBIDDEN.search(path.read_bytes())
-        if match is not None:
-            fail(f"{target} package metadata exposes private vocabulary: {relative}")
-    match = PACKAGE_FORBIDDEN.search(binary.read_bytes())
-    if match is not None:
-        fail(f"{target} binary exposes private vocabulary")
-
-    for name in LEGAL_FILES:
-        release_legal = release / name
-        target_legal = target_root / "share/licenses/coakka-http-runtime" / name
-        require_equal(digest(target_legal), digest(release_legal), f"{target} legal file {name}")
-    return header_hash
+    Admission first checks a separately pinned complete archive digest. This
+    second check catches malformed producer layouts; it never accepts arbitrary
+    files just because an archive carries its own checksum ledger.
+    """
+    entries = archive.getmembers()
+    names = [entry.name.rstrip("/") for entry in entries]
+    require(len(names) == len(set(names)) and len(entries) <= 256, "duplicate or excessive connector entries")
+    files = {}
+    links = {}
+    for entry in entries:
+        name = entry.name.rstrip("/")
+        path = PurePosixPath(name)
+        require(not path.is_absolute() and ".." not in path.parts
+                and "\\" not in name and (name == prefix or name.startswith(prefix + "/")),
+                "unsafe connector archive path")
+        require(entry.isdir() or entry.isfile() or entry.issym(), "unsupported connector archive entry")
+        require(0 <= entry.size <= 32 * 1024 * 1024, "oversized connector entry")
+        if entry.issym():
+            destination = posixpath.normpath(posixpath.join(posixpath.dirname(name), entry.linkname))
+            require(not entry.linkname.startswith("/") and destination.startswith(prefix + "/"),
+                    "escaping connector link")
+            links[name] = destination
+        elif entry.isfile():
+            files[name] = entry
+    for destination in links.values():
+        seen = set()
+        while destination in links:
+            require(destination not in seen, "cyclic connector link")
+            seen.add(destination)
+            destination = links[destination]
+        require(destination in files, "broken connector link")
+    ledger = prefix + "/SHA256SUMS"
+    require(ledger in files, "missing inner checksum ledger")
+    recorded = {}
+    for line in archive.extractfile(files[ledger]).read().decode("utf-8").splitlines():
+        match = re.fullmatch(r"([0-9a-f]{64})  (.+)", line)
+        require(match is not None, "malformed inner checksum")
+        relative = match[2].removeprefix("./")
+        name = prefix + "/" + relative
+        require(name not in recorded and name in files, "duplicate or unknown inner checksum")
+        recorded[name] = match[1]
+    require(set(recorded) == set(files) - {ledger}, "inner checksum inventory")
+    for name, sha in recorded.items():
+        require(hashlib.sha256(archive.extractfile(files[name]).read()).hexdigest() == sha,
+                f"connector payload differs: {name}")
 
 
-def main() -> None:
-    repo_root = Path(__file__).resolve().parent.parent
-    product = repo_root / "coakka-http-runtime"
-    release = product / "native/releases" / RELEASE_ID
-    if not product.is_dir() or not release.is_dir():
-        fail(f"expected native candidate is missing: {release}")
-
-    release_dirs = sorted(path.name for path in release.parent.iterdir() if path.is_dir())
-    require_equal(release_dirs, [RELEASE_ID], "native release inventory")
-    for language in ("go", "jvm", "python", "javascript"):
-        if (product / language / "releases").exists():
-            fail(f"registry-oriented {language} packages are outside this release step")
-
-    verify_no_dependency_inventory(product)
-    verify_public_docs(product)
-    verify_safe_links(release)
-
-    required_release_files = {
-        "README.md",
-        "RELEASE.md",
-        "manifest.json",
-        "SHA256SUMS",
-        *LEGAL_FILES,
-    }
-    missing = sorted(name for name in required_release_files if not (release / name).is_file())
-    if missing:
-        fail(f"native release is missing: {', '.join(missing)}")
-    verify_release_record(release)
-
-    manifest = read_json(release / "manifest.json")
-    require_equal(manifest.get("schema"), "coakka.http.native-release.v1", "manifest schema")
-    require_equal(manifest.get("product"), "coakka-http-runtime", "manifest product")
-    require_equal(manifest.get("version"), "1.0.0", "manifest version")
-    require_equal(manifest.get("status"), "ready-to-release", "manifest status")
-    require_equal(manifest.get("source_revision"), SOURCE_REVISION, "source revision")
-    require_equal(
-        manifest.get("connector_revision"), CONNECTOR_REVISION, "connector revision"
-    )
-    require_equal(manifest.get("samples_revision"), SAMPLES_REVISION, "samples revision")
-    require_equal(
-        manifest.get("documentation_revision"),
-        DOCUMENTATION_REVISION,
-        "documentation revision",
-    )
-    require_equal(manifest.get("release_directory"), RELEASE_ID, "release directory")
-    targets = manifest.get("targets")
-    if not isinstance(targets, dict):
-        fail("manifest targets must be an object")
-    require_equal(tuple(targets), TARGETS, "manifest target order")
-    require_equal(set(QUALIFIED_BINARY_SHA256), set(TARGETS), "qualified target inventory")
-
-    benchmark = manifest.get("benchmark")
-    if not isinstance(benchmark, dict):
-        fail("benchmark evidence is missing")
-    require_equal(benchmark.get("status"), "accepted", "benchmark status")
-    benchmark_path = benchmark.get("document")
-    if benchmark_path != "docs/benchmark-results-rpi5.md":
-        fail("benchmark document path is invalid")
-    if QUALIFIED_BENCHMARK_SHA256 is None:
-        fail("physical-board benchmark has not been qualified")
-    benchmark_document = product / benchmark_path
-    benchmark_hash = digest(benchmark_document)
-    require_equal(benchmark_hash, QUALIFIED_BENCHMARK_SHA256, "qualified benchmark document")
-    require_equal(benchmark_hash, benchmark.get("sha256"), "manifest benchmark document")
-
-    expected_header_hash: str | None = None
-    for target in TARGETS:
-        expected_header_hash = verify_target(
-            release, target, targets[target], expected_header_hash
-        )
-
-    for name in LEGAL_FILES:
-        require_equal(digest(product / name), digest(release / name), f"release legal file {name}")
-
-    verify_checksums(release)
-    print(
-        "[http-runtime-release] pass "
-        f"release={RELEASE_ID} targets={len(TARGETS)} exports=102 benchmark=accepted"
-    )
+def verify_connector_candidate(product, lane, record):
+    """Admit precisely the five independently qualified archives for one lane."""
+    require(set(record["sha256"]) == set(QUALIFIED), "connector platform inventory")
+    root = product / lane / "candidates" / record["date"]
+    files = {f"coakka-http-{lane}-1.0.0-candidate-{target}.{record['extension']}": sha
+             for target, sha in record["sha256"].items()}
+    for path in (root, *root.parents):
+        require(not path.is_symlink(), "linked connector directory")
+        if path == product:
+            break
+    require({path.name for path in root.iterdir()} == set(files) | {"SHA256SUMS"},
+            "connector candidate file inventory")
+    require(not (root / "SHA256SUMS").is_symlink(), "linked connector checksum ledger")
+    expected = "".join(f"{sha}  {name}\n" for name, sha in sorted(files.items()))
+    require((root / "SHA256SUMS").read_text() == expected, "connector checksum ledger differs")
+    for name, sha in files.items():
+        path = root / name
+        require(path.is_file() and not path.is_symlink() and digest(path) == sha,
+                f"unqualified connector archive: {name}")
+        prefix = "package" if lane == "javascript" else name.removesuffix(".tar.gz")
+        with tarfile.open(path, "r:gz") as archive:
+            verify_connector_payload(archive, prefix)
 
 
 if __name__ == "__main__":

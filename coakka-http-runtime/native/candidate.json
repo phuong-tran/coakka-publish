@@ -1,0 +1,12 @@
+{
+  "archives": {
+    "coakka-http-native-1.0.0-candidate-linux-aarch64.tar.gz": "4225febd7681d550b3f85feeb0254ed72d6332fc37079210a8f3c940ed4c148a",
+    "coakka-http-native-1.0.0-candidate-linux-x86_64.tar.gz": "7c0b63bcca23d984ea630eb2c8ee6561b7f7ceea7850eb2f810b1edbfc817634",
+    "coakka-http-native-1.0.0-candidate-macos-aarch64.tar.gz": "a3260760511e18334c1e680ff46b45b043acd305243cd98463be1c9aaa74356b",
+    "coakka-http-native-1.0.0-candidate-windows-aarch64.tar.gz": "470030b59e5a2dd674749e6973ccf6dd98d15972157a6dd75edf79bc6d71ca10",
+    "coakka-http-native-1.0.0-candidate-windows-x86_64.tar.gz": "cede881af8fc24c45fe58409a17417abcdda78bf8e4b88182093f9bb38e9e914"
+  },
+  "candidate": "2026-10-08-r3",
+  "schema": "coakka.http.native-candidate.v1",
+  "status": "candidate"
+}

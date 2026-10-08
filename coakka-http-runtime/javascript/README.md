@@ -4,13 +4,41 @@ CoAkka HTTP gives Node.js and Bun applications a JavaScript-native service API
 while the native runtime owns listeners, protocol I/O, bounded queues, route
 matching, streaming, files, WebSockets, outbound connections, and monitoring.
 
-The connector does not embed or extract native binaries. Packaging for npm and
-other JavaScript registries is intentionally handled by a later platform-specific
-release step. A source or development build selects the addon explicitly:
+Five branch packages serve both Node.js and Bun. Download the `.tgz` matching
+the runtime process architecture from [candidates/2026-10-08-r2](candidates/2026-10-08-r3/)
+and verify [SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). Install that local file:
 
 ```sh
-export COAKKA_HTTP_JAVASCRIPT_ADDON=/absolute/path/to/coakka_http_javascript.node
+npm install --ignore-scripts /absolute/path/coakka-http-javascript-1.0.0-candidate-macos-aarch64.tgz
 ```
+
+The package loads its own native files by fixed relative paths. Keep `native/`
+intact; no compiler, postinstall download, runtime extraction or environment
+override is needed. npm publication is not part of this branch preparation.
+
+The API baseline is Node.js22 or Bun1.2.22. On Windows use Bun1.4.2 or later,
+prefer native ARM64 Bun on Windows ARM64. Version1.4.2 is the tested reference,
+not certification of future versions. Earlier Windows x64 Bun builds crashed
+in the ARM64 emulation runner, including a standalone test without CoAkka.
+Physical Intel/AMD Windows testing remains separate. The archive's release note
+preserves the exact tested scope and related issue links without asserting an
+upstream fix. For a deliberate development override only,
+`COAKKA_HTTP_JAVASCRIPT_ADDON` accepts an absolute regular addon file; invalid
+configuration fails instead of silently choosing another library.
+
+## Contents
+
+- [Basic server](#basic-server)
+- [io_uring selection](#io_uring-selection)
+- [Request bodies](#request-bodies)
+- [Streaming responses and SSE](#streaming-responses-and-sse)
+- [WebSocket](#websocket)
+- [Static and application-selected files](#static-and-application-selected-files)
+- [Outbound requests](#outbound-requests)
+- [Route updates](#route-updates)
+- [Configuration And Core Observations](#configuration-and-core-observations)
+- [Monitoring and lifecycle](#monitoring-and-lifecycle)
+- [Advanced runtime surface](#advanced-runtime-surface)
 
 ## Basic server
 
@@ -68,6 +96,12 @@ const service = new Builder()
 Large or incremental bodies use a stream route. Events for concurrent requests
 carry distinct generation-checked IDs:
 
+Every admitted stream receives one `dispose` notification when its handler scope
+retires, including cancellation before `end`. Release application-owned state
+there synchronously and return `undefined`. This notification has no body
+sequence and does not assert HTTP success; do not infer transport outcomes from
+cleanup or add timers that guess whether a request still exists.
+
 ```js
 const chunks = new Map();
 const key = (event) => `${event.id.slot}:${event.id.generation}`;
@@ -75,6 +109,10 @@ const key = (event) => `${event.id.slot}:${event.id.generation}`;
 const service = new Builder()
   .postStream("/upload", (event) => {
     const id = key(event);
+    if (event.kind === "dispose") {
+      chunks.delete(id);
+      return undefined;
+    }
     if (event.kind === "start") chunks.set(id, []);
     if (event.kind === "data") chunks.get(id).push(event.data);
     if (event.kind === "end") {
@@ -88,7 +126,12 @@ const service = new Builder()
 ```
 
 Only the `end` event returns a response. The application must keep any
-per-request state bounded.
+per-request state bounded. One handler admission remains reserved for the whole
+stream scope, including asynchronous response work. `dispose` runs after that
+work settles; a throwing cleanup is reported as a handler diagnostic, never a
+second response. Its typed cause distinguishes `end`, `cancelled`, `terminal`,
+`handler-failed`, and `service-stopped`. The last cause follows successful Core
+stop; a refused stop retains the live scope for retry.
 
 ## Streaming responses and SSE
 
@@ -212,6 +255,28 @@ const outcome = service.rebindHandler({
 Use `publishRoutes()` only for structural changes such as adding or removing a
 route or changing its method, path, or body policy. Both operations use expected
 generation values and return the complete effective outcome.
+
+## Configuration And Core Observations
+
+`Builder.compression({ mode: CompressionMode.GZIP })` enables bounded buffered
+compression; import `CompressionMode` from `@coakka/http`. Omission or
+`CompressionMode.DISABLED` leaves it disabled. Identity response streams remain
+usable with buffered compression enabled; this does not promise streaming GZIP.
+Optional byte/workspace bounds and encoding effort are documented in the
+installed `CompressionOptions` fields and validated by Core.
+
+`service.routes` and `service.routeSnapshot()` both pull Core's coherent route
+generation and route/binding revisions. Neither reports a local declaration
+cache or invents state when native inspection fails. Use captured route IDs
+and expected revisions for control operations.
+
+`OutboundReason`, `OutboundPhase`, `OutboundRetry` and `OutboundCertainty` name
+Core-issued outcome fields. Unknown numeric observations remain unchanged;
+application retry safety and budgets are not inferred from status or text.
+The sibling `coakka-samples` checkout provides the runnable TypeScript recipes
+under `coakka-http-runtime/typescript/`: configuration observations, monitor
+reload, cancellation, deadlines, compression and native outbound TLS/mTLS.
+Use the matching repository package set selected by the sample checksum pins.
 
 ## Monitoring and lifecycle
 

@@ -27,12 +27,22 @@ jobs:
       - name: Check out artifacts
         uses: actions/checkout@v6
 
+      - name: Admit and extract the exact native package
+        shell: bash
+        run: |
+          bash scripts/verify-http-runtime-release.sh --candidate
+          bash scripts/verify-http-runtime-test-source.sh
+          mkdir -p build/http-package
+          tar -xzf coakka-http-runtime/native/candidates/2026-10-08-r3/coakka-http-native-1.0.0-candidate-${{ matrix.platform }}.tar.gz -C build/http-package
+
       - name: Configure public ABI test
         run: >-
           cmake
           -S coakka-http-runtime/runtime-test
           -B build/coakka-http-runtime-test
-          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/coakka-http-runtime/native/releases/1.0.0+204d6ed28231ff9a39f4584393bf7d5af0b6975a/${{ matrix.platform }}
+          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/build/http-package
+          -DCOAKKA_HTTP_RUNTIME_TEST_EXPECT_TLS=ON
+          -DCOAKKA_HTTP_RUNTIME_TEST_EXPECT_OUTBOUND=ON
 
       - name: Build public ABI test
         run: cmake --build build/coakka-http-runtime-test --config Release --parallel
@@ -46,7 +56,7 @@ jobs:
           --output-on-failure
 
   http-native-sanitizers:
-    name: HTTP native ${{ matrix.sanitizer }}
+    name: HTTP consumer ${{ matrix.sanitizer }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -54,14 +64,22 @@ jobs:
       matrix:
         include:
           - sanitizer: ASan
-            cmake_option: COAKKA_HTTP_RUNTIME_TEST_ENABLE_ASAN
+            flag: address
           - sanitizer: UBSan
-            cmake_option: COAKKA_HTTP_RUNTIME_TEST_ENABLE_UBSAN
+            flag: undefined
           - sanitizer: TSan
-            cmake_option: COAKKA_HTTP_RUNTIME_TEST_ENABLE_TSAN
+            flag: thread
     steps:
       - name: Check out artifacts
         uses: actions/checkout@v6
+
+      - name: Admit and extract the exact native package
+        shell: bash
+        run: |
+          bash scripts/verify-http-runtime-release.sh --candidate
+          bash scripts/verify-http-runtime-test-source.sh
+          mkdir -p build/http-package
+          tar -xzf coakka-http-runtime/native/candidates/2026-10-08-r3/coakka-http-native-1.0.0-candidate-linux-x86_64.tar.gz -C build/http-package
 
       - name: Configure instrumented public ABI test
         run: >-
@@ -69,8 +87,11 @@ jobs:
           -S coakka-http-runtime/runtime-test
           -B build/coakka-http-runtime-${{ matrix.sanitizer }}
           -DCMAKE_BUILD_TYPE=RelWithDebInfo
-          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/coakka-http-runtime/native/releases/1.0.0+204d6ed28231ff9a39f4584393bf7d5af0b6975a/linux-x86_64
-          -D${{ matrix.cmake_option }}=ON
+          -DCMAKE_PREFIX_PATH=${{ github.workspace }}/build/http-package
+          -DCOAKKA_HTTP_RUNTIME_TEST_EXPECT_OUTBOUND=ON
+          "-DCMAKE_C_FLAGS=-fsanitize=${{ matrix.flag }} -fno-omit-frame-pointer"
+          "-DCMAKE_CXX_FLAGS=-fsanitize=${{ matrix.flag }} -fno-omit-frame-pointer"
+          -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=${{ matrix.flag }}
 
       - name: Build instrumented public ABI test
         run: >-
@@ -125,6 +146,8 @@ jobs:
           scripts/test-npm-package-manager-candidates.sh
           scripts/test-runtime-intake-artifact.sh
           scripts/test-runtime-addon-release.sh
-          scripts/verify-http-runtime-release.sh
+          python3 scripts/test-http-runtime-release.py
+          python3 scripts/test-http-inspect-candidate.py
+          scripts/verify-http-runtime-release.sh --all-candidates
           scripts/verify-http-runtime-test-source.sh
           scripts/verify-public-surface.sh

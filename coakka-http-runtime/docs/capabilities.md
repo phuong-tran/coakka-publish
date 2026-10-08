@@ -1,9 +1,9 @@
 # CoAkka HTTP Runtime Capabilities
 
-This matrix separates the complete `CoAkka HTTP Runtime` contract from
-the smaller convenience builders. Release `1.0.0` remains private, so every
-optional row still requires capability detection and matching-host evidence
-before a public support claim.
+This matrix describes the shared `CoAkka HTTP Runtime` contract and its
+idiomatic application surfaces. Builders are not limited to buffered HTTP.
+Every optional capability still requires feature detection and matching-host
+evidence for the selected package and deployment.
 
 ## Contents
 
@@ -42,8 +42,10 @@ before a public support claim.
 | Realtime | Server-Sent Events and WebSocket | Built in, feature gated |
 | Files | Static mounts, SPA fallback, application-authorized files, ranges and validators | Built in, target filesystem support required |
 | Outbound | Bounded client, logical targets, pools, DNS, TLS identity/trust, cancel and terminal outcome | Built in, feature gated |
-| Live control | Handler-binding swap with generation, revision, and idempotency checks | Built in, feature gated |
+| Live control | Handler-binding swap and complete route-generation publication, with versioned acceptance/rejection | Built in, feature gated |
+| Configuration | CPU/batch/timeout intent and Core-issued effective runtime information | Inspect the exact public package surface |
 | Observability | Health, fresh liveness, typed outcomes and inspection | Built in |
+| Browser tooling | Route/schema snapshots, OpenAPI and route try | Optional [HTTP Runtime Inspect](../inspect/README.md); separate macOS ARM64/Linux ARM64 local-development packages |
 | Monitoring | Bounded aggregates, failures, latency buckets, recent events, cursor/loss accounting, wait/interrupt, live policy | Built in, disabled by default |
 | I/O selection | Platform-default backend | Built in |
 | I/O selection | Linux `io_uring` | Feature gated for eligible HTTP/2 and HTTP/3 listener configurations |
@@ -55,35 +57,43 @@ provider silently appear.
 
 ## Language Projection
 
-| Language | Advanced service entry | Events and copied values | Monitor channel | Handler swap |
-| --- | --- | --- | --- | --- |
-| C/C++ | `coakka_http_host_service_t` | Explicit leased C values | `coakka_http_host_monitor_read/wait/interrupt` | `coakka_http_host_rebind` |
-| Java/Kotlin | `HttpRuntime` | JVM-owned sealed/data values | `readMonitorEvents/waitForMonitor/interruptMonitorWaiter` | `rebind` |
-| Python | `Runtime(RuntimeConfig(...))` | Typed context-managed leases | `monitor_read/monitor_wait/monitor_interrupt` | `rebind` |
-| JavaScript/TypeScript | `createRuntime()` | JavaScript-owned copied objects | `monitorRead/monitorWait/monitorInterrupt` | `rebind` |
-| Go | `Open()` | Go-owned structs and slices | `ReadMonitorEvents/WaitMonitor/InterruptMonitor` | `Rebind` |
+| Host | Normal application surface | Ownership |
+| --- | --- | --- |
+| C | `coakka_http_server_t`, declared callbacks, installed `coakka/http/http.h` | Callback-scoped borrowed requests; checked stop/destroy |
+| C++ | The same public C API wrapped with application RAII | No exception crosses a C callback; retain state on close refusal |
+| Kotlin/Java | `ServiceBuilder` | Kotlin implementation, Java-friendly public values and lifecycle |
+| Go | `NewBuilder()` | Functions, structs, errors and context-aware application flow |
+| Python | `Builder` | Python values and explicit service lifetime |
+| Node.js/Bun | `Builder` | Value or Promise-returning buffered handlers; synchronous stream chunk callbacks, asynchronous producers and close |
 
-All five projections cover the complete runtime capability vocabulary. Their
-reader, scheduling, and close idioms intentionally follow the host language.
+The native application package uses `CoAkkaHttp::runtime`, not the connector
+host API. Advanced public native configuration and event operations also live
+in `http.h`; an application never needs the private build-tree runtime header.
+Consult each exact package declaration before using a lower-level entrypoint.
 
 ## Convenience Builders
 
-The convenience layer keeps first use simple. It is not the product's
-capability ceiling.
+The ordinary Go, Kotlin, Python and TypeScript examples already demonstrate
+buffered and streaming HTTP, SSE, WebSocket, static/application files, outbound
+requests, monitor reads, handler replacement and route publication. Their
+security examples configure TLS/mTLS. These features do not inherently require
+abandoning the idiomatic service builder for a manual event pump.
 
-| Language | Builder | Current convenience scope |
-| --- | --- | --- |
-| C/C++ | `coakka_http_host_*` | Explicit leased events, finite bounds, and explicit lifecycle |
-| Java/Kotlin | `ServiceBuilder` | Direct buffered handlers with finite event loops, active-handler admission, and body/header/route bounds |
-| Python | `Builder` | Async buffered handlers with finite connection, active-handler, header, body, response, route, and backlog bounds |
-| JavaScript/TypeScript | `Builder` | Synchronous or asynchronous handlers on Node.js or Bun with finite active-handler, body, and route bounds plus Promise close |
-| Go | `NewBuilder()` | Buffered handlers with finite connection, active-handler, body, header, stream, session, and diagnostic bounds |
+The current C/C++ samples demonstrate a smaller subset than the native public
+API: buffered callbacks, files, runtime information, monitor reads, handler
+replacement and secure listeners. Missing advanced native examples are a sample
+coverage gap, not proof that the native API lacks those features.
 
-Use the builder for normal request/reply. Use the complete runtime owner when the
-application needs streaming, realtime sessions, files, outbound calls,
-TLS/mTLS control, `io_uring`, handler swap, inspection, or the monitor channel.
-An addon can provide annotations, decorators, middleware, dependency injection,
-generated routes, or another framework-style experience above either surface.
+CPU budgets, batch settings and timeouts belong to Core. Connectors submit
+intent and expose Core's accepted effective state through runtime information.
+Do not infer effective CPU/backend settings from the requested values. Internal
+loop tuning is not an application knob in normal language builders.
+
+For runnable source and honest remaining coverage, use the
+[feature sample index](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/FEATURES.md)
+on the matching coordinated candidate branch. Framework-style authentication,
+annotations, dependency injection and business routing policy remain app-host
+or addon responsibilities.
 
 ## Capacity And Backpressure
 
@@ -128,9 +138,11 @@ deployment shape.
 
 - The private target matrix contains macOS ARM64, Linux ARM64, Linux x86-64,
   Windows ARM64, and Windows x86-64 packages.
-- Static and SPA serving has passed on macOS ARM64, Linux x86-64, Windows ARM64,
-  and Windows x86-64. Linux ARM64 remains pending on the clean Trixie host;
-  applications must still check the loaded capability and use a confined root.
+- Artifact-backed application and TLS/mTLS samples pass on macOS ARM64 and
+  Raspberry Pi Linux ARM64. Package qualification for other targets is separate
+  from executing these samples. Static/application roots remain confined.
+- HTTP/1.1 security sample success does not establish HTTP/2 or HTTP/3 wire
+  coverage; check the exact target capability and corresponding protocol evidence.
 - Explicit `io_uring` is Linux only and currently belongs to eligible HTTP/2
   and HTTP/3 configurations, not HTTP/1.1.
 - Protocol, security, outbound, and filesystem support must be checked through

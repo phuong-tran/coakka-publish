@@ -7,10 +7,23 @@
 [![public-surface](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml/badge.svg)](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml)
 
 **CoAkka is a polyglot, multi-language, multi-platform runtime ecosystem.**
-One native core and a stable public C ABI support native C/C++, JVM and
-framework adapters, JavaScript runtimes, Python, Go, C#, Rust, Swift, Zig,
-Mojo, and related host integrations according to each release's compatibility
-row.
+Its independently versioned products cover HTTP services, application-owned
+runtime messaging, and bounded logging. Native libraries and language packages
+support each product's documented hosts; language and platform availability
+must be checked per product, not inferred from another product's release.
+
+## CoAkka Ecosystem
+
+| Product | Responsibility | Artifacts and guides |
+| --- | --- | --- |
+| CoAkka HTTP Runtime | HTTP servers and outbound HTTP, routing, static files, streaming, SSE, WebSocket, TLS/mTLS, and explicit lifecycle. Usable on its own. | [HTTP Runtime packages](coakka-http-runtime/README.md) — `1.0.0` branch candidates |
+| CoAkka Runtime | Application-owned work across languages/processes: target routing, request/reply, deadletters, File Lane and Stream Lane. | [Runtime packages](runtime/) |
+| CoAkka Logger | Bounded logging with explicit admission, delivery and pressure outcomes. | [Logger packages](logger/) |
+| Runtime Addons | Optional, independently versioned capabilities composed with CoAkka Runtime. | [Addon packages](runtime-addons/README.md) |
+
+CoAkka HTTP Runtime is a separate product, not an HTTP mode of CoAkka Runtime
+or a required wrapper around it. An HTTP handler may call CoAkka Runtime for
+application-owned work and use CoAkka Logger; neither is required to serve HTTP.
 
 Kubernetes is a first-class deployment lane, not a prerequisite. CoAkka keeps
 the same target, request/reply, bounded-admission, and deadletter contract on
@@ -22,7 +35,9 @@ CPU, and release-channel evidence.
 
 ## Architecture Boundary
 
-HTTP remains the external API edge; selected application-owned work crosses a
+CoAkka HTTP Runtime can own the external HTTP edge. Existing web frameworks
+can also keep that role; adopting one CoAkka product does not require the others.
+Selected application-owned work crosses a
 bounded CoAkka request/reply boundary instead of becoming another internal HTTP
 service. Read
 [Keep HTTP At The Edge](docs/http-edge-runtime-boundary.md) and
@@ -41,7 +56,7 @@ Runtime field guide: [docs/runtime-field-guide.md](docs/runtime-field-guide.md)
 How it works: [docs/how-it-works.md](docs/how-it-works.md)
 HTTP edge and runtime boundary:
 [docs/http-edge-runtime-boundary.md](docs/http-edge-runtime-boundary.md)
-CoAkka HTTP Runtime private release candidate:
+CoAkka HTTP Runtime packages and candidate status:
 [coakka-http-runtime/](coakka-http-runtime/README.md)
 WebSocket integration:
 [docs/runtime-websocket-integration.md](docs/runtime-websocket-integration.md)
@@ -68,6 +83,26 @@ CoAkka components. It has no aggregate product version. A product-scoped
 GitHub Release identifies one exact artifact set; it does not create a shared
 version across unrelated products. Select an exact lane path or package-manager
 coordinate, then verify its manifest and checksum evidence.
+
+## CoAkka HTTP Runtime
+
+The [HTTP Runtime catalog](coakka-http-runtime/README.md) contains 25
+checksum-pinned archives on this coordinated branch: five platform targets each
+for native C/C++, Go, JVM, Python, and the shared Node.js/Bun package. JVM apps
+may use Kotlin or Java. Each language guide explains its package layout and
+installation; no private source build is needed to consume these candidates.
+
+Two additional [HTTP Runtime Inspect packages](coakka-http-runtime/inspect/README.md)
+provide an optional local browser application on macOS ARM64 and Linux ARM64.
+Their platform scope is separate from the five-target service-package matrix.
+
+HTTP Runtime is distributed through the repository archives, without a
+separate GitHub Release. The retained candidate directory names identify exact
+qualified bytes. HTTP Runtime has no
+npm, Maven, PyPI or Go registry publication in this train. The Runtime/Logger
+registry coordinates below do not install HTTP Runtime. See the HTTP catalog
+for exact platform checks and limitations, and use the matching
+`coakka-samples/coakka-http-runtime` checkout for artifact-backed examples.
 
 ## Featured Binary Lanes
 
@@ -179,7 +214,7 @@ CoAkka Logger is a separate bounded logging surface in the same ecosystem.
 | Question | Short answer |
 | --- | --- |
 | Problem | Internal application work often becomes an HTTP-shaped handoff only to give capability code an address, spreading one contract across URLs, clients, retries, timeout mapping, status mapping, and logs. |
-| What CoAkka is | A runtime boundary for application capabilities: callers submit an identified payload to a stable target, route snapshots decide ownership, and replies/deadletters carry runtime diagnostics. |
+| What CoAkka is | An ecosystem with distinct HTTP Runtime, Runtime messaging, Logger and optional addon products; choose the boundary your application needs. |
 | What this repo is | The public artifact surface: packages, native archives, optional runtime-addon releases, manifests, checksums, compatibility matrix, and release notes. |
 | What it is not | Not the runnable sample repo and not a source-build repository. Use `coakka-samples` to run examples. |
 | How to adopt | Pick one painful internal boundary, keep legacy HTTP/gRPC edges intact, and migrate gradually where runtime targets make ownership clearer. |
@@ -189,7 +224,7 @@ Public repository map:
 | Repository | Use it for | Link |
 | --- | --- | --- |
 | `coakka-publish` | Released packages, native archives, manifests, checksums, compatibility matrix, and release notes. | https://github.com/phuong-tran/coakka-publish |
-| `coakka-samples` | Runnable examples that show how an app uses the runtime and logger packages. | https://github.com/phuong-tran/coakka-samples |
+| `coakka-samples` | Runnable HTTP Runtime, Runtime and Logger examples, with candidate versus released artifact status stated per lane. | https://github.com/phuong-tran/coakka-samples |
 | `coakka-runtime-go` | Public Go module for CoAkka Runtime. | https://github.com/phuong-tran/coakka-runtime-go |
 | `coakka-logger-go` | Public Go module for CoAkka Logger. | https://github.com/phuong-tran/coakka-logger-go |
 | `coakka-runtime-swift` | Public SwiftPM package with five native payloads and macOS ARM64 Swift execution. | https://github.com/phuong-tran/coakka-runtime-swift |

@@ -5,16 +5,43 @@ runtime API over the host-inlined CoAkka HTTP native library. Java consumers use
 the same public classes without Kotlin-only call syntax.
 
 The connector JAR contains managed classes only. It does not embed or extract a
-native library. Native package layout and Maven publication are intentionally
-outside this development slice.
+native library. Five branch bundles pair the JAR with its matching native
+libraries. Download from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/) and verify
+[SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). Maven publication remains outside
+this step. Select the JVM process architecture, not just the OS architecture.
+
+## Contents
+
+- [Requirements](#requirements)
+- [Buffered service](#buffered-service)
+- [Supported service features](#supported-service-features)
+- [Lower-level Kotlin API](#lower-level-kotlin-api)
+- [Resource and failure behavior](#resource-and-failure-behavior)
+- [Build and verification](#build-and-verification)
 
 ## Requirements
 
 - Java 8 or newer at runtime;
-- JDK 17 to build the Kotlin and native adapter sources;
-- an installed CoAkka HTTP host package containing `coakka/http/host.h` and the
-  matching shared library;
-- the matching native adapter built from this module.
+- the managed JAR and unchanged `native/` directory from one bundle;
+- Kotlin standard library 2.3.10 as an application dependency.
+
+Consumers need no native compiler or JDK17 build tools. Windows ARM64 was tested
+with Java21; Windows x86-64 with Java8 under ARM64 emulation. Linux x86-64 was
+also emulated. Java8 bytecode does not establish Java8 execution on every target.
+The bundle README contains exact startup steps and platform qualifications.
+
+```kotlin
+dependencies {
+    implementation(files("vendor/coakka-http/lib/coakka-http-jvm-1.0.0.jar"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.10")
+}
+tasks.withType<JavaExec>().configureEach {
+    jvmArgs("-Djava.library.path=" + file("vendor/coakka-http/native").absolutePath)
+}
+```
+
+On Windows also add this trusted native directory to the application's process
+`PATH`. Keep library links intact and never replace libraries while loaded.
 
 The host library and native adapter must be on the operating system library path.
 Tests may instead provide absolute regular-file paths with
@@ -69,6 +96,18 @@ does not inspect the operating system or issue a probe syscall. Benchmark code
 must check `ioUringEffective` before describing a result as io_uring.
 
 ## Supported service features
+
+The service builder accepts nullable `Compression` intent for eligible buffered
+responses; `Limits.transportTimeouts` groups header/body/keep-alive/protocol-idle
+deadlines. Core resolves omitted/zero values and validates bounds. Streaming
+remains unbuffered even when buffered GZIP is enabled. Read `effectiveLimits()`
+for accepted deadlines, not the input values.
+
+`service.routes` (Java: `service.getRoutes()`) returns a coherent immutable Core
+`RouteSnapshot`, independently of monitoring, not local registration declarations.
+Outbound terminals provide named reason/phase/retry/certainty enums with raw values
+preserved separately. Unknown values are `UNRECOGNIZED`; an HTTP error response
+is still `OutboundReason.RESPONSE`, not a transport failure.
 
 The same `Service` surface supports:
 

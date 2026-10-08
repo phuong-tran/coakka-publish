@@ -1,19 +1,50 @@
 # CoAkka HTTP for Python
 
+## Contents
+
+- [Package status](#package-status)
+- [Requirements](#requirements)
+- [Buffered service](#buffered-service)
+- [I/O backend](#io-backend)
+- [Lower-level API](#lower-level-api)
+- [Ownership and bounds](#ownership-and-bounds)
+- [Verification](#verification)
+
+## Package status
+
+Five offline candidates are available in [candidates/2026-10-08-r3/](candidates/2026-10-08-r3/),
+with `SHA256SUMS`: macOS ARM64, Linux ARM64/x86-64, and Windows ARM64/x86-64.
+These are repository archives, not PyPI wheels or registry packages.
+
 `coakka_http` is an idiomatic Python binding to the host-inlined CoAkka HTTP
 runtime. It provides a bounded handler service and a lower-level typed event
 API. The module uses only the focused public host interface; HTTP parsing, transport,
 routing, files, TLS, outbound calls, and deadlines remain native-owned.
 
-The connector does not bundle a shared library. Wheel layout and PyPI
-publication are intentionally outside this development slice.
+Each archive includes its matching native library. Wheel layout and PyPI
+publication remain outside this step.
 
 ## Requirements
 
-- CPython 3.11 or newer;
-- an installed CoAkka HTTP host shared library;
-- `COAKKA_HTTP_HOST_PATH` set to that absolute regular-file path during local
-  development, or the library available through the platform loader.
+- CPython 3.11 syntax baseline; tested with 3.11.15 on macOS, 3.13.5 on
+  Linux ARM64, and 3.12.10 on Linux x86-64 and both Windows targets.
+- A matching OS/architecture archive. Linux and Windows x86-64 qualification
+  used emulation; it is not physical x86-64 machine evidence.
+
+Verify the archive against `SHA256SUMS`, extract it, and add its `python`
+directory to `PYTHONPATH` before starting your application. For example, on
+macOS ARM64, from this directory:
+
+```sh
+tar -xzf candidates/2026-10-08-r3/coakka-http-python-1.0.0-candidate-macos-aarch64.tar.gz
+export PYTHONPATH="$PWD/coakka-http-python-1.0.0-candidate-macos-aarch64/python"
+python3 your_application.py
+```
+
+The package selects its own paired library; no native-path environment variable
+is needed. `COAKKA_HTTP_HOST_PATH` is an explicit development override only:
+when supplied, it must name an absolute regular library file. Invalid or missing
+package metadata fails rather than silently loading another installed library.
 
 ## Buffered service
 
@@ -48,6 +79,21 @@ The same surface supports buffered and incremental request bodies, response
 streams and trailers, SSE, WebSocket, static mounts, confined file responses,
 logical outbound targets, route rebinding/publication, health, liveness, route
 snapshots, and bounded monitoring.
+
+`service.routes` returns an immutable Core `RouteSnapshot`, including coherent
+structural generation and binding revisions. It is not local handler declarations,
+does not require monitoring, and raises on inspection failure rather than guessing.
+
+`Builder.compression(Compression(CompressionMode.GZIP))` enables bounded buffered
+compression; identity response streams remain independent and unbuffered.
+Configure transport/handler deadlines through `Limits`; optional zero-valued limits
+request Core defaults. Inspect accepted settings through `effective_limits()`
+and `runtime_info()`, not the builder's input.
+
+Outbound terminals carry typed `OutboundReason`, `OutboundPhase`, `OutboundRetry`
+and `OutboundCertainty` facts. A received HTTP error response is still `RESPONSE`.
+Unknown uint32 values retain their identity through `int(value)` without an
+unbounded enum cache. Never automatically expose operator diagnostics to clients.
 
 ## I/O backend
 
@@ -131,3 +177,8 @@ The integration suite exercises real loopback traffic and covers default and
 opt-in I/O selection, indexed headers, buffered/streamed requests and
 responses, SSE, WebSocket, static/file delivery, outbound calls, route control,
 monitoring, and lifecycle shutdown.
+
+The October 8 candidates passed 100 tests and an independent three-cycle consumer
+on each of the five targets listed above. Mac/Pi also passed real HTTP/2 and
+HTTP/3 wire plus graceful-drain checks. These are exact-package checks, not a
+full-interpreter sanitizer or benchmark claim.
