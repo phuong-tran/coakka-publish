@@ -2,3 +2,7 @@
 # metadata byte-for-byte. Their source formatting is part of the release input.
 coakka-http-runtime/**/third-party-licenses/** -text -diff
 coakka-http-runtime/native/releases/*/windows-*/lib/cmake/CoAkkaHttp/*.cmake -text -diff
+
+# The installed public test suite is verified against byte-exact SHA-256
+# digests. Keep its source bytes stable when Windows enables core.autocrlf.
+coakka-http-runtime/runtime-test/** text eol=lf
