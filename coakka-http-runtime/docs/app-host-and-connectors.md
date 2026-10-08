@@ -34,24 +34,23 @@ remain visible to the developer.
 The connector is the only public application path for a language package. It:
 
 - presents idiomatic builders, requests, responses, errors, and lifecycle;
-- freezes and validates route and resource declarations before ready;
+- submits route and resource declarations for runtime validation before ready;
 - starts the configured CoAkka HTTP service and projects its values;
 - executes application handlers inside the App Host;
-- bounds active work, bodies, streams, sessions, diagnostics, and retained
-  bytes according to the host's capabilities;
+- preserves runtime-issued bounds and enforces the language boundary's own
+  memory-safety, lifetime and scheduling limits;
 - exposes pressure, health, inspection, monitoring, cancellation, and finite
   close without asking users to select a runtime mode.
 
 ```mermaid
 flowchart LR
     Client[Client]
-    HTTP[CoAkka HTTP service]
     Connector[CoAkka connector]
-    runtime[CoAkka HTTP Runtime]
+    runtime[Shared native HTTP runtime]
     Handler[Application handler]
     Ops[Health and monitoring]
 
-    Client <--> HTTP <--> runtime <--> Connector <--> Handler
+    Client <--> runtime <--> Connector <--> Handler
     runtime -. bounded state .-> Ops
 ```
 
@@ -64,6 +63,12 @@ of user code; it does not need to reimplement the shared HTTP runtime.
 foundation: route admission rules, stable result meanings, bounded-resource
 policy, lifecycle law, health/monitoring vocabulary, and native C/C++ service
 capabilities.
+
+The shared implementation owns HTTP transport, parsing, route matching,
+configuration defaults, effective state and terminal outcomes. Connectors
+must not infer these facts or repeat the same validation policy in each
+language. An improvement here can benefit all language packages that adopt
+the updated runtime; host scheduling and value conversion remain distinct.
 
 Language connectors project that contract into their App Host. The foundation
 does not force JavaScript to look like C or Go to look like the JVM. Each
@@ -80,7 +85,7 @@ flowchart TD
     App[Application]
     Addon[Framework-style addon]
     Connector[language connector]
-    Host[App Host HTTP service]
+    Host[Shared native HTTP runtime]
 
     App --> Addon --> Connector --> Host
 ```
@@ -93,13 +98,13 @@ separate operational contract for pressure, monitoring, and shutdown.
 | Boundary | Owner and rule |
 | --- | --- |
 | Builder | Application owns it until `start`; start freezes it and is single-use |
-| Listener/service | Connector owns it from successful start through close |
-| Buffered request | Handler receives a host-owned value bounded by the connector |
+| Listener/service | Runtime owns HTTP resources; the application owns the language service handle and initiates close through the connector |
+| Buffered request | Connector projects a bounded request value; borrowed native views obey their callback lifetime |
 | Request stream | The current reader owns consumption and must honor cancellation |
 | Response stream | Producer owns its source and must stop on cancellation or close |
 | WebSocket session | Service owns the session lifecycle; application owns its callbacks/state |
 | Monitoring | Snapshot reads are independent; one blocking waiter owns the bounded event channel |
-| Shutdown | Application supplies the deadline; connector converges all service-owned resources |
+| Shutdown | Application requests close; runtime owns transport drain and terminal state, connector retires language-owned resources according to that outcome |
 
 ## Concurrency And Capacity
 

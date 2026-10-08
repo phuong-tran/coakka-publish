@@ -6,9 +6,10 @@
 
 [![public-surface](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml/badge.svg)](https://github.com/phuong-tran/coakka-publish/actions/workflows/public-surface.yml)
 
-**CoAkka is a polyglot, multi-language, multi-platform runtime ecosystem.**
-Its independently versioned products cover HTTP services, application-owned
-runtime messaging, and bounded logging. Native libraries and language packages
+**CoAkka is a polyglot, multi-language, multi-platform distributed runtime ecosystem.**
+CoAkka Runtime is the central product for application-owned work across
+processes and languages. Logger, Runtime addons and the independent HTTP
+server/client complement it. Native libraries and language packages
 support each product's documented hosts; language and platform availability
 must be checked per product, not inferred from another product's release.
 
@@ -16,10 +17,10 @@ must be checked per product, not inferred from another product's release.
 
 | Product | Responsibility | Artifacts and guides |
 | --- | --- | --- |
-| CoAkka HTTP Runtime | HTTP servers and outbound HTTP, routing, static files, streaming, SSE, WebSocket, TLS/mTLS, and explicit lifecycle. Usable on its own. | [HTTP Runtime packages](coakka-http-runtime/README.md) — `1.0.0` branch candidates |
 | CoAkka Runtime | Application-owned work across languages/processes: target routing, request/reply, deadletters, File Lane and Stream Lane. | [Runtime packages](runtime/) |
 | CoAkka Logger | Bounded logging with explicit admission, delivery and pressure outcomes. | [Logger packages](logger/) |
 | Runtime Addons | Optional, independently versioned capabilities composed with CoAkka Runtime. | [Addon packages](runtime-addons/README.md) |
+| CoAkka HTTP Runtime | Independent HTTP server/client, routes, static files, streaming, SSE, WebSocket and TLS/mTLS. | [HTTP Runtime archives](coakka-http-runtime/README.md) — repository distribution; no npm, PyPI, Maven Central or tagged Go module yet |
 
 CoAkka HTTP Runtime is a separate product, not an HTTP mode of CoAkka Runtime
 or a required wrapper around it. An HTTP handler may call CoAkka Runtime for
@@ -79,30 +80,10 @@ Incremental adoption: [docs/incremental-adoption.md](docs/incremental-adoption.m
 Production readiness: [docs/production-readiness.md](docs/production-readiness.md)
 
 This repository is a versioned artifact warehouse and catalog for independent
-CoAkka components. It has no aggregate product version. A product-scoped
-GitHub Release identifies one exact artifact set; it does not create a shared
-version across unrelated products. Select an exact lane path or package-manager
+CoAkka components. It has no aggregate product version and creates no GitHub
+Releases. Each product's versioned path, manifest and checksums identify its
+artifact set. Select an exact lane path or package-manager
 coordinate, then verify its manifest and checksum evidence.
-
-## CoAkka HTTP Runtime
-
-The [HTTP Runtime catalog](coakka-http-runtime/README.md) contains 25
-checksum-pinned archives on this coordinated branch: five platform targets each
-for native C/C++, Go, JVM, Python, and the shared Node.js/Bun package. JVM apps
-may use Kotlin or Java. Each language guide explains its package layout and
-installation; no private source build is needed to consume these candidates.
-
-Two additional [HTTP Runtime Inspect packages](coakka-http-runtime/inspect/README.md)
-provide an optional local browser application on macOS ARM64 and Linux ARM64.
-Their platform scope is separate from the five-target service-package matrix.
-
-HTTP Runtime is distributed through the repository archives, without a
-separate GitHub Release. The retained candidate directory names identify exact
-qualified bytes. HTTP Runtime has no
-npm, Maven, PyPI or Go registry publication in this train. The Runtime/Logger
-registry coordinates below do not install HTTP Runtime. See the HTTP catalog
-for exact platform checks and limitations, and use the matching
-`coakka-samples/coakka-http-runtime` checkout for artifact-backed examples.
 
 ## Featured Binary Lanes
 
@@ -818,6 +799,37 @@ The intake gate checks runtime ABI/feature compatibility, the reviewed C ABI,
 matching-host platform evidence, archive shape, checksums, exact static
 dependency versions, and absence of bundled runtime or implementation sidecar
 libraries. The full public-surface gate also inspects native linkage.
+
+## CoAkka HTTP Runtime
+
+The independent HTTP server/client gives supported languages one shared native
+HTTP implementation. Transport, parsing, route matching, limits, monitoring
+and lifecycle no longer need separate implementations per language. Common
+fixes and optimizations can benefit every connector that ships the updated
+runtime, while application handlers retain their own language idioms.
+
+Features include static frontend/file delivery, streamed requests/responses,
+SSE, WebSocket, outbound HTTP, TLS/mTLS, live handler changes and graceful
+shutdown. Read the [introduction and benefits](docs/coakka-http-runtime-introduction.md)
+for why it exists and what a shared runtime does—and does not—guarantee.
+
+The [HTTP Runtime catalog](coakka-http-runtime/README.md) contains 25
+checksum-pinned archives on `main`: five platform targets each
+for native C/C++, Go, JVM, Python, and the shared Node.js/Bun package. JVM apps
+may use Kotlin or Java. Each language guide explains its package layout and
+installation; no private source build is needed to consume these candidates.
+
+Two additional [HTTP Runtime Inspect packages](coakka-http-runtime/inspect/README.md)
+provide an optional local browser application on macOS ARM64 and Linux ARM64.
+Their platform scope is separate from the five-target service-package matrix.
+
+HTTP Runtime is distributed through the repository archives, without a
+separate GitHub Release. The retained candidate directory names identify exact
+qualified bytes. HTTP Runtime has no
+npm, Maven, PyPI or Go registry publication in this train. The Runtime/Logger
+registry coordinates below do not install HTTP Runtime. See the HTTP catalog
+for exact platform checks and limitations, and use the matching
+`coakka-samples/coakka-http-runtime` checkout for artifact-backed examples.
 
 ## Logger Artifacts
 

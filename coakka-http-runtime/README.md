@@ -16,6 +16,12 @@ CoAkka HTTP Runtime supplies one shared HTTP contract. Language packages
 project it through each App Host without changing how application handlers are
 written.
 
+The shared part is a **native HTTP implementation**, not just similarly named
+APIs over unrelated language servers. Transport, parsing, routing, limits,
+timeouts and shutdown are maintained in one place. A fix or optimization there
+can benefit every connector that ships the updated runtime; each language
+keeps its own handler style, scheduling and boundary costs.
+
 Version `1.0.0` is distributed through this repository as checksum-pinned
 archives with synchronized documentation and samples. The earlier native package layout is superseded and is not
 the installation baseline for this train. Do not use an older archive with
@@ -27,7 +33,7 @@ The optional Inspect application has two separately qualified packages.
 Distribution uses repository files, not a GitHub Release. There is no HTTP
 Runtime publication to npm, Maven, PyPI or Go package repositories in this train.
 
-## Package files on this branch
+## Package Files
 
 | Application language | Package directory | Archives |
 | --- | --- | ---: |
@@ -39,18 +45,19 @@ Runtime publication to npm, Maven, PyPI or Go package repositories in this train
 | Optional inspection application | [Inspect guide and packages](inspect/README.md) | 2: macOS ARM64, Linux ARM64 |
 
 Each available directory includes `SHA256SUMS`. Node.js and Bun use the same
-JavaScript package, not separate downloads. These are branch candidates, not
+JavaScript package, not separate downloads. These are repository archives, not
 registry releases. From this checkout, verify the admitted archives with:
 
 ```sh
 bash scripts/verify-http-runtime-release.sh --all-candidates
 ```
 
-This checks candidate bytes and payload checksums, not final three-repository
-release approval.
+This checks archive bytes and payload checksums; it does not execute the service
+or establish deployment capacity.
 
 ## Contents
 
+- [Package Files](#package-files)
 - [Why CoAkka HTTP Runtime Exists](#why-coakka-http-runtime-exists)
 - [Where It Fits In CoAkka](#where-it-fits-in-coakka)
 - [Start With Familiar Code](#start-with-familiar-code)
@@ -84,6 +91,16 @@ CoAkka keeps two things together:
 The goal is not to make every language look identical. The goal is to give
 each language a strong native experience without rebuilding the operational
 contract from zero.
+
+Sharing the implementation reduces repeated transport work across languages:
+one parser correction, resource-policy fix or hot-path optimization can be
+carried into every language package using that runtime generation. Users still
+need to adopt the updated package; installed services do not upgrade
+automatically. It also does not make Python, Go, JVM and JavaScript scheduling
+or throughput identical.
+
+For the complete rationale and capability overview, read
+[Introducing CoAkka HTTP Runtime](../docs/coakka-http-runtime-introduction.md).
 
 ## Where It Fits In CoAkka
 
@@ -136,24 +153,23 @@ See the same shape in [C/C++](native/README.md),
 
 An **App Host** is the process environment running application code, such as a
 JVM, CPython, Node.js, Bun, Go, or a native process. A connector maps CoAkka's
-service contract into that host's normal handlers, values, concurrency, and
-HTTP facilities.
+service contract into that host's normal handlers, values and concurrency.
+The shared runtime owns HTTP transport; no second host-native HTTP server is
+required.
 
 ```mermaid
 flowchart LR
     Client[Client or browser]
-    Service[CoAkka HTTP service]
     Connector[Language connector]
-    runtime[CoAkka HTTP Runtime]
+    runtime[Shared native HTTP runtime]
     Handler[Application handler]
     Monitor[Health and monitoring surface]
     Addon[Optional framework addon]
 
-    Client <--> Service
-    Service <--> Connector
+    Client <--> runtime
     Connector <--> runtime
     Connector <--> Handler
-    Connector -. bounded observations .-> Monitor
+    runtime -. bounded observations .-> Monitor
     Addon --> Connector
 ```
 

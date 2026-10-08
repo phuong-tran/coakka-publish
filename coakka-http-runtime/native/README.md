@@ -86,7 +86,7 @@ out of HTTP transport processing. Each streaming or asynchronous operation
 has its own ownership and completion contract in the installed headers.
 
 The October 7 native correction makes server runtime information read actual
-Core execution and accepted configuration. A busy lifecycle gate returns
+the runtime execution and accepted configuration. A busy lifecycle gate returns
 `RETAINED` without blocking; a stopped service returns `CLOSED`. A refused
 query leaves the output unchanged. Never treat that previous output as a fresh
 observation. Serialize destruction with every query. This correction does not
@@ -99,14 +99,14 @@ never an older library with the current header.
 
 Initialize `coakka_http_server_tuning_t` with
 `coakka_http_server_tuning_init` and optionally assign `options.tuning`.
-NULL selects Core defaults. The group accepts CPU AUTO/SINGLE, independent
+NULL selects the runtime defaults. The group accepts CPU AUTO/SINGLE, independent
 request/terminal notification profiles, and an optional
 `coakka_http_compression_t`. Values are borrowed only during create and
 copied; there is no hot reload or application loop-count knob.
 
 GZIP transforms eligible buffered responses only. Response streams and SSE
 remain uncompressed without being collected into a buffer. When compression
-policy is enabled and a client refuses identity coding, Core rejects an
+policy is enabled and a client refuses identity coding, the runtime rejects an
 unencoded stream with HTTP406 before it starts. Application-supplied content
 encoding remains application-owned. Streaming compression is not implemented.
 
@@ -114,7 +114,7 @@ AUTO prefers two allowed logical CPUs on Linux, or one when constrained.
 SINGLE requires one. Other platforms currently inherit for AUTO and reject
 SINGLE. Runtime-info's grouped `cpu` value reports construction/startup facts;
 unknown counts/IDs are not invented observations. Affinity is not a CPU-time
-quota or a reservation. Core covers construction-time and startup-time workers,
+quota or a reservation. The runtime covers construction-time and startup-time workers,
 retains the same selected set, and restores each caller thread before returning.
 Starting on another thread requires that thread to allow the selected set.
 
@@ -123,14 +123,14 @@ destroy-only owner. Applications must destroy that owner and must not start it.
 C++ constructors must clean it up before throwing; their destructor does not
 run after constructor failure. Failed start remains destroy-only as well.
 
-Notification AUTO resolves inside Core; runtime-info returns accepted caps.
+Notification AUTO resolves inside the runtime; runtime-info returns accepted caps.
 GZIP requires a supported provider and explicit level1..9; zero-valued byte
-limits select Core's bounded defaults. Compression negotiation and framing
-remain Core-owned.
+limits select the runtime's bounded defaults. Compression negotiation and framing
+remain runtime-owned.
 
 `coakka_http_request_path_parameter_count/path_parameter` and
 `coakka_http_request_query_parameter_count/query_parameter` expose indexed,
-borrowed Core-parsed views in callbacks. Each access is O(1), without parsing,
+borrowed runtime-parsed views in callbacks. Each access is O(1), without parsing,
 copying or allocating. Query order, duplicates and absent versus empty values
 are preserved. Encoded octets remain encoded. Bounds/null refusal returns zero
 without changing output; views expire when the callback returns.

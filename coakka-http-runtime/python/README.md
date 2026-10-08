@@ -17,7 +17,7 @@ with `SHA256SUMS`: macOS ARM64, Linux ARM64/x86-64, and Windows ARM64/x86-64.
 These are repository archives, not PyPI wheels or registry packages.
 
 `coakka_http` is an idiomatic Python binding to the host-inlined CoAkka HTTP
-runtime. It provides a bounded handler service and a lower-level typed event
+The runtime. It provides a bounded handler service and a lower-level typed event
 API. The module uses only the focused public host interface; HTTP parsing, transport,
 routing, files, TLS, outbound calls, and deadlines remain native-owned.
 
@@ -80,14 +80,14 @@ streams and trailers, SSE, WebSocket, static mounts, confined file responses,
 logical outbound targets, route rebinding/publication, health, liveness, route
 snapshots, and bounded monitoring.
 
-`service.routes` returns an immutable Core `RouteSnapshot`, including coherent
+`service.routes` returns an immutable runtime `RouteSnapshot`, including coherent
 structural generation and binding revisions. It is not local handler declarations,
 does not require monitoring, and raises on inspection failure rather than guessing.
 
 `Builder.compression(Compression(CompressionMode.GZIP))` enables bounded buffered
 compression; identity response streams remain independent and unbuffered.
 Configure transport/handler deadlines through `Limits`; optional zero-valued limits
-request Core defaults. Inspect accepted settings through `effective_limits()`
+request the runtime defaults. Inspect accepted settings through `effective_limits()`
 and `runtime_info()`, not the builder's input.
 
 Outbound terminals carry typed `OutboundReason`, `OutboundPhase`, `OutboundRetry`

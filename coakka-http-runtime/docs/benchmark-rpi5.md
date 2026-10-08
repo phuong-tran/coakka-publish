@@ -54,7 +54,7 @@ as proof of the current boot environment.
 | Storage | Boot device/model and filesystem; evidence/output location |
 | Cooling | Fan policy, ambient temperature if measured, board temperature before/after each run, throttle flags |
 | Software | Exact CoAkka archive hashes, language/framework/load-tool versions and startup flags |
-| Effective configuration | Core-reported CPU/loop/batch/timeout/backend state, alongside requested configuration |
+| Effective configuration | runtime-reported CPU/loop/batch/timeout/backend state, alongside requested configuration |
 | Network | Loopback or external topology, interfaces, HTTP/TLS mode, client placement |
 
 Unknown values are explicitly unavailable, never guessed. Exclude credentials,

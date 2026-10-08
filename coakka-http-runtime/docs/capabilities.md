@@ -43,7 +43,7 @@ evidence for the selected package and deployment.
 | Files | Static mounts, SPA fallback, application-authorized files, ranges and validators | Built in, target filesystem support required |
 | Outbound | Bounded client, logical targets, pools, DNS, TLS identity/trust, cancel and terminal outcome | Built in, feature gated |
 | Live control | Handler-binding swap and complete route-generation publication, with versioned acceptance/rejection | Built in, feature gated |
-| Configuration | CPU/batch/timeout intent and Core-issued effective runtime information | Inspect the exact public package surface |
+| Configuration | CPU/batch/timeout intent and runtime-issued effective runtime information | Inspect the exact public package surface |
 | Observability | Health, fresh liveness, typed outcomes and inspection | Built in |
 | Browser tooling | Route/schema snapshots, OpenAPI and route try | Optional [HTTP Runtime Inspect](../inspect/README.md); separate macOS ARM64/Linux ARM64 local-development packages |
 | Monitoring | Bounded aggregates, failures, latency buckets, recent events, cursor/loss accounting, wait/interrupt, live policy | Built in, disabled by default |
@@ -79,19 +79,20 @@ requests, monitor reads, handler replacement and route publication. Their
 security examples configure TLS/mTLS. These features do not inherently require
 abandoning the idiomatic service builder for a manual event pump.
 
-The current C/C++ samples demonstrate a smaller subset than the native public
-API: buffered callbacks, files, runtime information, monitor reads, handler
-replacement and secure listeners. Missing advanced native examples are a sample
-coverage gap, not proof that the native API lacks those features.
+The C/C++ samples include buffered callbacks, path/query/header access, files,
+request/response streaming, SSE, WebSocket, outbound calls, route publication,
+runtime information, monitor control, handler replacement and secure listeners.
+The feature index below distinguishes named examples and executed recipes from
+remaining failure-path coverage; API availability alone is not test evidence.
 
-CPU budgets, batch settings and timeouts belong to Core. Connectors submit
-intent and expose Core's accepted effective state through runtime information.
+CPU budgets, batch settings and timeouts belong to the runtime. Connectors submit
+intent and expose the runtime's accepted effective state through runtime information.
 Do not infer effective CPU/backend settings from the requested values. Internal
 loop tuning is not an application knob in normal language builders.
 
 For runnable source and honest remaining coverage, use the
 [feature sample index](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/FEATURES.md)
-on the matching coordinated candidate branch. Framework-style authentication,
+on `main`. Framework-style authentication,
 annotations, dependency injection and business routing policy remain app-host
 or addon responsibilities.
 

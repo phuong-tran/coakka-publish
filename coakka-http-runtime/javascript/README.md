@@ -36,7 +36,7 @@ configuration fails instead of silently choosing another library.
 - [Static and application-selected files](#static-and-application-selected-files)
 - [Outbound requests](#outbound-requests)
 - [Route updates](#route-updates)
-- [Configuration And Core Observations](#configuration-and-core-observations)
+- [Configuration And Runtime Observations](#configuration-and-runtime-observations)
 - [Monitoring and lifecycle](#monitoring-and-lifecycle)
 - [Advanced runtime surface](#advanced-runtime-surface)
 
@@ -130,7 +130,7 @@ per-request state bounded. One handler admission remains reserved for the whole
 stream scope, including asynchronous response work. `dispose` runs after that
 work settles; a throwing cleanup is reported as a handler diagnostic, never a
 second response. Its typed cause distinguishes `end`, `cancelled`, `terminal`,
-`handler-failed`, and `service-stopped`. The last cause follows successful Core
+`handler-failed`, and `service-stopped`. The last cause follows successful the runtime
 stop; a refused stop retains the live scope for retry.
 
 ## Streaming responses and SSE
@@ -256,22 +256,22 @@ Use `publishRoutes()` only for structural changes such as adding or removing a
 route or changing its method, path, or body policy. Both operations use expected
 generation values and return the complete effective outcome.
 
-## Configuration And Core Observations
+## Configuration And Runtime Observations
 
 `Builder.compression({ mode: CompressionMode.GZIP })` enables bounded buffered
 compression; import `CompressionMode` from `@coakka/http`. Omission or
 `CompressionMode.DISABLED` leaves it disabled. Identity response streams remain
 usable with buffered compression enabled; this does not promise streaming GZIP.
 Optional byte/workspace bounds and encoding effort are documented in the
-installed `CompressionOptions` fields and validated by Core.
+installed `CompressionOptions` fields and validated by the runtime.
 
-`service.routes` and `service.routeSnapshot()` both pull Core's coherent route
+`service.routes` and `service.routeSnapshot()` both pull the runtime's coherent route
 generation and route/binding revisions. Neither reports a local declaration
 cache or invents state when native inspection fails. Use captured route IDs
 and expected revisions for control operations.
 
 `OutboundReason`, `OutboundPhase`, `OutboundRetry` and `OutboundCertainty` name
-Core-issued outcome fields. Unknown numeric observations remain unchanged;
+runtime-issued outcome fields. Unknown numeric observations remain unchanged;
 application retry safety and budgets are not inferred from status or text.
 The sibling `coakka-samples` checkout provides the runnable TypeScript recipes
 under `coakka-http-runtime/typescript/`: configuration observations, monitor

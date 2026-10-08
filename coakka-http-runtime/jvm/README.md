@@ -1,7 +1,7 @@
 # CoAkka HTTP for Kotlin/JVM
 
 This module provides an idiomatic Kotlin service API and a lower-level typed
-runtime API over the host-inlined CoAkka HTTP native library. Java consumers use
+The runtime API over the host-inlined CoAkka HTTP native library. Java consumers use
 the same public classes without Kotlin-only call syntax.
 
 The connector JAR contains managed classes only. It does not embed or extract a
@@ -99,11 +99,11 @@ must check `ioUringEffective` before describing a result as io_uring.
 
 The service builder accepts nullable `Compression` intent for eligible buffered
 responses; `Limits.transportTimeouts` groups header/body/keep-alive/protocol-idle
-deadlines. Core resolves omitted/zero values and validates bounds. Streaming
+deadlines. The runtime resolves omitted/zero values and validates bounds. Streaming
 remains unbuffered even when buffered GZIP is enabled. Read `effectiveLimits()`
 for accepted deadlines, not the input values.
 
-`service.routes` (Java: `service.getRoutes()`) returns a coherent immutable Core
+`service.routes` (Java: `service.getRoutes()`) returns a coherent immutable runtime
 `RouteSnapshot`, independently of monitoring, not local registration declarations.
 Outbound terminals provide named reason/phase/retry/certainty enums with raw values
 preserved separately. Unknown values are `UNRECOGNIZED`; an HTTP error response

@@ -95,12 +95,12 @@ Configure ordinary host-inlined handlers with
 before startup. The builder copies the optional value; `Compression(nil)`
 removes an earlier override. Explicit disable uses
 `&coakkahttp.Compression{Mode: coakkahttp.CompressionDisabled}` without GZIP-only
-tuning fields. Core rejects incompatible settings rather than ignoring them.
+tuning fields. The runtime rejects incompatible settings rather than ignoring them.
 
-Core owns response eligibility, resource ceilings and negotiation. Handlers
+The runtime owns response eligibility, resource ceilings and negotiation. Handlers
 return normal application values; do not add another compression layer. The
 Go boundary rejects an unknown mode that cannot be represented by the native
-boolean. Numeric bounds and capability decisions remain Core-owned. This is
+boolean. Numeric bounds and capability decisions remain runtime-owned. This is
 startup configuration, not a live change to existing connections.
 
 The transform applies to eligible buffered responses, not response streams or
@@ -211,7 +211,7 @@ Monitor saturation never changes an HTTP exchange result.
 ## Route changes
 
 `Service.Routes()` and `Runtime.Routes()` return `(RouteSnapshot, error)` from
-Core: one complete structural generation, binding-change sequence and bounded
+the runtime: one complete structural generation, binding-change sequence and bounded
 route/binding list. The caller owns the copy; mutation cannot change routing.
 Monitoring need not be enabled. Refusal or unresolved control returns no partial
 snapshot. This unreleased contract replaces the old local-declaration getter.
