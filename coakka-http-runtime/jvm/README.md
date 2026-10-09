@@ -1,4 +1,14 @@
-# CoAkka HTTP for Kotlin/JVM
+# CoAkka HTTP for JVM (Kotlin and Java)
+
+**Java is supported too.** Kotlin is the connector implementation language,
+not a required application language. See the
+[Java code and runnable example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/kotlin/integration.md#java-uses-the-same-jvm-connector)
+for ordinary Java lambdas, getters, static/file serving and handler replacement
+through the same artifact.
+
+**New application?** Start with the [Kotlin/JVM integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/kotlin/integration.md)
+for installation, a first request and feature-by-feature usage. This page
+remains the package/API reference.
 
 This module provides an idiomatic Kotlin service API and a lower-level typed
 The runtime API over the host-inlined CoAkka HTTP native library. Java consumers use
@@ -11,6 +21,8 @@ libraries. Download from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/) a
 this step. Select the JVM process architecture, not just the OS architecture.
 
 ## Contents
+
+- [URL grammar and glossary](../docs/glossary.md)
 
 - [Requirements](#requirements)
 - [Buffered service](#buffered-service)

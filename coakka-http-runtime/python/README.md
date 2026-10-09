@@ -1,6 +1,12 @@
 # CoAkka HTTP for Python
 
+**New application?** Start with the [Python integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/python/integration.md)
+for installation, a first request and feature-by-feature usage. This page
+remains the package/API reference.
+
 ## Contents
+
+- [URL grammar and glossary](../docs/glossary.md)
 
 - [Package status](#package-status)
 - [Requirements](#requirements)

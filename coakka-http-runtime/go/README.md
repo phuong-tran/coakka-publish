@@ -1,5 +1,9 @@
 # CoAkka HTTP for Go
 
+**New application?** Start with the [Go integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/go/integration.md)
+for installation, a first request and feature-by-feature usage. This page
+remains the package/API reference.
+
 `coakkahttp` is the idiomatic Go connector for CoAkka HTTP Runtime. The module
 links directly to the matching library supplied beside the Go module. It does
 not extract or download a library at runtime.
@@ -10,6 +14,8 @@ release. Download from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/) and
 `native/` together, installation instructions and legal material.
 
 ## Contents
+
+- [URL grammar and glossary](../docs/glossary.md)
 
 - [Requirements](#requirements)
 - [Quick start](#quick-start)

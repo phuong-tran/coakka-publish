@@ -1,5 +1,10 @@
 # CoAkka HTTP Runtime for C and C++
 
+**New application?** Start with the [C integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/c/integration.md)
+or [C++ integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/cpp/integration.md)
+for installation, a first request and feature-by-feature usage. This page
+remains the native package reference.
+
 The native application package exposes `<coakka/http/http.h>`. C11 and C++20
 applications use the same C contract for ordinary handlers, responses and
 explicit service lifecycle. HTTP transport, configuration, resource bounds,
@@ -23,6 +28,8 @@ Use `--all-candidates` to verify all service and Inspect packages. This command
 checks artifacts; it does not create a GitHub Release or publish to registries.
 
 ## Contents
+
+- [URL grammar and glossary](../docs/glossary.md)
 
 - [Two distinct packages](#two-distinct-packages)
 - [CMake use](#cmake-use)
