@@ -65,6 +65,8 @@ or establish deployment capacity.
 
 ## Contents
 
+- [Inspect: metadata, OpenAPI and Swagger UI](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/inspect/metadata-and-openapi.md)
+
 - [Roadmap: distribution, certificates and connectors](roadmap.md)
 
 - [Package Files](#package-files)

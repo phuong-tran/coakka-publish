@@ -7,11 +7,13 @@ It is separate from CoAkka Runtime Inspect, which inspects runtime messaging.
 
 ## Contents
 
+- [Why Inspect exists, metadata, OpenAPI and Swagger UI](metadata-and-openapi.md)
+
 - [Packages and evidence](#packages-and-evidence)
 - [Install](#install)
 - [Connect to a service](#connect-to-a-service)
 - [Security and lifecycle](#security-and-lifecycle)
-- [Limitations](#limitations)
+- [Deployment scope](#deployment-scope)
 
 ## Packages and evidence
 
@@ -112,7 +114,7 @@ did not execute. Do not automatically retry state-changing operations.
   Inspect does not stop the target service. Restart Inspect after changing its
   executable, bearer file or startup configuration.
 
-## Limitations
+## Deployment scope
 
 This candidate is a local development tool, not a remotely exposed operations
 console. It does not include publisher signing/notarization, a published
