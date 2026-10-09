@@ -13,6 +13,9 @@ remain bounded and explicit.
 - [Observability And Monitoring](#observability-and-monitoring)
 - [Failure Outcomes](#failure-outcomes)
 - [Shutdown](#shutdown)
+- [Shutdown trade-offs](#shutdown-trade-offs)
+- [Application hooks](#application-hooks)
+- [Deployment without Kubernetes](deployment-without-kubernetes.md)
 - [Operational Checklist](#operational-checklist)
 
 ## Ownership
@@ -153,6 +156,66 @@ flowchart TD
 Close is serialized and idempotent. A timed-out close reports failure without
 releasing memory or state still reachable by live handlers. Signal ownership is
 opt-in; importing a connector does not silently take over the process.
+
+The normal service surface owns this sequence through its close contract; do
+not invent a separate `drain()` method for a connector that does not expose one.
+Removing a replica from ingress is a deployment action before service close,
+not a substitute for Core's admission and cleanup work. Keep dependencies
+needed by accepted handlers alive until their work has settled.
+
+## Shutdown trade-offs
+
+| Choice | Benefit | Cost or limitation |
+| --- | --- | --- |
+| Drain accepted work | Reduces interrupted requests and gives owned resources an orderly end | Holds CPU/memory/connections during rollout; completion is not guaranteed before the deadline. |
+| Finite deadline | Bounds the graceful attempt and exposes stuck work | Some long-running requests or sessions may not finish; inspect the outcome rather than reporting success. |
+| Replacement before old-instance drain | Keeps new traffic served while the old instance retires | Requires spare capacity and ingress coordination; not an atomic cluster-wide operation. |
+| Force termination as an operator escalation | Ends a process that cannot converge | Can interrupt responses and business work; bypasses graceful cleanup and cannot guarantee delivery or rollback. |
+
+A completed business side effect may still have a lost HTTP response. Clients
+need application-defined idempotency and retry policy; drain does not create
+exactly-once business execution. SSE/WebSocket applications need bounded drain
+and reconnect/resume policy rather than an unlimited shutdown wait.
+
+## Application hooks
+
+A hook is the application's bridge from process termination intent to its
+existing service owner. It is not a handler invoked by Core for every request.
+Install it before publishing readiness; importing a connector should not take
+over process signals. Keep one cleanup owner, preserve errors and avoid racing
+several independent close sequences.
+
+The [Kotlin main sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/kotlin/src/main/kotlin/sample/Main.kt)
+uses this coordination excerpt (the latches are declared in `main`):
+
+```kotlin
+Runtime.getRuntime().addShutdownHook(Thread {
+    stopped.countDown()          // Ask the main lifecycle owner to stop.
+    shutdownCompleted.await()    // Keep the hook alive until cleanup is reported.
+})
+```
+
+The main path waits on `stopped`, then closes the service in `finally`. It
+releases `shutdownCompleted` in a nested `finally`, including on close failure;
+the latch means the cleanup attempt ended, not that it succeeded. The sample
+prints its success marker only after close succeeds and preserves the original
+failure with cleanup errors attached. See the complete source for ordering and
+its second, upstream service owner; this excerpt is not standalone code.
+
+This coordination latch has no independent timeout in the sample. Core close
+has its own contract, but that does not bound arbitrary application cleanup.
+A deployment must supply an outer process-stop budget covering ingress
+withdrawal, drain and application cleanup, and define what happens if that
+budget expires. A forced kill or machine loss can bypass hooks entirely.
+Do not call process exit from a hook or depend on unspecified ordering between
+independent hooks. Register application cleanup in an explicit owner order.
+
+Go, Python and Node/Bun use their language's termination handling to request
+the same lifecycle sequence; they do not emulate JVM shutdown hooks. See each
+[integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/README.md#languages)
+for its concrete signal/close recipe. Stop and join any application-owned
+monitor reader before freeing the service it reads; retain resources still
+reachable by a failed close. Do not convert a timeout to a successful stop.
 
 ## Operational Checklist
 

@@ -107,6 +107,12 @@ does not change a request outcome.
 
 ## Configure Collection
 
+For the packaged host-inlined service, start with the
+[Service monitoring guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/monitoring.md).
+It covers builder configuration, typed live-policy outcomes and source recipes
+for C/C++, Go, Java/Kotlin, Python, Node.js and Bun. The lower-level runtime
+example below is not the first-run application recipe.
+
 Monitoring is disabled by default. Reserve the maximum memory shape at startup,
 then optionally change the active policy within that reservation. This Python
 example reserves 256 event slots, runtime-safe detail, signal notification,

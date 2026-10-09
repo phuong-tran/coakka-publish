@@ -1,5 +1,13 @@
 # CoAkka HTTP Runtime
 
+> Polyglot applications should not require polyglot HTTP infrastructure.
+
+Native is our measurement baseline, not a promise of identical language
+throughput. Each host has scheduling, conversion and memory-management costs;
+measuring those costs under matched conditions helps plan capacity and scaling.
+See [native baseline and language costs](../docs/coakka-http-runtime-introduction.md#native-baseline-and-language-costs)
+and the [monitoring guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/monitoring.md).
+
 **One HTTP runtime. Familiar programming in every supported language.**
 
 CoAkka HTTP Runtime lets C, C++, Java, Kotlin, Python, JavaScript, TypeScript,
@@ -57,6 +65,8 @@ or establish deployment capacity.
 
 ## Contents
 
+- [Roadmap: distribution, certificates and connectors](roadmap.md)
+
 - [Package Files](#package-files)
 - [Why CoAkka HTTP Runtime Exists](#why-coakka-http-runtime-exists)
 - [Where It Fits In CoAkka](#where-it-fits-in-coakka)
@@ -64,8 +74,10 @@ or establish deployment capacity.
 - [Application Model](#application-model)
 - [What It Supports](#what-it-supports)
 - [Frontend And Backend In One Service](#frontend-and-backend-in-one-service)
+- [File delivery, sendfile and uploads](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/file-delivery.md)
 - [Queues And Backpressure](#queues-and-backpressure)
 - [Observability And Monitoring](#observability-and-monitoring)
+- [Deployment without Kubernetes](docs/deployment-without-kubernetes.md)
 - [TLS, mTLS, And Live Handler Changes](#tls-mtls-and-live-handler-changes)
 - [Framework Experiences Belong In Addons](#framework-experiences-belong-in-addons)
 - [Compare With Familiar Platforms](#compare-with-familiar-platforms)
