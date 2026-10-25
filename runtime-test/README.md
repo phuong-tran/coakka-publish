@@ -4,6 +4,10 @@ This directory is the published source projection of
 `coakka-samples/runtime-test/`. It uses only the installed CoAkka
 Runtime native C ABI; it does not include private runtime implementation.
 
+The published/default profile is historical v1. The explicit private Native
+candidate profile below uses Core readers/tickets and v2 accounting; it does
+not parse responses through the old framed channel.
+
 In addition to request/reply, bounded-admission, and connection-policy checks,
 the projection contains configurable C11 race and route-snapshot hot-reload
 evidence. `hot-reload` means full route-snapshot replacement; it does not claim
@@ -15,6 +19,8 @@ The source is intentionally small and separated by responsibility:
 
 - `evidence_config.c`: bounded command-line input parsing;
 - `evidence_runtime.c`: request/reply, pressure, stress, and soak workload;
+- `native_workload.c`, `native_engine_owner.*`, `native_ticket_window.h`: the
+  explicit Native profile's public-Core workload and bounded ownership seams;
 - `file_lane_main.c`: a 9 MiB multi-quantum direct-profile file transfer through
   only the published File Lane contract, including digest, receipt, final
   progress, monotonic observed update cursors, and counter checks;
@@ -88,7 +94,7 @@ runtime capability snapshot and requires unsupported modes to fail without
 changing active state. It does not load certificates or claim an active
 TLS/mTLS handshake.
 
-## Current-Engine Fixture Controls — Source Candidate
+## Current-Engine Controls — Source Candidate
 
 The private native candidate `2.5.1+f6b61768` has focused C11 fixture-owner
 controls using only Core's opaque request reader and ask tickets. From the
@@ -103,9 +109,11 @@ cmake -S runtime-test -B /external/owned/native-engine-controls \
   -DCOAKKA_NATIVE_EVIDENCE_REQUIRE_NATIVE_STARTUP=ON
 cmake --build /external/owned/native-engine-controls --config Release \
   --target coakka_runtime_v2_native_engine_owner_tests \
-           coakka_runtime_v2_native_engine_owner_consumer
+           coakka_runtime_v2_native_engine_owner_consumer \
+           coakka_runtime_v2_native_ticket_window_tests \
+           coakka_runtime_v2_native_evidence
 ctest --test-dir /external/owned/native-engine-controls -C Release \
-  -R '^native-engine-owner-' --output-on-failure
+  -R '^native-(engine|ticket)' --output-on-failure
 ```
 
 The white-box control covers exact status/fact projection, partial startup,
@@ -114,12 +122,36 @@ complete lifecycles, empty/binary roundtrips and Core-issued owned request and
 response modes. Release assertions remain active and a disabled-assertion
 build is refused. Pre-start snapshots are not live applied-state observations.
 
-These are preparatory source-candidate controls, not a published artifact or
-full migration of legacy workload/concurrency modes. Current-engine pressure
-must distinguish synchronous refusal from admitted requests and their actual
-terminal results. Do not relabel historical framed compatibility evidence as
-new-engine traffic, widen deadlines or weaken its assertions. The separate
-ordinary modes and source-projection reconciliation remain open until tested.
+This explicit profile selects `native_workload.c` for `smoke`, `pressure`,
+`stress` and `soak`; run `coakka_runtime_v2_native_evidence` from the build's
+configuration directory. The historical SDK/profile keeps unchanged v1 source,
+not a runtime fallback. `race`/`hot-reload` remain legacy and are NOT certified
+as migrated by these controls.
+
+Native schema `coakka.runtime.native.evidence.v2` separates attempted,
+Core-accepted (`submitted`), synchronous `WOULD_BLOCK` without a ticket
+(`nativeProfile.synchronouslyRefused`), actual responses (`completed`) and
+matched deadletters (`rejected`). It requires:
+
+```text
+attempted == submitted + synchronouslyRefused
+submitted == completed + rejected
+handlerReceived == repliesSubmitted == completed
+deadletters == rejected
+queueRejected == synchronouslyRefused + rejected + replySubmitBackpressure
+```
+
+Pressure is a finite Native admission burst before handler pumping, not the
+old pipe-paced scenario; it must prove bounded refusal and complete terminal
+conservation. Non-pressure requires no refusal/deadletter/route miss and checks
+every reply payload. Original1000ms intent/5000ms final drain remain unchanged.
+One FIFO ticket window is allocated once from finite request/max-in-flight
+bounds, at most500K slots; unbounded/oversized intent fails before Runtime
+construction. Default soak retains at most64 tickets. Core owns reply matching;
+the window's4096-round pure test checks ownership/refusal/wrap, not Native state.
+Pre-start Core facts are projected only after successful getters, and CLI
+refusal never invents a zero-valued runtime fact. No new published artifact or
+whole ecosystem release is implied.
 
 ## Analysis And Sanitizers
 
