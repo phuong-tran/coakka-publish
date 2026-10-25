@@ -88,6 +88,39 @@ runtime capability snapshot and requires unsupported modes to fail without
 changing active state. It does not load certificates or claim an active
 TLS/mTLS handshake.
 
+## Current-Engine Fixture Controls — Source Candidate
+
+The private native candidate `2.5.1+f6b61768` has focused C11 fixture-owner
+controls using only Core's opaque request reader and ask tickets. From the
+repository root, select an exact installed `CoAkkaV2` prefix and an external,
+caller-owned build directory; no package download or Core rebuild is implied:
+
+```sh
+cmake -S runtime-test -B /external/owned/native-engine-controls \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCOAKKA_NATIVE_EVIDENCE_RUNTIME_PACKAGE=CoAkkaV2 \
+  -DCOAKKA_NATIVE_EVIDENCE_RUNTIME_PREFIX=/exact/installed/native-candidate \
+  -DCOAKKA_NATIVE_EVIDENCE_REQUIRE_NATIVE_STARTUP=ON
+cmake --build /external/owned/native-engine-controls --config Release \
+  --target coakka_runtime_v2_native_engine_owner_tests \
+           coakka_runtime_v2_native_engine_owner_consumer
+ctest --test-dir /external/owned/native-engine-controls -C Release \
+  -R '^native-engine-owner-' --output-on-failure
+```
+
+The white-box control covers exact status/fact projection, partial startup,
+stop-refusal retention and cleanup order. The SDK-only consumer verifies16
+complete lifecycles, empty/binary roundtrips and Core-issued owned request and
+response modes. Release assertions remain active and a disabled-assertion
+build is refused. Pre-start snapshots are not live applied-state observations.
+
+These are preparatory source-candidate controls, not a published artifact or
+full migration of legacy workload/concurrency modes. Current-engine pressure
+must distinguish synchronous refusal from admitted requests and their actual
+terminal results. Do not relabel historical framed compatibility evidence as
+new-engine traffic, widen deadlines or weaken its assertions. The separate
+ordinary modes and source-projection reconciliation remain open until tested.
+
 ## Analysis And Sanitizers
 
 Run Clang static analysis against the installed include directory:
