@@ -201,6 +201,24 @@ mutable-before-start contract. Both profiles close exported descriptors through
 Core, not the executable's separate CRT on native Windows. This configuration
 lane adds no exchange, response pipe parser, certificate or TLS handshake claim.
 
+## Standalone Lane Source Candidate
+
+The current source candidate additionally supports `--owner-aware` on both
+File and Stream executables, alongside their no-argument Simple profiles.
+Select exact SDK headers with owner-grant APIs; historical prebuilt runners
+remain unchanged and are not evidence of this candidate's source execution.
+These standalone Core lane APIs do not construct actor Runtime or use its
+response engine. Core grants supply the copied exact owner and actual listener
+port; File retains bounded resume/idempotency, Stream is single-admission.
+Deterministic loopback test tokens are never printed. Both profiles preserve
+9MiB+731 File digest/terminal receipts and97 ordered Stream frames, counters,
+pressure and stop checks. Unobserved File getter/digest/statistics values are
+null on failure, never zero-valued Core facts.
+
+The current Windows import definition is bounded to the harness's public C
+call closure; no private export or Core ABI expansion is implied. Both lane
+executables receive the exact selected DLL app-local during their actual build.
+
 ## Analysis And Sanitizers
 
 Run Clang static analysis against the installed include directory:
