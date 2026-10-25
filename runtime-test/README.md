@@ -112,6 +112,8 @@ cmake --build /external/owned/native-engine-controls --config Release \
            coakka_runtime_v2_native_engine_owner_consumer \
            coakka_runtime_v2_native_ticket_window_tests \
            coakka_runtime_v2_native_ticket_publication_tests \
+           coakka_runtime_v2_native_concurrency_fixture_tests \
+           coakka_runtime_v2_concurrency_evidence \
            coakka_runtime_v2_native_evidence
 ctest --test-dir /external/owned/native-engine-controls -C Release \
   -R '^native-(engine|ticket)' --output-on-failure
@@ -126,8 +128,8 @@ build is refused. Pre-start snapshots are not live applied-state observations.
 This explicit profile selects `native_workload.c` for `smoke`, `pressure`,
 `stress` and `soak`; run `coakka_runtime_v2_native_evidence` from the build's
 configuration directory. The historical SDK/profile keeps unchanged v1 source,
-not a runtime fallback. `race`/`hot-reload` remain legacy and are NOT certified
-as migrated by these controls.
+not a runtime fallback. The same explicit profile now selects Native
+`race`/`hot-reload` sources; the historical/default profile retains legacy code.
 
 Native schema `coakka.runtime.native.evidence.v2` separates attempted,
 Core-accepted (`submitted`), synchronous `WOULD_BLOCK` without a ticket
@@ -155,8 +157,28 @@ refusal never invents a zero-valued runtime fact. No new published artifact or
 whole ecosystem release is implied.
 
 The separate pure publication control exercises finite one-producer/controller
-ticket ownership,4×4096 release/acquire transfers and no Core load. This is a
-concurrency prerequisite, not certification of Native `race`/`hot-reload`.
+ticket ownership,4×4096 release/acquire transfers and no Core load. Native
+concurrency uses this handoff plus only Core readers/tickets. Run the selected
+`coakka_runtime_v2_concurrency_evidence` with `race` or `hot-reload`; its Native
+schema is `coakka.runtime.native.concurrency-evidence.v2`.
+
+Logical attempts, actual synchronous admission backpressure, confirmed Core
+admission and matched responses/deadletters remain distinct. The original
+5000ms request/default30000ms phase, per-generation quotas, every-generation
+Core observation, atomic stale/invalid refusal, final route probes, actual
+submit-versus-stop `CLOSED` and lifecycle counts are preserved. No TLS-credential
+or connection-policy reload claim is implied.
+
+One finite table defaults to512 pointers/4KiB on64-bit, with an explicit
+64×100000-pointer/51.2MB advanced bound excluding Core ticket/result storage.
+Controller alone observes/retires tickets; producers join before remaining
+owners are freed. Discarded observation never means revoked execution, and an
+accepted Core request remains admitted even if fixture handoff fails. Core
+RESPONSE remains RESPONSE when the echo payload mismatches; `responseValidation`
+keeps that application check separate from the exact Core projection status.
+Unknown/unperformed Core counters/states/refusals are null; final state is the
+Core stats snapshot before close, not a local lifecycle guess. This is source
+candidate proof, not a new published package or complete ecosystem readiness.
 
 ## Analysis And Sanitizers
 
