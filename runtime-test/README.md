@@ -111,6 +111,7 @@ cmake --build /external/owned/native-engine-controls --config Release \
   --target coakka_runtime_v2_native_engine_owner_tests \
            coakka_runtime_v2_native_engine_owner_consumer \
            coakka_runtime_v2_native_ticket_window_tests \
+           coakka_runtime_v2_native_ticket_publication_tests \
            coakka_runtime_v2_native_evidence
 ctest --test-dir /external/owned/native-engine-controls -C Release \
   -R '^native-(engine|ticket)' --output-on-failure
@@ -152,6 +153,10 @@ the window's4096-round pure test checks ownership/refusal/wrap, not Native state
 Pre-start Core facts are projected only after successful getters, and CLI
 refusal never invents a zero-valued runtime fact. No new published artifact or
 whole ecosystem release is implied.
+
+The separate pure publication control exercises finite one-producer/controller
+ticket ownership,4×4096 release/acquire transfers and no Core load. This is a
+concurrency prerequisite, not certification of Native `race`/`hot-reload`.
 
 ## Analysis And Sanitizers
 
