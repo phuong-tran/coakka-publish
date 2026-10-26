@@ -96,6 +96,20 @@ TLS/mTLS handshake.
 
 ## Current-Engine Controls — Source Candidate
 
+The installed-candidate CMake path pins every Core-linked consumer to its exact
+selected image, not just the startup probe. Reused install/build RPATH settings
+cannot make startup pass while traffic loads an unrelated image. Pure fake-API
+and ticket units remain Core-free. CMake also records exact target-file paths
+for source launchers, including custom/multi-configuration output layouts.
+An installed SDK prefix and a Core source build cannot be selected together.
+
+Samples' macOS/Linux source frontend applies explicit candidate intent to all
+workload, concurrency, connection and lane modes, without historical/prebuilt
+fallback. This published source projection retains its direct CMake interface;
+it does not duplicate Samples' repository-specific shell/bootstrap helpers or
+claim Windows Bash execution. Native Windows CMake and exact app-local image
+execution are independently checked.
+
 The private native candidate `2.5.1+f6b61768` has focused C11 fixture-owner
 controls using only Core's opaque request reader and ask tickets. From the
 repository root, select an exact installed `CoAkkaV2` prefix and an external,
