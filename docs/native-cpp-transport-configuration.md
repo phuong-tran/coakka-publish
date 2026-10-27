@@ -7,9 +7,12 @@ connection strategy, TLS/mTLS, and capability discovery. The C++ SDK delegates
 all validation, entitlement, lifecycle, and atomic-publication semantics to the
 public C ABI. It does not invent a second configuration model.
 
-The surface follows the released public connector ABI. `PER_EXCHANGE +
-PLAINTEXT` remains the default when `StartSpec` leaves both transport fields
-unset.
+The released connector is still an explicitly legacy-constructor compatibility
+surface. An omitted TCP strategy therefore observes that old constructor's
+`PER_EXCHANGE + PLAINTEXT`, not Core's current native-construction
+`AUTO + MULTIPLEXED` contract. A future connector migration must switch
+construction and its tests together before this document can describe the
+native default.
 
 ## Public Types
 
