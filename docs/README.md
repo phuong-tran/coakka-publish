@@ -14,7 +14,7 @@ combining the products' configuration and installation instructions.
 - [Runtime integration](runtime-integration-guide.md) and [current packages](current-packages.md).
 - [Runtime logging and observability](runtime-logging-observability.md).
 - [Runtime Inspect](coakka-runtime-inspect.md).
-- [Runnable Runtime samples](https://github.com/phuong-tran/coakka-samples/tree/main/runtime).
+- [Runnable Runtime samples](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime).
 
 ## Build and operate HTTP Runtime
 
@@ -41,3 +41,5 @@ distributed Runtime Inspect tool.
 - [Logger package entrypoints](current-packages.md#package-and-source-entrypoints).
 - [Runtime addons](runtime-addons.md).
 - [Complete sample documentation index](https://github.com/phuong-tran/coakka-samples/blob/main/docs/README.md).
+
+See [Product Layout](product-layout.md) for stable product entrypoints and retained warehouse paths.

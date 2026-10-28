@@ -14,7 +14,7 @@ Current lane:
   evidence over a complete local target request/reply path.
 
 The exact auditable C11 harness source is visible at the repository root under
-[`runtime-test/`](../../runtime-test/README.md), including capability-aware
+[`runtime-test/`](../../coakka-runtime/runtime-test/README.md), including capability-aware
 connection-strategy checks and consumer-side ASan/UBSan build controls. The
 [`native/`](native/README.md) directory retains prebuilt runners and immutable
 release evidence.

@@ -60,11 +60,14 @@ make_fixture() {
     "${fixture}/runtime-addons" \
     "${fixture}/samples/runtime/native/example/releases/1.1.0" \
     "${fixture}/coakka-tools/coakka-runtime-inspect/releases/1.3.1+e664986" \
-    "${fixture}/scripts"
+    "${fixture}/scripts" \
+    "${fixture}/coakka-runtime/scripts" \
+    "${fixture}/coakka-runtime/addons" \
+    "${fixture}/coakka-logger"
 
   cp "${repo_root}/scripts/verify-public-surface.sh" "${fixture}/scripts/verify-public-surface.sh"
-  cp "${repo_root}/scripts/verify-runtime-addon-release.py" \
-    "${fixture}/scripts/verify-runtime-addon-release.py"
+  cp "${repo_root}/coakka-runtime/scripts/verify-runtime-addon-release.py" \
+    "${fixture}/coakka-runtime/scripts/verify-runtime-addon-release.py"
   cat >"${fixture}/scripts/scan-public-surface.sh" <<'EOF'
 #!/usr/bin/env bash
 echo "[public-artifact-surface] ok"
@@ -72,13 +75,15 @@ EOF
   chmod +x \
     "${fixture}/scripts/scan-public-surface.sh" \
     "${fixture}/scripts/verify-public-surface.sh" \
-    "${fixture}/scripts/verify-runtime-addon-release.py"
+    "${fixture}/coakka-runtime/scripts/verify-runtime-addon-release.py"
 
   printf '# Fixture\n' >"${fixture}/README.md"
   cp "${repo_root}/LICENSE.md" "${fixture}/LICENSE.md"
   printf '# Fixture contract\n' >"${fixture}/docs/public-artifact-contract.md"
+  printf '# Runtime\n' >"${fixture}/coakka-runtime/README.md"
+  printf '# Logger\n' >"${fixture}/coakka-logger/README.md"
   printf '# Runtime addons\n' >"${fixture}/runtime-addons/README.md"
-  printf '{}\n' >"${fixture}/runtime-addons/manifest.schema.json"
+  printf '{}\n' >"${fixture}/coakka-runtime/addons/manifest.schema.json"
   printf 'client header\n' >"${fixture}/include/coakka/v2/client.h"
   printf 'control header\n' >"${fixture}/include/coakka/v2/control.h"
   printf 'runtime header\n' >"${fixture}/include/coakka/v2/runtime.h"
@@ -262,6 +267,21 @@ expect_failure "duplicate manifest label" env \
   COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
   "${duplicate_label_fixture}/scripts/verify-public-surface.sh"
 grep -Fq "duplicate artifact label" "${test_output}"
+
+product_fixture="$(make_fixture product-layout)"
+for product in coakka-runtime coakka-logger; do
+  product_release="${product_fixture}/${product}/node/releases/test"
+  mkdir -p "${product_release}"
+  printf 'product archive\n' >"${product_release}/package.tgz"
+  product_sha="$(sha256_file "${product_release}/package.tgz")"
+  printf 'public\t%s Node layout fixture\t%s/node/releases/test/package.tgz\t%s\n' \
+    "${product}" "${product}" "${product_sha}" >>"${product_fixture}/artifacts/public-artifacts.tsv"
+done
+expect_success "new product paths preserve legacy warehouse admission" env \
+  COAKKA_PUBLIC_VERIFY_SKIP_CURRENT_BOUNDARY=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS=1 \
+  COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE=1 \
+  "${product_fixture}/scripts/verify-public-surface.sh"
 
 bad_sha_fixture="$(make_fixture bad-sha)"
 sed -i.bak 's/[0-9a-f]\{64\}$/ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff/' \

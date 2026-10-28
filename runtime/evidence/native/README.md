@@ -7,7 +7,7 @@ coakka-samples/runtime-test/
 ```
 
 The auditable C11 source is also included at the repository root under
-[`runtime-test/`](../../../runtime-test/README.md). Its SHA-256 manifest and verification script let a
+[`runtime-test/`](../../../coakka-runtime/runtime-test/README.md). Its SHA-256 manifest and verification script let a
 consumer inspect and verify the exact public-ABI harness without relying on a
 second checkout.
 
@@ -49,13 +49,13 @@ caller request
 Use the source-first sample path when possible:
 
 ```sh
-bash run.sh runtime-test smoke
+bash run.sh coakka-runtime runtime-test smoke
 ```
 
 Use the prebuilt path when the local machine does not have a C toolchain:
 
 ```sh
-COAKKA_NATIVE_EVIDENCE_USE_PREBUILT=1 bash run.sh runtime-test smoke
+COAKKA_NATIVE_EVIDENCE_USE_PREBUILT=1 bash run.sh coakka-runtime runtime-test smoke
 ```
 
 Windows uses the prebuilt path directly:

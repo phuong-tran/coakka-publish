@@ -302,7 +302,7 @@ verify_public_artifact_manifest() {
       fail "unsafe artifact path in manifest row ${line_no}: ${relative_path}"
     fi
     case "${relative_path}" in
-      runtime-addons/*/native/releases/*/*)
+      runtime-addons/*/native/releases/*/*|coakka-runtime/addons/*/native/releases/*/*)
         addon_release_manifest="${repo_root}/$(dirname "${relative_path}")/manifest.json"
         if [[ ! -f "${addon_release_manifest}" ]]; then
           fail "runtime addon artifact has no release manifest: ${relative_path}"
@@ -319,7 +319,7 @@ PY
           fail "runtime addon public row does not name its manifest archive: ${relative_path}"
         fi
         ;;
-      samples/runtime/native/*/releases/*/*)
+      samples/runtime/native/*/releases/*/*|coakka-runtime/demos/*/releases/*/*)
         sample_release_manifest="${repo_root}/$(dirname "${relative_path}")/manifest.json"
         if [[ ! -f "${sample_release_manifest}" ]]; then
           fail "native sample artifact has no release manifest: ${relative_path}"
@@ -340,7 +340,7 @@ PY
           fail "native sample public row is not declared exactly once in its release manifest: ${relative_path}"
         fi
         ;;
-      logger/*/releases/*|runtime/*/releases/*|runtime-inspect/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|coakka-tools/*/releases/*|maven/coakka/*/*/*/*.jar|maven/io/github/phuong-tran/coakka/*/*/*.jar)
+      logger/*/releases/*|coakka-logger/*/releases/*|runtime/*/releases/*|coakka-runtime/*/releases/*|coakka-runtime/tools/*/releases/*|runtime-inspect/*/releases/*|cli/releases/*|demo/coakka-client/releases/*|coakka-tools/*/releases/*|maven/coakka/*/*/*/*.jar|maven/io/github/phuong-tran/coakka/*/*/*.jar)
         ;;
       *)
         fail "artifact path is outside the current public manifest surface in row ${line_no}: ${relative_path}"
@@ -614,7 +614,7 @@ PY
       fail "Android Maven candidate manifest is missing artifact identity: ${manifest#"${repo_root}/"}"
     [[ -f "${release_dir}/${artifact_name}" ]] ||
       fail "Android Maven candidate artifact is missing: ${release_dir#"${repo_root}/"}/${artifact_name}"
-    "${repo_root}/scripts/verify-runtime-intake-artifact.py" \
+    "${repo_root}/coakka-runtime/scripts/verify-runtime-intake-artifact.py" \
       --lane android \
       --artifact "${release_dir}/${artifact_name}" \
       --expected-native-version "${native_version}" \
@@ -670,12 +670,14 @@ PY
 }
 
 require_file "README.md"
+require_file "coakka-runtime/README.md"
+require_file "coakka-logger/README.md"
 require_file "LICENSE.md"
 require_file "docs/public-artifact-contract.md"
 require_file "artifacts/public-artifacts.tsv"
 require_file "runtime-addons/README.md"
-require_file "runtime-addons/manifest.schema.json"
-require_file "scripts/verify-runtime-addon-release.py"
+require_file "coakka-runtime/addons/manifest.schema.json"
+require_file "coakka-runtime/scripts/verify-runtime-addon-release.py"
 require_file "include/coakka/v2/client.h"
 require_file "include/coakka/v2/control.h"
 require_file "include/coakka/v2/runtime.h"
@@ -696,7 +698,7 @@ if ! find "${repo_root}/runtime/native/releases" -mindepth 2 -maxdepth 2 \
 fi
 
 release_roots=()
-for release_root in logger runtime runtime-addons cli demo samples; do
+for release_root in coakka-logger coakka-runtime logger runtime runtime-addons cli demo samples; do
   if [[ -d "${repo_root}/${release_root}" ]]; then
     release_roots+=("${repo_root}/${release_root}")
   fi
@@ -713,10 +715,10 @@ done < <(find "${release_roots[@]}" -path '*/releases/*/SHA256SUMS' -print0)
 verify_maven_sidecars
 
 while IFS= read -r -d '' addon_manifest; do
-  "${repo_root}/scripts/verify-runtime-addon-release.py" \
+  "${repo_root}/coakka-runtime/scripts/verify-runtime-addon-release.py" \
     --release-dir "$(dirname "${addon_manifest}")"
 done < <(
-  find "${repo_root}/runtime-addons" \
+  find "${repo_root}/runtime-addons" "${repo_root}/coakka-runtime/addons" \
     -path '*/native/releases/*/manifest.json' -print0
 )
 
@@ -736,8 +738,8 @@ if [[ "${COAKKA_PUBLIC_VERIFY_SKIP_FRAMEWORK_ADAPTERS:-0}" != "1" ]]; then
 fi
 
 if [[ "${COAKKA_PUBLIC_VERIFY_SKIP_RUNTIME_JVM_BUNDLE:-0}" != "1" &&
-      -x "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh" ]]; then
-  "${repo_root}/scripts/verify-runtime-jvm-native-bundle.sh"
+      -x "${repo_root}/coakka-runtime/scripts/verify-runtime-jvm-native-bundle.sh" ]]; then
+  "${repo_root}/coakka-runtime/scripts/verify-runtime-jvm-native-bundle.sh"
 fi
 
 scanner_inputs=(
@@ -745,6 +747,8 @@ scanner_inputs=(
   "${repo_root}/docs"
   "${repo_root}/include"
   "${repo_root}/coakka-http-runtime"
+  "${repo_root}/coakka-runtime"
+  "${repo_root}/coakka-logger"
   "${repo_root}/runtime-addons"
   "${repo_root}/samples"
   "${repo_root}/scripts"

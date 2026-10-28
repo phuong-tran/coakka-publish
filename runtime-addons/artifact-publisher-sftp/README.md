@@ -59,10 +59,10 @@ the release SHA-256 values before use; organizations that require signed code
 must sign the verified DLLs with their own trusted certificate and policy.
 
 The native package template lives under
-[`native/package-template`](native/package-template/README.md).
+[`native/package-template`](../../coakka-runtime/addons/artifact-publisher-sftp/native/package-template/README.md).
 
 The independent
-[native sample](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-addons/artifact-publisher-sftp/native)
+[native sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime/addons/artifact-publisher-sftp/native)
 consumes the immutable addon and Runtime archives, then exercises SFTP
 acquisition plus cross-process File Lane delivery. The root sample runner keeps
 it under the distinct `runtime-addons` command.

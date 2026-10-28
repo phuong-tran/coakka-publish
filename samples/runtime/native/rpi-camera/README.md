@@ -7,7 +7,7 @@ Version `1.1.0` packages two applications:
 
 The public source, build instructions, CLI contract, resolution controls, and
 audio/no-audio recording workflow are in
-[`coakka-samples/runtime-streaming-demo/rpi-camera/`](https://github.com/phuong-tran/coakka-samples/tree/main/runtime-streaming-demo/rpi-camera).
+[`coakka-samples/runtime-streaming-demo/rpi-camera/`](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime/demos/rpi-camera).
 
 ## Current Binary Set
 

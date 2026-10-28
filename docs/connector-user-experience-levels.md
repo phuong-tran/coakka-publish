@@ -119,7 +119,7 @@ C#:
 - Level 3: `TransportEnvelope`, JSON helpers, explicit payload identity,
   native library resolver, and raw submit paths.
 - Public C# connector APIs publish XML documentation so IntelliSense teaches
-  ownership, local-route metadata, and runtime/no-discovery boundaries.
+  ownership, local-route metadata, and coakka-runtime/no-discovery boundaries.
 
 Zig:
 

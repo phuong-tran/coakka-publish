@@ -328,11 +328,11 @@ remain under [docs/releases/](docs/releases/).
 - Documented the planned npm, Go module, crates.io, and apt/deb distribution
   lanes without changing the current artifact or license surface.
 - Added an npm package-manager preflight and fixture coverage for the planned
-  Node.js, Bun, and Electron runtime/logger lanes without making an npm release
+  Node.js, Bun, and Electron coakka-runtime/logger lanes without making an npm release
   claim.
 - Staged npm-ready candidate tarballs for Node.js, Bun, and Electron runtime
   and logger lanes under `package-manager/npm/candidates/55bbeb7/`.
-- Published and registry-verified the npm JavaScript runtime/logger lane:
+- Published and registry-verified the npm JavaScript coakka-runtime/logger lane:
   `coakka-v2-connector-node@1.3.1`, `coakka-v2-connector-bun@1.3.1`,
   `coakka-v2-connector-electron@1.3.1`, `coakka-logger-node@1.2.1`,
   `coakka-logger-bun@1.2.1`, and `coakka-logger-electron@1.2.1`.
@@ -341,7 +341,7 @@ remain under [docs/releases/](docs/releases/).
   `coakka-samples`.
 - Staged npm onboarding patch release candidates from connector commit
   `e5d3342`: runtime packages `1.3.2` and logger packages `1.2.2`, with the
-  same native runtime/logger generations as the previous npm release.
+  same native coakka-runtime/logger generations as the previous npm release.
 - Published and registry-verified the npm onboarding patch release:
   `coakka-v2-connector-node@1.3.2`, `coakka-v2-connector-bun@1.3.2`,
   `coakka-v2-connector-electron@1.3.2`, `coakka-logger-node@1.2.2`,
@@ -355,7 +355,7 @@ remain under [docs/releases/](docs/releases/).
   `coakka-v2-connector-electron@1.3.3`.
 - Staged npm README first-run smoke patch candidates from connector commit
   `f3e25ec`: runtime packages `1.3.4` and logger packages `1.2.3`, with the
-  same native runtime/logger generations as the current npm release.
+  same native coakka-runtime/logger generations as the current npm release.
 - Published and registry-verified the npm README first-run smoke patch release:
   `coakka-v2-connector-node@1.3.4`,
   `coakka-v2-connector-bun@1.3.4`,
@@ -365,7 +365,7 @@ remain under [docs/releases/](docs/releases/).
   `coakka-logger-electron@1.2.3`.
 - Staged npm package metadata links patch candidates from connector commit
   `e2c2442`: runtime packages `1.3.5` and logger packages `1.2.4`, with the
-  same native runtime/logger generations as the current npm release.
+  same native coakka-runtime/logger generations as the current npm release.
 - Published and registry-verified the npm package metadata links patch release:
   `coakka-v2-connector-node@1.3.5`,
   `coakka-v2-connector-bun@1.3.5`,

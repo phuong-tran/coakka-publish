@@ -30,8 +30,8 @@ jobs:
       - name: Admit and extract the exact native package
         shell: bash
         run: |
-          bash scripts/verify-http-runtime-release.sh --candidate
-          bash scripts/verify-http-runtime-test-source.sh
+          bash coakka-http-runtime/scripts/verify-http-runtime-release.sh --candidate
+          bash coakka-http-runtime/scripts/verify-http-runtime-test-source.sh
           mkdir -p build/http-package
           tar -xzf coakka-http-runtime/native/candidates/2026-10-08-r3/coakka-http-native-1.0.0-candidate-${{ matrix.platform }}.tar.gz -C build/http-package
 
@@ -76,8 +76,8 @@ jobs:
       - name: Admit and extract the exact native package
         shell: bash
         run: |
-          bash scripts/verify-http-runtime-release.sh --candidate
-          bash scripts/verify-http-runtime-test-source.sh
+          bash coakka-http-runtime/scripts/verify-http-runtime-release.sh --candidate
+          bash coakka-http-runtime/scripts/verify-http-runtime-test-source.sh
           mkdir -p build/http-package
           tar -xzf coakka-http-runtime/native/candidates/2026-10-08-r3/coakka-http-native-1.0.0-candidate-linux-x86_64.tar.gz -C build/http-package
 
@@ -129,25 +129,31 @@ jobs:
             scripts/test-npm-package-manager-candidates.sh \
             scripts/publish-npm-package-manager-candidates.sh \
             scripts/verify-npm-registry-candidates.sh \
-            scripts/test-runtime-intake-artifact.sh \
-            scripts/test-runtime-addon-release.sh \
-            scripts/verify-http-runtime-release.sh \
-            scripts/verify-http-runtime-test-source.sh \
+            coakka-runtime/scripts/test-runtime-intake-artifact.sh \
+            coakka-runtime/scripts/test-runtime-addon-release.sh \
+            coakka-runtime/scripts/test-runtime-jvm-native-bundle.sh \
+            coakka-runtime/scripts/verify-native-evidence-source.sh \
+            coakka-http-runtime/scripts/verify-http-runtime-release.sh \
+            coakka-http-runtime/scripts/verify-http-runtime-test-source.sh \
             scripts/verify-public-surface.sh
-          python3 -m py_compile scripts/verify-runtime-intake-artifact.py
-          python3 -m py_compile scripts/verify-runtime-addon-release.py
+          python3 -m py_compile coakka-runtime/scripts/verify-runtime-intake-artifact.py
+          python3 -m py_compile coakka-runtime/scripts/verify-runtime-addon-release.py
           python3 -m py_compile scripts/verify-npm-package-manager-artifact.py
-          python3 -m py_compile scripts/package-artifact-source-release.py
-          python3 -m py_compile scripts/test-package-artifact-source-sanitization.py
-          python3 scripts/test-package-artifact-source-sanitization.py
+          python3 -m py_compile coakka-runtime/scripts/package-artifact-source-release.py
+          python3 -m py_compile coakka-runtime/scripts/test-package-artifact-source-sanitization.py
+          python3 coakka-runtime/scripts/test-package-artifact-source-sanitization.py
+          python3 coakka-runtime/scripts/test-native-harness-admission.py
           scripts/test-public-surface-scanner.sh
           scripts/test-public-artifact-manifest.sh
           scripts/test-npm-package-manager-artifact.sh
           scripts/test-npm-package-manager-candidates.sh
-          scripts/test-runtime-intake-artifact.sh
-          scripts/test-runtime-addon-release.sh
-          python3 scripts/test-http-runtime-release.py
-          python3 scripts/test-http-inspect-candidate.py
-          scripts/verify-http-runtime-release.sh --all-candidates
-          scripts/verify-http-runtime-test-source.sh
+          coakka-runtime/scripts/test-runtime-intake-artifact.sh
+          coakka-runtime/scripts/test-runtime-addon-release.sh
+          coakka-runtime/scripts/test-runtime-jvm-native-bundle.sh
+          coakka-runtime/scripts/verify-native-evidence-source.sh
+          scripts/test-native-artifact-linkage.sh
+          python3 coakka-http-runtime/scripts/test-http-runtime-release.py
+          python3 coakka-http-runtime/scripts/test-http-inspect-candidate.py
+          coakka-http-runtime/scripts/verify-http-runtime-release.sh --all-candidates
+          coakka-http-runtime/scripts/verify-http-runtime-test-source.sh
           scripts/verify-public-surface.sh

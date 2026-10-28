@@ -10,15 +10,16 @@ trap 'rm -rf "${tmp_root}"' EXIT
 
 make_fixture() {
   local name="$1"
+  local product_prefix="${2:-runtime-addons}"
   local fixture="${tmp_root}/${name}"
-  local release="${fixture}/runtime-addons/artifact-publisher-azure-blob/native/releases/1.1.0+d1032f6d"
+  local release="${fixture}/${product_prefix}/artifact-publisher-azure-blob/native/releases/1.1.0+d1032f6d"
 
   mkdir -p "${fixture}/scripts" "${fixture}/artifacts" "${release}"
   cp "${checker}" "${fixture}/scripts/check-native-artifact-linkage.sh"
   cp "${source_release}/manifest.json" "${release}/manifest.json"
   cp "${source_release}/coakka-runtime-addon-artifact-publisher-azure-blob-native-1.1.0.tar.gz" "${release}/"
   printf 'public\truntime addon linkage fixture\t%s\tfixture\n' \
-    'runtime-addons/artifact-publisher-azure-blob/native/releases/1.1.0+d1032f6d/coakka-runtime-addon-artifact-publisher-azure-blob-native-1.1.0.tar.gz' \
+    "${product_prefix}/artifact-publisher-azure-blob/native/releases/1.1.0+d1032f6d/coakka-runtime-addon-artifact-publisher-azure-blob-native-1.1.0.tar.gz" \
     >"${fixture}/artifacts/public-artifacts.tsv"
   printf '%s\n' "${fixture}"
 }
@@ -26,6 +27,10 @@ make_fixture() {
 good_fixture="$(make_fixture declared-sibling)"
 COAKKA_NATIVE_LINKAGE_TMP_ROOT="${good_fixture}/.tmp/linkage" \
   "${good_fixture}/scripts/check-native-artifact-linkage.sh" >/dev/null
+
+product_fixture="$(make_fixture product-layout coakka-runtime/addons)"
+COAKKA_NATIVE_LINKAGE_TMP_ROOT="${product_fixture}/.tmp/linkage" \
+  "${product_fixture}/scripts/check-native-artifact-linkage.sh" >/dev/null
 
 parallel_fixture="$(make_fixture parallel-default-roots)"
 "${parallel_fixture}/scripts/check-native-artifact-linkage.sh" >/dev/null &

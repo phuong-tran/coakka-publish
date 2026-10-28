@@ -113,11 +113,11 @@ All logger connector lanes below align to logger native generation
 
 | Channel | Available surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron runtime/logger packages | runtime `2.5.3`, logger `1.2.7`; registry verified |
-| PyPI | Python runtime/logger wheels | runtime `coakka-v2-connector==2.5.3` and logger `coakka-logger==1.2.2`; registry verified |
-| Go modules | Go runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.3`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
-| SwiftPM | Swift runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.3`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
-| NuGet | C# runtime/logger packages | runtime `CoAkka.Runtime==2.5.3`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
+| npm | Node.js, Bun, and Electron coakka-runtime/logger packages | runtime `2.5.3`, logger `1.2.7`; registry verified |
+| PyPI | Python coakka-runtime/logger wheels | runtime `coakka-v2-connector==2.5.3` and logger `coakka-logger==1.2.2`; registry verified |
+| Go modules | Go coakka-runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.3`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
+| SwiftPM | Swift coakka-runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.3`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
+| NuGet | C# coakka-runtime/logger packages | runtime `CoAkka.Runtime==2.5.3`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
 
 PyPI superseded versions are yanked, not deleted:
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and

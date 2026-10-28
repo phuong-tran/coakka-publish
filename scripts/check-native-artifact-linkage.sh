@@ -118,7 +118,7 @@ check_archive() {
 
   [[ -f "${archive}" ]] || fail "missing artifact: ${relative_path}"
   case "${relative_path}" in
-    runtime-addons/*/native/releases/*/*.tar.gz)
+    runtime-addons/*/native/releases/*/*.tar.gz|coakka-runtime/addons/*/native/releases/*/*.tar.gz)
       allowed_addon_dependencies="$(addon_dependencies_for_archive "${relative_path}")"
       ;;
   esac
@@ -145,7 +145,7 @@ while IFS=$'\t' read -r row_status label relative_path _expected_sha _extra || [
   [[ -z "${row_status:-}" || "${row_status}" == \#* ]] && continue
   [[ "${row_status}" == "public" ]] || continue
   case "${relative_path}" in
-    logger/native/releases/*.tar.gz|runtime/native/releases/*.tar.gz|runtime-addons/*/native/releases/*/*.tar.gz|runtime-inspect/native/releases/*.tar.gz|cli/releases/*.tar.gz|demo/coakka-client/releases/*.tar.gz|coakka-tools/coakka-client/releases/*/*.tar.gz|coakka-tools/coakka-client/docker-demo/releases/*/*.tar.gz|coakka-tools/coakka-runtime-inspect/releases/*/*.tar.gz)
+    logger/native/releases/*.tar.gz|coakka-logger/native/releases/*.tar.gz|runtime/native/releases/*.tar.gz|coakka-runtime/native/releases/*.tar.gz|runtime-addons/*/native/releases/*/*.tar.gz|coakka-runtime/addons/*/native/releases/*/*.tar.gz|runtime-inspect/native/releases/*.tar.gz|cli/releases/*.tar.gz|demo/coakka-client/releases/*.tar.gz|coakka-tools/coakka-client/releases/*/*.tar.gz|coakka-tools/coakka-client/docker-demo/releases/*/*.tar.gz|coakka-tools/coakka-runtime-inspect/releases/*/*.tar.gz|coakka-runtime/tools/*/releases/*/*.tar.gz)
       check_archive "${relative_path}"
       ;;
   esac
