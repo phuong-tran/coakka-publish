@@ -12,6 +12,7 @@ combining the products' configuration and installation instructions.
 
 - [New to CoAkka](new-to-coakka.md) and [ecosystem overview](ecosystem-overview.md).
 - [Runtime integration](runtime-integration-guide.md) and [current packages](current-packages.md).
+- [Runtime defaults and monitoring](runtime-monitoring.md).
 - [Runtime logging and observability](runtime-logging-observability.md).
 - [Runtime Inspect](coakka-runtime-inspect.md).
 - [Runnable Runtime samples](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime).
