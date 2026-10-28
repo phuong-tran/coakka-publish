@@ -99,6 +99,6 @@ decorators and validation above the connector without moving HTTP ownership.
 
 - [FastAPI first steps](https://fastapi.tiangolo.com/tutorial/first-steps/)
 - [FastAPI tutorial](https://fastapi.tiangolo.com/tutorial/)
-- [Uvicorn settings and resource limits](https://www.uvicorn.org/settings/)
+- [Uvicorn settings and resource limits](https://uvicorn.dev/settings/)
 - [CoAkka Python guide](../../python/README.md)
 - [CoAkka App Host And Connectors](../app-host-and-connectors.md)
