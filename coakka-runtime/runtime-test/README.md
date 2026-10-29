@@ -290,4 +290,4 @@ Historical prebuilt runners remain under
 [`runtime/evidence/native/releases/`](../../runtime/evidence/native/releases/).
 
 For loader, unsigned-library, Windows, macOS, Linux, and TLS/mTLS diagnosis,
-see [Troubleshooting](../../docs/troubleshooting.md).
+see [Troubleshooting](../../docs/coakka-runtime/troubleshooting.md).

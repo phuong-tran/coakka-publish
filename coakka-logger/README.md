@@ -1,5 +1,7 @@
 # CoAkka Logger
 
+Read the [product documentation](../docs/coakka-logger/README.md) for the full guide.
+
 CoAkka Logger provides a bounded logging queue, explicit admission outcomes and
 counters across host languages. Use it when log volume, slow output or unclear
 record loss has become an application concern. It is independent of CoAkka
@@ -93,13 +95,13 @@ does not require replacing a working logging stack or collector.
 
 ## Packages And Guides
 
-- [Current package coordinates](../docs/current-packages.md)
-- [Ecosystem overview](../docs/ecosystem-overview.md)
+- [Current package coordinates](../docs/common/current-packages.md)
+- [Ecosystem overview](../docs/common/ecosystem-overview.md)
 - [Logger samples and operating guidance](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/README.md)
 - [Published native Logger catalog](../logger/native/README.md)
 - [Published JVM Logger catalog](../logger/jvm/README.md)
 - [Published Node.js Logger catalog](../logger/node/README.md)
 
 Use the selected language guide for its runtime, OS, package and sink support.
-See [Product Layout](../docs/product-layout.md) for stable artifact paths.
+See [Product Layout](../docs/common/product-layout.md) for stable artifact paths.
 Private candidates remain separate from published packages.

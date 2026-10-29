@@ -2,11 +2,11 @@
 
 **Java is supported too.** Kotlin is the connector implementation language,
 not a required application language. See the
-[Java code and runnable example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/kotlin/integration.md#java-uses-the-same-jvm-connector)
+[Java code and runnable example](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/kotlin/integration.md#java-uses-the-same-jvm-connector)
 for ordinary Java lambdas, getters, static/file serving and handler replacement
 through the same artifact.
 
-**New application?** Start with the [Kotlin/JVM integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/kotlin/integration.md)
+**New application?** Start with the [Kotlin/JVM integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/kotlin/integration.md)
 for installation, a first request and feature-by-feature usage. This page
 remains the package/API reference.
 
@@ -22,7 +22,7 @@ this step. Select the JVM process architecture, not just the OS architecture.
 
 ## Contents
 
-- [URL grammar and glossary](../docs/glossary.md)
+- [URL grammar and glossary](../../docs/coakka-http-runtime/glossary.md)
 
 - [Requirements](#requirements)
 - [Buffered service](#buffered-service)
@@ -202,6 +202,6 @@ class-file gate still requires every packaged class to use Java 8 bytecode.
 Release verification also shrinks the managed artifact and executes a native
 call to prove that only the required runtime lookup names are retained.
 
-The [App Host and connector guide](../docs/app-host-and-connectors.md) describes
+The [App Host and connector guide](../../docs/coakka-http-runtime/app-host-and-connectors.md) describes
 ownership and threading. Release evidence remains a gate of the assembled
 candidate rather than a promise inferred from this API guide.

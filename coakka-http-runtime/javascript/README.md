@@ -1,6 +1,6 @@
 # CoAkka HTTP for JavaScript
 
-**New application?** Start with the [Node.js/Bun integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/typescript/integration.md)
+**New application?** Start with the [Node.js/Bun integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/typescript/integration.md)
 for installation, a first request and feature-by-feature usage. This page
 remains the package/API reference.
 
@@ -32,7 +32,7 @@ configuration fails instead of silently choosing another library.
 
 ## Contents
 
-- [URL grammar and glossary](../docs/glossary.md)
+- [URL grammar and glossary](../../docs/coakka-http-runtime/glossary.md)
 
 - [Basic server](#basic-server)
 - [io_uring selection](#io_uring-selection)

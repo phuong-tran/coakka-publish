@@ -17,14 +17,14 @@ binary does not by itself prove execution on every host.
 
 Existing warehouse directories, Maven endpoints, versioned release paths and
 receipts retain their original locations and bytes. Product navigation does
-not rename those download URLs. See [Product Layout](docs/product-layout.md).
+not rename those download URLs. See [Product Layout](docs/common/product-layout.md).
 There is no aggregate repository product version or GitHub Release.
 
 Shared guidance:
 
-- [New to CoAkka](docs/new-to-coakka.md), [documentation index](docs/README.md) and [ecosystem overview](docs/ecosystem-overview.md).
-- [Current package coordinates](docs/current-packages.md) and [compatibility matrix](docs/compatibility-matrix.md).
-- [Runtime package/platform evidence](docs/runtime-package-platform-evidence.md), [artifact contract](docs/public-artifact-contract.md) and [troubleshooting](docs/troubleshooting.md).
+- [New to CoAkka](docs/common/new-to-coakka.md), [documentation index](docs/README.md) and [ecosystem overview](docs/common/ecosystem-overview.md).
+- [Current package coordinates](docs/common/current-packages.md) and [compatibility matrix](docs/coakka-runtime/compatibility-matrix.md).
+- [Runtime package/platform evidence](docs/coakka-runtime/runtime-package-platform-evidence.md), [artifact contract](docs/common/public-artifact-contract.md) and [troubleshooting](docs/coakka-runtime/troubleshooting.md).
 
 Private candidate catalogs remain separate from published coordinates. A
 source or documentation update does not admit a candidate or publish a release.

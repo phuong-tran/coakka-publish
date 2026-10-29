@@ -1,6 +1,6 @@
 # CoAkka HTTP for Go
 
-**New application?** Start with the [Go integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/go/integration.md)
+**New application?** Start with the [Go integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/go/integration.md)
 for installation, a first request and feature-by-feature usage. This page
 remains the package/API reference.
 
@@ -15,7 +15,7 @@ release. Download from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/) and
 
 ## Contents
 
-- [URL grammar and glossary](../docs/glossary.md)
+- [URL grammar and glossary](../../docs/coakka-http-runtime/glossary.md)
 
 - [Requirements](#requirements)
 - [Quick start](#quick-start)

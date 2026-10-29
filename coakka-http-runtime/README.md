@@ -1,12 +1,14 @@
 # CoAkka HTTP Runtime
 
+Read the [product documentation](../docs/coakka-http-runtime/README.md) for the full guide.
+
 > Polyglot applications should not require polyglot HTTP infrastructure.
 
 Native is our measurement baseline, not a promise of identical language
 throughput. Each host has scheduling, conversion and memory-management costs;
 measuring those costs under matched conditions helps plan capacity and scaling.
-See [native baseline and language costs](../docs/coakka-http-runtime-introduction.md#native-baseline-and-language-costs)
-and the [monitoring guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/monitoring.md).
+See [native baseline and language costs](../docs/coakka-http-runtime/introduction.md#native-baseline-and-language-costs)
+and the [monitoring guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/monitoring.md).
 
 **One HTTP runtime. Familiar programming in every supported language.**
 
@@ -65,9 +67,9 @@ or establish deployment capacity.
 
 ## Contents
 
-- [Inspect: metadata, OpenAPI and Swagger UI](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/inspect/metadata-and-openapi.md)
+- [Inspect: metadata, OpenAPI and Swagger UI](https://github.com/phuong-tran/coakka-publish/blob/main/docs/coakka-http-runtime/inspect/metadata-and-openapi.md)
 
-- [Roadmap: distribution, certificates and connectors](roadmap.md)
+- [Roadmap: distribution, certificates and connectors](../docs/coakka-http-runtime/roadmap.md)
 
 - [Package Files](#package-files)
 - [Why CoAkka HTTP Runtime Exists](#why-coakka-http-runtime-exists)
@@ -76,10 +78,10 @@ or establish deployment capacity.
 - [Application Model](#application-model)
 - [What It Supports](#what-it-supports)
 - [Frontend And Backend In One Service](#frontend-and-backend-in-one-service)
-- [File delivery, sendfile and uploads](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/file-delivery.md)
+- [File delivery, sendfile and uploads](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/file-delivery.md)
 - [Queues And Backpressure](#queues-and-backpressure)
 - [Observability And Monitoring](#observability-and-monitoring)
-- [Deployment without Kubernetes](docs/deployment-without-kubernetes.md)
+- [Deployment without Kubernetes](../docs/coakka-http-runtime/deployment-without-kubernetes.md)
 - [TLS, mTLS, And Live Handler Changes](#tls-mtls-and-live-handler-changes)
 - [Framework Experiences Belong In Addons](#framework-experiences-belong-in-addons)
 - [Compare With Familiar Platforms](#compare-with-familiar-platforms)
@@ -114,7 +116,7 @@ automatically. It also does not make Python, Go, JVM and JavaScript scheduling
 or throughput identical.
 
 For the complete rationale and capability overview, read
-[Introducing CoAkka HTTP Runtime](../docs/coakka-http-runtime-introduction.md).
+[Introducing CoAkka HTTP Runtime](../docs/coakka-http-runtime/introduction.md).
 
 ## Where It Fits In CoAkka
 
@@ -194,8 +196,8 @@ same service. The App Host keeps ownership of business state and application
 scheduling; `CoAkka HTTP Runtime` keeps ownership of its HTTP resources,
 limits, protocol state, operational truth, and ordered shutdown.
 
-Read [How It Works](docs/how-it-works.md) and
-[App Host And Connectors](docs/app-host-and-connectors.md) for the lifecycle and
+Read [How It Works](../docs/coakka-http-runtime/how-it-works.md) and
+[App Host And Connectors](../docs/coakka-http-runtime/app-host-and-connectors.md) for the lifecycle and
 ownership diagrams.
 
 ## What It Supports
@@ -215,7 +217,7 @@ ownership diagrams.
 | Live change | Generation- and revision-checked handler swap without dropping already-admitted work |
 | Linux I/O | Platform-default backend plus explicit `io_uring` for supported HTTP/2 and HTTP/3 configurations |
 
-The [capability matrix](docs/capabilities.md) records the exact per-language
+The [capability matrix](../docs/coakka-http-runtime/capabilities.md) records the exact per-language
 surface. An API name by itself is not evidence that every host implements the
 same mechanism.
 
@@ -238,7 +240,7 @@ flowchart TD
 
 Application routes take precedence over static fallback. File roots, active
 files, byte counts, and cache behavior remain explicit and bounded. See
-[Frontend And Backend](docs/frontend-and-backend.md).
+[Frontend And Backend](../docs/coakka-http-runtime/frontend-and-backend.md).
 
 ## Queues And Backpressure
 
@@ -274,7 +276,7 @@ collection cost is explicit. Event saturation never blocks HTTP traffic or
 changes an exchange result. Request bodies, credentials, cookies, certificate
 material, and arbitrary application labels are not retained.
 
-Read [Observability And Monitoring](docs/observability-and-monitoring.md) for
+Read [Observability And Monitoring](../docs/coakka-http-runtime/observability-and-monitoring.md) for
 the data model, monitor channel, operational loop, and language API map.
 
 ## TLS, mTLS, And Live Handler Changes
@@ -290,8 +292,8 @@ already admitted continue on the binding they captured, while new requests use
 the accepted revision. Replayed activation identifiers are idempotent, and a
 stale update is rejected without partially changing the route.
 
-See [TLS And mTLS](docs/tls-and-mtls.md) and
-[Handler Swap And Hot Reload](docs/handler-swap-and-hot-reload.md). The atomic
+See [TLS And mTLS](../docs/coakka-http-runtime/tls-and-mtls.md) and
+[Handler Swap And Hot Reload](../docs/coakka-http-runtime/handler-swap-and-hot-reload.md). The atomic
 binding change is the runtime foundation for hot reload. Source watching,
 compilation, module loading, and deployment policy stay in the App Host or an
 addon.
@@ -323,13 +325,13 @@ a feature score and not benchmark evidence.
 
 | Ecosystem | Comparisons |
 | --- | --- |
-| JavaScript | [Node.js](docs/comparisons/nodejs.md), [Bun](docs/comparisons/bun.md) |
-| JVM | [Spring Boot](docs/comparisons/spring-boot.md), [Netty](docs/comparisons/netty.md), [Tomcat](docs/comparisons/tomcat.md), [Jetty](docs/comparisons/jetty.md) |
-| Go | [`net/http`](docs/comparisons/go-net-http.md), [Chi](docs/comparisons/chi.md), [Gin](docs/comparisons/gin.md) |
-| Python | [FastAPI and Uvicorn](docs/comparisons/fastapi-uvicorn.md) |
+| JavaScript | [Node.js](../docs/coakka-http-runtime/comparisons/nodejs.md), [Bun](../docs/coakka-http-runtime/comparisons/bun.md) |
+| JVM | [Spring Boot](../docs/coakka-http-runtime/comparisons/spring-boot.md), [Netty](../docs/coakka-http-runtime/comparisons/netty.md), [Tomcat](../docs/coakka-http-runtime/comparisons/tomcat.md), [Jetty](../docs/coakka-http-runtime/comparisons/jetty.md) |
+| Go | [`net/http`](../docs/coakka-http-runtime/comparisons/go-net-http.md), [Chi](../docs/coakka-http-runtime/comparisons/chi.md), [Gin](../docs/coakka-http-runtime/comparisons/gin.md) |
+| Python | [FastAPI and Uvicorn](../docs/coakka-http-runtime/comparisons/fastapi-uvicorn.md) |
 
-Start with the [comparison index](docs/comparisons/README.md) or the
-[cross-platform snapshot](docs/comparison-2026-09-13.md).
+Start with the [comparison index](../docs/coakka-http-runtime/comparisons/README.md) or the
+[cross-platform snapshot](../docs/coakka-http-runtime/comparison-2026-09-13.md).
 
 ## Languages And Hosts
 
@@ -363,24 +365,24 @@ application normally uses.
 - A result without verified application-path identity is invalid, even if the
   command ran successfully.
 
-See the [Raspberry Pi 5 protocol](docs/benchmark-rpi5.md) and the
-[result status](docs/benchmark-results-rpi5.md).
+See the [Raspberry Pi 5 protocol](../docs/coakka-http-runtime/benchmark-rpi5.md) and the
+[result status](../docs/coakka-http-runtime/benchmark-results-rpi5.md).
 
 ## Documentation
 
 | Guide | Purpose |
 | --- | --- |
-| [How It Works](docs/how-it-works.md) | Request, pressure, monitoring, and lifecycle flow |
-| [App Host And Connectors](docs/app-host-and-connectors.md) | Responsibilities, ownership, and addon boundary |
-| [Frontend And Backend](docs/frontend-and-backend.md) | Static build, APIs, SSE, and WebSocket in one service |
-| [Capabilities](docs/capabilities.md) | Exact feature state by host |
-| [Operations](docs/operations.md) | Bounds, pressure, health, monitoring, and shutdown |
-| [Observability And Monitoring](docs/observability-and-monitoring.md) | Health, liveness, aggregates, event channel, loss, and operator integration |
-| [TLS And mTLS](docs/tls-and-mtls.md) | Installation, listener identity, trust, protocol selection, and samples |
-| [Handler Swap And Hot Reload](docs/handler-swap-and-hot-reload.md) | Atomic handler activation, generation checks, draining, and reload ownership |
-| [Comparisons](docs/comparisons/README.md) | Dated platform-by-platform maps |
-| [Raspberry Pi 5 Benchmark](docs/benchmark-rpi5.md) | Reproducible application benchmark protocol |
-| [Raspberry Pi 5 Results](docs/benchmark-results-rpi5.md) | Current result status and measured-machine record |
+| [How It Works](../docs/coakka-http-runtime/how-it-works.md) | Request, pressure, monitoring, and lifecycle flow |
+| [App Host And Connectors](../docs/coakka-http-runtime/app-host-and-connectors.md) | Responsibilities, ownership, and addon boundary |
+| [Frontend And Backend](../docs/coakka-http-runtime/frontend-and-backend.md) | Static build, APIs, SSE, and WebSocket in one service |
+| [Capabilities](../docs/coakka-http-runtime/capabilities.md) | Exact feature state by host |
+| [Operations](../docs/coakka-http-runtime/operations.md) | Bounds, pressure, health, monitoring, and shutdown |
+| [Observability And Monitoring](../docs/coakka-http-runtime/observability-and-monitoring.md) | Health, liveness, aggregates, event channel, loss, and operator integration |
+| [TLS And mTLS](../docs/coakka-http-runtime/tls-and-mtls.md) | Installation, listener identity, trust, protocol selection, and samples |
+| [Handler Swap And Hot Reload](../docs/coakka-http-runtime/handler-swap-and-hot-reload.md) | Atomic handler activation, generation checks, draining, and reload ownership |
+| [Comparisons](../docs/coakka-http-runtime/comparisons/README.md) | Dated platform-by-platform maps |
+| [Raspberry Pi 5 Benchmark](../docs/coakka-http-runtime/benchmark-rpi5.md) | Reproducible application benchmark protocol |
+| [Raspberry Pi 5 Results](../docs/coakka-http-runtime/benchmark-results-rpi5.md) | Current result status and measured-machine record |
 | [Native](native/README.md) | C and C++ usage |
 | [JVM](jvm/README.md) | Java and Kotlin usage |
 | [Python](python/README.md) | Python usage |

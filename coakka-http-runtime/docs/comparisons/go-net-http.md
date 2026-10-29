@@ -1,91 +1,29 @@
-# CoAkka HTTP Runtime And Go net/http
+# Documentation moved
 
-**Compared: 2026-09-13.** Scope: CoAkka HTTP Runtime `1.0.0` and the Go `1.27`
-standard-library documentation current on the comparison date.
+<!-- coakka-doc-forward -->
 
-## Contents
+Read [CoAkka HTTP Runtime And Go net/http](../../../docs/coakka-http-runtime/comparisons/go-net-http.md).
 
-- [The Familiar Shape](#the-familiar-shape)
-- [The CoAkka Shape](#the-coakka-shape)
-- [Mental Model](#mental-model)
-- [Operations](#operations)
-- [Choose By Responsibility](#choose-by-responsibility)
-- [Official References](#official-references)
+<a id="coakka-http-runtime-and-go-nethttp"></a>
+[CoAkka HTTP Runtime And Go net/http](../../../docs/coakka-http-runtime/comparisons/go-net-http.md#coakka-http-runtime-and-go-nethttp)
 
-## The Familiar Shape
+<a id="contents"></a>
+[Contents](../../../docs/coakka-http-runtime/comparisons/go-net-http.md#contents)
 
-```go
-mux := http.NewServeMux()
-mux.HandleFunc("GET /api/hello", func(w http.ResponseWriter, r *http.Request) {
-    _, _ = io.WriteString(w, "Hello from Go")
-})
+<a id="the-familiar-shape"></a>
+[The Familiar Shape](../../../docs/coakka-http-runtime/comparisons/go-net-http.md#the-familiar-shape)
 
-server := &http.Server{
-    Addr:              ":3000",
-    Handler:           mux,
-    ReadHeaderTimeout: 5 * time.Second,
-}
-log.Fatal(server.ListenAndServe())
-```
+<a id="the-coakka-shape"></a>
+[The CoAkka Shape](../../../docs/coakka-http-runtime/comparisons/go-net-http.md#the-coakka-shape)
 
-`net/http` supplies the standard Go server, client, handler, multiplexer,
-streaming, file, timeout, and shutdown building blocks.
+<a id="mental-model"></a>
+[Mental Model](../../../docs/coakka-http-runtime/comparisons/go-net-http.md#mental-model)
 
-## The CoAkka Shape
+<a id="operations"></a>
+[Operations](../../../docs/coakka-http-runtime/comparisons/go-net-http.md#operations)
 
-```go
-service, err := coakkahttp.NewBuilder().
-    Listen("127.0.0.1", 3000).
-    Get("/api/hello", func(*coakkahttp.Request) (coakkahttp.Response, error) {
-        return coakkahttp.Text(200, "Hello from CoAkka")
-    }).
-    Start()
-if err != nil {
-    return err
-}
-defer service.Close()
-```
+<a id="choose-by-responsibility"></a>
+[Choose By Responsibility](../../../docs/coakka-http-runtime/comparisons/go-net-http.md#choose-by-responsibility)
 
-## Mental Model
-
-| Go `net/http` | CoAkka HTTP Runtime |
-| --- | --- |
-| `ServeMux` patterns | Builder method/path routes |
-| `http.Handler` | CoAkka handler function |
-| `ResponseWriter` | Returned response value |
-| `http.Server` | CoAkka `Service` |
-| `Server.Shutdown(ctx)` | Bounded, idempotent `Service.Close()` |
-| `FileServer` and `ServeFile` | Static mounts and application-selected file responses |
-
-Both surfaces remain recognizably Go. CoAkka's language connector stays in
-the Go host and adds a frozen route set, response values, finite admission,
-health, inspection, diagnostics, and service lifecycle.
-
-## Operations
-
-With `net/http`, applications compose server timeouts, middleware, concurrency
-limits, metrics, health, and downstream bounds from the standard library and
-their chosen packages.
-
-CoAkka places finite connection, active-handler, body, stream, session, and
-diagnostic capacity around the Go service. Go applications still own and bound
-their own goroutines and downstream work.
-
-Static frontend delivery, SPA fallback, streaming, SSE, WebSocket, rebind,
-health, inspection, and the bounded monitor channel remain on the complete
-CoAkka runtime API in the same package.
-
-## Choose By Responsibility
-
-Choose `net/http` for a Go-only service that wants the standard library and its
-large compatible ecosystem.
-
-Choose CoAkka when Go is one part of a polyglot system that should share HTTP
-pressure, health, monitoring, and lifecycle behavior with other languages.
-
-## Official References
-
-- [Go net/http package](https://pkg.go.dev/net/http)
-- [Go net/http server documentation](https://pkg.go.dev/net/http#Server)
-- [CoAkka Go guide](../../go/README.md)
-- [CoAkka Frontend And Backend](../frontend-and-backend.md)
+<a id="official-references"></a>
+[Official References](../../../docs/coakka-http-runtime/comparisons/go-net-http.md#official-references)

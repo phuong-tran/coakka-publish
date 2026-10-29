@@ -1,96 +1,29 @@
-# CoAkka HTTP Runtime And Node.js
+# Documentation moved
 
-**Compared: 2026-09-13.** Scope: CoAkka HTTP Runtime `1.0.0` and the Node.js
-HTTP documentation current on that date.
+<!-- coakka-doc-forward -->
 
-## Contents
+Read [CoAkka HTTP Runtime And Node.js](../../../docs/coakka-http-runtime/comparisons/nodejs.md).
 
-- [The Familiar Shape](#the-familiar-shape)
-- [The CoAkka Shape](#the-coakka-shape)
-- [Mental Model](#mental-model)
-- [Operational Difference](#operational-difference)
-- [Choose By Responsibility](#choose-by-responsibility)
-- [Official References](#official-references)
+<a id="coakka-http-runtime-and-nodejs"></a>
+[CoAkka HTTP Runtime And Node.js](../../../docs/coakka-http-runtime/comparisons/nodejs.md#coakka-http-runtime-and-nodejs)
 
-## The Familiar Shape
+<a id="contents"></a>
+[Contents](../../../docs/coakka-http-runtime/comparisons/nodejs.md#contents)
 
-Node.js exposes a low-level request/response server through `node:http`:
+<a id="the-familiar-shape"></a>
+[The Familiar Shape](../../../docs/coakka-http-runtime/comparisons/nodejs.md#the-familiar-shape)
 
-```javascript
-import * as http from "node:http";
+<a id="the-coakka-shape"></a>
+[The CoAkka Shape](../../../docs/coakka-http-runtime/comparisons/nodejs.md#the-coakka-shape)
 
-const server = http.createServer((request, response) => {
-  if (request.method === "GET" && request.url === "/api/hello") {
-    response.writeHead(200, { "content-type": "text/plain" });
-    response.end("Hello from Node.js");
-    return;
-  }
-  response.writeHead(404).end();
-});
+<a id="mental-model"></a>
+[Mental Model](../../../docs/coakka-http-runtime/comparisons/nodejs.md#mental-model)
 
-server.listen(3000);
-```
+<a id="operational-difference"></a>
+[Operational Difference](../../../docs/coakka-http-runtime/comparisons/nodejs.md#operational-difference)
 
-The application inspects the request, chooses a route, and writes the response.
+<a id="choose-by-responsibility"></a>
+[Choose By Responsibility](../../../docs/coakka-http-runtime/comparisons/nodejs.md#choose-by-responsibility)
 
-## The CoAkka Shape
-
-```javascript
-import { Builder, Response } from "@coakka/http";
-
-const service = await new Builder()
-  .listen("127.0.0.1", 3000)
-  .get("/api/hello", () => Response.text("Hello from CoAkka"))
-  .start();
-
-process.once("SIGINT", async () => service.close());
-```
-
-The handler remains a normal JavaScript function. The language connector
-adds routing, bounds, and lifecycle while keeping the handler in the Node.js
-App Host. The complete runtime surface adds health, liveness, inspection, and
-monitor control.
-
-## Mental Model
-
-| Node.js HTTP | CoAkka HTTP Runtime |
-| --- | --- |
-| `http.createServer(listener)` | `new Builder()` plus registered handlers |
-| Inspect `request.method` and `request.url` | Register method and path directly |
-| `ServerResponse` writes | Return a `Response` value |
-| `server.listen(port)` | `builder.listen(...).start()` |
-| Node.js host owns its server and HTTP objects | CoAkka service owns its HTTP resources; JavaScript owns handlers and application state |
-| Application assembles routing and monitoring | CoAkka supplies routes, bounds, health, snapshots, and a bounded monitor channel |
-
-## Operational Difference
-
-Node.js deliberately provides a low-level HTTP API and supports streaming
-messages. Application code and its libraries decide how routing, worker
-admission, metrics, and broader overload policy are composed.
-
-CoAkka places finite connection, active-handler, body, stream, session, and
-diagnostic capacities around the CoAkka service. The complete runtime API exposes
-health and snapshots independently of application logging, plus a bounded
-monitor event channel with cursor and missed-history accounting.
-
-Put blocking CPU or I/O work in the application's normal bounded worker/task
-facility so the Node.js event loop remains responsive.
-
-## Choose By Responsibility
-
-Choose Node.js built-in HTTP when the application wants direct control of the
-Node.js HTTP objects or is already composed around Node streams and middleware.
-
-Choose CoAkka when the same operational HTTP behavior must also serve JVM,
-Python, Go, or native applications, or when bounded pressure and a shared
-monitoring contract should be present without rebuilding them per language.
-
-For static frontend plus API routing, see
-[Frontend And Backend](../frontend-and-backend.md).
-
-## Official References
-
-- [Node.js HTTP API](https://nodejs.org/api/http.html)
-- [Node.js streams and backpressure](https://nodejs.org/api/stream.html#buffering)
-- [CoAkka How It Works](../how-it-works.md)
-- [CoAkka Operations](../operations.md)
+<a id="official-references"></a>
+[Official References](../../../docs/coakka-http-runtime/comparisons/nodejs.md#official-references)

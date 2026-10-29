@@ -36,7 +36,7 @@ HTTP remains appropriate for public/browser distribution and CDN-backed files;
 File Lane is the bounded point-to-point path for application-owned peers.
 
 If a file already exists locally, use File Lane directly; no source addon is
-needed. Read [Runtime Addons](../docs/runtime-addons.md) for the AI-era use
+needed. Read [Runtime Addons](../docs/coakka-runtime/runtime-addons.md) for the AI-era use
 case, provider selection, HTTP comparison, and ownership boundary.
 
 ## Current Language Boundary

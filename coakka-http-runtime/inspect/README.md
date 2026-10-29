@@ -7,7 +7,7 @@ It is separate from CoAkka Runtime Inspect, which inspects runtime messaging.
 
 ## Contents
 
-- [Why Inspect exists, metadata, OpenAPI and Swagger UI](metadata-and-openapi.md)
+- [Why Inspect exists, metadata, OpenAPI and Swagger UI](../../docs/coakka-http-runtime/inspect/metadata-and-openapi.md)
 
 - [Packages and evidence](#packages-and-evidence)
 - [Install](#install)
@@ -122,4 +122,4 @@ container image, Windows execution, or other CPU architectures. Those are
 separate qualification scopes, not implied by the HTTP SDK platform matrix.
 
 See the [HTTP Runtime catalog](../README.md) for service packages and
-[operations guide](../docs/operations.md) for application lifecycle guidance.
+[operations guide](../../docs/coakka-http-runtime/operations.md) for application lifecycle guidance.

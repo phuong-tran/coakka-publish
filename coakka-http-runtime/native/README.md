@@ -1,7 +1,7 @@
 # CoAkka HTTP Runtime for C and C++
 
-**New application?** Start with the [C integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/c/integration.md)
-or [C++ integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/cpp/integration.md)
+**New application?** Start with the [C integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/c/integration.md)
+or [C++ integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/cpp/integration.md)
 for installation, a first request and feature-by-feature usage. This page
 remains the native package reference.
 
@@ -29,7 +29,7 @@ checks artifacts; it does not create a GitHub Release or publish to registries.
 
 ## Contents
 
-- [URL grammar and glossary](../docs/glossary.md)
+- [URL grammar and glossary](../../docs/coakka-http-runtime/glossary.md)
 
 - [Two distinct packages](#two-distinct-packages)
 - [CMake use](#cmake-use)
