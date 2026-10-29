@@ -84,7 +84,7 @@ var result = runtime.ApplyTcpSecurity(new RuntimeTcpSecuritySpec(
 The caller owns strings and secret-file lifecycle. Native code loads and
 validates them synchronously, then atomically publishes an immutable context.
 A rejected mismatch or stale generation leaves the previous active context.
-See the canonical [TLS/mTLS guide](https://github.com/phuong-tran/coakka-publish/blob/main/docs/coakka-runtime/reference/tls-and-mtls.md)
+See the canonical [TLS/mTLS guide](https://github.com/phuong-tran/coakka-publish/blob/61f61cdff41cfea82dc43f3f4f9e5e684cd82cb7/docs/coakka-runtime/reference/tls-and-mtls.md)
 for Kubernetes ingress/service mesh, controlled networks, LAN/edge, RPi,
 BeagleBone, bare metal, industrial Android, and rotation semantics.
 
@@ -96,7 +96,7 @@ Core `1522b4a9` / ABI1. The exact candidate qualification record identifies
 which hosts have actually executed this package. Core private dependencies
 are absorbed; consumers do not install them separately.
 Payload presence is not execution evidence; exact connector and consumer
-evidence is reported per platform. Use [common troubleshooting](https://github.com/phuong-tran/coakka-publish/blob/main/docs/coakka-runtime/operations/troubleshooting.md)
+evidence is reported per platform. Use [common troubleshooting](https://github.com/phuong-tran/coakka-publish/blob/61f61cdff41cfea82dc43f3f4f9e5e684cd82cb7/docs/coakka-runtime/operations/troubleshooting.md)
 for RID/loader, OS/CPU, dependencies, certificates, Gatekeeper, Authenticode,
 digests, and signing status. Publisher signing is currently absent.
 Contact `gabrielgun1983@gmail.com` or use the public issue tracker.
