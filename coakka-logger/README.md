@@ -1,5 +1,11 @@
 # CoAkka Logger
 
+**Native-backed logging across languages.**
+
+CoAkka Logger is a **cross-platform logging library** for **polyglot
+applications**. Its language connectors share a native logging core with
+bounded storage and explicit acceptance or refusal of records.
+
 Logs are useful during an incident, but logging is also work the application
 has to perform. Message construction, bursts of traffic and slow output can
 affect the requests or jobs the application is trying to serve.

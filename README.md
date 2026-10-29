@@ -2,6 +2,12 @@
 
 <p align="center"><img src="docs/common/assets/brand/coakka-logo.png" alt="CoAkka" width="480"></p>
 
+**Shared native cores. Familiar APIs across languages.**
+
+Find **native-backed runtime packages** for CoAkka's **polyglot, cross-platform
+ecosystem**. Each product has its own native core, shared by its language
+connectors through familiar APIs.
+
 An application can bring together a web API, a Python worker and an existing
 JVM service. CoAkka gives teams shared building blocks for calling application
 work, serving HTTP and handling logs across languages. Business logic stays
@@ -14,7 +20,7 @@ version and distribution channels.
 
 | Product | What it helps you do | Catalog |
 | --- | --- | --- |
-| CoAkka Runtime | Call application work across languages and processes. | [Runtime packages, tools, addons and evidence](coakka-runtime/README.md) |
+| CoAkka Runtime | Connect application-owned work across languages and processes. | [Runtime packages, tools, addons and evidence](coakka-runtime/README.md) |
 | CoAkka HTTP Runtime | Build HTTP services with shared behavior across languages. | [Independent HTTP server/client archives](coakka-http-runtime/README.md) |
 | CoAkka Logger | Read application logs and observe pressure with bounded storage. | [Logger packages](coakka-logger/README.md) |
 

@@ -1,5 +1,11 @@
 # CoAkka Runtime Packages
 
+**Application-owned work across languages and processes.**
+
+CoAkka Runtime is a **polyglot, cross-platform runtime** backed by a
+**shared native core**. Its native-backed language connectors expose familiar
+APIs while keeping business behavior in application code.
+
 Application work often crosses a language or process boundary: a web API asks
 a Python worker to process an image, or an existing JVM service handles a
 customer operation. CoAkka Runtime gives that work stable target names and
