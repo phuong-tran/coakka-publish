@@ -1,8 +1,22 @@
 # CoAkka HTTP Runtime Packages
 
-Build HTTP services with handlers written in your application's language.
-HTTP Runtime owns HTTP delivery, limits and service lifecycle. It is a separate
-product from CoAkka Runtime and uses different packages.
+**Polyglot applications should not require polyglot HTTP infrastructure.**
+
+When a team uses Go, Python and JavaScript services, it can end up maintaining
+several ways to handle the same HTTP concerns: request limits, timeouts,
+streaming, monitoring and shutdown. CoAkka HTTP Runtime brings that shared
+work into one HTTP engine, exposed through familiar APIs for each language.
+
+Each service runs its own instance. Application handlers keep their business
+logic and language conventions; the runtime handles HTTP delivery and service
+lifecycle. Teams can reuse operational knowledge across services and receive
+shared fixes when they adopt an updated package.
+
+Use it to serve APIs, web frontends, files, streams and WebSocket sessions.
+It works independently of CoAkka Runtime, which connects named application
+work across processes. Read the
+[HTTP Runtime introduction](../docs/coakka-http-runtime/explanation/introduction.md)
+or [try a service in your language](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/README.md).
 
 ## Download version 1.0.0
 

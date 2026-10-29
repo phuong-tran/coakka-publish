@@ -1,5 +1,20 @@
 # CoAkka Runtime Packages
 
+Application work often crosses a language or process boundary: a web API asks
+a Python worker to process an image, or an existing JVM service handles a
+customer operation. CoAkka Runtime gives that work stable target names and
+a shared way to send requests, receive replies and observe delivery failures.
+
+The application chooses where its handlers live and keeps its business rules.
+Runtime handles the communication between those participants. This makes it
+useful for connecting existing systems and evolving an application gradually,
+including moving work from a local handler into another process.
+
+Read [The CoAkka Story](../docs/coakka-runtime/explanation/coakka-story.md) for
+why internal application work is modeled this way, or
+[try one example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/README.md)
+to see the model in code.
+
 Install the connector for your application's language. Its package supplies
 the matching native Runtime; applications normally do not install Core separately.
 

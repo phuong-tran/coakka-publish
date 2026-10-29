@@ -2,14 +2,21 @@
 
 <p align="center"><img src="docs/common/assets/brand/coakka-logo.png" alt="CoAkka" width="480"></p>
 
-CoAkka is a polyglot runtime ecosystem. This repository is the versioned
-artifact warehouse and catalog for independently versioned products.
+An application can bring together a web API, a Python worker and an existing
+JVM service. CoAkka gives teams shared building blocks for calling application
+work, serving HTTP and handling logs across languages. Business logic stays
+in the application's own code.
 
-| Product | Catalog |
-| --- | --- |
-| CoAkka Runtime | [Runtime packages, tools, addons and evidence](coakka-runtime/README.md) |
-| CoAkka HTTP Runtime | [Independent HTTP server/client archives](coakka-http-runtime/README.md) |
-| CoAkka Logger | [Logger packages](coakka-logger/README.md) |
+This repository is where you find the packages for those products. Choose the
+job your application needs, then find the matching language package and
+installation guide. Each product can be used independently and has its own
+version and distribution channels.
+
+| Product | What it helps you do | Catalog |
+| --- | --- | --- |
+| CoAkka Runtime | Call application work across languages and processes. | [Runtime packages, tools, addons and evidence](coakka-runtime/README.md) |
+| CoAkka HTTP Runtime | Build HTTP services with shared behavior across languages. | [Independent HTTP server/client archives](coakka-http-runtime/README.md) |
+| CoAkka Logger | Read application logs and observe pressure with bounded storage. | [Logger packages](coakka-logger/README.md) |
 
 Choose a product, then select the exact package coordinate or archive recorded
 by its catalog. Verify its manifest, checksum and platform evidence. A packaged

@@ -1,11 +1,16 @@
 # CoAkka Logger
 
-Read the [product documentation](../docs/coakka-logger/README.md) for the full guide.
+Logs are useful during an incident, but logging is also work the application
+has to perform. Message construction, bursts of traffic and slow output can
+affect the requests or jobs the application is trying to serve.
 
-CoAkka Logger provides a bounded logging queue, explicit admission outcomes and
-counters across host languages. Use it when log volume, slow output or unclear
-record loss has become an application concern. It is independent of CoAkka
-Runtime and CoAkka HTTP Runtime; neither product is required to use Logger.
+CoAkka Logger provides bounded log storage, explicit acceptance or refusal and
+counters across host languages. Use it when log volume, output delays or
+unclear record loss have become application concerns. The application can see
+pressure and decide how to consume records and handle refused writes.
+
+Logger is independent of CoAkka Runtime and CoAkka HTTP Runtime. Read the
+[product documentation](../docs/coakka-logger/README.md) for the full guide.
 
 ## Why Logging Affects The Application
 
