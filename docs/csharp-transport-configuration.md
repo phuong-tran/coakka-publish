@@ -90,10 +90,11 @@ BeagleBone, bare metal, industrial Android, and rotation semantics.
 
 ## Platforms And Troubleshooting
 
-The private P397 candidate digest-verifies `linux-arm64`, `osx-arm64` and
-`win-x64` over one Coref6b61768/ABI1 identity. Historical five-RID packages do not
-qualify this native-client source. Core private dependencies are absorbed;
-consumers do not install them separately.
+The private `3.0.0` candidate digest-verifies its five native payloads:
+`linux-arm64`, `linux-x64`, `osx-arm64`, `win-arm64` and `win-x64`, over
+Core `1522b4a9` / ABI1. The exact candidate qualification record identifies
+which hosts have actually executed this package. Core private dependencies
+are absorbed; consumers do not install them separately.
 Payload presence is not execution evidence; exact connector and consumer
 evidence is reported per platform. Use [common troubleshooting](https://github.com/phuong-tran/coakka-publish/blob/main/docs/troubleshooting.md)
 for RID/loader, OS/CPU, dependencies, certificates, Gatekeeper, Authenticode,
