@@ -37,5 +37,3 @@ Read [Observability And Monitoring](../../docs/coakka-http-runtime/observability
 <a id="operational-guidance"></a>
 [Operational Guidance](../../docs/coakka-http-runtime/observability-and-monitoring.md#operational-guidance)
 
-<a id="http-monitor"></a>
-[http-monitor](../../docs/coakka-http-runtime/observability-and-monitoring.md#http-monitor)
