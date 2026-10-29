@@ -32,7 +32,7 @@ four connection modes against effective capability truth, validates structured
 atomic rejection, proves invalid applies preserve active state, and verifies
 that post-start reconfiguration fails without mutation. It explicitly does not
 claim a TLS/mTLS certificate handshake; TLS diagnosis remains documented in
-[Troubleshooting](../../../docs/troubleshooting.md).
+[Troubleshooting](../../../docs/coakka-runtime/troubleshooting.md).
 
 The measured path is:
 
