@@ -90,4 +90,4 @@ when JVM teams also want higher-level conventions above that shared contract.
 - [Spring Boot documentation](https://docs.spring.io/spring-boot/)
 - [Spring Boot embedded web servers](https://docs.spring.io/spring-boot/how-to/webserver.html)
 - [Spring Boot Servlet applications](https://docs.spring.io/spring-boot/reference/web/servlet.html)
-- [CoAkka App Host And Connectors](../app-host-and-connectors.md)
+- [CoAkka App Host And Connectors](../explanation/app-host-and-connectors.md)

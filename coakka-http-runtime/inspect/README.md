@@ -122,4 +122,4 @@ container image, Windows execution, or other CPU architectures. Those are
 separate qualification scopes, not implied by the HTTP SDK platform matrix.
 
 See the [HTTP Runtime catalog](../README.md) for service packages and
-[operations guide](../../docs/coakka-http-runtime/operations.md) for application lifecycle guidance.
+[operations guide](../../docs/coakka-http-runtime/operations/operations.md) for application lifecycle guidance.

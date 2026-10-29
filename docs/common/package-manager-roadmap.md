@@ -20,7 +20,7 @@ its native runtime generation.
 JVM, Spring Boot, and Quarkus artifacts are also available through the checked-in
 Maven layout in this repository. Native archives and source-first connector
 packages are indexed by `artifacts/public-artifacts.tsv` and the
-[compatibility matrix](../coakka-runtime/compatibility-matrix.md).
+[compatibility matrix](../coakka-runtime/reference/compatibility-matrix.md).
 
 Package-lane installation and evidence details live in
 [PyPI](../../package-manager/pypi/README.md),

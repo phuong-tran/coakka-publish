@@ -86,11 +86,11 @@ Python, Go, or native applications, or when bounded pressure and a shared
 monitoring contract should be present without rebuilding them per language.
 
 For static frontend plus API routing, see
-[Frontend And Backend](../frontend-and-backend.md).
+[Frontend And Backend](../explanation/frontend-and-backend.md).
 
 ## Official References
 
 - [Node.js HTTP API](https://nodejs.org/api/http.html)
 - [Node.js streams and backpressure](https://nodejs.org/api/stream.html#buffering)
-- [CoAkka How It Works](../how-it-works.md)
-- [CoAkka Operations](../operations.md)
+- [CoAkka How It Works](../explanation/how-it-works.md)
+- [CoAkka Operations](../operations/operations.md)

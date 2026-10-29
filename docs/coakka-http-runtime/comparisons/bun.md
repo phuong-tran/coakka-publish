@@ -83,4 +83,4 @@ needs the same pressure, monitoring, and lifecycle contract outside Bun too.
 - [Bun HTTP server](https://bun.sh/docs/runtime/http/server)
 - [`Bun.serve` reference](https://bun.sh/reference/bun/serve)
 - [CoAkka JavaScript and TypeScript guide](../../../coakka-http-runtime/javascript/README.md)
-- [CoAkka Frontend And Backend](../frontend-and-backend.md)
+- [CoAkka Frontend And Backend](../explanation/frontend-and-backend.md)

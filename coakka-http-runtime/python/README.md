@@ -6,7 +6,7 @@ remains the package/API reference.
 
 ## Contents
 
-- [URL grammar and glossary](../../docs/coakka-http-runtime/glossary.md)
+- [URL grammar and glossary](../../docs/coakka-http-runtime/reference/glossary.md)
 
 - [Package status](#package-status)
 - [Requirements](#requirements)

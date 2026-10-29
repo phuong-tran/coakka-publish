@@ -176,7 +176,7 @@ Java baseline metadata is part of the public contract for JVM artifacts:
 
 Runtime connector packages must keep the first-run API smaller than the full
 runtime model. The public onboarding progression is defined in
-[`connector-user-experience-levels.md`](connector-user-experience-levels.md):
+[`connector-user-experience-levels.md`](../coakka-runtime/reference/connector-user-experience-levels.md):
 
 - Level 1: local handler and ask helpers for application users
 - Level 2: explicit route snapshots for control planes and framework adapters

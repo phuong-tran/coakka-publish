@@ -22,7 +22,7 @@ this step. Select the JVM process architecture, not just the OS architecture.
 
 ## Contents
 
-- [URL grammar and glossary](../../docs/coakka-http-runtime/glossary.md)
+- [URL grammar and glossary](../../docs/coakka-http-runtime/reference/glossary.md)
 
 - [Requirements](#requirements)
 - [Buffered service](#buffered-service)
@@ -202,6 +202,6 @@ class-file gate still requires every packaged class to use Java 8 bytecode.
 Release verification also shrinks the managed artifact and executes a native
 call to prove that only the required runtime lookup names are retained.
 
-The [App Host and connector guide](../../docs/coakka-http-runtime/app-host-and-connectors.md) describes
+The [App Host and connector guide](../../docs/coakka-http-runtime/explanation/app-host-and-connectors.md) describes
 ownership and threading. Release evidence remains a gate of the assembled
 candidate rather than a promise inferred from this API guide.

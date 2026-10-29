@@ -80,4 +80,4 @@ wants higher-level framework conventions.
 - [Jetty HTTP server libraries](https://jetty.org/docs/jetty/12.1/programming-guide/server/http.html)
 - [Jetty threading architecture](https://jetty.org/docs/jetty/12/programming-guide/arch/threads.html)
 - [Jetty 12.1 programming guide](https://jetty.org/docs/jetty/12.1/programming-guide/index.html)
-- [CoAkka Operations](../operations.md)
+- [CoAkka Operations](../operations/operations.md)

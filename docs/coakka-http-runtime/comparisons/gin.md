@@ -75,4 +75,4 @@ as they become available.
 - [Gin routing](https://gin-gonic.com/en/docs/routing/)
 - [Gin middleware](https://gin-gonic.com/en/docs/middleware/)
 - [Gin releases](https://github.com/gin-gonic/gin/releases)
-- [CoAkka How It Works](../how-it-works.md)
+- [CoAkka How It Works](../explanation/how-it-works.md)

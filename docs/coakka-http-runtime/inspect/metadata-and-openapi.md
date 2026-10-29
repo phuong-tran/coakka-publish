@@ -107,7 +107,7 @@ fictional `.metadata(...)` call for Kotlin, Java, Go, Python or JavaScript.
 
 An already inspection-enabled target can use the packaged Inspect workflow.
 Adding end-user metadata authoring to the connector guides requires a public
-contract and artifact-backed examples first; see the [roadmap](../roadmap.md).
+contract and artifact-backed examples first; see the [roadmap](../reference/roadmap.md).
 Do not reach into private headers or schema encodings to compensate.
 
 ## OpenAPI projection

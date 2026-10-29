@@ -73,5 +73,5 @@ backpressure, monitoring, and lifecycle model.
 
 - [Chi project and router interface](https://github.com/go-chi/chi)
 - [Chi middleware](https://pkg.go.dev/github.com/go-chi/chi/v5/middleware)
-- [CoAkka App Host And Connectors](../app-host-and-connectors.md)
-- [CoAkka Operations](../operations.md)
+- [CoAkka App Host And Connectors](../explanation/app-host-and-connectors.md)
+- [CoAkka Operations](../operations/operations.md)

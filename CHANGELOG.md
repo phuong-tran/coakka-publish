@@ -1,7 +1,7 @@
 # Changelog
 
 This changelog summarizes the public artifact surface. Detailed per-drop notes
-remain under [docs/releases/](docs/releases/).
+remain under [docs/releases/](docs/coakka-runtime/releases/README.md).
 
 ## 2026-08-21
 
@@ -388,11 +388,11 @@ remain under [docs/releases/](docs/releases/).
 - Tightened the public boundary checks for Bun, Tauri, and Electron packages so
   first-run consumers do not need extra native implementation packages.
 - See:
-  [Runtime Bun and Tauri](docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md),
-  [Runtime Electron](docs/releases/2026-07-23-runtime-electron-1.3.1-4e0cab0.md),
-  [Logger Bun](docs/releases/2026-07-23-logger-bun-1.2.1-6fdcc69.md),
+  [Runtime Bun and Tauri](docs/coakka-runtime/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md),
+  [Runtime Electron](docs/coakka-runtime/releases/2026-07-23-runtime-electron-1.3.1-4e0cab0.md),
+  [Logger Bun](docs/coakka-logger/releases/2026-07-23-logger-bun-1.2.1-6fdcc69.md),
   and
-  [Logger Tauri/Electron](docs/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md).
+  [Logger Tauri/Electron](docs/coakka-logger/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md).
 
 ## 2026-07-20
 
@@ -401,11 +401,11 @@ remain under [docs/releases/](docs/releases/).
 - Added the public Docker Hub sample image for `coakka-runtime-inspect`.
 - Refreshed inspect release metadata and self-contained package checks.
 - See:
-  [Inspect Linux x86_64](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-x86_64.md),
-  [Inspect Linux ARM64](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-aarch64.md),
-  [Inspect Windows](docs/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md),
+  [Inspect Linux x86_64](docs/coakka-runtime/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-x86_64.md),
+  [Inspect Linux ARM64](docs/coakka-runtime/releases/2026-07-20-coakka-runtime-inspect-1.3.1-4ce41f19-linux-aarch64.md),
+  [Inspect Windows](docs/coakka-runtime/releases/2026-07-20-coakka-runtime-inspect-1.3.1-d7ab7fa-windows.md),
   and
-  [Inspect Docker Hub](docs/releases/2026-07-20-coakka-runtime-inspect-dockerhub-1.3.1-4ce41f19.md).
+  [Inspect Docker Hub](docs/coakka-runtime/releases/2026-07-20-coakka-runtime-inspect-dockerhub-1.3.1-4ce41f19.md).
 
 ## 2026-07-18
 
@@ -417,13 +417,13 @@ remain under [docs/releases/](docs/releases/).
 - Documented the current public release boundary and GitHub Release asset
   layout.
 - See:
-  [Runtime native 1.3.1](docs/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md),
-  [Runtime JVM 1.3.1](docs/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md),
-  [Runtime adapters 1.3.1](docs/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
-  [Runtime non-JVM 1.3.1](docs/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md),
-  [coakka-client 1.3.1](docs/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md),
+  [Runtime native 1.3.1](docs/coakka-runtime/releases/2026-07-18-runtime-native-1.3.1-bda2ef5.md),
+  [Runtime JVM 1.3.1](docs/coakka-runtime/releases/2026-07-18-runtime-jvm-1.3.1-0a0aa76.md),
+  [Runtime adapters 1.3.1](docs/coakka-runtime/releases/2026-07-18-runtime-jvm-adapters-1.3.1-0a0aa76.md),
+  [Runtime non-JVM 1.3.1](docs/coakka-runtime/releases/2026-07-18-runtime-non-jvm-1.3.1-0a0aa76.md),
+  [coakka-client 1.3.1](docs/coakka-runtime/releases/2026-07-18-coakka-client-1.3.1-2215b0f.md),
   and
-  [Public release boundary 1.3.1](docs/releases/2026-07-18-public-release-boundary-1.3.1.md).
+  [Public release boundary 1.3.1](docs/common/releases/2026-07-18-public-release-boundary-1.3.1.md).
 
 ## 2026-07-06
 
@@ -431,12 +431,12 @@ remain under [docs/releases/](docs/releases/).
 - Published Logger `1.2.1` with Windows parity.
 - Added community repository templates and contribution/support entrypoints.
 - See:
-  [Runtime native 1.2.1](docs/releases/2026-07-06-runtime-native-1.2.1-abde383.md),
-  [Runtime JVM 1.2.1](docs/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md),
-  [Runtime adapters 1.2.1](docs/releases/2026-07-06-runtime-jvm-adapters-1.2.1-fa29f94.md),
-  [Runtime non-JVM 1.2.1](docs/releases/2026-07-06-runtime-non-jvm-1.2.1-fa29f94.md),
+  [Runtime native 1.2.1](docs/coakka-runtime/releases/2026-07-06-runtime-native-1.2.1-abde383.md),
+  [Runtime JVM 1.2.1](docs/coakka-runtime/releases/2026-07-06-runtime-jvm-1.2.1-fa29f94.md),
+  [Runtime adapters 1.2.1](docs/coakka-runtime/releases/2026-07-06-runtime-jvm-adapters-1.2.1-fa29f94.md),
+  [Runtime non-JVM 1.2.1](docs/coakka-runtime/releases/2026-07-06-runtime-non-jvm-1.2.1-fa29f94.md),
   and
-  [Logger 1.2.1](docs/releases/2026-07-06-logger-1.2.1-8264bba.md).
+  [Logger 1.2.1](docs/coakka-logger/releases/2026-07-06-logger-1.2.1-8264bba.md).
 
 ## 2026-07-05
 
@@ -444,10 +444,10 @@ remain under [docs/releases/](docs/releases/).
 - Published Logger Mojo and Zig source lanes.
 - Hardened native publish verification.
 - See:
-  [Logger Mojo/Zig source](docs/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
-  [Runtime JVM refresh](docs/releases/2026-07-05-runtime-jvm-c124a9e-da30a95.md),
+  [Logger Mojo/Zig source](docs/coakka-logger/releases/2026-07-05-logger-zig-mojo-source-1107154.md),
+  [Runtime JVM refresh](docs/coakka-runtime/releases/2026-07-05-runtime-jvm-c124a9e-da30a95.md),
   and
-  [Runtime non-JVM refresh](docs/releases/2026-07-05-runtime-non-jvm-c124a9e-66ebe58.md).
+  [Runtime non-JVM refresh](docs/coakka-runtime/releases/2026-07-05-runtime-non-jvm-c124a9e-66ebe58.md).
 
 ## 2026-05
 

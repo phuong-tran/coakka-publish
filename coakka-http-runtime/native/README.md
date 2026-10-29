@@ -29,7 +29,7 @@ checks artifacts; it does not create a GitHub Release or publish to registries.
 
 ## Contents
 
-- [URL grammar and glossary](../../docs/coakka-http-runtime/glossary.md)
+- [URL grammar and glossary](../../docs/coakka-http-runtime/reference/glossary.md)
 
 - [Two distinct packages](#two-distinct-packages)
 - [CMake use](#cmake-use)

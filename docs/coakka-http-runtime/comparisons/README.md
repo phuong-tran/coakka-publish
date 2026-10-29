@@ -30,7 +30,7 @@ linked by each page as it appeared on that date.
 | Gin | [CoAkka And Gin](gin.md) |
 | FastAPI with Uvicorn | [CoAkka And FastAPI/Uvicorn](fastapi-uvicorn.md) |
 
-The [positioning snapshot](../comparison-2026-09-13.md) keeps the compact
+The [positioning snapshot](../benchmarks/comparison-2026-09-13.md) keeps the compact
 cross-platform table. These pages provide the code and context behind it.
 
 ## What Every Page Compares
@@ -63,7 +63,7 @@ does not claim that such an addon already ships.
 
 Architecture and API shape do not prove throughput, latency, or memory use.
 Performance comparisons belong to the
-[Raspberry Pi 5 benchmark protocol](../benchmark-rpi5.md), which requires the
+[Raspberry Pi 5 benchmark protocol](../benchmarks/benchmark-rpi5.md), which requires the
 same workload, host, toolchain, concurrency, connection reuse, run order, and
 resource reporting. Every CoAkka language lane must prove normal application-path identity;
 release results remain pending. Linux `io_uring` uses a separate same-language

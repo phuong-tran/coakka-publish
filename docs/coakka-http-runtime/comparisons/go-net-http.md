@@ -88,4 +88,4 @@ pressure, health, monitoring, and lifecycle behavior with other languages.
 - [Go net/http package](https://pkg.go.dev/net/http)
 - [Go net/http server documentation](https://pkg.go.dev/net/http#Server)
 - [CoAkka Go guide](../../../coakka-http-runtime/go/README.md)
-- [CoAkka Frontend And Backend](../frontend-and-backend.md)
+- [CoAkka Frontend And Backend](../explanation/frontend-and-backend.md)

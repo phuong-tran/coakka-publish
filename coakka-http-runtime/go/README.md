@@ -15,7 +15,7 @@ release. Download from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/) and
 
 ## Contents
 
-- [URL grammar and glossary](../../docs/coakka-http-runtime/glossary.md)
+- [URL grammar and glossary](../../docs/coakka-http-runtime/reference/glossary.md)
 
 - [Requirements](#requirements)
 - [Quick start](#quick-start)

@@ -80,5 +80,5 @@ must extend beyond the JVM or when a small route-and-handler service is enough.
 
 - [Tomcat HTTP Connector](https://tomcat.apache.org/tomcat-11.0-doc/config/http.html)
 - [Tomcat connectors guide](https://tomcat.apache.org/tomcat-11.0-doc/connectors.html)
-- [CoAkka Capabilities](../capabilities.md)
-- [CoAkka Operations](../operations.md)
+- [CoAkka Capabilities](../reference/capabilities.md)
+- [CoAkka Operations](../operations/operations.md)

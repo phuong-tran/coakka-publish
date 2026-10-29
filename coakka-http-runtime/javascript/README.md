@@ -32,7 +32,7 @@ configuration fails instead of silently choosing another library.
 
 ## Contents
 
-- [URL grammar and glossary](../../docs/coakka-http-runtime/glossary.md)
+- [URL grammar and glossary](../../docs/coakka-http-runtime/reference/glossary.md)
 
 - [Basic server](#basic-server)
 - [io_uring selection](#io_uring-selection)

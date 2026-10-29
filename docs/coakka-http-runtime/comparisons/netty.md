@@ -83,4 +83,4 @@ across several languages and prefer route/service APIs over protocol assembly.
 - [Netty project](https://netty.io/)
 - [Netty 4.x user guide](https://netty.io/wiki/user-guide-for-4.x.html)
 - [Netty channel configuration](https://netty.io/4.2/api/io/netty/channel/ChannelConfig.html)
-- [CoAkka How It Works](../how-it-works.md)
+- [CoAkka How It Works](../explanation/how-it-works.md)
