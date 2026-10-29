@@ -12,9 +12,9 @@ that status changes for the particular language you use.
 
 | Application | Distribution and installation reference |
 | --- | --- |
-| Node.js, Bun, Electron | [npm packages](../package-manager/npm/README.md) |
-| Python | [PyPI package](../package-manager/pypi/README.md) |
-| C# | [NuGet package](../package-manager/nuget/README.md) |
+| Node.js, Bun, Electron | [npm coordinates and versions](../docs/common/current-packages.md) |
+| Python | [PyPI coordinate and version](../docs/common/current-packages.md) |
+| C# | [NuGet coordinate and version](../docs/common/current-packages.md) |
 | Kotlin / Java, Spring Boot, Quarkus | [Maven artifacts](../maven/README.md) |
 | Go / Swift | [Go modules and SwiftPM](../docs/common/current-packages.md) |
 | C/C++ or source/archive consumers | [Native archive catalog](../runtime/native/README.md) and [connector coordinates](../docs/common/current-packages.md) |
