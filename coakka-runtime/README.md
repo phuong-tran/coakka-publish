@@ -28,9 +28,9 @@ the matching native Runtime; applications normally do not install Core separatel
 ## Published packages
 
 The [published package ledger](../docs/common/current-packages.md) owns exact
-versions and coordinates. Runtime 3.0.0 is being prepared; **it has not been
-uploaded to package registries**. Follow the ledger's released versions until
-that status changes for the particular language you use.
+versions and coordinates. **C# `CoAkka.Runtime 3.0.0` is available on NuGet**.
+Other 3.0.0 Runtime connectors remain local candidates until their individual
+publication. Follow the ledger for the particular language you use.
 
 | Application | Distribution and installation reference |
 | --- | --- |

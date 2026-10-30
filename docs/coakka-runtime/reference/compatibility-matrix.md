@@ -24,12 +24,14 @@ contract instead of inventing language-specific runtime semantics.
 
 The promoted native artifact pointer remains on its explicitly listed 2.4
 generation. Native `2.5.1`, Maven Central Runtime `2.5.3`, npm Runtime `2.5.3`,
-PyPI Runtime `2.5.3`, NuGet Runtime `2.5.3`, Go `v1.8.3`, SwiftPM `v2.5.3`,
+PyPI Runtime `2.5.3`, Go `v1.8.3`, SwiftPM `v2.5.3`,
 and the checksum-pinned connector archives use Core
 `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`. Runtime tools retain their
 listed `2.4.0+c2f53117` generation. The current Runtime
 package train contains five libraries: Linux ARM64/x86-64 `.so`, macOS ARM64
 `.dylib`, and Windows ARM64/x86-64 `.dll`.
+
+NuGet C# is independently published at `3.0.0`, with Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` / ABI1 and all five native RIDs. It requires a source migration from 2.x; see the [release note](../releases/2026-10-30-nuget-csharp-runtime-3.0.0.md).
 
 The `2.5.3` connectors expose typed File receive and Stream publish owner
 grants for replica-pinned lanes. ONE selects one enumerated owner; ALL creates
@@ -46,7 +48,7 @@ request does not implement ALL semantics.
 | Connector archives | `runtime/<lane>/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | npm | `coakka-v2-connector-{node,bun,electron}@2.5.3` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | PyPI | `coakka-v2-connector==2.5.3` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
-| NuGet | `CoAkka.Runtime==2.5.3` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| NuGet | `CoAkka.Runtime==3.0.0` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.8.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 
@@ -117,7 +119,7 @@ All logger connector lanes below align to logger native generation
 | PyPI | Python coakka-runtime/logger wheels | runtime `coakka-v2-connector==2.5.3` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go coakka-runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go@v1.8.3`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift coakka-runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@2.5.3`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
-| NuGet | C# coakka-runtime/logger packages | runtime `CoAkka.Runtime==2.5.3`, logger `CoAkka.Logger==1.2.3`; `net8.0` minimum, registry verified on .NET 8/9/10 |
+| NuGet | C# coakka-runtime/logger packages | runtime `CoAkka.Runtime==3.0.0` (`net8.0` minimum; fresh registry consumer verified on .NET 8), logger `CoAkka.Logger==1.2.3` (verified on .NET 8/9/10) |
 
 PyPI superseded versions are yanked, not deleted:
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
@@ -150,7 +152,7 @@ NuGet packages:
 
 | Surface | NuGet coordinate | Native generation |
 | --- | --- | --- |
-| C# runtime | `CoAkka.Runtime==2.5.3` (`net8.0`; verified on .NET 8/9/10) | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| C# runtime | `CoAkka.Runtime==3.0.0` (`net8.0`; fresh registry verification on .NET 8) | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | C# logger | `CoAkka.Logger==1.2.3` (`net8.0`; verified on .NET 8/9/10) | `1.2.1+f50756ebff0d` |
 
 SwiftPM packages:
