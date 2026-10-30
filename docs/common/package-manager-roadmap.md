@@ -12,7 +12,7 @@ its native runtime generation.
 | npm | [`coakka-v2-connector-node@2.5.3`](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.5.3) | [`coakka-logger-node@1.2.7`](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
 | npm (Bun) | [`coakka-v2-connector-bun@2.5.3`](https://www.npmjs.com/package/coakka-v2-connector-bun/v/2.5.3) | [`coakka-logger-bun@1.2.7`](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.7) |
 | npm (Electron) | [`coakka-v2-connector-electron@2.5.3`](https://www.npmjs.com/package/coakka-v2-connector-electron/v/2.5.3) | [`coakka-logger-electron@1.2.7`](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.7) |
-| PyPI | [`coakka-v2-connector==2.5.3`](https://pypi.org/project/coakka-v2-connector/2.5.3/) | [`coakka-logger==1.2.2`](https://pypi.org/project/coakka-logger/1.2.2/) |
+| PyPI | [`coakka-v2-connector==3.0.0`](https://pypi.org/project/coakka-v2-connector/3.0.0/) | [`coakka-logger==1.2.2`](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go@v1.8.3`](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.8.3) | [`coakka-logger-go@v1.2.6`](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.6) |
 | SwiftPM | [`coakka-runtime-swift` v2.5.3](https://github.com/phuong-tran/coakka-runtime-swift/tree/v2.5.3) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
 | NuGet | [`CoAkka.Runtime` 3.0.0](https://www.nuget.org/packages/CoAkka.Runtime/3.0.0) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
@@ -23,7 +23,7 @@ packages are indexed by `artifacts/public-artifacts.tsv` and the
 [compatibility matrix](../coakka-runtime/reference/compatibility-matrix.md).
 
 Package-lane installation and evidence details live in
-[PyPI](../../package-manager/pypi/README.md),
+[Python 3.0.0](../coakka-runtime/releases/2026-10-30-pypi-python-runtime-3.0.0.md),
 [npm](../../package-manager/npm/README.md),
 [NuGet Runtime 3.0.0](../coakka-runtime/releases/2026-10-30-nuget-csharp-runtime-3.0.0.md) (the earlier package-lane receipt remains historical), and
 [SwiftPM](../../package-manager/swiftpm/README.md). Go consumers use the

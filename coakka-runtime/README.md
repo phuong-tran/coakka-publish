@@ -28,8 +28,9 @@ the matching native Runtime; applications normally do not install Core separatel
 ## Published packages
 
 The [published package ledger](../docs/common/current-packages.md) owns exact
-versions and coordinates. **C# `CoAkka.Runtime 3.0.0` is available on NuGet**.
-Other 3.0.0 Runtime connectors remain local candidates until their individual
+versions and coordinates. **C# `CoAkka.Runtime 3.0.0` is available on NuGet**
+and **Python `coakka-v2-connector==3.0.0` on PyPI**. Other 3.0.0 Runtime
+connectors remain local candidates until their individual
 publication. Follow the ledger for the particular language you use.
 
 | Application | Distribution and installation reference |
