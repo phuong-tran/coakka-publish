@@ -4,14 +4,19 @@
 
 **Shared native cores. Familiar APIs across languages.**
 
-Find **native-backed runtime packages** for CoAkka's **polyglot, cross-platform
-ecosystem**. Each product has its own native core, shared by its language
-connectors through familiar APIs.
+Find packages and documentation for CoAkka's **polyglot, cross-platform
+ecosystem**. Its central product, **CoAkka Runtime**, is a **native-backed
+distributed runtime for application-owned work** across languages, processes
+and hosts.
 
-An application can bring together a web API, a Python worker and an existing
-JVM service. CoAkka gives teams shared building blocks for calling application
-work, serving HTTP and handling logs across languages. Business logic stays
-in the application's own code.
+**CoAkka HTTP Runtime** provides a native HTTP core shared across languages,
+and **CoAkka Logger** provides native-backed logging with bounded storage.
+Each product can be adopted independently and has its own native core,
+packages and version.
+
+Application code can compose the products: receive an HTTP request, call work
+owned by a Python process through Runtime, and record events through Logger.
+Business rules and the choice of products stay in the application.
 
 This repository is where you find the packages for those products. Choose the
 job your application needs, then find the matching language package and
@@ -20,9 +25,9 @@ version and distribution channels.
 
 | Product | What it helps you do | Catalog |
 | --- | --- | --- |
-| CoAkka Runtime | Connect application-owned work across languages and processes. | [Runtime packages, tools, addons and evidence](coakka-runtime/README.md) |
-| CoAkka HTTP Runtime | Build HTTP services with shared behavior across languages. | [Independent HTTP server/client archives](coakka-http-runtime/README.md) |
-| CoAkka Logger | Read application logs and observe pressure with bounded storage. | [Logger packages](coakka-logger/README.md) |
+| CoAkka Runtime | Distributed runtime for application-owned work across processes and languages. | [Runtime packages, tools, addons and evidence](coakka-runtime/README.md) |
+| CoAkka HTTP Runtime | HTTP server/client with a native core shared across languages. | [Independent HTTP server/client archives](coakka-http-runtime/README.md) |
+| CoAkka Logger | Native-backed logging with bounded storage and visible pressure. | [Logger packages](coakka-logger/README.md) |
 
 Choose a product, then select the exact package coordinate or archive recorded
 by its catalog. Verify its manifest, checksum and platform evidence. A packaged
