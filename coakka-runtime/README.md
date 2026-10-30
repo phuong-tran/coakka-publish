@@ -30,7 +30,7 @@ the matching native Runtime; applications normally do not install Core separatel
 The [published package ledger](../docs/common/current-packages.md) owns exact
 versions and coordinates. **C# `CoAkka.Runtime 3.0.0` is available on NuGet**
 and **Python `coakka-v2-connector==3.0.0` on PyPI**. **Node.js, Bun and Electron
-3.0.0 are available on npm**. Other3.0.0 Runtime
+3.0.0 are available on npm**. **Go `/v3@v3.0.0` is released on GitHub**. Other3.0.0 Runtime
 connectors remain local candidates until their individual
 publication. Follow the ledger for the particular language you use.
 
