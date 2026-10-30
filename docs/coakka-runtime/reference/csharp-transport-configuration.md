@@ -6,7 +6,7 @@ does not retain native pointers or expose secret paths/material.
 
 ## Startup
 
-Unreleased native-client source candidate: connection intent is submitted at
+Version 3.0.0: connection intent is submitted at
 Core construction, not reapplied after Core freezes startup selection. Omitted
 connection/execution groups select Core AUTO/MULTIPLEXING. Construction failure
 preserves Core's status but has no active instance/apply-result record;
@@ -15,7 +15,7 @@ Read `StartupConfig().Connection` or `TcpConnectionConfig()` for accepted facts.
 Security still uses Core's structured pre-start apply result. Inputs are not
 trimmed/repaired by the host; only host representation/NUL/UTF-8 checks precede
 Core validation. Explicit inapplicable network fields reach Core and reject,
-instead of being silently omitted. See the candidate lifecycle/shrink bounds in
+instead of being silently omitted. See the lifecycle and trimming bounds in
 the C# README. Monitor intent is nullable: omission selects Core defaults while
 explicit false remains explicit off in Core provenance. A connection-spec value
 requires an explicit mode; omit the whole spec to request Core defaults rather
@@ -90,9 +90,9 @@ BeagleBone, bare metal, industrial Android, and rotation semantics.
 
 ## Platforms And Troubleshooting
 
-The private `3.0.0` candidate digest-verifies its five native payloads:
+The `3.0.0` package digest-verifies its five native payloads:
 `linux-arm64`, `linux-x64`, `osx-arm64`, `win-arm64` and `win-x64`, over
-Core `1522b4a9` / ABI1. The exact candidate qualification record identifies
+Core `1522b4a9` / ABI1. The exact package qualification record identifies
 which hosts have actually executed this package. Core private dependencies
 are absorbed; consumers do not install them separately.
 Payload presence is not execution evidence; exact connector and consumer
