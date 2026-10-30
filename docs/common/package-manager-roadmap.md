@@ -8,6 +8,7 @@ its native runtime generation.
 ## Current Packages
 
 | Channel | Runtime | Logger |
+| Maven Central | [Runtime 3.0.0](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/runtime/3.0.0), Spring Boot/Quarkus3.0.0 | Logger1.2.2 |
 | --- | --- | --- |
 | npm | [`coakka-v2-connector-node@3.0.0`](https://www.npmjs.com/package/coakka-v2-connector-node/v/3.0.0) | [`coakka-logger-node@1.2.7`](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
 | npm (Bun) | [`coakka-v2-connector-bun@3.0.0`](https://www.npmjs.com/package/coakka-v2-connector-bun/v/3.0.0) | [`coakka-logger-bun@1.2.7`](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.7) |
@@ -17,8 +18,7 @@ its native runtime generation.
 | SwiftPM | [`coakka-runtime-swift` v3.0.0](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v3.0.0) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
 | NuGet | [`CoAkka.Runtime` 3.0.0](https://www.nuget.org/packages/CoAkka.Runtime/3.0.0) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
 
-JVM, Spring Boot, and Quarkus artifacts are also available through the checked-in
-Maven layout in this repository. Native archives and source-first connector
+JVM, Spring Boot and Quarkus3.0.0 are available from Maven Central. The checked-in Maven layout remains a historical archive. Native archives and source-first connector
 packages are indexed by `artifacts/public-artifacts.tsv` and the
 [compatibility matrix](../coakka-runtime/reference/compatibility-matrix.md).
 
