@@ -14,7 +14,7 @@ its native runtime generation.
 | npm (Electron) | [`coakka-v2-connector-electron@3.0.0`](https://www.npmjs.com/package/coakka-v2-connector-electron/v/3.0.0) | [`coakka-logger-electron@1.2.7`](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.7) |
 | PyPI | [`coakka-v2-connector==3.0.0`](https://pypi.org/project/coakka-v2-connector/3.0.0/) | [`coakka-logger==1.2.2`](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go/v3@v3.0.0`](https://github.com/phuong-tran/coakka-runtime-go/releases/tag/v3.0.0) | [`coakka-logger-go@v1.2.6`](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.6) |
-| SwiftPM | [`coakka-runtime-swift` v2.5.3](https://github.com/phuong-tran/coakka-runtime-swift/tree/v2.5.3) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
+| SwiftPM | [`coakka-runtime-swift` v3.0.0](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v3.0.0) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
 | NuGet | [`CoAkka.Runtime` 3.0.0](https://www.nuget.org/packages/CoAkka.Runtime/3.0.0) | [`CoAkka.Logger` 1.2.3](https://www.nuget.org/packages/CoAkka.Logger/1.2.3) |
 
 JVM, Spring Boot, and Quarkus artifacts are also available through the checked-in
@@ -26,7 +26,7 @@ Package-lane installation and evidence details live in
 [Python 3.0.0](../coakka-runtime/releases/2026-10-30-pypi-python-runtime-3.0.0.md),
 [npm Runtime 3.0.0](../coakka-runtime/releases/2026-10-30-npm-node-bun-electron-runtime-3.0.0.md),
 [NuGet Runtime 3.0.0](../coakka-runtime/releases/2026-10-30-nuget-csharp-runtime-3.0.0.md) (the earlier package-lane receipt remains historical), and
-[SwiftPM](../../package-manager/swiftpm/README.md). Go consumers use the
+[SwiftPM Runtime 3.0.0](../coakka-runtime/releases/2026-10-30-swift-runtime-3.0.0-github.md). Go consumers use the
 [`coakka-runtime-go` README](https://github.com/phuong-tran/coakka-runtime-go)
 and its versioned `CONSUMING.md`.
 
