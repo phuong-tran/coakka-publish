@@ -23,7 +23,7 @@ contract instead of inventing language-specific runtime semantics.
 ## Current Runtime Artifact Train
 
 The promoted native artifact pointer remains on its explicitly listed 2.4
-generation. Native `2.5.1`, Maven Central Runtime `2.5.3`, npm Runtime `2.5.3`,
+generation. Native `2.5.1`, Maven Central Runtime `2.5.3`,
 Go `v1.8.3`, SwiftPM `v2.5.3`,
 and the checksum-pinned connector archives use Core
 `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`. Runtime tools retain their
@@ -34,6 +34,8 @@ package train contains five libraries: Linux ARM64/x86-64 `.so`, macOS ARM64
 NuGet C# is independently published at `3.0.0`, with Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` / ABI1 and all five native RIDs. It requires a source migration from 2.x; see the [release note](../releases/2026-10-30-nuget-csharp-runtime-3.0.0.md).
 
 PyPI Python is independently published at `3.0.0`, with Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` / ABI1 and five `cp311-abi3` wheels. Each contains Core plus its Python adapter. GIL-enabled CPython3.11 is the minimum; see the [release note](../releases/2026-10-30-pypi-python-runtime-3.0.0.md).
+
+npm Node.js/Bun/Electron are published together at `3.0.0`, with Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` / ABI1 and all five native targets. Node requires 22.0.0+, Bun 1.3.14+ (Windows ARM64:1.4.0+), and Electron 42+. Electron depends exactly on Node 3.0.0. See the [npm release note](../releases/2026-10-30-npm-node-bun-electron-runtime-3.0.0.md).
 
 The `2.5.3` connectors expose typed File receive and Stream publish owner
 grants for replica-pinned lanes. ONE selects one enumerated owner; ALL creates
@@ -48,7 +50,7 @@ request does not implement ALL semantics.
 | Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `2.5.3` | Runtime `2.5.3` / Core `2.5.1+26f7944d` |
 | JVM signed public tree | `https://repo1.maven.org/maven2/io/github/phuong-tran/coakka/runtime/2.5.3/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | Connector archives | `runtime/<lane>/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
-| npm | `coakka-v2-connector-{node,bun,electron}@2.5.3` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
+| npm | `coakka-v2-connector-{node,bun,electron}@3.0.0` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | PyPI | `coakka-v2-connector==3.0.0` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | NuGet | `CoAkka.Runtime==3.0.0` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go` | `v1.8.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |

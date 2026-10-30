@@ -9,9 +9,9 @@ its native runtime generation.
 
 | Channel | Runtime | Logger |
 | --- | --- | --- |
-| npm | [`coakka-v2-connector-node@2.5.3`](https://www.npmjs.com/package/coakka-v2-connector-node/v/2.5.3) | [`coakka-logger-node@1.2.7`](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
-| npm (Bun) | [`coakka-v2-connector-bun@2.5.3`](https://www.npmjs.com/package/coakka-v2-connector-bun/v/2.5.3) | [`coakka-logger-bun@1.2.7`](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.7) |
-| npm (Electron) | [`coakka-v2-connector-electron@2.5.3`](https://www.npmjs.com/package/coakka-v2-connector-electron/v/2.5.3) | [`coakka-logger-electron@1.2.7`](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.7) |
+| npm | [`coakka-v2-connector-node@3.0.0`](https://www.npmjs.com/package/coakka-v2-connector-node/v/3.0.0) | [`coakka-logger-node@1.2.7`](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) |
+| npm (Bun) | [`coakka-v2-connector-bun@3.0.0`](https://www.npmjs.com/package/coakka-v2-connector-bun/v/3.0.0) | [`coakka-logger-bun@1.2.7`](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.7) |
+| npm (Electron) | [`coakka-v2-connector-electron@3.0.0`](https://www.npmjs.com/package/coakka-v2-connector-electron/v/3.0.0) | [`coakka-logger-electron@1.2.7`](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.7) |
 | PyPI | [`coakka-v2-connector==3.0.0`](https://pypi.org/project/coakka-v2-connector/3.0.0/) | [`coakka-logger==1.2.2`](https://pypi.org/project/coakka-logger/1.2.2/) |
 | Go modules | [`coakka-runtime-go@v1.8.3`](https://pkg.go.dev/github.com/phuong-tran/coakka-runtime-go@v1.8.3) | [`coakka-logger-go@v1.2.6`](https://pkg.go.dev/github.com/phuong-tran/coakka-logger-go@v1.2.6) |
 | SwiftPM | [`coakka-runtime-swift` v2.5.3](https://github.com/phuong-tran/coakka-runtime-swift/tree/v2.5.3) | [`coakka-logger-swift` v1.2.2](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) |
@@ -24,7 +24,7 @@ packages are indexed by `artifacts/public-artifacts.tsv` and the
 
 Package-lane installation and evidence details live in
 [Python 3.0.0](../coakka-runtime/releases/2026-10-30-pypi-python-runtime-3.0.0.md),
-[npm](../../package-manager/npm/README.md),
+[npm Runtime 3.0.0](../coakka-runtime/releases/2026-10-30-npm-node-bun-electron-runtime-3.0.0.md),
 [NuGet Runtime 3.0.0](../coakka-runtime/releases/2026-10-30-nuget-csharp-runtime-3.0.0.md) (the earlier package-lane receipt remains historical), and
 [SwiftPM](../../package-manager/swiftpm/README.md). Go consumers use the
 [`coakka-runtime-go` README](https://github.com/phuong-tran/coakka-runtime-go)
