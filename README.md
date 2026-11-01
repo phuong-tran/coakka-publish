@@ -20,7 +20,10 @@ which returns item prices, shipping and the total through CoAkka Runtime.
 
 **[Run the demo and read the walkthrough](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/scenarios/order-quote-node-python/README.md)** · Published npm/PyPI **3.0.0** packages · Two terminals, no Docker required.
 
-[![Node–Python browser demo showing a basket and a USD 48.00 quote from Python.](docs/coakka-runtime/assets/node-python-order-quote-web.png)](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/scenarios/order-quote-node-python/README.md)
+[![Node–Python demo: change the basket and receive an updated quote from Python.](docs/coakka-runtime/assets/node-python-order-quote-demo.gif)](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/scenarios/order-quote-node-python/README.md)
+
+Change the quantities, request a quote and see Python return the updated total.
+[View a still screenshot](docs/coakka-runtime/assets/node-python-order-quote-web.png).
 
 ## Choose your product
 
