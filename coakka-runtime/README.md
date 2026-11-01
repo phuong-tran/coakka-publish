@@ -25,6 +25,13 @@ to see the model in code.
 Install the connector for your application's language. Its package supplies
 the matching native Runtime; applications normally do not install Core separately.
 
+## Start in your language
+
+[Choose a published first-run example](../docs/coakka-runtime/getting-started.md)
+or [find a use case](../docs/coakka-runtime/guides/examples-and-use-cases.md).
+Each language guide gives installation, a command, expected output and source.
+Use the catalog below when selecting an archive or checking an exact release.
+
 ## Published packages
 
 The [published package ledger](../docs/common/current-packages.md) owns exact

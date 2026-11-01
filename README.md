@@ -5,49 +5,47 @@
 **Shared native cores. Familiar APIs across languages.**
 
 Find packages and documentation for CoAkka's **polyglot, cross-platform
-ecosystem**. Its central product, **CoAkka Runtime**, is a **native-backed
-distributed runtime for application-owned work** across languages, processes
-and hosts.
+ecosystem**. **CoAkka Runtime** is a **native-backed distributed runtime for
+application-owned work** across languages, processes and hosts. Your application
+keeps its handlers and business rules.
 
-**CoAkka HTTP Runtime** provides a native HTTP core shared across languages,
-and **CoAkka Logger** provides native-backed logging with bounded storage.
-Each product can be adopted independently and has its own native core,
-packages and version.
+**HTTP Runtime** provides a shared native HTTP core for HTTP services.
+**Logger** provides native-backed logging with bounded storage. Each product
+can be used independently and has its own packages and version.
 
-Application code can compose the products: receive an HTTP request, call work
-owned by a Python process through Runtime, and record events through Logger.
-Business rules and the choice of products stay in the application.
+## Choose your product
 
-This repository is where you find the packages for those products. Choose the
-job your application needs, then find the matching language package and
-installation guide. Each product can be used independently and has its own
-version and distribution channels.
-
-| Product | What it helps you do | Catalog |
+| I need… | First steps | Package catalog |
 | --- | --- | --- |
-| CoAkka Runtime | Distributed runtime for application-owned work across processes and languages. | [Runtime packages, tools, addons and evidence](coakka-runtime/README.md) |
-| CoAkka HTTP Runtime | HTTP server/client with a native core shared across languages. | [Independent HTTP server/client archives](coakka-http-runtime/README.md) |
-| CoAkka Logger | Native-backed logging with bounded storage and visible pressure. | [Logger packages](coakka-logger/README.md) |
+| Calls between application work across processes or languages | [Runtime in my language](docs/coakka-runtime/getting-started.md) | [Runtime packages](coakka-runtime/README.md) |
+| An HTTP API, web frontend or streaming endpoint | [HTTP Runtime in my language](docs/coakka-http-runtime/getting-started.md) | [HTTP archives](coakka-http-runtime/README.md) |
+| Application logging and visible pressure | [Logger in my language](docs/coakka-logger/README.md#start-with-one-consumer) | [Logger packages](coakka-logger/README.md) |
 
-Choose a product, then select the exact package coordinate or archive recorded
-by its catalog. Verify its manifest, checksum and platform evidence. A packaged
-binary does not by itself prove execution on every host.
+## Trying CoAkka for the first time?
 
-Existing warehouse directories, Maven endpoints, versioned release paths and
-receipts retain their original locations and bytes. Product navigation does
-not rename those download URLs. See [Product Layout](docs/common/product-layout.md).
-There is no aggregate repository product version or GitHub Release.
+Use [Samples](https://github.com/phuong-tran/coakka-samples) to run a small
+application in your language. Follow its complete prerequisites, command and
+expected result. The normal Runtime connector package supplies its required
+Runtime components.
 
-Shared guidance:
+The [package ledger](docs/common/current-packages.md) records exact released
+coordinates. [New to CoAkka](docs/common/new-to-coakka.md) explains which product
+fits your application.
 
-- [New to CoAkka](docs/common/new-to-coakka.md), [documentation index](docs/README.md) and [ecosystem overview](docs/common/ecosystem-overview.md).
-- [Current package coordinates](docs/common/current-packages.md) and [compatibility matrix](docs/coakka-runtime/reference/compatibility-matrix.md).
-- [Runtime package/platform evidence](docs/coakka-runtime/reference/runtime-package-platform-evidence.md), [artifact contract](docs/common/public-artifact-contract.md) and [troubleshooting](docs/coakka-runtime/operations/troubleshooting.md).
+## Downloading an archive or checking a release?
 
-Private candidate catalogs remain separate from published coordinates. A
-source or documentation update does not admit a candidate or publish a release.
-Runnable examples live in [CoAkka Samples](https://github.com/phuong-tran/coakka-samples).
+Use the selected product catalog to choose the exact version and platform.
+Follow its manifest, checksum and platform-evidence instructions. Local
+evaluation packages are separate from published registry coordinates.
 
-[Contributing](CONTRIBUTING.md) · [Support](SUPPORT.md) · [Changelog](CHANGELOG.md)
+Versioned downloads, Maven paths, source mirrors and receipts retain their
+original URLs and bytes. [Product layout](docs/common/product-layout.md)
+explains the warehouse and rolling documentation. This repository has no
+aggregate product version or aggregate GitHub Release.
 
-Contact: `gabrielgun1983@gmail.com`
+[All documentation](docs/README.md) ·
+[Runtime platform requirements](docs/coakka-runtime/reference/runtime-package-platform-evidence.md) ·
+[Artifact contract](docs/common/public-artifact-contract.md) ·
+[Support](SUPPORT.md) · [Changelog](CHANGELOG.md)
+
+Contact: gabrielgun1983@gmail.com
