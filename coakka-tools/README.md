@@ -1,14 +1,19 @@
 # CoAkka Tools
 
-`coakka-tools` is the public artifact surface for CoAkka ecosystem tools.
+`coakka-tools` hosts the published artifacts for companion tools. For Runtime,
+choose a terminal workflow or a browser workflow:
 
-Current tools:
+| Product name | Purpose | Guide |
+| --- | --- | --- |
+| **CoAkka Runtime Client** — `coakka-runtime-client` | Try Runtime requests from a terminal or script. | [Client guide](../docs/coakka-runtime/operations/coakka-runtime-client.md) |
+| **CoAkka Runtime Inspect** — `coakka-runtime-inspect` | Explore Runtime facts and try request/reply in a browser. | [Inspect guide](../docs/coakka-runtime/operations/coakka-runtime-inspect.md) |
 
-- `coakka-client`: command-line runtime client for diagnostics and
-  request/reply probes.
-- `coakka-client/docker-demo`: Linux demo bundles that package the client with
-  native runtime demo services for Docker walkthroughs.
-- `coakka-runtime-inspect`: browser runtime explorer and route-try UI.
+The published Client command and archive prefix are `coakka-client`. Use that
+command in the current release's examples; `coakka-runtime-client` is the
+product name. Inspect's command is already `coakka-runtime-inspect`.
+
+The Client also has `coakka-client/docker-demo` bundles for Linux walkthroughs.
+Tools keep their own release versions; use each guide's exact package and scope.
 
 The current checksummed artifact list lives in
 [`../artifacts/public-artifacts.tsv`](../artifacts/public-artifacts.tsv).
