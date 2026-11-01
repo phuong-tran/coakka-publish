@@ -1,7 +1,21 @@
 # Changelog
 
 This changelog summarizes the public artifact surface. Detailed per-drop notes
-remain under [docs/releases/](docs/coakka-runtime/releases/README.md).
+remain under [docs/coakka-runtime/releases/](docs/coakka-runtime/releases/README.md).
+
+## 3.0.0 — 2026-10-30
+
+- Released the CoAkka Runtime 3.0.0 family: C# on NuGet, Python on PyPI,
+  Node.js/Bun/Electron on npm, Go and Swift on GitHub, and JVM Runtime plus
+  Spring Boot/Quarkus on Maven Central. These packages include or depend on
+  Core 3.0.0 / ABI1 for the five selected 64-bit platform pairs.
+- This is a new application API baseline. Rebuild/migrate earlier callers;
+  Go uses the /v3 module path and Swift host close is throwing. AUTO,
+  MULTIPLEXED and monitoring-off remain Core defaults.
+- See the [Runtime 3.0.0 changelog](docs/coakka-runtime/CHANGELOG.md) for changes,
+  migration, host baselines and links to all six publication receipts.
+  HTTP Runtime/Logger keep independent versions; Android/Mojo remain previews.
+  Existing versioned artifacts and release receipts are unchanged.
 
 ## 2026-08-21
 

@@ -30,16 +30,15 @@ the matching native Runtime; applications normally do not install Core separatel
 The [published package ledger](../docs/common/current-packages.md) owns exact
 versions and coordinates. **C# `CoAkka.Runtime 3.0.0` is available on NuGet**
 and **Python `coakka-v2-connector==3.0.0` on PyPI**. **Node.js, Bun and Electron
-3.0.0 are available on npm**. **Go `/v3@v3.0.0` and Swift 3.0.0 are released on GitHub**. Other3.0.0 Runtime
-connectors remain local candidates until their individual
-publication. Follow the ledger for the particular language you use.
+3.0.0 are available on npm**. **Go `/v3@v3.0.0` and Swift 3.0.0 are released on GitHub**. **JVM Runtime, Spring Boot and Quarkus 3.0.0 are published on Maven Central**.
+Other Runtime 3.0.0 lanes remain local candidates until their own publication. Follow the ledger for the particular language you use.
 
 | Application | Distribution and installation reference |
 | --- | --- |
 | Node.js, Bun, Electron | [npm coordinates and versions](../docs/common/current-packages.md) |
 | Python | [PyPI coordinate and version](../docs/common/current-packages.md) |
 | C# | [NuGet coordinate and version](../docs/common/current-packages.md) |
-| Kotlin / Java, Spring Boot, Quarkus | [Maven artifacts](../maven/README.md) |
+| Kotlin / Java, Spring Boot, Quarkus | [Maven Central 3.0.0](../docs/coakka-runtime/releases/2026-10-30-jvm-spring-quarkus-runtime-3.0.0-maven-central.md) |
 | Go / Swift | [Go modules and SwiftPM](../docs/common/current-packages.md) |
 | C/C++ or source/archive consumers | [Native archive catalog](../runtime/native/README.md) and [connector coordinates](../docs/common/current-packages.md) |
 
@@ -62,3 +61,5 @@ and [optional addons](../runtime-addons/README.md) have their own catalogs.
 For configuration and operation, start with [Runtime documentation](../docs/coakka-runtime/README.md).
 [Release history](../docs/coakka-runtime/releases/README.md) records older identities.
 [Choose another product](../README.md).
+
+Read the [Runtime 3.0.0 changelog](../docs/coakka-runtime/CHANGELOG.md) before upgrading older application code.
