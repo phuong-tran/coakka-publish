@@ -1,36 +1,43 @@
 # CoAkka Runtime Packages
 
+[Language examples](#start-in-your-language) · [Packages](#published-packages) · [Platform scope](#candidate-and-platform-scope) · [Documentation](../docs/coakka-runtime/README.md) · [All products](../README.md)
+
 **Application-owned work across languages and processes.**
 
-CoAkka Runtime is a **polyglot, cross-platform distributed runtime for
-application-owned work**, backed by a **shared native core**. Its native-backed
-language connectors expose familiar APIs while keeping business behavior in
-application code.
+CoAkka Runtime is a **polyglot, cross-platform distributed runtime** backed by a
+**shared native core**. Its native-backed language packages connect named pieces
+of application work while your application keeps its business rules and data.
 
-Application work often crosses a language or process boundary: a web API asks
-a Python worker to process an image, or an existing JVM service handles a
-customer operation. CoAkka Runtime gives that work stable target names and
-a shared way to send requests, receive replies and observe delivery failures.
+For example, a Node.js checkout can ask a Python pricing function for a quote.
+Runtime carries the request and reply; Python calculates the price. Start with
+one local example in your language, then try a two-process application.
 
-The application chooses where its handlers live and keeps its business rules.
-Runtime handles the communication between those participants. This makes it
-useful for connecting existing systems and evolving an application gradually,
-including moving work from a local handler into another process.
-
-Read [The CoAkka Story](../docs/coakka-runtime/explanation/coakka-story.md) for
-why internal application work is modeled this way, or
-[try one example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/README.md)
-to see the model in code.
-
-Install the connector for your application's language. Its package supplies
-the matching native Runtime; applications normally do not install Core separately.
+Read [the CoAkka story](../docs/coakka-runtime/explanation/coakka-story.md) for
+why the work belongs to the application. The normal connector package includes
+its matching native Runtime; no separate Core installation is needed.
 
 ## Start in your language
 
-[Choose a published first-run example](../docs/coakka-runtime/getting-started.md)
-or [find a use case](../docs/coakka-runtime/guides/examples-and-use-cases.md).
-Each language guide gives installation, a command, expected output and source.
-Use the catalog below when selecting an archive or checking an exact release.
+Choose one **published 3.0.0** example. Its guide gives installation, a run
+command, expected output and the application source, including how to close it.
+
+| Your application | Runnable example |
+| --- | --- |
+| Node.js | [Node.js first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/node/registry-basic/README.md) |
+| Bun | [Bun first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/bun/registry-basic/README.md) |
+| Electron | [Electron first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/electron/registry-basic/README.md) |
+| Python | [Python first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/python/registry-basic/README.md) |
+| C# | [C# first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/csharp/registry-basic/README.md) |
+| Kotlin | [Kotlin first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/jvm/registry-basic/README.md#kotlin) |
+| Java | [Java first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/jvm/registry-basic/README.md#java) |
+| Go | [Go first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/go/registry-basic/README.md) |
+| Swift | [Swift first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/swift/registry-basic/README.md) |
+| Spring Boot | [Spring Boot first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/scenarios/customer-crud/framework-registry/README.md#spring-boot) |
+| Quarkus | [Quarkus first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/scenarios/customer-crud/framework-registry/README.md#quarkus) |
+
+For other hosts, see [language and evaluation paths](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/README.md#other-languages-and-evaluations).
+Use the [package ledger](../docs/common/current-packages.md) for exact install
+coordinates, or the catalogs below when choosing an archive.
 
 ## Published packages
 
