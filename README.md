@@ -2,18 +2,20 @@
 
 <p align="center"><img src="docs/common/assets/brand/coakka-logo.png" alt="CoAkka" width="480"></p>
 
+[Website](https://coakka-ecosystem-preview.vivid-plume-2955.chatgpt.site/) · [Find a package](#choose-your-product) · [Demo](#try-the-nodepython-web-demo) · [Documentation](docs/README.md)
+
 **Shared native cores. Familiar APIs across languages.**
 
-Find packages and documentation for CoAkka's **polyglot, cross-platform
-ecosystem**. **CoAkka Runtime** is a **native-backed distributed runtime for
+CoAkka is a **polyglot, cross-platform ecosystem** built on shared native cores.
+**CoAkka Runtime** is a **native-backed distributed runtime for
 application-owned work** across languages, processes and hosts. Your application
-keeps its handlers and business rules.
+keeps its handlers, business rules and data.
 
-**HTTP Runtime** provides a shared native HTTP core for HTTP services.
-**Logger** provides native-backed logging with bounded storage. Each product
-can be used independently and has its own packages and version.
+Use **HTTP Runtime** for HTTP services and **Logger** for logging with bounded
+storage. Each product can be adopted independently and has its own packages
+and versions.
 
-Explore the products and demo on the [CoAkka website](https://coakka-ecosystem-preview.vivid-plume-2955.chatgpt.site/).
+**[Find a package by product and language](#choose-your-product)**
 
 ## Try the Node–Python web demo
 
