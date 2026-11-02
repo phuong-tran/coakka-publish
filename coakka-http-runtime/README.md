@@ -1,6 +1,6 @@
 # CoAkka HTTP Runtime Packages
 
-[Choose your language and archive](#download-version-100) · [After the first request](#after-the-first-request) · [Documentation](../docs/coakka-http-runtime/README.md) · [Examples](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/README.md) · [All products](../README.md)
+[Choose your language and archive](#download-version-100) · [After the first request](#after-the-first-request) · [HTTP Inspect](#coakka-http-runtime-inspect) · [Documentation](../docs/coakka-http-runtime/README.md) · [Examples](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/README.md) · [All products](../README.md)
 
 **HTTP services in your language. One shared native core.**
 
@@ -28,6 +28,22 @@ HTTP Runtime gives the ecosystem an HTTP server/client surface for browser and
 HTTP integrations. Runtime remains the product for named application work; an
 HTTP handler can call it when needed. Each product can be used on its own.
 
+## CoAkka HTTP Runtime Inspect
+
+**Swagger-like API exploration for an inspection-enabled HTTP service.**
+Browse the route descriptions a service publishes, try HTTP requests in a
+browser and export an **OpenAPI 3.0.3** document. Inspect provides its own UI;
+the exported document can also be used by OpenAPI tools such as Swagger UI.
+
+Current Inspect archives target **macOS ARM64** and **Linux ARM64**. Service
+inspection must be explicitly enabled, and language-connector APIs for declaring
+route/schema metadata are still being completed. Follow the current integration
+status before adding inspection to a language example.
+
+[Explore Inspect and OpenAPI](../docs/coakka-http-runtime/inspect/metadata-and-openapi.md) ·
+[Current integration status](../docs/coakka-http-runtime/inspect/metadata-and-openapi.md#current-package-integration) ·
+[Inspect packages and setup](inspect/README.md).
+
 ## Package-manager releases in preparation
 
 Distribution through **npm**, **Maven Central**, **Go modules** and **PyPI** is
@@ -54,7 +70,7 @@ Check the selected archive against that directory's checksums. Each guide gives
 prerequisites, archive setup, a runnable service,
 its first request and shutdown steps. You only need that language's tools.
 
-The [optional Inspect application](inspect/README.md) is distributed separately
+The [optional HTTP Runtime Inspect application](inspect/README.md) is distributed separately
 for macOS ARM64 and Linux ARM64.
 
 ## After the first request

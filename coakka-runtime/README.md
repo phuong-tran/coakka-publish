@@ -1,6 +1,6 @@
 # CoAkka Runtime Packages
 
-[Language examples](#start-in-your-language) · [Packages](#published-packages) · [Platform scope](#candidate-and-platform-scope) · [Documentation](../docs/coakka-runtime/README.md) · [All products](../README.md)
+[Language examples](#start-in-your-language) · [Packages](#published-packages) · [Platform scope](#candidate-and-platform-scope) · [Addons](#runtime-addons) · [Documentation](../docs/coakka-runtime/README.md) · [All products](../README.md)
 
 **Application-owned work across languages and processes.**
 
@@ -78,6 +78,24 @@ Linux ARM64/x64 and Windows ARM64/x64. See [package/platform evidence](../docs/c
 for each package's actual version and support; do not assume an old package
 inherits this candidate's targets. Android and Mojo remain previews. Swift's
 Windows ARM lane is preview; that does not make the whole Swift package preview.
+
+## Runtime addons
+
+**Runtime addons** add optional capabilities around CoAkka Runtime. The released
+**Artifact Source Addons** obtain and verify files from external sources before
+Runtime transfers those files between application peers.
+
+For example, acquire an exact model file from **S3/MinIO** or **Hugging Face Hub**,
+verify it, then deliver it to the worker that needs it. Other provider guides
+cover HTTPS, SFTP, cloud storage and local files.
+
+Current addon packages expose a **native C interface**. Each addon has its own
+version, supported platforms and Runtime compatibility; high-level language
+addon bindings are not currently released. Add only the capability you need.
+
+[Understand the workflow](../docs/coakka-runtime/guides/runtime-addons.md) ·
+[Choose a provider example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/addons/README.md) ·
+[Package and compatibility catalog](../runtime-addons/README.md).
 
 ## Runtime companion tools
 
