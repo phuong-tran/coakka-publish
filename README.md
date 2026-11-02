@@ -12,8 +12,9 @@
 
 CoAkka is a **polyglot, cross-platform ecosystem** built on shared native cores.
 **CoAkka Runtime** is a **native-backed distributed runtime for
-application-owned work** across languages, processes and hosts. Your application
-keeps its handlers, business rules and data.
+application-owned work**: for example, a Node.js checkout asking Python to
+calculate a price. Your application keeps its handlers, business rules and data;
+Runtime carries the request and reply across languages, processes and hosts.
 
 Use **HTTP Runtime** for HTTP services and **Logger** for logging with bounded
 storage. Each product can be adopted independently and has its own packages
@@ -54,10 +55,6 @@ applications through three complementary lanes:
 | Move a stable file that already exists on the sending host | **File-Lane** | [File transfer](docs/coakka-runtime/guides/runtime-file-transfer.md) |
 | Send live frames as they are produced, such as camera, audio or telemetry | **Stream-Lane** | [Streaming](docs/coakka-runtime/guides/runtime-streaming.md) |
 
-For example, send a processing request through Message-Lane, deliver a model
-file through File-Lane, or send live camera frames through Stream-Lane.
-Follow your language guide for the available lane APIs and package scope.
-
 Choose the integration that matches your code:
 
 | Application language or host | Start here |
@@ -67,30 +64,21 @@ Choose the integration that matches your code:
 | Electron and Tauri desktop apps | [Electron](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/electron/registry-basic/README.md) · [Tauri](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/tauri/README.md) |
 | C / C++, Rust, Zig, Android and Mojo | [Source/archive guides and previews](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/README.md#other-languages-and-evaluations) |
 
-Released 3.0.0 first runs cover Node.js, Bun, Python, Java/Kotlin, C#, Go,
-Swift, Electron, Spring Boot and Quarkus. Tauri, C/C++, Rust and Zig follow their own versioned
-source/archive guides; Android and Mojo are previews. Each guide gives its
-actual package and platform scope.
+Start with the **3.0.0** language examples. Tauri, C/C++, Rust and Zig use their
+own versioned source/archive guides; Android and Mojo are previews. Follow each
+guide's package, lane and platform scope.
 
 ## CoAkka Runtime addons
 
-**Runtime addons** add optional capabilities around CoAkka Runtime. The released
-**Artifact Source Addons** obtain and verify files from external sources before
-Runtime transfers those files between application peers.
+**Artifact Source Addons** acquire and verify an exact model file from
+**S3/MinIO**, **Hugging Face Hub**
+or another provider, then deliver it through **File-Lane**. Already have a stable
+local file? Use File-Lane directly.
 
-For example, acquire an exact model file from **S3/MinIO** or **Hugging Face Hub**,
-verify it, then deliver it to the worker that needs it. Other provider guides
-cover HTTPS, SFTP, cloud storage and local files.
-
-Current addon packages expose a **native C interface**. Each addon has its own
-version, supported platforms and Runtime compatibility. **Native C is the
-maintained addon surface**; additional language bindings will be considered
-when concrete user demand justifies their support and maintenance.
-This scope applies to addons, separately from Runtime's language connectors.
-
-Already have the file locally? Use **File-Lane directly**. If the file lives
-elsewhere, the addon acquires and verifies it locally first, then hands it to
-File-Lane for delivery. Add only the capability you need.
+**Native C is the maintained addon interface.** Other language bindings depend
+on concrete user demand. Addons keep their own versions and platform scope;
+check [Runtime 3.0.0 compatibility](docs/coakka-runtime/guides/native-addons-runtime3.md)
+before selecting one.
 
 [Understand the workflow](docs/coakka-runtime/guides/runtime-addons.md) ·
 [Choose a provider example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/addons/README.md) ·
@@ -98,33 +86,29 @@ File-Lane for delivery. Add only the capability you need.
 
 ## CoAkka Runtime Client and Inspect
 
-Use the companion tools to try Runtime before writing another application,
-or to check a request while integrating it.
+Try requests before writing another application, or inspect a request during
+integration. Product names and released commands are listed separately:
 
-| Tool | Use it for |
-| --- | --- |
-| [CoAkka Runtime Client](docs/coakka-runtime/operations/coakka-runtime-client.md) — `coakka-runtime-client` | Send test requests from a terminal or script and inspect the returned result. |
-| [CoAkka Runtime Inspect](docs/coakka-runtime/operations/coakka-runtime-inspect.md) — `coakka-runtime-inspect` | Explore Runtime facts and try request/reply interactions in a browser. |
+| Product | Released command | Use it for |
+| --- | --- | --- |
+| [CoAkka Runtime Client](docs/coakka-runtime/operations/coakka-runtime-client.md) | `coakka-client` | Send requests from a terminal or script and inspect the result. |
+| [CoAkka Runtime Inspect](docs/coakka-runtime/operations/coakka-runtime-inspect.md) | `coakka-runtime-inspect` | Explore Runtime facts and try request/reply in a browser. |
 
-These are the product names. The released Client command is `coakka-client`;
-the Inspect command is `coakka-runtime-inspect`. Follow each tool's guide for
-its published version, connection setup and inspection scope.
+Each guide records the tool's version, connection setup and inspection scope.
 
 ## CoAkka HTTP Runtime: shared HTTP, familiar languages
 
-**CoAkka HTTP Runtime** (`coakka-http-runtime`) provides an HTTP server and
-client for polyglot applications. Use it for APIs, web frontends, uploads,
-files, streaming and WebSocket services.
+**CoAkka HTTP Runtime** (`coakka-http-runtime`) provides a shared native HTTP
+core for **polyglot HTTP servers and outbound HTTP requests**. Build APIs, web
+frontends, uploads, file delivery, streaming and WebSocket services.
 
-Its language packages share one native HTTP core. Common HTTP behavior and
-fixes can reach several languages through updated packages, while each service
-keeps its own handlers and business rules. Teams can reuse their understanding
-of HTTP across services instead of maintaining unrelated HTTP behavior for
-every application language.
+Language packages share HTTP behavior and fixes while handlers stay in your
+language. An HTTP handler can ask CoAkka Runtime to perform named work; each
+product can also be used independently.
 
-HTTP Runtime serves the HTTP edge; CoAkka Runtime connects named application
-work. An HTTP handler can call Runtime when it needs that work, and either
-product can also be adopted independently.
+Outbound requests are part of HTTP Runtime's documented package scope. The
+planned standalone **CoAkka HTTP Client** is a separate future product:
+[current client scope and roadmap](docs/coakka-http-runtime/explanation/introduction.md#outbound-http-and-the-planned-http-client).
 
 **Package-manager releases are in preparation for npm, Maven Central, Go
 modules and PyPI.** The current installation path uses 1.0.0 repository archives.
@@ -133,15 +117,13 @@ and [current archive catalog](coakka-http-runtime/README.md).
 
 ### CoAkka HTTP Runtime Inspect
 
-**Swagger-like API exploration for an inspection-enabled HTTP service.**
-Browse the route descriptions a service publishes, try HTTP requests in a
-browser and export an **OpenAPI 3.0.3** document. Inspect provides its own UI;
-the exported document can also be used by OpenAPI tools such as Swagger UI.
+**Swagger-like exploration: browse routes, try HTTP requests and export
+OpenAPI 3.0.3.** Inspect has its own browser UI and works with a service that
+explicitly enables inspection.
 
-Current Inspect archives target **macOS ARM64** and **Linux ARM64**. Service
-inspection must be explicitly enabled, and language-connector APIs for declaring
-route/schema metadata are still being completed. Follow the current integration
-status before adding inspection to a language example.
+Current Inspect archives cover **macOS ARM64** and **Linux ARM64**. Language APIs
+for declaring route/schema metadata are still being completed; check the
+integration status below before adding Inspect to an example.
 
 [Explore Inspect and OpenAPI](docs/coakka-http-runtime/inspect/metadata-and-openapi.md) ·
 [Current integration status](docs/coakka-http-runtime/inspect/metadata-and-openapi.md#current-package-integration) ·
@@ -160,14 +142,10 @@ fits your application.
 
 ## Downloading an archive or checking a release?
 
-Use the selected product catalog to choose the exact version and platform.
-Follow its manifest, checksum and platform-evidence instructions. Local
-evaluation packages are separate from published registry coordinates.
-
-Versioned downloads, Maven paths, source mirrors and receipts retain their
-original URLs and bytes. [Product layout](docs/common/product-layout.md)
-explains the warehouse and rolling documentation. This repository has no
-aggregate product version or aggregate GitHub Release.
+Choose the version and platform in the product catalog, then follow its
+manifest, checksum and platform-evidence instructions. [Product layout](docs/common/product-layout.md)
+explains the stable download paths and rolling docs. Each product has its own
+version and release; local evaluations are labeled separately.
 
 [All documentation](docs/README.md) ·
 [Runtime platform requirements](docs/coakka-runtime/reference/runtime-package-platform-evidence.md) ·
