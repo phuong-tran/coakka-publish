@@ -1,22 +1,22 @@
-// Command fixed-server measures the installed CoAkka host-inlined surface.
-// Chi and Gin use separate executables so neither links this native runtime.
+// Command fixed-server serves the release-confirmation response through CoAkka.
 package main
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"errors"
 	"fmt"
-	coakkahttp "github.com/phuong-tran/coakka-http-runtime-go"
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
+	"runtime/debug"
 	"runtime/pprof"
- "runtime/debug"
- "path/filepath"
- "crypto/sha256"
- "strings"
 	"strconv"
+	"strings"
 	"syscall"
+
+	coakkahttp "github.com/phuong-tran/coakka-http-runtime-go"
 )
 
 var body = []byte("0123456789abcdef0123456789abcdef")
@@ -58,18 +58,52 @@ func runCoakka(port uint16) {
 	}
 	service, err := coakkahttp.NewBuilder().Listen("127.0.0.1", port).
 		CPU(policy).
- Limits(coakkahttp.Limits{Notifications:coakkahttp.NotificationProfiles{Request:coakkahttp.NotificationUltra, Terminal:coakkahttp.NotificationXXLarge}}).
+		Limits(coakkahttp.Limits{
+			Notifications: coakkahttp.NotificationProfiles{
+				Request:  coakkahttp.NotificationUltra,
+				Terminal: coakkahttp.NotificationXXLarge,
+			},
+		}).
 		Get("/fixed", func(*coakkahttp.Request) (coakkahttp.Response, error) {
-			if os.Getenv("RESPONSE_MODE")=="fresh" {return coakkahttp.NewResponse(http.StatusOK,headers,body)}
- return response, nil
+			if os.Getenv("RESPONSE_MODE") == "fresh" {
+				return coakkahttp.NewResponse(http.StatusOK, headers, body)
+			}
+			return response, nil
 		}).Start()
 	if err != nil {
 		fatal(err)
 	}
-	exe,_:=os.Executable(); identity("fixture",exe)
- bi,ok:=debug.ReadBuildInfo();if !ok{fatal(fmt.Errorf("build identity unavailable"))};for _,d:=range bi.Deps{if d.Path=="github.com/phuong-tran/coakka-http-runtime-go" {if d.Replace!=nil{fatal(fmt.Errorf("module replacement forbidden"))};fmt.Printf("identity-module-version=%s\n",d.Version)}}
- maps,e:=os.ReadFile("/proc/self/maps");if e!=nil{fatal(e)};seen:=map[string]bool{};for _,l:=range strings.Split(string(maps),"\n"){at:=strings.Index(l,"/");if at>=0&&strings.Contains(l,"coakka_http"){path:=l[at:];if !seen[path]{identity("image",path);seen[path]=true}}}
- // This cold record projects Core facts; it never reconstructs its defaults.
+	// Report the executable, linked module version, and mapped SDK before load.
+	exe, _ := os.Executable()
+	identity("fixture", exe)
+	bi, ok := debug.ReadBuildInfo()
+	if !ok {
+		fatal(fmt.Errorf("build identity unavailable"))
+	}
+	for _, d := range bi.Deps {
+		if d.Path == "github.com/phuong-tran/coakka-http-runtime-go" {
+			if d.Replace != nil {
+				fatal(fmt.Errorf("module replacement forbidden"))
+			}
+			fmt.Printf("identity-module-version=%s\n", d.Version)
+		}
+	}
+	maps, e := os.ReadFile("/proc/self/maps")
+	if e != nil {
+		fatal(e)
+	}
+	seen := map[string]bool{}
+	for _, l := range strings.Split(string(maps), "\n") {
+		at := strings.Index(l, "/")
+		if at >= 0 && strings.Contains(l, "coakka_http") {
+			path := l[at:]
+			if !seen[path] {
+				identity("image", path)
+				seen[path] = true
+			}
+		}
+	}
+	// Report the settings accepted by the running service.
 	info, err := service.RuntimeInfo()
 	if err != nil {
 		fatal(errors.Join(err, service.Close()))
@@ -81,14 +115,20 @@ func runCoakka(port uint16) {
 		fatal(errors.Join(fmt.Errorf("unknown Core backend observation"), service.Close()))
 	}
 	record, err := json.Marshal(map[string]any{
-		"cpu": map[string]any{"requestedPolicy": info.CPU.RequestedPolicy,
-			"placement": info.CPU.Placement, "selectedCpuCount": info.CPU.SelectedCPUCount,
-			"selectedCpuIds": info.CPU.SelectedCPUIDs[:info.CPU.SelectedCPUCount]},
-		"execution": map[string]any{"observed": info.Execution.Observed,
+		"cpu": map[string]any{
+			"requestedPolicy":  info.CPU.RequestedPolicy,
+			"placement":        info.CPU.Placement,
+			"selectedCpuCount": info.CPU.SelectedCPUCount,
+			"selectedCpuIds":   info.CPU.SelectedCPUIDs[:info.CPU.SelectedCPUCount],
+		},
+		"execution": map[string]any{
+			"observed":             info.Execution.Observed,
 			"selection":            info.Execution.Selection,
 			"configuredEventLoops": info.Execution.ConfiguredEventLoops,
-			"activeEventLoops":     info.Execution.ActiveEventLoops},
-		"limits": info.Limits, "effectiveIoBackend": info.EffectiveIOBackend,
+			"activeEventLoops":     info.Execution.ActiveEventLoops,
+		},
+		"limits":                        info.Limits,
+		"effectiveIoBackend":            info.EffectiveIOBackend,
 		"ioUringEffective":              info.EffectiveIOBackend == coakkahttp.IOUring,
 		"requestNotificationBatchSize":  info.RequestNotificationBatchSize,
 		"terminalNotificationBatchSize": info.TerminalNotificationBatchSize,
@@ -126,4 +166,14 @@ func fatal(err error) {
 	os.Exit(1)
 }
 
-func identity(kind,path string){path,err:=filepath.EvalSymlinks(path);if err!=nil{fatal(err)};b,err:=os.ReadFile(path);if err!=nil{fatal(err)};fmt.Printf("identity-%s=%s\t%x\n",kind,path,sha256.Sum256(b))}
+func identity(kind, path string) {
+	path, err := filepath.EvalSymlinks(path)
+	if err != nil {
+		fatal(err)
+	}
+	b, err := os.ReadFile(path)
+	if err != nil {
+		fatal(err)
+	}
+	fmt.Printf("identity-%s=%s\t%x\n", kind, path, sha256.Sum256(b))
+}

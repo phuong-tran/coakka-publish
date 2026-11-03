@@ -28,8 +28,8 @@ static void stop_signal(int signal_number) {
   stopping = 1;
 }
 
-/* The private CLI names exact effective caps for paired evidence, while the
- * host-facing configuration accepts only the reviewed named profiles. */
+/* The fixture CLI accepts numeric caps from the recorded campaign. The SDK
+ * expects the corresponding named notification profiles. */
 static int valid_explicit_profile(unsigned long value) {
   switch (value) {
   case COAKKA_HTTP_HOST_NOTIFICATION_SMALL:
@@ -63,6 +63,7 @@ static int serve(coakka_http_host_service_t *service, probe_counts_t *counts) {
       (void)fprintf(stderr, "probe-failure take=%d\n", status);
       return 0;
     }
+    /* A successful take gives us a lease. Release it after handling the event. */
     if (event.kind == COAKKA_HTTP_HOST_REQUEST) {
       ++counts->requests;
       coakka_http_host_response_t response;
@@ -79,9 +80,10 @@ static int serve(coakka_http_host_service_t *service, probe_counts_t *counts) {
       if (submitted == COAKKA_HTTP_HOST_STALE_EXCHANGE) {
         ++counts->late_responses;
       } else if (submitted != COAKKA_HTTP_HOST_OK) {
-        (void)fprintf(stderr, "probe-failure respond=%d slot=%" PRIu64
-                      " generation=%" PRIu64 "\n", submitted,
-                      event.exchange.slot, event.exchange.generation);
+        (void)fprintf(stderr,
+                      "probe-failure respond=%d slot=%" PRIu64 " generation=%" PRIu64
+                      "\n",
+                      submitted, event.exchange.slot, event.exchange.generation);
         (void)coakka_http_host_release_request(service, &event);
         return 0;
       }
@@ -100,9 +102,8 @@ static int serve(coakka_http_host_service_t *service, probe_counts_t *counts) {
   return 1;
 }
 
-/* Stop closes new admission but retains already-published terminal leases.
- * Drain them before comparing full-event accounting; this is a private
- * diagnostic, not an extra per-request branch in the product Core. */
+/* Stop closes admission. Drain terminal events already published so the
+ * fixture accounts for them before destroying the service. */
 static int drain_after_stop(coakka_http_host_service_t *service,
                             probe_counts_t *counts) {
   for (uint32_t index = 0U; index < 1024U; ++index) {
@@ -121,8 +122,7 @@ static int drain_after_stop(coakka_http_host_service_t *service,
     } else {
       ++counts->other_events;
     }
-    if (coakka_http_host_release_request(service, &event) !=
-        COAKKA_HTTP_HOST_OK) {
+    if (coakka_http_host_release_request(service, &event) != COAKKA_HTTP_HOST_OK) {
       return 0;
     }
   }
@@ -153,16 +153,14 @@ int main(int argc, char **argv) {
   if (argc >= 4) {
     char *end = NULL;
     terminal_cap = strtoul(argv[3], &end, 10);
-    if (end == argv[3] || *end != '\0' ||
-        !valid_explicit_profile(terminal_cap)) {
+    if (end == argv[3] || *end != '\0' || !valid_explicit_profile(terminal_cap)) {
       return EXIT_FAILURE;
     }
   }
   if (argc >= 5) {
     char *end = NULL;
     request_cap = strtoul(argv[4], &end, 10);
-    if (end == argv[4] || *end != '\0' ||
-        !valid_explicit_profile(request_cap)) {
+    if (end == argv[4] || *end != '\0' || !valid_explicit_profile(request_cap)) {
       return EXIT_FAILURE;
     }
   }
@@ -186,10 +184,8 @@ int main(int argc, char **argv) {
   configuration.limits.completion_queue_capacity = 256U;
   /* Zero inherits Core's measured default. Optional arguments are exclusively
    * a private tuning probe; no per-request policy lookup occurs. */
-  configuration.limits.terminal_notification_profile =
-      (uint32_t)terminal_cap;
-  configuration.limits.request_notification_profile =
-      (uint32_t)request_cap;
+  configuration.limits.terminal_notification_profile = (uint32_t)terminal_cap;
+  configuration.limits.request_notification_profile = (uint32_t)request_cap;
   /* In the three-argument A/B, only Core's event policy varies. */
   configuration.omit_buffered_success_events =
       strcmp(argv[2], "compact") == 0 ? 1U : 0U;
@@ -222,7 +218,8 @@ int main(int argc, char **argv) {
                 info.request_notification_batch_size,
                 info.terminal_notification_batch_size);
   (void)fprintf(stderr, "host-execution configured=%u active=%u\n",
-                info.execution.configured_event_loops, info.execution.active_event_loops);
+                info.execution.configured_event_loops,
+                info.execution.active_event_loops);
 
   (void)signal(SIGINT, stop_signal);
   (void)signal(SIGTERM, stop_signal);
@@ -238,8 +235,8 @@ int main(int argc, char **argv) {
     passed = 0;
   }
   (void)fprintf(stderr,
-                "host-event-accounting requests=%" PRIu64
-                " terminals=%" PRIu64 " other=%" PRIu64 "\n",
+                "host-event-accounting requests=%" PRIu64 " terminals=%" PRIu64
+                " other=%" PRIu64 "\n",
                 counts.requests, counts.terminals, counts.other_events);
   (void)fprintf(stderr, "host-late-responses count=%" PRIu64 "\n",
                 counts.late_responses);

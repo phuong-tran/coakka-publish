@@ -13,7 +13,25 @@ The runner scripts retain the measurement and identity checks. The
 connector runner accepts the three runtime executable paths through
 environment variables and discovers the Python package in its local
 virtual environment. Rebuilding the fixtures can change executable hashes.
-The evidence contains the hashes observed in the published runs.
+The evidence contains the hashes observed in the published runs. For
+byte-for-byte comparison, use the [original fixture snapshot](https://github.com/phuong-tran/coakka-publish/tree/da9153e2600d0b29809c1060f05a561a5820245d/coakka-http-runtime/benchmark/release-confirmation).
+
+## How the files fit together
+
+- `fixture.c` serves the Native C response through the installed SDK.
+  `measure-native-full.py` builds the evidence from its admitted runs.
+- `server.py`, `node/server.mjs`, `bun/server.mjs`, `go-app/main.go`
+  and `FixedServer.java` each serve the same 32-byte response at `/fixed`.
+  At startup they report the files they loaded and the runtime settings
+  they observed. The runner uses those records to verify the fixture.
+- `campaign.py` selects one response mode per connector and records accepted
+  attempts. It calls `run-public.py` for each attempt. That script verifies
+  startup, drives warm-up and timed load, and records cleanup.
+- Native C listens on `127.0.0.1:18431`. Each connector uses
+  `127.0.0.1:18430`, so run the fixtures sequentially. The runners send
+  SIGTERM to close the active server and restore the CPU governors.
+
+## Build the fixtures
 
 From the writable copy, prepare the release artifacts and compile the
 Native C, Go and JVM fixtures.
@@ -53,6 +71,8 @@ export BENCHMARK_NODE="$(command -v node)"
 export BENCHMARK_BUN="$(command -v bun)"
 export BENCHMARK_JAVA="$(command -v java)"
 ```
+
+## Run the confirmation
 
 Run these commands sequentially.
 
