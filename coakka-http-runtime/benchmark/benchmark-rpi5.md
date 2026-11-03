@@ -26,9 +26,9 @@ includes the five HTTP Runtime 1.1.2 connector confirmation results.
 | Node.js | CoAkka host-inlined | Express, Fastify |
 | Bun | CoAkka host-inlined | Elysia, Hono |
 
-Vert.x and Undertow comparisons are **Pending** for both CPU budgets. The
-current JVM remeasurement covers CoAkka only; no accepted comparison results
-are published for those two frameworks in this round.
+The [JVM framework comparison](jvm-framework-runs-rpi5.md) records Undertow, Vert.x and
+CoAkka JVM runs for both CPU budgets, with admission status for each profile.
+The following comparison profiles are not admitted: Vert.x Web 4.5.34, 2 CPU, 64 connections.
 
 No standalone Netty or native-library competitor is included. The separately
 requested Bun.serve paired study is reported explicitly; it does not add other

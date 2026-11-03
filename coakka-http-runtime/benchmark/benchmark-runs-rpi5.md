@@ -26,3 +26,8 @@ latency, RSS and peak RSS in the published summary.
 | Native C | 1 | 1,613,440 | 161,344.0 | 0.376 | 0.547 | 0.605 | 19.39 | 19.39 |  |
 | Native C | 2 | 1,622,912 | 162,291.2 | 0.376 | 0.543 | 0.609 | 19.39 | 19.39 |  |
 | Native C | 3 | 1,617,276 | 161,727.6 | 0.376 | 0.546 | 0.607 | 19.38 | 19.38 | Median |
+
+## JVM framework comparison
+
+[View the individual Undertow, Vert.x and CoAkka JVM runs](jvm-framework-runs-rpi5.md)
+for the separate one- and two-CPU comparison.
