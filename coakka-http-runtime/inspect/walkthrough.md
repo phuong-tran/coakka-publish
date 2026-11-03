@@ -1,4 +1,4 @@
-# Try HTTP Runtime Inspect on macOS ARM64
+# HTTP Runtime Inspect walkthrough
 
 Inspect is a standalone, Swagger-like browser for local development. Connect
 it to an inspection-enabled service to browse declared routes, send a real

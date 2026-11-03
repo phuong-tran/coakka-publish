@@ -39,7 +39,7 @@ inspection must be explicitly enabled, and language-connector APIs for declaring
 route/schema metadata are still being completed. Follow the current integration
 status before adding inspection to a language example.
 
-[Explore Inspect and OpenAPI](../docs/coakka-http-runtime/inspect/metadata-and-openapi.md) ·
+[Walkthrough](inspect/walkthrough.md) · [Explore Inspect and OpenAPI](../docs/coakka-http-runtime/inspect/metadata-and-openapi.md) ·
 [Current integration status](../docs/coakka-http-runtime/inspect/metadata-and-openapi.md#current-package-integration) ·
 [Inspect packages and setup](inspect/README.md).
 
