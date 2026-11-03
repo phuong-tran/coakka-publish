@@ -87,7 +87,7 @@ a short fixed delay alone is not evidence of steady state. Record the chosen
 warm-up and observed stability instead of applying unequal hidden warm-up.
 
 Before **every** run, including the first and retries, stop the preceding
-server and wait at least 30 seconds, until board temperature is at most 50 °C,
+server and wait at least 30 seconds, until board temperature is below 50 °C,
 background CPU busy is at most 5%, and throttle status is clear. Freeze the
 sampling interval and number of consecutive qualifying observations in the
 campaign configuration. The current gate requires three clean observations,
@@ -95,8 +95,9 @@ with a five-second wait between one-second CPU samples; any failure resets the
 streak. A bounded cooldown deadline expiring rejects or defers
 the run; it never bypasses the gate. Keep cooling policy fixed throughout.
 
-Warm-up can heat the CPU again: record conditions at the start and end of the
-timed interval too. Any throttling during measurement rejects that run.
+Record the temperature at load start and during the run when sampling is available.
+The 50 °C limit applies to starting the test. During load, keep recording
+temperature and reject the run if the Pi reports throttling.
 
 ## Metrics And Accounting
 
