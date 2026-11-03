@@ -2,7 +2,7 @@
 
 <p align="center"><img src="docs/common/assets/brand/coakka-logo.png" alt="CoAkka" width="480"></p>
 
-[Website](https://coakka-ecosystem-preview.vivid-plume-2955.chatgpt.site/) · [Find a package](#choose-your-product) · [Documentation](docs/README.md) · [HTTP benchmarks](coakka-http-runtime/benchmark/)
+[Website](https://coakka-ecosystem-preview.vivid-plume-2955.chatgpt.site/) · [Find a package](#choose-your-product) · [Documentation](docs/README.md) · [HTTP Benchmarks (Pi 5)](coakka-http-runtime/benchmark/README.md)
 
 **Contents**
 
