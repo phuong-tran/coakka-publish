@@ -31,3 +31,11 @@ latency, RSS and peak RSS in the published summary.
 
 [View the individual Undertow, Vert.x and CoAkka JVM runs](jvm-framework-runs-rpi5.md)
 for the active 2-CPU comparison and archived 1-CPU evidence.
+
+## Go, Node.js, Bun and Python framework comparison
+
+[View all 36 individual runs](framework-runs-rpi5.md#per-run-results).
+
+## Bun.serve() paired comparison
+
+[View all 6 individual runs](bun-serve-runs-rpi5.md#individual-runs).

@@ -30,10 +30,10 @@ The [JVM framework comparison](jvm-framework-runs-rpi5.md) records Undertow, Ver
 CoAkka JVM runs at 2 CPU and 64 connections. Vert.x Web 4.5.34 exceeded
 the load-generator CPU ceiling in this profile.
 
-No standalone Netty or native-library competitor is included. The separately
-requested Bun.serve paired study is reported explicitly; it does not add other
-language-standard HTTP servers to the comparison matrix.
-Framework dependencies are not extra comparison rows.
+The [framework comparison](framework-runs-rpi5.md) covers Go, Node.js, Bun and Python.
+The [Bun.serve() paired comparison](bun-serve-runs-rpi5.md) covers Bun's built-in server.
+Both campaigns use two server CPUs and 64 localhost connections.
+The scope excludes standalone Netty and native-library competitors.
 Spring MVC with Tomcat is one stack, not two independent results. C++ samples
 refer to the native C baseline without claiming a separate C++ measurement.
 
