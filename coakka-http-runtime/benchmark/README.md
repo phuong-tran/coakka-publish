@@ -3,13 +3,14 @@
 The Pi 5 server used CPU 0–1 and the load generator used CPU 2–3.
 All campaigns below used 64 HTTP/1.1 keep-alive connections over localhost
 and a fixed 32-byte response. For each admitted configuration, p99 and RSS
-come from the throughput-median run.
+come from the throughput-median run in campaigns that report RSS.
 
 | Campaign | Results | Run records |
 | --- | --- | --- |
 | Release confirmation | [Native C and connector baselines](#release-confirmation) | [Individual runs](benchmark-runs-rpi5.md) |
 | Go, Node.js, Bun and Python | [Framework comparison](#go-nodejs-bun-and-python-framework-comparison) | [36 individual runs](framework-runs-rpi5.md#per-run-results) |
 | Bun built-in server | [Bun.serve() paired comparison](#bunserve-paired-comparison) | [6 individual runs](bun-serve-runs-rpi5.md#individual-runs) |
+| Node.js and Bun CPU efficiency | [Requests per CPU-second](#nodejs-and-bun-requests-per-cpu-second) | [12 individual runs](node-bun-cpu-runs-rpi5.md#individual-runs) |
 | JVM | [JVM framework comparison](#jvm-framework-comparison) | [28 individual runs](jvm-full-runs-rpi5.md#individual-runs) |
 
 [Methodology](benchmark-rpi5.md) · [Evidence and reproduction](evidence-rpi5.md)
@@ -100,6 +101,38 @@ The median CoAkka Bun run averaged 188.5% server CPU. The median
 Bun.serve() fetch run averaged 100.3%.
 
 [View all 6 individual runs](bun-serve-runs-rpi5.md#individual-runs).
+
+## Node.js and Bun requests per CPU-second
+
+This separate campaign gave each server process the same two CPUs (0–1).
+h2load used CPUs 2–3 and drove 64 persistent HTTP/1.1 connections over
+localhost. Each fixture returned HTTP 200 with the same 32-byte payload.
+
+The CoAkka Node.js and Bun fixtures reuse a prebuilt response. Fastify
+sends the shared payload through its reply API. The `Bun.serve()` fetch
+fixture creates a new `Response` per request from shared payload bytes.
+The results include the cost of those response paths.
+
+Requests completed and total process CPU time across all server threads
+are counted in the same 10-second window after warm-up. Req/CPU-s divides
+successful requests by server CPU-seconds. Each row uses the middle of
+three accepted runs ranked by that metric. Request count, CPU time,
+throughput and p99 all come from that run.
+
+| Application | Requests in 10 s | Server CPU (s) | Req/s | Req/CPU-s | p99 (ms) | Accepted runs |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| Node.js / CoAkka 1.1.2 | 874,042 | 19.0805 | 87,404.2 | 45,808.1 | 0.960 | [1](node-bun-cpu-runs-rpi5.md#node-coakka-run-1) · [2](node-bun-cpu-runs-rpi5.md#node-coakka-run-2) · [3](node-bun-cpu-runs-rpi5.md#node-coakka-run-3) |
+| Node.js / Fastify 5.12.4 | 166,797 | 10.0086 | 16,679.7 | 16,665.4 | 4.184 | [1](node-bun-cpu-runs-rpi5.md#node-fastify-run-1) · [2](node-bun-cpu-runs-rpi5.md#node-fastify-run-2) · [3](node-bun-cpu-runs-rpi5.md#node-fastify-run-3) |
+| Bun / CoAkka 1.1.2 | 822,720 | 18.9202 | 82,272.0 | 43,483.6 | 1.449 | [1](node-bun-cpu-runs-rpi5.md#bun-coakka-run-1) · [2](node-bun-cpu-runs-rpi5.md#bun-coakka-run-2) · [3](node-bun-cpu-runs-rpi5.md#bun-coakka-run-3) |
+| Bun / `Bun.serve()` | 482,802 | 10.0356 | 48,280.2 | 48,108.9 | 2.151 | [1](node-bun-cpu-runs-rpi5.md#bun-direct-run-1) · [2](node-bun-cpu-runs-rpi5.md#bun-direct-run-2) · [3](node-bun-cpu-runs-rpi5.md#bun-direct-run-3) |
+
+The CoAkka fixtures used about 19 CPU-seconds per median run. Fastify and
+`Bun.serve()` used about 10 each. For these fixtures, CoAkka Node.js
+delivered 2.75× the requests per CPU-second of Fastify. CoAkka Bun
+delivered 1.70× the throughput of `Bun.serve()`, which delivered 10.6%
+more requests per CPU-second.
+
+[Measurement details and all 12 runs](node-bun-cpu-runs-rpi5.md).
 
 ## JVM framework comparison
 

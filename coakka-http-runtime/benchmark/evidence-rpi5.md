@@ -7,6 +7,7 @@
 | Release confirmation | [18 Native C and connector runs](benchmark-runs-rpi5.md) | [JSON](release-confirmation-evidence-rpi5.json) · [Reproduction](release-confirmation/README.md) |
 | Go, Node.js, Bun and Python | [36 runs](framework-runs-rpi5.md#per-run-results) | [JSON](framework-evidence-rpi5.json) |
 | Bun.serve() pair | [6 runs](bun-serve-runs-rpi5.md#individual-runs) | [JSON](bun-serve-evidence-rpi5.json) |
+| Node.js and Bun CPU efficiency | [12 runs](node-bun-cpu-runs-rpi5.md#individual-runs) | Request counts, process CPU time and window method in the per-run record |
 | JVM | [28 runs](jvm-full-runs-rpi5.md#individual-runs) | [JSON](jvm-evidence-rpi5.json) |
 
 The release-confirmation export includes h2load warm-up and timed output,
