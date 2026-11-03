@@ -57,7 +57,7 @@ status before adding inspection to a language example.
 
 [Native C and C++ SDK archives](native/releases/1.1.2/) · [Raspberry Pi 5 benchmark](docs/benchmark-results-rpi5.md)
 
-## Download version 1.0.0
+## Archived 1.0.0 downloads
 
 These checksum-pinned repository archives are available here. They are not
 npm, Maven Central, PyPI or Go registry releases. Use the matching sample and

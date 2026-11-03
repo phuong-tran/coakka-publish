@@ -20,16 +20,16 @@ private key, and, for mutual TLS, client trust roots.
 
 ## Install The Repository Package
 
-Install the exact `1.0.0` archive for your platform from the repository.
-Do not substitute a similarly named registry package.
+Install HTTP Runtime 1.1.2 for your application host.
 
 | Language | Installation guide |
 | --- | --- |
-| Python | [Extracted module and matching library](../../../coakka-http-runtime/python/README.md); no wheel is published in this train |
-| Node.js/Bun | [Shared JavaScript archive](../../../coakka-http-runtime/javascript/README.md) |
-| JVM | [JAR and matching native libraries](../../../coakka-http-runtime/jvm/README.md) |
-| Go | [Module and native bundle](../../../coakka-http-runtime/go/README.md) |
-| C/C++ | [Installed CMake package](../../../coakka-http-runtime/native/README.md) |
+| Python | [PyPI package](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#python) |
+| Node.js | [npm package](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#nodejs) |
+| Bun | [npm package for Bun](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#bun) |
+| JVM | [Maven Central JAR and native classifier](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#jvm) |
+| Go | [Go module and native SDK](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#go) |
+| C/C++ | [Native SDK downloads](https://github.com/phuong-tran/coakka-publish/tree/main/coakka-http-runtime/native/releases/1.1.2) |
 
 Match the artifact to the operating system and architecture. Package presence
 alone is not protocol evidence; check the packaged capability bits and run a

@@ -25,7 +25,7 @@ It selects the matching binary when you import the package.
 ## Archived 1.0.0 sample packages
 
 Five branch packages serve both Node.js and Bun. Download the `.tgz` matching
-the runtime process architecture from [candidates/2026-10-08-r2](candidates/2026-10-08-r3/)
+the runtime process architecture from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/)
 and verify [SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). Install that local file:
 
 ```sh
