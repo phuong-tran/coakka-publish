@@ -140,14 +140,9 @@ backend, descriptor/resource return, and negative handshake cases.
 ## Credential Operations
 
 `credential_generation` and `credential_id` identify the selected credential
-set without exposing secret material. Current deployments rotate listener
-credentials through a replacement service. Live certificate reload is planned
-for a future version; see the [roadmap](../reference/roadmap.md#certificate-lifecycle).
-
-Listener credential replacement currently requires creating and starting a
-new service instance with the newer credential generation, shifting traffic,
-then draining the old instance. Live handler swap is a separate capability and
-does not replace TLS identity, protocol, bind address, or listener policy.
+set without exposing secret material. The 1.1.2 release candidate supports
+explicit listener credential reload. Older packages rotate through a
+replacement service. Live handler swap is a separate operation.
 
 `credential_id` names the logical identity; `credential_generation` identifies
 the deployment's selected revision of its material. Neither is a file watcher.
@@ -157,20 +152,25 @@ Do not mistake a configured version for proof of a successful handshake.
 
 ## What can be hot reloaded
 
-Use the live-update APIs for routes and monitor policy today. Certificate
-reload is on the roadmap; until that API ships, use the replacement procedure
-below for certificate and trust-root changes.
-
-| Change | Current packaged path | Important bound |
+| Change | Available path | Important bound |
 | --- | --- | --- |
-| Replace a route handler | Prepare a binding, then generation/revision-checked apply | Captured work retains the old binding until it finishes. |
-| Replace the route table | Publish a complete accepted structural generation | Rejected candidates leave the prior effective table intact. |
-| Change monitor collection policy | Expected-generation policy apply | Cannot enlarge startup reservations; unsupported intent is refused. |
-| Replace listener certificate/key or client trust roots | Start a replacement service, validate it, shift traffic, drain the old service | Live certificate reload is planned for a future version. |
-| Change listener address or protocol | Construct a replacement service | A handler change does not rebind a listener. |
+| Replace a route handler | Generation/revision-checked apply | Captured work retains the old binding until it finishes. |
+| Replace the route table | Publish an accepted structural generation | Rejected candidates preserve the effective table. |
+| Change monitor collection policy | Expected-generation policy apply | Cannot enlarge startup reservations. |
+| Replace listener certificate/key or client trust roots | Explicit credential reload in the 1.1.2 release candidate | Requires the current effective generation and a complete candidate credential set. |
+| Change listener address or protocol | Construct a replacement service | Live updates do not rebind the listener. |
 
-These are independent contracts, not one universal reload switch. For why
-compare-and-apply versions matter, see [generations](../reference/glossary.md#why-generations-are-needed).
+For live rotation, prepare the new files at distinct paths and keep the chain,
+matching key and intended trust roots together. Read the effective generation
+from the running listener, then submit the complete candidate with that
+expected generation. Check the typed outcome. If the runtime refuses it, the
+effective generation stays unchanged. If it accepts the update, verify a new
+handshake and request with the intended trust. For mTLS, also verify refusal of
+an untrusted client. Publication and retirement are separate outcomes, so
+observe retirement before removing old deployment resources.
+
+Use the replacement procedure below with older packages, unsupported listeners,
+or when changing the listener address or protocol.
 
 ## Rotate certificates with a replacement instance
 
@@ -252,5 +252,5 @@ an automated rotation controller or multi-node rotation test ships in the SDK.
 - Keep handshake, connection, request, drain, and stop timeouts finite.
 - Exclude keys, certificates, cookies, tokens, and peer-certificate bytes from
   logs and monitor detail.
-- Rotate by starting the new generation before draining the old service; do
-  not overwrite files beneath a running listener and assume they were reloaded.
+- Rotate through an explicit credential reload or a replacement service.
+  Overwriting files alone does not activate new credentials.
