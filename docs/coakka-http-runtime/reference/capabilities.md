@@ -59,17 +59,16 @@ provider silently appear.
 
 | Host | Normal application surface | Ownership |
 | --- | --- | --- |
-| C | `coakka_http_server_t`, declared callbacks, installed `coakka/http/http.h` | Callback-scoped borrowed requests; checked stop/destroy |
-| C++ | The same public C API wrapped with application RAII | No exception crosses a C callback; retain state on close refusal |
+| C | `coakka_http_host_service_t` and request events in `<coakka/http/host.h>` | A single reader owns borrowed events until release. Check stop and destroy results. |
+| C++ | The same public C API wrapped with application RAII | Own the service and each borrowed event explicitly. Keep the service on destroy refusal. |
 | Kotlin/Java | `ServiceBuilder` | Kotlin implementation, Java-friendly public values and lifecycle |
 | Go | `NewBuilder()` | Functions, structs, errors and context-aware application flow |
 | Python | `Builder` | Python values and explicit service lifetime |
 | Node.js/Bun | `Builder` | Value or Promise-returning buffered handlers; synchronous stream chunk callbacks, asynchronous producers and close |
 
-The native application package uses `CoAkkaHttp::runtime`, not the connector
-host API. Advanced public native configuration and event operations also live
-in `http.h`; an application never needs the private build-tree runtime header.
-Consult each exact package declaration before using a lower-level entrypoint.
+The focused 1.1.2 native SDK uses CMake package `CoAkkaHttpHost` and link
+target `CoAkkaHttp::host`. Use the installed header and library from the
+same package. The native SDK guide covers setup and the event lifetime rules.
 
 ## Convenience Builders
 
@@ -79,11 +78,10 @@ requests, monitor reads, handler replacement and route publication. Their
 security examples configure TLS/mTLS. These features do not inherently require
 abandoning the idiomatic service builder for a manual event pump.
 
-The C/C++ samples include buffered callbacks, path/query/header access, files,
-request/response streaming, SSE, WebSocket, outbound calls, route publication,
-runtime information, monitor control, handler replacement and secure listeners.
-The feature index below distinguishes named examples and executed recipes from
-remaining failure-path coverage; API availability alone is not test evidence.
+The public native contract tests exercise loopback requests, event ownership,
+pressure, routing, streams, outbound calls, concurrency and execution facts
+through the focused SDK. The older callback samples use their own pinned SDK.
+Use the feature index to match each example to its SDK and test evidence.
 
 CPU budgets, batch settings and timeouts belong to the runtime. Connectors submit
 intent and expose the runtime's accepted effective state through runtime information.

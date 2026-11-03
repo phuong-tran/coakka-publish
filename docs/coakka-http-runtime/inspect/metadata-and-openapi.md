@@ -86,29 +86,24 @@ The app remains responsible for validation, serialization and authorization.
 
 ## Current package integration
 
-**Core already supports route API metadata; the language connectors do not yet
-expose its end-user declaration API.** Inspect can consume Core's metadata and
-project OpenAPI. The planned connector work connects to that existing capability,
-with examples and tests; it is not a new Core metadata design.
+The JavaScript, Python, Go, and JVM connectors expose route metadata in the
+current 1.1.2 source. Attach it to the route declaration when building the
+service. The route metadata describes the handler's inputs and outputs.
 
-The current native archive exposes `coakka_http_inspection_options_t` and
-`coakka_http_configuration_set_inspection` for target inspection setup. Its
-options cover bearer-file selection, runtime identity, call capacity, per-turn
-entry/byte budgets, snapshot deadline and response-byte ceilings. Use its
-initializer and checked configuration result; an inspection endpoint must be
-explicitly enabled, never silently added to an ordinary service.
+| Connector | Route declaration |
+| --- | --- |
+| JavaScript and TypeScript | Pass `apiMetadata` in the route options and construct the value with `RouteApiMetadata`. |
+| Python | Call `document(RouteApiMetadata(...))` after declaring the route. |
+| Go | Call `Document(coakkahttp.RouteAPIMetadata{...})` after declaring the route. |
+| Kotlin and Java | Call `document(...)` with a `RouteApiMetadata` value after declaring the route. |
+| C and C++ | Initialize `coakka_http_host_route_api_metadata_t` and attach it to the route's `api_metadata` field in the focused `<coakka/http/host.h>` SDK. |
 
-The current language feature samples do not enable this target surface.
-The checked connector sources do not yet provide a documented host-inlined
-metadata-publication recipe, and the installed native header does not expose
-a route-schema authoring API. Route snapshot access and metadata-generation
-fields alone are not such an API. Therefore this guide does not present a
-fictional `.metadata(...)` call for Kotlin, Java, Go, Python or JavaScript.
-
-An already inspection-enabled target can use the packaged Inspect workflow.
-Adding end-user metadata authoring to the connector guides requires a public
-contract and artifact-backed examples first; see the [roadmap](../reference/roadmap.md).
-Do not reach into private headers or schema encodings to compensate.
+Connector package tests verify metadata declarations and their effect on route
+snapshots. Connecting Inspect also requires a target that explicitly enables
+its authenticated read endpoint. Check the target package's supported setup
+and use the connection instructions in the installation guide. The 1.1.2
+workflow from connector declaration through Inspect to OpenAPI export still
+requires qualification against the final packages. See the [roadmap](../reference/roadmap.md).
 
 ## OpenAPI projection
 
