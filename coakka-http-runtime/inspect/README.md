@@ -5,6 +5,8 @@ Inspect connects to a service's explicitly enabled inspection endpoint, reads
 route/schema snapshots, projects OpenAPI 3.0.3, and lets the developer try routes.
 It is separate from CoAkka Runtime Inspect, which inspects runtime messaging.
 
+[macOS walkthrough with screenshot and GIF](macos-walkthrough.md)
+
 ## Contents
 
 - [Why Inspect exists, metadata, OpenAPI and Swagger UI](../../docs/coakka-http-runtime/inspect/metadata-and-openapi.md)
