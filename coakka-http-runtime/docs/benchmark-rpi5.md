@@ -13,8 +13,7 @@
 ## Status
 
 The [results ledger](benchmark-results-rpi5.md#http-runtime-112-on-raspberry-pi-5)
-includes the five HTTP Runtime 1.1.2 connector confirmation results. The
-r3 cohorts and framework comparisons below describe earlier campaigns.
+includes the five HTTP Runtime 1.1.2 connector confirmation results.
 
 ## Comparison Scope
 
