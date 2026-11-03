@@ -6,6 +6,8 @@ The Pi 5 ran OpenJDK 21.0.12.1 and h2load 1.64.0. All three applications
 served the same 32-byte GET /fixed response over HTTP/1.1 keep-alive on
 loopback. Each timed interval lasted 10 seconds. The server ran on CPU
 0 or CPUs 0–1, with the remaining CPUs assigned to the load generator.
+The active comparison uses two CPUs and 64 connections. The one-CPU rows
+below preserve earlier measurements.
 
 CoAkka used the public 1.1.2 JVM package with one active I/O loop. Undertow
 used one I/O thread per assigned CPU and a nonblocking handler. Vert.x

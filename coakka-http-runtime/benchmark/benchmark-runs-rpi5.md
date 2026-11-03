@@ -30,4 +30,4 @@ latency, RSS and peak RSS in the published summary.
 ## JVM framework comparison
 
 [View the individual Undertow, Vert.x and CoAkka JVM runs](jvm-framework-runs-rpi5.md)
-for the separate one- and two-CPU comparison.
+for the active 2-CPU comparison and archived 1-CPU evidence.

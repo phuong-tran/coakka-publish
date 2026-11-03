@@ -37,18 +37,13 @@ from that same run. All 4,853,628 native responses were HTTP 200.
 
 ## JVM framework comparison
 
-CoAkka JVM, Undertow and Vert.x ran the same fixed-response workload at
-one and two server CPUs. These are separate runs from the connector
-confirmation table above. The comparison reports sampled process RSS
-over warm-up and load. Compare rows at the same connection count and CPU
-budget. The published workload uses 64 concurrent connections throughout.
-A missing median indicates a failed admission gate.
+The active comparison uses two server CPUs and 64 concurrent connections
+on Pi 5 loopback. These are separate runs from the connector confirmation
+table above. RSS is sampled over warm-up and load. One-CPU comparisons are
+deferred. Earlier one-CPU runs are available in the per-run record.
 
 | Connections | CPUs | Application | Median req/s | Req/s range | p50 (ms) | p95 (ms) | p99 (ms) | RSS (MiB) | Sampled peak (MiB) |
 | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 64 | 1 | CoAkka JVM 1.1.2 | 73,695.4 | 73,535.0–74,193.1 | 0.855 | 0.922 | 1.076 | 148.72 | 150.73 |
-| 64 | 1 | Undertow 2.3.26.Final | 95,156.6 | 90,270.7–97,392.6 | 0.661 | 0.710 | 0.751 | 147.41 | 151.12 |
-| 64 | 1 | Vert.x Web 4.5.34 | 112,853.4 | 112,163.1–114,245.9 | 0.558 | 0.600 | 0.636 | 156.42 | 159.56 |
 | 64 | 2 | CoAkka JVM 1.1.2 | 84,733.1 | 84,307.1–85,154.6 | 0.748 | 0.780 | 0.851 | 242.67 | 249.55 |
 | 64 | 2 | Undertow 2.3.26.Final | 150,805.0 | 143,790.0–153,122.1 | 0.408 | 0.491 | 0.882 | 233.38 | 242.02 |
 | 64 | 2 | Vert.x Web 4.5.34: not admitted | — | — | — | — | — | — | — |
