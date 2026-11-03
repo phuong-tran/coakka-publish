@@ -55,7 +55,7 @@ status before adding inspection to a language example.
 | JVM | [`io.github.phuong-tran.coakka:coakka-http-runtime-jvm:1.1.2`](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/coakka-http-runtime-jvm/1.1.2) |
 | Go | [`github.com/phuong-tran/coakka-http-runtime-go@v1.1.2`](https://pkg.go.dev/github.com/phuong-tran/coakka-http-runtime-go@v1.1.2) |
 
-[Native C and C++ SDK archives](native/releases/1.1.2/) · [Raspberry Pi 5 benchmark](docs/benchmark-results-rpi5.md)
+[Native C and C++ SDK archives](native/releases/1.1.2/) · [Raspberry Pi 5 benchmark](benchmark/README.md)
 
 ## Archived 1.0.0 downloads
 
