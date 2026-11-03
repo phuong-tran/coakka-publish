@@ -43,12 +43,17 @@ status before adding inspection to a language example.
 [Current integration status](../docs/coakka-http-runtime/inspect/metadata-and-openapi.md#current-package-integration) ·
 [Inspect packages and setup](inspect/README.md).
 
-## Package-manager releases in preparation
+## Version 1.1.2
 
-Distribution through **npm**, **Maven Central**, **Go modules** and **PyPI** is
-planned. The currently available installation path uses the 1.0.0 archives and
-matching examples below. The [package ledger](../docs/common/current-packages.md)
-records what has actually been released.
+| Host | HTTP Runtime 1.1.2 |
+| --- | --- |
+| Node.js | [`coakka-http-runtime-node`](https://www.npmjs.com/package/coakka-http-runtime-node/v/1.1.2) |
+| Bun | [`coakka-http-runtime-bun`](https://www.npmjs.com/package/coakka-http-runtime-bun/v/1.1.2) |
+| Python | [`coakka-http-runtime-python`](https://pypi.org/project/coakka-http-runtime-python/1.1.2/) |
+| JVM | [`io.github.phuong-tran.coakka:coakka-http-runtime-jvm:1.1.2`](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/coakka-http-runtime-jvm/1.1.2) |
+| Go | [`github.com/phuong-tran/coakka-http-runtime-go@v1.1.2`](https://pkg.go.dev/github.com/phuong-tran/coakka-http-runtime-go@v1.1.2) |
+
+[Native C and C++ SDK archives](native/releases/1.1.2/) · [Raspberry Pi 5 benchmark](docs/benchmark-results-rpi5.md)
 
 ## Download version 1.0.0
 
