@@ -114,6 +114,16 @@ temperature and reject the run if the Pi reports throttling.
 | Environment | Before/after temperature, throttling, observed frequencies and background activity |
 | Generator | Separate CPU/RSS and errors; never include generator resources in the server totals |
 
+CPU affinity defines the budget available to a server. Observed CPU use
+sums CPU time across its processes and threads over the stated interval.
+Record the process and worker configuration for each fixture. A change
+in worker count or CPU affinity defines a separate execution profile.
+
+To report responses per CPU-second, count successful responses and
+collect server CPU time over the same timed interval. The framework and
+Bun pair campaigns report server CPU averaged across warm-up and load,
+while their throughput and latency describe the timed interval.
+
 Include supervisors and workers consistently; record how exited workers are
 accounted for. Missing metrics say **N/A — reason**, not zero. Record collector
 cost. Never merge latency histograms incorrectly or average percentiles while

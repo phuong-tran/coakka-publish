@@ -23,7 +23,9 @@ The summary uses p99 and RSS from the throughput-median run.
 At the throughput-median runs, CoAkka Bun used 188.5% server CPU and
 the Bun.serve() fetch fixture used 100.3%. Both had two CPUs available.
 Here 100% represents one logical CPU on average across warm-up and
-measurement.
+measurement. Throughput and p99 cover the timed interval. The comparison
+captures the combined effect of the server path and the response
+lifecycle described above.
 
 ## Individual runs
 

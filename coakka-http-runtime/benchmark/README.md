@@ -76,10 +76,11 @@ RSS is sampled across warm-up and measurement.
 | Bun | Elysia 1.4.30 | 44,384.3 | 42,287.7–45,645.7 | 2.075 | 53.28 | 55.06 |
 | Bun | Hono 4.13.7 | 42,018.5 | 40,215.5–43,785.4 | 2.312 | 49.02 | 50.38 |
 
-In the median runs, CoAkka Node.js and Bun used about 187% server CPU
-each. Express, Fastify, Elysia and Hono used about 100–110%. The runner
-averages server CPU across warm-up and measurement, with 100% equal to
-one logical CPU. Both comparisons gave the server two CPUs.
+Each server had two logical CPUs available. In the throughput-median
+runs, CoAkka Node.js and Bun each averaged about 187% server CPU in a
+single application process. Express, Fastify, Elysia and Hono averaged
+about 100–110%. The CPU average spans warm-up and measurement. Throughput
+covers the timed interval. [CPU accounting](benchmark-rpi5.md#metrics-and-accounting)
 
 [View all 36 individual runs](framework-runs-rpi5.md#per-run-results).
 
