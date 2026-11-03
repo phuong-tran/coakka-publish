@@ -140,7 +140,7 @@ backend, descriptor/resource return, and negative handshake cases.
 ## Credential Operations
 
 `credential_generation` and `credential_id` identify the selected credential
-set without exposing secret material. The 1.1.2 release candidate supports
+set without exposing secret material. The 1.1.2 release supports
 explicit listener credential reload. Older packages rotate through a
 replacement service. Live handler swap is a separate operation.
 
@@ -157,7 +157,7 @@ Do not mistake a configured version for proof of a successful handshake.
 | Replace a route handler | Generation/revision-checked apply | Captured work retains the old binding until it finishes. |
 | Replace the route table | Publish an accepted structural generation | Rejected candidates preserve the effective table. |
 | Change monitor collection policy | Expected-generation policy apply | Cannot enlarge startup reservations. |
-| Replace listener certificate/key or client trust roots | Explicit credential reload in the 1.1.2 release candidate | Requires the current effective generation and a complete candidate credential set. |
+| Replace listener certificate/key or client trust roots | Explicit credential reload in the 1.1.2 release | Requires the current effective generation and a complete candidate credential set. |
 | Change listener address or protocol | Construct a replacement service | Live updates do not rebind the listener. |
 
 For live rotation, prepare the new files at distinct paths and keep the chain,

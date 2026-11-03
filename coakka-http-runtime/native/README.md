@@ -7,9 +7,9 @@ shared library. Native application business dispatch stays application-owned;
 HTTP I/O, route matching, admission, deadlines and authoritative state stay
 inside CoAkka HTTP Runtime.
 
-This version is being prepared in Git. Registry publication and final
-qualification are separate gates. Historical archives and their checksums
-remain historical; their qualification does not certify a new version.
+Download the [released 1.1.2 SDK](releases/1.1.2/) for your host. Its public
+C header declares host ABI 10. The release directory lists all five archives
+and their SHA-256 checksums.
 
 ## Install one matching SDK
 

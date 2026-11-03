@@ -87,7 +87,7 @@ The app remains responsible for validation, serialization and authorization.
 ## Current package integration
 
 The JavaScript, Python, Go, and JVM connectors expose route metadata in the
-current 1.1.2 source. Attach it to the route declaration when building the
+published 1.1.2 packages. Attach it to the route declaration when building the
 service. The route metadata describes the handler's inputs and outputs.
 
 | Connector | Route declaration |
