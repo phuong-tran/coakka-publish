@@ -2,9 +2,9 @@
 
 **Choose your language, start a service and send one request.**
 
-HTTP Runtime is a separate product from CoAkka Runtime. Its current 1.0.0
-distribution uses repository archives. Follow one language guide to obtain the
-matching archive and prepare only that language's tools.
+HTTP Runtime is a separate product from CoAkka Runtime. The Node.js and Bun
+guide includes npm installation for 1.1.2 and the pinned archive workflow
+for the original 1.0.0 samples.
 
 ## Choose your language
 

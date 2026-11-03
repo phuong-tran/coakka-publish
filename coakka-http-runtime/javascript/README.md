@@ -8,6 +8,20 @@ CoAkka HTTP gives Node.js and Bun applications a JavaScript-native service API
 while the native runtime owns listeners, protocol I/O, bounded queues, route
 matching, streaming, files, WebSockets, outbound connections, and monitoring.
 
+## Install 1.1.2 from npm
+
+```sh
+npm install coakka-http-runtime-node@1.1.2
+# In a Bun application
+bun add coakka-http-runtime-bun@1.1.2
+```
+
+Import the API from the package you install. Each package contains the
+binaries for macOS ARM64, Linux x64 and ARM64, and Windows x64 and ARM64.
+It selects the matching binary when you import the package.
+
+## Archived 1.0.0 sample packages
+
 Five branch packages serve both Node.js and Bun. Download the `.tgz` matching
 the runtime process architecture from [candidates/2026-10-08-r2](candidates/2026-10-08-r3/)
 and verify [SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). Install that local file:
@@ -18,7 +32,7 @@ npm install --ignore-scripts /absolute/path/coakka-http-javascript-1.0.0-candida
 
 The package loads its own native files by fixed relative paths. Keep `native/`
 intact; no compiler, postinstall download, runtime extraction or environment
-override is needed. npm publication is not part of this branch preparation.
+override is needed.
 
 The API baseline is Node.js22 or Bun1.2.22. On Windows use Bun1.4.2 or later,
 prefer native ARM64 Bun on Windows ARM64. Version1.4.2 is the tested reference,
