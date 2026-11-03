@@ -19,14 +19,14 @@ HTTP delivery, limits and shutdown.
 | JVM | [`io.github.phuong-tran.coakka:coakka-http-runtime-jvm:1.1.2`](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/coakka-http-runtime-jvm/1.1.2) |
 | Go | [`github.com/phuong-tran/coakka-http-runtime-go@v1.1.2`](https://pkg.go.dev/github.com/phuong-tran/coakka-http-runtime-go@v1.1.2) |
 
-## HTTP Inspect
+## CoAkka HTTP Runtime Inspect
 
 Inspect can browse a service’s published routes, try requests and export
 OpenAPI. Its packages target macOS ARM64 and Linux ARM64. The service must
 enable inspection before the companion can connect.
 [Walkthrough](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/inspect/walkthrough.md) · [Integration status](https://github.com/phuong-tran/coakka-publish/blob/main/docs/coakka-http-runtime/inspect/metadata-and-openapi.md#current-package-integration)
 
-## Archived 1.0.0 downloads
+## Download version 1.0.0
 
 These checksum-pinned archives support the corresponding historical samples.
 Use the headers and libraries that match the sample you are building.
