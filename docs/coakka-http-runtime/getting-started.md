@@ -17,9 +17,7 @@ for the original 1.0.0 samples.
 | C | [C installation and first request](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/c/integration.md) |
 | C++ | [C++ installation and first request](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/cpp/integration.md) |
 
-Each guide gives prerequisites, archive setup, the service command, a request
-to send, its expected response and how to stop the service. Follow that complete
-sequence; installing a CoAkka Runtime connector does not install HTTP Runtime.
+The guides in the table describe the archived feature samples and their matching package requirements.
 
 The [HTTP sample index](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/README.md)
 links the runnable source and feature coverage for each language.

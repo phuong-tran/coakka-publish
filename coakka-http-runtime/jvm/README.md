@@ -1,5 +1,7 @@
 # CoAkka HTTP for JVM (Kotlin and Java)
 
+[Install and run a 1.1.2 registry sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md). The archive recipes below are for the pinned 1.0.0 generation.
+
 **Java is supported too.** Kotlin is the connector implementation language,
 not a required application language. See the
 [Java code and runnable example](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/kotlin/integration.md#java-uses-the-same-jvm-connector)
@@ -17,8 +19,7 @@ the same public classes without Kotlin-only call syntax.
 The connector JAR contains managed classes only. It does not embed or extract a
 native library. Five branch bundles pair the JAR with its matching native
 libraries. Download from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/) and verify
-[SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). Maven publication remains outside
-this step. Select the JVM process architecture, not just the OS architecture.
+[SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). For Maven Central installation, use the 1.1.2 instructions above. Select the JVM process architecture, not just the OS architecture.
 
 ## Contents
 

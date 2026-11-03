@@ -1,5 +1,7 @@
 # CoAkka HTTP for Go
 
+[Install and run a 1.1.2 registry sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md). The archive recipes below are for the pinned 1.0.0 generation.
+
 **New application?** Start with the [Go integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/go/integration.md)
 for installation, a first request and feature-by-feature usage. This page
 remains the package/API reference.

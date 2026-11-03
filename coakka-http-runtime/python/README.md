@@ -1,5 +1,7 @@
 # CoAkka HTTP for Python
 
+[Install and run a 1.1.2 registry sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md). The archive recipes below are for the pinned 1.0.0 generation.
+
 **New application?** Start with the [Python integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/python/integration.md)
 for installation, a first request and feature-by-feature usage. This page
 remains the package/API reference.
@@ -27,8 +29,7 @@ The runtime. It provides a bounded handler service and a lower-level typed event
 API. The module uses only the focused public host interface; HTTP parsing, transport,
 routing, files, TLS, outbound calls, and deadlines remain native-owned.
 
-Each archive includes its matching native library. Wheel layout and PyPI
-publication remain outside this step.
+Each archive includes its matching native library. For PyPI installation, use the 1.1.2 instructions above.
 
 ## Requirements
 

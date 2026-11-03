@@ -45,6 +45,8 @@ status before adding inspection to a language example.
 
 ## Version 1.1.2
 
+[Install and run a 1.1.2 registry sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md).
+
 | Host | HTTP Runtime 1.1.2 |
 | --- | --- |
 | Node.js | [`coakka-http-runtime-node`](https://www.npmjs.com/package/coakka-http-runtime-node/v/1.1.2) |

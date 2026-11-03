@@ -14,7 +14,7 @@ to distinguish its outbound HTTP APIs from the planned standalone HTTP Client.
 
 [Run one service and send one request](getting-started.md), or
 [download the matching package](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/README.md).
-The current 1.0.0 distribution uses repository archives, not package registries.
+HTTP Runtime 1.1.2 is available from the [public registries and native SDK catalog](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/README.md#version-112).
 
 ## Use and operate
 
