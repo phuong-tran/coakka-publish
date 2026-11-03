@@ -1,5 +1,26 @@
 # HTTP Runtime 1.1.2 on Raspberry Pi 5
 
+The Pi 5 server used CPU 0–1 and the load generator used CPU 2–3.
+All campaigns below used 64 HTTP/1.1 keep-alive connections over localhost
+and a fixed 32-byte response. For each admitted configuration, p99 and RSS
+come from the throughput-median run.
+
+| Campaign | Results | Run records |
+| --- | --- | --- |
+| Release confirmation | [Native C and connector baselines](#release-confirmation) | [Individual runs](benchmark-runs-rpi5.md) |
+| Go, Node.js, Bun and Python | [Framework comparison](#go-nodejs-bun-and-python-framework-comparison) | [36 individual runs](framework-runs-rpi5.md#per-run-results) |
+| Bun built-in server | [Bun.serve() paired comparison](#bunserve-paired-comparison) | [6 individual runs](bun-serve-runs-rpi5.md#individual-runs) |
+| JVM | [JVM framework comparison](#jvm-framework-comparison) | [28 individual runs](jvm-full-runs-rpi5.md#individual-runs) |
+
+[Methodology](benchmark-rpi5.md) · [Evidence and reproduction](evidence-rpi5.md)
+
+## Release confirmation
+
+Native C used two I/O event loops and one host event reader. The connector
+baseline used AUTO with one active I/O event loop. These profiles differ
+in execution topology. RSS in this section is measured after load, and
+peak RSS is the process high-water mark.
+
 The physical Raspberry Pi 5 ran the public HTTP Runtime 1.1.2 packages.
 Each connector ran three times under a configuration fixed before the
 measurement campaign. Each row reports the median-throughput run and
@@ -21,7 +42,6 @@ and a 10-second loopback load. The server used CPUs 0–1 and the load generator
 used CPUs 2–3. Connectors used AUTO and one active I/O event loop. Start
 temperatures were 44.10–46.85°C. The highest measured temperature during
 load was 49.60°C. All accepted runs reported throttle state `0x0`.
-RSS is the whole server process after load. Peak RSS is its high-water mark.
 
 ### Native C SDK 1.1.2
 
@@ -35,26 +55,11 @@ The table reports the median-throughput run of three accepted runs
 (161,344.0–162,291.2 requests/s), with latency and memory
 from that same run. All 4,853,628 native responses were HTTP 200.
 
-## JVM framework comparison
-
-The active comparison uses two server CPUs and 64 concurrent connections
-on Pi 5 loopback. These are separate runs from the connector confirmation
-table above. RSS is sampled over warm-up and load. One-CPU comparisons are
-deferred. Earlier one-CPU runs are available in the per-run record.
-
-| Connections | CPUs | Application | Median req/s | Req/s range | p50 (ms) | p95 (ms) | p99 (ms) | RSS (MiB) | Sampled peak (MiB) |
-| ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 64 | 2 | CoAkka JVM 1.1.2 | 84,733.1 | 84,307.1–85,154.6 | 0.748 | 0.780 | 0.851 | 242.67 | 249.55 |
-| 64 | 2 | Undertow 2.3.26.Final | 150,805.0 | 143,790.0–153,122.1 | 0.408 | 0.491 | 0.882 | 233.38 | 242.02 |
-| 64 | 2 | Vert.x Web 4.5.34: not admitted | — | — | — | — | — | — | — |
-
-[See every comparison round, including median selections, p99 and RSS](jvm-framework-runs-rpi5.md).
-
 ## Go, Node.js, Bun and Python framework comparison
 
 This campaign compared CoAkka 1.1.2 with eight framework fixtures.
 The server had a two-CPU budget and used 64 HTTP/1.1 connections over Pi 5 localhost.
-p99 and sampled RSS come from the throughput-median run.
+RSS is sampled across warm-up and measurement.
 
 | Host | Application | Median req/s | Req/s range | p99 (ms) | Mean RSS (MiB) | Sampled peak RSS (MiB) |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
@@ -75,9 +80,10 @@ p99 and sampled RSS come from the throughput-median run.
 
 ## Bun.serve() paired comparison
 
-This campaign paired CoAkka Bun 1.1.2 with Bun.serve() using a fetch handler.
+CoAkka Bun reuses one prebuilt response. The Bun.serve() fetch fixture
+creates a new Response for each request from the same fixed payload.
 The server had a two-CPU budget and used 64 HTTP/1.1 connections over Pi 5 localhost.
-p99 and sampled RSS come from the throughput-median run.
+RSS is sampled across warm-up and measurement.
 
 | Application | Median req/s | Range req/s | p99 (ms) | Mean RSS (MiB) | Sampled peak RSS (MiB) |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -85,3 +91,23 @@ p99 and sampled RSS come from the throughput-median run.
 | `Bun.serve()` | 46,425.7 | 46,410.9–48,229.1 | 2.223 | 40.01 | 42.14 |
 
 [View all 6 individual runs](bun-serve-runs-rpi5.md#individual-runs).
+
+## JVM framework comparison
+
+This campaign includes Tomcat with a direct servlet, Spring MVC on Tomcat,
+Jetty, Undertow, WebFlux, Vert.x and CoAkka JVM. The three measurement
+rounds used a 30-second warm-up. A separate 40-second warm-up check had
+to stay within 5% of the median and pass the load-generator gate.
+RSS is sampled across warm-up and measurement.
+
+| Application | Median req/s | Range req/s | p99 (ms) | Mean RSS (MiB) | Sampled peak RSS (MiB) | Gate |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| CoAkka JVM 1.1.2 | 84,469.6 | 83,894.6–84,811.5 | 0.831 | 243.47 | 249.44 | Accepted |
+| Tomcat 10.1.50 (direct servlet) | 68,051.5 | 61,803.9–73,281.2 | 1.827 | 236.64 | 260.31 | Accepted |
+| Jetty 12.1.13 | 159,186.6 | 153,993.5–160,878.5 | 0.782 | 226.86 | 243.73 | Accepted |
+| Spring WebFlux 6.2.19 + Reactor Netty 1.2.18 | — | — | — | — | — | 3/3 standard runs passed headroom. Warm-up delta 7.84%. |
+| Spring MVC 6.2.19 + Tomcat 10.1.50 | — | — | — | — | — | 3/3 standard runs passed headroom. Warm-up delta 25.88%. |
+| Undertow 2.3.26.Final | 162,458.1 | 162,065.0–162,640.4 | 0.767 | 224.91 | 233.80 | Accepted |
+| Vert.x Web 4.5.34 | — | — | — | — | — | 0/3 standard runs passed headroom. Warm-up delta 1.30%. Warm-up check was client-limited. |
+
+[View all 28 individual runs](jvm-full-runs-rpi5.md#individual-runs) · [Earlier JVM campaign](jvm-framework-runs-rpi5.md)

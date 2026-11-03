@@ -29,8 +29,8 @@ latency, RSS and peak RSS in the published summary.
 
 ## JVM framework comparison
 
-[View the individual Undertow, Vert.x and CoAkka JVM runs](jvm-framework-runs-rpi5.md)
-for the active 2-CPU comparison and archived 1-CPU evidence.
+[View the 28 runs in the current JVM campaign](jvm-full-runs-rpi5.md#individual-runs).
+The [earlier JVM campaign](jvm-framework-runs-rpi5.md) includes archived 1-CPU evidence.
 
 ## Go, Node.js, Bun and Python framework comparison
 

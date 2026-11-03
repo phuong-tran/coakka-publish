@@ -1,5 +1,7 @@
 # Bun.serve() and CoAkka Bun on Raspberry Pi 5
 
+[Measurement data and h2load output](bun-serve-evidence-rpi5.json) · [Reproduction notes](evidence-rpi5.md)
+
 [Benchmark overview](README.md) · [Methodology](benchmark-rpi5.md)
 
 Bun 1.4.2 ran on server CPU 0–1 and h2load on CPU 2–3. Both used 64
@@ -7,7 +9,7 @@ HTTP/1.1 keep-alive connections over localhost, 5 seconds of warm-up
 and 10 seconds of measurement. GET /fixed returned HTTP 200 with a
 32-byte binary response. The direct fixture uses Bun.serve with a
 fetch handler and constructs a Response per request from the fixed payload.
-CoAkka uses the public connector with the same fixture as its previous run.
+CoAkka uses the public connector and reuses one prebuilt response.
 Each lane ran three times with the order reversed in the second round.
 
 RSS is the sampled time-weighted mean over warm-up and measurement.

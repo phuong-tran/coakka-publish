@@ -1,5 +1,7 @@
 # Pi 5 framework comparison for Go, Node.js, Bun and Python
 
+[Measurement data and h2load output](framework-evidence-rpi5.json) · [Reproduction notes](evidence-rpi5.md)
+
 [Benchmark overview](README.md) · [Methodology](benchmark-rpi5.md)
 
 The server ran on CPU 0–1 and the load generator on CPU 2–3 on the same

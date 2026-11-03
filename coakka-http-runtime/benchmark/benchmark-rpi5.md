@@ -21,14 +21,14 @@ includes the five HTTP Runtime 1.1.2 connector confirmation results.
 | --- | --- | --- |
 | Native C | Explicitly configured public C host-inlined event reader | None; standalone native baseline |
 | Go | CoAkka host-inlined | Chi, Gin |
-| Kotlin/JVM | CoAkka host-inlined | Spring WebFlux, Spring MVC with Tomcat, Jetty, Undertow, Vert.x |
+| Kotlin/JVM | CoAkka host-inlined | Spring WebFlux, Spring MVC with Tomcat, Jetty, Undertow, Vert.x, Tomcat with a direct servlet |
 | Python | CoAkka host-inlined | FastAPI, Starlette; exact server stack named |
 | Node.js | CoAkka host-inlined | Express, Fastify |
 | Bun | CoAkka host-inlined | Elysia, Hono |
 
-The [JVM framework comparison](jvm-framework-runs-rpi5.md) records Undertow, Vert.x and
-CoAkka JVM runs at 2 CPU and 64 connections. Vert.x Web 4.5.34 exceeded
-the load-generator CPU ceiling in this profile.
+The [JVM framework comparison](jvm-full-runs-rpi5.md) includes direct Tomcat,
+Spring MVC on Tomcat, Jetty, WebFlux, Undertow, Vert.x and CoAkka JVM.
+The per-run record explains the admission outcome for every configuration.
 
 The [framework comparison](framework-runs-rpi5.md) covers Go, Node.js, Bun and Python.
 The [Bun.serve() paired comparison](bun-serve-runs-rpi5.md) covers Bun's built-in server.
@@ -121,6 +121,8 @@ labelling the result as a pooled percentile: report per-run percentiles or use
 compatible raw histograms.
 
 ## Acceptance And Reproduction
+
+[Campaign evidence and reproduction commands](evidence-rpi5.md)
 
 Every result needs: candidate identities, fixture/config identity, full commands,
 raw output and telemetry, timestamps, accepted/rejected status and reason.
