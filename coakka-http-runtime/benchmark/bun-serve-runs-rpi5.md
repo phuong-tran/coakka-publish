@@ -20,6 +20,11 @@ The summary uses p99 and RSS from the throughput-median run.
 | CoAkka Bun 1.1.2 | 83,623.7 | 83,469.1–83,898.6 | 1.475 | 73.66 | 75.00 |
 | `Bun.serve()` | 46,425.7 | 46,410.9–48,229.1 | 2.223 | 40.01 | 42.14 |
 
+At the throughput-median runs, CoAkka Bun used 188.5% server CPU and
+the Bun.serve() fetch fixture used 100.3%. Both had two CPUs available.
+Here 100% represents one logical CPU on average across warm-up and
+measurement.
+
 ## Individual runs
 
 | Application | Round | HTTP 200 | Req/s | p99 (ms) | Mean RSS (MiB) | Sampled peak RSS (MiB) | Start/max °C | Client max CPU | Status |

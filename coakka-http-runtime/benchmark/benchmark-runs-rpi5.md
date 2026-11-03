@@ -1,5 +1,7 @@
 # HTTP Runtime 1.1.2 Raspberry Pi 5 runs
 
+[Release measurement data](release-confirmation-evidence-rpi5.json) · [Reproduction commands](release-confirmation/README.md)
+
 This table contains all three accepted runs per host used for the
 [benchmark results](README.md). Each timed run lasted 10 seconds.
 To verify the published result, sort the three throughput values for a host

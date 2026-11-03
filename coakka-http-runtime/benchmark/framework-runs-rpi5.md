@@ -33,6 +33,13 @@ These results describe the fixed-response workload and the listed fixtures.
 | Bun | Elysia 1.4.30 | 44,384.3 | 42,287.7–45,645.7 | 2.075 | 53.28 | 55.06 |
 | Bun | Hono 4.13.7 | 42,018.5 | 40,215.5–43,785.4 | 2.312 | 49.02 | 50.38 |
 
+## Observed server CPU
+
+At the throughput-median runs, CoAkka Node.js used 186.7% CPU, Express
+109.8% and Fastify 102.3%. CoAkka Bun used 186.6%, Elysia 100.4% and
+Hono 100.6%. Every fixture had two CPUs available. Here 100% represents
+one logical CPU on average across warm-up and measurement.
+
 ## Per-run results
 
 | Host | Application | Round | HTTP 200 | Req/s | p99 (ms) | Mean RSS (MiB) | Sampled peak RSS (MiB) | Start/max °C | Client max CPU | Status |

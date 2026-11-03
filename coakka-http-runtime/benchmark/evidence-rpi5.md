@@ -4,12 +4,18 @@
 
 | Campaign | Per-run tables | Measurement data |
 | --- | --- | --- |
-| Release confirmation | [Native C and connectors](benchmark-runs-rpi5.md) | Per-run tables |
+| Release confirmation | [18 Native C and connector runs](benchmark-runs-rpi5.md) | [JSON](release-confirmation-evidence-rpi5.json) · [Reproduction](release-confirmation/README.md) |
 | Go, Node.js, Bun and Python | [36 runs](framework-runs-rpi5.md#per-run-results) | [JSON](framework-evidence-rpi5.json) |
 | Bun.serve() pair | [6 runs](bun-serve-runs-rpi5.md#individual-runs) | [JSON](bun-serve-evidence-rpi5.json) |
 | JVM | [28 runs](jvm-full-runs-rpi5.md#individual-runs) | [JSON](jvm-evidence-rpi5.json) |
 
-The JSON exports contain the recorded workload, h2load output and sampled
+The release-confirmation export includes h2load warm-up and timed output,
+thermal readings, loaded file digests, and exact latency counts in microseconds.
+These counts reproduce the published percentiles without per-request timestamps.
+RSS is the process VmRSS after load and VmHWM. This campaign did not capture
+sampled generator CPU or a time series for RSS.
+
+The comparison JSON exports contain the recorded workload, h2load output and sampled
 RSS, temperature and generator CPU. Server argument templates use placeholders
 for campaign and harness directories. The exports omit local paths, boot
 identifiers and startup logs. The JVM export includes the two warm-up

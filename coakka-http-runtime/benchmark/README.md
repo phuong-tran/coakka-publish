@@ -76,6 +76,11 @@ RSS is sampled across warm-up and measurement.
 | Bun | Elysia 1.4.30 | 44,384.3 | 42,287.7–45,645.7 | 2.075 | 53.28 | 55.06 |
 | Bun | Hono 4.13.7 | 42,018.5 | 40,215.5–43,785.4 | 2.312 | 49.02 | 50.38 |
 
+In the median runs, CoAkka Node.js and Bun used about 187% server CPU
+each. Express, Fastify, Elysia and Hono used about 100–110%. The runner
+averages server CPU across warm-up and measurement, with 100% equal to
+one logical CPU. Both comparisons gave the server two CPUs.
+
 [View all 36 individual runs](framework-runs-rpi5.md#per-run-results).
 
 ## Bun.serve() paired comparison
@@ -89,6 +94,9 @@ RSS is sampled across warm-up and measurement.
 | --- | ---: | ---: | ---: | ---: | ---: |
 | CoAkka Bun 1.1.2 | 83,623.7 | 83,469.1–83,898.6 | 1.475 | 73.66 | 75.00 |
 | `Bun.serve()` | 46,425.7 | 46,410.9–48,229.1 | 2.223 | 40.01 | 42.14 |
+
+The median CoAkka Bun run averaged 188.5% server CPU. The median
+Bun.serve() fetch run averaged 100.3%.
 
 [View all 6 individual runs](bun-serve-runs-rpi5.md#individual-runs).
 
