@@ -15,7 +15,7 @@ packages are indexed by `artifacts/public-artifacts.tsv` and the
 [compatibility matrix](../coakka-runtime/reference/compatibility-matrix.md).
 
 Package-lane installation and evidence details live in
-[Python 3.0.0](../coakka-runtime/releases/2026-10-30-pypi-python-runtime-3.0.0.md),
+[Python 3.2.1](../coakka-runtime/releases/2026-11-05-pypi-python-runtime-3.2.1.md),
 [npm Node.js, Bun and Electron 3.2.1](../coakka-runtime/releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md),
 [NuGet Runtime 3.2.1](../coakka-runtime/releases/2026-11-05-nuget-csharp-runtime-3.2.1.md), and
 [SwiftPM Runtime 3.0.0](../coakka-runtime/releases/2026-10-30-swift-runtime-3.0.0-github.md). Go consumers use the

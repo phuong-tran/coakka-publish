@@ -33,7 +33,9 @@ package train contains five libraries: Linux ARM64/x86-64 `.so`, macOS ARM64
 NuGet C# `3.2.1` includes Core `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45`, ABI 1, for five native RIDs.
 Use .NET 8 or later. See the [C# release](../releases/2026-11-05-nuget-csharp-runtime-3.2.1.md).
 
-PyPI Python is independently published at `3.0.0`, with Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` / ABI1 and five `cp311-abi3` wheels. Each contains Core plus its Python adapter. GIL-enabled CPython3.11 is the minimum; see the [release note](../releases/2026-10-30-pypi-python-runtime-3.0.0.md).
+PyPI Python `3.2.1` includes Core `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45`, ABI 1, in five
+`cp311-abi3` wheels. Use GIL-enabled CPython 3.11 or later.
+See the [release record](../releases/2026-11-05-pypi-python-runtime-3.2.1.md).
 
 Node.js, Bun and Electron Runtime `3.2.1` are available on npm with Core
 `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45`, ABI 1, and five native targets.
@@ -55,7 +57,7 @@ request does not implement ALL semantics.
 | Connector archives | `runtime/<lane>/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | npm (Node.js and Bun) | `coakka-v2-connector-{node,bun}@3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
 | npm (Electron) | `coakka-v2-connector-electron@3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` via Node `3.2.1` |
-| PyPI | `coakka-v2-connector==3.0.0` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
+| PyPI | `coakka-v2-connector==3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
 | NuGet | `CoAkka.Runtime==3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go/v3` | `v3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
@@ -124,7 +126,7 @@ All logger connector lanes below align to logger native generation
 | Channel | Available surface | Status |
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron coakka-runtime/logger packages | Runtime Node.js, Bun and Electron `3.2.1`; Logger `1.2.7` |
-| PyPI | Python coakka-runtime/logger wheels | runtime `coakka-v2-connector==3.0.0` and logger `coakka-logger==1.2.2`; registry verified |
+| PyPI | Python coakka-runtime/logger wheels | runtime `coakka-v2-connector==3.2.1` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go coakka-runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go/v3@v3.0.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift coakka-runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@3.0.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
 | NuGet | C# coakka-runtime/logger packages | runtime `CoAkka.Runtime==3.2.1` (`net8.0` minimum; fresh registry consumer verified on .NET 8), logger `CoAkka.Logger==1.2.3` (verified on .NET 8/9/10) |
@@ -148,7 +150,7 @@ Runtime PyPI package:
 
 | Surface | PyPI coordinate | Native generation |
 | --- | --- | --- |
-| Python runtime | `coakka-v2-connector==3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
+| Python runtime | `coakka-v2-connector==3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
 
 Logger PyPI package:
 
