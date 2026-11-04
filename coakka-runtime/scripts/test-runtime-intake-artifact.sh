@@ -156,6 +156,65 @@ verify_intake() {
     --expected-native-version "0.1.0+63c346e"
 }
 
+make_source_connector_package() {
+  local target="$1"
+  local lane="$2"
+  local format="$3"
+  local root="coakka-runtime-${lane}-3.2.1-source"
+  python3 -B - "${target}" "${lane}" "${format}" "${root}" <<'PY_FIXTURE'
+import io
+import json
+import sys
+import tarfile
+
+target, lane, layout, root = sys.argv[1:]
+product = f"coakka-runtime-{lane}"
+legacy_name = f"{product}-package.json"
+generic_name = "coakka-runtime-package.json"
+metadata = {"bundled_native_package_version": "0.1.0+63c346e"}
+with tarfile.open(target, "w:gz") as archive:
+    def add(name, content):
+        member = tarfile.TarInfo(f"{root}/{name}")
+        member.size = len(content)
+        archive.addfile(member, io.BytesIO(content))
+
+    add("native/macos-aarch64/libcoakka_runtime_v2.dylib", b"public binary placeholder")
+    if layout in {"legacy", "mixed"}:
+        add(legacy_name, json.dumps(metadata).encode())
+    if layout != "legacy":
+        metadata["artifact_name"] = "coakka-runtime-wrong" if layout == "wrong" else product
+        if layout == "wrong-core":
+            metadata["bundled_native_package_version"] = "0.1.0+wrong"
+        content = json.dumps(metadata).encode()
+        name = f"subdir/{generic_name}" if layout == "nested" else generic_name
+        add(name, content)
+        if layout == "duplicate":
+            add(generic_name, content)
+PY_FIXTURE
+}
+
+for lane in zig mojo; do
+  source_archive="${tmp_root}/coakka-runtime-${lane}-3.2.1-source.tar.gz"
+  for layout in generic legacy; do
+    make_source_connector_package "${source_archive}" "${lane}" "${layout}"
+    verify_intake "${lane} with ${layout} metadata" "${lane}" "${source_archive}"
+  done
+  for layout in mixed duplicate wrong nested wrong-core; do
+    make_source_connector_package "${source_archive}" "${lane}" "${layout}"
+    expect_failure \
+      "${lane} with ${layout} metadata" \
+      "${repo_root}/coakka-runtime/scripts/verify-runtime-intake-artifact.py" \
+      --lane "${lane}" --artifact "${source_archive}" --expected-native-version "0.1.0+63c346e"
+    case "${layout}" in
+      mixed|duplicate) diagnostic="must contain exactly one" ;;
+      wrong) diagnostic="package metadata must identify coakka-runtime-${lane}" ;;
+      nested) diagnostic="package metadata must be a regular file at the archive root" ;;
+      wrong-core) diagnostic="expected '0.1.0+63c346e'" ;;
+    esac
+    grep -Fq "${diagnostic}" "${test_output}"
+  done
+done
+
 good_jvm="${tmp_root}/coakka-jvm-native-runtime-v2-0.1.0.jar"
 make_jvm_jar "${good_jvm}" "0.1.0+63c346e" "public runtime binary placeholder"
 verify_intake "clean JVM jar" jvm "${good_jvm}"

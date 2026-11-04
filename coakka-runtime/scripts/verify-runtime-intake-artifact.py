@@ -291,12 +291,46 @@ def source_connector_native_version(artifact: Path, metadata_name: str) -> tuple
     return str(metadata.get("bundled_native_package_version", "")), entries
 
 
+def versioned_source_native_version(artifact: Path, lane: str) -> tuple[str, list[str]]:
+    product = f"coakka-runtime-{lane}"
+    legacy_name = f"{product}-package.json"
+    generic_name = "coakka-runtime-package.json"
+    with tarfile.open(artifact, "r:gz") as archive:
+        members = archive.getmembers()
+        matches = []
+        for member in members:
+            parts = path_components(member.name)
+            if parts and parts[-1] in {legacy_name, generic_name}:
+                matches.append((member, parts))
+        if len(matches) != 1:
+            fail(f"{artifact.name} must contain exactly one {product} package metadata entry")
+        member, parts = matches[0]
+        if (not member.isfile() or len(parts) != 2 or parts[0] == ".."
+                or member.name != "/".join(parts)):
+            fail(f"{artifact.name} package metadata must be a regular file at the archive root")
+        if not 0 < member.size <= 65_536:
+            fail(f"{artifact.name} package metadata size is invalid")
+        stream = archive.extractfile(member)
+        if stream is None:
+            fail(f"{artifact.name} package metadata is unreadable")
+        try:
+            with stream:
+                metadata = json.load(stream)
+        except (ValueError, RecursionError):
+            fail(f"{artifact.name} package metadata is invalid JSON")
+    if not isinstance(metadata, dict):
+        fail(f"{artifact.name} package metadata must be a JSON object")
+    if parts[-1] == generic_name and metadata.get("artifact_name") != product:
+        fail(f"{artifact.name} package metadata must identify {product}")
+    return str(metadata.get("bundled_native_package_version", "")), [member.name for member in members]
+
+
 def mojo_native_version(artifact: Path) -> tuple[str, list[str]]:
-    return source_connector_native_version(artifact, "coakka-runtime-mojo-package.json")
+    return versioned_source_native_version(artifact, "mojo")
 
 
 def zig_native_version(artifact: Path) -> tuple[str, list[str]]:
-    return source_connector_native_version(artifact, "coakka-runtime-zig-package.json")
+    return versioned_source_native_version(artifact, "zig")
 
 
 def tauri_native_version(artifact: Path) -> tuple[str, list[str]]:
