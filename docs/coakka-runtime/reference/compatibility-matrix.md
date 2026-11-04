@@ -59,7 +59,7 @@ request does not implement ALL semantics.
 | npm (Electron) | `coakka-v2-connector-electron@3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` via Node `3.2.1` |
 | PyPI | `coakka-v2-connector==3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
 | NuGet | `CoAkka.Runtime==3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
-| Go module | `github.com/phuong-tran/coakka-runtime-go/v3` | `v3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
+| Go module | `github.com/phuong-tran/coakka-runtime-go/v3` | `v3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
 | SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 
 The artifact mirror is complete independently of npm, PyPI, and NuGet. Exact
@@ -127,7 +127,7 @@ All logger connector lanes below align to logger native generation
 | --- | --- | --- |
 | npm | Node.js, Bun, and Electron coakka-runtime/logger packages | Runtime Node.js, Bun and Electron `3.2.1`; Logger `1.2.7` |
 | PyPI | Python coakka-runtime/logger wheels | runtime `coakka-v2-connector==3.2.1` and logger `coakka-logger==1.2.2`; registry verified |
-| Go modules | Go coakka-runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go/v3@v3.0.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
+| Go modules | Go coakka-runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go/v3@v3.2.1`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift coakka-runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@3.0.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
 | NuGet | C# coakka-runtime/logger packages | runtime `CoAkka.Runtime==3.2.1` (`net8.0` minimum; fresh registry consumer verified on .NET 8), logger `CoAkka.Logger==1.2.3` (verified on .NET 8/9/10) |
 
@@ -185,7 +185,7 @@ Consumer-facing downloads are listed in
 [`artifacts/public-artifacts.tsv`](../../../artifacts/public-artifacts.tsv) and are
 verified by checksum before public sample use.
 
-Go 3.0.0 is [released on GitHub](../releases/2026-10-30-go-runtime-3.0.0-github.md). It requires the `/v3` import path and C11 cgo; Go 1.22.12 is the floor on four targets, with Go 1.25.5 for native Windows ARM64. Its five native images are included in the module.
+Go 3.2.1 is [released on GitHub](../releases/2026-11-05-go-runtime-3.2.1-github.md) with Core 3.2. It requires the `/v3` import path and C11 cgo; Go 1.22.12 is the floor on four targets, with Go 1.25.5 for native Windows ARM64. Its five native images are included in the module.
 
 Swift 3.0.0 is [released on GitHub](../releases/2026-10-30-swift-runtime-3.0.0-github.md). It carries all five native images; only Windows ARM64 has preview scope. Supported compiler profiles remain Apple Swift 6.2/macOS and Swift 6.0.3/Linux/Windows x64, with manifest/language floor 6.0.
 
