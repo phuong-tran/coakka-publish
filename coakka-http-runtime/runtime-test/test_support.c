@@ -85,9 +85,14 @@ int test_service_open(test_service_t *owner,
 }
 
 int test_release(test_service_t *owner) {
-  if (!owner->lease_live) return 1;
+  if (!owner->lease_live) {
+    return 1;
+  }
   if (coakka_http_host_release_request(owner->service, &owner->event) !=
-      COAKKA_HTTP_HOST_OK) return 0;
+      COAKKA_HTTP_HOST_OK) {
+    /* Keep the lease recorded if the SDK refuses to release it. */
+    return 0;
+  }
   owner->lease_live = 0;
   return 1;
 }

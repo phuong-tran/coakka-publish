@@ -76,7 +76,7 @@ together; do not mix the earlier callback SDK with the focused host SDK.
 The current focused host contract is ABI10; a product version and an ABI
 revision are separate identifiers.
 
-The [public native tests](../runtime-test/README.md) exercise the installed
+The [coakka-http-runtime-test](../runtime-test/README.md) exercise the installed
 contract with real loopback I/O, borrowing, pressure, correlation, routing,
 streams, concurrency and execution facts. They are reviewable consumer source,
 not runtime implementation source. Product qualification separately covers

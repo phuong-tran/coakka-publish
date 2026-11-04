@@ -7,6 +7,10 @@ HTTP delivery, limits and shutdown.
 
 [HTTP documentation](../docs/coakka-http-runtime/README.md) · [Pi 5 benchmark](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md)
 
+**[coakka-http-runtime-test](runtime-test/)** — read and run the public C and C++
+tests against the SDK you install. See how the tests check that requests
+stay with the right service, resources are released, and failures are handled.
+
 ## Version 2.0.1
 
 [Run your first request](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md) · [Native C and C++ SDK](native/releases/2.0.1/)

@@ -103,9 +103,9 @@ and remove the demo directory when finished.
 
 ## Build and test against the native SDK
 
-Install CMake and a matching Apple compiler and linker. From a checkout of
-[coakka-samples](https://github.com/phuong-tran/coakka-samples), set
-`PUBLISH` to the absolute path of your publish checkout. Use a fresh build
+Install CMake and a matching Apple compiler and linker. Set `PUBLISH`
+to the absolute path of your `coakka-publish` checkout. The test source is
+in that checkout. Use a fresh build
 directory on a writable volume. The archive filename below is the one listed
 in the [2.0.1 SDK downloads](../native/releases/2.0.1/).
 
@@ -116,7 +116,7 @@ SDK_ARCHIVE=coakka-http-runtime-native-2.0.1-macos-aarch64.tar.gz
 (cd "$SDK_ARCHIVES" && grep "  $SDK_ARCHIVE\$" SHA256SUMS | shasum -a 256 -c)
 mkdir -p "$BUILD_ROOT/sdk"
 tar -xzf "$SDK_ARCHIVES/$SDK_ARCHIVE" -C "$BUILD_ROOT/sdk"
-cmake -S coakka-http-runtime/runtime-test -B "$BUILD_ROOT/http-tests" \
+cmake -S "$PUBLISH/coakka-http-runtime/runtime-test" -B "$BUILD_ROOT/http-tests" \
   -DCMAKE_PREFIX_PATH="$BUILD_ROOT/sdk" \
   -DCMAKE_OSX_SYSROOT="$(xcrun --sdk macosx --show-sdk-path)" \
   -DCMAKE_BUILD_TYPE=Release

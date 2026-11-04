@@ -14,8 +14,10 @@ int main() {
   std::uint32_t failed = COAKKA_HTTP_HOST_FAILED_INDEX_NONE;
   coakka_http_host_configuration_init(&config);
   bool ok = coakka_http_host_abi_version() == COAKKA_HTTP_HOST_ABI_VERSION;
-  if (ok) ok = coakka_http_host_service_create(&config, nullptr, 0U, &service,
-                                               &failed) == COAKKA_HTTP_HOST_OK;
+  if (ok) {
+    ok = coakka_http_host_service_create(&config, nullptr, 0U, &service,
+                                        &failed) == COAKKA_HTTP_HOST_OK;
+  }
   if (ok) {
     coakka_http_host_limits_init(&effective);
     ok = coakka_http_host_service_limits(service, &effective) == COAKKA_HTTP_HOST_OK &&

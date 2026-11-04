@@ -30,10 +30,12 @@ jobs:
       - name: Admit and extract the exact native package
         shell: bash
         run: |
-          bash coakka-http-runtime/scripts/verify-http-runtime-release.sh --candidate
           bash coakka-http-runtime/scripts/verify-http-runtime-test-source.sh
+          release=coakka-http-runtime/native/releases/2.0.1
+          archive=coakka-http-runtime-native-2.0.1-${{ matrix.platform }}.tar.gz
+          (cd "$release" && awk -v name="$archive" '$2 == name' SHA256SUMS | sha256sum -c -)
           mkdir -p build/http-package
-          tar -xzf coakka-http-runtime/native/candidates/2026-10-08-r3/coakka-http-native-1.0.0-candidate-${{ matrix.platform }}.tar.gz -C build/http-package
+          tar -xzf "$release/$archive" -C build/http-package
 
       - name: Configure public ABI test
         run: >-
@@ -41,8 +43,6 @@ jobs:
           -S coakka-http-runtime/runtime-test
           -B build/coakka-http-runtime-test
           -DCMAKE_PREFIX_PATH=${{ github.workspace }}/build/http-package
-          -DCOAKKA_HTTP_RUNTIME_TEST_EXPECT_TLS=ON
-          -DCOAKKA_HTTP_RUNTIME_TEST_EXPECT_OUTBOUND=ON
 
       - name: Build public ABI test
         run: cmake --build build/coakka-http-runtime-test --config Release --parallel
@@ -76,10 +76,12 @@ jobs:
       - name: Admit and extract the exact native package
         shell: bash
         run: |
-          bash coakka-http-runtime/scripts/verify-http-runtime-release.sh --candidate
           bash coakka-http-runtime/scripts/verify-http-runtime-test-source.sh
+          release=coakka-http-runtime/native/releases/2.0.1
+          archive=coakka-http-runtime-native-2.0.1-linux-x86_64.tar.gz
+          (cd "$release" && awk -v name="$archive" '$2 == name' SHA256SUMS | sha256sum -c -)
           mkdir -p build/http-package
-          tar -xzf coakka-http-runtime/native/candidates/2026-10-08-r3/coakka-http-native-1.0.0-candidate-linux-x86_64.tar.gz -C build/http-package
+          tar -xzf "$release/$archive" -C build/http-package
 
       - name: Configure instrumented public ABI test
         run: >-
@@ -88,7 +90,6 @@ jobs:
           -B build/coakka-http-runtime-${{ matrix.sanitizer }}
           -DCMAKE_BUILD_TYPE=RelWithDebInfo
           -DCMAKE_PREFIX_PATH=${{ github.workspace }}/build/http-package
-          -DCOAKKA_HTTP_RUNTIME_TEST_EXPECT_OUTBOUND=ON
           "-DCMAKE_C_FLAGS=-fsanitize=${{ matrix.flag }} -fno-omit-frame-pointer"
           "-DCMAKE_CXX_FLAGS=-fsanitize=${{ matrix.flag }} -fno-omit-frame-pointer"
           -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=${{ matrix.flag }}

@@ -78,7 +78,7 @@ requests, monitor reads, handler replacement and route publication. Their
 security examples configure TLS/mTLS. These features do not inherently require
 abandoning the idiomatic service builder for a manual event pump.
 
-The public native contract tests exercise loopback requests, event ownership,
+The [public SDK tests](../../../coakka-http-runtime/runtime-test/) exercise loopback requests, event ownership,
 pressure, routing, streams, outbound calls, concurrency and execution facts
 through the focused SDK. The older callback samples use their own pinned SDK.
 Use the feature index to match each example to its SDK and test evidence.

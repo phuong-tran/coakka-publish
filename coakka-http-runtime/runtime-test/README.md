@@ -1,16 +1,23 @@
-# CoAkka HTTP Runtime native contract tests
+# coakka-http-runtime-test
 
-This is reviewable consumer test source, not the runtime implementation. It
-consumes only the installed `<coakka/http/host.h>` contract and the relocatable
-`CoAkkaHttp::host` CMake target. C11 and C++20 callers use the same C ABI.
-SDK 2.0.1 uses public C ABI 10. Do not combine headers, metadata or a library
-from different packages. Older archive receipts describe their own contracts.
+Read and run the public tests against the HTTP Runtime SDK you install.
+The tests check how the SDK handles real requests, refuses invalid operations,
+and releases resources when work ends or a service stops.
+
+To review the code, start with [request ownership](host_ownership.c),
+[behavior at capacity](host_pressure.c), and the [C++ caller](host_cpp_header.cc).
+The [shared test helpers](test_support.c) show how the tests release borrowed
+data and handle a failed close.
+
+The suite uses the public C interface from `<coakka/http/host.h>`.
+The default SDK is `2.0.1`, with C ABI 10.
 
 ## Build and run
 
 For the macOS ARM64 SDK download and toolchain setup, see the [tested build steps](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/inspect/walkthrough.md#build-and-test-against-the-native-sdk).
 
-Verify and extract the [2.0.1 native SDK for your host](https://github.com/phuong-tran/coakka-publish/tree/main/coakka-http-runtime/native/releases/2.0.1/), then run:
+From the root of your `coakka-publish` checkout, verify and extract the
+[2.0.1 SDK for your host](../native/releases/2.0.1/), then run:
 
 ```sh
 cmake -S coakka-http-runtime/runtime-test -B build/http-tests \
@@ -95,22 +102,11 @@ Clang users may enable `COAKKA_HTTP_TEST_FUZZ=ON` and run
 and artifact directory. This targets the fixture's narrow wire assertion; it
 is not product parser fuzz evidence.
 
-## Evidence boundaries
+## What a pass tells you
 
-This self-contained suite exercises HTTP/1.1. Product qualification separately
-owns TLS/mTLS, HTTP/2, HTTP/3, static files, monitoring, fault injection, stress,
-soak, artifact/export/dependency checks and instrumented runtime builds. Removing
-obsolete SDK callers does not transfer their historical evidence to this suite.
-A passing test does not claim complete capability coverage or release readiness.
+These tests check the behaviors listed above through the installed package.
+They are one part of release verification. They do not measure performance
+or establish that every use of the SDK is safe.
 
-The required matching lanes are physical macOS ARM64, physical Raspberry Pi5
-Linux ARM64, Linux x86_64, physical Windows x86_64, and Windows WSL2. Windows
-ARM64 through UTM has a bounded correctness/compatibility lane. WSL consumes
-the Linux x86_64 image, so there are five native artifacts. Comparative
-throughput/latency is measured only on Pi5 with declared identity, thermal and
-throttling admission. This harness is not a benchmark.
-
-Common documentation is authored in `coakkaCoreNativeDev/public-docs` and
-projected one way. Reviewed test code is owned by the HTTP Runtime repository;
-its projector preserves the separately owned README and refuses unauthenticated
-replacement or deletion of an older projected source file.
+Run `bash coakka-http-runtime/scripts/verify-http-runtime-test-source.sh` from
+the repository root to check that the test files match their recorded checksums.
