@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "product": "coakka-runtime-android",
+  "version": "3.2.1",
+  "release_status": "preview",
+  "distribution": "standalone_aar",
+  "archive": "coakka-runtime-android-3.2.1.aar",
+  "bytes": 3007524,
+  "sha256": "1ce5d292305988b506f388ee5561b7b6f446ed80205e365c3cc9d56f417fb3df",
+  "core_generation": "3.2",
+  "core_source_commit": "f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
+  "connector_source_commit": "ecf7785da1f05cf8ae40b875d16cefadf97d8281",
+  "core_abi": 1,
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+  ],
+  "min_android_api": 24,
+  "min_compile_sdk": "36.1",
+  "emulator_qualification": [
+    {
+      "api": 24,
+      "abi": "x86_64",
+      "result": "installed_pass",
+      "lifecycle_cycles": 613,
+      "elapsed_ms": 180912
+    },
+    {
+      "api": 36,
+      "abi": "arm64-v8a",
+      "result": "installed_pass",
+      "lifecycle_cycles": 477,
+      "elapsed_ms": 180515
+    },
+    {
+      "api": 24,
+      "abi": "arm64-v8a",
+      "result": "blocked_before_apk_install",
+      "detail": "emulator kernel panic"
+    }
+  ],
+  "static_only_abis": [
+    "armeabi-v7a",
+    "x86"
+  ]
+}
