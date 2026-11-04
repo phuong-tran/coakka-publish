@@ -3,6 +3,8 @@
 `coakka-tools` hosts the published artifacts for companion tools. For Runtime,
 choose a terminal workflow or a browser workflow:
 
+Native downloads: [coakka-client 3.2.1](https://github.com/phuong-tran/coakka-publish/tree/86aa17f3d2af26bfd0faee3c02fbd9e82750592e/coakka-tools/coakka-client/releases/3.2.1%2Bf9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45) · [coakka-runtime-inspect 3.2.1](https://github.com/phuong-tran/coakka-publish/tree/86aa17f3d2af26bfd0faee3c02fbd9e82750592e/coakka-tools/coakka-runtime-inspect/releases/3.2.1%2Bf9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45).
+
 | Product name | Purpose | Guide |
 | --- | --- | --- |
 | **CoAkka Runtime Client** — `coakka-runtime-client` | Try Runtime requests from a terminal or script. | [Client guide](../docs/coakka-runtime/operations/coakka-runtime-client.md) |

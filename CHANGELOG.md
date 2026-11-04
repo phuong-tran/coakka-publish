@@ -7,6 +7,9 @@ remain under [docs/coakka-runtime/releases/](docs/coakka-runtime/releases/README
 
 Cataloged the published Runtime 3.2.1 packages for Maven Central, npm, PyPI, NuGet, Go and Swift. The [Runtime changelog](docs/coakka-runtime/CHANGELOG.md) links to the verification records.
 
+Published Client and Inspect 3.2.1 with Core 3.2. Each tool has five native
+archives with verified SHA-256 downloads. [Release record](docs/coakka-runtime/releases/2026-11-05-runtime-tools-3.2.1.md)
+
 ## HTTP Runtime 2.0.1 — 2026-11-04
 
 - Published native SDK `2.0.1` (Core `2.0`, C ABI 10) and the matching
