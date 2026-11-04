@@ -11,7 +11,7 @@ The current public release surface contains:
 - runtime v2 public C ABI files under `include/` and `native/`
 - runtime v2 native C ABI archive under `runtime/native/releases/`
 - runtime connector packages under `runtime/{jvm,python,node,bun,electron,go,csharp,rust}/releases/`
-- runtime source connector packages under `runtime/{mojo,zig,tauri}/releases/`
+- runtime source connector packages under `coakka-runtime/{zig,mojo}/releases/` and historical lanes under `runtime/{mojo,zig,tauri}/releases/`
 - independently versioned optional runtime addons under
   `runtime-addons/<addon>/native/releases/` once a verified archive is present
   in the root public artifact manifest
@@ -38,7 +38,7 @@ Consumer-facing package downloads are listed in
 manifest so sample metadata and publish contents do not drift silently. The
 manifest is intentionally limited to the current public release surface:
 `logger/*/releases/*`, `runtime/*/releases/*`,
-`coakka-runtime/android/releases/*`, `coakka-tools/*/releases/*`,
+`coakka-runtime/{android,zig,mojo}/releases/*`, `coakka-tools/*/releases/*`,
 `coakka-tools/*/*/releases/*`, `runtime-addons/*/native/releases/*/*`, and
 selected Maven jars under `maven/coakka/`.
 Older `cli/releases/`, `demo/coakka-client/releases/`, and
@@ -236,9 +236,10 @@ generation, native source commit, clean-source state, and included Android ABIs
 in `assets/coakka/runtime-package.json`. Every declared ABI must contain both
 `libcoakka_runtime_v2.so` and the thin `libcoakka_android_jni.so` bridge.
 
-Mojo and Zig are currently published as source connector packages with bundled
-native runtime libraries. They are public source packages, not package-manager
-releases yet.
+Zig 3.2.1 and Mojo 3.2.1 preview are source archives with bundled Core 3.2
+libraries. The manifests distinguish the bundled native targets from the
+hosts exercised with the language toolchain. Mojo preview covers macOS ARM64
+and Raspberry Pi 5 Linux ARM64.
 
 For native C/C++ packages:
 

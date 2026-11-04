@@ -14,6 +14,10 @@ Published the standalone Android 3.2.1 preview AAR with Core 3.2 and four
 Android ABIs. The [preview record](docs/coakka-runtime/releases/2026-11-05-android-runtime-3.2.1-preview.md)
 lists the SHA-256 and the exact emulator coverage.
 
+Published Zig 3.2.1 and Mojo 3.2.1 preview source archives with Core 3.2.
+The [release record](docs/coakka-runtime/releases/2026-11-05-zig-mojo-runtime-3.2.1-source.md)
+lists verified SHA-256 downloads and the executed hosts.
+
 ## HTTP Runtime 2.0.1 — 2026-11-04
 
 - Published native SDK `2.0.1` (Core `2.0`, C ABI 10) and the matching
