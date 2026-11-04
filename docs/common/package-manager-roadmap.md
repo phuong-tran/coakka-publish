@@ -19,7 +19,7 @@ Package-lane installation and evidence details live in
 [npm Node.js, Bun and Electron 3.2.1](../coakka-runtime/releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md),
 [Go Runtime 3.2.1](../coakka-runtime/releases/2026-11-05-go-runtime-3.2.1-github.md),
 [NuGet Runtime 3.2.1](../coakka-runtime/releases/2026-11-05-nuget-csharp-runtime-3.2.1.md), and
-[SwiftPM Runtime 3.0.0](../coakka-runtime/releases/2026-10-30-swift-runtime-3.0.0-github.md). Go consumers use the
+[SwiftPM Runtime 3.2.1](../coakka-runtime/releases/2026-11-05-swift-runtime-3.2.1-github.md). Go consumers use the
 [`coakka-runtime-go` README](https://github.com/phuong-tran/coakka-runtime-go)
 and its versioned `CONSUMING.md`.
 

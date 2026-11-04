@@ -54,7 +54,7 @@ coordinates, or the catalogs below when choosing an archive.
 
 The [published package ledger](../docs/common/current-packages.md) owns exact
 versions and coordinates. **C# `CoAkka.Runtime 3.2.1` is available on NuGet**
-and **[Python `coakka-v2-connector==3.2.1` on PyPI](../docs/coakka-runtime/releases/2026-11-05-pypi-python-runtime-3.2.1.md)**. **[Node.js, Bun and Electron 3.2.1 are available on npm](../docs/coakka-runtime/releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md).** **[Go 3.2.1 is available on GitHub](../docs/coakka-runtime/releases/2026-11-05-go-runtime-3.2.1-github.md)**. **Swift 3.0.0 is released on GitHub**. **JVM Runtime, Spring Boot and Quarkus 3.0.0 are published on Maven Central**.
+and **[Python `coakka-v2-connector==3.2.1` on PyPI](../docs/coakka-runtime/releases/2026-11-05-pypi-python-runtime-3.2.1.md)**. **[Node.js, Bun and Electron 3.2.1 are available on npm](../docs/coakka-runtime/releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md).** **[Go 3.2.1 is available on GitHub](../docs/coakka-runtime/releases/2026-11-05-go-runtime-3.2.1-github.md)**. **[Swift 3.2.1 is available on GitHub](../docs/coakka-runtime/releases/2026-11-05-swift-runtime-3.2.1-github.md)**. **JVM Runtime, Spring Boot and Quarkus 3.0.0 are published on Maven Central**.
 Other Runtime 3.0.0 lanes remain local candidates until their own publication. Follow the ledger for the particular language you use.
 
 | Application | Distribution and installation reference |
