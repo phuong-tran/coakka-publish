@@ -3,6 +3,10 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/coakka-runtime/releases/](docs/coakka-runtime/releases/README.md).
 
+## Runtime 3.2.1 — 2026-11-05
+
+Cataloged the published Runtime 3.2.1 packages for Maven Central, npm, PyPI, NuGet, Go and Swift. The [Runtime changelog](docs/coakka-runtime/CHANGELOG.md) links to the verification records.
+
 ## HTTP Runtime 2.0.1 — 2026-11-04
 
 - Published native SDK `2.0.1` (Core `2.0`, C ABI 10) and the matching

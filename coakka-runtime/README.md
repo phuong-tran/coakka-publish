@@ -29,7 +29,7 @@ those guides rather than applying one package's support scope to another.
 
 ## Start in your language
 
-Choose one **published 3.0.0** example. Its guide gives installation, a run
+Choose one published first-run example. Its guide gives installation, a run
 command, expected output and the application source, including how to close it.
 
 | Your application | Runnable example |
@@ -54,20 +54,20 @@ coordinates, or the catalogs below when choosing an archive.
 
 The [published package ledger](../docs/common/current-packages.md) owns exact
 versions and coordinates. **C# `CoAkka.Runtime 3.2.1` is available on NuGet**
-and **[Python `coakka-v2-connector==3.2.1` on PyPI](../docs/coakka-runtime/releases/2026-11-05-pypi-python-runtime-3.2.1.md)**. **[Node.js, Bun and Electron 3.2.1 are available on npm](../docs/coakka-runtime/releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md).** **[Go 3.2.1 is available on GitHub](../docs/coakka-runtime/releases/2026-11-05-go-runtime-3.2.1-github.md)**. **[Swift 3.2.1 is available on GitHub](../docs/coakka-runtime/releases/2026-11-05-swift-runtime-3.2.1-github.md)**. **JVM Runtime, Spring Boot and Quarkus 3.0.0 are published on Maven Central**.
-Other Runtime 3.0.0 lanes remain local candidates until their own publication. Follow the ledger for the particular language you use.
+and **[Python `coakka-v2-connector==3.2.1` on PyPI](../docs/coakka-runtime/releases/2026-11-05-pypi-python-runtime-3.2.1.md)**. **[Node.js, Bun and Electron 3.2.1 are available on npm](../docs/coakka-runtime/releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md).** **[Go 3.2.1 is available on GitHub](../docs/coakka-runtime/releases/2026-11-05-go-runtime-3.2.1-github.md)**. **[Swift 3.2.1 is available on GitHub](../docs/coakka-runtime/releases/2026-11-05-swift-runtime-3.2.1-github.md)**. **[JVM Runtime, Spring Boot and Quarkus 3.2.1 are published on Maven Central](../docs/coakka-runtime/releases/2026-11-05-jvm-spring-quarkus-runtime-3.2.1-maven-central.md)**.
+The package ledger records the available version for each language and tool.
 
 | Application | Distribution and installation reference |
 | --- | --- |
 | Node.js, Bun, Electron | [npm coordinates and versions](../docs/common/current-packages.md) |
 | Python | [PyPI coordinate and version](../docs/common/current-packages.md) |
 | C# | [NuGet coordinate and version](../docs/common/current-packages.md) |
-| Kotlin / Java, Spring Boot, Quarkus | [Maven Central 3.0.0](../docs/coakka-runtime/releases/2026-10-30-jvm-spring-quarkus-runtime-3.0.0-maven-central.md) |
+| Kotlin / Java, Spring Boot, Quarkus | [Maven Central 3.2.1](../docs/coakka-runtime/releases/2026-11-05-jvm-spring-quarkus-runtime-3.2.1-maven-central.md) |
 | Go / Swift | [Go modules and SwiftPM](../docs/common/current-packages.md) |
 | C/C++ or source/archive consumers | [Native archive catalog](../runtime/native/README.md) and [connector coordinates](../docs/common/current-packages.md) |
 
 [Run the matching published example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/README.md)
-when trying a package. That page separates released samples from the 3.0.0 candidates.
+when trying a package. That page separates released samples from local candidates.
 
 ## Candidate and platform scope
 
@@ -115,4 +115,4 @@ For configuration and operation, start with [Runtime documentation](../docs/coak
 [Release history](../docs/coakka-runtime/releases/README.md) records older identities.
 [Choose another product](../README.md).
 
-Read the [Runtime 3.0.0 changelog](../docs/coakka-runtime/CHANGELOG.md) before upgrading older application code.
+Read the [Runtime changelog](../docs/coakka-runtime/CHANGELOG.md) before upgrading older application code.

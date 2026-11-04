@@ -3,7 +3,7 @@
 `coakka-client` is the command-line runtime client for CoAkka Runtime. It is
 used for diagnostics, request/reply probes, and sample walkthroughs.
 
-Current native CLI archives are under `releases/`.
+The current public 2.5.1 native CLI archives are under `releases/`.
 Current Docker demo bundles are under `docker-demo/releases/`.
 
 Use `artifacts/public-artifacts.tsv` at the repository root for the current

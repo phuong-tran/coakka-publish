@@ -10,7 +10,7 @@ its native runtime generation.
 See the [current package ledger](current-packages.md) for all current
 registry coordinates and exact installation versions.
 
-JVM, Spring Boot and Quarkus3.0.0 are available from Maven Central. The checked-in Maven layout remains a historical archive. Native archives and source-first connector
+JVM, Spring Boot and Quarkus 3.2.1 are available from Maven Central. The checked-in Maven layout remains a historical archive. Native archives and source-first connector
 packages are indexed by `artifacts/public-artifacts.tsv` and the
 [compatibility matrix](../coakka-runtime/reference/compatibility-matrix.md).
 

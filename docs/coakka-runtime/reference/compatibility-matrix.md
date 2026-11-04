@@ -50,10 +50,10 @@ request does not implement ALL semantics.
 | Surface | Public artifact or coordinate | Public generation | Native generation |
 | --- | --- | --- | --- |
 | Native C ABI | `runtime/native/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be/coakka-runtime-native-v2-2.5.1.tar.gz` | `2.5.1` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
-| JVM runtime | `io.github.phuong-tran.coakka:runtime` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
-| Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `3.0.0` | Runtime `3.0.0` / Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
-| Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `3.0.0` | Runtime `3.0.0` / Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
-| JVM signed public tree | `https://repo1.maven.org/maven2/io/github/phuong-tran/coakka/runtime/3.0.0/` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
+| JVM runtime | `io.github.phuong-tran.coakka:runtime` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
+| Spring Boot adapter | `io.github.phuong-tran.coakka:spring-boot-starter` | `3.2.1` | Runtime `3.2.1` / Core `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
+| Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `3.2.1` | Runtime `3.2.1` / Core `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
+| JVM signed public tree | `https://repo1.maven.org/maven2/io/github/phuong-tran/coakka/runtime/3.2.1/` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
 | Connector archives | `runtime/<lane>/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
 | npm (Node.js and Bun) | `coakka-v2-connector-{node,bun}@3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
 | npm (Electron) | `coakka-v2-connector-electron@3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` via Node `3.2.1` |
@@ -189,4 +189,4 @@ Go 3.2.1 is [released on GitHub](../releases/2026-11-05-go-runtime-3.2.1-github.
 
 Swift 3.2.1 is [released on GitHub](../releases/2026-11-05-swift-runtime-3.2.1-github.md) with Core 3.2. It carries all five native images; only Windows ARM64 has preview scope. Supported compiler profiles remain Apple Swift 6.2/macOS and Swift 6.0.3/Linux/Windows x64, with manifest/language floor 6.0.
 
-Maven Runtime, Spring Boot and Quarkus3.0.0 are [published together](../releases/2026-10-30-jvm-spring-quarkus-runtime-3.0.0-maven-central.md). Plain JVM remains Java 8; framework apps use Java 17. Native Windows ARM64 requires ARM64 JDK11+.
+Maven Runtime, Spring Boot and Quarkus3.2.1 are [published together](../releases/2026-11-05-jvm-spring-quarkus-runtime-3.2.1-maven-central.md). Plain JVM remains Java 8; framework apps use Java 17. Native Windows ARM64 requires ARM64 JDK11+.
