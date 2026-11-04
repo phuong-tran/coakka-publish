@@ -1,6 +1,10 @@
 # HTTP Runtime 1.1.2 on Raspberry Pi 5
 
-These are historical measurements from HTTP Runtime 1.1.2. A Raspberry Pi 5 run for 2.0.1 is pending.
+**Version note.** The numbers on this page were measured with HTTP Runtime
+`1.1.2`, now deprecated for new installs. The hostname and IP fix in `2.0.1`
+applies to outbound connections. This workload exercises inbound server
+handling, which the fix does not change. The `2.0.1` baseline is deferred.
+[Release notes](../docs/release-2.0.1.md)
 
 The Pi 5 server used CPU 0–1 and the load generator used CPU 2–3.
 All campaigns below used 64 HTTP/1.1 keep-alive connections over localhost

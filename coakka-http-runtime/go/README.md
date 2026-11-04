@@ -241,7 +241,7 @@ that has fetched the module. Use `Builder` for the Go service API or `Runtime`
 for the lower-level pull API.
 
 - [URL grammar and glossary](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/glossary.md)
-- [Go v1.1.2 sample and feature recipes](https://github.com/phuong-tran/coakka-samples/blob/7fab741dec51b2d8c156f653cdbe8442c56f2704/docs/coakka-http-runtime/go/integration.md)
+- [Archived 1.0.0 feature recipes](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/go/integration.md#4-try-the-http-features)
 
 ## Response compression
 

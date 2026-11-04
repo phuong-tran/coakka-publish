@@ -1,6 +1,7 @@
 # Raspberry Pi 5 Benchmark Methodology
 
-This page describes the previous benchmark campaign. Its published results were measured with HTTP Runtime 1.1.2; 2.0.1 has not been measured here yet.
+This methodology describes the published HTTP Runtime `1.1.2` measurements.
+See the [benchmark version note](README.md) for the `2.0.1` fix and measurement status.
 
 ## Contents
 

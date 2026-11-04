@@ -12,6 +12,10 @@ HTTP authority, and TLS peer identity retain their separate roles. The fix
 also keeps resolved address overrides scoped to the connection that needs
 them.
 
+HTTP Runtime `1.1.2` is deprecated for new installs. The published
+[Pi 5 measurements](../benchmark/README.md) describe `1.1.2` inbound server
+handling. The `2.0.1` fix applies to outbound connections.
+
 Choose the guide for your application.
 
 - [Go](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/go/README.md)

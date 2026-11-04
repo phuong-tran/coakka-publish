@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Admit exact HTTP native candidate archives without implying release approval.
+"""Verify the archived HTTP Runtime 1.0.0 native candidate.
 
 Pins are independent of the candidate's manifest. No archive is extracted and
 no private source is required. Candidate admission is not branch-merge or
@@ -101,7 +101,7 @@ def verify_members(archive, target):
 
 def verify_candidate(product):
     root = product / "native/candidates" / CANDIDATE
-    require(not (product / "native/releases").exists(), "obsolete native assembly remains")
+    # Released SDKs can coexist with this separately pinned candidate.
     for path in product.rglob("*"):
         name = path.name.lower().replace("_", "-")
         require("third-party" not in name and "thirdparty" not in name,

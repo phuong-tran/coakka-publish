@@ -124,7 +124,7 @@ cmake --build "$BUILD_ROOT/http-tests" --config Release --parallel
 ctest --test-dir "$BUILD_ROOT/http-tests" -C Release --output-on-failure
 ```
 
-The macOS ARM64 run passed **13/13 tests** against SDK 2.0.1.
+The macOS ARM64 run passed **14/14 default tests** against SDK 2.0.1.
 If CMake reports a linker error about the macOS SDK, confirm that `xcode-select -p`
 and `xcrun --sdk macosx --show-sdk-path` refer to the same toolchain, then configure
 in a fresh build directory.

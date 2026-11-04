@@ -185,7 +185,7 @@ to close the service.
 
 - [HTTP Runtime documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime)
 - [URL grammar and glossary](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/glossary.md)
-- [Java and Kotlin feature recipes from v1.1.2](https://github.com/phuong-tran/coakka-samples/blob/7fab741dec51b2d8c156f653cdbe8442c56f2704/docs/coakka-http-runtime/kotlin/integration.md)
+- [Archived 1.0.0 feature recipes](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/kotlin/integration.md#4-try-the-http-features)
 
 `ServiceBuilder` creates one service. Use Java's try-with-resources or
 Kotlin's `use` to close it. `close()` stops admission and waits for in-flight

@@ -3,6 +3,17 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/coakka-runtime/releases/](docs/coakka-runtime/releases/README.md).
 
+## HTTP Runtime 2.0.1 — 2026-11-04
+
+- Published native SDK `2.0.1` (Core `2.0`, C ABI 10) and the matching
+  Node.js, Bun, Python, Go, and JVM connectors. The release fixes outbound
+  hostname and IP handling, including direct connections to LAN IP addresses.
+  Version `1.1.2` is deprecated for new installs. [Release notes](coakka-http-runtime/docs/release-2.0.1.md)
+- Published standalone HTTP Runtime Inspect `2.0.1` for macOS ARM64 and Linux
+  ARM64. [Inspect downloads](coakka-http-runtime/inspect/releases/2.0.1/)
+- Updated the installed-SDK suite with outbound address and TLS regressions.
+  The published Pi 5 numbers were measured on `1.1.2`. [Benchmark version note](coakka-http-runtime/benchmark/README.md)
+
 ## 3.0.0 — 2026-10-30
 
 - Released the CoAkka Runtime 3.0.0 family: C# on NuGet, Python on PyPI,
