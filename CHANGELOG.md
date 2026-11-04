@@ -10,6 +10,10 @@ Cataloged the published Runtime 3.2.1 packages for Maven Central, npm, PyPI, NuG
 Published Client and Inspect 3.2.1 with Core 3.2. Each tool has five native
 archives with verified SHA-256 downloads. [Release record](docs/coakka-runtime/releases/2026-11-05-runtime-tools-3.2.1.md)
 
+Published the standalone Android 3.2.1 preview AAR with Core 3.2 and four
+Android ABIs. The [preview record](docs/coakka-runtime/releases/2026-11-05-android-runtime-3.2.1-preview.md)
+lists the SHA-256 and the exact emulator coverage.
+
 ## HTTP Runtime 2.0.1 — 2026-11-04
 
 - Published native SDK `2.0.1` (Core `2.0`, C ABI 10) and the matching

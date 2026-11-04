@@ -16,6 +16,7 @@ The current public release surface contains:
   `runtime-addons/<addon>/native/releases/` once a verified archive is present
   in the root public artifact manifest
 - runtime JVM, Spring Boot, and Quarkus artifacts under `maven/`
+- standalone Android preview AARs under `coakka-runtime/android/releases/`
 - coakka-client native CLI archives under `coakka-tools/coakka-client/releases/`
 - coakka-client Docker Linux bundles under
   `coakka-tools/coakka-client/docker-demo/releases/`
@@ -28,12 +29,16 @@ evaluation. A resolvable candidate coordinate is distribution evidence, not
 matching-host execution evidence. An AAR does not join the current supported
 surface until it passes runtime intake, its exact device or emulator lifecycle
 path is recorded, and its row is added to `artifacts/public-artifacts.tsv`.
+A standalone public Android preview carries a preview label in its manifest
+and catalog entry. Its release record identifies the executed emulator
+profiles and the ABIs inspected as binaries.
 
 Consumer-facing package downloads are listed in
 `artifacts/public-artifacts.tsv`. Public samples should pin against that
 manifest so sample metadata and publish contents do not drift silently. The
 manifest is intentionally limited to the current public release surface:
-`logger/*/releases/*`, `runtime/*/releases/*`, `coakka-tools/*/releases/*`,
+`logger/*/releases/*`, `runtime/*/releases/*`,
+`coakka-runtime/android/releases/*`, `coakka-tools/*/releases/*`,
 `coakka-tools/*/*/releases/*`, `runtime-addons/*/native/releases/*/*`, and
 selected Maven jars under `maven/coakka/`.
 Older `cli/releases/`, `demo/coakka-client/releases/`, and
