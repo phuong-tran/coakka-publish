@@ -87,7 +87,7 @@ The app remains responsible for validation, serialization and authorization.
 ## Current package integration
 
 The JavaScript, Python, Go, and JVM connectors expose route metadata in the
-published 1.1.2 packages. Attach it to the route declaration when building the
+published 2.0.1 packages. Attach it to the route declaration when building the
 service. The route metadata describes the handler's inputs and outputs.
 
 | Connector | Route declaration |
@@ -101,9 +101,10 @@ service. The route metadata describes the handler's inputs and outputs.
 Connector package tests verify metadata declarations and their effect on route
 snapshots. Connecting Inspect also requires a target that explicitly enables
 its authenticated read endpoint. Check the target package's supported setup
-and use the connection instructions in the installation guide. The 1.1.2
-workflow from connector declaration through Inspect to OpenAPI export still
-requires qualification against the final packages. See the [roadmap](../reference/roadmap.md).
+and use the connection instructions in the installation guide. The
+[2.0.1 walkthrough](../../../coakka-http-runtime/inspect/walkthrough.md)
+runs a Node.js service, sends a real request and exports OpenAPI.
+
 
 ## OpenAPI projection
 

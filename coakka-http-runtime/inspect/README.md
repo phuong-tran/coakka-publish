@@ -5,8 +5,6 @@ Inspect connects to a service's explicitly enabled inspection endpoint, reads
 route/schema snapshots, projects OpenAPI 3.0.3, and lets the developer try routes.
 It is separate from CoAkka Runtime Inspect, which inspects runtime messaging.
 
-[Walkthrough](walkthrough.md)
-
 ## Contents
 
 - [Why Inspect exists, metadata, OpenAPI and Swagger UI](../../docs/coakka-http-runtime/inspect/metadata-and-openapi.md)
@@ -19,48 +17,43 @@ It is separate from CoAkka Runtime Inspect, which inspects runtime messaging.
 
 ## Packages and evidence
 
-These are qualified branch candidates, not registry releases. Keep the exact
-archive identity when reporting a problem.
+Inspect 2.0.1 embeds HTTP Runtime Core generation 2.0. Install a
+matching standalone archive; you do not need to install the SDK separately
+for Inspect.
 
-| Target | Archive | Bytes | Execution evidence |
-| --- | --- | ---: | --- |
-| macOS ARM64 | [Download](candidates/2026-10-08/coakka-http-runtime-inspect-1.0.0-macos-aarch64.tar.gz) | 3272697 | Installed application workflow on macOS ARM64 |
-| Linux ARM64 | [Download](candidates/2026-10-08/coakka-http-runtime-inspect-1.0.0-linux-aarch64.tar.gz) | 4168385 | Rocky Linux ARM64, the same archive on Raspberry Pi 5 Debian 13, and an offline restricted Ubuntu 24.04 container |
+| Target | Archive | Execution evidence |
+| --- | --- | --- |
+| macOS ARM64 | [Download](releases/2.0.1/coakka-http-runtime-inspect-2.0.1-macos-aarch64.tar.gz) | Installed workflow and [Node.js walkthrough](walkthrough.md) |
+| Linux ARM64 | [Download](releases/2.0.1/coakka-http-runtime-inspect-2.0.1-linux-aarch64.tar.gz) | Installed workflow on Rocky Linux 8.10 ARM64 and Raspberry Pi 5 |
 
-Checksums: [SHA256SUMS](candidates/2026-10-08/SHA256SUMS).
-The Linux package references system interfaces up to GLIBC 2.28. This is a
-binary baseline, not certification of every distribution. macOS execution
-evidence applies to the tested host; the package is ad-hoc signed, not notarized.
-Windows and x86-64 Inspect packages are not included in this candidate set.
+Compare your archive with [SHA256SUMS](releases/2.0.1/SHA256SUMS). The Linux
+binary uses system interfaces up to glibc 2.28. The macOS executable has an
+ad hoc signature and has not been notarized. Windows and x86-64 builds are
+outside this release's scope.
 
-Recorded checks cover startup, health, browser assets, disconnected state,
-connect/refusal, snapshot/OpenAPI, refresh, route try, disconnect/reconnect and
-graceful process stop. Package checks cover exact contents, required license
-texts, binary hardening and reproducible archive bytes. No throughput claim is
-attached to the inspection application.
+The installed workflow checks startup, browser assets, connect and refusal,
+OpenAPI export, route requests, disconnect and graceful stop. The
+[original 1.0.0 candidate archives](candidates/2026-10-08/) remain available
+for reproducing earlier runs.
 
 ## Install
 
-From the `coakka-publish` checkout, first verify both archived packages:
+From a `coakka-publish` checkout, verify and extract the archive for your
+platform. This example uses Linux ARM64. On macOS ARM64, replace
+`linux-aarch64` with `macos-aarch64` in `archive`.
 
 ```sh
-python3 scripts/verify-http-inspect-candidate.py
-```
-
-Extract only the package for your platform into a new application directory.
-For example, on Linux ARM64:
-
-```sh
+archives="$PWD/coakka-http-runtime/inspect/releases/2.0.1"
+archive=coakka-http-runtime-inspect-2.0.1-linux-aarch64.tar.gz
+(cd "$archives" && grep "  $archive\$" SHA256SUMS | shasum -a 256 -c)
 mkdir http-inspect
-tar -xzf coakka-http-runtime/inspect/candidates/2026-10-08/coakka-http-runtime-inspect-1.0.0-linux-aarch64.tar.gz -C http-inspect
+tar -xzf "$archives/$archive" -C http-inspect
 ./http-inspect/bin/coakka-http-runtime-inspect --version
-./http-inspect/bin/coakka-http-runtime-inspect --help
 ```
 
-Use the macOS archive instead on macOS ARM64. The archive contains one executable
-and four required license/notice files under `share/licenses/`. It does not
-require a separate HTTP Runtime library installation. Retain the license files.
-Do not disable operating-system security controls to bypass a launch refusal.
+Expect `coakka-http-runtime-inspect 2.0.1 assets=3`. The archive contains the
+executable and its license files under `share/licenses/`. Keep those files
+with the executable.
 
 ## Connect to a service
 
@@ -118,10 +111,8 @@ did not execute. Do not automatically retry state-changing operations.
 
 ## Deployment scope
 
-This candidate is a local development tool, not a remotely exposed operations
-console. It does not include publisher signing/notarization, a published
-container image, Windows execution, or other CPU architectures. Those are
-separate qualification scopes, not implied by the HTTP SDK platform matrix.
+Run Inspect on a trusted local development machine. The broader HTTP SDK
+platform matrix does not extend to the standalone Inspect application.
 
 See the [HTTP Runtime catalog](../README.md) for service packages and
 [operations guide](../../docs/coakka-http-runtime/operations/operations.md) for application lifecycle guidance.

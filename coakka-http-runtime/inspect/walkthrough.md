@@ -4,23 +4,23 @@ Inspect is a standalone, Swagger-like browser for local development. Connect
 it to an inspection-enabled service to browse declared routes, send a real
 request and export an OpenAPI 3.0.3 document.
 
-This walkthrough uses the standalone Inspect **1.0.0** macOS ARM64 archive and
-the **1.1.2** Node.js connector. The native consumer tests below use the
-**1.1.2** SDK. Run the commands from a checkout of
+This walkthrough uses the standalone Inspect **2.0.1** macOS ARM64 archive and
+the **2.0.1** Node.js connector. The native consumer tests below use the
+**2.0.1** SDK. Run the commands from a checkout of
 [coakka-publish](https://github.com/phuong-tran/coakka-publish).
 
 ![Inspect connected to the local demo service with a documented GET /hello route](assets/macos-inspect-routes.png)
 
 ## Start a documented service
 
-Use Node.js and npm on macOS ARM64. In the first terminal, create a fresh
+Use Node.js and npm on macOS ARM64. The screenshots show the same workflow in the earlier Inspect release. In the first terminal, create a fresh
 directory for the demo, install the connector and generate a local bearer file.
 
 ```sh
 PUBLISH="$PWD"
 WORK="$(mktemp -d)"
 cd "$WORK"
-npm install coakka-http-runtime-node@1.1.2
+npm install coakka-http-runtime-node@2.0.1
 (umask 077; openssl rand -hex 32 | tr -d '\n' > inspect.token)
 printf 'Demo directory: %s\n' "$WORK"
 ```
@@ -80,8 +80,8 @@ to the demo directory printed above. Verify the macOS archive, then start
 Inspect with the same bearer file.
 
 ```sh
-ARCHIVE=coakka-http-runtime-inspect-1.0.0-macos-aarch64.tar.gz
-ARCHIVES="$PUBLISH/coakka-http-runtime/inspect/candidates/2026-10-08"
+ARCHIVE=coakka-http-runtime-inspect-2.0.1-macos-aarch64.tar.gz
+ARCHIVES="$PUBLISH/coakka-http-runtime/inspect/releases/2.0.1"
 (cd "$ARCHIVES" && grep "  $ARCHIVE\$" SHA256SUMS | shasum -a 256 -c)
 mkdir "$WORK/inspect"
 tar -xzf "$ARCHIVES/$ARCHIVE" -C "$WORK/inspect"
@@ -107,12 +107,12 @@ Install CMake and a matching Apple compiler and linker. From a checkout of
 [coakka-samples](https://github.com/phuong-tran/coakka-samples), set
 `PUBLISH` to the absolute path of your publish checkout. Use a fresh build
 directory on a writable volume. The archive filename below is the one listed
-in the [1.1.2 SDK downloads](../native/releases/1.1.2/).
+in the [2.0.1 SDK downloads](../native/releases/2.0.1/).
 
 ```sh
 BUILD_ROOT=/absolute/path/to/a/writable/build-directory
-SDK_ARCHIVES="$PUBLISH/coakka-http-runtime/native/releases/1.1.2"
-SDK_ARCHIVE=coakka-http-host-1.1.2-candidate-macos-aarch64.tar.gz
+SDK_ARCHIVES="$PUBLISH/coakka-http-runtime/native/releases/2.0.1"
+SDK_ARCHIVE=coakka-http-runtime-native-2.0.1-macos-aarch64.tar.gz
 (cd "$SDK_ARCHIVES" && grep "  $SDK_ARCHIVE\$" SHA256SUMS | shasum -a 256 -c)
 mkdir -p "$BUILD_ROOT/sdk"
 tar -xzf "$SDK_ARCHIVES/$SDK_ARCHIVE" -C "$BUILD_ROOT/sdk"
@@ -124,7 +124,7 @@ cmake --build "$BUILD_ROOT/http-tests" --config Release --parallel
 ctest --test-dir "$BUILD_ROOT/http-tests" -C Release --output-on-failure
 ```
 
-The documented macOS ARM64 run passed **13/13 tests** against the released SDK.
+The macOS ARM64 run passed **13/13 tests** against SDK 2.0.1.
 If CMake reports a linker error about the macOS SDK, confirm that `xcode-select -p`
 and `xcrun --sdk macosx --show-sdk-path` refer to the same toolchain, then configure
 in a fresh build directory.

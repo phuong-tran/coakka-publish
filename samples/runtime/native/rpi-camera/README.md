@@ -10,7 +10,7 @@ audio/no-audio recording workflow are in
 [`coakka-samples/coakka-runtime/demos/rpi-camera/`](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime/demos/rpi-camera).
 
 Current source has moved its HTTP/MJPEG/WebSocket and profile-control edges to
-the released CoAkka HTTP Runtime `1.1.2` native host ABI. The published camera
+the released CoAkka HTTP Runtime native SDK `2.0.1`. The published camera
 `v1.1.0` archives below predate that migration and remain byte-for-byte under
 their original libuv-based evidence; this source update is not a replacement
 binary release.

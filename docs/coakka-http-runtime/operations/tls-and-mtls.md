@@ -20,16 +20,16 @@ private key, and, for mutual TLS, client trust roots.
 
 ## Install The Repository Package
 
-Install HTTP Runtime 1.1.2 for your application host.
+Install HTTP Runtime 2.0.1 for your application host.
 
 | Language | Installation guide |
 | --- | --- |
 | Python | [PyPI package](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#python) |
-| Node.js | [npm package](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#nodejs) |
-| Bun | [npm package for Bun](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#bun) |
+| Node.js | [npm package](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#nodejs-and-bun) |
+| Bun | [npm package for Bun](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#nodejs-and-bun) |
 | JVM | [Maven Central JAR and native classifier](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#jvm) |
 | Go | [Go module and native SDK](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#go) |
-| C/C++ | [Native SDK downloads](https://github.com/phuong-tran/coakka-publish/tree/main/coakka-http-runtime/native/releases/1.1.2) |
+| C/C++ | [Native SDK downloads](https://github.com/phuong-tran/coakka-publish/tree/main/coakka-http-runtime/native/releases/2.0.1) |
 
 Match the artifact to the operating system and architecture. Package presence
 alone is not protocol evidence; check the packaged capability bits and run a
@@ -140,9 +140,8 @@ backend, descriptor/resource return, and negative handshake cases.
 ## Credential Operations
 
 `credential_generation` and `credential_id` identify the selected credential
-set without exposing secret material. The 1.1.2 release supports
-explicit listener credential reload. Older packages rotate through a
-replacement service. Live handler swap is a separate operation.
+set without exposing secret material. SDK 2.0.1 supports explicit listener credential reload.
+When the installed version lacks reload, rotate through a replacement service. Live handler swap is a separate operation.
 
 `credential_id` names the logical identity; `credential_generation` identifies
 the deployment's selected revision of its material. Neither is a file watcher.
@@ -157,7 +156,7 @@ Do not mistake a configured version for proof of a successful handshake.
 | Replace a route handler | Generation/revision-checked apply | Captured work retains the old binding until it finishes. |
 | Replace the route table | Publish an accepted structural generation | Rejected candidates preserve the effective table. |
 | Change monitor collection policy | Expected-generation policy apply | Cannot enlarge startup reservations. |
-| Replace listener certificate/key or client trust roots | Explicit credential reload in the 1.1.2 release | Requires the current effective generation and a complete candidate credential set. |
+| Replace listener certificate/key or client trust roots | Explicit credential reload in the 2.0.1 release | Requires the current effective generation and a complete candidate credential set. |
 | Change listener address or protocol | Construct a replacement service | Live updates do not rebind the listener. |
 
 For live rotation, prepare the new files at distinct paths and keep the chain,

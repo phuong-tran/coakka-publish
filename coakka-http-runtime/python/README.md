@@ -1,59 +1,35 @@
-# CoAkka HTTP for Python
+# CoAkka HTTP Runtime for Python
 
-[Install and run a 1.1.2 registry sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md). The archive recipes below are for the pinned 1.0.0 generation.
+![CoAkka](https://raw.githubusercontent.com/phuong-tran/coakka-samples/a539dfcd7dc8d93c5b1c61b1324899af13d47ca6/docs/common/assets/brand/coakka-logo.png)
 
-**New application?** Start with the [Python integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/python/integration.md)
-for installation, a first request and feature-by-feature usage. This page
-remains the package/API reference.
+CoAkka HTTP Runtime provides HTTP server and client APIs for Python. Use it
+to serve routes, stream responses, handle WebSockets, or call configured
+upstream services. The wheel includes the native library for your platform.
 
-## Contents
+## Install 2.0.1
 
-- [URL grammar and glossary](../../docs/coakka-http-runtime/reference/glossary.md)
+Run these commands from your application directory with CPython 3.11 or newer.
 
-- [Package status](#package-status)
-- [Requirements](#requirements)
-- [Buffered service](#buffered-service)
-- [I/O backend](#io-backend)
-- [Lower-level API](#lower-level-api)
-- [Ownership and bounds](#ownership-and-bounds)
-- [Verification](#verification)
-
-## Package status
-
-Five offline candidates are available in [candidates/2026-10-08-r3/](candidates/2026-10-08-r3/),
-with `SHA256SUMS`: macOS ARM64, Linux ARM64/x86-64, and Windows ARM64/x86-64.
-These are repository archives, not PyPI wheels or registry packages.
-
-`coakka_http` is an idiomatic Python binding to the host-inlined CoAkka HTTP
-The runtime. It provides a bounded handler service and a lower-level typed event
-API. The module uses only the focused public host interface; HTTP parsing, transport,
-routing, files, TLS, outbound calls, and deadlines remain native-owned.
-
-Each archive includes its matching native library. For PyPI installation, use the 1.1.2 instructions above.
-
-## Requirements
-
-- CPython 3.11 syntax baseline; tested with 3.11.15 on macOS, 3.13.5 on
-  Linux ARM64, and 3.12.10 on Linux x86-64 and both Windows targets.
-- A matching OS/architecture archive. Linux and Windows x86-64 qualification
-  used emulation; it is not physical x86-64 machine evidence.
-
-Verify the archive against `SHA256SUMS`, extract it, and add its `python`
-directory to `PYTHONPATH` before starting your application. For example, on
-macOS ARM64, from this directory:
+On macOS or Linux:
 
 ```sh
-tar -xzf candidates/2026-10-08-r3/coakka-http-python-1.0.0-candidate-macos-aarch64.tar.gz
-export PYTHONPATH="$PWD/coakka-http-python-1.0.0-candidate-macos-aarch64/python"
-python3 your_application.py
+python3 -m venv .venv
+.venv/bin/python -m pip install coakka-http-runtime-python==2.0.1
 ```
 
-The package selects its own paired library; no native-path environment variable
-is needed. `COAKKA_HTTP_HOST_PATH` is an explicit development override only:
-when supplied, it must name an absolute regular library file. Invalid or missing
-package metadata fails rather than silently loading another installed library.
+On Windows in PowerShell:
 
-## Buffered service
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install coakka-http-runtime-python==2.0.1
+```
+
+Install `coakka-http-runtime-python` with pip and import `coakka_http`
+in your application.
+
+## First request
+
+Save this example as `server.py`.
 
 ```python
 from coakka_http import Builder, Request, Response
@@ -63,49 +39,111 @@ def echo(request: Request) -> Response:
     return Response(status=201, body=request.body)
 
 
-service = (
-    Builder()
-    .listen("127.0.0.1", 8080)
-    .concurrency(2)
-    .post("/echo", echo)
-    .start()
-)
-try:
-    print(service.port)
-finally:
-    service.close()
+def main() -> None:
+    service = Builder().listen("127.0.0.1", 8080).post("/echo", echo).start()
+    with service:
+        print(f"Listening on http://127.0.0.1:{service.port}")
+        input("Press Enter to stop. ")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-`Builder` is single-use. `Service` owns one native runtime, a sole inbound
-reader, a fixed worker set, and bounded copied-request queues. Application
-handlers never execute on the native event-loop thread. Header and handler
-lookups are map-backed for average O(1) access while wire header order and
-duplicates remain available.
+Run `.venv/bin/python server.py` on macOS or Linux, or
+`.\.venv\Scripts\python.exe server.py` on Windows. From a second terminal,
+send a request with the following command.
 
-The same surface supports buffered and incremental request bodies, response
-streams and trailers, SSE, WebSocket, static mounts, confined file responses,
-logical outbound targets, route rebinding/publication, health, liveness, route
-snapshots, and bounded monitoring.
+```sh
+curl -i --data "hello" http://127.0.0.1:8080/echo
+```
 
-`service.routes` returns an immutable runtime `RouteSnapshot`, including coherent
-structural generation and binding revisions. It is not local handler declarations,
-does not require monitoring, and raises on inspection failure rather than guessing.
+In Windows PowerShell, use `curl.exe`. The server returns HTTP 201 with
+`hello` in the response body. Press Enter in the server terminal to shut
+it down. The service context manager closes the runtime when the block exits.
 
-`Builder.compression(Compression(CompressionMode.GZIP))` enables bounded buffered
-compression; identity response streams remain independent and unbuffered.
-Configure transport/handler deadlines through `Limits`; optional zero-valued limits
-request the runtime defaults. Inspect accepted settings through `effective_limits()`
-and `runtime_info()`, not the builder's input.
+## Requirements
 
-Outbound terminals carry typed `OutboundReason`, `OutboundPhase`, `OutboundRetry`
-and `OutboundCertainty` facts. A received HTTP error response is still `RESPONSE`.
-Unknown uint32 values retain their identity through `int(value)` without an
-unbounded enum cache. Never automatically expose operator diagnostics to clients.
+| Platform | Architecture | Requirement |
+| --- | --- | --- |
+| macOS | ARM64 | macOS 11 or newer |
+| Linux | x86-64 and ARM64 | glibc 2.28 or newer |
+| Windows | x64 and ARM64 | CPython matching the wheel architecture |
+
+If pip cannot find a matching wheel, run `python -VV` and
+`python -c "import platform; print(platform.machine())"` with the interpreter
+you plan to use. Install and run the package with that interpreter.
+
+## Outbound requests
+
+Keep the first server running. Save this example as `client.py` and run
+it with the same virtual environment's Python. It sends a request to the
+configured loopback endpoint and prints `201 hello`.
+
+```python
+from coakka_http import (
+    Builder,
+    OutboundEndpoint,
+    OutboundReason,
+    OutboundRequest,
+    OutboundTarget,
+)
+
+
+def main() -> None:
+    endpoint = OutboundEndpoint(
+        node_id="local",
+        connect_host="127.0.0.1",
+        connect_port=8080,
+        http_authority="127.0.0.1:8080",
+    )
+    target = OutboundTarget(name="echo", generation=1, endpoints=(endpoint,))
+
+    with Builder().outbound_target(target).start() as service:
+        call = service.outbound_submit(
+            OutboundRequest("echo", "POST", "/echo", body=b"hello", timeout_ms=3000)
+        )
+        result = service.take_outbound(5000)
+        if result is None:
+            raise TimeoutError("No outbound result within five seconds")
+        if result.call != call or result.reason is not OutboundReason.RESPONSE:
+            raise RuntimeError(f"Outbound request ended with {result.reason.name}")
+        print(result.response_status, result.response_body.decode("utf-8"))
+
+
+if __name__ == "__main__":
+    main()
+```
+
+`connect_host` selects the connection destination and `http_authority`
+sets the HTTP authority. For TLS, configure the peer identity and trust
+for the endpoint. A received HTTP error still arrives as a response with
+its HTTP status. Use the terminal reason to distinguish transport and
+lifecycle outcomes.
+
+## API reference
+
+- [Python integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/python/integration.md)
+- [Runnable Python samples](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/python)
+- [URL grammar and glossary](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/glossary.md)
+- [I/O backend](#io-backend)
+- [Lower-level API](#lower-level-api)
+- [Ownership and bounds](#ownership-and-bounds)
+
+`Builder` creates one service. The service supports buffered and streamed
+requests, streaming responses and trailers, SSE, WebSockets, static files,
+outbound targets, route updates, and monitoring.
+
+`service.routes` returns the runtime's route generation and binding
+revisions. Use `effective_limits()` and `runtime_info()` to inspect the
+configuration accepted by the runtime. Use
+`Builder.compression(Compression(CompressionMode.GZIP))` to enable buffered
+response compression.
 
 ## I/O backend
 
-Platform I/O is the default. On Linux that means epoll. io_uring requires an
-explicit opt-in:
+The service uses the platform's default I/O backend. On Linux, applications
+can request io_uring explicitly.
 
 ```python
 from coakka_http import Builder, IoBackend, Response
@@ -123,15 +161,13 @@ finally:
     service.close()
 ```
 
-Python only forwards this preference. Native startup owns capability checks,
-kernel probing, protocol eligibility, initialization, and safe fallback to
-epoll. The connector does not inspect `/proc`, compare kernel versions, or
-issue a probe syscall. Benchmarks must require `io_uring_effective` before
-labelling a result as io_uring.
+The native runtime checks availability and uses the platform default when
+the request cannot be applied. Read `io_uring_effective` to see the backend
+in use and `fallback_reason` for the outcome of the request.
 
 ## Lower-level API
 
-`Runtime` accepts one immutable `RuntimeConfig` and returns copied events:
+`Runtime` accepts one immutable `RuntimeConfig` and returns copied events.
 
 ```python
 from coakka_http import EventKind, Response, Route, Runtime, RuntimeConfig
@@ -166,26 +202,4 @@ Monitoring is disabled by default. Enabling it reserves fixed storage during
 construction. Signals are hints; callers pull immutable snapshots. Monitoring
 pressure cannot block request handling or change an exchange result.
 
-## Verification
-
-From the repository root:
-
-```bash
-export COAKKA_HTTP_HOST_PATH=/absolute/path/to/libcoakka_http_host.dylib
-export PYTHONPATH="$PWD/connectors/python"
-python3 -m pytest -q connectors/python/tests
-ruff check connectors/python/coakka_http connectors/python/tests
-mypy --strict connectors/python/coakka_http
-python3 connectors/python/scripts/verify-docstrings.py \
-  connectors/python/coakka_http
-```
-
-The integration suite exercises real loopback traffic and covers default and
-opt-in I/O selection, indexed headers, buffered/streamed requests and
-responses, SSE, WebSocket, static/file delivery, outbound calls, route control,
-monitoring, and lifecycle shutdown.
-
-The October 8 candidates passed 100 tests and an independent three-cycle consumer
-on each of the five targets listed above. Mac/Pi also passed real HTTP/2 and
-HTTP/3 wire plus graceful-drain checks. These are exact-package checks, not a
-full-interpreter sanitizer or benchmark claim.
+[HTTP Runtime documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime)

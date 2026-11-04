@@ -1,104 +1,251 @@
-# CoAkka HTTP for Go
+# CoAkka HTTP Runtime for Go
 
-[Install and run a 1.1.2 registry sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md). The archive recipes below are for the pinned 1.0.0 generation.
+![CoAkka](https://raw.githubusercontent.com/phuong-tran/coakka-samples/a539dfcd7dc8d93c5b1c61b1324899af13d47ca6/docs/common/assets/brand/coakka-logo.png)
 
-**New application?** Start with the [Go integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/go/integration.md)
-for installation, a first request and feature-by-feature usage. This page
-remains the package/API reference.
-
-`coakkahttp` is the idiomatic Go connector for CoAkka HTTP Runtime. The module
-links directly to the matching library supplied beside the Go module. It does
-not extract or download a library at runtime.
-
-Status: five packaged branch candidates, not a tagged module or registry
-release. Download from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/) and verify
-[SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). Each bundle supplies `go/` and
-`native/` together, installation instructions and legal material.
-
-## Contents
-
-- [URL grammar and glossary](../../docs/coakka-http-runtime/reference/glossary.md)
-
-- [Requirements](#requirements)
-- [Quick start](#quick-start)
-- [I/O backend selection](#io-backend-selection)
-- [Supported service features](#supported-service-features)
-- [Response compression](#response-compression)
-- [Low-level example](#low-level-example)
-- [Monitoring](#monitoring)
-- [Route changes](#route-changes)
-- [Shutdown](#shutdown)
+Use CoAkka HTTP Runtime to serve HTTP requests, stream responses, handle
+WebSockets, and call configured upstream services from a Go application.
 
 ## Requirements
 
-- Go 1.23 or newer
-- cgo and a C11 compiler
-- `coakka/http/host.h`
-- `libcoakka_http_host` for the current target
+Use Go 1.23 or newer, cgo, and a C11 compiler for your target. Run
+`go env GOOS GOARCH` to choose the SDK for the application you will build.
+For WSL2, select the Linux row for the architecture reported by Go.
 
-From an application module on macOS/Linux, use the extracted bundle:
+| `GOOS/GOARCH` | Platform | SDK archive suffix |
+| --- | --- | --- |
+| `darwin/arm64` | macOS 11 or newer | `macos-aarch64` |
+| `linux/amd64` | Linux x86-64, glibc 2.28 or newer | `linux-x86_64` |
+| `linux/arm64` | Linux ARM64, glibc 2.28 or newer | `linux-aarch64` |
+| `windows/amd64` | Windows x64 | `windows-x86_64` |
+| `windows/arm64` | Windows ARM64 | `windows-aarch64` |
+
+On Windows, put a cgo-compatible compiler for the selected architecture on
+`PATH` or point `CC` to it. Use a directory without spaces for the extracted SDK.
+
+## Install v2.0.1
+
+Download `coakka-http-runtime-native-2.0.1-<suffix>.tar.gz` and
+`SHA256SUMS` from the [v2.0.1 GitHub Release](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.0.1).
+Put both files in your application directory. Compare the archive's hash with
+its line in `SHA256SUMS` before extracting it. On macOS use
+`shasum -a 256 <archive>`, on Linux use `sha256sum <archive>`, and on Windows
+use `Get-FileHash <archive> -Algorithm SHA256`.
+
+Run `go mod init example.com/coakka-hello` if you are starting a new module.
+From that directory, fetch the Go connector.
 
 ```sh
-export COAKKA_HTTP_PACKAGE=/absolute/path/to/extracted-bundle
-go mod edit -require=github.com/phuong-tran/coakka-http-runtime-go@v0.0.0
-go mod edit -replace=github.com/phuong-tran/coakka-http-runtime-go="$COAKKA_HTTP_PACKAGE/go"
-export CGO_ENABLED=1
-export CGO_CFLAGS="-I$COAKKA_HTTP_PACKAGE/native/include"
-export CGO_LDFLAGS="-L$COAKKA_HTTP_PACKAGE/native/lib -Wl,-rpath,$COAKKA_HTTP_PACKAGE/native/lib"
-go build -trimpath .
+go get github.com/phuong-tran/coakka-http-runtime-go/v2@v2.0.1
 ```
 
-Use an application-owned library location when deploying; do not retain a
-developer path. Windows needs a cgo-capable compiler for the selected process
-architecture, `native/include`, `native/lib`, and `native/bin` on the process
-`PATH` (or the DLL beside the executable). Follow the included platform guide.
+The Go tag supplies the connector source. The matching SDK archive supplies
+the headers and shared library for cgo. Keep both on version 2.0.1.
 
-## Quick start
+On macOS or Linux, extract the archive and set these variables in the terminal
+where you will build and run the examples. The filename below is for macOS
+ARM64. Use the filename for your target from the table.
+
+```sh
+mkdir -p sdk
+tar -xzf coakka-http-runtime-native-2.0.1-macos-aarch64.tar.gz -C sdk
+export COAKKA_HTTP_SDK="$PWD/sdk"
+export CGO_ENABLED=1
+export CGO_CFLAGS="-I$COAKKA_HTTP_SDK/include"
+export CGO_LDFLAGS="-L$COAKKA_HTTP_SDK/lib -Wl,-rpath,$COAKKA_HTTP_SDK/lib"
+```
+
+On Windows, use PowerShell. Substitute the ARM64 archive if you are building
+for Windows ARM64.
+
+```powershell
+New-Item -ItemType Directory -Force sdk | Out-Null
+tar.exe -xzf coakka-http-runtime-native-2.0.1-windows-x86_64.tar.gz -C sdk
+$env:COAKKA_HTTP_SDK = (Resolve-Path sdk).Path.Replace('\', '/')
+$env:CGO_ENABLED = '1'
+$env:CGO_CFLAGS = "-I$env:COAKKA_HTTP_SDK/include"
+$env:CGO_LDFLAGS = "-L$env:COAKKA_HTTP_SDK/lib"
+$env:PATH = "$env:COAKKA_HTTP_SDK/bin;$env:PATH"
+```
+
+If the build cannot find `coakka/http/host.h`, check `CGO_CFLAGS` and confirm the
+SDK directory contains `include/` and `lib/`. If the program fails to load the
+shared library, check that the SDK matches the binary's architecture. On
+macOS and Linux, keep the versioned library links when deploying and choose a
+loader path for the deployed application. On Windows, put the matching DLL
+beside the deployed executable.
+
+On macOS, if the linker reports `unknown architecture` in a system `.tbd`
+file, use a macOS SDK that matches your compiler and linker. With full Xcode
+selected, set the SDK for this terminal before retrying the build.
+
+```sh
+export SDKROOT="$(xcodebuild -version -sdk macosx Path)"
+```
+
+## First request
+
+Save this example as `main.go`. It listens on loopback and asks the runtime
+to choose an available port.
 
 ```go
 package main
 
 import (
-    "context"
-    "log"
-    "os"
-    "os/signal"
+	"context"
+	"errors"
+	"log"
+	"net/http"
+	"os"
+	"os/signal"
 
-    coakkahttp "github.com/phuong-tran/coakka-http-runtime-go"
+	"github.com/phuong-tran/coakka-http-runtime-go/v2"
 )
 
 func main() {
-    ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
-    defer stop()
-    service, err := coakkahttp.NewBuilder().
-        Get("/hello/{name}", func(request *coakkahttp.Request) (coakkahttp.Response, error) {
-            name := request.PathParameters[0].EncodedValue
-            return coakkahttp.Text(200, "hello "+name)
-        }).
-        Start()
-    if err != nil {
-        log.Fatal(err)
-    }
-    port, err := service.Port()
-    if err != nil {
-        closeErr := service.Close()
-        log.Fatalf("read port: %v; close: %v", err, closeErr)
-    }
-    log.Printf("listening on http://127.0.0.1:%d", port)
-    <-ctx.Done()
-    if err := service.Close(); err != nil {
-        log.Fatal(err)
-    }
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
+	if err := serve(ctx); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func serve(ctx context.Context) (err error) {
+	service, err := coakkahttp.NewBuilder().
+		Listen("127.0.0.1", 0).
+		Get("/hello/{name}", func(request *coakkahttp.Request) (coakkahttp.Response, error) {
+			name := request.PathParameters[0].EncodedValue
+			return coakkahttp.Text(http.StatusOK, "hello "+name)
+		}).
+		Start()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		err = errors.Join(err, service.Close())
+	}()
+
+	port, err := service.Port()
+	if err != nil {
+		return err
+	}
+	log.Printf("listening on http://127.0.0.1:%d", port)
+	<-ctx.Done()
+	return nil
 }
 ```
 
-`Builder` supplies a bounded request/reply facade. `Runtime` is the lower-level
-pull API for applications that need direct ownership of events and commands.
-Both use the same host API and the same native service.
+Run `go run .`. From a second terminal, open `/hello/Ada` at the printed
+address. For example, if the server prints port `49321`, run
+`curl -i http://127.0.0.1:49321/hello/Ada`. In Windows PowerShell, use
+`curl.exe`. The response is HTTP 200 with the body `hello Ada`.
+Press Ctrl+C in the server terminal to stop it.
+
+## Outbound requests
+
+With the server running, save this example as `client/main.go` in the same
+module. In another terminal with the same SDK environment, run
+`go run ./client 49321` using the port printed by your server.
+The client prints `200 hello Ada`.
+
+```go
+package main
+
+import (
+	"errors"
+	"fmt"
+	"log"
+	"net"
+	"net/http"
+	"os"
+	"strconv"
+	"time"
+
+	"github.com/phuong-tran/coakka-http-runtime-go/v2"
+)
+
+func main() {
+	if len(os.Args) != 2 {
+		log.Fatal("usage: go run ./client <server-port>")
+	}
+	port, err := strconv.ParseUint(os.Args[1], 10, 16)
+	if err != nil || port == 0 {
+		log.Fatalf("invalid server port %q", os.Args[1])
+	}
+	if err := call(uint16(port)); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func call(port uint16) (err error) {
+	const host = "127.0.0.1"
+	target := coakkahttp.OutboundTarget{
+		Name:       "hello",
+		Generation: 1,
+		Endpoints: []coakkahttp.OutboundEndpoint{{
+			NodeID:        "local",
+			ConnectHost:   host,
+			ConnectPort:   port,
+			HTTPAuthority: net.JoinHostPort(host, strconv.Itoa(int(port))),
+		}},
+	}
+	service, err := coakkahttp.NewBuilder().OutboundTarget(target).Start()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		err = errors.Join(err, service.Close())
+	}()
+
+	callID, err := service.SubmitOutbound(coakkahttp.ClientRequest{
+		LogicalTarget: target.Name,
+		Method:        http.MethodGet,
+		Target:        "/hello/Ada",
+		TimeoutMillis: 3000,
+	})
+	if err != nil {
+		return err
+	}
+	result, err := service.TakeOutbound(5 * time.Second)
+	if err != nil {
+		return err
+	}
+	if result == nil {
+		return errors.New("no outbound result within five seconds")
+	}
+	if result.Call != callID || result.Reason != coakkahttp.OutboundResponse {
+		return fmt.Errorf("unexpected outbound result for %v: %s", result.Call, result.Reason)
+	}
+	fmt.Printf("%d %s\n", result.ResponseStatus, result.ResponseBody)
+	return nil
+}
+```
+
+`ConnectHost` and `ConnectPort` choose the connection destination.
+`HTTPAuthority` sets the HTTP authority, and TLS uses its configured peer
+identity. A completed HTTP response can carry a 4xx or 5xx status. Inspect
+`Reason` to distinguish it from a transport or lifecycle failure.
+
+## Upgrade from v1
+
+1. Change imports of `github.com/phuong-tran/coakka-http-runtime-go` to
+   `github.com/phuong-tran/coakka-http-runtime-go/v2`. The package name remains
+   `coakkahttp`. Update dependencies that still import the v1 connector.
+2. Update the application to use the v2.0.1 Go module and the matching 2.0.1
+   native SDK. Replace the build and runtime library paths together.
+3. Run `go mod tidy` and `go test ./...` in your application.
+
+## API reference
+
+Run `go doc github.com/phuong-tran/coakka-http-runtime-go/v2` in an application
+that has fetched the module. Use `Builder` for the Go service API or `Runtime`
+for the lower-level pull API.
+
+- [URL grammar and glossary](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/glossary.md)
+- [Go v1.1.2 sample and feature recipes](https://github.com/phuong-tran/coakka-samples/blob/7fab741dec51b2d8c156f653cdbe8442c56f2704/docs/coakka-http-runtime/go/integration.md)
 
 ## Response compression
 
-Configure ordinary host-inlined handlers with
+Configure buffered responses with
 `builder.Compression(&coakkahttp.Compression{Mode: coakkahttp.CompressionGZIP, MinimumBodyBytes: 1, GZIPLevel: 6})`
 before startup. The builder copies the optional value; `Compression(nil)`
 removes an earlier override. Explicit disable uses
@@ -113,7 +260,7 @@ startup configuration, not a live change to existing connections.
 
 The transform applies to eligible buffered responses, not response streams or
 SSE. Streams remain uncompressed and bounded; an identity-refusing client
-receives HTTP406 before an unencoded stream starts when this policy is enabled.
+receives HTTP 406 before an unencoded stream starts when this policy is enabled.
 Application-supplied content encoding remains application-owned.
 
 ## I/O backend selection
@@ -123,10 +270,10 @@ platform backend. On Linux this is the normal epoll path. To request io_uring:
 
 ```go
 runtime, err := coakkahttp.Open(coakkahttp.Config{
-    IOBackend: coakkahttp.IOUring,
-    Routes: []coakkahttp.Route{{
-        ID: 1, HandlerBindingID: 1, Method: "GET", Pattern: "/ready",
-    }},
+	IOBackend: coakkahttp.IOUring,
+	Routes: []coakkahttp.Route{{
+		ID: 1, HandlerBindingID: 1, Method: "GET", Pattern: "/ready",
+	}},
 })
 ```
 
@@ -162,34 +309,34 @@ defaults.
 
 ```go
 runtime, err := coakkahttp.Open(coakkahttp.Config{
-    Listeners: []coakkahttp.Listener{{
-        ID:          1,
-        BindAddress: "127.0.0.1",
-        Protocol:    coakkahttp.ProtocolHTTP11,
-        Security:    coakkahttp.SecurityPlaintext,
-    }},
-    Routes: []coakkahttp.Route{{
-        ID:               1,
-        HandlerBindingID: 1,
-        Method:           "POST",
-        Pattern:          "/echo",
-    }},
+	Listeners: []coakkahttp.Listener{{
+		ID:          1,
+		BindAddress: "127.0.0.1",
+		Protocol:    coakkahttp.ProtocolHTTP11,
+		Security:    coakkahttp.SecurityPlaintext,
+	}},
+	Routes: []coakkahttp.Route{{
+		ID:               1,
+		HandlerBindingID: 1,
+		Method:           "POST",
+		Pattern:          "/echo",
+	}},
 })
 if err != nil {
-    return err
+	return err
 }
 defer runtime.Close()
 
 if err = runtime.Start(); err != nil {
-    return err
+	return err
 }
 event, err := runtime.TakeEvent(250 * time.Millisecond)
 if err != nil {
-    return err
+	return err
 }
 if event.Kind == coakkahttp.EventRequest {
-    reply, _ := coakkahttp.Bytes(200, event.Request.Bytes())
-    err = runtime.Respond(event.Exchange, reply)
+	reply, _ := coakkahttp.Bytes(200, event.Request.Bytes())
+	err = runtime.Respond(event.Exchange, reply)
 }
 ```
 
@@ -202,13 +349,13 @@ Monitoring starts disabled. Reserve the resources that may be enabled later:
 
 ```go
 builder.Monitor(coakkahttp.MonitorOptions{
-    Collection:          coakkahttp.MonitorDisabled,
-    EventCapacity:       256,
-    MaxEventsPerRead:    32,
-    AggregateCategories: coakkahttp.MonitorCategoryLifecycle |
-        coakkahttp.MonitorCategoryExchange,
-    EventCategories: coakkahttp.MonitorCategoryLifecycle,
-    SignalReserved:  true,
+	Collection:       coakkahttp.MonitorDisabled,
+	EventCapacity:    256,
+	MaxEventsPerRead: 32,
+	AggregateCategories: coakkahttp.MonitorCategoryLifecycle |
+		coakkahttp.MonitorCategoryExchange,
+	EventCategories: coakkahttp.MonitorCategoryLifecycle,
+	SignalReserved:  true,
 })
 ```
 
@@ -222,7 +369,7 @@ Monitor saturation never changes an HTTP exchange result.
 the runtime: one complete structural generation, binding-change sequence and bounded
 route/binding list. The caller owns the copy; mutation cannot change routing.
 Monitoring need not be enabled. Refusal or unresolved control returns no partial
-snapshot. This unreleased contract replaces the old local-declaration getter.
+snapshot.
 
 Prepare a new handler binding before publishing it. `RebindHandler` changes only
 the selected route's binding revision; `PublishRoutes` replaces one complete
@@ -237,7 +384,7 @@ route identity lookup remain native-owned.
 
 Outbound terminals preserve typed `OutboundReason`, `OutboundPhase`,
 `OutboundRetry` and `OutboundCertainty`, including unknown numbers. Use named
-constants: HTTP404/500 can be `OutboundResponse`, while cancellation and deadline
+constants: HTTP 404 or 500 can be `OutboundResponse`, while cancellation and deadline
 expiry remain distinct causes. `Reason.String()` derives a code without storing
 a duplicate name. Retry disposition does not authorize replaying business work;
 the application owns idempotency and retry budgets. Never expose operator
@@ -250,3 +397,5 @@ needs retry. `*DrainError` preserves forced expiry or abort even after cleanup.
 Low-level `Runtime.Close` is forced cleanup: graceful low-level use requires
 `Drain`, progressing readers and handlers, then `WaitDrained` first. A timed wait
 is not proof of completion; an expired drain is not graceful success.
+
+[HTTP Runtime documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime)

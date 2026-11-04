@@ -1,75 +1,37 @@
 # CoAkka HTTP for JavaScript
 
-[Install and run a 1.1.2 registry sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md). The archive recipes below are for the pinned 1.0.0 generation.
+![CoAkka](https://raw.githubusercontent.com/phuong-tran/coakka-samples/a539dfcd7dc8d93c5b1c61b1324899af13d47ca6/docs/common/assets/brand/coakka-logo.png)
 
-**New application?** Start with the [Node.js/Bun integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/typescript/integration.md)
-for installation, a first request and feature-by-feature usage. This page
-remains the package/API reference.
+CoAkka HTTP Runtime provides HTTP server and client APIs for JavaScript
+and TypeScript applications. Use it to serve routes, stream responses,
+handle WebSockets, or send requests to configured services.
 
-CoAkka HTTP gives Node.js and Bun applications a JavaScript-native service API
-while the native runtime owns listeners, protocol I/O, bounded queues, route
-matching, streaming, files, WebSockets, outbound connections, and monitoring.
+## Install 2.0.1
 
-## Install 1.1.2 from npm
+Use the package for your runtime in your application directory.
 
-```sh
-npm install coakka-http-runtime-node@1.1.2
-# In a Bun application
-bun add coakka-http-runtime-bun@1.1.2
-```
+| Runtime | Requirement | Install |
+| --- | --- | --- |
+| Node.js | 22 or newer | `npm install coakka-http-runtime-node@2.0.1` |
+| Bun | 1.2.22 or newer | `bun add coakka-http-runtime-bun@2.0.1` |
 
-Import the API from the package you install. Each package contains the
-binaries for macOS ARM64, Linux x64 and ARM64, and Windows x64 and ARM64.
-It selects the matching binary when you import the package.
-
-## Archived 1.0.0 sample packages
-
-Five branch packages serve both Node.js and Bun. Download the `.tgz` matching
-the runtime process architecture from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/)
-and verify [SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). Install that local file:
-
-```sh
-npm install --ignore-scripts /absolute/path/coakka-http-javascript-1.0.0-candidate-macos-aarch64.tgz
-```
-
-The package loads its own native files by fixed relative paths. Keep `native/`
-intact; no compiler, postinstall download, runtime extraction or environment
-override is needed.
-
-The API baseline is Node.js22 or Bun1.2.22. On Windows use Bun1.4.2 or later,
-prefer native ARM64 Bun on Windows ARM64. Version1.4.2 is the tested reference,
-not certification of future versions. Earlier Windows x64 Bun builds crashed
-in the ARM64 emulation runner, including a standalone test without CoAkka.
-Physical Intel/AMD Windows testing remains separate. The archive's release note
-preserves the exact tested scope and related issue links without asserting an
-upstream fix. For a deliberate development override only,
-`COAKKA_HTTP_JAVASCRIPT_ADDON` accepts an absolute regular addon file; invalid
-configuration fails instead of silently choosing another library.
-
-## Contents
-
-- [URL grammar and glossary](../../docs/coakka-http-runtime/reference/glossary.md)
-
-- [Basic server](#basic-server)
-- [io_uring selection](#io_uring-selection)
-- [Request bodies](#request-bodies)
-- [Streaming responses and SSE](#streaming-responses-and-sse)
-- [WebSocket](#websocket)
-- [Static and application-selected files](#static-and-application-selected-files)
-- [Outbound requests](#outbound-requests)
-- [Route updates](#route-updates)
-- [Configuration And Runtime Observations](#configuration-and-runtime-observations)
-- [Monitoring and lifecycle](#monitoring-and-lifecycle)
-- [Advanced runtime surface](#advanced-runtime-surface)
+Each package bundles the native libraries for macOS ARM64, Linux x64 and
+ARM64, and Windows x64 and ARM64. The package selects the binary for the
+runtime's architecture when you import it. On Windows, qualification
+covered Bun 1.3.14 on x64 and Bun 1.4.2 on ARM64.
 
 ## Basic server
 
+Save this as `server.mjs` and run `node server.mjs`. For Bun, import from
+`coakka-http-runtime-bun` and run `bun server.mjs`. Use the same package
+name in the examples that follow.
+
 ```js
-import { Builder, Response } from "@coakka/http";
+import { Builder, Response } from "coakka-http-runtime-node";
 
 const service = new Builder()
   .listen("127.0.0.1", 8080)
-  .get("/hello/{name}", async (request) => {
+  .get("/hello/{name}", (request) => {
     const name = Buffer.from(request.pathParameters[0].encodedValue).toString();
     return Response.text(`Hello, ${name}!`);
   })
@@ -82,9 +44,31 @@ process.once("SIGINT", async () => {
 });
 ```
 
-Handlers may return a response directly or through a promise. Header lookup is
-case-insensitive and average O(1); declaration order and duplicate fields remain
-available through iteration and `Headers.getAll()`.
+Open `http://127.0.0.1:8080/hello/Ada`. The server returns HTTP 200 with
+`Hello, Ada!`. Press Ctrl+C to stop it.
+
+If the import fails, check the architecture reported by `node -p process.arch`
+or `bun -e 'console.log(process.arch)'` and install the package again in your
+application directory. Keep the installed package intact when deploying.
+
+## API reference
+
+Handlers can return a response or a promise. Header lookup is case-insensitive.
+Iteration follows declaration order, and `Headers.getAll()` returns duplicate
+values.
+
+- [Node.js and Bun integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/typescript/integration.md)
+- [URL grammar and glossary](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/glossary.md)
+- [Request bodies](#request-bodies)
+- [Streaming responses and SSE](#streaming-responses-and-sse)
+- [WebSocket](#websocket)
+- [Static and application-selected files](#static-and-application-selected-files)
+- [Outbound requests](#outbound-requests)
+- [Route updates](#route-updates)
+- [Configuration and runtime observations](#configuration-and-runtime-observations)
+- [Monitoring and lifecycle](#monitoring-and-lifecycle)
+- [Advanced runtime surface](#advanced-runtime-surface)
+- [io_uring selection](#io_uring-selection)
 
 ## io_uring selection
 
@@ -99,11 +83,10 @@ const service = new Builder()
 console.log(service.runtimeInfo());
 ```
 
-JavaScript only sends the boolean preference. Native code decides whether the
-listener is eligible, performs the platform probe when appropriate, and falls
-back to `epoll` when `io_uring` cannot be used. `runtimeInfo()` reports separate
-`ioUringRequested`, `ioUringProbed`, `ioUringEffective`, and `fallbackReason`
-fields. The connector never performs an operating-system probe.
+The native runtime checks whether the listener and platform support this
+option. It uses the platform default when the option is unavailable.
+`runtimeInfo()` reports `ioUringRequested`, `ioUringProbed`, `ioUringEffective`,
+and `fallbackReason`.
 
 ## Request bodies
 
@@ -116,7 +99,7 @@ const service = new Builder()
 ```
 
 Large or incremental bodies use a stream route. Events for concurrent requests
-carry distinct generation-checked IDs:
+carry distinct generation-checked IDs.
 
 Every admitted stream receives one `dispose` notification when its handler scope
 retires, including cancellation before `end`. Release application-owned state
@@ -152,13 +135,13 @@ per-request state bounded. One handler admission remains reserved for the whole
 stream scope, including asynchronous response work. `dispose` runs after that
 work settles; a throwing cleanup is reported as a handler diagnostic, never a
 second response. Its typed cause distinguishes `end`, `cancelled`, `terminal`,
-`handler-failed`, and `service-stopped`. The last cause follows successful the runtime
-stop; a refused stop retains the live scope for retry.
+`handler-failed`, and `service-stopped`. A successful runtime stop reports
+`service-stopped`. A refused stop retains the live scope for retry.
 
 ## Streaming responses and SSE
 
 ```js
-import { Builder, StreamingResponse, sse } from "@coakka/http";
+import { Builder, StreamingResponse, sse } from "coakka-http-runtime-node";
 
 const service = new Builder()
   .get("/download", () => new StreamingResponse(async (writer) => {
@@ -177,7 +160,7 @@ full, it waits for a writable event up to the configured response-write timeout.
 ## WebSocket
 
 ```js
-import { Builder, websocket } from "@coakka/http";
+import { Builder, websocket } from "coakka-http-runtime-node";
 
 const service = new Builder()
   .get("/socket", () => websocket({
@@ -208,7 +191,7 @@ Application-selected files use an explicit authority and remain confined below
 its root:
 
 ```js
-import { Builder, FileResponse } from "@coakka/http";
+import { Builder, FileResponse } from "coakka-http-runtime-node";
 
 const service = new Builder()
   .fileAuthority({
@@ -228,10 +211,13 @@ loop.
 
 ## Outbound requests
 
-Logical targets are immutable construction-time snapshots. Calls select a target
-by name instead of accepting an arbitrary destination from request data:
+Configure logical targets when you build the service, then select them by
+name when submitting requests. This example sends `GET /ready` to an HTTP
+service running at `127.0.0.1:9000`.
 
 ```js
+import { Builder, TransportSecurity } from "coakka-http-runtime-node";
+
 const service = new Builder()
   .outboundTarget({
     name: "users",
@@ -241,7 +227,7 @@ const service = new Builder()
       connectHost: "127.0.0.1",
       connectPort: 9000,
       httpAuthority: "users.internal",
-      security: 1,
+      security: TransportSecurity.PLAINTEXT,
     }],
   })
   .start();
@@ -278,10 +264,10 @@ Use `publishRoutes()` only for structural changes such as adding or removing a
 route or changing its method, path, or body policy. Both operations use expected
 generation values and return the complete effective outcome.
 
-## Configuration And Runtime Observations
+## Configuration and runtime observations
 
 `Builder.compression({ mode: CompressionMode.GZIP })` enables bounded buffered
-compression; import `CompressionMode` from `@coakka/http`. Omission or
+compression; import `CompressionMode` from `coakka-http-runtime-node`. Omission or
 `CompressionMode.DISABLED` leaves it disabled. Identity response streams remain
 usable with buffered compression enabled; this does not promise streaming GZIP.
 Optional byte/workspace bounds and encoding effort are documented in the
@@ -295,10 +281,10 @@ and expected revisions for control operations.
 `OutboundReason`, `OutboundPhase`, `OutboundRetry` and `OutboundCertainty` name
 runtime-issued outcome fields. Unknown numeric observations remain unchanged;
 application retry safety and budgets are not inferred from status or text.
-The sibling `coakka-samples` checkout provides the runnable TypeScript recipes
-under `coakka-http-runtime/typescript/`: configuration observations, monitor
-reload, cancellation, deadlines, compression and native outbound TLS/mTLS.
-Use the matching repository package set selected by the sample checksum pins.
+The [TypeScript sample repository](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/typescript)
+has runnable recipes for monitoring, cancellation, deadlines, compression,
+and outbound TLS/mTLS. The sample runner uses the SDK and package versions
+listed in its own guide.
 
 ## Monitoring and lifecycle
 
@@ -321,3 +307,5 @@ should still stop creating new work before closing the service.
 need to own event dispatch themselves. Each successful take operation already
 returns JavaScript-owned copies, and each lane permits one reader. Do not overlap
 blocking reads on the same lane.
+
+[HTTP Runtime documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime)

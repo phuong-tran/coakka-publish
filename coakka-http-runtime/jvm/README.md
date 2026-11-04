@@ -1,112 +1,219 @@
-# CoAkka HTTP for JVM (Kotlin and Java)
+# CoAkka HTTP Runtime for Java and Kotlin
 
-[Install and run a 1.1.2 registry sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md). The archive recipes below are for the pinned 1.0.0 generation.
+![CoAkka](https://raw.githubusercontent.com/phuong-tran/coakka-samples/a539dfcd7dc8d93c5b1c61b1324899af13d47ca6/docs/common/assets/brand/coakka-logo.png)
 
-**Java is supported too.** Kotlin is the connector implementation language,
-not a required application language. See the
-[Java code and runnable example](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/kotlin/integration.md#java-uses-the-same-jvm-connector)
-for ordinary Java lambdas, getters, static/file serving and handler replacement
-through the same artifact.
-
-**New application?** Start with the [Kotlin/JVM integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/kotlin/integration.md)
-for installation, a first request and feature-by-feature usage. This page
-remains the package/API reference.
-
-This module provides an idiomatic Kotlin service API and a lower-level typed
-The runtime API over the host-inlined CoAkka HTTP native library. Java consumers use
-the same public classes without Kotlin-only call syntax.
-
-The connector JAR contains managed classes only. It does not embed or extract a
-native library. Five branch bundles pair the JAR with its matching native
-libraries. Download from [candidates/2026-10-08-r3](candidates/2026-10-08-r3/) and verify
-[SHA256SUMS](candidates/2026-10-08-r3/SHA256SUMS). For Maven Central installation, use the 1.1.2 instructions above. Select the JVM process architecture, not just the OS architecture.
-
-## Contents
-
-- [URL grammar and glossary](../../docs/coakka-http-runtime/reference/glossary.md)
-
-- [Requirements](#requirements)
-- [Buffered service](#buffered-service)
-- [Supported service features](#supported-service-features)
-- [Lower-level Kotlin API](#lower-level-kotlin-api)
-- [Resource and failure behavior](#resource-and-failure-behavior)
-- [Build and verification](#build-and-verification)
+Serve HTTP requests, stream responses, handle WebSockets, and call configured
+upstream services from Java or Kotlin. Both languages use the same JVM
+artifact and native library package.
 
 ## Requirements
 
-- Java 8 or newer at runtime;
-- the managed JAR and unchanged `native/` directory from one bundle;
-- Kotlin standard library 2.3.10 as an application dependency.
+Use JDK 17 and Maven for the examples below. The connector JAR targets Java 8
+bytecode. Pick the native ZIP for the operating system and architecture of
+the JVM that will run your app. Check the architecture with
+`java -XshowSettings:properties -version` and look for `os.arch`.
 
-Consumers need no native compiler or JDK17 build tools. Windows ARM64 was tested
-with Java21; Windows x86-64 with Java8 under ARM64 emulation. Linux x86-64 was
-also emulated. Java8 bytecode does not establish Java8 execution on every target.
-The bundle README contains exact startup steps and platform qualifications.
+| Platform | JVM architecture | Native ZIP classifier |
+| --- | --- | --- |
+| macOS 11 or newer | ARM64 | `macos-aarch64` |
+| Linux, glibc 2.28 or newer | ARM64 | `linux-aarch64` |
+| Linux, glibc 2.28 or newer | x86-64 | `linux-x86_64` |
+| Windows | ARM64 | `windows-aarch64` |
+| Windows | x64 | `windows-x86_64` |
+
+On WSL2, use the Linux classifier for the JVM running inside WSL2.
+
+## Install 2.0.1
+
+For a new Maven app, save this as `pom.xml`. In an existing Maven app, add
+the dependency to your `dependencies` block.
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>example</groupId>
+    <artifactId>coakka-echo</artifactId>
+    <version>1.0.0</version>
+    <dependencies>
+        <dependency>
+            <groupId>io.github.phuong-tran.coakka</groupId>
+            <artifactId>coakka-http-runtime-jvm</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+For an existing Gradle app, use Maven Central and add the same dependency
+in `build.gradle.kts`. Maven and Gradle resolve the Kotlin standard library
+as a transitive dependency, including for Java applications.
 
 ```kotlin
-dependencies {
-    implementation(files("vendor/coakka-http/lib/coakka-http-jvm-1.0.0.jar"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.3.10")
+repositories {
+    mavenCentral()
 }
-tasks.withType<JavaExec>().configureEach {
+
+dependencies {
+    implementation("io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.0.1")
+}
+```
+
+Download and unpack the matching native ZIP. Run the following as a single
+command from the directory containing your Maven project. Replace
+`macos-aarch64` with the classifier for your JVM.
+
+```sh
+mvn org.apache.maven.plugins:maven-dependency-plugin:3.8.1:unpack "-Dartifact=io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.0.1:zip:macos-aarch64" "-DoutputDirectory=vendor/coakka-http"
+```
+
+The ZIP creates `vendor/coakka-http/native`. Pass that directory with
+`-Djava.library.path` at JVM startup. In Windows PowerShell, add it to the
+process `PATH` before starting the application.
+
+```powershell
+$env:PATH = "$(Resolve-Path vendor/coakka-http/native);$env:PATH"
+```
+
+Use the same version for the JAR and the native ZIP. If the JVM reports
+`UnsatisfiedLinkError`, check the classifier, the extracted `native` directory,
+and the value of `java.library.path` in the application process.
+
+If you launch the app with Gradle's `application` plugin, pass the same
+directory to its JVM.
+
+```kotlin
+tasks.named<JavaExec>("run") {
     jvmArgs("-Djava.library.path=" + file("vendor/coakka-http/native").absolutePath)
 }
 ```
 
-On Windows also add this trusted native directory to the application's process
-`PATH`. Keep library links intact and never replace libraries while loaded.
+## First request in Java
 
-The host library and native adapter must be on the operating system library path.
-Tests may instead provide absolute regular-file paths with
-`coakka.http.host.path` and `coakka.http.bridge.path`. Both properties are
-required together.
+From the example Maven project, copy the runtime JARs into `vendor/lib`.
 
-## Buffered service
+```sh
+mvn org.apache.maven.plugins:maven-dependency-plugin:3.8.1:copy-dependencies "-DincludeScope=runtime" "-DoutputDirectory=vendor/lib"
+```
 
-```kotlin
-val service = ServiceBuilder()
-    .listen("127.0.0.1", 8080)
-    .concurrency(2)
-    .post("/echo", Handler { request ->
-        Responses.bytes(request.bytes(), status = 201)
-    })
-    .start()
+Save this as `EchoServer.java` in the project directory.
 
-service.use {
-    println("listening on ${it.port}")
+```java
+import coakka.http.Responses;
+import coakka.http.Service;
+import coakka.http.ServiceBuilder;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.TimeoutException;
+
+public final class EchoServer {
+    private EchoServer() {}
+
+    public static void main(String[] args)
+            throws IOException, InterruptedException, TimeoutException {
+        try (Service service = new ServiceBuilder()
+                .listen("127.0.0.1", 0)
+                .post("/echo", request -> Responses.bytes(request.bytes(), 201))
+                .start()) {
+            System.out.printf("Listening on http://127.0.0.1:%d%n", service.getPort());
+            System.out.println("Press Enter to stop.");
+            BufferedReader input = new BufferedReader(
+                    new InputStreamReader(System.in, StandardCharsets.UTF_8));
+            input.readLine();
+        }
+    }
 }
 ```
 
-`ServiceBuilder` is single-use. `Service` owns one native runtime, one inbound
-event reader, a fixed worker pool, and bounded queues. Application handlers do
-not run on the native event-loop thread. `close()` is idempotent and preserves
-an unfinished native owner if an admitted handler has not stopped by the
-configured deadline, so a later close can complete safely.
+Compile and run on macOS or Linux.
 
-Header names are indexed case-insensitively for average O(1) lookup. Route and
-handler identities are also map-backed; dispatch never scans the route list.
+```sh
+javac -cp "vendor/lib/*" EchoServer.java
+java "-Djava.library.path=vendor/coakka-http/native" -cp ".:vendor/lib/*" EchoServer
+```
 
-### I/O backend
+In Windows PowerShell, use `".;vendor/lib/*"` as the classpath in the `java`
+command. Send a request from another terminal using the port printed by the
+server. For example, if it prints port 49321, use the following command.
 
-The default is the platform backend. Linux therefore uses epoll unless the
-application explicitly opts in:
+```sh
+curl -i --data "hello" http://127.0.0.1:49321/echo
+```
+
+Use `curl.exe` in Windows PowerShell. Expect HTTP 201 with the body `hello`.
+Press Enter in the server terminal to close the service.
+
+## First request in Kotlin
+
+Use the same Maven project, downloaded JARs, and extracted ZIP. Put the
+[Kotlin 2.3.10 command-line compiler](https://github.com/JetBrains/kotlin/releases/tag/v2.3.10)
+on your `PATH`. Save this as `EchoServer.kt` in the project directory.
 
 ```kotlin
-val service = ServiceBuilder()
+import coakka.http.Responses
+import coakka.http.ServiceBuilder
+
+fun main() {
+    ServiceBuilder()
+        .listen("127.0.0.1", 0)
+        .post("/echo") { request ->
+            Responses.bytes(request.bytes(), status = 201)
+        }
+        .start()
+        .use { service ->
+            println("Listening on http://127.0.0.1:${service.port}")
+            println("Press Enter to stop.")
+            readlnOrNull()
+        }
+}
+```
+
+Compile with `kotlinc` and run on macOS or Linux.
+
+```sh
+kotlinc EchoServer.kt -classpath vendor/lib/coakka-http-runtime-jvm-2.0.1.jar -d echo-kotlin.jar
+java "-Djava.library.path=vendor/coakka-http/native" -cp "echo-kotlin.jar:vendor/lib/*" EchoServerKt
+```
+
+In Windows PowerShell, use `"echo-kotlin.jar;vendor/lib/*"` as the classpath
+in the `java` command. Send the same `/echo` request using the port printed
+by the Kotlin server. It returns HTTP 201 with the body `hello`. Press Enter
+to close the service.
+
+## API reference
+
+- [HTTP Runtime documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime)
+- [URL grammar and glossary](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/glossary.md)
+- [Java and Kotlin feature recipes from v1.1.2](https://github.com/phuong-tran/coakka-samples/blob/7fab741dec51b2d8c156f653cdbe8442c56f2704/docs/coakka-http-runtime/kotlin/integration.md)
+
+`ServiceBuilder` creates one service. Use Java's try-with-resources or
+Kotlin's `use` to close it. `close()` stops admission and waits for in-flight
+work within the configured deadline. If an admitted handler has yet to stop
+and cleanup reports retained ownership, allow that handler to finish and
+retry close.
+
+## I/O backend
+
+The runtime uses the default backend for your platform. On Linux you can
+request io_uring explicitly.
+
+```kotlin
+ServiceBuilder()
     .ioBackend(IoBackend.IO_URING)
     .get("/health", Handler { Responses.empty() })
     .start()
-
-val info = service.runtimeInfo()
-println("requested=${info.ioUringRequested}")
-println("effective=${info.ioUringEffective}")
-println("fallback=${info.fallbackReason}")
+    .use { service ->
+        val info = service.runtimeInfo()
+        println("requested=${info.ioUringRequested}")
+        println("effective=${info.ioUringEffective}")
+        println("fallback=${info.fallbackReason}")
+    }
 ```
 
-The connector only forwards the preference. The native runtime owns support
-detection, protocol eligibility, startup, and fallback to epoll. Connector code
-does not inspect the operating system or issue a probe syscall. Benchmark code
-must check `ioUringEffective` before describing a result as io_uring.
+The runtime checks whether it can apply the request and uses the platform
+default otherwise. Read `ioUringEffective` and `fallbackReason` to see the
+backend in use and the outcome of your request.
 
 ## Supported service features
 
@@ -179,30 +286,3 @@ error queue and remain available through `pollError()`.
 Monitoring is disabled by default. Enabling it reserves fixed storage before
 startup. Live policy changes are generation-checked and a rejected change
 leaves the effective policy unchanged.
-
-## Build and verification
-
-```bash
-./gradlew :connectors:jvm:runtime:check \
-  -PcoakkaHttpPrefix=/absolute/path/to/installed-host \
-  -PcoakkaHttpBuildDir=/absolute/path/to/external-build
-```
-
-`check` compiles the native adapter with warnings as errors, runs the Kotlin and
-Java consumer tests on Java 8, exercises the class-only JAR against externally
-supplied native libraries, verifies public KDoc, and checks Java 8 bytecode.
-On Windows, pass `-PcoakkaHttpPython=C:\\absolute\\path\\to\\python.exe` when
-`python.exe` is not already on `PATH`; the same property can select a reviewed
-Python interpreter on every platform.
-
-The test runtime defaults to Azul Java 8. Windows ARM64 has no matching Java 8
-toolchain in the supported test inventory, so that target uses
-`-PcoakkaHttpTestJavaVersion=17` with a native ARM64 JDK. The independent
-class-file gate still requires every packaged class to use Java 8 bytecode.
-
-Release verification also shrinks the managed artifact and executes a native
-call to prove that only the required runtime lookup names are retained.
-
-The [App Host and connector guide](../../docs/coakka-http-runtime/explanation/app-host-and-connectors.md) describes
-ownership and threading. Release evidence remains a gate of the assembled
-candidate rather than a promise inferred from this API guide.

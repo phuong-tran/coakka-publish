@@ -66,7 +66,7 @@ provider silently appear.
 | Python | `Builder` | Python values and explicit service lifetime |
 | Node.js/Bun | `Builder` | Value or Promise-returning buffered handlers; synchronous stream chunk callbacks, asynchronous producers and close |
 
-The focused 1.1.2 native SDK uses CMake package `CoAkkaHttpHost` and link
+The focused 2.0.1 native SDK uses CMake package `CoAkkaHttpHost` and link
 target `CoAkkaHttp::host`. Use the installed header and library from the
 same package. The native SDK guide covers setup and the event lifetime rules.
 

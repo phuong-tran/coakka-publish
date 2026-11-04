@@ -1,22 +1,20 @@
 # CoAkka HTTP Runtime native SDK
 
-The 1.1.2 release train has one focused public C contract:
+SDK 2.0.1 exposes the focused public C contract:
 `<coakka/http/host.h>`, CMake package `CoAkkaHttpHost`, and link target
 `CoAkkaHttp::host`. C11, C++20 and language adapters consume the same closed
 shared library. Native application business dispatch stays application-owned;
 HTTP I/O, route matching, admission, deadlines and authoritative state stay
 inside CoAkka HTTP Runtime.
 
-Download the [released 1.1.2 SDK](releases/1.1.2/) for your host. Its public
-C header declares host ABI 10. The release directory lists all five archives
-and their SHA-256 checksums.
+[Download SDK 2.0.1](https://github.com/phuong-tran/coakka-publish/tree/main/coakka-http-runtime/native/releases/2.0.1) and verify the SHA-256 for your target. SDK 2.0.1 implements Core generation 2.0 and C ABI 10.
 
 ## Install one matching SDK
 
 Verify and extract the complete archive for the host, then use:
 
 ```cmake
-find_package(CoAkkaHttpHost 1.1.2 EXACT REQUIRED CONFIG)
+find_package(CoAkkaHttpHost 2.0.1 EXACT REQUIRED CONFIG)
 add_executable(example main.c)
 target_link_libraries(example PRIVATE CoAkkaHttp::host)
 ```
@@ -71,7 +69,7 @@ details are not automatically safe HTTP response bodies.
 
 ## Contract migration
 
-The 1.1.2 train replaces the provisional native application SDK based on
+The focused host SDK replaces the provisional native application SDK based on
 `http.h`, `CoAkkaHttp` and `CoAkkaHttp::runtime`. It does not install that header,
 retain aliases, or expose the full internal runtime ABI. Update native callers
 together; do not mix the earlier callback SDK with the focused host SDK.
@@ -98,5 +96,4 @@ There are five native artifacts. WSL does not introduce a sixth artifact.
 Correctness, installation, lifecycle and stability evidence remain distinct
 from comparative throughput/latency, which is measured only on physical Pi5.
 A cross-build or emulated execution does not replace matching-host evidence.
-See each final candidate's receipts for exact image hashes, tools, gates and
-limitations; this document does not assert that an active candidate has passed.
+See the versioned release for the exact archive hashes and qualification scope.
