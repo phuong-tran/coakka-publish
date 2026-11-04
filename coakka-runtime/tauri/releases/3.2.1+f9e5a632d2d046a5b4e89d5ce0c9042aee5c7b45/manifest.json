@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "product": "coakka-runtime-tauri-intents",
+  "version": "3.2.1",
+  "release_status": "released",
+  "distribution": "source_archive",
+  "archive": "coakka-runtime-tauri-intents-3.2.1-source.tar.gz",
+  "bytes": 4353274,
+  "sha256": "81ccf9868d5b89f3c274c07be3de1845cf78048f78acca9bbae2565eb55150d4",
+  "core_generation": "3.2",
+  "core_source_commit": "f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
+  "core_abi": 1,
+  "core_manifest_sha256": "16d8239b6f6f0d113e7059429400a055a7a79500bc5ab38970328c030b5fc677",
+  "bundled_native_sha256": {
+    "rust/native/macos-aarch64/libcoakka_runtime_v2.dylib": "c05e2be0be725e0868e7ebf7387319b040da84794d22b6c1d50e506164dadbfa",
+    "rust/native/linux-aarch64/libcoakka_runtime_v2.so": "c78b08f0b4cd62e9fb7276ffdb7cb95d8fd9a46ce327600ba45e85c5d4fe2d55",
+    "rust/native/linux-x86_64/libcoakka_runtime_v2.so": "666f6e00c63b0b24414d515e1365281ac1e59084871f3a7e7d2c5551383c68d6",
+    "rust/native/windows-aarch64/libcoakka_runtime_v2.dll": "d7fcb3a3c17e722cdb2bec5696fd7bd4bf75526bb24e8e41784390b4c18145fe",
+    "rust/native/windows-x86_64/libcoakka_runtime_v2.dll": "5418962956871fc82cc830b3614163941970bfb656df96436e03f0a777ac514c"
+  },
+  "publisher_signing": "absent",
+  "tested_toolchain": "Rust 1.95.0 for the macOS ARM64 archive smoke",
+  "language_execution_hosts": [
+    "macos-arm64"
+  ],
+  "tls_exercised": false,
+  "desktop_webview_execution_hosts": [
+    "macos-arm64"
+  ],
+  "desktop_webview_framework": "Tauri 2.11.5",
+  "desktop_webview_evidence": "previous archive with identical executable inputs",
+  "installer_qualified": false
+}

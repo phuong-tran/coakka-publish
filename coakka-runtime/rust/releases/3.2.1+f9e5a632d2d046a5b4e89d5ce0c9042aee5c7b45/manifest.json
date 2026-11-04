@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "product": "coakka-runtime-rs",
+  "version": "3.2.1",
+  "release_status": "released",
+  "distribution": "source_archive",
+  "archive": "coakka-runtime-rs-3.2.1.tar.gz",
+  "bytes": 4317688,
+  "sha256": "1e213fc11d5ff34bb7893a589f43766f5d24dadb07d4601d9733aaa86affaad2",
+  "core_generation": "3.2",
+  "core_source_commit": "f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
+  "core_abi": 1,
+  "core_manifest_sha256": "16d8239b6f6f0d113e7059429400a055a7a79500bc5ab38970328c030b5fc677",
+  "bundled_native_sha256": {
+    "native/macos-aarch64/libcoakka_runtime_v2.dylib": "c05e2be0be725e0868e7ebf7387319b040da84794d22b6c1d50e506164dadbfa",
+    "native/linux-aarch64/libcoakka_runtime_v2.so": "c78b08f0b4cd62e9fb7276ffdb7cb95d8fd9a46ce327600ba45e85c5d4fe2d55",
+    "native/linux-x86_64/libcoakka_runtime_v2.so": "666f6e00c63b0b24414d515e1365281ac1e59084871f3a7e7d2c5551383c68d6",
+    "native/windows-aarch64/libcoakka_runtime_v2.dll": "d7fcb3a3c17e722cdb2bec5696fd7bd4bf75526bb24e8e41784390b4c18145fe",
+    "native/windows-x86_64/libcoakka_runtime_v2.dll": "5418962956871fc82cc830b3614163941970bfb656df96436e03f0a777ac514c"
+  },
+  "publisher_signing": "absent",
+  "tested_toolchain": "Rust 1.95.0 for the macOS ARM64 archive smoke",
+  "language_execution_hosts": [
+    "macos-arm64",
+    "raspberry-pi-5-linux-arm64",
+    "wsl2-linux-x86_64",
+    "native-windows-x86_64",
+    "utm-windows-arm64"
+  ],
+  "tls_exercised": false,
+  "windows_arm64_evidence": "cross-built application executed in Windows ARM64 UTM"
+}
