@@ -35,12 +35,10 @@ for five native RIDs. Use .NET 8 or later. See the [C# release](../releases/2026
 
 PyPI Python is independently published at `3.0.0`, with Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` / ABI1 and five `cp311-abi3` wheels. Each contains Core plus its Python adapter. GIL-enabled CPython3.11 is the minimum; see the [release note](../releases/2026-10-30-pypi-python-runtime-3.0.0.md).
 
-Node.js and Bun Runtime `3.1.2` are on npm with Core `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` / ABI 1
-and all five native targets. Node requires 22.0.0 or later, and Bun requires
-1.3.14 or later (Windows ARM64 requires 1.4.0). Electron `3.1.1` requires
-Electron 42 or later and depends exactly on Node `3.1.2`.
-See the [Node.js and Bun release](../releases/2026-11-04-npm-node-bun-runtime-3.1.2.md)
-and [Electron release](../releases/2026-11-04-npm-electron-runtime-3.1.1.md).
+Node.js, Bun and Electron Runtime `3.2.1` are available on npm with Core
+`3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45`, ABI 1, and five native targets.
+Electron requires version 42 or later and installs Node.js `3.2.1` exactly.
+See the [npm release record](../releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md).
 
 The `2.5.3` connectors expose typed File receive and Stream publish owner
 grants for replica-pinned lanes. ONE selects one enumerated owner; ALL creates
@@ -55,8 +53,8 @@ request does not implement ALL semantics.
 | Quarkus adapter | `io.github.phuong-tran.coakka:quarkus-extension` | `3.0.0` | Runtime `3.0.0` / Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | JVM signed public tree | `https://repo1.maven.org/maven2/io/github/phuong-tran/coakka/runtime/3.0.0/` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | Connector archives | `runtime/<lane>/releases/2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be-0ba485e/` | `2.5.3` | `2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` |
-| npm (Node.js and Bun) | `coakka-v2-connector-{node,bun}@3.1.2` | `3.1.2` | `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` |
-| npm (Electron) | `coakka-v2-connector-electron@3.1.1` | `3.1.1` | `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` via Node `3.1.2` |
+| npm (Node.js and Bun) | `coakka-v2-connector-{node,bun}@3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
+| npm (Electron) | `coakka-v2-connector-electron@3.2.1` | `3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` via Node `3.2.1` |
 | PyPI | `coakka-v2-connector==3.0.0` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | NuGet | `CoAkka.Runtime==3.1.1` | `3.1.1` | `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go/v3` | `v3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
@@ -125,7 +123,7 @@ All logger connector lanes below align to logger native generation
 
 | Channel | Available surface | Status |
 | --- | --- | --- |
-| npm | Node.js, Bun, and Electron coakka-runtime/logger packages | Runtime Node.js and Bun `3.1.2`, Electron `3.1.1`; Logger `1.2.7` |
+| npm | Node.js, Bun, and Electron coakka-runtime/logger packages | Runtime Node.js, Bun and Electron `3.2.1`; Logger `1.2.7` |
 | PyPI | Python coakka-runtime/logger wheels | runtime `coakka-v2-connector==3.0.0` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go coakka-runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go/v3@v3.0.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift coakka-runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@3.0.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
@@ -139,9 +137,9 @@ Runtime npm packages are published for the sealed package boundary:
 
 | Surface | npm coordinate | Native generation |
 | --- | --- | --- |
-| Node.js runtime | `coakka-v2-connector-node@3.1.2` | `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` |
-| Bun runtime | `coakka-v2-connector-bun@3.1.2` | `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` |
-| Electron runtime | `coakka-v2-connector-electron@3.1.1` | via `coakka-v2-connector-node@3.1.2` |
+| Node.js runtime | `coakka-v2-connector-node@3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
+| Bun runtime | `coakka-v2-connector-bun@3.2.1` | `3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45` |
+| Electron runtime | `coakka-v2-connector-electron@3.2.1` | via `coakka-v2-connector-node@3.2.1` |
 | Node.js logger | `coakka-logger-node@1.2.7` | `1.2.1+f50756ebff0d` |
 | Bun logger | `coakka-logger-bun@1.2.7` | `1.2.1+f50756ebff0d` |
 | Electron logger | `coakka-logger-electron@1.2.7` | via `coakka-logger-node@1.2.7` |
