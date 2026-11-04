@@ -21,7 +21,7 @@ its matching native Runtime; no separate Core installation is needed.
 Runtime integrations include **JavaScript and TypeScript (Node.js / Bun),
 Python, Java, Kotlin, C#, Go and Swift**, with **Spring Boot** and **Quarkus**
 framework adapters and **Electron** desktop support. The language table below
-leads to the released 3.0.0 first runs.
+leads to published first-run examples with their pinned versions.
 
 **Tauri**, C/C++, Rust and Zig use version-specific source/archive guides;
 Android and Mojo remain previews. Choose the exact version and platform in
@@ -54,8 +54,7 @@ coordinates, or the catalogs below when choosing an archive.
 
 The [published package ledger](../docs/common/current-packages.md) owns exact
 versions and coordinates. **C# `CoAkka.Runtime 3.0.0` is available on NuGet**
-and **Python `coakka-v2-connector==3.0.0` on PyPI**. **Node.js, Bun and Electron
-3.0.0 are available on npm**. **Go `/v3@v3.0.0` and Swift 3.0.0 are released on GitHub**. **JVM Runtime, Spring Boot and Quarkus 3.0.0 are published on Maven Central**.
+and **Python `coakka-v2-connector==3.0.0` on PyPI**. **Node.js and Bun 3.1.2 and Electron 3.1.1 are available on npm.** **Go `/v3@v3.0.0` and Swift 3.0.0 are released on GitHub**. **JVM Runtime, Spring Boot and Quarkus 3.0.0 are published on Maven Central**.
 Other Runtime 3.0.0 lanes remain local candidates until their own publication. Follow the ledger for the particular language you use.
 
 | Application | Distribution and installation reference |
