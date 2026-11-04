@@ -30,7 +30,8 @@ listed `2.4.0+c2f53117` generation. The current Runtime
 package train contains five libraries: Linux ARM64/x86-64 `.so`, macOS ARM64
 `.dylib`, and Windows ARM64/x86-64 `.dll`.
 
-NuGet C# is independently published at `3.0.0`, with Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` / ABI1 and all five native RIDs. It requires a source migration from 2.x; see the [release note](../releases/2026-10-30-nuget-csharp-runtime-3.0.0.md).
+NuGet C# `3.1.1` bundles Core `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121`, ABI 1,
+for five native RIDs. Use .NET 8 or later. See the [C# release](../releases/2026-11-04-nuget-csharp-runtime-3.1.1.md).
 
 PyPI Python is independently published at `3.0.0`, with Core `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` / ABI1 and five `cp311-abi3` wheels. Each contains Core plus its Python adapter. GIL-enabled CPython3.11 is the minimum; see the [release note](../releases/2026-10-30-pypi-python-runtime-3.0.0.md).
 
@@ -57,7 +58,7 @@ request does not implement ALL semantics.
 | npm (Node.js and Bun) | `coakka-v2-connector-{node,bun}@3.1.2` | `3.1.2` | `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` |
 | npm (Electron) | `coakka-v2-connector-electron@3.1.1` | `3.1.1` | `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` via Node `3.1.2` |
 | PyPI | `coakka-v2-connector==3.0.0` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
-| NuGet | `CoAkka.Runtime==3.0.0` | `3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
+| NuGet | `CoAkka.Runtime==3.1.1` | `3.1.1` | `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` |
 | Go module | `github.com/phuong-tran/coakka-runtime-go/v3` | `v3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 | SwiftPM | `github.com/phuong-tran/coakka-runtime-swift` | `v3.0.0` | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
 
@@ -128,7 +129,7 @@ All logger connector lanes below align to logger native generation
 | PyPI | Python coakka-runtime/logger wheels | runtime `coakka-v2-connector==3.0.0` and logger `coakka-logger==1.2.2`; registry verified |
 | Go modules | Go coakka-runtime/logger packages | runtime `github.com/phuong-tran/coakka-runtime-go/v3@v3.0.0`, logger `github.com/phuong-tran/coakka-logger-go@v1.2.6` |
 | SwiftPM | Swift coakka-runtime/logger source packages | runtime `github.com/phuong-tran/coakka-runtime-swift@3.0.0`, logger `github.com/phuong-tran/coakka-logger-swift@1.2.2` |
-| NuGet | C# coakka-runtime/logger packages | runtime `CoAkka.Runtime==3.0.0` (`net8.0` minimum; fresh registry consumer verified on .NET 8), logger `CoAkka.Logger==1.2.3` (verified on .NET 8/9/10) |
+| NuGet | C# coakka-runtime/logger packages | runtime `CoAkka.Runtime==3.1.1` (`net8.0` minimum; fresh registry consumer verified on .NET 8), logger `CoAkka.Logger==1.2.3` (verified on .NET 8/9/10) |
 
 PyPI superseded versions are yanked, not deleted:
 `coakka-v2-connector==1.3.2`, `coakka-v2-connector==1.3.3`, and
@@ -161,7 +162,7 @@ NuGet packages:
 
 | Surface | NuGet coordinate | Native generation |
 | --- | --- | --- |
-| C# runtime | `CoAkka.Runtime==3.0.0` (`net8.0`; fresh registry verification on .NET 8) | `3.0.0+1522b4a9f30da1039ef8c7d198bbecfc749a2456` |
+| C# runtime | `CoAkka.Runtime==3.1.1` (`net8.0`; fresh registry verification on .NET 8) | `3.1+6789dd16210fc01f17cca4d2b66a592d1ac79121` |
 | C# logger | `CoAkka.Logger==1.2.3` (`net8.0`; verified on .NET 8/9/10) | `1.2.1+f50756ebff0d` |
 
 SwiftPM packages:
