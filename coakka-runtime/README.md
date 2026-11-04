@@ -38,7 +38,7 @@ command, expected output and the application source, including how to close it.
 | Bun | [Bun first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/bun/registry-basic/README.md) |
 | Electron | [Electron first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/electron/registry-basic/README.md) |
 | Python | [Python first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/python/registry-basic/README.md) |
-| C# | [C# 3.1.1 install](../docs/coakka-runtime/releases/2026-11-04-nuget-csharp-runtime-3.1.1.md#install) |
+| C# | [C# 3.2.1 install](../docs/coakka-runtime/releases/2026-11-05-nuget-csharp-runtime-3.2.1.md#install) |
 | Kotlin | [Kotlin first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/jvm/registry-basic/README.md#kotlin) |
 | Java | [Java first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/jvm/registry-basic/README.md#java) |
 | Go | [Go first example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-runtime/go/registry-basic/README.md) |
@@ -53,7 +53,7 @@ coordinates, or the catalogs below when choosing an archive.
 ## Published packages
 
 The [published package ledger](../docs/common/current-packages.md) owns exact
-versions and coordinates. **C# `CoAkka.Runtime 3.1.1` is available on NuGet**
+versions and coordinates. **C# `CoAkka.Runtime 3.2.1` is available on NuGet**
 and **Python `coakka-v2-connector==3.0.0` on PyPI**. **[Node.js, Bun and Electron 3.2.1 are available on npm](../docs/coakka-runtime/releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md).** **Go `/v3@v3.0.0` and Swift 3.0.0 are released on GitHub**. **JVM Runtime, Spring Boot and Quarkus 3.0.0 are published on Maven Central**.
 Other Runtime 3.0.0 lanes remain local candidates until their own publication. Follow the ledger for the particular language you use.
 
