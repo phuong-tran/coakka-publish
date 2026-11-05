@@ -13,8 +13,15 @@ int main(void) {
   coakka_v2_runtime_info_t info = {0};
   info.struct_size = sizeof(info);
   assert(coakka_v2_runtime_get_info(&info) == COAKKA_V2_OK);
-  assert(info.abi_version == 1 && strcmp(info.git_commit,
-      "1522b4a9f30da1039ef8c7d198bbecfc749a2456") == 0);
+  assert(info.abi_version == 1);
+  assert(info.runtime_version != NULL && strcmp(info.runtime_version, "3.2") == 0);
+  assert(info.git_commit != NULL && strcmp(info.git_commit,
+      "f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45") == 0);
+  assert(info.edition == COAKKA_V2_RUNTIME_EDITION_COMMUNITY ||
+      info.edition == COAKKA_V2_RUNTIME_EDITION_ENTERPRISE);
+  const uint32_t owned = info.edition == COAKKA_V2_RUNTIME_EDITION_ENTERPRISE;
+  const uint32_t delivery_mode = owned ? COAKKA_V2_STARTUP_DELIVERY_OWNED_QUEUE
+                                      : COAKKA_V2_STARTUP_DELIVERY_FRAMED;
   for (unsigned cycle = 0; cycle < 16; ++cycle) {
     const coakka_v2_runtime_config_t base = {"native-engine-evidence", "main", 1, 0};
     const coakka_v2_endpoint_t endpoint = {"127.0.0.1", 0, 1, COAKKA_V2_ENDPOINT_FLAG_LOCAL};
@@ -27,9 +34,9 @@ int main(void) {
     assert(owner.facts.startup_checked && owner.facts.delivery_checked);
     assert(owner.facts.startup.execution.requested_policy == COAKKA_V2_STARTUP_CPU_AUTO);
     assert(owner.facts.startup.connection.mode == COAKKA_V2_TCP_CONNECTION_MULTIPLEXED);
-    assert(owner.facts.delivery.compiled == 1);
-    assert(owner.facts.delivery.request_mode == COAKKA_V2_STARTUP_DELIVERY_OWNED_QUEUE);
-    assert(owner.facts.delivery.response_mode == COAKKA_V2_STARTUP_DELIVERY_OWNED_QUEUE);
+    assert(owner.facts.delivery.compiled == owned);
+    assert(owner.facts.delivery.request_mode == delivery_mode);
+    assert(owner.facts.delivery.response_mode == delivery_mode);
     {
       uint8_t payload[4096];
       uint8_t *wire = NULL, *reply = NULL, *result = NULL, *copy = NULL;

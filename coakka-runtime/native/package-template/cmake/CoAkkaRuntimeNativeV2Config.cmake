@@ -45,6 +45,14 @@ if(NOT TARGET CoAkkaRuntimeNativeV2::runtime_v2)
     IMPORTED_LOCATION "${_coakka_runtime_native_lib}"
     INTERFACE_INCLUDE_DIRECTORIES "${_coakka_runtime_native_include_dir}"
   )
+  if(WIN32)
+    set(_coakka_runtime_native_import_lib
+      "${_coakka_runtime_native_root}/lib/${_coakka_runtime_native_platform}/coakka_runtime_v2.lib")
+    if(EXISTS "${_coakka_runtime_native_import_lib}")
+      set_property(TARGET CoAkkaRuntimeNativeV2::runtime_v2 PROPERTY
+        IMPORTED_IMPLIB "${_coakka_runtime_native_import_lib}")
+    endif()
+  endif()
 endif()
 
 set(CoAkkaRuntimeNativeV2_FOUND TRUE)
