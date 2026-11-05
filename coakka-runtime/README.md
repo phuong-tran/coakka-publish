@@ -109,7 +109,7 @@ independent of the connector package selected for your application.
 
 ## Tools, extensions and reference
 
-[Client and Inspect](../coakka-tools/README.md), [native Runtime tests](runtime-test/README.md)
+[Client and Inspect](../coakka-tools/README.md), [native Runtime tests](coakka-runtime-test/README.md)
 and [optional addons](../runtime-addons/README.md) have their own catalogs.
 For configuration and operation, start with [Runtime documentation](../docs/coakka-runtime/README.md).
 [Release history](../docs/coakka-runtime/releases/README.md) records older identities.

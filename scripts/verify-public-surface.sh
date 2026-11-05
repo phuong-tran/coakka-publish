@@ -330,9 +330,17 @@ import sys
 
 manifest_path, archive_name = sys.argv[1:]
 with open(manifest_path, "r", encoding="utf-8") as handle:
-    artifacts = json.load(handle).get("artifacts", [])
+    manifest = json.load(handle)
 
-matches = [item for item in artifacts if item.get("name") == archive_name]
+if isinstance(manifest, list) and "/native/rpi-camera/releases/" in manifest_path:
+    artifacts, archive_field = manifest, "archive"
+elif isinstance(manifest, dict):
+    artifacts, archive_field = manifest.get("artifacts", []), "name"
+else:
+    raise SystemExit(f"Unsupported native sample manifest: {manifest_path}")
+if not isinstance(artifacts, list) or not all(isinstance(item, dict) for item in artifacts):
+    raise SystemExit(f"Invalid native sample manifest entries: {manifest_path}")
+matches = [item for item in artifacts if item.get(archive_field) == archive_name]
 print(archive_name if len(matches) == 1 else "")
 PY
 )"
@@ -558,10 +566,10 @@ verify_current_bun_tauri_public_boundary() {
   local bun_rel electron_rel logger_bun_rel logger_electron_rel logger_tauri_rel tauri_rel
 
   verify_no_public_core_markers_in_tree "${repo_root}/README.md" "root README"
-  verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-logger-bun-1.2.1-6fdcc69.md" "logger Bun release note"
-  verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md" "logger Tauri/Electron release note"
-  verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md" "Bun/Tauri release note"
-  verify_no_public_core_markers_in_tree "${repo_root}/docs/releases/2026-07-23-runtime-electron-1.3.1-4e0cab0.md" "Electron release note"
+  verify_no_public_core_markers_in_tree "${repo_root}/docs/coakka-logger/releases/2026-07-23-logger-bun-1.2.1-6fdcc69.md" "logger Bun release note"
+  verify_no_public_core_markers_in_tree "${repo_root}/docs/coakka-logger/releases/2026-07-23-logger-tauri-electron-1.2.1-3e8a6ae.md" "logger Tauri/Electron release note"
+  verify_no_public_core_markers_in_tree "${repo_root}/docs/coakka-runtime/releases/2026-07-23-runtime-bun-tauri-1.3.1-247df1b.md" "Bun/Tauri release note"
+  verify_no_public_core_markers_in_tree "${repo_root}/docs/coakka-runtime/releases/2026-07-23-runtime-electron-1.3.1-4e0cab0.md" "Electron release note"
 
   bun_rel="$(public_manifest_path_for_label "runtime Bun package")"
   electron_rel="$(public_manifest_path_for_label "runtime Electron package")"
@@ -673,7 +681,7 @@ require_file "README.md"
 require_file "coakka-runtime/README.md"
 require_file "coakka-logger/README.md"
 require_file "LICENSE.md"
-require_file "docs/public-artifact-contract.md"
+require_file "docs/common/public-artifact-contract.md"
 require_file "artifacts/public-artifacts.tsv"
 require_file "runtime-addons/README.md"
 require_file "coakka-runtime/addons/manifest.schema.json"

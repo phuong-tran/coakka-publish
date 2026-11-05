@@ -1,0 +1,33 @@
+{
+  "schema": "coakka.runtime.native.evidence.release.v3",
+  "name": "coakka-runtime-native-evidence-v2",
+  "version": "3.2",
+  "release": "3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
+  "candidateState": "sealed",
+  "sourceRepository": "https://github.com/phuong-tran/coakka-publish",
+  "sampleSourceDirectory": "coakka-runtime/coakka-runtime-test",
+  "sourceSnapshot": "a058c38216390e2b5e20bafe9cf6d41de8a0792d",
+  "sourceManifestSha256": "5929b81b1aa0a4330ec6bdb73c9b8c6ba15f1ecce66a05311935f4ca124265ef",
+  "runtimeNativeName": "coakka-runtime-native-v2",
+  "runtimeNativeVersion": "3.2",
+  "runtimeNativeRelease": "3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
+  "runtimeNativeSourceSnapshot": "f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
+  "runtimeNativeManifest": "runtime/native/releases/3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45/manifest.json",
+  "runtimeNativeManifestSha256": "4c8bbd8b23ab993c9547135c5989fab687ee26cc71ec8be2b710caab8cf15dcc",
+  "runtimeNativeArchive": "runtime/native/releases/3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45/coakka-runtime-native-v2-3.2.tar.gz",
+  "runtimeNativeArchiveSha256": "3dbc6950c194aa2adb2a34c9de54916851df06e6e876e182b009c6faf14ecfd3",
+  "executables": [
+    "coakka-runtime-native-evidence",
+    "coakka-runtime-native-concurrency-evidence",
+    "coakka-runtime-native-connection-strategy-evidence",
+    "coakka-runtime-native-file-lane-evidence",
+    "coakka-runtime-native-stream-lane-evidence"
+  ],
+  "archives": [
+    {"platform":"linux-aarch64","archive":"coakka-runtime-native-evidence-v2-3.2-linux-aarch64.tar.gz","sha256":"2c868dbfcd6c53c910d42fcce3a6d40e3b69a1b1b913823bf3abf7aab220b2d1","runtimeLibrarySha256":"0637cadd56e697b82765bcd7e42c5324c28dc90301d6f40d4245275af2c86b05"},
+    {"platform":"linux-x86_64","archive":"coakka-runtime-native-evidence-v2-3.2-linux-x86_64.tar.gz","sha256":"72f9e9075f3567cdda1fcf3d5438740741f05058d8028a6f4fbf5235a33de27a","runtimeLibrarySha256":"dd59b53e1d0398ad3b977c700a6f970c10ee67d32aba4023ac6510801fc2096e"},
+    {"platform":"macos-aarch64","archive":"coakka-runtime-native-evidence-v2-3.2-macos-aarch64.tar.gz","sha256":"cc05a16e9a9f26b0ac8a2ed701511c42eab5f88b9ea9a8ad0c7bda68fda2242c","runtimeLibrarySha256":"9ba3b2d3299408ce7ec8b3eeab59e3f629d01d628022adec7a7a5a3169dc68ff"},
+    {"platform":"windows-aarch64","archive":"coakka-runtime-native-evidence-v2-3.2-windows-aarch64.zip","sha256":"59bfebe830f0baf2c876167fda4384fcb373aaec138d52c3c55ce347609440c7","runtimeLibrarySha256":"d6db37830cd7b13f1c60cafc51c224d8082be18fb1bb0b70d26357a7b1b9efe3"},
+    {"platform":"windows-x86_64","archive":"coakka-runtime-native-evidence-v2-3.2-windows-x86_64.zip","sha256":"19f3579ef2df9fa55273dd561f830d2b2299fbef04232f51064f96a840ed4487","runtimeLibrarySha256":"1e9c11f8ccde0c28ae3f0f310872642d163527ae00abe5b58094a8716374a587"}
+  ]
+}

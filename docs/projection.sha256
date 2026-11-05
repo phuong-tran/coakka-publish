@@ -37,11 +37,11 @@ a0fc67500feabf38876c798184ba8c9ea22c4daf45f0c972a71d061e2350b289  coakka-http-ru
 55ffe22c90dfbf3185a4d4de91abc6c8ebc85557963300148b6daf75eab4ca93  coakka-http-runtime/python/README.md
 522cde7aa5a9ea8fbb55082b394f17bae9cf85a0187f79bda246bb9fb452cf3c  coakka-http-runtime/runtime-test/README.md
 c3df3544e6f2a0df33205a7a2f34a8a6b6dbf2c199981060ddf487f97f6e5f0c  coakka-logger/README.md
-c614e81b304503b29f5503d61bc1152474c2cfd51e5692dcc2a17cb69ac32ce2  coakka-runtime/README.md
+7b93ae962639bdbd35c32801d3d41226f3937ede9b50c336da4175f709424063  coakka-runtime/README.md
 0b5d4f8ce98a8d88c58e10e51ea2e3beee06b30184769fc73530b8daf5b2a8f9  coakka-runtime/addons/artifact-publisher-sftp/native/package-template/CONSUMING.md
 65c7326a2e6a3e07ab18c54df84d89142bd6c70df8603acec653801e4cd3bcfc  coakka-runtime/addons/artifact-publisher-sftp/native/package-template/README.md
 2fb28086497adf9519aaa16cea81fba5ae9698679c2e5fca389febdfd9a54e4f  coakka-runtime/addons/artifact-publisher-sftp/native/package-template/THIRD_PARTY_NOTICES.md
-deb1e1902f5d9e0a003dd3cf45ef074ced358ec4379f19e6d1db586b5d809490  coakka-runtime/coakka-runtime-test/README.md
+b540525226c4cb8bc7dec93b96022cda053642a733a11046cbffc6b1745a8a9e  coakka-runtime/coakka-runtime-test/README.md
 de715408194c0bb057b71122a4a822e9adba2791943b587cf071031b846ef677  coakka-runtime/native/package-template/CONSUMING.md
 31389f301f62f13e2fc37abdf65575399fcc1dd28d4aa71e1af471271140e965  coakka-runtime/native/package-template/README.md
 a194b604d364a877eba9014ad11029c09c6131b3e1eb46459df02c0730c030ca  coakka-tools/README.md
@@ -92,7 +92,7 @@ bdbd1a8ea52a1bf36b10806658609685e538ea0b91ac1baae87b4482d99005ef  docs/coakka-lo
 cd8c202b2f1c1be1bd290bc7e6da763dd04dd4b2450184c2c73ac191834edcb2  docs/coakka-logger/releases/2026-08-17-go-logger-v1.2.6.md
 aa47b319a76b590708abeec2914f40b1810ecff4b637d7923574b52af08c7d6f  docs/coakka-logger/releases/2026-08-17-logger-jvm-maven-central-1.2.2.md
 06f8cb8b6702d39206b81f95d6b079e0e7af2f6d6369c084eee9d63db8cd3397  docs/coakka-logger/releases/README.md
-1475e712df384b15f325083c015926555e5b6fc85cd58da87d4316a2cc96ed63  docs/coakka-runtime/CHANGELOG.md
+b7a713362a9e7c6e0bd7cc3823cb1ac2ef5a63e6f0836d84f07cb06e33577952  docs/coakka-runtime/CHANGELOG.md
 fd8165a814abfa0c2ee1c692d5522683eb521986d0d68481d4ce8fc79082fd34  docs/coakka-runtime/README.md
 34517fb50ff479c8f42a118470ac7c362c28b971a183b180a08ea28049252fba  docs/coakka-runtime/assets/coakka-runtime-client.gif
 ae4e41f502fa0279a4d8a4bccbba09b73a8564b0b3115e0b06dbb496a9b72e7f  docs/coakka-runtime/assets/coakka-runtime-client.mp4
@@ -290,6 +290,7 @@ cad51c3f0072d6aeeddd00e26473ed4a98986948de1b060a12882d4f707720d8  docs/coakka-ru
 64ea5ad014675b796fa82ed2dd127b9266d55f1bb13040badb3209f354f2903b  docs/coakka-runtime/releases/2026-11-04-npm-node-bun-runtime-3.1.2.md
 838deafa1241b9e6d418cea2a1afe131ece3c3f0631890159f2468fd9f835594  docs/coakka-runtime/releases/2026-11-04-nuget-csharp-runtime-3.1.1.md
 9fdf7d558ad3eb4d557a1fe2f7748dac50f759abf588f8c2cb101d66598b0055  docs/coakka-runtime/releases/2026-11-05-android-runtime-3.2.1-preview.md
+a467dd3f6c4b5aebddc59fd8db3fd64d32ccda9a950aad52d63ade735173e603  docs/coakka-runtime/releases/2026-11-05-core-runtime-test-3.2.md
 ecc13509d6cf2aac0038497eca7d36e2ef411e115550c826b1ca59f3dd22d2d9  docs/coakka-runtime/releases/2026-11-05-go-runtime-3.2.1-github.md
 355731e9b8add3ed4c1e9a305232a09f2e4095f12680672158d9cca1430160d5  docs/coakka-runtime/releases/2026-11-05-jvm-spring-quarkus-runtime-3.2.1-maven-central.md
 17e6ab3631504904b61968af2f63a9c4d3e6765eb08a0ec6bfb81b1541f4287f  docs/coakka-runtime/releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md
@@ -299,7 +300,7 @@ a8c101c37de53b1d733806619dd1c33b90857760520dbc49fdfee934af4bea99  docs/coakka-ru
 246223eba9625ea74282a88a8b7bb1be72f141bc82ceec97a21fc8c4a6ee0679  docs/coakka-runtime/releases/2026-11-05-rust-tauri-runtime-3.2.1-source.md
 257c67d8b75bc71baaa329edb7a0d27fa64a06d3d7c5d5ace477568c3b3387de  docs/coakka-runtime/releases/2026-11-05-swift-runtime-3.2.1-github.md
 870bebb4c55355a0817a2f5bc7f02df5b80438dc6d68d00a156085756cc97691  docs/coakka-runtime/releases/2026-11-05-zig-mojo-runtime-3.2.1-source.md
-0aeef505fd2393c84a596ccd05bae0273db457846a2557a36820197ee26dedee  docs/coakka-runtime/releases/README.md
+55e99d46dd5b9928f130bf7017e8f8d947e4155b564fe166cef24a1c70a91a98  docs/coakka-runtime/releases/README.md
 27d8012fcd074da5f7ae199fb6d4331a0bb49dda4a413f478d92d127d0045e6c  docs/common/README.md
 2e69771a6c92f28fe4e2ce4c93edaaefc0cc92d2b93ce8c784e143c025c85707  docs/common/assets/brand/coakka-icon-dark.png
 2f45fbf0b6c2530f3fb23df60a0be2022422620eae55ed2b8514c79f01513957  docs/common/assets/brand/coakka-icon-dark.svg
@@ -314,7 +315,7 @@ d47c7641e81844da64ed0826007588c68b40d615d82992806c576bfaae485ed8  docs/common/as
 de812af159147a3b18f560d9b275a4c8a12ff74184ffa62e14e739813deb8d6a  docs/common/brand-assets.md
 6ec33ca34a47368194f9c934cdd837a82f560eed0b653f3defd8a3748cbf6039  docs/common/coakka-ecosystem-naming.md
 14b81cbe2fd99c0135e055ef52fc98bad9db7d81dd97a7a5cdfb7e8869d1dcc0  docs/common/contact-and-support.md
-0d09d617faeec5704b36ff0c30f3e2354c8edfcb780eeb50c6480c0712cbcdf6  docs/common/current-packages.md
+3ee650a74920ba00d827de122892e2a2a475e58ed993e5747bc9e92be93ec0d2  docs/common/current-packages.md
 6abdff9a08d00f78e555a2545374bd0f414fc6b46187b34240d89bb174ee05c2  docs/common/ecosystem-overview.md
 cc63d02caf09126933fff28fd53fb24bb497b3ba3dfc1e539633925271e1773e  docs/common/new-to-coakka.md
 d37e9a10935c509e27f6f68cea77ced5f827fa5a8d9714b885a4b0d6e49ed571  docs/common/package-licensing.md
@@ -353,9 +354,9 @@ d0e0f35661b28217267d6554a0a5450eb9e7387da6cd0cec18043ffa1d3658c0  runtime-addons
 354d4929114f24e88f3bbf1edefce4dd7b81c00230a2a953c48c0525c9fd52b4  runtime-addons/artifact-publisher-sftp/README.md
 fe2e162120e4a335a646c461aeac20839c6c693f008d780f364386ee0367cb2c  runtime-addons/artifact-publisher-webdav/README.md
 b5f0ff51d723858bef07481e815c0ac36a688c97f74b1101e0134310dd7cbdab  runtime/evidence/README.md
-592579c0b6e937711eae799800265bf3e11b78c33886a7c015c6dfb36f9b9363  runtime/evidence/native/README.md
+9e69678c5933c1122aa8fa5f6bca84c210e4d38330da99a62aa0c8aff5cb4123  runtime/evidence/native/README.md
 01606b6822ca9b3df53e379f82abe8e7801412dad36080f01d1d8352eea9d76a  runtime/evidence/native/source/README.md
-e150b9c463e0e84b0ba9439a82aa5c7cd8539d4d7f0928d38df33577633b1953  runtime/native/README.md
+98f32293275894ff3706cfb5218db9712621399759d9d3f33acf19648173fb9c  runtime/native/README.md
 6061605f8c8b9f334a0771c194107b05eeb497e19276847d42959de6f4435ad8  samples/README.md
 4a8a21c76ffe17118b4cf12e460771980736221215ab77afbe203af6c9fcd7bf  samples/runtime/native/rpi-camera/README.md
 f8f01c06515453ceee5b5c9d72554809157aa81ecf75f6cecc4ef489d2cb8b68  samples/runtime/native/rpi-camera/WITHDRAWN-v1.1.1.md

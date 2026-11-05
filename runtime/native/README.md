@@ -1,18 +1,16 @@
-# CoAkka Runtime Native v2
+# CoAkka Runtime Native SDK
 
-This lane publishes the direct runtime v2 native C ABI archive.
+Use the standalone SDK to link a C or C++ application to CoAkka Runtime.
 
-Release lane:
+**[Core 3.2 downloads and SHA-256](../../docs/coakka-runtime/releases/2026-11-05-core-runtime-test-3.2.md)** ·
+[Build with the SDK](releases/3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45/CONSUMING.md)
 
-```text
-runtime/native/releases/<version+snapshot>/coakka-runtime-native-v2-<version>.tar.gz
-```
+Core 3.2 uses C ABI 1. One archive contains the public headers and libraries
+for Linux x86-64, Linux ARM64, macOS ARM64, Windows x86-64, and Windows ARM64.
+The archive is unsigned. Verify its SHA-256 before extracting it.
 
-The current package includes the runtime C ABI and the scanner-clean TCP frame
-transport profile. Runtime JVM, Python, Node.js, Go, C#, Rust, Spring Boot,
-and Quarkus artifacts are published against this native package version.
+To try the public C interface without compiling, download
+[CoAkka Runtime Test](../evidence/native/README.md).
 
-Public release rule:
-
-- package users must not have to install ambient third-party native libraries
-- consumer-facing package/docs must not expose backend implementation names
+[Browse previous SDK releases](releases/). Each versioned archive keeps the
+same bytes and checksum for consumers that pin it.

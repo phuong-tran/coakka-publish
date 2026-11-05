@@ -48,7 +48,14 @@ int main(void) {
   coakka_v2_runtime_info_t info = {0};
   info.struct_size = sizeof(info);
   assert(coakka_v2_runtime_get_info(&info) == COAKKA_V2_OK && info.abi_version == 1);
-  assert(strcmp(info.git_commit, "1522b4a9f30da1039ef8c7d198bbecfc749a2456") == 0);
+  assert(info.runtime_version != NULL && strcmp(info.runtime_version, "3.2") == 0);
+  assert(info.git_commit != NULL && strcmp(info.git_commit,
+      "f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45") == 0);
+  assert(info.edition == COAKKA_V2_RUNTIME_EDITION_COMMUNITY ||
+      info.edition == COAKKA_V2_RUNTIME_EDITION_ENTERPRISE);
+  const uint32_t owned = info.edition == COAKKA_V2_RUNTIME_EDITION_ENTERPRISE;
+  const uint32_t delivery_mode = owned ? COAKKA_V2_STARTUP_DELIVERY_OWNED_QUEUE
+                                      : COAKKA_V2_STARTUP_DELIVERY_FRAMED;
   native_concurrency_fixture_t fixture;
   native_engine_failure_t failure;
   native_concurrency_fixture_init(&fixture);
@@ -62,9 +69,9 @@ int main(void) {
     assert(fixture.core.facts.startup_checked && fixture.core.facts.delivery_checked);
     assert(fixture.core.facts.startup.execution.requested_policy == COAKKA_V2_STARTUP_CPU_AUTO);
     assert(fixture.core.facts.startup.connection.mode == COAKKA_V2_TCP_CONNECTION_MULTIPLEXED);
-    assert(fixture.core.facts.delivery.compiled == 1);
-    assert(fixture.core.facts.delivery.request_mode == COAKKA_V2_STARTUP_DELIVERY_OWNED_QUEUE);
-    assert(fixture.core.facts.delivery.response_mode == COAKKA_V2_STARTUP_DELIVERY_OWNED_QUEUE);
+    assert(fixture.core.facts.delivery.compiled == owned);
+    assert(fixture.core.facts.delivery.request_mode == delivery_mode);
+    assert(fixture.core.facts.delivery.response_mode == delivery_mode);
     ask(&fixture, cycle * 2u, target != NULL);
     assert(native_concurrency_apply_snapshot(fixture.core.runtime, 1, "fixture.echo") == COAKKA_V2_ERR_STALE_GENERATION);
     assert(native_concurrency_apply_snapshot(fixture.core.runtime, 2, "") == COAKKA_V2_ERR_INVALID_ARG);

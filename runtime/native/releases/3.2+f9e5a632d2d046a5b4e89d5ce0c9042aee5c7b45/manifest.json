@@ -1,0 +1,34 @@
+{
+  "name": "coakka-runtime-native-v2",
+  "version": "3.2",
+  "release": "3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
+  "sourceSnapshot": "f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
+  "profile": "public-runtime",
+  "archive": "coakka-runtime-native-v2-3.2.tar.gz",
+  "sha256": "3dbc6950c194aa2adb2a34c9de54916851df06e6e876e182b009c6faf14ecfd3",
+  "platforms": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "windows-aarch64",
+    "windows-x86_64"
+  ],
+  "headers": [
+    "include/coakka/v2/client.h",
+    "include/coakka/v2/control.h",
+    "include/coakka/v2/file_lane.h",
+    "include/coakka/v2/lane_grant.h",
+    "include/coakka/v2/message_value.h",
+    "include/coakka/v2/runtime.h",
+    "include/coakka/v2/runtime_auth.h",
+    "include/coakka/v2/runtime_distribution.h",
+    "include/coakka/v2/runtime_event_log.h",
+    "include/coakka/v2/runtime_monitor.h",
+    "include/coakka/v2/runtime_startup.h",
+    "include/coakka/v2/runtime_topology.h",
+    "include/coakka/v2/runtime_transport_config.h",
+    "include/coakka/v2/stream_lane.h",
+    "include/coakka/v2/transport.h",
+    "include/coakka/v2/utils.h"
+  ]
+}
