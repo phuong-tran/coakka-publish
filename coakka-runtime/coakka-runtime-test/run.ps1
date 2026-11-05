@@ -179,6 +179,11 @@ try {
   if ($env:COAKKA_NATIVE_EVIDENCE_USE_PREBUILT -ne "1") {
     throw "Build with a compatible installed SDK, or set COAKKA_NATIVE_EVIDENCE_USE_PREBUILT=1 to run the historical published package."
   }
+  if ($env:COAKKA_NATIVE_EVIDENCE_RUNTIME_PREFIX -or
+      $env:COAKKA_NATIVE_EVIDENCE_BUILD_DIR -or
+      $env:COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR) {
+    throw "Select one input. The historical published package cannot be combined with a current SDK or source directory."
+  }
   $ExpectedSha256 = if ($Platform -eq "windows-aarch64") {
     "3521ca0e83f86d140e19998452c2e4326b45bb03929e097c87acbb3cecbd5d89"
   } else {

@@ -156,6 +156,8 @@ elif [[ "${1:-}" == native-startup ||
         -n "${COAKKA_NATIVE_EVIDENCE_BUILD_DIR:-}" ]]; then
   run_installed_native_candidate "${script_dir}" "${repo_root}" "$@"
 elif [[ "${COAKKA_NATIVE_EVIDENCE_USE_PREBUILT:-0}" == "1" ]]; then
+  [[ -z "${COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR:-}" ]] ||
+    coakka_die "Select one input. The historical published package cannot be combined with a current source directory."
   run_from_prebuilt "$@"
 elif [[ -n "${COAKKA_NATIVE_EVIDENCE_RUNTIME_SOURCE_DIR:-}" ]]; then
   run_from_source "$@"
