@@ -1,0 +1,71 @@
+name: Documentation projection
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify documentation checksums
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Check out the proposed projection inventory
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+          sparse-checkout: /docs/projection.sha256
+          sparse-checkout-cone-mode: false
+
+      - name: Verify the generated projection
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PYTHON' | git sparse-checkout add --no-cone --stdin
+          import os
+          import re
+          import subprocess
+          from pathlib import Path, PurePosixPath
+
+          manifest = 'docs/projection.sha256'
+
+          def read_paths(lines):
+              paths = set()
+              for line in lines.splitlines():
+                  match = re.fullmatch(r'[0-9a-f]{64}  ([A-Za-z0-9._+/-]+)', line)
+                  if not match:
+                      raise SystemExit(f'Invalid projection inventory row: {line!r}')
+                  name = match[1]
+                  path = PurePosixPath(name)
+                  if path.is_absolute() or '..' in path.parts or str(path) != name or name == manifest or name in paths:
+                      raise SystemExit(f'Invalid projection path: {name}')
+                  paths.add(name)
+              if not paths:
+                  raise SystemExit('The documentation inventory is empty')
+              return paths
+
+          paths = read_paths(Path(manifest).read_text())
+          tree = subprocess.check_output(['git', 'ls-tree', '-rz', 'HEAD']).decode().split('\0')
+          modes = {row.split('\t', 1)[1]: row.split(' ', 1)[0] for row in tree if row}
+          for path in sorted(paths):
+              if modes.get(path) not in ('100644', '100755'):
+                  raise SystemExit(f'Projected document is missing or is not a regular file: {path}')
+              print('/' + path)
+
+          if base := os.environ.get('BASE_SHA'):
+              present = subprocess.check_output(['git', 'ls-tree', base, '--', manifest])
+              if present:
+                  previous = subprocess.check_output(['git', 'show', f'{base}:{manifest}'], text=True)
+                  dropped = sorted(path for path in read_paths(previous) - paths if path in modes)
+                  if dropped:
+                      raise SystemExit('Tracked files removed from the projection inventory: ' + ', '.join(dropped))
+          PYTHON
+          sha256sum --check --strict --quiet docs/projection.sha256
