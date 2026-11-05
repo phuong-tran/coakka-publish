@@ -6,3 +6,4 @@ coakka-http-runtime/native/releases/*/windows-*/lib/cmake/CoAkkaHttp/*.cmake -te
 # The installed public test suite is verified against byte-exact SHA-256
 # digests. Keep its source bytes stable when Windows enables core.autocrlf.
 coakka-http-runtime/runtime-test/** text eol=lf
+coakka-runtime/coakka-runtime-test/** text eol=lf

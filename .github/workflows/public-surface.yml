@@ -11,6 +11,52 @@ permissions:
   contents: read
 
 jobs:
+  runtime-public-abi:
+    name: Runtime public ABI (${{ matrix.runner }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 10
+    env:
+      COAKKA_NATIVE_EVIDENCE_USE_PREBUILT: "1"
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, macos-14, windows-latest]
+    steps:
+      - name: Check out published tests and packages
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /coakka-runtime/coakka-runtime-test/
+            /coakka-runtime/scripts/verify-native-evidence-source.sh
+            /coakka-runtime/scripts/test-runtime-native-candidate.py
+            /runtime/evidence/native/releases/1.3.4+dc6ec284/
+
+      - name: Verify the test source inventory
+        shell: bash
+        run: bash coakka-runtime/scripts/verify-native-evidence-source.sh
+
+      - name: Check launcher argument and failure handling
+        if: runner.os == 'Linux'
+        env:
+          COAKKA_DOC_TEST_ROOT: ${{ runner.temp }}
+        run: python3 -B coakka-runtime/scripts/test-runtime-native-candidate.py
+
+      - name: Run published smoke and pressure tests
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          bash coakka-runtime/coakka-runtime-test/run.sh smoke --payload 64K --requests 128
+          bash coakka-runtime/coakka-runtime-test/run.sh pressure --requests 512 --queue-capacity 2
+
+      - name: Run published smoke and pressure tests on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          ./coakka-runtime/coakka-runtime-test/run.ps1 smoke --payload 64K --requests 128
+          ./coakka-runtime/coakka-runtime-test/run.ps1 pressure --requests 512 --queue-capacity 2
+
   http-native-runtime:
     name: HTTP native runtime (${{ matrix.platform }})
     runs-on: ${{ matrix.runner }}

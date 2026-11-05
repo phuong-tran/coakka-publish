@@ -6,8 +6,8 @@ Native evidence runners are built from the public sample source:
 coakka-samples/runtime-test/
 ```
 
-The auditable C11 source is also included at the repository root under
-[`runtime-test/`](../../../coakka-runtime/runtime-test/README.md). Its SHA-256 manifest and verification script let a
+The auditable C11 source is also included in
+[`coakka-runtime-test/`](../../../coakka-runtime/coakka-runtime-test/README.md). Its SHA-256 manifest and verification script let a
 consumer inspect and verify the exact public-ABI harness without relying on a
 second checkout.
 

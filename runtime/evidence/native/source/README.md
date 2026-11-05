@@ -1,6 +1,5 @@
 # Native Runtime Test Compatibility Path
 
-The active source projection and its SHA-256 manifest are at the repository
-root under [`runtime-test/`](../../../../coakka-runtime/runtime-test/README.md).
+The current test source and its SHA-256 manifest are in [`coakka-runtime-test/`](../../../../coakka-runtime/coakka-runtime-test/README.md).
 
 Historical release archives remain under the sibling `releases/` directory.
