@@ -1,0 +1,36 @@
+[
+  {
+    "archive": "coakka-camera-pi-1.1.2-linux-arm64.tar.gz",
+    "sha256": "a6e7cced9b077de4cafb8a90e7be752ebb19a5df21c936be97472831718532b8",
+    "sample_version": "1.1.2",
+    "sample_source_commit": "eddff0c596de0f431daab94515b86b01fbfff5a4",
+    "target": "linux-arm64",
+    "executable": "coakka_camera_pi",
+    "runtime_native_source": "2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be",
+    "http_runtime_native": "2.0.1",
+    "http_runtime_c_abi": 10,
+    "files": {
+      "coakka_camera_pi": "864017b9c48d9e3d2ef2f404acc8f90fbe840877ce8f371bf5208a2dc33cb15a",
+      "libcoakka_runtime_v2.so": "dedacfa666c398b01e0aefa0bd9f649a6a63722645e5b822252d3e505e7fda43",
+      "libcoakka_http_host.so.2.0.1": "c0a5b49d4af7ee6a6e6f944480eba55f178d941d4088f2b4257358466841b5dd",
+      "libcoakka_http_host.so.1": "c0a5b49d4af7ee6a6e6f944480eba55f178d941d4088f2b4257358466841b5dd"
+    }
+  },
+  {
+    "archive": "coakka-camera-host-1.1.2-macos-arm64.tar.gz",
+    "sha256": "36a6b55e49d51f7b9930f4572c35c9c968da446e9f6c90b5983081a213f2af38",
+    "sample_version": "1.1.2",
+    "sample_source_commit": "eddff0c596de0f431daab94515b86b01fbfff5a4",
+    "target": "macos-arm64",
+    "executable": "coakka_camera_host",
+    "runtime_native_source": "2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be",
+    "http_runtime_native": "2.0.1",
+    "http_runtime_c_abi": 10,
+    "files": {
+      "coakka_camera_host": "5ff26052435df4f84e89b869dad242cd62244e1e271c756f48c2d4d8b1f8c52a",
+      "libcoakka_runtime_v2.dylib": "277d9ff36b017f2eef2e630ac82bb9ba68f112879297e8067521fe665f82368a",
+      "libcoakka_http_host.2.0.1.dylib": "69413b92f9ec07aad9dfc4bb83213e062f80b5411ed05d94f8635fe0dee5703a",
+      "libcoakka_http_host.1.dylib": "69413b92f9ec07aad9dfc4bb83213e062f80b5411ed05d94f8635fe0dee5703a"
+    }
+  }
+]
