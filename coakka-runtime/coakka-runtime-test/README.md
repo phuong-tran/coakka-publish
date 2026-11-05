@@ -5,14 +5,20 @@ public C ABI. The suite checks request and reply, bounded admission, concurrent
 requests, route updates and shutdown. The File and Stream tests check their
 own transfer and lifecycle contracts.
 
+## Download and run Core 3.2
+
+Choose the archive for your operating system and CPU. Each unsigned archive
+includes the matching Community Core 3.2 library and runs without a compiler.
+Verify the SHA-256 before extracting it.
+
+[Downloads and checksums](../../docs/coakka-runtime/releases/2026-11-05-core-runtime-test-3.2.md) ·
+[Run the smoke test](../../runtime/evidence/native/releases/3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45/README.md#run-the-smoke-test)
+
 ## Build the current source
 
-The current suite needs an installed SDK that exports
-`coakka_v2_host_handles_close`. CMake checks the header and library before
-building. The source and SDK must support the same public ABI calls.
-Smoke, concurrency and native startup passed on macOS ARM64 with Core 3.2
-and ABI 1. For a download that runs with its bundled Runtime, see the
-[historical published smoke test](#run-the-historical-published-smoke-test).
+Use the [Core 3.2 SDK](../../runtime/native/README.md) to build the suite
+through C ABI 1. CMake checks that the public headers and matching library
+are available before building.
 
 In addition to request/reply, bounded-admission, and connection-policy checks,
 the suite contains configurable C11 race and route-snapshot hot-reload
@@ -46,13 +52,12 @@ The source is intentionally small and separated by responsibility:
 
 ### Configure and build
 
-From this directory, point CMake at an extracted compatible Runtime SDK.
+From this directory, point CMake at the extracted Core 3.2 SDK.
 
 ```sh
 cmake -S . -B build \
-  -DCMAKE_PREFIX_PATH=/path/to/installed-runtime-sdk \
-  -DCOAKKA_NATIVE_EVIDENCE_RUNTIME_PACKAGE=CoAkkaV2 \
-  -DCOAKKA_NATIVE_EVIDENCE_REQUIRE_CONNECTION_STRATEGY=ON
+  -DCMAKE_PREFIX_PATH=/path/to/coakka-runtime-native-v2-3.2 \
+  -DCOAKKA_NATIVE_EVIDENCE_REQUIRE_NATIVE_STARTUP=ON
 cmake --build build --config Release
 ```
 
@@ -69,31 +74,16 @@ configuration directory:
   --threads 4 --requests 256 --generations 64
 ```
 
-Set `COAKKA_NATIVE_EVIDENCE_REQUIRE_FILE_LANE=ON` when file-lane evidence is a
-required gate. This fails configuration when the selected artifact predates
-`coakka/v2/file_lane.h`; otherwise CMake omits only that compatibility target.
-
-Stream Lane is present in the `2.3.0` native package. Require the header and
-target explicitly so an older or incomplete package fails during configuration:
-
-```sh
-cmake -S . -B build-stream \
-  -DCMAKE_PREFIX_PATH=/path/to/coakka-runtime-native-v2-2.3.0 \
-  -DCOAKKA_NATIVE_EVIDENCE_REQUIRE_STREAM_LANE=ON
-cmake --build build-stream --config Release
-./build-stream/coakka_runtime_v2_stream_lane_evidence
-```
-
-This target verifies ordered frames, metadata, source-reported drops, pressure,
-terminal state, stats, forget, and stop. Do not present it as execution against
-a published `2.1.0` package.
+The Core 3.2 SDK includes the File and Stream interfaces used by these tests.
+To require both targets at configure time, set
+`COAKKA_NATIVE_EVIDENCE_REQUIRE_FILE_LANE=ON` and
+`COAKKA_NATIVE_EVIDENCE_REQUIRE_STREAM_LANE=ON`.
 
 For a multi-configuration generator, use `build/Release/` instead.
 
-The current Windows archive contains the published runtime DLL but no MSVC
-import library. On MSVC, this harness creates a consumer-only `.lib` from
-`coakka_runtime_v2.def` during configure. The DLL is neither modified nor
-relinked.
+The Core 3.2 SDK includes the Windows import libraries. When working with an
+older compatible SDK without import libraries, the harness can generate one
+from its public export list.
 
 In the default historical profile, the connection-policy executable covers `PER_EXCHANGE`, `BOUNDED_POOL`,
 `PERSISTENT_SINGLE_FLIGHT`, and `MULTIPLEXING`. It evaluates support from the
