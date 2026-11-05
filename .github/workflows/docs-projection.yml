@@ -29,7 +29,7 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           set -euo pipefail
-          python3 -B - <<'PYTHON' | git sparse-checkout add --no-cone --stdin
+          python3 -B - <<'PYTHON' | git sparse-checkout add --stdin
           import os
           import re
           import subprocess
