@@ -79,7 +79,8 @@ EOF
 
   printf '# Fixture\n' >"${fixture}/README.md"
   cp "${repo_root}/LICENSE.md" "${fixture}/LICENSE.md"
-  printf '# Fixture contract\n' >"${fixture}/docs/public-artifact-contract.md"
+  mkdir -p "${fixture}/docs/common"
+  printf '# Fixture contract\n' >"${fixture}/docs/common/public-artifact-contract.md"
   printf '# Runtime\n' >"${fixture}/coakka-runtime/README.md"
   printf '# Logger\n' >"${fixture}/coakka-logger/README.md"
   printf '# Runtime addons\n' >"${fixture}/runtime-addons/README.md"
