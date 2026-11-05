@@ -1,47 +1,36 @@
-# npm Connector Packages
+# CoAkka on npm
 
-The npm packages are JavaScript connectors in the polyglot, multi-language,
-multi-platform CoAkka Runtime ecosystem. CoAkka is not a JavaScript-only
-runtime: Node.js, Bun, and Electron use the same native core and public runtime
-contract as the JVM, Python, Go, C#, Rust, Swift, and other connector lanes.
+Use the package for Node.js, Bun or Electron. Electron Runtime uses the exact Node.js dependency listed in its release record.
 
-| Host | Current runtime package |
-| --- | --- |
-| Node.js | `coakka-v2-connector-node@2.5.3` |
-| Bun | `coakka-v2-connector-bun@2.5.3` |
-| Electron | `coakka-v2-connector-electron@2.5.3` |
+<!-- package-catalog -->
 
-These published coordinates use native generation
-`2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be` and connector source
-`0ba485e8ff19f3ce23902345cb445a1f652fe3f3`. Their immutable artifacts and
-checksums are under the matching `runtime/{node,bun,electron}/releases/`
-directories.
+### CoAkka Runtime
 
-Runtime `2.5.3` exposes the current File Lane and Stream Lane connector
-surfaces, typed replica-owner grants, trusted control-plane reconstruction,
-and exact-owner lane pinning while retaining the macOS 13, Node.js 22, Bun
-1.2.0, and Electron 42 host floors.
+| Host | Install or dependency coordinate | First run |
+| --- | --- | --- |
+| Node.js | [`npm install coakka-v2-connector-node@3.2.1`](https://www.npmjs.com/package/coakka-v2-connector-node/v/3.2.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime/node/registry-basic) |
+| Bun | [`bun add coakka-v2-connector-bun@3.2.1`](https://www.npmjs.com/package/coakka-v2-connector-bun/v/3.2.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime/bun/registry-basic) |
+| Electron | [`npm install coakka-v2-connector-electron@3.2.1`](https://www.npmjs.com/package/coakka-v2-connector-electron/v/3.2.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime/electron/registry-basic) |
 
-## Runtime 2.5.3 Packages
+### CoAkka HTTP Runtime
 
-The public artifact mirror contains Node.js, Bun, and Electron `2.5.3` packages
-from connector source `0ba485e` over native generation
-`2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be`.
-Each package is checksum-pinned in `artifacts/public-artifacts.tsv`. Bundled
-native payloads cover Linux ARM64/x86-64, macOS ARM64, and Windows ARM64/x86-64.
-Clean registry smokes load runtime `2.5.0` and complete real request/reply. npm
-registry downloads match the sealed candidate tarballs byte-for-byte;
-clean Node.js and Bun installs complete request/reply, and Electron resolves
-its exact Node.js `2.5.3` dependency and completes the package-surface path.
-Exact digests and registry evidence are recorded in the
-[Runtime registry packages 2.5.3 receipt](../../docs/releases/2026-08-21-runtime-registries-2.5.3.md).
+| Host | Install or dependency coordinate | First run |
+| --- | --- | --- |
+| Node.js | [`npm install coakka-http-runtime-node@2.0.1`](https://www.npmjs.com/package/coakka-http-runtime-node/v/2.0.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#nodejs-and-bun) |
+| Bun | [`bun add coakka-http-runtime-bun@2.0.1`](https://www.npmjs.com/package/coakka-http-runtime-bun/v/2.0.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#nodejs-and-bun) |
 
-The Node.js registry package executes request/reply on macOS ARM64 and Linux
-ARM64/x86-64. See the exact [package and platform evidence](../../docs/runtime-package-platform-evidence.md)
-before selecting another host target.
+### CoAkka Logger
 
-Kubernetes is supported but not required. Select an exact package version and
-native OS/CPU tuple using the [current packages](../../docs/current-packages.md)
-and [compatibility matrix](../../docs/compatibility-matrix.md). Common loader,
-checksum, signing, and certificate failures are covered in
-[troubleshooting](../../docs/troubleshooting.md).
+| Host | Install or dependency coordinate | First run |
+| --- | --- | --- |
+| Node.js | [`npm install coakka-logger-node@1.2.7`](https://www.npmjs.com/package/coakka-logger-node/v/1.2.7) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-logger/node/basic) |
+| Bun | [`bun add coakka-logger-bun@1.2.7`](https://www.npmjs.com/package/coakka-logger-bun/v/1.2.7) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-logger/bun/basic) |
+| Electron | [`npm install coakka-logger-electron@1.2.7`](https://www.npmjs.com/package/coakka-logger-electron/v/1.2.7) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-logger/electron/basic) |
+
+<!-- /package-catalog -->
+
+[Current packages across all channels](../../docs/common/current-packages.md)
+ · [Runtime release and platform evidence](../../docs/coakka-runtime/releases/2026-11-05-npm-node-bun-electron-runtime-3.2.1.md)
+
+For earlier versions and migration instructions, use the
+[Runtime changelog](../../docs/coakka-runtime/CHANGELOG.md).

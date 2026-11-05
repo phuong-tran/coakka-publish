@@ -1,34 +1,26 @@
-# SwiftPM Package Lane
+# CoAkka on Swift Package Manager
 
-SwiftPM is the public source package lane for Swift runtime and logger
-connectors.
+Use the package URL and exact version in your dependencies. For Runtime, use Swift 6.0 or later and add the `CoAkkaRuntime` product to your target. Windows ARM64 remains a Runtime preview.
 
-`coakka-runtime-swift` is the Swift connector in the polyglot, multi-language,
-multi-platform CoAkka Runtime ecosystem. CoAkka is not a Swift-only runtime:
-the package uses the same native core and public runtime contract as C++, the
-JVM, JavaScript, Python, Go, C#, Rust, and other connector lanes. Kubernetes is
-supported but not required.
+<!-- package-catalog -->
 
-Current coordinates:
+### CoAkka Runtime
 
-| Surface | Coordinate | Native generation |
+| Host | Install or dependency coordinate | First run |
 | --- | --- | --- |
-| Runtime | `https://github.com/phuong-tran/coakka-runtime-swift.git`, exact `2.5.2` | `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` |
-| Logger | `https://github.com/phuong-tran/coakka-logger-swift.git`, exact `1.2.2` | `1.2.1+f50756ebff0d` |
+| Swift | [`.package(url: "https://github.com/phuong-tran/coakka-runtime-swift.git", exact: "3.2.1")`](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v3.2.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime/swift/registry-basic) |
 
-Runtime `2.5.2` exposes typed replica-owner File and Stream Lane grants over
-the unchanged native `2.5.0` generation. Logger remains independently
-published at `1.2.2`. Native verification, package tests, smokes, and clean
-consumers cloned from both remote tags pass on macOS ARM64.
+### CoAkka Logger
 
-The current manifest is [`current.json`](current.json). Public samples consume
-these coordinates directly.
+| Host | Install or dependency coordinate | First run |
+| --- | --- | --- |
+| Swift | [`.package(url: "https://github.com/phuong-tran/coakka-logger-swift.git", exact: "1.2.2")`](https://github.com/phuong-tran/coakka-logger-swift/releases/tag/v1.2.2) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-logger/swift/basic) |
 
-Bundled runtime generation `2.5.0+4b65d0b2256037bf7fc180bfa6df8c41efc1dd6a` contains verified native payloads
-for Linux ARM64/x86-64,
-macOS ARM64, and Windows ARM64/x86-64. Swift request/reply, transport, TLS
-reload, and consumer execution pass on macOS ARM64. Linux C-bridge compilation
-and native payload verification pass; the current Linux guests do not contain
-a Swift toolchain. The Mach-O verifier proves `minos 13.0`; this receipt does
-not claim execution on a macOS 13 host. See
-[package and platform evidence](../../docs/runtime-package-platform-evidence.md).
+<!-- /package-catalog -->
+
+[Current packages across all channels](../../docs/common/current-packages.md)
+ · [Runtime release and platform evidence](../../docs/coakka-runtime/releases/2026-11-05-swift-runtime-3.2.1-github.md)
+ · [Machine-readable package record](current.json)
+
+For earlier versions and migration instructions, use the
+[Runtime changelog](../../docs/coakka-runtime/CHANGELOG.md).

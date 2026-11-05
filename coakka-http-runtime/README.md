@@ -13,7 +13,7 @@ stay with the right service, resources are released, and failures are handled.
 
 ## Version 2.0.1
 
-[Run your first request](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md) · [Native C and C++ SDK](native/releases/2.0.1/)
+[Run your first request](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md) · [Native C and C++ SDK downloads and checksums](native/releases/2.0.1/)
 
 | Host | HTTP Runtime 2.0.1 |
 | --- | --- |
@@ -32,7 +32,7 @@ OpenAPI. Its packages target macOS ARM64 and Linux ARM64. The service must
 enable inspection before the companion can connect.
 [Walkthrough](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/inspect/walkthrough.md) · [Integration status](https://github.com/phuong-tran/coakka-publish/blob/main/docs/coakka-http-runtime/inspect/metadata-and-openapi.md#current-package-integration)
 
-## Download version 1.0.0
+## Archived 1.0.0 feature packages
 
 These checksum-pinned archives support the corresponding historical samples.
 Use the headers and libraries that match the sample you are building.

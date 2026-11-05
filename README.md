@@ -20,7 +20,8 @@ Use **HTTP Runtime** for HTTP services and **Logger** for logging with bounded
 storage. Each product can be adopted independently and has its own packages
 and versions.
 
-**[Find a package by product and language](#choose-your-product)**
+**[Find a package by product and language](docs/common/current-packages.md)** ·
+[Run a first example in Samples](https://github.com/phuong-tran/coakka-samples#choose-what-you-want-to-build)
 
 ## Try the Node–Python web demo
 
@@ -39,7 +40,7 @@ Change the quantities, request a quote and see Python return the updated total.
 | I need… | First steps | Package catalog |
 | --- | --- | --- |
 | Calls between application work across processes or languages | [Runtime in my language](docs/coakka-runtime/getting-started.md) | [Runtime packages](coakka-runtime/README.md) |
-| An HTTP API, web frontend or streaming endpoint | [HTTP Runtime in my language](docs/coakka-http-runtime/getting-started.md) | [HTTP archives](coakka-http-runtime/README.md) |
+| An HTTP API, web frontend or streaming endpoint | [Run a first HTTP request](docs/coakka-http-runtime/getting-started.md) | [HTTP packages and native downloads](coakka-http-runtime/README.md) |
 | Application logging and visible pressure | [Logger in my language](docs/coakka-logger/README.md#start-with-one-consumer) | [Logger packages](coakka-logger/README.md) |
 
 ## CoAkka Runtime: languages, frameworks and app hosts

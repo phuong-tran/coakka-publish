@@ -6,7 +6,7 @@ does not retain native pointers or expose secret paths/material.
 
 ## Startup
 
-Version 3.1.1: connection intent is submitted at
+Version 3.2.1: connection intent is submitted at
 Core construction, not reapplied after Core freezes startup selection. Omitted
 connection/execution groups select Core AUTO/MULTIPLEXING. Construction failure
 preserves Core's status but has no active instance/apply-result record;
@@ -71,7 +71,7 @@ returns a structured rejection instead of silently discarding them.
 
 ## TLS Ownership And Reload
 
-The bundled Core 3.1 r2 reports public TCP TLS and mTLS as unavailable.
+The bundled Core 3.2 reports public TCP TLS and mTLS as unavailable.
 The reload example applies to a build that reports the required
 capabilities through `ReadRuntimeCapabilities()`.
 
@@ -94,9 +94,9 @@ BeagleBone, bare metal, industrial Android, and rotation semantics.
 
 ## Platforms And Troubleshooting
 
-The `3.1.1` package digest-verifies its five native payloads:
+The `3.2.1` package digest-verifies its five native payloads:
 `linux-arm64`, `linux-x64`, `osx-arm64`, `win-arm64` and `win-x64`, over
-Core `6789dd162` / ABI1. The exact package qualification record identifies
+Core `f9e5a632d` / ABI1. The exact package qualification record identifies
 which hosts have actually executed this package. Core private dependencies
 are absorbed; consumers do not install them separately.
 Payload presence is not execution evidence; exact connector and consumer

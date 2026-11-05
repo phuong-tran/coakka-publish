@@ -1,48 +1,26 @@
 # CoAkka Logger
 
-[Choose your language](#start-in-your-language) · [Why logging affects your app](#why-logging-affects-the-application) · [Packages](#packages-and-guides) · [Documentation](../docs/coakka-logger/README.md) · [All products](../README.md)
+[Choose a Logger package](../docs/common/current-packages.md#coakka-logger)
+ · [Run a first example](../docs/coakka-logger/README.md#start-with-one-consumer)
+ · [All products](../README.md)
 
 **Native-backed logging across languages.**
 
-CoAkka Logger is a **cross-platform logging library for polyglot applications**.
-Its language packages share a native logging core with bounded storage and
-visible acceptance or refusal of records.
+CoAkka Logger is a **cross-platform logging library** for **polyglot
+applications**. Its language connectors share a native logging core with
+bounded storage and explicit acceptance or refusal of records.
 
-Logging uses resources alongside the work your application serves. A burst of
-messages or slow output can hold up requests or consume memory. Logger makes
-that pressure visible so your application can decide how to read records and
-handle refused writes.
+Logs are useful during an incident, but logging is also work the application
+has to perform. Message construction, bursts of traffic and slow output can
+affect the requests or jobs the application is trying to serve.
 
-Logger can be used independently of Runtime and HTTP Runtime. Choose your
-language below; each guide lists its package, prerequisites and basic example.
-The [product documentation](../docs/coakka-logger/README.md) explains the model.
+CoAkka Logger provides bounded log storage, explicit acceptance or refusal and
+counters across host languages. Use it when log volume, output delays or
+unclear record loss have become application concerns. The application can see
+pressure and decide how to consume records and handle refused writes.
 
-## Start in your language
-
-Follow the selected guide for installation and one record from start to close.
-Logger versions and available output modes vary by package; use that guide's
-platform requirements and the [package ledger](../docs/common/current-packages.md).
-
-| Your application | Package guide and first example |
-| --- | --- |
-| Node.js | [Node.js Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/node/README.md) |
-| Bun | [Bun Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/bun/README.md) |
-| Electron | [Electron Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/electron/README.md) |
-| Python | [Python Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/python/README.md) |
-| Kotlin / Java | [Kotlin / Java Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/jvm/README.md) |
-| C# | [C# Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/csharp/README.md) |
-| Go | [Go Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/go/README.md) |
-| Swift | [Swift Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/swift/basic/README.md) |
-| Rust | [Rust Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/rust/README.md) |
-| Tauri | [Tauri Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/tauri/README.md) |
-| C / C++ | [C / C++ Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/native/README.md) |
-| Zig | [Zig Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/zig/README.md) |
-| Mojo | [Mojo Logger](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-logger/mojo/README.md) |
-
-Start with the basic example. Where a pressure example is provided, try it next
-to see what happens when messages arrive faster than they are consumed. The
-sample application reads and displays records; it does not implicitly set up
-a background file writer or a remote collector.
+Logger is independent of CoAkka Runtime and CoAkka HTTP Runtime. Read the
+[product documentation](../docs/coakka-logger/README.md) for the full guide.
 
 ## Why Logging Affects The Application
 

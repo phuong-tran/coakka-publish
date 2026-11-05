@@ -1,26 +1,27 @@
 {
   "lane": "nuget",
   "status": "current",
-  "released_at": "2026-08-21",
   "packages": [
     {
       "surface": "runtime",
       "package": "CoAkka.Runtime",
-      "version": "2.5.3",
-      "url": "https://www.nuget.org/packages/CoAkka.Runtime/2.5.3",
-      "connector_source": "0ba485e8ff19f3ce23902345cb445a1f652fe3f3",
-      "native_generation": "2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be",
+      "version": "3.2.1",
+      "url": "https://www.nuget.org/packages/CoAkka.Runtime/3.2.1",
+      "native_generation": "3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
       "minimum_dotnet_tfm": "net8.0",
-      "tested_dotnet_tfms": ["net8.0", "net9.0", "net10.0"],
-      "candidate_sha256": "6d16602a5291b0d00351df122a01f4e028832f1c4b27e5827d1c557ecce781da",
-      "registry_sha256": "07790498c5933f034792be540c656b542e5c529489982ef54a3a57c944a34ca7",
+      "tested_dotnet_tfms": [
+        "net8.0"
+      ],
+      "candidate_sha256": "d25366526b214f1079ec5222a30fa78635a4b7a71c9e9809f1fafcd7074539ce",
+      "registry_sha256": "827b3f84268ba117b9b5c83acb8d0f2192413e0b7a76a4a3e34ea9dfab03b573",
       "platforms": [
         "osx-arm64",
         "linux-arm64",
         "linux-x64",
         "win-arm64",
         "win-x64"
-      ]
+      ],
+      "release_record": "../../docs/coakka-runtime/releases/2026-11-05-nuget-csharp-runtime-3.2.1.md"
     },
     {
       "surface": "logger",
@@ -30,7 +31,11 @@
       "connector_source": "801a0a6e67152465568c72246b112beb299360a3",
       "native_generation": "1.2.1+f50756ebff0d",
       "minimum_dotnet_tfm": "net8.0",
-      "tested_dotnet_tfms": ["net8.0", "net9.0", "net10.0"],
+      "tested_dotnet_tfms": [
+        "net8.0",
+        "net9.0",
+        "net10.0"
+      ],
       "candidate_sha256": "a929605a76631cff07c1488f8e60f09331e66bbeeb6d72fd8e1a1741922bb93c",
       "registry_sha256": "f9501901ab71376feb027ccf97100f17de48792c45ddf5a843d88ec129a9639a",
       "platforms": [
@@ -41,14 +46,5 @@
         "win-x64"
       ]
     }
-  ],
-  "verification": [
-    "csharp/scripts/check-nuget-readiness.sh and logger/csharp/scripts/check-nuget-readiness.sh",
-    "the same immutable candidates execute packaged consumers for net8.0, net9.0, and net10.0",
-    "dotnet nuget verify --all passes both NuGet.org repository-signed packages",
-    "all candidate ZIP entries match each registry package byte-for-byte; NuGet.org adds only .signature.p7s",
-    "Runtime request/reply and route-miss deadletter execute on .NET 8, .NET 9, and .NET 10",
-    "Logger accepted write, drain, and bounded-pressure drop execute on .NET 8, .NET 9, and .NET 10",
-    "connector CI run 31992973586 passes all jobs"
   ]
 }

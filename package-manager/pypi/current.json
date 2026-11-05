@@ -1,25 +1,43 @@
 {
   "lane": "pypi",
   "status": "current",
-  "released_at": "2026-08-21",
   "packages": [
     {
       "surface": "runtime",
       "package": "coakka-v2-connector",
-      "version": "2.5.3",
-      "url": "https://pypi.org/project/coakka-v2-connector/2.5.3/",
-      "artifact": "coakka_v2_connector-2.5.3-py3-none-any.whl",
-      "connector_source": "0ba485e8ff19f3ce23902345cb445a1f652fe3f3",
-      "payload_staging_source": "0ba485e8ff19f3ce23902345cb445a1f652fe3f3",
-      "sha256": "18f87998c33ba6e5bf43e0981f39f97e229e2dc74d44b3f762698ac46d6deff5",
-      "native_generation": "2.5.1+26f7944de4a4e0598845a54e4775f9463a9e33be",
+      "version": "3.2.1",
+      "url": "https://pypi.org/project/coakka-v2-connector/3.2.1/",
+      "native_generation": "3.2+f9e5a632d2d046a5b4e89d5ce0c9042aee5c7b45",
+      "artifacts": [
+        {
+          "filename": "coakka_v2_connector-3.2.1-cp311-abi3-macosx_13_0_arm64.whl",
+          "sha256": "210178a92fcec3e2e0b16f80b04393a006ba408d65755a252aff527314a26d33"
+        },
+        {
+          "filename": "coakka_v2_connector-3.2.1-cp311-abi3-manylinux_2_35_aarch64.whl",
+          "sha256": "d5ebda4527ad5f87164f7ff9467c6b22ec2061176cd23e5a4cc1fcbfa9aac7c4"
+        },
+        {
+          "filename": "coakka_v2_connector-3.2.1-cp311-abi3-manylinux_2_36_x86_64.whl",
+          "sha256": "3d28c0b5b8c9f474f8f1b156e18eae189179e76091242bef52b899910ca9ec6f"
+        },
+        {
+          "filename": "coakka_v2_connector-3.2.1-cp311-abi3-win_amd64.whl",
+          "sha256": "ba950155f7e20c026524a4d2c4114c5588a009eaf14ebb8b12168f038c406775"
+        },
+        {
+          "filename": "coakka_v2_connector-3.2.1-cp311-abi3-win_arm64.whl",
+          "sha256": "f24f6261e6faad5945b29e94aaa55c0ceef298c19ff7af9ea38eed50fd99e9ce"
+        }
+      ],
       "platforms": [
         "linux-aarch64",
         "linux-x86_64",
         "macos-aarch64",
         "windows-aarch64",
         "windows-x86_64"
-      ]
+      ],
+      "release_record": "../../docs/coakka-runtime/releases/2026-11-05-pypi-python-runtime-3.2.1.md"
     },
     {
       "surface": "logger",
@@ -28,13 +46,5 @@
       "url": "https://pypi.org/project/coakka-logger/1.2.2/",
       "native_generation": "1.2.1+f50756ebff0d"
     }
-  ],
-  "verification": [
-    "PyPI JSON version, filename, yanked state, and SHA-256",
-    "clean isolated pip install from https://pypi.org/simple",
-    "candidate and registry wheel byte comparison",
-    "clean registry-installed request/reply",
-    "candidate package File Lane and Stream Lane tests",
-    "normalized Apache and native file-scope license metadata"
   ]
 }
