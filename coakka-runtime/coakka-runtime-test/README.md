@@ -1,21 +1,21 @@
-# Auditable Native Evidence Source
+# CoAkka Runtime Test
 
-The rolling harness requires a Runtime SDK exposing `coakka_v2_host_handles_close`.
-An older SDK is rejected before the harness is built. Historical Runtime
-archives remain unchanged; use their matching recorded harness snapshot rather
-than pairing them with this current rolling source. Candidate verification
-uses the exact SDK identified by the selected candidate catalog.
+Read the C source, build the tests and exercise CoAkka Runtime through its
+public C ABI. The suite checks request and reply, bounded admission, concurrent
+requests, route updates and shutdown. The File and Stream tests check their
+own transfer and lifecycle contracts.
 
-This directory is the published source projection of
-`coakka-samples/coakka-runtime/runtime-test/`. It uses only the installed CoAkka
-Runtime native C ABI; it does not include private runtime implementation.
+## Build the current source
 
-The published/default profile is historical v1. The explicit private Native
-candidate profile below uses Core readers/tickets and v2 accounting; it does
-not parse responses through the old framed channel.
+The current suite needs an installed SDK that exports
+`coakka_v2_host_handles_close`. CMake checks the header and library before
+building. The source and SDK must support the same public ABI calls.
+Smoke, concurrency and native startup passed on macOS ARM64 with Core 3.2
+and ABI 1. For a download that runs with its bundled Runtime, see the
+[historical published smoke test](#run-the-historical-published-smoke-test).
 
 In addition to request/reply, bounded-admission, and connection-policy checks,
-the projection contains configurable C11 race and route-snapshot hot-reload
+the suite contains configurable C11 race and route-snapshot hot-reload
 evidence. `hot-reload` means full route-snapshot replacement; it does not claim
 TLS credential or connection-strategy reload. Producer quotas keep traffic
 active through the final generation, and every accepted generation must become
@@ -44,13 +44,14 @@ The source is intentionally small and separated by responsibility:
 - `evidence_report.c` and `connection_strategy_report.c`: machine-readable JSON
   output.
 
-## Build
+### Configure and build
 
-Point CMake at an extracted native runtime package:
+From this directory, point CMake at an extracted compatible Runtime SDK.
 
 ```sh
 cmake -S . -B build \
-  -DCMAKE_PREFIX_PATH=/path/to/coakka-runtime-native-v2-<version> \
+  -DCMAKE_PREFIX_PATH=/path/to/installed-runtime-sdk \
+  -DCOAKKA_NATIVE_EVIDENCE_RUNTIME_PACKAGE=CoAkkaV2 \
   -DCOAKKA_NATIVE_EVIDENCE_REQUIRE_CONNECTION_STRATEGY=ON
 cmake --build build --config Release
 ```
@@ -239,6 +240,17 @@ The current Windows import definition is bounded to the harness's public C
 call closure; no private export or Core ABI expansion is implied. Both lane
 executables receive the exact selected DLL app-local during their actual build.
 
+## Native startup checks
+
+For an installed SDK with the startup contract, set
+`COAKKA_NATIVE_EVIDENCE_RUNTIME_PREFIX` to the absolute SDK path and
+`COAKKA_NATIVE_EVIDENCE_BUILD_DIR` to an existing, separate build directory.
+From the Publish root, run
+`bash coakka-runtime/coakka-runtime-test/run.sh native-startup`
+or `./coakka-runtime/coakka-runtime-test/run.ps1 native-startup` on Windows.
+The launcher checks the SDK before building and returns a nonzero exit status
+if admission or a startup assertion fails.
+
 ## Analysis And Sanitizers
 
 Run Clang static analysis against the installed include directory:
@@ -283,11 +295,32 @@ Sanitizer profiles are intentionally local or evaluator-run. Hosted
 instrumented builds. This keeps the controls auditable without treating a slow
 or toolchain-sensitive sanitizer run as a per-change gate.
 
-Run `bash scripts/verify-native-evidence-source.sh` from the repository root
+Run `bash coakka-runtime/scripts/verify-native-evidence-source.sh` from the repository root
 to verify `SOURCE-MANIFEST.sha256`.
 
-Historical prebuilt runners remain under
-[`runtime/evidence/native/releases/`](../../runtime/evidence/native/releases/).
+## Run the historical published smoke test
+
+From the root of a [coakka-publish checkout](https://github.com/phuong-tran/coakka-publish),
+run the launcher for your platform. It verifies the archive checksum before
+running the bundled executable and matching Runtime library.
+
+Linux or macOS:
+
+```sh
+COAKKA_NATIVE_EVIDENCE_USE_PREBUILT=1 bash coakka-runtime/coakka-runtime-test/run.sh smoke --requests 128
+```
+
+Windows PowerShell:
+
+```powershell
+$env:COAKKA_NATIVE_EVIDENCE_USE_PREBUILT = "1"
+./coakka-runtime/coakka-runtime-test/run.ps1 smoke --requests 128
+```
+
+A passing run exits with status 0 and prints one JSON result. The
+[1.3.4 release record](../../runtime/evidence/native/releases/1.3.4+dc6ec284/)
+identifies the package, platforms and available modes. Use that release to
+reproduce its smoke, pressure, stress and soak workloads.
 
 For loader, unsigned-library, Windows, macOS, Linux, and TLS/mTLS diagnosis,
 see [Troubleshooting](../../docs/coakka-runtime/operations/troubleshooting.md).

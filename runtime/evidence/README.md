@@ -13,8 +13,8 @@ Current lane:
 - `native`: prebuilt runner for native runtime smoke, pressure, stress, and soak
   evidence over a complete local target request/reply path.
 
-The exact auditable C11 harness source is visible at the repository root under
-[`runtime-test/`](../../coakka-runtime/runtime-test/README.md), including capability-aware
+The exact auditable C11 harness source is visible in
+[`coakka-runtime-test/`](../../coakka-runtime/coakka-runtime-test/README.md), including capability-aware
 connection-strategy checks and consumer-side ASan/UBSan build controls. The
 [`native/`](native/README.md) directory retains prebuilt runners and immutable
 release evidence.
