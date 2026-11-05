@@ -24,6 +24,14 @@ jobs:
     steps:
       - name: Check out published tests and packages
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /coakka-runtime/coakka-runtime-test/
+            /coakka-runtime/scripts/verify-native-evidence-source.sh
+            /coakka-runtime/scripts/test-runtime-native-candidate.py
+            /runtime/evidence/native/releases/1.3.4+dc6ec284/
 
       - name: Verify the test source inventory
         shell: bash
