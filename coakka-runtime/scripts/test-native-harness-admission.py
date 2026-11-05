@@ -9,7 +9,7 @@ import tempfile
 import unittest
 
 
-HARNESS = Path(__file__).resolve().parents[1] / "runtime-test"
+HARNESS = Path(__file__).resolve().parents[1] / "coakka-runtime-test"
 DIAGNOSTIC = "rolling harness requires an installed SDK exposing and linking"
 
 
