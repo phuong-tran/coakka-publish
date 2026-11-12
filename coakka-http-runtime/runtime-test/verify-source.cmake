@@ -34,7 +34,7 @@ endforeach()
 file(GLOB inventory RELATIVE "${TEST_SOURCE_DIR}"
   "${TEST_SOURCE_DIR}/*.c" "${TEST_SOURCE_DIR}/*.cc"
   "${TEST_SOURCE_DIR}/*.h" "${TEST_SOURCE_DIR}/*.cmake"
-  "${TEST_SOURCE_DIR}/*.sh" "${TEST_SOURCE_DIR}/*.md")
+  "${TEST_SOURCE_DIR}/*.sh" "${TEST_SOURCE_DIR}/*.py" "${TEST_SOURCE_DIR}/*.md")
 list(APPEND inventory CMakeLists.txt)
 list(SORT inventory)
 list(SORT listed)

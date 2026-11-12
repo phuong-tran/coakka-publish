@@ -19,21 +19,6 @@ static const fixture_identity_t identity_b = {
     "fixture-b-certificate.pem", "fixture-b-key.pem", "fixture-b-trust.pem",
     test_tls_certificate_b, test_tls_key_b, test_tls_root_b};
 
-static int write_material(const char *path, const char *material, int *created) {
-  FILE *file = NULL;
-  size_t size = strlen(material);
-  int written;
-#if defined(_WIN32)
-  if (fopen_s(&file, path, "wbx") != 0) return 0;
-#else
-  file = fopen(path, "wbx");
-#endif
-  if (file == NULL) return 0;
-  *created = 1;
-  written = fwrite(material, 1U, size, file) == size;
-  return fclose(file) == 0 && written;
-}
-
 static int monitor_off(coakka_http_host_service_t *service) {
   coakka_http_host_monitor_config_t monitor;
   coakka_http_host_monitor_config_init(&monitor);
@@ -367,7 +352,7 @@ int main(void) {
   int ok = 1, cleanup_ok = 1;
   if (!test_platform_open()) return 1;
   for (index = 0U; index < sizeof(created) / sizeof(created[0]); ++index) {
-    TEST_CHECK(write_material(paths[index], materials[index], &created[index]));
+    TEST_CHECK(test_write_material(paths[index], materials[index], &created[index]));
   }
   TEST_CHECK(plaintext_has_no_credential_owner());
   TEST_CHECK(secure_reload(COAKKA_HTTP_HOST_SECURITY_TLS));
