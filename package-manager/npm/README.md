@@ -16,8 +16,8 @@ Use the package for Node.js, Bun or Electron. Electron Runtime uses the exact No
 
 | Host | Install or dependency coordinate | First run |
 | --- | --- | --- |
-| Node.js | [`npm install coakka-http-runtime-node@2.0.1`](https://www.npmjs.com/package/coakka-http-runtime-node/v/2.0.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#nodejs-and-bun) |
-| Bun | [`bun add coakka-http-runtime-bun@2.0.1`](https://www.npmjs.com/package/coakka-http-runtime-bun/v/2.0.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#nodejs-and-bun) |
+| Node.js | [`npm install coakka-http-runtime-node@2.2.1`](https://www.npmjs.com/package/coakka-http-runtime-node/v/2.2.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md#nodejs-or-bun) |
+| Bun | [`bun add coakka-http-runtime-bun@2.2.1`](https://www.npmjs.com/package/coakka-http-runtime-bun/v/2.2.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md#nodejs-or-bun) |
 
 ### CoAkka Logger
 

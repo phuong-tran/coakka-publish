@@ -14,7 +14,7 @@ For Runtime and HTTP Runtime, use GIL-enabled CPython 3.11 or later. The first-r
 
 | Host | Install or dependency coordinate | First run |
 | --- | --- | --- |
-| Python | [`python -m pip install coakka-http-runtime-python==2.0.1`](https://pypi.org/project/coakka-http-runtime-python/2.0.1/) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md#python) |
+| Python | [`python -m pip install coakka-http-runtime-python==2.2.1`](https://pypi.org/project/coakka-http-runtime-python/2.2.1/) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md#python) |
 
 ### CoAkka Logger
 
