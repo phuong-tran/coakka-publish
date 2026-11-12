@@ -45,7 +45,7 @@ lists verified SHA-256 downloads and the command and WebView scope.
 - Published standalone HTTP Runtime Inspect `2.0.1` for macOS ARM64 and Linux
   ARM64. [Inspect downloads](coakka-http-runtime/inspect/releases/2.0.1/)
 - Updated the installed-SDK suite with outbound address and TLS regressions.
-  The published Pi 5 numbers were measured on `1.1.2`. [Benchmark version note](coakka-http-runtime/benchmark/README.md)
+  The published Pi 5 numbers were measured on `1.1.2`. [Archived benchmark](https://github.com/phuong-tran/coakka-publish/tree/550a4196ac23237ae6b6375170632a15dca56eca/coakka-http-runtime/benchmark)
 
 ## 3.0.0 — 2026-10-30
 

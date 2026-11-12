@@ -1,39 +1,26 @@
 # Bun.serve() and CoAkka Bun on Raspberry Pi 5
 
-[Measurement data and h2load output](bun-serve-evidence-rpi5.json) · [Reproduction notes](evidence-rpi5.md)
+[Benchmark overview](README.md) · [Evidence JSON](bun-serve-evidence-rpi5.json)
 
-[Benchmark overview](README.md) · [Methodology](benchmark-rpi5.md)
+Both fixtures used Bun 1.4.2 with a two-CPU budget. Three runs per
+fixture were admitted.
 
-Bun 1.4.2 ran on server CPU 0–1 and h2load on CPU 2–3. Both used 64
-HTTP/1.1 keep-alive connections over localhost, 5 seconds of warm-up
-and 10 seconds of measurement. GET /fixed returned HTTP 200 with a
-32-byte binary response. The direct fixture uses Bun.serve with a
-fetch handler and constructs a Response per request from the fixed payload.
-CoAkka uses the public connector and reuses one prebuilt response.
-Each lane ran three times with the order reversed in the second round.
-
-RSS is the sampled time-weighted mean over warm-up and measurement.
-The summary uses p99 and RSS from the throughput-median run.
-
-| Application | Median req/s | Range req/s | p99 (ms) | Mean RSS (MiB) | Sampled peak RSS (MiB) |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| CoAkka Bun 1.1.2 | 83,623.7 | 83,469.1–83,898.6 | 1.475 | 73.66 | 75.00 |
-| `Bun.serve()` | 46,425.7 | 46,410.9–48,229.1 | 2.223 | 40.01 | 42.14 |
-
-At the throughput-median runs, CoAkka Bun used 188.5% server CPU and
-the Bun.serve() fetch fixture used 100.3%. Both had two CPUs available.
-Here 100% represents one logical CPU on average across warm-up and
-measurement. Throughput and p99 cover the timed interval. The comparison
-captures the combined effect of the server path and the response
-lifecycle described above.
+<!-- summary:start -->
+| Fixture | Median req/s | Req/s range | p99 (ms) | Peak °C / status |
+| --- | --- | --- | --- | --- |
+| CoAkka Bun | 80,671.7 | 78,085.9–82,057.2 | 1.937 | 47.40 |
+| Bun.serve() | 47,103.2 | 46,635.0–47,140.9 | 2.192 | 45.20 |
+<!-- summary:end -->
 
 ## Individual runs
 
-| Application | Round | HTTP 200 | Req/s | p99 (ms) | Mean RSS (MiB) | Sampled peak RSS (MiB) | Start/max °C | Client max CPU | Status |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| CoAkka Bun 1.1.2 | 1 | 836,237 | 83,623.7 | 1.475 | 73.66 | 75.00 | 38.05/44.65 | 54.9% | Median |
-| `Bun.serve()` | 1 | 464,109 | 46,410.9 | 2.219 | 40.50 | 42.11 | 39.70/43.55 | 51.5% | Accepted |
-| `Bun.serve()` | 2 | 464,257 | 46,425.7 | 2.223 | 40.01 | 42.14 | 39.15/43.55 | 59.0% | Median |
-| CoAkka Bun 1.1.2 | 2 | 838,986 | 83,898.6 | 1.618 | 72.04 | 73.44 | 40.25/45.20 | 51.0% | Accepted |
-| CoAkka Bun 1.1.2 | 3 | 834,691 | 83,469.1 | 1.525 | 72.13 | 73.52 | 39.15/46.30 | 69.4% | Accepted |
-| `Bun.serve()` | 3 | 482,291 | 48,229.1 | 2.156 | 39.74 | 41.88 | 40.80/44.10 | 59.6% | Accepted |
+<!-- attempts:start -->
+| Fixture | Attempt | Warm-up (s) | Req/s | p99 (ms) | CPU (s) | Peak °C | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| CoAkka Bun | 01-bun-coakka-1 | 5 | 80,671.7 | 1.937 | — | 47.40 | Admitted |
+| Bun.serve() | 01-bun-direct-1 | 5 | 47,103.2 | 2.192 | — | 45.20 | Admitted |
+| CoAkka Bun | 02-bun-coakka-1 | 5 | 78,085.9 | 1.969 | — | 46.85 | Admitted |
+| Bun.serve() | 02-bun-direct-1 | 5 | 46,635.0 | 2.217 | — | 45.20 | Admitted |
+| CoAkka Bun | 03-bun-coakka-1 | 5 | 82,057.2 | 1.567 | — | 47.40 | Admitted |
+| Bun.serve() | 03-bun-direct-1 | 5 | 47,140.9 | 2.185 | — | 45.20 | Admitted |
+<!-- attempts:end -->

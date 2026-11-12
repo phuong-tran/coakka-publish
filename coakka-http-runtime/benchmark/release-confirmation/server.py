@@ -2,7 +2,6 @@
 
 import hashlib
 import json
-import os
 from pathlib import Path
 import signal
 import sys
@@ -33,14 +32,7 @@ headers = Headers((Header("content-type", "application/octet-stream"),))
 body = b"0123456789abcdef0123456789abcdef"
 
 
-def make():
-    return Response(headers=headers, body=body)
-
-
-shared = make()
-handler = (
-    (lambda _: make()) if os.environ["RESPONSE_MODE"] == "fresh" else (lambda _: shared)
-)
+response = Response(headers=headers, body=body)
 service = (
     Builder()
     .listen("127.0.0.1", 18430)
@@ -52,7 +44,7 @@ service = (
             terminal_notification_profile=NotificationProfile.XXLARGE,
         )
     )
-    .get("/fixed", handler)
+    .get("/fixed", lambda _: response)
     .start()
 )
 try:

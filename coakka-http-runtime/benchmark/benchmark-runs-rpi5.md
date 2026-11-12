@@ -1,43 +1,46 @@
-# HTTP Runtime 1.1.2 Raspberry Pi 5 runs
+<a name="http-runtime-112-raspberry-pi-5-runs"></a>
 
-[Release measurement data](release-confirmation-evidence-rpi5.json) · [Reproduction commands](release-confirmation/README.md)
+# HTTP Runtime 2.2.1 Raspberry Pi 5 runs
 
-This table contains all three accepted runs per host used for the
-[benchmark results](README.md). Each timed run lasted 10 seconds.
-To verify the published result, sort the three throughput values for a host
-and take the middle row. The row marked **Median** supplies the throughput,
-latency, RSS and peak RSS in the published summary.
+[Release confirmation results](README.md#release-confirmation) · [Evidence JSON](release-confirmation-evidence-rpi5.json)
 
-| Host | Run | HTTP 200 | Req/s | p50 (ms) | p95 (ms) | p99 (ms) | RSS (MiB) | Peak RSS (MiB) | Selected |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| Python | 1 | 741,750 | 74,175.0 | 0.840 | 1.070 | 1.202 | 46.19 | 46.19 |  |
-| Python | 2 | 748,913 | 74,891.3 | 0.813 | 1.056 | 1.143 | 46.20 | 46.20 | Median |
-| Python | 3 | 751,478 | 75,147.8 | 0.821 | 1.055 | 1.153 | 46.17 | 46.17 |  |
-| Node.js | 1 | 875,832 | 87,583.2 | 0.709 | 0.894 | 0.959 | 72.62 | 72.62 | Median |
-| Node.js | 2 | 885,850 | 88,585.0 | 0.704 | 0.889 | 0.945 | 72.83 | 72.83 |  |
-| Node.js | 3 | 872,356 | 87,235.6 | 0.714 | 0.895 | 0.955 | 73.03 | 73.03 |  |
-| Bun | 1 | 809,479 | 80,947.9 | 0.761 | 0.875 | 1.476 | 72.19 | 73.75 |  |
-| Bun | 2 | 827,152 | 82,715.2 | 0.746 | 0.856 | 1.459 | 72.12 | 73.22 |  |
-| Bun | 3 | 815,697 | 81,569.7 | 0.752 | 0.869 | 1.496 | 70.36 | 73.38 | Median |
-| Go | 1 | 948,324 | 94,832.4 | 0.645 | 0.822 | 1.169 | 25.81 | 39.69 |  |
-| Go | 2 | 961,237 | 96,123.7 | 0.637 | 0.812 | 1.149 | 25.70 | 38.64 |  |
-| Go | 3 | 959,721 | 95,972.1 | 0.638 | 0.813 | 1.162 | 25.75 | 39.69 | Median |
-| JVM | 1 | 832,725 | 83,272.5 | 0.763 | 0.789 | 0.811 | 249.33 | 249.33 | Median |
-| JVM | 2 | 843,874 | 84,387.4 | 0.752 | 0.779 | 0.797 | 246.88 | 248.52 |  |
-| JVM | 3 | 812,842 | 81,284.2 | 0.772 | 0.801 | 1.285 | 249.09 | 252.06 |  |
-| Native C | 1 | 1,613,440 | 161,344.0 | 0.376 | 0.547 | 0.605 | 19.39 | 19.39 |  |
-| Native C | 2 | 1,622,912 | 162,291.2 | 0.376 | 0.543 | 0.609 | 19.39 | 19.39 |  |
-| Native C | 3 | 1,617,276 | 161,727.6 | 0.376 | 0.546 | 0.607 | 19.38 | 19.38 | Median |
+The release confirmation has three admitted runs for each of six fixtures.
+This table also records the initial Native C validation attempt that was
+excluded because it applied a stricter terminal equality check than the
+campaign protocol.
+
+<!-- attempts:start -->
+| Fixture | Attempt | Warm-up (s) | Req/s | p99 (ms) | CPU (s) | Peak °C | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Bun | 01-bun-1 | 5 | 80,858.6 | 1.569 | — | 46.30 | Admitted |
+| Go | 01-go-1 | 5 | 93,728.2 | 1.212 | — | 44.10 | Admitted |
+| JVM | 01-jvm-1 | 30 | 82,580.1 | 1.139 | — | 45.20 | Admitted |
+| Native C | 01-native-1 | 5 | — | — | — | 46.85 | native terminal accounting or shutdown failed |
+| Native C | 01-native-2 | 5 | 160,955.6 | 0.612 | — | 46.85 | Admitted |
+| Node.js | 01-node-1 | 5 | 88,133.9 | 0.958 | — | 46.85 | Admitted |
+| Python | 01-python-1 | 5 | 73,793.8 | 1.188 | — | 46.85 | Admitted |
+| Bun | 02-bun-1 | 5 | 79,529.6 | 1.966 | — | 46.85 | Admitted |
+| Go | 02-go-1 | 5 | 92,094.1 | 1.238 | — | 45.75 | Admitted |
+| JVM | 02-jvm-1 | 30 | 82,954.1 | 0.980 | — | 45.75 | Admitted |
+| Native C | 02-native-1 | 5 | 161,369.7 | 0.608 | — | 47.40 | Admitted |
+| Node.js | 02-node-1 | 5 | 86,244.9 | 0.969 | — | 47.40 | Admitted |
+| Python | 02-python-1 | 5 | 73,917.7 | 1.185 | — | 46.85 | Admitted |
+| Bun | 03-bun-1 | 5 | 80,833.4 | 1.516 | — | 47.40 | Admitted |
+| Go | 03-go-1 | 5 | 94,084.8 | 1.204 | — | 45.75 | Admitted |
+| JVM | 03-jvm-1 | 30 | 81,772.1 | 1.093 | — | 46.30 | Admitted |
+| Native C | 03-native-1 | 5 | 160,338.5 | 0.618 | — | 47.95 | Admitted |
+| Node.js | 03-node-1 | 5 | 84,937.2 | 1.413 | — | 47.40 | Admitted |
+| Python | 03-python-1 | 5 | 73,586.2 | 1.196 | — | 47.40 | Admitted |
+<!-- attempts:end -->
 
 ## JVM framework comparison
 
-[View the 28 runs in the current JVM campaign](jvm-full-runs-rpi5.md#individual-runs).
-The [earlier JVM campaign](jvm-framework-runs-rpi5.md) includes archived 1-CPU evidence.
+[JVM results and all 28 scheduled runs](jvm-full-runs-rpi5.md)
 
 ## Go, Node.js, Bun and Python framework comparison
 
-[View all 36 individual runs](framework-runs-rpi5.md#per-run-results).
+[Framework results and all 36 runs](framework-runs-rpi5.md)
 
 ## Bun.serve() paired comparison
 
-[View all 6 individual runs](bun-serve-runs-rpi5.md#individual-runs).
+[Bun results and all six runs](bun-serve-runs-rpi5.md)
