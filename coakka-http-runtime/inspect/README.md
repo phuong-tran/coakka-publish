@@ -17,24 +17,23 @@ It is separate from CoAkka Runtime Inspect, which inspects runtime messaging.
 
 ## Packages and evidence
 
-Inspect 2.0.1 embeds HTTP Runtime Core generation 2.0. Install a
+Inspect 2.2.0 embeds HTTP Runtime Core generation 2.2. Install a
 matching standalone archive; you do not need to install the SDK separately
 for Inspect.
 
 | Target | Archive | Execution evidence |
 | --- | --- | --- |
-| macOS ARM64 | [Download](releases/2.0.1/coakka-http-runtime-inspect-2.0.1-macos-aarch64.tar.gz) | Installed workflow and [Node.js walkthrough](walkthrough.md) |
-| Linux ARM64 | [Download](releases/2.0.1/coakka-http-runtime-inspect-2.0.1-linux-aarch64.tar.gz) | Installed workflow on Rocky Linux 8.10 ARM64 and Raspberry Pi 5 |
+| macOS ARM64 | [Download](releases/2.2.0/coakka-http-runtime-inspect-2.2.0-macos-aarch64.tar.gz) | Installed workflow against Core 2.2 |
+| Linux ARM64 | [Download](releases/2.2.0/coakka-http-runtime-inspect-2.2.0-linux-aarch64.tar.gz) | Installed workflow on Raspberry Pi 5 and in a glibc 2.28 environment |
 
-Compare your archive with [SHA256SUMS](releases/2.0.1/SHA256SUMS). The Linux
+Compare your archive with [SHA256SUMS](releases/2.2.0/SHA256SUMS). The Linux
 binary uses system interfaces up to glibc 2.28. The macOS executable has an
 ad hoc signature and has not been notarized. Windows and x86-64 builds are
 outside this release's scope.
 
 The installed workflow checks startup, browser assets, connect and refusal,
-OpenAPI export, route requests, disconnect and graceful stop. The
-[original 1.0.0 candidate archives](candidates/2026-10-08/) remain available
-for reproducing earlier runs.
+OpenAPI export, route requests, disconnect and graceful stop. See the [2.0.1 archives](releases/2.0.1/) and
+[2.0.1 Node.js walkthrough](walkthrough.md) for the earlier release.
 
 ## Install
 
@@ -43,15 +42,15 @@ platform. This example uses Linux ARM64. On macOS ARM64, replace
 `linux-aarch64` with `macos-aarch64` in `archive`.
 
 ```sh
-archives="$PWD/coakka-http-runtime/inspect/releases/2.0.1"
-archive=coakka-http-runtime-inspect-2.0.1-linux-aarch64.tar.gz
+archives="$PWD/coakka-http-runtime/inspect/releases/2.2.0"
+archive=coakka-http-runtime-inspect-2.2.0-linux-aarch64.tar.gz
 (cd "$archives" && grep "  $archive\$" SHA256SUMS | shasum -a 256 -c)
 mkdir http-inspect
 tar -xzf "$archives/$archive" -C http-inspect
 ./http-inspect/bin/coakka-http-runtime-inspect --version
 ```
 
-Expect `coakka-http-runtime-inspect 2.0.1 assets=3`. The archive contains the
+Expect `coakka-http-runtime-inspect 2.2.0 assets=3`. The archive contains the
 executable and its license files under `share/licenses/`. Keep those files
 with the executable.
 
