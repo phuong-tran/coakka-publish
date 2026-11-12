@@ -46,6 +46,8 @@ coakka_http_host_status_t test_cpu_info(coakka_http_host_cpu_info_t *info);
 int test_now_ms(uint64_t *out_ms);
 coakka_http_host_bytes_t test_text(const char *text);
 int test_bytes_equal(coakka_http_host_bytes_t bytes, const char *text);
+/* A test may remove the file only once it owns this exclusive creation. */
+int test_write_material(const char *path, const char *material, int *created);
 void test_service_init(test_service_t *owner);
 int test_service_open(test_service_t *owner,
                       const coakka_http_host_configuration_t *configuration,

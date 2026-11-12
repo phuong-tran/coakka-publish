@@ -33,6 +33,22 @@ complete SDK; such a run is evidence for that SDK, not evidence for 2.0.1.
 Configure verifies the complete source inventory before compiling. Its SHA256
 manifest detects source drift; it is not a publisher signature.
 
+## Check the HTTP versions an endpoint serves
+
+Use [SDK 2.2.0](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) or another SDK that supports listener V1.
+Install Python 3.8 or later and choose a curl whose
+`--version` lists both HTTP2 and HTTP3. In the configure command above, set
+`-DCOAKKA_HTTP_TEST_SDK_VERSION` to the version of your extracted SDK and add
+`-DCOAKKA_HTTP_TEST_CURL=/absolute/path/to/curl`. Build, then run
+`ctest --test-dir build/http-tests -R '^http_host_protocol_' -V`.
+
+The four tests start temporary TLS endpoints on loopback. Three run
+HTTP/1.1, HTTP/2 and HTTP/3 individually. The mixed test sends all three
+versions concurrently to one V1 port. Its JSON report includes the endpoint,
+the versions Core reports as accepting requests, and the versions the clients
+actually used. Each request must return HTTP 200 with the expected body and
+negotiate the requested version.
+
 ## What the tests prove
 
 | Case | Invariant |

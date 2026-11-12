@@ -9,6 +9,8 @@ set(COAKKA_HTTP_TEST_SDK_VERSION "2.0.1" CACHE STRING "Exact installed SDK versi
 find_package(CoAkkaHttpHost ${COAKKA_HTTP_TEST_SDK_VERSION} EXACT REQUIRED CONFIG)
 find_package(Threads REQUIRED)
 option(COAKKA_HTTP_TEST_FUZZ "Build the optional Clang libFuzzer fixture seam" OFF)
+set(COAKKA_HTTP_TEST_CURL "" CACHE FILEPATH
+    "Enable endpoint protocol tests with this HTTP/2 and HTTP/3 capable curl")
 set(COAKKA_HTTP_TEST_OUTBOUND_LAN_ADDRESS "" CACHE STRING
     "Non-loopback IPv4 address already assigned to the test host")
 
@@ -34,13 +36,17 @@ add_library(http_test_threads STATIC
 set_target_properties(http_test_threads PROPERTIES C_EXTENSIONS NO)
 target_link_libraries(http_test_threads PUBLIC http_test_options Threads::Threads)
 
-function(register_test name)
+function(configure_test_target name)
   set_target_properties(${name} PROPERTIES C_EXTENSIONS NO CXX_EXTENSIONS NO)
   if(WIN32)
     add_custom_command(TARGET ${name} POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
         $<TARGET_FILE:CoAkkaHttp::host> $<TARGET_FILE_DIR:${name}> VERBATIM)
   endif()
+endfunction()
+
+function(register_test name)
+  configure_test_target(${name})
   add_test(NAME ${name} COMMAND ${name} ${ARGN})
   # One process-level watchdog complements finite Core and socket waits. The
   # thread helper never frees a child context when completion is unproven.
@@ -74,6 +80,34 @@ if(COAKKA_HTTP_TEST_SDK_VERSION VERSION_GREATER_EQUAL "1.1.2")
   file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tls-fixture")
   set_tests_properties(http_host_tls_reload PROPERTIES
     WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tls-fixture")
+endif()
+if(COAKKA_HTTP_TEST_SDK_VERSION VERSION_GREATER_EQUAL "2.1.0")
+  add_executable(http_host_multi_listener host_multi_listener.c)
+  target_link_libraries(http_host_multi_listener PRIVATE http_test_support)
+  register_test(http_host_multi_listener)
+  file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/v1-fixture")
+  set_tests_properties(http_host_multi_listener PROPERTIES
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/v1-fixture")
+endif()
+if(COAKKA_HTTP_TEST_CURL)
+  if(COAKKA_HTTP_TEST_SDK_VERSION VERSION_LESS "2.1.0")
+    message(FATAL_ERROR "The endpoint protocol tests require SDK 2.1.0 or later")
+  endif()
+  if(NOT IS_ABSOLUTE "${COAKKA_HTTP_TEST_CURL}" OR
+     NOT EXISTS "${COAKKA_HTTP_TEST_CURL}" OR IS_DIRECTORY "${COAKKA_HTTP_TEST_CURL}")
+    message(FATAL_ERROR "COAKKA_HTTP_TEST_CURL must name an absolute curl executable")
+  endif()
+  find_package(Python3 3.8 REQUIRED COMPONENTS Interpreter)
+  add_executable(http_host_protocols host_protocols.c)
+  target_link_libraries(http_host_protocols PRIVATE http_test_support)
+  configure_test_target(http_host_protocols)
+  foreach(profile IN ITEMS 1.1 2 3 mixed)
+    set(case "http_host_protocol_${profile}")
+    add_test(NAME "${case}"
+      COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/check_protocols.py"
+        $<TARGET_FILE:http_host_protocols> "${COAKKA_HTTP_TEST_CURL}" "${profile}")
+    set_tests_properties("${case}" PROPERTIES TIMEOUT 60)
+  endforeach()
 endif()
 add_executable(http_host_cpp host_cpp_header.cc)
 target_link_libraries(http_host_cpp PRIVATE http_test_options CoAkkaHttp::host)

@@ -19,6 +19,7 @@ third number and keeps the exact Core SDK pin.
 | First release on Core `2.0` | `2.0` | `2.0.1` | `2.0.1` |
 | Go fix | `2.0` | `2.0.2` | `2.0.1` |
 | First release on Core `2.1` | `2.1` | `2.1.1` | `2.1.1` |
+| Coordinated release on Core `2.2` | `2.2` | `2.2.1` | `2.2.1` |
 
 Published package versions and checksums stay fixed. Documentation on
 `coakka-publish` and `coakka-samples` can be corrected independently.
@@ -37,3 +38,6 @@ Published package versions and checksums stay fixed. Documentation on
 
 The coordinated [2.0.1 release](release-2.0.1.md) uses the SDK packaged as
 `2.0.1` for Core generation `2.0` across all five connectors.
+
+The coordinated [2.2.1 release](release-2.2.1.md) pins SDK `2.2.0` for
+Core generation `2.2`. The C ABI is 10.

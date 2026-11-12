@@ -58,6 +58,20 @@ int test_bytes_equal(coakka_http_host_bytes_t bytes, const char *text) {
          (size == 0U || (bytes.data != NULL && memcmp(bytes.data, text, size) == 0));
 }
 
+int test_write_material(const char *path, const char *material, int *created) {
+  FILE *file = NULL;
+  const size_t size = strlen(material);
+#if defined(_WIN32)
+  if (fopen_s(&file, path, "wbx") != 0) return 0;
+#else
+  file = fopen(path, "wbx");
+#endif
+  if (file == NULL) return 0;
+  *created = 1;
+  const int written = fwrite(material, 1U, size, file) == size;
+  return fclose(file) == 0 && written;
+}
+
 void test_service_init(test_service_t *owner) {
   memset(owner, 0, sizeof(*owner));
   coakka_http_host_request_event_init(&owner->event);
@@ -85,14 +99,9 @@ int test_service_open(test_service_t *owner,
 }
 
 int test_release(test_service_t *owner) {
-  if (!owner->lease_live) {
-    return 1;
-  }
+  if (!owner->lease_live) return 1;
   if (coakka_http_host_release_request(owner->service, &owner->event) !=
-      COAKKA_HTTP_HOST_OK) {
-    /* Keep the lease recorded if the SDK refuses to release it. */
-    return 0;
-  }
+      COAKKA_HTTP_HOST_OK) return 0;
   owner->lease_live = 0;
   return 1;
 }

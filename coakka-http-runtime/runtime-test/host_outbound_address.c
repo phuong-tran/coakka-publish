@@ -107,6 +107,7 @@ int main(int argc, char **argv) {
   }
   TEST_CHECK(coakka_http_host_release_outbound(client.service, &event) ==
              COAKKA_HTTP_HOST_OK);
+  terminal_live = 0;
   coakka_http_host_outbound_event_init(&event);
   const coakka_http_host_status_t second =
       coakka_http_host_take_outbound(client.service, 0U, &event);
