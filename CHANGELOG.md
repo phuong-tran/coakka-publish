@@ -3,6 +3,11 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/coakka-runtime/releases/](docs/coakka-runtime/releases/README.md).
 
+## HTTP Runtime Inspect 2.2.0 — 2026-11-12
+
+Published standalone Inspect with Core 2.2 for macOS ARM64 and Linux ARM64.
+[Downloads, SHA-256 checksums and verification](coakka-http-runtime/inspect/releases/2.2.0/)
+
 ## HTTP Runtime 2.2.1 — 2026-11-12
 
 - Released Node.js and Bun on npm, Python on PyPI, Go on GitHub and JVM

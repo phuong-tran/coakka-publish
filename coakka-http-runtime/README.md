@@ -42,7 +42,7 @@ Read `2.0.1` as Core generation `2.0` and connector revision `1`. A connector fi
 Inspect can browse a service’s published routes, try requests and export
 OpenAPI. Its packages target macOS ARM64 and Linux ARM64. The service must
 enable inspection before the companion can connect.
-[Walkthrough](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/inspect/walkthrough.md) · [Integration status](https://github.com/phuong-tran/coakka-publish/blob/main/docs/coakka-http-runtime/inspect/metadata-and-openapi.md#current-package-integration)
+[Inspect 2.2.0 downloads and checksums](inspect/releases/2.2.0/) · [2.0.1 Node.js walkthrough](inspect/walkthrough.md) · [Integration status](https://github.com/phuong-tran/coakka-publish/blob/main/docs/coakka-http-runtime/inspect/metadata-and-openapi.md#current-package-integration)
 
 ## Archived 1.0.0 feature packages
 
