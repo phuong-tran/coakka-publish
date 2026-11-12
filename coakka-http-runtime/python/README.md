@@ -2,11 +2,18 @@
 
 ![CoAkka](https://raw.githubusercontent.com/phuong-tran/coakka-samples/a539dfcd7dc8d93c5b1c61b1324899af13d47ca6/docs/common/assets/brand/coakka-logo.png)
 
-CoAkka HTTP Runtime provides HTTP server and client APIs for Python. Use it
-to serve routes, stream responses, handle WebSockets, or call configured
-upstream services. The wheel includes the native library for your platform.
+CoAkka HTTP Runtime is an embeddable HTTP server and client for Python.
+Use Python handlers to serve HTTP APIs, stream responses, handle
+WebSockets or call upstream services. The wheel includes the shared
+native HTTP core for your platform.
 
-## Install 2.0.1
+The CoAkka ecosystem provides polyglot tools for distributed applications,
+HTTP services and logging. CoAkka HTTP Runtime is the HTTP product and can
+be adopted independently.
+
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md)
+
+## Install 2.2.1
 
 Run these commands from your application directory with CPython 3.11 or newer.
 
@@ -14,14 +21,14 @@ On macOS or Linux:
 
 ```sh
 python3 -m venv .venv
-.venv/bin/python -m pip install coakka-http-runtime-python==2.0.1
+.venv/bin/python -m pip install coakka-http-runtime-python==2.2.1
 ```
 
 On Windows in PowerShell:
 
 ```powershell
 py -3 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install coakka-http-runtime-python==2.0.1
+.\.venv\Scripts\python.exe -m pip install coakka-http-runtime-python==2.2.1
 ```
 
 Install `coakka-http-runtime-python` with pip and import `coakka_http`
@@ -74,6 +81,35 @@ If pip cannot find a matching wheel, run `python -VV` and
 `python -c "import platform; print(platform.machine())"` with the interpreter
 you plan to use. Install and run the package with that interpreter.
 
+## Choose an HTTP version
+
+`Builder.listen()` in the first example starts a plain HTTP/1.1 listener.
+For HTTP/2 or HTTP/3, generate the [local TLS files](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/README.md#prepare-local-tls-files)
+and pass a `Listener` to the builder instead. For example:
+
+```python
+from coakka_http import Builder, Listener, ListenerProtocol, TransportSecurity
+
+builder = Builder().listener(
+    Listener(
+        port=8443,
+        protocol=ListenerProtocol.HTTP_2,
+        security=TransportSecurity.TLS,
+        credential_id="local-example",
+        credential_generation=1,
+        certificate_chain_file="http-test-tls/server.pem",
+        private_key_file="http-test-tls/server.key",
+    )
+)
+```
+
+Register your routes on `builder`, then call `start()`. Use
+`ListenerProtocol.HTTP_3` to serve HTTP/3 over UDP. The
+[complete Python sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/server.py) runs all 3 modes separately.
+Python 2.2.1 does not expose the same-port V1 profile.
+
+[HTTP/1.1](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http1.md) · [HTTP/2](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http2.md) · [HTTP/3](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http3.md) · [All 3 on one port](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md)
+
 ## Outbound requests
 
 Keep the first server running. Save this example as `client.py` and run
@@ -125,6 +161,7 @@ lifecycle outcomes.
 
 - [Python integration guide](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/python/integration.md)
 - [Runnable Python samples](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/python)
+- [Feature recipes and coverage](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/FEATURES.md)
 - [URL grammar and glossary](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/glossary.md)
 - [I/O backend](#io-backend)
 - [Lower-level API](#lower-level-api)
@@ -132,7 +169,8 @@ lifecycle outcomes.
 
 `Builder` creates one service. The service supports buffered and streamed
 requests, streaming responses and trailers, SSE, WebSockets, static files,
-outbound targets, route updates, and monitoring.
+outbound targets, generation-checked route updates, TLS and mTLS, and
+bounded monitoring.
 
 `service.routes` returns the runtime's route generation and binding
 revisions. Use `effective_limits()` and `runtime_info()` to inspect the
