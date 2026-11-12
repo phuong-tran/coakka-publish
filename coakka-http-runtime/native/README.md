@@ -1,20 +1,25 @@
 # CoAkka HTTP Runtime native SDK
 
-SDK 2.0.1 exposes the focused public C contract:
+SDK 2.2.0 exposes the focused public C contract:
 `<coakka/http/host.h>`, CMake package `CoAkkaHttpHost`, and link target
 `CoAkkaHttp::host`. C11, C++20 and language adapters consume the same closed
 shared library. Native application business dispatch stays application-owned;
 HTTP I/O, route matching, admission, deadlines and authoritative state stay
 inside CoAkka HTTP Runtime.
 
-[Download SDK 2.0.1](https://github.com/phuong-tran/coakka-publish/tree/main/coakka-http-runtime/native/releases/2.0.1) and verify the SHA-256 for your target. SDK 2.0.1 implements Core generation 2.0 and C ABI 10.
+[Download SDK 2.2.0](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) and verify the SHA-256 for your target. SDK 2.2.0 implements Core generation 2.2 and C ABI 10.
+
+CoAkka HTTP Runtime is the embeddable HTTP server and client in the
+CoAkka ecosystem. The same native SDK powers the language connectors.
+
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md)
 
 ## Install one matching SDK
 
 Verify and extract the complete archive for the host, then use:
 
 ```cmake
-find_package(CoAkkaHttpHost 2.0.1 EXACT REQUIRED CONFIG)
+find_package(CoAkkaHttpHost 2.2.0 EXACT REQUIRED CONFIG)
 add_executable(example main.c)
 target_link_libraries(example PRIVATE CoAkkaHttp::host)
 ```
@@ -30,6 +35,24 @@ An implementation source tree, diagnostic symbol companion or dependency
 inventory is not part of the consumer SDK. Language applications normally
 install the corresponding language package instead of selecting native images
 independently.
+
+## Choose an HTTP version
+
+The [C and C++ samples](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners#c-and-c) build against the installed SDK.
+Run `http1` for plain HTTP over TCP, `http2` for HTTP/2 over TLS/TCP, or
+`http3` for HTTP/3 over QUIC/UDP. Start with the same buffered `/hello`
+route and change the listener.
+
+For HTTPS on all 3 protocols at one port, obtain the additive
+`coakka_http_host_multi_listener_get_api_v1` table declared in
+`<coakka/http/host.h>`. The profile accepts a server TLS identity and
+buffered request/reply routes. The existing ABI 10 entry points continue
+to serve standalone listeners and advanced features such as streams,
+WebSockets, mTLS and TLS credential reload.
+
+[HTTP/1.1](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http1.md) · [HTTP/2](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http2.md) · [HTTP/3](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http3.md) · [All 3 on one port](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md)
+
+[Feature recipes and coverage](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/FEATURES.md)
 
 ## Lifecycle and borrowing
 

@@ -11,7 +11,19 @@ HTTP delivery, limits and shutdown.
 tests against the SDK you install. See how the tests check that requests
 stay with the right service, resources are released, and failures are handled.
 
-## Version 2.0.1
+## Current release: connector 2.2.1 and Core SDK 2.2.0
+
+[Release notes](docs/release-2.2.1.md) · [Native SDK downloads and SHA-256 checksums](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) · [Run an HTTP example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md)
+
+| Host | Package |
+| --- | --- |
+| Node.js | [`coakka-http-runtime-node`](https://www.npmjs.com/package/coakka-http-runtime-node/v/2.2.1) |
+| Bun | [`coakka-http-runtime-bun`](https://www.npmjs.com/package/coakka-http-runtime-bun/v/2.2.1) |
+| Python | [`coakka-http-runtime-python`](https://pypi.org/project/coakka-http-runtime-python/2.2.1/) |
+| Java / Kotlin | [`io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.2.1`](https://central.sonatype.com/artifact/io.github.phuong-tran.coakka/coakka-http-runtime-jvm/2.2.1) |
+| Go | [`github.com/phuong-tran/coakka-http-runtime-go/v2@v2.2.1`](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) |
+
+## Previous release: 2.0.1
 
 [Run your first request](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/registry-basic/README.md) · [Native C and C++ SDK downloads and checksums](native/releases/2.0.1/)
 

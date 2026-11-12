@@ -3,6 +3,17 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/coakka-runtime/releases/](docs/coakka-runtime/releases/README.md).
 
+## HTTP Runtime 2.2.1 — 2026-11-12
+
+- Released Node.js and Bun on npm, Python on PyPI, Go on GitHub and JVM
+  on Maven Central. All five use native SDK `2.2.0` (Core generation
+  `2.2`, C ABI 10).
+- Core serves HTTP/1.1, HTTP/2 and HTTP/3 on one HTTPS port through listener
+  V1, and fixes a standalone HTTP/3 response that could wait for a later
+  request. Node.js and Bun expose V1 and handler swap.
+- Updated the installed SDK tests to report negotiated protocol versions.
+  [Release notes, packages and upgrade guide](coakka-http-runtime/docs/release-2.2.1.md)
+
 ## Runtime 3.2.1 — 2026-11-05
 
 Cataloged Runtime connector revision 1 on Core generation 3.2. Maven Central,
@@ -34,7 +45,7 @@ lists verified SHA-256 downloads and the command and WebView scope.
 - Published standalone HTTP Runtime Inspect `2.0.1` for macOS ARM64 and Linux
   ARM64. [Inspect downloads](coakka-http-runtime/inspect/releases/2.0.1/)
 - Updated the installed-SDK suite with outbound address and TLS regressions.
-  The published Pi 5 numbers were measured on `1.1.2`. [Benchmark version note](coakka-http-runtime/benchmark/README.md)
+  The published Pi 5 numbers were measured on `1.1.2`. [Archived benchmark](https://github.com/phuong-tran/coakka-publish/tree/550a4196ac23237ae6b6375170632a15dca56eca/coakka-http-runtime/benchmark)
 
 ## 3.0.0 — 2026-10-30
 
