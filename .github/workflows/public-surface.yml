@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, macos-14, windows-latest]
+        runner: [ubuntu-latest, macos-15, windows-latest]
     steps:
       - name: Check out published tests and packages
         uses: actions/checkout@v6
@@ -36,6 +36,11 @@ jobs:
       - name: Verify the test source inventory
         shell: bash
         run: bash coakka-runtime/scripts/verify-native-evidence-source.sh
+
+      - name: Confirm the macOS runner is ARM64
+        if: runner.os == 'macOS'
+        shell: bash
+        run: test "$(uname -m)" = arm64
 
       - name: Check launcher argument and failure handling
         if: runner.os == 'Linux'
