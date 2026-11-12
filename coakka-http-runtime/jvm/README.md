@@ -2,13 +2,20 @@
 
 ![CoAkka](https://raw.githubusercontent.com/phuong-tran/coakka-samples/a539dfcd7dc8d93c5b1c61b1324899af13d47ca6/docs/common/assets/brand/coakka-logo.png)
 
-Serve HTTP requests, stream responses, handle WebSockets, and call configured
-upstream services from Java or Kotlin. Both languages use the same JVM
-artifact and native library package.
+CoAkka HTTP Runtime is an embeddable HTTP server and client for Java and
+Kotlin. Serve HTTP APIs, stream responses, handle WebSockets and call
+upstream services with JVM handlers. Both languages use the same managed
+JAR and the native HTTP core for the JVM's platform.
+
+The CoAkka ecosystem provides polyglot tools for distributed applications,
+HTTP services and logging. CoAkka HTTP Runtime is the HTTP product and can
+be adopted independently.
+
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md)
 
 ## Requirements
 
-Use JDK 17 and Maven for the examples below. The connector JAR targets Java 8
+Use JDK 17 for the examples below. Install the package with Maven or Gradle. The connector JAR targets Java 8
 bytecode. Pick the native ZIP for the operating system and architecture of
 the JVM that will run your app. Check the architecture with
 `java -XshowSettings:properties -version` and look for `os.arch`.
@@ -23,7 +30,7 @@ the JVM that will run your app. Check the architecture with
 
 On WSL2, use the Linux classifier for the JVM running inside WSL2.
 
-## Install 2.0.1
+## Install 2.2.1
 
 For a new Maven app, save this as `pom.xml`. In an existing Maven app, add
 the dependency to your `dependencies` block.
@@ -38,7 +45,7 @@ the dependency to your `dependencies` block.
         <dependency>
             <groupId>io.github.phuong-tran.coakka</groupId>
             <artifactId>coakka-http-runtime-jvm</artifactId>
-            <version>2.0.1</version>
+            <version>2.2.1</version>
         </dependency>
     </dependencies>
 </project>
@@ -54,16 +61,16 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.0.1")
+    implementation("io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.2.1")
 }
 ```
 
-Download and unpack the matching native ZIP. Run the following as a single
+**Maven:** Download and unpack the matching native ZIP. Run the following as a single
 command from the directory containing your Maven project. Replace
 `macos-aarch64` with the classifier for your JVM.
 
 ```sh
-mvn org.apache.maven.plugins:maven-dependency-plugin:3.8.1:unpack "-Dartifact=io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.0.1:zip:macos-aarch64" "-DoutputDirectory=vendor/coakka-http"
+mvn org.apache.maven.plugins:maven-dependency-plugin:3.8.1:unpack "-Dartifact=io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.2.1:zip:macos-aarch64" "-DoutputDirectory=vendor/coakka-http"
 ```
 
 The ZIP creates `vendor/coakka-http/native`. Pass that directory with
@@ -78,14 +85,39 @@ Use the same version for the JAR and the native ZIP. If the JVM reports
 `UnsatisfiedLinkError`, check the classifier, the extracted `native` directory,
 and the value of `java.library.path` in the application process.
 
-If you launch the app with Gradle's `application` plugin, pass the same
-directory to its JVM.
+**Gradle:** Resolve the ZIP from Maven Central as a separate dependency.
+Replace `macos-aarch64` with the classifier for your JVM:
 
 ```kotlin
+val coakkaNative by configurations.creating
+val coakkaNativeRoot = layout.buildDirectory.dir("coakka-http")
+
+dependencies {
+    add(coakkaNative.name, "io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.2.1:macos-aarch64@zip")
+}
+
+val unpackCoakkaNative by tasks.registering(Sync::class) {
+    from(coakkaNative.elements.map { files -> zipTree(files.single().asFile) })
+    into(coakkaNativeRoot)
+}
+
 tasks.named<JavaExec>("run") {
-    jvmArgs("-Djava.library.path=" + file("vendor/coakka-http/native").absolutePath)
+    dependsOn(unpackCoakkaNative)
+    standardInput = System.`in`
+    val nativeDir = coakkaNativeRoot.get().dir("native").asFile.absolutePath
+    jvmArgs("-Djava.library.path=$nativeDir")
+    if (System.getProperty("os.name").startsWith("Windows")) {
+        environment("PATH", "$nativeDir;${System.getenv("PATH").orEmpty()}")
+    }
 }
 ```
+
+The `run` task requires Gradle's `application` plugin. Run
+`./gradlew run` for that app, or `./gradlew unpackCoakkaNative` when
+launching from an IDE; point the IDE's JVM at `build/coakka-http/native`
+and add it to the process PATH on Windows. In PowerShell, use
+`.\gradlew.bat`. The standalone commands below use the Maven example's
+directory layout.
 
 ## First request in Java
 
@@ -156,8 +188,8 @@ import coakka.http.ServiceBuilder
 
 fun main() {
     ServiceBuilder()
-        .listen("127.0.0.1", 0)
-        .post("/echo") { request ->
+        .listen(host = "127.0.0.1", port = 0)
+        .post(pattern = "/echo") { request ->
             Responses.bytes(request.bytes(), status = 201)
         }
         .start()
@@ -172,7 +204,7 @@ fun main() {
 Compile with `kotlinc` and run on macOS or Linux.
 
 ```sh
-kotlinc EchoServer.kt -classpath vendor/lib/coakka-http-runtime-jvm-2.0.1.jar -d echo-kotlin.jar
+kotlinc -jvm-target 17 EchoServer.kt -classpath vendor/lib/coakka-http-runtime-jvm-2.2.1.jar -d echo-kotlin.jar
 java "-Djava.library.path=vendor/coakka-http/native" -cp "echo-kotlin.jar:vendor/lib/*" EchoServerKt
 ```
 
@@ -181,9 +213,45 @@ in the `java` command. Send the same `/echo` request using the port printed
 by the Kotlin server. It returns HTTP 201 with the body `hello`. Press Enter
 to close the service.
 
+## Choose an HTTP version
+
+`listen(host, port)` in the Java and Kotlin examples starts plain HTTP/1.1.
+For HTTP/2 or HTTP/3, generate the
+[local TLS files](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/README.md#prepare-local-tls-files) and call
+`listener(...)` with a `Listener`. Kotlin example:
+
+```kotlin
+import coakka.http.Listener
+import coakka.http.ListenerProtocol
+import coakka.http.ServiceBuilder
+import coakka.http.TransportSecurity
+
+val builder = ServiceBuilder().listener(
+    Listener(
+        bindAddress = "127.0.0.1",
+        port = 8443,
+        protocol = ListenerProtocol.HTTP_2,
+        security = TransportSecurity.TLS,
+        credentialGeneration = 1,
+        credentialId = "local-example",
+        certificateChainFile = "http-test-tls/server.pem",
+        privateKeyFile = "http-test-tls/server.key",
+    )
+)
+```
+
+Register routes on `builder`, then start the service. Use
+`ListenerProtocol.HTTP_3` to serve HTTP/3 over UDP. The complete
+[Java](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/Server.java) and [Kotlin](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/Server.kt) examples show
+both choices. The JVM 2.2.1 connector selects standalone listeners;
+it does not expose the same-port V1 profile.
+
+[HTTP/1.1](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http1.md) · [HTTP/2](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http2.md) · [HTTP/3](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http3.md) · [All 3 on one port](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md)
+
 ## API reference
 
 - [HTTP Runtime documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime)
+- [Feature recipes and coverage](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/FEATURES.md)
 - [URL grammar and glossary](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/reference/glossary.md)
 - [Archived 1.0.0 feature recipes](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/kotlin/integration.md#4-try-the-http-features)
 
