@@ -16,7 +16,7 @@ import (
 	"strings"
 	"syscall"
 
-	coakkahttp "github.com/phuong-tran/coakka-http-runtime-go"
+	coakkahttp "github.com/phuong-tran/coakka-http-runtime-go/v2"
 )
 
 var body = []byte("0123456789abcdef0123456789abcdef")
@@ -65,9 +65,6 @@ func runCoakka(port uint16) {
 			},
 		}).
 		Get("/fixed", func(*coakkahttp.Request) (coakkahttp.Response, error) {
-			if os.Getenv("RESPONSE_MODE") == "fresh" {
-				return coakkahttp.NewResponse(http.StatusOK, headers, body)
-			}
 			return response, nil
 		}).Start()
 	if err != nil {
@@ -81,7 +78,7 @@ func runCoakka(port uint16) {
 		fatal(fmt.Errorf("build identity unavailable"))
 	}
 	for _, d := range bi.Deps {
-		if d.Path == "github.com/phuong-tran/coakka-http-runtime-go" {
+		if d.Path == "github.com/phuong-tran/coakka-http-runtime-go/v2" {
 			if d.Replace != nil {
 				fatal(fmt.Errorf("module replacement forbidden"))
 			}

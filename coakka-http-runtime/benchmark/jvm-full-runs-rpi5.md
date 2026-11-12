@@ -1,58 +1,66 @@
 # JVM server comparison on Raspberry Pi 5
 
-[Measurement data and h2load output](jvm-evidence-rpi5.json) · [Reproduction notes](evidence-rpi5.md)
+[Benchmark overview](README.md) · [Evidence JSON](jvm-evidence-rpi5.json)
 
-[Overview](README.md) · [Earlier JVM campaign](jvm-framework-runs-rpi5.md)
+Each fixture had three 30-second warm-ups and a separate 40-second check.
+The four ranked fixtures passed both the measurement gates and the 5%
+warm-up check. The direct Tomcat servlet was reconstructed from the
+published setup. WebFlux and Spring MVC varied across repeated runs.
 
-All workloads use server CPUs 0–1 and load-generator CPUs 2–3. The load
-uses 64 HTTP/1.1 keep-alive connections through localhost for a fixed
-32-byte response. Each standard run warms for 30 seconds and measures for
-10 seconds. The fourth run checks sensitivity to a 40-second warm-up.
+Jetty, Undertow and Vert.x reached the thermal cutoff. The first excluded
+Jetty attempt reached 50.15°C. The resumed JVM runs used a 49.60°C cutoff,
+with cooler starts for those three fixtures. Excluded attempts supply no
+throughput or latency values to the ranking.
 
-A median requires all three standard runs to pass the 90% generator CPU
-ceiling and the warm-up check to pass that ceiling and stay within 5%
-of the median. p99 and sampled RSS come from the throughput-median run.
-Mean and peak RSS are sampled over warm-up and measurement.
-
-| Application | Median req/s | Range req/s | p99 (ms) | Mean RSS (MiB) | Sampled peak RSS (MiB) | Gate |
-| --- | ---: | ---: | ---: | ---: | ---: | --- |
-| CoAkka JVM 1.1.2 | 84,469.6 | 83,894.6–84,811.5 | 0.831 | 243.47 | 249.44 | Accepted |
-| Tomcat 10.1.50 (direct servlet) | 68,051.5 | 61,803.9–73,281.2 | 1.827 | 236.64 | 260.31 | Accepted |
-| Jetty 12.1.13 | 159,186.6 | 153,993.5–160,878.5 | 0.782 | 226.86 | 243.73 | Accepted |
-| Spring WebFlux 6.2.19 + Reactor Netty 1.2.18 | — | — | — | — | — | 3/3 standard runs passed headroom. Warm-up delta 7.84%. |
-| Spring MVC 6.2.19 + Tomcat 10.1.50 | — | — | — | — | — | 3/3 standard runs passed headroom. Warm-up delta 25.88%. |
-| Undertow 2.3.26.Final | 162,458.1 | 162,065.0–162,640.4 | 0.767 | 224.91 | 233.80 | Accepted |
-| Vert.x Web 4.5.34 | — | — | — | — | — | 0/3 standard runs passed headroom. Warm-up delta 1.30%. Warm-up check was client-limited. |
+<!-- summary:start -->
+| Fixture | Median req/s | Req/s range | p99 (ms) | Peak °C / status |
+| --- | --- | --- | --- | --- |
+| CoAkka JVM | 83,373.8 | 83,246.7–84,048.6 | 0.823 | 47.40 |
+| Tomcat 10.1.50 (direct servlet) | 68,924.4 | 65,549.6–70,215.6 | 1.682 | 49.05 |
+| Jetty 12.1.13 | — | — | — | Thermal cutoff |
+| Spring WebFlux + Reactor Netty | 56,962.2 | 40,736.8–57,306.6 | 1.390 | 49.05 |
+| Spring MVC + Tomcat | 17,250.6 | 14,905.2–18,162.8 | 87.398 | 48.50 |
+| Undertow 2.3.26.Final | — | — | — | Thermal cutoff |
+| Vert.x Web 4.5.34 | — | — | — | Thermal cutoff |
+<!-- summary:end -->
 
 ## Individual runs
 
-| Application | Round | HTTP 200 | Req/s | p99 (ms) | Mean RSS (MiB) | Sampled peak RSS (MiB) | Start/max °C | Client max CPU | Status |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| CoAkka JVM 1.1.2 | 1 | 844,696 | 84,469.6 | 0.831 | 243.47 | 249.44 | 38.60/45.20 | 47.7% | Median |
-| Tomcat 10.1.50 (direct servlet) | 1 | 680,515 | 68,051.5 | 1.827 | 236.64 | 260.31 | 41.35/47.40 | 47.6% | Median |
-| Jetty 12.1.13 | 1 | 1,608,785 | 160,878.5 | 0.773 | 233.39 | 245.97 | 41.35/50.70 | 85.5% | Standard run |
-| Spring WebFlux 6.2.19 + Reactor Netty 1.2.18 | 1 | 513,432 | 51,343.2 | 1.516 | 340.33 | 381.47 | 42.45/47.95 | 38.3% | Standard run |
-| Spring MVC 6.2.19 + Tomcat 10.1.50 | 1 | 126,451 | 12,645.1 | 129.960 | 220.47 | 236.86 | 43.00/47.40 | 17.8% | Standard run |
-| Undertow 2.3.26.Final | 1 | 1,626,404 | 162,640.4 | 0.781 | 225.04 | 234.83 | 40.80/50.15 | 83.6% | Standard run |
-| Vert.x Web 4.5.34 | 1 | 2,055,927 | 205,592.7 | 0.349 | 241.02 | 252.23 | 40.80/51.25 | 97.2% | Standard run, client-limited |
-| Vert.x Web 4.5.34 | 2 | 2,175,085 | 217,508.5 | 0.334 | 235.91 | 246.05 | 42.45/51.80 | 99.1% | Standard run, client-limited |
-| Undertow 2.3.26.Final | 2 | 1,624,581 | 162,458.1 | 0.767 | 224.91 | 233.80 | 42.45/50.70 | 82.9% | Median |
-| Spring MVC 6.2.19 + Tomcat 10.1.50 | 2 | 182,090 | 18,209.0 | 92.524 | 230.95 | 246.39 | 42.45/47.95 | 21.8% | Standard run |
-| Spring WebFlux 6.2.19 + Reactor Netty 1.2.18 | 2 | 576,848 | 57,684.8 | 1.494 | 289.06 | 325.12 | 42.45/47.95 | 41.9% | Standard run |
-| Jetty 12.1.13 | 2 | 1,591,866 | 159,186.6 | 0.782 | 226.86 | 243.73 | 41.35/50.15 | 85.8% | Median |
-| Tomcat 10.1.50 (direct servlet) | 2 | 732,812 | 73,281.2 | 1.628 | 236.83 | 264.23 | 41.90/48.50 | 49.5% | Standard run |
-| CoAkka JVM 1.1.2 | 2 | 848,115 | 84,811.5 | 0.827 | 242.99 | 249.59 | 41.90/46.85 | 48.1% | Standard run |
-| Spring WebFlux 6.2.19 + Reactor Netty 1.2.18 | 3 | 406,393 | 40,639.3 | 1.974 | 289.49 | 318.88 | 40.80/47.95 | 34.0% | Standard run |
-| Spring MVC 6.2.19 + Tomcat 10.1.50 | 3 | 156,663 | 15,666.3 | 108.156 | 222.91 | 238.59 | 40.80/47.40 | 18.3% | Standard run |
-| Undertow 2.3.26.Final | 3 | 1,620,650 | 162,065.0 | 0.898 | 224.59 | 234.06 | 42.45/50.70 | 85.6% | Standard run |
-| Vert.x Web 4.5.34 | 3 | 2,109,606 | 210,960.6 | 0.343 | 235.27 | 246.62 | 41.35/51.25 | 98.1% | Standard run, client-limited |
-| CoAkka JVM 1.1.2 | 3 | 838,946 | 83,894.6 | 0.851 | 243.36 | 249.72 | 41.90/46.85 | 48.1% | Standard run |
-| Tomcat 10.1.50 (direct servlet) | 3 | 618,039 | 61,803.9 | 1.919 | 237.75 | 259.36 | 42.45/47.40 | 43.8% | Standard run |
-| Jetty 12.1.13 | 3 | 1,539,935 | 153,993.5 | 0.811 | 230.66 | 244.48 | 41.90/50.70 | 80.6% | Standard run |
-| Jetty 12.1.13 | 4 | 1,594,270 | 159,427.0 | 0.781 | 236.08 | 245.84 | 42.45/51.80 | 85.0% | 40 s warm-up check |
-| Spring WebFlux 6.2.19 + Reactor Netty 1.2.18 | 4 | 473,189 | 47,318.9 | 1.692 | 345.80 | 387.56 | 41.35/48.50 | 35.8% | 40 s warm-up check |
-| Spring MVC 6.2.19 + Tomcat 10.1.50 | 4 | 197,210 | 19,721.0 | 80.389 | 235.61 | 252.08 | 41.90/47.95 | 19.8% | 40 s warm-up check |
-| Undertow 2.3.26.Final | 4 | 1,653,611 | 165,361.1 | 0.767 | 232.59 | 238.89 | 40.80/51.80 | 87.7% | 40 s warm-up check |
-| Vert.x Web 4.5.34 | 4 | 2,137,121 | 213,712.1 | 0.338 | 242.37 | 251.69 | 42.45/51.80 | 99.1% | 40 s warm-up check, client-limited |
-| CoAkka JVM 1.1.2 | 4 | 846,223 | 84,622.3 | 0.826 | 243.85 | 249.45 | 40.80/46.85 | 47.2% | 40 s warm-up check |
-| Tomcat 10.1.50 (direct servlet) | 4 | 657,563 | 65,756.3 | 1.843 | 239.68 | 260.61 | 42.45/47.95 | 46.2% | 40 s warm-up check |
+<!-- attempts:start -->
+| Fixture | Attempt | Warm-up (s) | Req/s | p99 (ms) | CPU (s) | Peak °C | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| CoAkka JVM | 01-coakka-1 | 30 | 84,048.6 | 0.800 | — | 46.85 | Admitted |
+| Jetty 12.1.13 | 01-jetty-1 | 30 | — | — | — | 50.15 | Thermal cutoff at 50.15°C |
+| Jetty 12.1.13 | 01-jetty-2 | 30 | — | — | — | 49.60 | Interrupted while adjusting thermal controls |
+| Jetty 12.1.13 | 01-jetty-3 | 30 | — | — | — | — | Interrupted while adjusting thermal controls |
+| Jetty 12.1.13 | 01-jetty-4 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Spring MVC + Tomcat | 01-mvc-tomcat-1 | 30 | 17,250.6 | 87.398 | — | 47.95 | Admitted |
+| Tomcat 10.1.50 (direct servlet) | 01-tomcat-1 | 30 | 65,549.6 | 1.774 | — | 49.05 | Admitted |
+| Undertow 2.3.26.Final | 01-undertow-1 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Undertow 2.3.26.Final | 01-undertow-2 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Vert.x Web 4.5.34 | 01-vertx-1 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Vert.x Web 4.5.34 | 01-vertx-2 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Spring WebFlux + Reactor Netty | 01-webflux-1 | 30 | 40,736.8 | 1.993 | — | 47.95 | Admitted |
+| CoAkka JVM | 02-coakka-1 | 30 | 83,246.7 | 0.811 | — | 46.85 | Admitted |
+| Jetty 12.1.13 | 02-jetty-1 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Spring MVC + Tomcat | 02-mvc-tomcat-1 | 30 | 14,905.2 | 110.151 | — | 47.95 | Admitted |
+| Tomcat 10.1.50 (direct servlet) | 02-tomcat-1 | 30 | 68,924.4 | 1.682 | — | 48.50 | Admitted |
+| Undertow 2.3.26.Final | 02-undertow-1 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Vert.x Web 4.5.34 | 02-vertx-1 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Vert.x Web 4.5.34 | 02-vertx-2 | 30 | — | — | — | — | Interrupted while adjusting thermal controls |
+| Spring WebFlux + Reactor Netty | 02-webflux-1 | 30 | 57,306.6 | 1.365 | — | 49.05 | Admitted |
+| CoAkka JVM | 03-coakka-1 | 30 | 83,373.8 | 0.823 | — | 46.30 | Admitted |
+| Jetty 12.1.13 | 03-jetty-1 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Spring MVC + Tomcat | 03-mvc-tomcat-1 | 30 | 18,162.8 | 88.322 | — | 48.50 | Admitted |
+| Tomcat 10.1.50 (direct servlet) | 03-tomcat-1 | 30 | 70,215.6 | 1.683 | — | 48.50 | Admitted |
+| Undertow 2.3.26.Final | 03-undertow-1 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Vert.x Web 4.5.34 | 03-vertx-1 | 30 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Spring WebFlux + Reactor Netty | 03-webflux-1 | 30 | 56,962.2 | 1.390 | — | 49.05 | Admitted |
+| CoAkka JVM | 04-coakka-1 | 40 | 82,835.4 | 0.811 | — | 47.40 | Admitted |
+| Jetty 12.1.13 | 04-jetty-1 | 40 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Spring MVC + Tomcat | 04-mvc-tomcat-1 | 40 | 17,006.6 | 100.152 | — | 47.95 | Admitted |
+| Tomcat 10.1.50 (direct servlet) | 04-tomcat-1 | 40 | 71,182.4 | 1.686 | — | 48.50 | Admitted |
+| Undertow 2.3.26.Final | 04-undertow-1 | 40 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Vert.x Web 4.5.34 | 04-vertx-1 | 40 | — | — | — | 49.60 | Thermal cutoff at 49.60°C |
+| Spring WebFlux + Reactor Netty | 04-webflux-1 | 40 | 56,587.9 | 1.395 | — | 49.05 | Admitted |
+<!-- attempts:end -->

@@ -1,3 +1,5 @@
-# HTTP Runtime 1.1.2 on Raspberry Pi 5
+<a name="http-runtime-112-on-raspberry-pi-5"></a>
 
-This page moved to the [HTTP Runtime benchmark folder](../benchmark/README.md#http-runtime-112-on-raspberry-pi-5).
+# HTTP Runtime on Raspberry Pi 5
+
+See the [current Pi 5 benchmark results](../benchmark/README.md).

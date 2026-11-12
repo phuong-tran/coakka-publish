@@ -23,8 +23,7 @@ public final class FixedServer {
     public static void main(String[] args) throws Exception {
         byte[] body = "0123456789abcdef0123456789abcdef".getBytes(StandardCharsets.US_ASCII);
         Headers headers = Headers.of(new Header("content-type", "application/octet-stream"));
-        Response sharedResponse = Responses.bytes(body, 200, headers);
-        boolean freshResponse = "fresh".equals(System.getenv("RESPONSE_MODE"));
+        Response response = Responses.bytes(body, 200, headers);
 
         Limits limits = new Limits(
                 0, 0, 0, 0, 0L, 0L, 0L, 0, 0, 0, 0, 1024,
@@ -34,9 +33,7 @@ public final class FixedServer {
                 .cpu(CpuPolicy.AUTO)
                 .concurrency(1)
                 .limits(limits)
-                .get("/fixed", request -> freshResponse
-                        ? Responses.bytes(body, 200, headers)
-                        : sharedResponse)
+                .get("/fixed", request -> response)
                 .start();
 
         // The runner sends SIGTERM and checks that the service closed cleanly.

@@ -1,149 +1,89 @@
 # Raspberry Pi 5 Benchmark Methodology
 
-This methodology describes the published HTTP Runtime `1.1.2` measurements.
-See the [benchmark version note](README.md) for the `2.0.1` fix and measurement status.
-
 ## Contents
 
 - [Status](#status)
-- [Comparison Scope](#comparison-scope)
-- [Machine Record](#machine-record)
-- [Workload And CPU Budgets](#workload-and-cpu-budgets)
-- [Warm-Up And Cooldown](#warm-up-and-cooldown)
-- [Metrics And Accounting](#metrics-and-accounting)
-- [Acceptance And Reproduction](#acceptance-and-reproduction)
+- [Comparison scope](#comparison-scope)
+- [Machine record](#machine-record)
+- [Workload and CPU budgets](#workload-and-cpu-budgets)
+- [Warm-up and cooldown](#warm-up-and-cooldown)
+- [Metrics and accounting](#metrics-and-accounting)
+- [Acceptance and reproduction](#acceptance-and-reproduction)
 
 ## Status
 
-The [results ledger](README.md#http-runtime-112-on-raspberry-pi-5)
-includes the five HTTP Runtime 1.1.2 connector confirmation results.
+This campaign measured the released HTTP Runtime 2.2.1 connectors and
+native SDK 2.2.0 with C ABI 10 on November 12, 2026. [Current results](README.md)
 
-## Comparison Scope
+## Comparison scope
 
-| Host | Measured application | Comparison applications |
+| Campaign | Workload | Measurements |
 | --- | --- | --- |
-| Native C | Explicitly configured public C host-inlined event reader | None; standalone native baseline |
-| Go | CoAkka host-inlined | Chi, Gin |
-| Kotlin/JVM | CoAkka host-inlined | Spring WebFlux, Spring MVC with Tomcat, Jetty, Undertow, Vert.x, Tomcat with a direct servlet |
-| Python | CoAkka host-inlined | FastAPI, Starlette; exact server stack named |
-| Node.js | CoAkka host-inlined | Express, Fastify |
-| Bun | CoAkka host-inlined | Elysia, Hono |
+| Release confirmation | Native C and the five connectors | Three runs per fixture |
+| Framework comparison | Go, Node.js, Bun and Python fixtures | Three runs per fixture |
+| Bun.serve() | Two Bun 1.4.2 fixtures | Three runs per fixture |
+| CPU efficiency | Node.js and Bun fixtures | Three runs per fixture |
+| JVM | Seven JVM fixtures | Three measurements and one warm-up check per fixture |
 
-The [JVM framework comparison](jvm-full-runs-rpi5.md) includes direct Tomcat,
-Spring MVC on Tomcat, Jetty, WebFlux, Undertow, Vert.x and CoAkka JVM.
-The per-run record explains the admission outcome for every configuration.
+These measurements cover a fixed loopback response. TLS, HTTP/2, HTTP/3,
+remote traffic and application logic require separate measurements.
 
-The [framework comparison](framework-runs-rpi5.md) covers Go, Node.js, Bun and Python.
-The [Bun.serve() paired comparison](bun-serve-runs-rpi5.md) covers Bun's built-in server.
-Both campaigns use two server CPUs and 64 localhost connections.
-The scope excludes standalone Netty and native-library competitors.
-Spring MVC with Tomcat is one stack, not two independent results. C++ samples
-refer to the native C baseline without claiming a separate C++ measurement.
+## Machine record
 
-## Machine Record
+Raspberry Pi 5 Model B Rev 1.1, AArch64, Debian 13.7, kernel
+`6.18.50+rpt-rpi-2712` and h2load 1.64.0. The fan remained at state 4.
+The CPU governor was set to `performance` during load and restored to
+`ondemand` at the end of each campaign.
 
-Capture these facts from the Pi at campaign start and attach them to every
-result through a campaign identifier. Do not reuse a former machine snapshot
-as proof of the current boot environment.
+The release confirmation used Go 1.26.3, Node.js 22.0.0, Bun 1.4.2,
+Python 3.13.5 and OpenJDK 21.0.12.1. The framework and CPU efficiency
+comparisons used Node.js 22.23.3. The JSON evidence records the host
+and file digests.
 
-| Category | Required facts |
-| --- | --- |
-| Board | Raspberry Pi model/revision; physical machine, not emulation |
-| CPU | Architecture, logical CPU count, CPU model, affinity sets, governor, frequency limits and observed frequency |
-| Memory | Installed/OS-visible RAM, available RAM before each run, swap configuration/activity |
-| Operating system | Distribution/release, kernel, firmware identity, boot command line where relevant |
-| Storage | Boot device/model and filesystem; evidence/output location |
-| Cooling | Fan policy, ambient temperature if measured, board temperature before/after each run, throttle flags |
-| Software | Exact CoAkka archive hashes, language/framework/load-tool versions and startup flags |
-| Effective configuration | runtime-reported CPU/loop/batch/timeout/backend state, alongside requested configuration |
-| Network | Loopback or external topology, interfaces, HTTP/TLS mode, client placement |
+## Workload and CPU budgets
 
-Unknown values are explicitly unavailable, never guessed. Exclude credentials,
-private keys, unrelated environment variables and other sensitive machine data.
+h2load ran two threads on CPUs 2–3. The server ran on CPUs 0–1.
+The generator used 64 persistent HTTP/1.1 connections to `GET /fixed`.
+The response was HTTP 200 with a fixed 32-byte binary body. Native C
+used two I/O loops and one host event reader. Each CoAkka connector
+used one active I/O loop. Framework fixture topology is described
+alongside its results.
 
-## Workload And CPU Budgets
+## Warm-up and cooldown
 
-The initial fixed-response workload is `GET /fixed`, HTTP/1.1 keep-alive,
-status `200`, `Content-Type: application/octet-stream`, and the 32-byte body
-`0123456789abcdef0123456789abcdef`. Verify bytes and headers before timing.
-No database, logging, compression, TLS, proxy or application authentication is
-silently added to only one implementation. This workload is a transport and
-handler-overhead measurement, not production application capacity.
+Each measurement window was 10 seconds. Release confirmation used
+separate warm-up and timed connections, with five seconds of warm-up
+for C, Go, Node.js, Bun and Python and 30 seconds for JVM. The framework
+and Bun.serve() comparisons warmed the measured connections for five
+seconds. The JVM comparison used 30 seconds for its three measurements
+and 40 seconds for the separate warm-up check. The CPU efficiency fixture ran for
+17 seconds and selected the middle 10 seconds after a five-second warm-up.
 
-Measure the 2-CPU profile with 64 concurrent loopback connections. Defer
-1-CPU comparisons. Record actual CPU IDs, all server
-workers/threads, runtime flags and the generator CPU set. Server and generator
-CPU sets must not overlap in a loopback run. An allowed two-CPU set does not
-prove that a single-threaded host uses both CPUs; show observed CPU usage.
-Do not silently add clustered workers to only one side. If a supported worker
-configuration is used, label it as a distinct profile. Missing profiles say
-**not measured**, not zero throughput.
+The runner waited at least 30 seconds for cooldown. It checked CPU idle
+time, temperature and firmware throttle state before starting, then
+sampled temperature during warm-up and load. Admitted runs stayed below
+50°C with no throttling. After an excluded Jetty attempt reached 50.15°C,
+the JVM campaign used a 49.60°C cutoff and cooler starts for Jetty,
+Undertow and Vert.x.
 
-Freeze concurrency, warm-up, measurement duration, repetitions, tool arguments,
-CPU sets, framework settings and acceptance thresholds before the campaign.
-Use at least three accepted repeated rounds with reproducible balanced order.
-Validate generator headroom: saturation makes the server result inconclusive.
+## Metrics and accounting
 
-## Warm-Up And Cooldown
+- Throughput is the number of successful responses in the 10-second window
+  divided by ten. p50, p95 and p99 come from exact latency frequencies.
+- Throughput tables use the median-throughput run for p99. The CPU
+  efficiency table uses the median requests per CPU-second and reports
+  throughput and p99 from that same run.
+- Release confirmation records process RSS and high-water mark after
+  measurement. Framework comparisons record sampled mean and peak RSS
+  during warm-up and load. Both are available in the evidence.
+- JVM ranking requires three admitted measurements and an admitted
+  40-second warm-up check within 5% of the throughput median.
 
-Warm each process before its timed interval. Qualify JVM/JIT warm-up stability;
-a short fixed delay alone is not evidence of steady state. Record the chosen
-warm-up and observed stability instead of applying unequal hidden warm-up.
+## Acceptance and reproduction
 
-Before **every** run, including the first and retries, stop the preceding
-server and wait at least 30 seconds, until board temperature is below 50 °C,
-background CPU busy is at most 5%, and throttle status is clear. Freeze the
-sampling interval and number of consecutive qualifying observations in the
-campaign configuration. The current gate requires three clean observations,
-with a five-second wait between one-second CPU samples; any failure resets the
-streak. A bounded cooldown deadline expiring rejects or defers
-the run; it never bypasses the gate. Keep cooling policy fixed throughout.
+The harness verifies the response, the process's loaded file identities,
+CPU affinity, the I/O loop count and clean shutdown. It admits a run
+with complete HTTP 200 accounting, no throttling and peak generator CPU
+below 90%. The JVM temperature exclusions remain visible in the run log.
 
-Record the temperature at load start and during the run when sampling is available.
-The 50 °C limit applies to starting the test. During load, keep recording
-temperature and reject the run if the Pi reports throttling.
-
-## Metrics And Accounting
-
-| Metric | Definition and reporting rule |
-| --- | --- |
-| Throughput | Successful, workload-valid responses per measured second; retain per-run values, median and range |
-| Latency | Client-observed p50/p95/p99 with units and measurement method; do not invent percentiles from an average |
-| Outcomes | Total completed, valid success, wrong status/body, connection errors, timeouts and incomplete requests |
-| CPU | User/system CPU time for the complete server process tree; 100% means one logical CPU, so two busy CPUs approach 200% |
-| RSS | Sampled mean and peak in MiB for all server processes, with sampling interval and measurement window |
-| Memory caveat | Summed process RSS can double-count shared pages; it is not unique physical-memory usage or an instantaneous unsampled peak |
-| Scheduling | Voluntary/involuntary context switches where available; separate intrusive profiling from throughput measurements |
-| Environment | Before/after temperature, throttling, observed frequencies and background activity |
-| Generator | Separate CPU/RSS and errors; never include generator resources in the server totals |
-
-CPU affinity defines the budget available to a server. Observed CPU use
-sums CPU time across its processes and threads over the stated interval.
-Record the process and worker configuration for each fixture. A change
-in worker count or CPU affinity defines a separate execution profile.
-
-To report responses per CPU-second, count successful responses and
-collect server CPU time over the same timed interval. The framework and
-Bun pair campaigns report server CPU averaged across warm-up and load,
-while their throughput and latency describe the timed interval.
-
-Include supervisors and workers consistently; record how exited workers are
-accounted for. Missing metrics say **N/A — reason**, not zero. Record collector
-cost. Never merge latency histograms incorrectly or average percentiles while
-labelling the result as a pooled percentile: report per-run percentiles or use
-compatible raw histograms.
-
-## Acceptance And Reproduction
-
-[Campaign evidence and reproduction commands](evidence-rpi5.md)
-
-Every result needs: candidate identities, fixture/config identity, full commands,
-raw output and telemetry, timestamps, accepted/rejected status and reason.
-Retain rejected attempts rather than selecting only the fastest run. A workload
-mismatch, unexplained errors, throttling, cooldown failure, missing required
-telemetry or saturated generator prevents publication of that run.
-
-Publish the machine table, per-profile result tables and raw evidence together.
-Compare only matched workloads and CPU budgets. Do not use old records as new
-results, rank unrelated ecosystems by this tiny workload, or substitute a
-throughput win for feature/lifecycle correctness.
+[Evidence files and reproduction commands](evidence-rpi5.md)

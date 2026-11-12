@@ -22,9 +22,7 @@ const { Builder, CpuPolicy, Header, Headers, Limits, NotificationProfile, Respon
 const body = Buffer.from('0123456789abcdef0123456789abcdef');
 const headers = new Headers([new Header('content-type', 'application/octet-stream')]);
 
-// Both response modes send the same payload and headers.
-const makeResponse = () => Response.bytes(body, { headers });
-const sharedResponse = makeResponse();
+const response = Response.bytes(body, { headers });
 const service = new Builder()
   .listen('127.0.0.1', 18430)
   .limits(
@@ -34,7 +32,7 @@ const service = new Builder()
       terminalNotificationProfile: NotificationProfile.XXLARGE,
     }),
   )
-  .get('/fixed', process.env.RESPONSE_MODE === 'fresh' ? makeResponse : () => sharedResponse)
+  .get('/fixed', () => response)
   .start();
 
 function identify(kind, path) {

@@ -13,7 +13,7 @@ also keeps resolved address overrides scoped to the connection that needs
 them.
 
 HTTP Runtime `1.1.2` is deprecated for new installs. The published
-[Pi 5 measurements](../benchmark/README.md) describe `1.1.2` inbound server
+[archived Pi 5 measurements](https://github.com/phuong-tran/coakka-publish/tree/550a4196ac23237ae6b6375170632a15dca56eca/coakka-http-runtime/benchmark) describe `1.1.2` inbound server
 handling. The `2.0.1` fix applies to outbound connections.
 
 Choose the guide for your application.
