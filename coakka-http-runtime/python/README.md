@@ -106,23 +106,70 @@ builder = Builder().listener(
 Register your routes on `builder`, then call `start()`. Use
 `ListenerProtocol.HTTP_3` to serve HTTP/3 over UDP. The
 [complete Python sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/server.py) runs all 3 modes separately.
-For all 3 versions on one TLS port, use this builder option before registering routes.
+
+### Run HTTP/1.1, HTTP/2 and HTTP/3 on one port
+
+Use `MultiProtocolListener` with `Builder.multi_protocol_listener()` to
+serve one buffered route over all 3 HTTP versions on the same TLS port.
+TCP carries HTTP/1.1 and HTTP/2. UDP carries HTTP/3 on that port.
+
+Generate the local TLS files linked above and place `http-test-tls` in
+your application directory. Save this example as `multi_server.py`.
 
 ```python
-from coakka_http import Builder, MultiProtocolListener
+from coakka_http import Builder, MultiProtocolListener, Request, Response
 
-builder = Builder().multi_protocol_listener(MultiProtocolListener(
-    certificate_chain_file="http-test-tls/server.pem",
-    private_key_file="http-test-tls/server.key",
-    credential_id="local-example",
-    bind_address="127.0.0.1",
-    port=8443,
-))
+
+def hello(_request: Request) -> Response:
+    return Response.text("hello")
+
+
+def main() -> None:
+    listener = MultiProtocolListener(
+        certificate_chain_file="http-test-tls/server.pem",
+        private_key_file="http-test-tls/server.key",
+        credential_id="local-example",
+        bind_address="127.0.0.1",
+        port=8443,
+    )
+    builder = Builder().multi_protocol_listener(listener).get("/hello", hello)
+    with builder.start() as service:
+        info = service.multi_protocol_listener_info()
+        print(f"Listening on https://127.0.0.1:{info.port}", flush=True)
+        input("Press Enter to stop. ")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
-The shared listener serves buffered routes. Call `service.multi_protocol_listener_info()` to check the bound port and admission state.
+Run `.venv/bin/python multi_server.py` on macOS or Linux, or
+`.\.venv\Scripts\python.exe multi_server.py` in PowerShell. Leave the
+server running and run these commands in another terminal. On Windows,
+use `curl.exe`.
 
-[HTTP/1.1](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http1.md) · [HTTP/2](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http2.md) · [HTTP/3](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http3.md) · [All 3 on one port](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md)
+```sh
+curl --http1.1 --cacert http-test-tls/ca.pem -sS -w "\n%{http_code} %{http_version}\n" https://127.0.0.1:8443/hello
+curl --http2 --cacert http-test-tls/ca.pem -sS -w "\n%{http_code} %{http_version}\n" https://127.0.0.1:8443/hello
+curl --http3-only --cacert http-test-tls/ca.pem -sS -w "\n%{http_code} %{http_version}\n" https://127.0.0.1:8443/hello
+```
+
+The 3 requests return the same body and show the HTTP version used.
+
+```text
+hello
+200 1.1
+hello
+200 2
+hello
+200 3
+```
+
+`curl --version` should list `HTTP2` and `HTTP3` under features.
+`--http3-only` requires HTTP/3 and reports an error if the connection cannot
+use it. Press Enter in the server terminal to close the listener.
+
+[HTTP/1.1](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http1.md) · [HTTP/2](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http2.md) · [HTTP/3](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http3.md)
 
 ## Outbound requests
 
