@@ -11,7 +11,7 @@ The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. CoAkka HTTP Runtime is the HTTP product and can
 be adopted independently.
 
-[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md)
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
 
 ## Requirements
 
@@ -30,7 +30,7 @@ the JVM that will run your app. Check the architecture with
 
 On WSL2, use the Linux classifier for the JVM running inside WSL2.
 
-## Install 2.2.1
+## Install 2.3.1
 
 For a new Maven app, save this as `pom.xml`. In an existing Maven app, add
 the dependency to your `dependencies` block.
@@ -45,7 +45,7 @@ the dependency to your `dependencies` block.
         <dependency>
             <groupId>io.github.phuong-tran.coakka</groupId>
             <artifactId>coakka-http-runtime-jvm</artifactId>
-            <version>2.2.1</version>
+            <version>2.3.1</version>
         </dependency>
     </dependencies>
 </project>
@@ -61,7 +61,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.2.1")
+    implementation("io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.3.1")
 }
 ```
 
@@ -70,7 +70,7 @@ command from the directory containing your Maven project. Replace
 `macos-aarch64` with the classifier for your JVM.
 
 ```sh
-mvn org.apache.maven.plugins:maven-dependency-plugin:3.8.1:unpack "-Dartifact=io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.2.1:zip:macos-aarch64" "-DoutputDirectory=vendor/coakka-http"
+mvn org.apache.maven.plugins:maven-dependency-plugin:3.8.1:unpack "-Dartifact=io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.3.1:zip:macos-aarch64" "-DoutputDirectory=vendor/coakka-http"
 ```
 
 The ZIP creates `vendor/coakka-http/native`. Pass that directory with
@@ -93,7 +93,7 @@ val coakkaNative by configurations.creating
 val coakkaNativeRoot = layout.buildDirectory.dir("coakka-http")
 
 dependencies {
-    add(coakkaNative.name, "io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.2.1:macos-aarch64@zip")
+    add(coakkaNative.name, "io.github.phuong-tran.coakka:coakka-http-runtime-jvm:2.3.1:macos-aarch64@zip")
 }
 
 val unpackCoakkaNative by tasks.registering(Sync::class) {
@@ -204,7 +204,7 @@ fun main() {
 Compile with `kotlinc` and run on macOS or Linux.
 
 ```sh
-kotlinc -jvm-target 17 EchoServer.kt -classpath vendor/lib/coakka-http-runtime-jvm-2.2.1.jar -d echo-kotlin.jar
+kotlinc -jvm-target 17 EchoServer.kt -classpath vendor/lib/coakka-http-runtime-jvm-2.3.1.jar -d echo-kotlin.jar
 java "-Djava.library.path=vendor/coakka-http/native" -cp "echo-kotlin.jar:vendor/lib/*" EchoServerKt
 ```
 
@@ -243,8 +243,29 @@ val builder = ServiceBuilder().listener(
 Register routes on `builder`, then start the service. Use
 `ListenerProtocol.HTTP_3` to serve HTTP/3 over UDP. The complete
 [Java](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/Server.java) and [Kotlin](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/Server.kt) examples show
-both choices. The JVM 2.2.1 connector selects standalone listeners;
-it does not expose the same-port V1 profile.
+both standalone choices. For all 3 versions on one TLS port, configure the
+same builder with `MultiProtocolListener` before registering buffered routes.
+
+```kotlin
+val builder = ServiceBuilder().multiProtocolListener(
+    MultiProtocolListener(
+        certificateChainFile = "http-test-tls/server.pem",
+        privateKeyFile = "http-test-tls/server.key",
+        credentialId = "local-example",
+        bindAddress = "127.0.0.1",
+        port = 8443,
+    ),
+)
+```
+
+```java
+var builder = new ServiceBuilder().multiProtocolListener(
+    new MultiProtocolListener(
+        "http-test-tls/server.pem", "http-test-tls/server.key",
+        "local-example", 1, "127.0.0.1", 8443
+    )
+);
+```
 
 [HTTP/1.1](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http1.md) · [HTTP/2](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http2.md) · [HTTP/3](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http3.md) · [All 3 on one port](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md)
 

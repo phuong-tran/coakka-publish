@@ -13,16 +13,16 @@ The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. CoAkka HTTP Runtime is the HTTP product and can
 be adopted independently.
 
-[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md)
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
 
-## Install 2.2.1
+## Install 2.3.1
 
 Use the package for your runtime in your application directory.
 
 | Runtime | Requirement | Install |
 | --- | --- | --- |
-| Node.js | 22 or newer | `npm install coakka-http-runtime-node@2.2.1` |
-| Bun | 1.2.22 or newer | `bun add coakka-http-runtime-bun@2.2.1` |
+| Node.js | 22 or newer | `npm install coakka-http-runtime-node@2.3.1` |
+| Bun | 1.2.22 or newer | `bun add coakka-http-runtime-bun@2.3.1` |
 
 Each package bundles the native libraries for macOS ARM64, Linux x64 and
 ARM64, and Windows x64 and ARM64. The package selects the binary for the

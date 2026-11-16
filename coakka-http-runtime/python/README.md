@@ -11,9 +11,9 @@ The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. CoAkka HTTP Runtime is the HTTP product and can
 be adopted independently.
 
-[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md)
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
 
-## Install 2.2.1
+## Install 2.3.1
 
 Run these commands from your application directory with CPython 3.11 or newer.
 
@@ -21,14 +21,14 @@ On macOS or Linux:
 
 ```sh
 python3 -m venv .venv
-.venv/bin/python -m pip install coakka-http-runtime-python==2.2.1
+.venv/bin/python -m pip install coakka-http-runtime-python==2.3.1
 ```
 
 On Windows in PowerShell:
 
 ```powershell
 py -3 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install coakka-http-runtime-python==2.2.1
+.\.venv\Scripts\python.exe -m pip install coakka-http-runtime-python==2.3.1
 ```
 
 Install `coakka-http-runtime-python` with pip and import `coakka_http`
@@ -106,7 +106,21 @@ builder = Builder().listener(
 Register your routes on `builder`, then call `start()`. Use
 `ListenerProtocol.HTTP_3` to serve HTTP/3 over UDP. The
 [complete Python sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/server.py) runs all 3 modes separately.
-Python 2.2.1 does not expose the same-port V1 profile.
+For all 3 versions on one TLS port, use this builder option before registering routes.
+
+```python
+from coakka_http import Builder, MultiProtocolListener
+
+builder = Builder().multi_protocol_listener(MultiProtocolListener(
+    certificate_chain_file="http-test-tls/server.pem",
+    private_key_file="http-test-tls/server.key",
+    credential_id="local-example",
+    bind_address="127.0.0.1",
+    port=8443,
+))
+```
+
+The shared listener serves buffered routes. Call `service.multi_protocol_listener_info()` to check the bound port and admission state.
 
 [HTTP/1.1](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http1.md) · [HTTP/2](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http2.md) · [HTTP/3](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http3.md) · [All 3 on one port](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md)
 

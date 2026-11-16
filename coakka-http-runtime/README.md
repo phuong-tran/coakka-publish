@@ -1,11 +1,11 @@
 # CoAkka HTTP Runtime Packages
 
 HTTP Runtime runs HTTP services and sends outbound requests from C, C++, Go,
-Kotlin, Java, Python, Node.js and Bun. Each service runs its own instance.
+Kotlin, Java, Python, Node.js, Bun, C# and Swift. Each service runs its own instance.
 Application handlers use their language API while the native runtime handles
 HTTP delivery, limits and shutdown.
 
-[HTTP documentation](../docs/coakka-http-runtime/README.md) · [Pi 5 benchmark](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md)
+[HTTP documentation](../docs/coakka-http-runtime/README.md) · [Pi 5 benchmark](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
 
 **[coakka-http-runtime-test](runtime-test/)** — read and run the public C and C++
 tests against the SDK you install. See how the tests check that requests
@@ -36,6 +36,12 @@ stay with the right service, resources are released, and failures are handled.
 | Go | [`github.com/phuong-tran/coakka-http-runtime-go/v2@v2.0.1`](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.0.1) |
 
 Read `2.0.1` as Core generation `2.0` and connector revision `1`. A connector fix advances its own last number and keeps the same native SDK. A Core update changes the first two numbers, and each connector starts again at revision `1` when it adopts that Core. [Versions and SDK compatibility](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/docs/versions.md).
+
+## Connector 2.3.1
+
+The 2.3.1 release is in preparation. The connectors use Core SDK 2.3.0 and
+ABI 10. See the [release notes](docs/release-2.3.1.md), the
+[C# package guide](csharp/README.md) and the [Swift package guide](swift/README.md).
 
 ## CoAkka HTTP Runtime Inspect
 
@@ -72,3 +78,5 @@ guides, configuration, deployment and observation. Read the
 for why the shared HTTP contract exists and the language cost tradeoffs.
 
 [Choose another product](../README.md).
+
+[Release 2.2.1 and its changelog](docs/release-2.2.1.md) describe Core SDK 2.2.0 and the matching connectors.

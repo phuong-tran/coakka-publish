@@ -3,6 +3,12 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/coakka-runtime/releases/](docs/coakka-runtime/releases/README.md).
 
+## [Unreleased]
+
+- Prepare C# on NuGet and Swift on SwiftPM. All seven 2.3.1 connectors use
+  Core SDK 2.3.0 and ABI 10. The shared TLS listener serves HTTP/1.1, HTTP/2
+  and HTTP/3 on one port. See the [2.3.1 release notes](coakka-http-runtime/docs/release-2.3.1.md).
+
 ## HTTP Runtime Inspect 2.2.0 — 2026-11-12
 
 Published standalone Inspect with Core 2.2 for macOS ARM64 and Linux ARM64.
