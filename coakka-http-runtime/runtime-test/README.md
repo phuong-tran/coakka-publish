@@ -10,14 +10,15 @@ The [shared test helpers](test_support.c) show how the tests release borrowed
 data and handle a failed close.
 
 The suite uses the public C interface from `<coakka/http/host.h>`.
-The default SDK is `2.0.1`, with C ABI 10.
+The default is CoAkka HTTP Runtime SDK `2.3.0` with C ABI 10.
+
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
 
 ## Build and run
 
-For the macOS ARM64 SDK download and toolchain setup, see the [tested build steps](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/inspect/walkthrough.md#build-and-test-against-the-native-sdk).
-
-From the root of your `coakka-publish` checkout, verify and extract the
-[2.0.1 SDK for your host](../native/releases/2.0.1/), then run:
+Choose the SDK for your host from the [native SDK catalog](../native/README.md).
+Compare the archive hash with its release checksum. Extract the archive,
+then run these commands from the root of your `coakka-publish` checkout.
 
 ```sh
 cmake -S coakka-http-runtime/runtime-test -B build/http-tests \
@@ -27,15 +28,92 @@ cmake --build build/http-tests --config Release --parallel
 ctest --test-dir build/http-tests -C Release --output-on-failure
 ```
 
-CMake requires SDK version 2.0.1 exactly by default. The explicit
-`COAKKA_HTTP_TEST_SDK_VERSION` cache entry permits qualification of a different
-complete SDK; such a run is evidence for that SDK, not evidence for 2.0.1.
+CMake requires SDK version 2.3.0 exactly by default. Set
+`COAKKA_HTTP_TEST_SDK_VERSION` explicitly to exercise another supported SDK
+and use a separate build directory. Record the archive and loaded library
+hashes with the results so they identify the build you exercised.
 Configure verifies the complete source inventory before compiling. Its SHA256
 manifest detects source drift; it is not a publisher signature.
 
+## Installed ABI contract matrix
+
+Use `COAKKA_HTTP_TEST_CONTRACT_MATRIX=ON` for the complete loopback suite in
+this checkout. It requires SDK 2.3.0 or later, Python 3.11 or later with
+`h2==4.3.0` and `aioquic==1.3.0`, and a curl with both HTTP/2 and HTTP/3.
+Provide an absolute path to a fixture certificate, its key and the issuing
+CA. The certificate must cover `localhost` and `127.0.0.1`. Use fresh
+loopback credentials and a separate build directory for each SDK.
+
+For a disposable self-signed identity, generate the certificate and key in a
+new directory. This certificate is also the peer's trust file.
+
+```sh
+mkdir "$test_tls"
+openssl req -x509 -newkey rsa:2048 -nodes -days 1 -subj /CN=localhost \
+  -addext 'subjectAltName=DNS:localhost,IP:127.0.0.1' \
+  -out "$test_tls/server.pem" -keyout "$test_tls/server.key"
+cert="$test_tls/server.pem"
+key="$test_tls/server.key"
+ca="$cert"
+```
+
+```sh
+cmake -S "$test_source" -B "$test_build" \
+  -DCMAKE_PREFIX_PATH="$sdk" -DCOAKKA_HTTP_TEST_SDK_VERSION=2.3.0 \
+  -DCOAKKA_HTTP_TEST_CONTRACT_MATRIX=ON -DCOAKKA_HTTP_TEST_CURL="$curl_h3" \
+  -DPython3_EXECUTABLE="$test_python" \
+  -DCOAKKA_HTTP_TEST_CERTIFICATE="$cert" -DCOAKKA_HTTP_TEST_PRIVATE_KEY="$key" \
+  -DCOAKKA_HTTP_TEST_CA_CERTIFICATE="$ca"
+cmake --build "$test_build" --config Release
+ctest --test-dir "$test_build" -C Release --show-only=json-v1 > test-inventory.json
+ctest --test-dir "$test_build" -C Release --no-tests=error --output-on-failure
+```
+
+Set `test_source` to the directory containing this README and CMakeLists.txt.
+Save the test inventory, CTest output, SDK archive and loaded image hashes,
+host and peer versions when reporting results. Fixture instrumentation covers
+the consumer process code built with the corresponding sanitizer flags. A
+sealed SDK needs its own instrumented build for Core sanitizer evidence.
+
+| Area | Installed consumer cases |
+| --- | --- |
+| Protocol selection and capacity | `http_host_protocol_*` checks standalone HTTP/1.1, HTTP/2 and HTTP/3 and simultaneous traffic on one shared port. `http_host_multi_listener`, `http_host_h2_admission_reclaim_*` and `http_host_h3_connection_capacity_*` check effective limits, admission and reuse. |
+| Requests and uploads | `http_host_runtime`, `http_host_routes`, `http_host_stream`, `http_host_upload_*` and `http_host_lifecycle_*` check request values, body bytes and ownership, multipart interruption, resets and a live sibling. |
+| Responses | `http_host_stream_http*`, `http_host_sse_http*`, `http_host_http2_websocket_*` and `http_host_http3_websocket_*` check streaming, trailers and WebSocket on their supported profiles. |
+| File delivery | `http_host_files_*` and `http_host_file_gate_*` check HEAD, range, revalidation, file identity and closing during a transfer. A system-call trace is needed to confirm the native sendfile path. |
+| Runtime controls | `http_host_routes`, `http_host_tls_reload*`, `http_host_monitor_gate` and `http_host_outbound*` check binding revisions, credential generations, monitor limits, correlation and failure causes. |
+| Lifecycle and ABI | `http_host_contract`, `http_host_ownership`, `http_host_concurrency`, `http_host_pressure` and `http_host_cpp` check lease and token ownership, bounded admission, child cleanup and C++ access to the C ABI. |
+
+The Linux `*_URING` options add checks that require Core to report effective
+`io_uring`. The optional LAN address adds outbound coverage outside loopback.
+Per-language installed packages, OS floors, fault injection, extended load,
+soak, Inspect, and package metadata still need their own evidence.
+
+### Standalone HTTP/3 WebSocket
+
+Use `COAKKA_HTTP_TEST_HTTP3_WEBSOCKET=ON` to select these checks without the
+other matrix groups. Run the following after building.
+
+```sh
+ctest --test-dir "$test_build" -C Release --no-tests=error \
+  -R '^http_host_http3_websocket_' --output-on-failure
+```
+
+The [C fixture](host_http3_websocket.c) owns the listener, exchange tokens
+and borrowed events through the public ABI. The
+[independent peer](http3_websocket_peer.py) verifies TLS and HTTP/3 and
+applies RESET_STREAM, STOP_SENDING and FIN in separate runs. Each run
+holds a DATA lease from stream A across its close, then verifies that
+stream B echoes and a regular HTTP request completes on that connection.
+Other runs verify complete, expired and aborted drain, and stop while an
+event reader is waiting. The fixture joins that reader before releasing
+the retained DATA lease and destroying the service. Every run checks
+that a new service can bind the same UDP port.
+
 ## Check the HTTP versions an endpoint serves
 
-Use [SDK 2.2.0](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) or another SDK that supports listener V1.
+Use SDK 2.3.0 for this exercise. The probe also accepts another SDK with
+shared-listener support when checking an earlier release.
 Install Python 3.8 or later and choose a curl whose
 `--version` lists both HTTP2 and HTTP3. In the configure command above, set
 `-DCOAKKA_HTTP_TEST_SDK_VERSION` to the version of your extracted SDK and add

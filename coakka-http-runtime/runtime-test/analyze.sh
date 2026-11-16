@@ -13,13 +13,14 @@ if [[ ! -f "${include_dir}/coakka/http/host.h" ]]; then
 fi
 # Analyze only owned source. No production dependency graph is rebuilt here.
 sources=(host_runtime.c host_contract.c host_ownership.c host_pressure.c
-         host_outbound.c host_routes.c host_stream.c host_concurrency.c
+         host_outbound.c host_routes.c host_stream.c host_upload_cancel.c host_concurrency.c
          host_execution.c test_support.c test_socket.c test_wire.c
          test_threads_posix.c fixture_wire_test.c fixture_wire_fuzz.c fixture_threads_test.c)
 if grep -q '^#define COAKKA_HTTP_HOST_MULTI_LISTENER_HTTPS_ALL_THREE ' \
     "${include_dir}/coakka/http/host.h"; then
   sources+=(host_multi_listener.c host_protocols.c)
 fi
+sources+=(host_upload_standalone.c)
 warnings=(-std=c11 -Wall -Wextra -Wpedantic -Wconversion -Wshadow
           -Wsign-conversion -Wstrict-prototypes -Werror)
 if command -v "${compiler}" >/dev/null 2>&1; then
