@@ -79,6 +79,12 @@ jobs:
     steps:
       - name: Check out artifacts
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /coakka-http-runtime/runtime-test/
+            /coakka-http-runtime/scripts/verify-http-runtime-test-source.sh
 
       - name: Admit and extract the exact native package
         shell: bash
@@ -128,6 +134,12 @@ jobs:
     steps:
       - name: Check out artifacts
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /coakka-http-runtime/runtime-test/
+            /coakka-http-runtime/scripts/verify-http-runtime-test-source.sh
 
       - name: Admit and extract the exact native package
         shell: bash
