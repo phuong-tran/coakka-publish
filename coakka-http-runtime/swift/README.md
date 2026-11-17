@@ -2,9 +2,10 @@
 
 ![CoAkka](https://raw.githubusercontent.com/phuong-tran/coakka-samples/a539dfcd7dc8d93c5b1c61b1324899af13d47ca6/docs/common/assets/brand/coakka-logo.png)
 
-CoAkka HTTP Runtime is an embeddable HTTP server for Swift applications.
+CoAkka HTTP Runtime is an embeddable HTTP server and client for Swift applications.
 Use Swift handlers to serve APIs, accept uploads, stream responses, push
-updates with Server-Sent Events (SSE) or WebSockets, and deliver files.
+updates with Server-Sent Events (SSE) or WebSockets, deliver files and call
+upstream HTTP services.
 CoAkka HTTP Runtime handles HTTP connections, request limits and shutdown.
 Your application defines the routes and the responses.
 
@@ -24,14 +25,27 @@ with C ABI 10. [Version and SDK compatibility](https://github.com/phuong-tran/co
 
 ## Install 2.3.1
 
-Use Swift 6.0 or a compatible newer toolchain. The package can be consumed
-with Swift Package Manager (SwiftPM) on the following hosts.
+Use [Swift 6.0 or a compatible newer toolchain](https://www.swift.org/install/).
+The package can be consumed with Swift Package Manager (SwiftPM) on the
+following hosts. Install the platform tools listed by Swift before building
+a native application, including the Windows C/C++ build tools when applicable.
 
 | Platform | Architecture | Notes |
 | --- | --- | --- |
 | macOS | ARM64 | macOS 14 or newer |
 | Linux | x86-64 and ARM64 | glibc 2.28 or newer |
 | Windows | x64 and ARM64 | Use a toolchain for the application architecture |
+
+Use the exact `2.3.1` package version. The
+[v2.3.1 GitHub Release](https://github.com/phuong-tran/coakka-http-runtime-swift/releases/tag/v2.3.1)
+provides release notes, a complete package archive and `SHA256SUMS`.
+SwiftPM resolves the versioned Git tag; it does not need a separate Core
+SDK download. The package includes the native libraries for all 5 targets.
+WSL2 uses the Linux files for the application architecture.
+
+The Linux requirement above describes the native Core libraries. Use an OS
+supported by the selected Swift toolchain and runtime; this package does
+not bundle the Swift runtime.
 
 Create a directory for the example. In it, save this as `Package.swift`.
 
@@ -138,8 +152,9 @@ cleanup failures. The `defer` block covers early exits.
 
 ### Build and run on Linux and Windows
 
+On Debian or Ubuntu, install the linker with `sudo apt-get install lld`.
 From the directory containing `Package.swift`, build with
-`swift build -Xswiftc -use-ld=lld` on Linux with LLD installed. On Windows,
+`swift build -Xswiftc -use-ld=lld` on Linux. On Windows,
 run `swift build` from a shell configured for the Swift toolchain. Locate
 the executable directory with `swift build --show-bin-path`.
 
@@ -266,12 +281,82 @@ WebSockets, mTLS or TLS rotation.
 | Serve a WebSocket | Enable `HttpRoute.webSocket` and read connection events with `takeWebSocket` |
 | Serve files | Configure `StaticMount` for assets or use `respondFile` with a `FileAuthority` for a file chosen by a handler |
 | Read counters | Configure `MonitorOptions` and call `readMonitor` |
+| Call an upstream HTTP service | Configure `OutboundOptions`, then use `submitOutbound`, `takeOutbound` and `cancelOutbound` |
+| Reload a TLS/mTLS identity | Use `readTlsCredentials` and `reloadTls` on a supported standalone listener |
 | Replace a handler | Use `BufferedHandler.swapHandler` for application dispatch or `rebindHandler` for a supported standalone route |
 
 Use the standalone profile for streaming uploads, response streaming,
 SSE, WebSockets and file responses. Uploads carry data from the client
 into the application. File responses send server-side files back to a
 client. [Feature and profile guide](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime/reference/FEATURES.md#what-you-can-use-in-231)
+
+## Call an upstream HTTP service
+
+Outbound requests use the same Core-owned HTTP client as the other language
+connectors. The outbound client in 2.3.1 calls **HTTP/1.1** upstreams,
+with plaintext, TLS or mTLS. This is independent of the inbound listener
+serving HTTP/1.1, HTTP/2 or HTTP/3. A logical target names a service; an
+endpoint describes where Core connects. Start with a local HTTP/1.1 peer so the result is repeatable.
+Create `upstream/hello.txt` containing `hello upstream`, then run this in a
+separate terminal with Python 3.11 or newer (`python` or `py` can replace
+`python3` on Windows). Set the peer protocol explicitly; Python's default
+HTTP/1.0 mode does not match this outbound profile:
+
+```sh
+python3 -m http.server 9080 --bind 127.0.0.1 --protocol HTTP/1.1 --directory upstream
+```
+
+Replace `Sources/HelloServer/main.swift` with this complete client example:
+
+```swift
+import CoAkkaHttp
+
+enum ClientError: Error {
+    case missingResult
+    case upstreamFailed(OutboundReason, UInt16)
+}
+
+let endpoint = OutboundEndpoint(
+    nodeID: "local", connectHost: "127.0.0.1", connectPort: 9080,
+    httpAuthority: "127.0.0.1:9080", security: .plaintext)
+let outbound = OutboundOptions(targets: [
+    OutboundTarget(name: "example", generation: 1, endpoints: [endpoint]),
+])
+let service = try HttpService(
+    listener: .standalone(protocol: .http11, address: "127.0.0.1"),
+    routes: [], outbound: outbound)
+defer { try? service.close() }
+try service.start()
+
+let call = try service.submitOutbound(OutboundRequest(
+    logicalTarget: "example", method: "GET", target: "/hello.txt",
+    timeoutMilliseconds: 3000))
+guard let result = try service.takeOutbound(timeoutMilliseconds: 5000),
+      result.call == call else {
+    throw ClientError.missingResult
+}
+guard result.reason == .response, result.responseStatus == 200 else {
+    throw ClientError.upstreamFailed(result.reason, result.responseStatus)
+}
+print("HTTP \(result.responseStatus)")
+print(String(decoding: result.body, as: UTF8.self))
+try service.stop()
+try service.close()
+```
+
+Run it using the same build/launch instructions as the server example.
+Expect `HTTP 200` followed by `hello upstream`. The request has a 3-second
+Core deadline; the 5-second result read is a separate wait. A read returning
+`nil` does not cancel the request. Use `cancelOutbound(call)` to request
+cancellation, then read the Core-issued terminal result. Use 1 outbound
+result reader per service.
+
+For HTTPS, configure `.tls` with the target's trust and peer identity.
+Use `.mutualTLS` with a client identity when the upstream requires it.
+Inspect `reason`, `phase`, `retry` and `certainty` to decide what the
+application should do after a failure. A timeout can leave delivery uncertain;
+retry only when the operation is safe. Keep operator diagnostics out of
+HTTP responses sent to clients.
 
 ## Diagnose a failed request
 
@@ -286,3 +371,11 @@ client. [Feature and profile guide](https://github.com/phuong-tran/coakka-sample
 - During shutdown keep serving in-flight exchanges while draining. Inspect
   `waitDrained` before calling `stop`. An `.expired` drain reports that the
   deadline elapsed with work outstanding.
+
+## Support and funding
+
+[GitHub Sponsors](https://github.com/sponsors/phuong-tran) and
+[Ko-fi](https://ko-fi.com/phuongnamtran) support work across the CoAkka
+ecosystem. Use [CoAkka Samples](https://github.com/phuong-tran/coakka-samples)
+for runnable examples and [CoAkka Publish](https://github.com/phuong-tran/coakka-publish)
+for distribution information, checksums and benchmarks.

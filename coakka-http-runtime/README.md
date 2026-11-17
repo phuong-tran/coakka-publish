@@ -60,6 +60,16 @@ The package targets .NET 8 and includes all 5 native targets.
 [C# guide and MultiProtocol example](csharp/README.md) ·
 [Publication and package hashes](../docs/coakka-http-runtime/releases/2026-11-18-csharp-2.3.1-nuget.md)
 
+## Swift 2.3.1 on GitHub
+
+```swift
+.package(url: "https://github.com/phuong-tran/coakka-http-runtime-swift.git", exact: "2.3.1")
+```
+
+[GitHub Release and checksums](https://github.com/phuong-tran/coakka-http-runtime-swift/releases/tag/v2.3.1) ·
+[Swift guide and complete examples](swift/README.md) ·
+[Verified publication](../docs/coakka-http-runtime/releases/2026-11-18-swift-2.3.1-github.md)
+
 ## Previous coordinated release: connector 2.2.1 and Core SDK 2.2.0
 
 [Release notes](docs/release-2.2.1.md) · [Native SDK downloads and SHA-256 checksums](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) · [Run an HTTP example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md)
@@ -88,8 +98,8 @@ Read `2.0.1` as Core generation `2.0` and connector revision `1`. A connector fi
 
 ## Connector 2.3.1
 
-Swift 2.3.1 is in preparation. The 2.3.1 connectors use Core SDK 2.3.0 and
-ABI 10. The final `1` is each connector's first revision on Core 2.3.
+Go, Node.js, Bun, Python, Java/Kotlin, C# and Swift 2.3.1 are published
+on their respective channels. They use Core SDK 2.3.0 and ABI 10. The final `1` is each connector's first revision on Core 2.3.
 See the [release notes](docs/release-2.3.1.md),
 [the protocol examples](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md) and
 [how to read the version](docs/versions.md).

@@ -10,6 +10,12 @@ Use the package URL and exact version in your dependencies. For Runtime, use Swi
 | --- | --- | --- |
 | Swift | [`.package(url: "https://github.com/phuong-tran/coakka-runtime-swift.git", exact: "3.2.1")`](https://github.com/phuong-tran/coakka-runtime-swift/releases/tag/v3.2.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime/swift/registry-basic) |
 
+### CoAkka HTTP Runtime
+
+| Host | Install or dependency coordinate | First run |
+| --- | --- | --- |
+| Swift | [`.package(url: "https://github.com/phuong-tran/coakka-http-runtime-swift.git", exact: "2.3.1")`](https://github.com/phuong-tran/coakka-http-runtime-swift/releases/tag/v2.3.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md#swift) |
+
 ### CoAkka Logger
 
 | Host | Install or dependency coordinate | First run |
