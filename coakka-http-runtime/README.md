@@ -114,3 +114,5 @@ for why the shared HTTP contract exists and the language cost tradeoffs.
 [Choose another product](../README.md).
 
 [Release 2.2.1 and its changelog](docs/release-2.2.1.md) describe Core SDK 2.2.0 and the matching connectors.
+
+[Java and Kotlin 2.3.1 are available on Maven Central](../docs/coakka-http-runtime/releases/2026-11-18-jvm-2.3.1-central.md), with SDK 2.3.0 and ABI 10.

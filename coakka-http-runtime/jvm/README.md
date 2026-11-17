@@ -15,8 +15,8 @@ be adopted independently.
 
 ## Requirements
 
-Use JDK 17 for the examples below. Install the package with Maven or Gradle. The connector JAR targets Java 8
-bytecode. Pick the native ZIP for the operating system and architecture of
+The library supports Java 8 or newer and targets Java 8 bytecode. Use JDK 17
+for the examples below. Install the package with Maven or Gradle. Pick the native ZIP for the operating system and architecture of
 the JVM that will run your app. Check the architecture with
 `java -XshowSettings:properties -version` and look for `os.arch`.
 
@@ -259,7 +259,16 @@ both standalone choices.
 
 [Generate the local TLS files](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/README.md#prepare-local-tls-files) in your application directory. Use the same
 JVM JAR, Kotlin standard library and native classifier setup as above.
-Set these variables to the absolute paths of the native library directory, the connector JAR and Kotlin standard library JAR.
+On macOS or Linux, set these paths from the Maven project directory:
+
+```sh
+native_dir="$PWD/vendor/coakka-http/native"
+connector_jar="$PWD/vendor/lib/coakka-http-runtime-jvm-2.3.1.jar"
+kotlin_stdlib="$PWD/vendor/lib/kotlin-stdlib-2.3.10.jar"
+```
+
+For Gradle, use its resolved runtime classpath and the native directory created
+by `unpackCoakkaNative`.
 
 ### Java
 

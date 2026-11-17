@@ -2,11 +2,16 @@
 
 ![CoAkka](https://raw.githubusercontent.com/phuong-tran/coakka-samples/a539dfcd7dc8d93c5b1c61b1324899af13d47ca6/docs/common/assets/brand/coakka-logo.png)
 
-CoAkka HTTP Runtime is an embeddable HTTP server for .NET applications.
-Use C# handlers to serve APIs, accept uploads, stream responses, push
-updates with Server-Sent Events (SSE) or WebSockets, and deliver files.
-CoAkka HTTP Runtime handles HTTP connections, request limits and shutdown.
-Your application defines the routes and the responses.
+CoAkka HTTP Runtime is an embeddable HTTP server and client for .NET
+applications. Use C# to serve APIs, accept uploads, stream responses,
+push updates with Server-Sent Events (SSE) or WebSockets, deliver files,
+and call upstream services. Your application owns the routes and business
+logic; CoAkka HTTP Runtime owns HTTP connections, bounded resources and
+request lifecycle.
+
+Serve HTTP/1.1, HTTP/2 and HTTP/3 separately, or use `MultiProtocolListener`
+for buffered requests on one TLS port. The NuGet package includes the
+managed library and matching native libraries for all 5 supported targets.
 
 The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. You can adopt CoAkka HTTP Runtime independently
@@ -29,7 +34,7 @@ Use .NET 8 or a compatible newer .NET version. The NuGet package targets
 
 | Platform | Architecture | Notes |
 | --- | --- | --- |
-| macOS | ARM64 | Use .NET 8 or newer |
+| macOS 14 or newer | ARM64 | Use .NET 8 or newer |
 | Linux | x86-64 and ARM64 | glibc 2.28 or newer |
 | Windows | x64 and ARM64 | Use a toolchain for the application architecture |
 
@@ -41,7 +46,10 @@ cd HelloServer
 dotnet add package coakka-http-runtime-csharp --version 2.3.1
 ```
 
-Install `coakka-http-runtime-csharp` and import `CoAkka.Http`.
+Install `coakka-http-runtime-csharp` and import `CoAkka.Http`. NuGet selects
+native assets for the application runtime. On WSL2, run the Linux .NET SDK;
+Windows applications use Windows assets. No separate native SDK download
+is required for this package.
 
 ## First request
 
@@ -199,6 +207,7 @@ WebSockets, mTLS or TLS rotation.
 | Serve files | Configure `StaticMount` for assets or use `RespondFile` with a `FileAuthority` for a file chosen by a handler |
 | Read counters | Configure `MonitorOptions` and call `ReadMonitor` |
 | Replace a handler | Use `BufferedHandler.SwapHandler` for application dispatch or `RebindHandler` for a supported standalone route |
+| Call an upstream service | Configure `OutboundOptions`; submit with `SubmitOutbound`, read the terminal result with `TakeOutbound`, and request cancellation with `CancelOutbound` |
 
 Use the standalone profile for streaming uploads, response streaming,
 SSE, WebSockets and file responses. Uploads carry data from the client
@@ -217,3 +226,17 @@ client. [Feature and profile guide](https://github.com/phuong-tran/coakka-sample
 - During shutdown keep serving in-flight exchanges while draining. Inspect
   `WaitDrained` before calling `Stop`. An `Expired` drain reports that the
   deadline elapsed with work outstanding.
+
+
+## Documentation, feedback and support
+
+- [CoAkka HTTP Runtime documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime): concepts, configuration, failure modes and feature recipes.
+- [Runnable C# examples](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/csharp): standalone and MultiProtocol applications.
+- [Release packages and checksums](https://github.com/phuong-tran/coakka-publish/tree/main/coakka-http-runtime): published artifacts and compatibility information.
+- [Contact and support](https://github.com/phuong-tran/coakka-samples/blob/main/docs/common/contact-and-support.md): questions and support requests.
+
+## Support CoAkka
+
+Support development through [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
+or [Ko-fi](https://ko-fi.com/phuongnamtran). Both links support the CoAkka ecosystem,
+including CoAkka HTTP Runtime and its language connectors.
