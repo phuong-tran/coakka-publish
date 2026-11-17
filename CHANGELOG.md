@@ -3,11 +3,16 @@
 This changelog summarizes the public artifact surface. Detailed per-drop notes
 remain under [docs/coakka-runtime/releases/](docs/coakka-runtime/releases/README.md).
 
-## [Unreleased]
+## HTTP Runtime 2.3.1 — 2026-11-18
 
-- Prepare C# on NuGet and Swift on SwiftPM. All seven 2.3.1 connectors use
+- Released C# as `CoAkka.Http.Runtime` on NuGet and Swift as
+  `coakka-http-runtime-swift` through GitHub Release and SwiftPM.
+  Both have complete first-request and MultiProtocol examples.
+  All seven 2.3.1 connectors use
   Core SDK 2.3.0 and ABI 10. The shared TLS listener serves HTTP/1.1, HTTP/2
   and HTTP/3 on one port. See the [2.3.1 release notes](coakka-http-runtime/docs/release-2.3.1.md).
+- Added verified registry/package records to the [HTTP release history](docs/coakka-http-runtime/releases/README.md).
+  Existing benchmark results retain their original version and workload.
 
 ## HTTP Runtime Inspect 2.2.0 — 2026-11-12
 

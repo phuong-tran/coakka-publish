@@ -11,6 +11,16 @@ HTTP delivery, limits and shutdown.
 tests against the SDK you install. See how the tests check that requests
 stay with the right service, resources are released, and failures are handled.
 
+## New: C# and Swift 2.3.1
+
+| Language | Package and first request | Protocol exercises |
+| --- | --- | --- |
+| C# (.NET 8 or later) | [CoAkka.Http.Runtime on NuGet](csharp/README.md) | [Standalone and MultiProtocol](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md#c) |
+| Swift (Swift 6.0 or later) | [SwiftPM package and GitHub Release](swift/README.md) | [Standalone and MultiProtocol](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md#swift) |
+
+Both packages include the native libraries for the supported platforms.
+Run HTTP/1.1, HTTP/2 or HTTP/3 separately, or serve all 3 on one TLS port.
+
 ## Node.js and Bun 2.3.1 on npm
 
 Node.js and Bun 2.3.1 are available with Core SDK 2.3.0 and ABI 10.

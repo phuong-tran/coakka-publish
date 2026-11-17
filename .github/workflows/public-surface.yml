@@ -72,8 +72,10 @@ jobs:
         include:
           - runner: ubuntu-latest
             platform: linux-x86_64
+            sdk_sha256: 81d493d6acec4ad144ad344924d04907d9a0c52c1394f508e0cecfcb28a31488
           - runner: windows-latest
             platform: windows-x86_64
+            sdk_sha256: 8608d0774340d287d5e126b2e8660ff9f7d64fa2d1237db6798439c9ea05800b
     steps:
       - name: Check out artifacts
         uses: actions/checkout@v6
@@ -81,12 +83,15 @@ jobs:
       - name: Admit and extract the exact native package
         shell: bash
         run: |
+          set -euo pipefail
           bash coakka-http-runtime/scripts/verify-http-runtime-test-source.sh
-          release=coakka-http-runtime/native/releases/2.0.1
-          archive=coakka-http-runtime-native-2.0.1-${{ matrix.platform }}.tar.gz
-          (cd "$release" && awk -v name="$archive" '$2 == name' SHA256SUMS | sha256sum -c -)
-          mkdir -p build/http-package
-          tar -xzf "$release/$archive" -C build/http-package
+          release=https://github.com/phuong-tran/coakka-http-runtime-go/releases/download/v2.3.1
+          archive=coakka-http-runtime-native-2.3.0-${{ matrix.platform }}.tar.gz
+          mkdir -p build/http-download build/http-package
+          curl --proto '=https' --tlsv1.2 --fail --location --retry 3 \
+            --silent --show-error --output "build/http-download/$archive" "$release/$archive"
+          printf '%s  %s\n' '${{ matrix.sdk_sha256 }}' "build/http-download/$archive" | sha256sum --check --strict
+          tar -xzf "build/http-download/$archive" -C build/http-package
 
       - name: Configure public ABI test
         run: >-
@@ -127,12 +132,17 @@ jobs:
       - name: Admit and extract the exact native package
         shell: bash
         run: |
+          set -euo pipefail
           bash coakka-http-runtime/scripts/verify-http-runtime-test-source.sh
-          release=coakka-http-runtime/native/releases/2.0.1
-          archive=coakka-http-runtime-native-2.0.1-linux-x86_64.tar.gz
-          (cd "$release" && awk -v name="$archive" '$2 == name' SHA256SUMS | sha256sum -c -)
-          mkdir -p build/http-package
-          tar -xzf "$release/$archive" -C build/http-package
+          release=https://github.com/phuong-tran/coakka-http-runtime-go/releases/download/v2.3.1
+          archive=coakka-http-runtime-native-2.3.0-linux-x86_64.tar.gz
+          mkdir -p build/http-download build/http-package
+          curl --proto '=https' --tlsv1.2 --fail --location --retry 3 \
+            --silent --show-error --output "build/http-download/$archive" "$release/$archive"
+          printf '%s  %s\n' \
+            '81d493d6acec4ad144ad344924d04907d9a0c52c1394f508e0cecfcb28a31488' \
+            "build/http-download/$archive" | sha256sum --check --strict
+          tar -xzf "build/http-download/$archive" -C build/http-package
 
       - name: Configure instrumented public ABI test
         run: >-
