@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, macos-15, windows-latest]
+        runner: [ubuntu-latest, macos-26, windows-latest]
     steps:
       - name: Check out published tests and packages
         uses: actions/checkout@v6
