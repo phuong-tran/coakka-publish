@@ -10,14 +10,15 @@ The [shared test helpers](test_support.c) show how the tests release borrowed
 data and handle a failed close.
 
 The suite uses the public C interface from `<coakka/http/host.h>`.
-The default SDK is `2.0.1`, with C ABI 10.
+The default is CoAkka HTTP Runtime SDK `2.3.0` with C ABI 10.
+
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
 
 ## Build and run
 
-For the macOS ARM64 SDK download and toolchain setup, see the [tested build steps](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/inspect/walkthrough.md#build-and-test-against-the-native-sdk).
-
-From the root of your `coakka-publish` checkout, verify and extract the
-[2.0.1 SDK for your host](../native/releases/2.0.1/), then run:
+Choose the SDK for your host from the [native SDK catalog](../native/README.md).
+Compare the archive hash with its release checksum. Extract the archive,
+then run these commands from the root of your `coakka-publish` checkout.
 
 ```sh
 cmake -S coakka-http-runtime/runtime-test -B build/http-tests \
@@ -27,15 +28,162 @@ cmake --build build/http-tests --config Release --parallel
 ctest --test-dir build/http-tests -C Release --output-on-failure
 ```
 
-CMake requires SDK version 2.0.1 exactly by default. The explicit
-`COAKKA_HTTP_TEST_SDK_VERSION` cache entry permits qualification of a different
-complete SDK; such a run is evidence for that SDK, not evidence for 2.0.1.
+CMake requires SDK version 2.3.0 exactly by default. Set
+`COAKKA_HTTP_TEST_SDK_VERSION` explicitly to exercise another supported SDK
+and use a separate build directory. Record the archive and loaded library
+hashes with the results so they identify the build you exercised.
 Configure verifies the complete source inventory before compiling. Its SHA256
 manifest detects source drift; it is not a publisher signature.
 
+## Installed ABI contract matrix
+
+Use `COAKKA_HTTP_TEST_CONTRACT_MATRIX=ON` for the complete loopback suite in
+this checkout. It requires SDK 2.3.0 or later, Python 3.11 or later with
+`h2==4.3.0` and `aioquic==1.3.0`, and a curl with both HTTP/2 and HTTP/3.
+Provide an absolute path to a fixture certificate, its key and the issuing
+CA. The certificate must cover `localhost` and `127.0.0.1`. Use fresh
+loopback credentials and a separate build directory for each SDK.
+
+From the root of the checkout, set the SDK and curl paths for your host.
+These shell commands are for macOS, Linux and WSL. For native Windows, pass
+the same absolute paths to CMake from PowerShell and select the Python
+executable from the virtual environment's `Scripts` directory.
+
+```sh
+sdk=/absolute/path/to/extracted-sdk
+curl_h3=/absolute/path/to/curl
+test_source="$PWD/coakka-http-runtime/runtime-test"
+test_build="$PWD/build/http-contract"
+test_tls="$test_build/tls"
+mkdir -p "$test_tls"
+
+"$curl_h3" --version
+python3 -m venv "$test_build/peers"
+test_python="$test_build/peers/bin/python"
+"$test_python" -m pip install 'h2==4.3.0' 'aioquic==1.3.0'
+```
+
+Check that the curl output lists both `HTTP2` and `HTTP3` under `Features`.
+For a disposable loopback identity, generate a certificate that also serves
+as the peer's trust file.
+
+```sh
+openssl req -x509 -newkey rsa:2048 -nodes -days 1 -subj /CN=localhost \
+  -addext 'subjectAltName=DNS:localhost,IP:127.0.0.1' \
+  -out "$test_tls/server.pem" -keyout "$test_tls/server.key"
+cert="$test_tls/server.pem"
+key="$test_tls/server.key"
+ca="$cert"
+```
+
+```sh
+cmake -S "$test_source" -B "$test_build" \
+  -DCMAKE_PREFIX_PATH="$sdk" -DCOAKKA_HTTP_TEST_SDK_VERSION=2.3.0 \
+  -DCOAKKA_HTTP_TEST_CONTRACT_MATRIX=ON -DCOAKKA_HTTP_TEST_CURL="$curl_h3" \
+  -DPython3_EXECUTABLE="$test_python" \
+  -DCOAKKA_HTTP_TEST_CERTIFICATE="$cert" -DCOAKKA_HTTP_TEST_PRIVATE_KEY="$key" \
+  -DCOAKKA_HTTP_TEST_CA_CERTIFICATE="$ca"
+cmake --build "$test_build" --config Release
+ctest --test-dir "$test_build" -C Release --show-only=json-v1 > test-inventory.json
+ctest --test-dir "$test_build" -C Release --no-tests=error --output-on-failure
+```
+
+Save the test inventory, CTest output, SDK archive and loaded image hashes,
+host and peer versions when reporting results. Fixture instrumentation covers
+the consumer process code built with the corresponding sanitizer flags. A
+sealed SDK needs its own instrumented build for Core sanitizer evidence.
+
+| Area | Installed consumer cases |
+| --- | --- |
+| Protocol selection and capacity | `http_host_protocol_*` checks standalone HTTP/1.1, HTTP/2 and HTTP/3 and simultaneous traffic on one shared port. `http_host_multi_listener`, `http_host_h2_admission_reclaim_*` and `http_host_h3_connection_capacity_*` check effective limits, admission and reuse. |
+| Requests and uploads | `http_host_runtime`, `http_host_routes`, `http_host_stream`, `http_host_upload_*` and `http_host_lifecycle_*` check request values, body bytes and ownership, multipart interruption, resets and a live sibling. |
+| Responses | `http_host_stream_http*`, `http_host_sse_http*`, `http_host_http2_websocket_*` and `http_host_http3_websocket_*` check streaming, trailers and WebSocket on their supported profiles. |
+| File delivery | `http_host_files_*` and `http_host_file_gate_*` check HEAD, range, revalidation, file identity and closing during a transfer. A system-call trace is needed to confirm the native sendfile path. |
+| Runtime controls | `http_host_routes`, `http_host_tls_reload*`, `http_host_monitor_gate` and `http_host_outbound*` check binding revisions, credential generations, monitor limits, correlation and failure causes. |
+| Lifecycle and ABI | `http_host_contract`, `http_host_ownership`, `http_host_concurrency`, `http_host_pressure` and `http_host_cpp` check lease and token ownership, bounded admission, child cleanup and C++ access to the C ABI. |
+
+To check standalone HTTP/1.1 port reuse by itself, configure with
+`-DCOAKKA_HTTP_TEST_HTTP1_EPHEMERAL_RELISTEN=ON` and run
+`ctest --test-dir "$test_build" -R h1_ephemeral_relisten --output-on-failure`.
+The C and C++ consumers start with an automatically chosen port, serve a
+request, stop and destroy the listener, then serve a fresh request on the
+same port. The cases cover IPv4 and IPv6, plaintext, TLS and mTLS, plus
+idle and fixed-port controls and refusal while the first listener is active.
+The wire driver uses Python's standard library.
+
+The Linux `*_URING` options add checks that require Core to report effective
+`io_uring`. The optional LAN address adds outbound coverage outside loopback.
+Per-language installed packages, OS floors, fault injection, extended load,
+soak, Inspect, and package metadata still need their own evidence.
+
+### Buffered response capacity
+
+The contract matrix runs `http_host_response_capacity_*` for standalone
+HTTP/1.1, HTTP/2 and HTTP/3, and for each protocol on the shared listener.
+The C consumer sets a 1,024-byte response limit. A 1,025-byte submission
+returns `CAPACITY_EXHAUSTED`, and the same exchange accepts 1,024 bytes.
+The wire driver checks the exact body and negotiated HTTP version, then
+sends a follow-up request. The consumer checks one terminal per exchange
+and a completed drain. Successful response submission leaves request
+lease release with the caller.
+
+```sh
+ctest --test-dir "$test_build" -R '^http_host_response_capacity_' \
+  --no-tests=error --output-on-failure
+```
+
+### Slow SSE and gzip fallback
+
+Set `COAKKA_HTTP_TEST_RESPONSE_POLICY=ON` to run just these optional
+contract cases with the same installed SDK, Python peers and TLS material.
+The full contract matrix enables them as well.
+
+```sh
+ctest --test-dir "$test_build" --no-tests=error \
+  -R '^http_host_response_policy_' --output-on-failure
+```
+
+The fixture holds a slow SSE reader, observes the configured response
+retention limit, and checks an independent SSE stream and an ordinary
+request while the first remains held. HTTP/1.1 uses separate connections.
+HTTP/2 and HTTP/3 use separate streams on the same connection. After the
+peer cancels, the fixture matches the terminal events and restarts on the
+same port.
+
+The HTTP/1.1 writer deadline case keeps the slow SSE client connected
+until Core reports the write timeout and one terminal. It then verifies
+that a healthy request still completes and that the fixed port can reopen.
+
+The gzip cases check the raw encoded bytes and exact decompression. They
+also exercise explicit gzip refusal, Core selection with the header omitted, a body below
+the configured compression threshold, and a 204 with no body. The wire
+checks validate the encoding, cache variation and any content length.
+
+### Standalone HTTP/3 WebSocket
+
+Use `COAKKA_HTTP_TEST_HTTP3_WEBSOCKET=ON` to select these checks without the
+other matrix groups. Run the following after building.
+
+```sh
+ctest --test-dir "$test_build" -C Release --no-tests=error \
+  -R '^http_host_http3_websocket_' --output-on-failure
+```
+
+The [C fixture](host_http3_websocket.c) owns the listener, exchange tokens
+and borrowed events through the public ABI. The
+[independent peer](http3_websocket_peer.py) verifies TLS and HTTP/3 and
+applies RESET_STREAM, STOP_SENDING and FIN in separate runs. Each run
+holds a DATA lease from stream A across its close, then verifies that
+stream B echoes and a regular HTTP request completes on that connection.
+Other runs verify complete, expired and aborted drain, and stop while an
+event reader is waiting. The fixture joins that reader before releasing
+the retained DATA lease and destroying the service. Every run checks
+that a new service can bind the same UDP port.
+
 ## Check the HTTP versions an endpoint serves
 
-Use [SDK 2.2.0](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) or another SDK that supports listener V1.
+Use SDK 2.3.0 for this exercise. The probe also accepts another SDK with
+shared-listener support when checking an earlier release.
 Install Python 3.8 or later and choose a curl whose
 `--version` lists both HTTP2 and HTTP3. In the configure command above, set
 `-DCOAKKA_HTTP_TEST_SDK_VERSION` to the version of your extracted SDK and add

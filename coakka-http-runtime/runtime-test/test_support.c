@@ -10,8 +10,26 @@
  * AUTO; the harness never probes CPUs or duplicates its default table. */
 static coakka_http_host_cpu_scope_t *dispatcher_scope;
 
+static int check_loaded_image(void) {
+#if defined(_WIN32)
+  wchar_t expected[MAX_PATH], actual[MAX_PATH];
+  const DWORD capacity = (DWORD)(sizeof(expected) / sizeof(expected[0]));
+  const DWORD requested = GetEnvironmentVariableW(L"COAKKA_EXPECT_LOADED_DLL",
+                                                   expected, capacity);
+  if (requested == 0U) return GetLastError() == ERROR_ENVVAR_NOT_FOUND;
+  const HMODULE module = GetModuleHandleW(L"coakka_http_host.dll");
+  const DWORD loaded = module != NULL ? GetModuleFileNameW(module, actual, capacity) : 0U;
+  if (requested >= capacity || loaded == 0U || loaded >= capacity) return 0;
+  fprintf(stderr, "Loaded module: %ls\n", actual);
+  return CompareStringOrdinal(expected, -1, actual, -1, TRUE) == CSTR_EQUAL;
+#else
+  return 1;
+#endif
+}
+
 int test_platform_open(void) {
   coakka_http_host_issue_t issue;
+  if (!check_loaded_image()) return 0;
 #if defined(_WIN32)
   WSADATA data;
   if (WSAStartup(MAKEWORD(2, 2), &data) != 0) return 0;

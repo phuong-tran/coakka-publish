@@ -10,6 +10,12 @@ Use the .NET 8 SDK or later. Add the package to your project or run the linked s
 | --- | --- | --- |
 | C# / .NET | [`dotnet add package CoAkka.Runtime --version 3.2.1`](https://www.nuget.org/packages/CoAkka.Runtime/3.2.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-runtime/csharp/registry-basic) |
 
+### CoAkka HTTP Runtime
+
+| Host | Install or dependency coordinate | First run |
+| --- | --- | --- |
+| C# / .NET | [`dotnet add package CoAkka.Http.Runtime --version 2.3.1`](https://www.nuget.org/packages/CoAkka.Http.Runtime/2.3.1) | [Run the sample](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md) |
+
 ### CoAkka Logger
 
 | Host | Install or dependency coordinate | First run |

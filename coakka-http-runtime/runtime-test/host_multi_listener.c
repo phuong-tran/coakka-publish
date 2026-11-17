@@ -7,6 +7,66 @@ _Static_assert(COAKKA_HTTP_HOST_ABI_VERSION == 10U,
 static const char certificate_path[] = "v1-fixture-certificate.pem";
 static const char private_key_path[] = "v1-fixture-key.pem";
 
+#if defined(COAKKA_HTTP_TEST_WEBSOCKET_PROFILES)
+static int check_websocket_profiles(
+    const coakka_http_host_multi_listener_api_v1_t *api, test_service_t *owner) {
+  coakka_http_host_configuration_t config;
+  uint32_t failed_index = COAKKA_HTTP_HOST_FAILED_INDEX_NONE;
+  int ok = 1;
+
+  coakka_http_host_configuration_init(&config);
+  config.bind_address = test_text("127.0.0.1");
+  config.security = COAKKA_HTTP_HOST_SECURITY_TLS;
+  config.credential_generation = 1U;
+  config.credential_id = test_text("v1-fixture");
+  config.certificate_chain_file = test_text(certificate_path);
+  config.private_key_file = test_text(private_key_path);
+  config.reserve_websocket = 1U;
+
+  config.protocol = COAKKA_HTTP_HOST_PROTOCOL_HTTP_3;
+  TEST_CHECK(coakka_http_host_service_create(&config, NULL, 0U,
+                                             &owner->service,
+                                             &failed_index) ==
+             COAKKA_HTTP_HOST_OK);
+  TEST_CHECK(test_service_close(owner));
+
+  // Standalone WebSocket is admitted with server TLS. Mutual TLS may still
+  // start a listener without the WebSocket reservation.
+  coakka_http_host_configuration_t mutual = config;
+  mutual.security = COAKKA_HTTP_HOST_SECURITY_MUTUAL_TLS;
+  mutual.trust_roots_file = test_text(certificate_path);
+  TEST_CHECK(coakka_http_host_service_create(&mutual, NULL, 0U,
+                                             &owner->service,
+                                             &failed_index) ==
+             COAKKA_HTTP_HOST_INVALID_ARGUMENT);
+  TEST_CHECK(owner->service == NULL);
+  mutual.reserve_websocket = 0U;
+  TEST_CHECK(coakka_http_host_service_create(&mutual, NULL, 0U,
+                                             &owner->service,
+                                             &failed_index) ==
+             COAKKA_HTTP_HOST_OK);
+  TEST_CHECK(test_service_close(owner));
+
+  TEST_CHECK(api->create(&config, NULL, 0U, &owner->service, &failed_index) ==
+             COAKKA_HTTP_HOST_UNSUPPORTED);
+  TEST_CHECK(owner->service == NULL);
+  config.reserve_websocket = 0U;
+  coakka_http_host_route_t websocket;
+  coakka_http_host_route_init(&websocket);
+  websocket.route_id = 1U;
+  websocket.handler_binding_id = 1U;
+  websocket.method = test_text("GET");
+  websocket.encoded_path_pattern = test_text("/ws");
+  websocket.flags = COAKKA_HTTP_HOST_ROUTE_WEBSOCKET;
+  TEST_CHECK(api->create(&config, &websocket, 1U, &owner->service, &failed_index) ==
+             COAKKA_HTTP_HOST_UNSUPPORTED);
+  TEST_CHECK(owner->service == NULL);
+
+cleanup:
+  return ok;
+}
+#endif
+
 static int
 exercise_listener(const coakka_http_host_multi_listener_api_v1_t *api,
                   test_service_t *owner, const char *address, uint8_t family) {
@@ -59,6 +119,19 @@ exercise_listener(const coakka_http_host_multi_listener_api_v1_t *api,
                info.bound_transports == both_transports && info.port != 0U &&
                info.address_family == family &&
                info.security == COAKKA_HTTP_HOST_SECURITY_TLS);
+    coakka_http_host_tls_reload_request_t reload;
+    coakka_http_host_tls_reload_outcome_t outcome;
+    coakka_http_host_tls_reload_request_init(&reload);
+    coakka_http_host_tls_reload_outcome_init(&outcome);
+    reload.security = config.security;
+    reload.expected_generation = config.credential_generation;
+    reload.credential_generation = config.credential_generation + 1U;
+    reload.credential_id = test_text("v1-reload-refused");
+    reload.certificate_chain_file = config.certificate_chain_file;
+    reload.private_key_file = config.private_key_file;
+    TEST_CHECK(coakka_http_host_tls_reload(owner->service, &reload, &outcome) ==
+               COAKKA_HTTP_HOST_UNSUPPORTED);
+    TEST_CHECK(outcome.changed == 0U);
     // Start on an ephemeral port; later generations must reclaim that exact
     // pair.
     if (cycle == 0U)
@@ -119,6 +192,9 @@ int main(void) {
                                  &certificate_created));
   TEST_CHECK(
       test_write_material(private_key_path, test_tls_key_a, &key_created));
+#if defined(COAKKA_HTTP_TEST_WEBSOCKET_PROFILES)
+  TEST_CHECK(check_websocket_profiles(&api, &owner));
+#endif
   TEST_CHECK(exercise_listener(&api, &owner, "127.0.0.1", 4U));
   TEST_CHECK(exercise_listener(&api, &owner, "::1", 6U));
 

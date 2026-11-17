@@ -24,6 +24,30 @@
       "release_record": "../../docs/coakka-runtime/releases/2026-11-05-nuget-csharp-runtime-3.2.1.md"
     },
     {
+      "surface": "http runtime",
+      "package": "CoAkka.Http.Runtime",
+      "version": "2.3.1",
+      "url": "https://www.nuget.org/packages/CoAkka.Http.Runtime/2.3.1",
+      "core_generation": "2.3",
+      "sdk": "2.3.0",
+      "abi": 10,
+      "minimum_dotnet_tfm": "net8.0",
+      "tested_dotnet_tfms": [
+        "net8.0",
+        "net10.0"
+      ],
+      "candidate_sha256": "7c52433321da221e655dfe58b4c75c430d0a58f45cae2210405780338eaabe1b",
+      "registry_sha256": "e23e13c30b9ea9a92c900ab48831849b1474f5a3879dc04270955f3a3fc0bef4",
+      "platforms": [
+        "osx-arm64",
+        "linux-arm64",
+        "linux-x64",
+        "win-x64",
+        "win-arm64"
+      ],
+      "release_record": "../../docs/coakka-http-runtime/releases/2026-11-18-csharp-2.3.1-nuget.md"
+    },
+    {
       "surface": "logger",
       "package": "CoAkka.Logger",
       "version": "1.2.3",

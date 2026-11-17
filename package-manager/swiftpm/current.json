@@ -19,6 +19,27 @@
       "release_record": "../../docs/coakka-runtime/releases/2026-11-05-swift-runtime-3.2.1-github.md"
     },
     {
+      "surface": "http runtime",
+      "repository": "https://github.com/phuong-tran/coakka-http-runtime-swift.git",
+      "tag": "v2.3.1",
+      "exact_version": "2.3.1",
+      "commit": "b3e1e55abbd33fdfe9f765df0db7b1237c050c06",
+      "core_generation": "2.3",
+      "sdk": "2.3.0",
+      "abi": 10,
+      "minimum_swift_tools": "6.0",
+      "package_manifest_sha256": "58ff4337ce25ba270bcbec911c6ecbc26eb3285c9ce64d5f69b2fbc8da0fd7b5",
+      "archive_sha256": "396484e18bfbc5321ffb6ce9cf427f7e86122a205e343d91b41d59d46052b69e",
+      "platforms": [
+        "macos-aarch64",
+        "linux-aarch64",
+        "linux-x86_64",
+        "windows-aarch64",
+        "windows-x86_64"
+      ],
+      "release_record": "../../docs/coakka-http-runtime/releases/2026-11-18-swift-2.3.1-github.md"
+    },
+    {
       "surface": "logger",
       "repository": "https://github.com/phuong-tran/coakka-logger-swift.git",
       "tag": "v1.2.2",

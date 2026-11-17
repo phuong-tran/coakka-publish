@@ -1,13 +1,17 @@
 # CoAkka HTTP Runtime native SDK
 
-SDK 2.2.0 exposes the focused public C contract:
+SDK 2.3.0 exposes the focused public C contract:
 `<coakka/http/host.h>`, CMake package `CoAkkaHttpHost`, and link target
 `CoAkkaHttp::host`. C11, C++20 and language adapters consume the same closed
 shared library. Native application business dispatch stays application-owned;
 HTTP I/O, route matching, admission, deadlines and authoritative state stay
 inside CoAkka HTTP Runtime.
 
-[Download SDK 2.2.0](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) and verify the SHA-256 for your target. SDK 2.2.0 implements Core generation 2.2 and C ABI 10.
+[Download SDK 2.3.0](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.3.1)
+and verify the SHA-256 for your target. SDK 2.3.0 implements Core generation
+2.3 and C ABI 10. The Go release carries the same complete SDK used by
+native C/C++ consumers; it does not require installing Go.
+[Archive hashes and verified targets](../../docs/coakka-http-runtime/releases/2026-11-17-go-2.3.1-github.md#verified-publication).
 
 CoAkka HTTP Runtime is the embeddable HTTP server and client in the
 CoAkka ecosystem. The same native SDK powers the language connectors.
@@ -19,7 +23,7 @@ CoAkka ecosystem. The same native SDK powers the language connectors.
 Verify and extract the complete archive for the host, then use:
 
 ```cmake
-find_package(CoAkkaHttpHost 2.2.0 EXACT REQUIRED CONFIG)
+find_package(CoAkkaHttpHost 2.3.0 EXACT REQUIRED CONFIG)
 add_executable(example main.c)
 target_link_libraries(example PRIVATE CoAkkaHttp::host)
 ```
