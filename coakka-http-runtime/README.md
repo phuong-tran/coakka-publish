@@ -30,6 +30,19 @@ Install `coakka-http-runtime-python==2.3.1`.
 [Publication and wheel hashes](../docs/coakka-http-runtime/releases/2026-11-17-python-2.3.1-pypi.md) ·
 [Python guide](python/README.md)
 
+## Go 2.3.1 on GitHub
+
+The Go module and five native SDK 2.3.0 archives are available in
+[GitHub Release v2.3.1](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.3.1).
+
+```sh
+go get github.com/phuong-tran/coakka-http-runtime-go/v2@v2.3.1
+```
+
+[Installation and MultiProtocol example](go/README.md) ·
+[Changelog](go/CHANGELOG.md) ·
+[Publication and SDK hashes](../docs/coakka-http-runtime/releases/2026-11-17-go-2.3.1-github.md)
+
 ## Previous coordinated release: connector 2.2.1 and Core SDK 2.2.0
 
 [Release notes](docs/release-2.2.1.md) · [Native SDK downloads and SHA-256 checksums](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) · [Run an HTTP example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md)
