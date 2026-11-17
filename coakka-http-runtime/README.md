@@ -37,9 +37,16 @@ stay with the right service, resources are released, and failures are handled.
 
 Read `2.0.1` as Core generation `2.0` and connector revision `1`. A connector fix advances its own last number and keeps the same native SDK. A Core update changes the first two numbers, and each connector starts again at revision `1` when it adopts that Core. [Versions and SDK compatibility](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/docs/versions.md).
 
+## Python 2.3.1 on PyPI
+
+Python 2.3.1 is available with Core SDK 2.3.0 and ABI 10.
+Install `coakka-http-runtime-python==2.3.1`.
+[Publication and wheel hashes](../docs/coakka-http-runtime/releases/2026-11-17-python-2.3.1-pypi.md) ·
+[Python guide](python/README.md)
+
 ## Connector 2.3.1
 
-The 2.3.1 release is in preparation. The connectors use Core SDK 2.3.0 and
+The remaining 2.3.1 connector releases are in preparation. They use Core SDK 2.3.0 and
 ABI 10. The final `1` is each connector's first revision on Core 2.3.
 See the [release notes](docs/release-2.3.1.md),
 [the protocol examples](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md) and
