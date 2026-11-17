@@ -28,12 +28,22 @@ option(COAKKA_HTTP_TEST_HTTP3_UPLOAD_PRESSURE
     "Require the HTTP/3 default and HTTP/2 and HTTP/3 held-reader upload checks" OFF)
 option(COAKKA_HTTP_TEST_HTTP1_UPLOAD_DRAIN
     "Exercise HTTP/1.1 upload drain and shutdown using plaintext and TLS" OFF)
+option(COAKKA_HTTP_TEST_HTTP1_EPHEMERAL_RELISTEN
+    "Exercise HTTP/1.1 restart on the exact port returned by an installed SDK" OFF)
 option(COAKKA_HTTP_TEST_HTTP2_UPLOAD_DRAIN
     "Exercise held HTTP/2 upload leases with the selected Python and h2" OFF)
 option(COAKKA_HTTP_TEST_HTTP3_UPLOAD_DRAIN
     "Exercise held HTTP/3 upload leases with the selected Python and aioquic" OFF)
 option(COAKKA_HTTP_TEST_LIFECYCLE_INTERACTIONS
     "Exercise standalone, multiplexed upload reset, file drain and write deadlines" OFF)
+option(COAKKA_HTTP_TEST_HTTP2_UPLOAD_RECONNECT_URING
+    "Repeat the HTTP/2 upload reconnection case with effective io_uring" OFF)
+option(COAKKA_HTTP_TEST_OWNER_LIVENESS
+    "Exercise idle, drain and stop liveness through the standalone installed SDK" OFF)
+option(COAKKA_HTTP_TEST_OWNER_LIVENESS_URING
+    "Repeat standalone HTTP/2 and HTTP/3 liveness with effective io_uring" OFF)
+option(COAKKA_HTTP_TEST_RESPONSE_POLICY
+    "Exercise slow SSE isolation and gzip fallback through installed response APIs" OFF)
 option(COAKKA_HTTP_TEST_NATIVE_FINAL_GATES
     "Exercise installed monitor, static file recovery and outbound transport" OFF)
 option(COAKKA_HTTP_TEST_HTTP3_FILE_DRAIN
@@ -52,8 +62,8 @@ if(COAKKA_HTTP_TEST_CONTRACT_MATRIX)
   endif()
   foreach(group IN ITEMS RELEASE HTTP2_WEBSOCKET HTTP3_WEBSOCKET
       HTTP2_ADMISSION_RECLAIM HTTP3_CONNECTION_CAPACITY HTTP3_UPLOAD_PRESSURE
-      HTTP1_UPLOAD_DRAIN HTTP2_UPLOAD_DRAIN HTTP3_UPLOAD_DRAIN
-      LIFECYCLE_INTERACTIONS NATIVE_FINAL_GATES HTTP3_FILE_DRAIN)
+      HTTP1_UPLOAD_DRAIN HTTP1_EPHEMERAL_RELISTEN HTTP2_UPLOAD_DRAIN HTTP3_UPLOAD_DRAIN
+      LIFECYCLE_INTERACTIONS NATIVE_FINAL_GATES HTTP3_FILE_DRAIN RESPONSE_POLICY OWNER_LIVENESS)
     set(COAKKA_HTTP_TEST_${group} ON)
   endforeach()
 endif()
@@ -177,6 +187,36 @@ if(COAKKA_HTTP_TEST_HTTP2_ADMISSION_RECLAIM)
     endforeach()
   endforeach()
 endif()
+if(COAKKA_HTTP_TEST_HTTP1_EPHEMERAL_RELISTEN)
+  find_package(Python3 3.11 REQUIRED COMPONENTS Interpreter)
+  set(h1_relisten_cpp "${CMAKE_CURRENT_BINARY_DIR}/host_h1_ephemeral_relisten.cc")
+  configure_file(host_h1_ephemeral_relisten.c "${h1_relisten_cpp}" COPYONLY)
+  add_executable(http_host_h1_ephemeral_relisten_c host_h1_ephemeral_relisten.c)
+  add_executable(http_host_h1_ephemeral_relisten_cpp "${h1_relisten_cpp}")
+  foreach(language IN ITEMS c cpp)
+    set(target "http_host_h1_ephemeral_relisten_${language}")
+    target_include_directories("${target}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+    target_link_libraries("${target}" PRIVATE http_test_support)
+    configure_test_target("${target}")
+    foreach(family IN ITEMS ipv4 ipv6)
+      if(family STREQUAL "ipv4")
+        set(address "127.0.0.1")
+      else()
+        set(address "::1")
+      endif()
+      foreach(security IN ITEMS plain tls mtls)
+        foreach(scenario IN ITEMS ephemeral_request fixed_request ephemeral_idle)
+          string(REPLACE "_" ";" inputs "${scenario}")
+          set(name "${target}_${family}_${security}_${scenario}")
+          add_test(NAME "${name}" COMMAND "${Python3_EXECUTABLE}" -B
+            "${CMAKE_CURRENT_SOURCE_DIR}/h1_ephemeral_relisten_wire.py"
+            "$<TARGET_FILE:${target}>" "${address}" "${security}" ${inputs})
+          set_tests_properties("${name}" PROPERTIES TIMEOUT 60)
+        endforeach()
+      endforeach()
+    endforeach()
+  endforeach()
+endif()
 if(COAKKA_HTTP_TEST_HTTP3_CONNECTION_CAPACITY)
   find_package(Python3 REQUIRED COMPONENTS Interpreter)
   execute_process(COMMAND "${Python3_EXECUTABLE}" -c "import aioquic"
@@ -247,6 +287,8 @@ if(COAKKA_HTTP_TEST_HTTP3_WEBSOCKET)
   target_link_libraries(http_host_http3_websocket PRIVATE http_test_support http_test_threads)
   configure_test_target(http_host_http3_websocket)
   foreach(mode IN ITEMS ordinary ordinary-with-ws reset-stream reset-stop reset-fin
+      reset-pre-accept reset-pre-accept-stop reset-pre-accept-fin
+      reset-pending-write reset-pending-write-stream reset-pending-write-fin
       complete expired aborted shutdown)
     add_test(NAME http_host_http3_websocket_${mode}
       COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/http3_websocket_peer.py"
@@ -279,6 +321,14 @@ if(COAKKA_HTTP_TEST_NATIVE_FINAL_GATES)
     configure_test_target(http_host_${case})
   endforeach()
   target_link_libraries(http_host_file_gate PRIVATE Threads::Threads)
+  add_executable(http_host_outbound_start_stack host_outbound_start_stack.c)
+  target_link_libraries(http_host_outbound_start_stack PRIVATE http_test_support Threads::Threads)
+  configure_test_target(http_host_outbound_start_stack)
+  foreach(mode IN ITEMS plain outbound-large-stack outbound)
+    add_test(NAME "http_host_outbound_start_stack_${mode}"
+      COMMAND http_host_outbound_start_stack "${mode}")
+    set_tests_properties("http_host_outbound_start_stack_${mode}" PROPERTIES TIMEOUT 15)
+  endforeach()
   add_test(NAME http_host_monitor_gate COMMAND http_host_monitor_gate)
   add_test(NAME http_host_outbound_gate
     COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/outbound_gate_wire.py"
@@ -312,6 +362,35 @@ if(COAKKA_HTTP_TEST_LIFECYCLE_INTERACTIONS)
      NOT EXISTS "${COAKKA_HTTP_TEST_PRIVATE_KEY}")
     message(FATAL_ERROR "Lifecycle interactions require h2, aioquic and loopback TLS material")
   endif()
+  set(h2_upload_reconnect_cpp "${CMAKE_CURRENT_BINARY_DIR}/host_h2_upload_reconnect.cc")
+  configure_file(host_h2_upload_reconnect.c "${h2_upload_reconnect_cpp}" COPYONLY)
+  add_executable(http_host_h2_upload_reconnect_c host_h2_upload_reconnect.c)
+  add_executable(http_host_h2_upload_reconnect_cpp "${h2_upload_reconnect_cpp}")
+  set(h2_upload_reconnect_backends default)
+  if(COAKKA_HTTP_TEST_HTTP2_UPLOAD_RECONNECT_URING)
+    list(APPEND h2_upload_reconnect_backends uring)
+  endif()
+  set(h2_upload_reconnect_ca "${COAKKA_HTTP_TEST_CA_CERTIFICATE}")
+  if(NOT h2_upload_reconnect_ca)
+    set(h2_upload_reconnect_ca "${COAKKA_HTTP_TEST_CERTIFICATE}")
+  endif()
+  foreach(language IN ITEMS c cpp)
+    set(target "http_host_h2_upload_reconnect_${language}")
+    target_include_directories("${target}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+    target_link_libraries("${target}" PRIVATE http_test_support)
+    configure_test_target("${target}")
+    foreach(backend IN LISTS h2_upload_reconnect_backends)
+      foreach(mode IN ITEMS poll timed)
+        set(case "${target}_${backend}_${mode}")
+        add_test(NAME "${case}"
+          COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/h2_upload_reconnect_wire.py"
+            $<TARGET_FILE:${target}> "${COAKKA_HTTP_TEST_CERTIFICATE}"
+            "${COAKKA_HTTP_TEST_PRIVATE_KEY}" "${h2_upload_reconnect_ca}"
+            --backend "${backend}" --mode "${mode}")
+        set_tests_properties("${case}" PROPERTIES TIMEOUT 30)
+      endforeach()
+    endforeach()
+  endforeach()
   add_executable(http_host_lifecycle_interactions host_lifecycle_interactions.c)
   target_link_libraries(http_host_lifecycle_interactions PRIVATE http_test_support)
   configure_test_target(http_host_lifecycle_interactions)
@@ -398,6 +477,82 @@ if(COAKKA_HTTP_TEST_HTTP3_UPLOAD_DRAIN)
       "${COAKKA_HTTP_TEST_PRIVATE_KEY}")
   set_tests_properties(http_host_upload_drain PROPERTIES TIMEOUT 60)
 endif()
+if(COAKKA_HTTP_TEST_OWNER_LIVENESS)
+  if(COAKKA_HTTP_TEST_SDK_VERSION VERSION_LESS "2.3.0")
+    message(FATAL_ERROR "Liveness tests require SDK 2.3.0 or newer")
+  endif()
+  find_package(Python3 REQUIRED COMPONENTS Interpreter)
+  execute_process(COMMAND "${Python3_EXECUTABLE}" -c "import h2, aioquic"
+    RESULT_VARIABLE liveness_python_result TIMEOUT 5)
+  if(NOT liveness_python_result STREQUAL "0")
+    message(FATAL_ERROR "Liveness fixtures require Python h2 and aioquic")
+  endif()
+  foreach(input IN ITEMS CERTIFICATE PRIVATE_KEY CA_CERTIFICATE)
+    if(NOT IS_ABSOLUTE "${COAKKA_HTTP_TEST_${input}}" OR
+       NOT EXISTS "${COAKKA_HTTP_TEST_${input}}")
+      message(FATAL_ERROR "Liveness fixtures require COAKKA_HTTP_TEST_${input}")
+    endif()
+  endforeach()
+
+  add_executable(http_host_liveness_lifecycle host_liveness_lifecycle.c)
+  target_link_libraries(http_host_liveness_lifecycle PRIVATE http_test_support http_test_threads)
+  configure_test_target(http_host_liveness_lifecycle)
+
+  function(register_liveness profile backend monitor)
+    set(case "http_host_liveness_${profile}_${backend}_${monitor}")
+    add_test(NAME "${case}" COMMAND "${Python3_EXECUTABLE}" -B
+      "${CMAKE_CURRENT_SOURCE_DIR}/liveness_wire.py"
+      $<TARGET_FILE:http_host_liveness_lifecycle>
+      "${COAKKA_HTTP_TEST_CERTIFICATE}" "${COAKKA_HTTP_TEST_PRIVATE_KEY}"
+      "${COAKKA_HTTP_TEST_CA_CERTIFICATE}" "${profile}" "${backend}" "${monitor}")
+    set_tests_properties("${case}" PROPERTIES TIMEOUT 70)
+  endfunction()
+
+  foreach(profile IN ITEMS h1 h1-tls h2 h3)
+    foreach(monitor IN ITEMS disabled monitor)
+      register_liveness("${profile}" default "${monitor}")
+    endforeach()
+  endforeach()
+  if(COAKKA_HTTP_TEST_OWNER_LIVENESS_URING)
+    foreach(profile IN ITEMS h2 h3)
+      foreach(monitor IN ITEMS disabled monitor)
+        register_liveness("${profile}" uring "${monitor}")
+      endforeach()
+    endforeach()
+  endif()
+endif()
+if(COAKKA_HTTP_TEST_RESPONSE_POLICY)
+  find_package(Python3 3.11 REQUIRED COMPONENTS Interpreter)
+  execute_process(COMMAND "${Python3_EXECUTABLE}" -c "import h2, aioquic"
+    RESULT_VARIABLE policy_peers TIMEOUT 5)
+  if(NOT policy_peers STREQUAL "0")
+    message(FATAL_ERROR "Response policy fixtures require Python h2 and aioquic")
+  endif()
+  foreach(input IN ITEMS CERTIFICATE PRIVATE_KEY CA_CERTIFICATE)
+    if(NOT IS_ABSOLUTE "${COAKKA_HTTP_TEST_${input}}" OR
+       NOT EXISTS "${COAKKA_HTTP_TEST_${input}}")
+      message(FATAL_ERROR "Response policy fixtures require COAKKA_HTTP_TEST_${input}")
+    endif()
+  endforeach()
+  add_executable(http_host_response_policy host_response_policy.c)
+  target_link_libraries(http_host_response_policy PRIVATE http_test_support)
+  configure_test_target(http_host_response_policy)
+  foreach(profile IN ITEMS 1.1 2 3)
+    set(modes sse-pressure gzip)
+    if(profile STREQUAL "1.1")
+      list(APPEND modes write-timeout)
+    endif()
+    foreach(mode IN LISTS modes)
+      set(case "http_host_response_policy_${mode}_http${profile}")
+      add_test(NAME "${case}" COMMAND "${Python3_EXECUTABLE}" -B
+        "${CMAKE_CURRENT_SOURCE_DIR}/response_policy_wire.py"
+        $<TARGET_FILE:http_host_response_policy> "${mode}" "${profile}"
+        "${COAKKA_HTTP_TEST_CERTIFICATE}" "${COAKKA_HTTP_TEST_PRIVATE_KEY}"
+        "${COAKKA_HTTP_TEST_CA_CERTIFICATE}")
+      set_tests_properties("${case}" PROPERTIES TIMEOUT 45)
+    endforeach()
+  endforeach()
+endif()
 if(COAKKA_HTTP_TEST_CURL)
   if(COAKKA_HTTP_TEST_SDK_VERSION VERSION_LESS "2.1.0")
     message(FATAL_ERROR "The endpoint protocol tests require SDK 2.1.0 or later")
@@ -431,6 +586,13 @@ if(COAKKA_HTTP_TEST_CURL)
       COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/check_protocols.py"
         $<TARGET_FILE:http_host_protocols> "${COAKKA_HTTP_TEST_CURL}" "${profile}")
     set_tests_properties("${case}" PROPERTIES TIMEOUT 60)
+    if(COAKKA_HTTP_TEST_CONTRACT_MATRIX)
+      set(capacity_case "http_host_response_capacity_${profile}")
+      add_test(NAME "${capacity_case}"
+        COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/check_protocols.py"
+          $<TARGET_FILE:http_host_protocols> "${COAKKA_HTTP_TEST_CURL}" "${profile}" --capacity)
+      set_tests_properties("${capacity_case}" PROPERTIES TIMEOUT 75)
+    endif()
   endforeach()
 endif()
 if(COAKKA_HTTP_TEST_RELEASE)

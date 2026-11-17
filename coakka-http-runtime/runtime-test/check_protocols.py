@@ -10,7 +10,7 @@ import tempfile
 FLAGS = {"1.1": "--http1.1", "2": "--http2", "3": "--http3-only"}
 
 
-def probe(curl, directory, url, version):
+def probe(curl, directory, url, version, body="protocol-ok"):
     result = subprocess.run(
         [curl, "-q", "--silent", "--show-error", "--noproxy", "*",
          "--cacert", "root.pem", FLAGS[version], "--max-time", "8",
@@ -19,17 +19,20 @@ def probe(curl, directory, url, version):
     )
     if result.returncode != 0:
         raise RuntimeError(f"HTTP/{version} curl exited {result.returncode}: {result.stderr}")
-    expected = f"protocol-ok\n200 {version}"
+    expected = f"{body}\n200 {version}"
     if result.stdout != expected:
         raise RuntimeError(f"Expected {expected!r}, received {result.stdout!r}")
     return f"HTTP/{version}"
 
 
-def check_endpoint(fixture, curl, profile):
+def check_endpoint(fixture, curl, profile, capacity):
     versions = list(FLAGS) if profile == "mixed" else [profile]
     with tempfile.TemporaryDirectory(prefix="http-protocols-", dir=Path.cwd()) as work:
+        command = [fixture, profile]
+        if capacity:
+            command.append("capacity")
         with subprocess.Popen(
-            [fixture, profile], cwd=work, stdin=subprocess.PIPE,
+            command, cwd=work, stdin=subprocess.PIPE,
             stdout=subprocess.PIPE, text=True,
         ) as server, ThreadPoolExecutor(max_workers=3) as pool:
             try:
@@ -39,9 +42,17 @@ def check_endpoint(fixture, curl, profile):
                 if type(port) is not int or not 0 < port <= 65535:
                     raise RuntimeError(f"Fixture did not publish a valid port: {port!r}")
                 url = f"https://127.0.0.1:{port}/protocol"
-                requests = [pool.submit(probe, curl, work, url, version)
-                            for version in versions]
-                observed = [request.result() for request in requests]
+                if capacity:
+                    # Read each response to completion before opening the next
+                    # exchange, so terminal accounting has one unambiguous owner.
+                    observed = [probe(curl, work, url, version, "a" * 1024)
+                                for version in versions]
+                    for version in versions:
+                        probe(curl, work, url, version)
+                else:
+                    requests = [pool.submit(probe, curl, work, url, version)
+                                for version in versions]
+                    observed = [request.result() for request in requests]
                 stdout, _ = server.communicate(input="\n", timeout=10)
                 receipt = json.loads(stdout)
                 if (server.returncode != 0 or not receipt["ok"] or
@@ -51,6 +62,9 @@ def check_endpoint(fixture, curl, profile):
                           "observed_protocols": observed, "abi": receipt["abi"]}
                 if profile == "mixed":
                     report["admitting_protocols"] = ready["admitting_protocols"]
+                if capacity:
+                    report["response_limit_bytes"] = 1024
+                    report["passed_followup_requests"] = len(versions)
                 return report
             finally:
                 if server.poll() is None:
@@ -63,9 +77,10 @@ def main():
     parser.add_argument("fixture", type=Path)
     parser.add_argument("curl", type=Path)
     parser.add_argument("profile", choices=[*FLAGS, "mixed"])
+    parser.add_argument("--capacity", action="store_true")
     args = parser.parse_args()
     print(json.dumps(check_endpoint(args.fixture.resolve(strict=True),
-                                    args.curl.resolve(strict=True), args.profile)))
+                                    args.curl.resolve(strict=True), args.profile, args.capacity)))
 
 
 if __name__ == "__main__":

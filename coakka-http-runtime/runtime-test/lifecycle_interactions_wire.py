@@ -37,9 +37,11 @@ def require(condition, message):
 @dataclass
 class Response:
     status: bytes = b""
+    headers: dict[bytes, bytes] = field(default_factory=dict)
     body: bytearray = field(default_factory=bytearray)
     ended: bool = False
     reset: bool = False
+    reset_code: int | None = None
 
 
 class Http2Peer:
@@ -80,13 +82,15 @@ class Http2Peer:
             if isinstance(event, (ResponseReceived, DataReceived, StreamEnded, StreamReset)):
                 response = self.responses[event.stream_id]
                 if isinstance(event, ResponseReceived):
-                    response.status = dict(event.headers)[b":status"]
+                    response.headers = dict(event.headers)
+                    response.status = response.headers[b":status"]
                 elif isinstance(event, DataReceived):
                     response.body.extend(event.data)
                 elif isinstance(event, StreamEnded):
                     response.ended = True
                 else:
                     response.reset = True
+                    response.reset_code = int(event.error_code)
 
     async def until(self, predicate):
         async def wait():

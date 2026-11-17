@@ -44,11 +44,30 @@ Provide an absolute path to a fixture certificate, its key and the issuing
 CA. The certificate must cover `localhost` and `127.0.0.1`. Use fresh
 loopback credentials and a separate build directory for each SDK.
 
-For a disposable self-signed identity, generate the certificate and key in a
-new directory. This certificate is also the peer's trust file.
+From the root of the checkout, set the SDK and curl paths for your host.
+These shell commands are for macOS, Linux and WSL. For native Windows, pass
+the same absolute paths to CMake from PowerShell and select the Python
+executable from the virtual environment's `Scripts` directory.
 
 ```sh
-mkdir "$test_tls"
+sdk=/absolute/path/to/extracted-sdk
+curl_h3=/absolute/path/to/curl
+test_source="$PWD/coakka-http-runtime/runtime-test"
+test_build="$PWD/build/http-contract"
+test_tls="$test_build/tls"
+mkdir -p "$test_tls"
+
+"$curl_h3" --version
+python3 -m venv "$test_build/peers"
+test_python="$test_build/peers/bin/python"
+"$test_python" -m pip install 'h2==4.3.0' 'aioquic==1.3.0'
+```
+
+Check that the curl output lists both `HTTP2` and `HTTP3` under `Features`.
+For a disposable loopback identity, generate a certificate that also serves
+as the peer's trust file.
+
+```sh
 openssl req -x509 -newkey rsa:2048 -nodes -days 1 -subj /CN=localhost \
   -addext 'subjectAltName=DNS:localhost,IP:127.0.0.1' \
   -out "$test_tls/server.pem" -keyout "$test_tls/server.key"
@@ -69,7 +88,6 @@ ctest --test-dir "$test_build" -C Release --show-only=json-v1 > test-inventory.j
 ctest --test-dir "$test_build" -C Release --no-tests=error --output-on-failure
 ```
 
-Set `test_source` to the directory containing this README and CMakeLists.txt.
 Save the test inventory, CTest output, SDK archive and loaded image hashes,
 host and peer versions when reporting results. Fixture instrumentation covers
 the consumer process code built with the corresponding sanitizer flags. A
@@ -84,10 +102,62 @@ sealed SDK needs its own instrumented build for Core sanitizer evidence.
 | Runtime controls | `http_host_routes`, `http_host_tls_reload*`, `http_host_monitor_gate` and `http_host_outbound*` check binding revisions, credential generations, monitor limits, correlation and failure causes. |
 | Lifecycle and ABI | `http_host_contract`, `http_host_ownership`, `http_host_concurrency`, `http_host_pressure` and `http_host_cpp` check lease and token ownership, bounded admission, child cleanup and C++ access to the C ABI. |
 
+To check standalone HTTP/1.1 port reuse by itself, configure with
+`-DCOAKKA_HTTP_TEST_HTTP1_EPHEMERAL_RELISTEN=ON` and run
+`ctest --test-dir "$test_build" -R h1_ephemeral_relisten --output-on-failure`.
+The C and C++ consumers start with an automatically chosen port, serve a
+request, stop and destroy the listener, then serve a fresh request on the
+same port. The cases cover IPv4 and IPv6, plaintext, TLS and mTLS, plus
+idle and fixed-port controls and refusal while the first listener is active.
+The wire driver uses Python's standard library.
+
 The Linux `*_URING` options add checks that require Core to report effective
 `io_uring`. The optional LAN address adds outbound coverage outside loopback.
 Per-language installed packages, OS floors, fault injection, extended load,
 soak, Inspect, and package metadata still need their own evidence.
+
+### Buffered response capacity
+
+The contract matrix runs `http_host_response_capacity_*` for standalone
+HTTP/1.1, HTTP/2 and HTTP/3, and for each protocol on the shared listener.
+The C consumer sets a 1,024-byte response limit. A 1,025-byte submission
+returns `CAPACITY_EXHAUSTED`, and the same exchange accepts 1,024 bytes.
+The wire driver checks the exact body and negotiated HTTP version, then
+sends a follow-up request. The consumer checks one terminal per exchange
+and a completed drain. Successful response submission leaves request
+lease release with the caller.
+
+```sh
+ctest --test-dir "$test_build" -R '^http_host_response_capacity_' \
+  --no-tests=error --output-on-failure
+```
+
+### Slow SSE and gzip fallback
+
+Set `COAKKA_HTTP_TEST_RESPONSE_POLICY=ON` to run just these optional
+contract cases with the same installed SDK, Python peers and TLS material.
+The full contract matrix enables them as well.
+
+```sh
+ctest --test-dir "$test_build" --no-tests=error \
+  -R '^http_host_response_policy_' --output-on-failure
+```
+
+The fixture holds a slow SSE reader, observes the configured response
+retention limit, and checks an independent SSE stream and an ordinary
+request while the first remains held. HTTP/1.1 uses separate connections.
+HTTP/2 and HTTP/3 use separate streams on the same connection. After the
+peer cancels, the fixture matches the terminal events and restarts on the
+same port.
+
+The HTTP/1.1 writer deadline case keeps the slow SSE client connected
+until Core reports the write timeout and one terminal. It then verifies
+that a healthy request still completes and that the fixed port can reopen.
+
+The gzip cases check the raw encoded bytes and exact decompression. They
+also exercise explicit gzip refusal, Core selection with the header omitted, a body below
+the configured compression threshold, and a 204 with no body. The wire
+checks validate the encoding, cache variation and any content length.
 
 ### Standalone HTTP/3 WebSocket
 

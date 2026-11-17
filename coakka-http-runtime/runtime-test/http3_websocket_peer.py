@@ -17,6 +17,20 @@ from aioquic.quic.events import (
 )
 from aioquic.quic.logger import QuicLogger
 
+PENDING_STREAM_WINDOW = 4096
+PENDING_WEBSOCKET_PAYLOAD = 16 * 1024
+RESET_SIGNALS = {
+    "reset-stream": "RESET_STREAM",
+    "reset-stop": "STOP_SENDING",
+    "reset-fin": "FIN",
+    "reset-pre-accept": "RESET_STREAM",
+    "reset-pre-accept-stop": "STOP_SENDING",
+    "reset-pre-accept-fin": "FIN",
+    "reset-pending-write": "STOP_SENDING",
+    "reset-pending-write-stream": "RESET_STREAM",
+    "reset-pending-write-fin": "FIN",
+}
+
 
 def frame(opcode, payload):
     assert len(payload) < 126
@@ -46,6 +60,16 @@ class Peer(QuicConnectionProtocol):
         self.events = {}
         self.resets = {}
         self.alpn = None
+        self.held_credit_stream = None
+        write_limits = self._quic._write_stream_limits
+
+        def hold_one_window(builder, space, stream):
+            # Keep A's advertised receive window fixed. B and connection
+            # credit and transport ACKs continue on the normal path.
+            if stream.stream_id != self.held_credit_stream:
+                write_limits(builder, space, stream)
+
+        self._quic._write_stream_limits = hold_one_window
 
     def quic_event_received(self, event):
         if isinstance(event, HandshakeCompleted):
@@ -64,7 +88,7 @@ class Peer(QuicConnectionProtocol):
                 print(f"HTTP event {received!r}", flush=True)
             self.events.setdefault(received.stream_id, asyncio.Queue()).put_nowait(received)
 
-    async def headers(self, path, websocket=True):
+    def send_headers(self, path, websocket=True, *, hold_credit=False):
         stream = self._quic.get_next_available_stream_id()
         properties = [
             (b":method", b"CONNECT" if websocket else b"GET"),
@@ -78,8 +102,14 @@ class Peer(QuicConnectionProtocol):
                 (b"sec-websocket-version", b"13"),
                 (b"sec-websocket-protocol", b"echo"),
             ]
+        if hold_credit:
+            self.held_credit_stream = stream
         self.http.send_headers(stream, properties, end_stream=not websocket)
         self.transmit()
+        return stream
+
+    async def headers(self, path, websocket=True, *, hold_credit=False):
+        stream = self.send_headers(path, websocket, hold_credit=hold_credit)
         observed = await self.next_event(stream)
         assert isinstance(observed, HeadersReceived), observed
         fields = dict(observed.headers)
@@ -138,11 +168,12 @@ def check_default_allowance(logger):
     assert allowances == {8}, allowances
 
 
-def configuration(cert, logger):
+def configuration(cert, logger, *, pending_write=False):
     return QuicConfiguration(
         is_client=True, alpn_protocols=H3_ALPN, server_name="localhost",
         verify_mode=ssl.CERT_REQUIRED, cafile=cert, idle_timeout=5,
         supported_versions=[1], quic_logger=logger,
+        **({"max_stream_data": PENDING_STREAM_WINDOW} if pending_write else {}),
     )
 
 
@@ -215,9 +246,10 @@ async def exercise(args, mode):
         assert server.startswith("PORT="), server
         port = int(server.split("=")[1])
         logger = QuicLogger()
+        config = configuration(args.ca or args.cert, logger,
+                               pending_write=mode.startswith("reset-pending-write"))
         async with connect(
-            "127.0.0.1", port, configuration=configuration(args.ca or args.cert, logger),
-            create_protocol=Peer,
+            "127.0.0.1", port, configuration=config, create_protocol=Peer,
         ) as peer:
             peer.trace = args.trace
             await wait_for_http(peer)
@@ -249,30 +281,74 @@ async def exercise(args, mode):
             await process.wait()
 
 
+async def check_live_sibling(peer, process, sibling):
+    peer.send(sibling, 1, b"still-live")
+    assert await peer.body(sibling, 12) == b"\x81\x0astill-live"
+    ordinary = await peer.headers("/plain", False)
+    assert ordinary == 8
+    assert await peer.body(ordinary, 8, fin=True) == b"ordinary"
+    peer.send(sibling, 8, struct.pack("!H", 1000), end=True)
+    assert await peer.body(sibling, 4, fin=True) == b"\x88\x02\x03\xe8"
+    process.stdin.write(b"WIRE_CLOSED\n")
+    await process.stdin.drain()
+
+
+async def wait_for_pending_write(peer, stream):
+    partial = bytearray()
+    receiver = peer._quic._streams[stream].receiver
+    # The sender cannot finish this accepted frame within A's fixed
+    # window. Read until that window is spent, then stop the stream.
+    while receiver.highest_offset < PENDING_STREAM_WINDOW or not partial:
+        message = await peer.next_event(stream)
+        assert isinstance(message, DataReceived) and not message.stream_ended, message
+        partial.extend(message.data)
+    frame_head = b"\x82\x7e" + struct.pack("!H", PENDING_WEBSOCKET_PAYLOAD)
+    assert partial.startswith(frame_head), partial[:4]
+    assert 4 < len(partial) < len(frame_head) + PENDING_WEBSOCKET_PAYLOAD
+    assert receiver.highest_offset == PENDING_STREAM_WINDOW
+    print(f"WRITE_PENDING stream={stream} credit={receiver.highest_offset} "
+          f"frame_bytes={len(partial)}", flush=True)
+
+
+def send_reset_signal(peer, stream, mode):
+    signal = RESET_SIGNALS[mode]
+    if signal == "RESET_STREAM":
+        peer._quic.reset_stream(stream, 0x10C)
+    elif signal == "STOP_SENDING":
+        peer._quic.stop_stream(stream, 0x10C)
+    else:
+        # A bare transport FIN has no WebSocket CLOSE or HTTP/3 DATA frame.
+        peer._quic.send_stream_data(stream, b"", end_stream=True)
+    peer.transmit()
+    print(f"PEER_CLOSE mode={mode} stream={stream} signal={signal}", flush=True)
+
+
 async def exercise_websocket(peer, process, mode):
-    a = await peer.headers("/a")
-    if mode.startswith("reset"):
+    if mode.startswith("reset-pre-accept"):
+        b = await peer.headers("/b")
+        a = peer.send_headers("/a")
+        assert (b, a) == (0, 4)
+        assert await read_line(process) == "PRE_ACCEPT"
+        send_reset_signal(peer, a, mode)
+        assert await read_line(process) == "A_CLOSED"
+        await check_live_sibling(peer, process, b)
+        assert a not in peer.events or peer.events[a].empty()
+        return
+
+    pending_write = mode.startswith("reset-pending-write")
+    a = await peer.headers("/a", hold_credit=pending_write)
+    if mode in RESET_SIGNALS:
         b = await peer.headers("/b")
         assert (a, b) == (0, 4)
-        peer.send(a, 1, b"held")
-        assert await read_line(process) == "HELD"
-        if mode == "reset-stream":
-            peer._quic.reset_stream(a, 0x10C)
-        elif mode == "reset-stop":
-            peer._quic.stop_stream(a, 0x10C)
+        if pending_write:
+            assert await read_line(process) == "WRITE_ACCEPTED"
+            await wait_for_pending_write(peer, a)
         else:
-            peer.http.send_data(a, b"", end_stream=True)
-        peer.transmit()
+            peer.send(a, 1, b"held")
+            assert await read_line(process) == "HELD"
+        send_reset_signal(peer, a, mode)
         assert await read_line(process) == "A_CLOSED"
-        peer.send(b, 1, b"still-live")
-        assert await peer.body(b, 12) == b"\x81\x0astill-live"
-        c = await peer.headers("/plain", False)
-        assert c == 8
-        assert await peer.body(c, 8, fin=True) == b"ordinary"
-        peer.send(b, 8, struct.pack("!H", 1000), end=True)
-        assert await peer.body(b, 4, fin=True) == b"\x88\x02\x03\xe8"
-        process.stdin.write(b"WIRE_CLOSED\n")
-        await process.stdin.drain()
+        await check_live_sibling(peer, process, b)
     else:
         peer.send(a, 1, b"held")
         expected = "HELD" if mode == "shutdown" else "DRAIN_PENDING"
@@ -414,7 +490,7 @@ if __name__ == "__main__":
     parser.add_argument("key")
     parser.add_argument(
         "modes", nargs="*", default=[
-            "ordinary", "reset-stream", "reset-stop", "reset-fin",
+            "ordinary", *RESET_SIGNALS,
             "complete", "expired", "aborted", "shutdown",
         ],
     )

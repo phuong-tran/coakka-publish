@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "test_support.h"
 #include "test_threads.h"
 
 #define CHECK(value)                                                      \
@@ -112,27 +113,20 @@ static void ordinary_response(coakka_http_host_service_t* service) {
         COAKKA_HTTP_HOST_OK);
 }
 
-static void check_reset(coakka_http_host_service_t* service) {
-  const coakka_http_host_websocket_t a = accept_ws(service, "/a");
-  const coakka_http_host_websocket_t b = accept_ws(service, "/b");
-  coakka_http_host_websocket_event_t held =
-      websocket_event(service, COAKKA_HTTP_HOST_WEBSOCKET_TEXT);
-  CHECK(same_session(held.session, a) && equals(held.data, "held"));
-  marker("HELD");
-  // CLOSE retires the session. Core still owns the earlier DATA lease until
-  // this reader releases it, even after the peer ends the stream.
+static void expect_abnormal_close(coakka_http_host_service_t* service,
+                                  coakka_http_host_websocket_t session) {
   coakka_http_host_websocket_event_t closed =
       websocket_event(service, COAKKA_HTTP_HOST_WEBSOCKET_CLOSE);
-  CHECK(same_session(closed.session, a) && closed.close_code == 1006U);
-  CHECK(equals(held.data, "held"));
-  CHECK(coakka_http_host_send_websocket(service, a,
+  CHECK(same_session(closed.session, session) && closed.close_code == 1006U);
+  CHECK(coakka_http_host_send_websocket(service, session,
                                         COAKKA_HTTP_HOST_WEBSOCKET_TEXT,
                                         bytes("stale")) != COAKKA_HTTP_HOST_OK);
   CHECK(coakka_http_host_release_websocket(service, &closed) ==
         COAKKA_HTTP_HOST_OK);
-  CHECK(coakka_http_host_release_websocket(service, &held) ==
-        COAKKA_HTTP_HOST_OK);
-  marker("A_CLOSED");
+}
+
+static void check_live_sibling(coakka_http_host_service_t* service,
+                               coakka_http_host_websocket_t b) {
   coakka_http_host_websocket_event_t live =
       websocket_event(service, COAKKA_HTTP_HOST_WEBSOCKET_TEXT);
   CHECK(same_session(live.session, b) && equals(live.data, "still-live"));
@@ -143,13 +137,74 @@ static void check_reset(coakka_http_host_service_t* service) {
         COAKKA_HTTP_HOST_OK);
 
   ordinary_response(service);
-  closed = websocket_event(service, COAKKA_HTTP_HOST_WEBSOCKET_CLOSE);
+  coakka_http_host_websocket_event_t closed =
+      websocket_event(service, COAKKA_HTTP_HOST_WEBSOCKET_CLOSE);
   CHECK(same_session(closed.session, b) && closed.close_code == 1000U);
   CHECK(coakka_http_host_release_websocket(service, &closed) ==
         COAKKA_HTTP_HOST_OK);
   // App CLOSE means the response was committed. Let the peer observe it on
   // the wire before stopping the whole listener.
   barrier("WIRE_CLOSED\n");
+}
+
+static void check_reset(coakka_http_host_service_t* service, int pending_write) {
+  const coakka_http_host_websocket_t a = accept_ws(service, "/a");
+  const coakka_http_host_websocket_t b = accept_ws(service, "/b");
+  if (pending_write) {
+    // A's peer allows only 4 KiB of stream credit. The wire driver verifies
+    // partial delivery at that limit before sending the reset.
+    static const uint8_t payload[16U * 1024U] = {0};
+    const coakka_http_host_bytes_t data = {payload, sizeof(payload)};
+    CHECK(coakka_http_host_send_websocket(service, a,
+                                          COAKKA_HTTP_HOST_WEBSOCKET_BINARY,
+                                          data) == COAKKA_HTTP_HOST_OK);
+    marker("WRITE_ACCEPTED");
+    expect_abnormal_close(service, a);
+  } else {
+    coakka_http_host_websocket_event_t held =
+        websocket_event(service, COAKKA_HTTP_HOST_WEBSOCKET_TEXT);
+    CHECK(same_session(held.session, a) && equals(held.data, "held"));
+    marker("HELD");
+    // CLOSE retires the session. DATA bytes remain borrowed until release.
+    expect_abnormal_close(service, a);
+    CHECK(equals(held.data, "held"));
+    CHECK(coakka_http_host_release_websocket(service, &held) ==
+          COAKKA_HTTP_HOST_OK);
+  }
+  marker("A_CLOSED");
+  check_live_sibling(service, b);
+}
+
+static void check_pre_accept_reset(coakka_http_host_service_t* service) {
+  const coakka_http_host_websocket_t b = accept_ws(service, "/b");
+  coakka_http_host_request_event_t event = take_request(service, "/a");
+  const coakka_http_host_exchange_t a = event.exchange;
+  CHECK(coakka_http_host_release_request(service, &event) ==
+        COAKKA_HTTP_HOST_OK);
+
+  // Routing has delivered A to the application. Keep accept unsubmitted
+  // until the application observes the terminal for the cancelled request.
+  marker("PRE_ACCEPT");
+  int cancelled = 0;
+  for (;;) {
+    coakka_http_host_request_event_init(&event);
+    CHECK(coakka_http_host_take_request(service, 4000U, &event) ==
+          COAKKA_HTTP_HOST_OK);
+    CHECK(event.exchange.slot == a.slot && event.exchange.generation == a.generation);
+    const coakka_http_host_request_event_kind_t kind = event.kind;
+    CHECK(coakka_http_host_release_request(service, &event) ==
+          COAKKA_HTTP_HOST_OK);
+    if (kind == COAKKA_HTTP_HOST_REQUEST_TERMINAL)
+      break;
+    CHECK(kind == COAKKA_HTTP_HOST_REQUEST_CANCELLED && !cancelled);
+    cancelled = 1;
+  }
+  CHECK(coakka_http_host_accept_websocket(service, a, bytes("echo")) ==
+        COAKKA_HTTP_HOST_STALE_EXCHANGE);
+  marker("A_CLOSED");
+  // A must not produce OPEN or CLOSE. The next WebSocket event, apart
+  // from a writable notification, must be B's text on the same connection.
+  check_live_sibling(service, b);
 }
 
 static void check_drain(coakka_http_host_service_t* service, const char* mode) {
@@ -254,6 +309,7 @@ static void check_shutdown(coakka_http_host_service_t* service) {
 
 int main(int argc, char** argv) {
   CHECK(argc == 4 || (argc == 5 && strcmp(argv[4], "--io-uring") == 0));
+  CHECK(test_platform_open());
   CHECK(coakka_http_host_abi_version() == 10U);
   const int ordinary_only = strcmp(argv[3], "ordinary") == 0;
   const int ordinary =
@@ -350,8 +406,14 @@ int main(int argc, char** argv) {
       ordinary_response(service);
     }
     barrier("WIRE_CLOSED\n");
+  } else if (strncmp(argv[3], "reset-pre-accept",
+                     sizeof("reset-pre-accept") - 1U) == 0) {
+    check_pre_accept_reset(service);
   } else if (strncmp(argv[3], "reset", 5U) == 0) {
-    check_reset(service);
+    const int pending_write =
+        strncmp(argv[3], "reset-pending-write",
+                sizeof("reset-pending-write") - 1U) == 0;
+    check_reset(service, pending_write);
   } else if (strcmp(argv[3], "shutdown") == 0) {
     check_shutdown(service);
   } else {
@@ -365,6 +427,7 @@ int main(int argc, char** argv) {
   CHECK(coakka_http_host_service_start(service, &issue) == COAKKA_HTTP_HOST_OK);
   CHECK(coakka_http_host_service_stop(service) == COAKKA_HTTP_HOST_OK);
   CHECK(coakka_http_host_service_destroy(&service) == COAKKA_HTTP_HOST_OK);
+  CHECK(test_platform_close());
   marker("PASS PORT_REUSED");
   return EXIT_SUCCESS;
 }

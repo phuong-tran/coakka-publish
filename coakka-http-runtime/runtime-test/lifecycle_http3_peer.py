@@ -15,6 +15,7 @@ from aioquic.quic.events import ConnectionTerminated, StreamReset
 @dataclass
 class Response:
     status: bytes = b""
+    headers: dict[bytes, bytes] = field(default_factory=dict)
     body: bytearray = field(default_factory=bytearray)
     ended: bool = False
     reset: bool = False
@@ -74,7 +75,8 @@ class Http3Peer(QuicConnectionProtocol):
         for message in self.http.handle_event(event):
             response = self.responses[message.stream_id]
             if isinstance(message, HeadersReceived):
-                response.status = dict(message.headers)[b":status"]
+                response.headers = dict(message.headers)
+                response.status = response.headers[b":status"]
             elif isinstance(message, DataReceived):
                 response.body.extend(message.data)
             response.ended = message.stream_ended
