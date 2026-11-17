@@ -11,7 +11,26 @@ HTTP delivery, limits and shutdown.
 tests against the SDK you install. See how the tests check that requests
 stay with the right service, resources are released, and failures are handled.
 
-## Current release: connector 2.2.1 and Core SDK 2.2.0
+## Node.js and Bun 2.3.1 on npm
+
+Node.js and Bun 2.3.1 are available with Core SDK 2.3.0 and ABI 10.
+
+```sh
+npm install coakka-http-runtime-node@2.3.1
+bun add coakka-http-runtime-bun@2.3.1
+```
+
+[Publication and package hashes](../docs/coakka-http-runtime/releases/2026-11-17-node-bun-2.3.1-npm.md) ·
+[Node.js and Bun guide](javascript/README.md)
+
+## Python 2.3.1 on PyPI
+
+Python 2.3.1 is available with Core SDK 2.3.0 and ABI 10.
+Install `coakka-http-runtime-python==2.3.1`.
+[Publication and wheel hashes](../docs/coakka-http-runtime/releases/2026-11-17-python-2.3.1-pypi.md) ·
+[Python guide](python/README.md)
+
+## Previous coordinated release: connector 2.2.1 and Core SDK 2.2.0
 
 [Release notes](docs/release-2.2.1.md) · [Native SDK downloads and SHA-256 checksums](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.2.1) · [Run an HTTP example](https://github.com/phuong-tran/coakka-samples/blob/main/coakka-http-runtime/protocol-listeners/README.md)
 
@@ -36,13 +55,6 @@ stay with the right service, resources are released, and failures are handled.
 | Go | [`github.com/phuong-tran/coakka-http-runtime-go/v2@v2.0.1`](https://github.com/phuong-tran/coakka-http-runtime-go/releases/tag/v2.0.1) |
 
 Read `2.0.1` as Core generation `2.0` and connector revision `1`. A connector fix advances its own last number and keeps the same native SDK. A Core update changes the first two numbers, and each connector starts again at revision `1` when it adopts that Core. [Versions and SDK compatibility](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/docs/versions.md).
-
-## Python 2.3.1 on PyPI
-
-Python 2.3.1 is available with Core SDK 2.3.0 and ABI 10.
-Install `coakka-http-runtime-python==2.3.1`.
-[Publication and wheel hashes](../docs/coakka-http-runtime/releases/2026-11-17-python-2.3.1-pypi.md) ·
-[Python guide](python/README.md)
 
 ## Connector 2.3.1
 
