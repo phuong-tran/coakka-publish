@@ -11,7 +11,15 @@ The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. CoAkka HTTP Runtime is the HTTP product and can
 be adopted independently.
 
-[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran) · [Ko-fi](https://ko-fi.com/phuongnamtran)
+
+## Read the version
+
+In `2.3.1`, `2.3` is the Core generation and the final `1` is this
+connector's revision on that generation. The revision starts at `1` for
+each connector. A connector-only update can advance to `2.3.2` while using
+the same native SDK and checksums. This release uses Core SDK `2.3.0`
+with C ABI 10. [Version and SDK compatibility](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/docs/versions.md)
 
 ## Install 2.3.1
 
@@ -149,9 +157,9 @@ server running and run these commands in another terminal. On Windows,
 use `curl.exe`.
 
 ```sh
-curl --http1.1 --cacert http-test-tls/ca.pem -sS -w "\n%{http_code} %{http_version}\n" https://127.0.0.1:8443/hello
-curl --http2 --cacert http-test-tls/ca.pem -sS -w "\n%{http_code} %{http_version}\n" https://127.0.0.1:8443/hello
-curl --http3-only --cacert http-test-tls/ca.pem -sS -w "\n%{http_code} %{http_version}\n" https://127.0.0.1:8443/hello
+curl --http1.1 --noproxy '*' --cacert http-test-tls/ca.pem --fail --max-time 10 -sS -w "\n%{http_code} %{http_version}\n" https://127.0.0.1:8443/hello
+curl --http2 --noproxy '*' --cacert http-test-tls/ca.pem --fail --max-time 10 -sS -w "\n%{http_code} %{http_version}\n" https://127.0.0.1:8443/hello
+curl --http3-only --noproxy '*' --cacert http-test-tls/ca.pem --fail --max-time 10 -sS -w "\n%{http_code} %{http_version}\n" https://127.0.0.1:8443/hello
 ```
 
 The 3 requests return the same body and show the HTTP version used.

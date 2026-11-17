@@ -12,7 +12,15 @@ The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. You can adopt CoAkka HTTP Runtime independently
 and run the same HTTP protocols across different application languages.
 
-[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [HTTP documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [HTTP documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran) · [Ko-fi](https://ko-fi.com/phuongnamtran)
+
+## Read the version
+
+In `2.3.1`, `2.3` is the Core generation and the final `1` is this
+connector's revision on that generation. The revision starts at `1` for
+each connector. A connector-only update can advance to `2.3.2` while using
+the same native SDK and checksums. This release uses Core SDK `2.3.0`
+with C ABI 10. [Version and SDK compatibility](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/docs/versions.md)
 
 ## Install 2.3.1
 
@@ -110,41 +118,74 @@ value. The complete sample project runs `http1`, `http2`, `http3` and
 
 ### Serve all 3 protocols on one port
 
-Generate the [local TLS files](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/README.md#prepare-local-tls-files).
-Use the certificate chain and private key on the server, and `ca.pem`
-for trust in the client. The credential ID names the certificate
-configuration. The generation identifies its revision.
+[Generate the local TLS files](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/README.md#prepare-local-tls-files) next to your project. The certificate and
+private key configure the listener. The client uses `ca.pem` to verify it.
+Replace `Program.cs` with this complete example. The same program can
+run a standalone listener by changing its command-line mode.
 
 ```csharp
-var tls = new TlsOptions(
-    CredentialId: "sample",
-    Generation: 1,
-    CertificateChainFile: "http-test-tls/server.pem",
-    PrivateKeyFile: "http-test-tls/server.key");
-var listener = HttpListenerOptions.MultiProtocolListener(
-    tls, bindAddress: "127.0.0.1", port: 8443);
+using System.Text;
+using CoAkka.Http;
+
+if (args.Length == 0 || args[0] is not ("http1" or "http2" or "http3" or "multi") ||
+    (args[0] == "http1" ? args.Length != 1 : args.Length != 2))
+{
+    Console.Error.WriteLine("Usage: Server http1 | Server <http2|http3|multi> <certificate-directory>");
+    return 2;
+}
+
+const string address = "127.0.0.1";
+const ulong helloBinding = 1;
+string mode = args[0];
+ushort port = mode == "http1" ? (ushort)8080 : (ushort)8443;
+TlsOptions? tls = mode == "http1" ? null : new TlsOptions(
+    "sample", 1, Path.Combine(args[1], "server.pem"), Path.Combine(args[1], "server.key"));
+var listener = mode switch
+{
+    "multi" => HttpListenerOptions.MultiProtocolListener(tls!, bindAddress: address, port: port),
+    "http2" => HttpListenerOptions.Standalone(HttpProtocol.Http2, bindAddress: address, port: port, tls: tls),
+    "http3" => HttpListenerOptions.Standalone(HttpProtocol.Http3, bindAddress: address, port: port, tls: tls),
+    _ => HttpListenerOptions.Standalone(HttpProtocol.Http11, bindAddress: address, port: port),
+};
+
+using var service = new HttpService(listener, [new HttpRoute(1, helloBinding, "GET", "/hello")]);
+service.Start();
+Console.WriteLine($"Listening on {(tls is null ? "http" : "https")}://{address}:{service.Port}/hello");
+
+int remaining = mode == "multi" ? 3 : 1;
+byte[] body = Encoding.UTF8.GetBytes("hello");
+HttpField[] headers = [new("content-type", "text/plain; charset=utf-8")];
+while (remaining > 0)
+{
+    var request = service.Take(250);
+    if (request is not { Kind: EventKind.Request, BindingId: helloBinding })
+        continue;
+
+    var status = service.Respond(request.Exchange, 200, body, headers);
+    if (status == CoreStatus.StaleExchange)
+        continue;
+    if (status != CoreStatus.Ok)
+        throw new InvalidOperationException($"Response refused: {status}");
+
+    remaining--;
+}
+
+service.BeginDrain();
+var drain = service.WaitDrained(5000);
+service.Stop();
+Console.WriteLine($"Drain: {drain.State} ({drain.Status})");
+return drain.State == DrainState.Complete ? 0 : 1;
 ```
 
-For the protocol sample project, use `dotnet run --project csharp --
-multi ./http-test-tls` from `protocol-listeners` with the certificates at
-that path. The sample stays up for all 3 probes.
+From the project directory, run `dotnet run -- multi ./http-test-tls`.
+[Verify all 3 versions with curl](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md) from another terminal. The application serves `hello` at
+`https://127.0.0.1:8443/hello`. The three requests should report
+`200 1.1`, `200 2` and `200 3`. After the third response, the example begins
+drain and reports whether it completed.
 
-The shared listener serves buffered routes over HTTPS on one TCP and UDP
-port. Start it once and run the 3 probes against the same URL. Use a curl
-build that lists `HTTP2` and `HTTP3` in `curl --version`.
-
-```sh
-for protocol in --http1.1 --http2 --http3-only; do
-  curl --noproxy '*' "$protocol" --cacert ./http-test-tls/ca.pem \
-    --fail --silent --show-error --max-time 10 \
-    --write-out '\n%{http_code} %{http_version}\n' https://127.0.0.1:8443/hello || exit
-done
-```
-
-Each call returns `hello`. The final lines should be `200 1.1`, `200 2`
-and `200 3`. If curl reports `200 1.1` for the second call, check the
-HTTP/2 negotiation. If HTTP/3 times out, check that UDP 8443 reaches
-the server. [Full shared-listener exercise](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md)
+Run one listener mode at a time. For remote clients, allow both TCP and
+UDP on port 8443. Use a supported standalone listener for streaming, SSE,
+WebSockets, mTLS or TLS rotation.
 
 ## Build on the example
 
@@ -176,5 +217,3 @@ client. [Feature and profile guide](https://github.com/phuong-tran/coakka-sample
 - During shutdown keep serving in-flight exchanges while draining. Inspect
   `WaitDrained` before calling `Stop`. An `Expired` drain reports that the
   deadline elapsed with work outstanding.
-
-Connector 2.3.1 uses Core SDK 2.3.0 (C ABI 10).

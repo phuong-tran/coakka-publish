@@ -13,7 +13,15 @@ The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. CoAkka HTTP Runtime is the HTTP product and can
 be adopted independently.
 
-[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran) · [Ko-fi](https://ko-fi.com/phuongnamtran)
+
+## Read the version
+
+In `2.3.1`, `2.3` is the Core generation and the final `1` is this
+connector's revision on that generation. The revision starts at `1` for
+each connector. A connector-only update can advance to `2.3.2` while using
+the same native SDK and checksums. This release uses Core SDK `2.3.0`
+with C ABI 10. [Version and SDK compatibility](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/docs/versions.md)
 
 ## Install 2.3.1
 
@@ -92,7 +100,10 @@ const service = new Builder()
 
 try {
   console.log(service.listenerInfo());
-  await new Promise((stop) => process.once("SIGINT", stop));
+  await new Promise((stop) => {
+    process.once("SIGINT", stop);
+    process.once("SIGTERM", stop);
+  });
 } finally {
   await service.close();
 }
@@ -100,7 +111,7 @@ try {
 
 `credentialId` names the TLS identity; `credentialGeneration` identifies
 its initial revision. Both file paths must be readable by the server.
-Listener V1 enables a fixed profile, so you do not pass a protocol array.
+The shared listener enables all 3 versions together with this configuration.
 Run the [3 curl probes](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md) against the same URL and check
 for `200 1.1`, `200 2` and `200 3`. For remote clients, open TCP **and**
 UDP on that port. Use a standalone listener when the application needs

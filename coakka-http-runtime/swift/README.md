@@ -12,7 +12,15 @@ The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. You can adopt CoAkka HTTP Runtime independently
 and run the same HTTP protocols across different application languages.
 
-[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [HTTP documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [HTTP documentation](https://github.com/phuong-tran/coakka-samples/tree/main/docs/coakka-http-runtime) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran) · [Ko-fi](https://ko-fi.com/phuongnamtran)
+
+## Read the version
+
+In `2.3.1`, `2.3` is the Core generation and the final `1` is this
+connector's revision on that generation. The revision starts at `1` for
+each connector. A connector-only update can advance to `2.3.2` while using
+the same native SDK and checksums. This release uses Core SDK `2.3.0`
+with C ABI 10. [Version and SDK compatibility](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/docs/versions.md)
 
 ## Install 2.3.1
 
@@ -166,45 +174,86 @@ runs `http1`, `http2`, `http3` and `multi` modes. [Swift protocol samples](https
 
 ### Serve all 3 protocols on one port
 
-Generate the [local TLS files](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/README.md#prepare-local-tls-files).
-Use the certificate chain and private key on the server, and `ca.pem`
-for trust in the client. The credential ID names the certificate
-configuration. The generation identifies its revision.
+[Generate the local TLS files](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/README.md#prepare-local-tls-files) next to your project. The certificate and
+private key configure the listener. The client uses `ca.pem` to verify it.
+Replace `Sources/HelloServer/main.swift` with this complete example. The
+same program can run a standalone listener by changing its command-line
+mode.
 
 ```swift
-let tls = TlsOptions(
-    credentialID: "sample",
-    generation: 1,
-    certificateChainFile: "http-test-tls/server.pem",
-    privateKeyFile: "http-test-tls/server.key"
-)
-let listener = HttpListener.multiProtocolListener(
-    tls: tls, address: "127.0.0.1", port: 8443
-)
+import CoAkkaHttp
+import Foundation
+
+enum SampleError: Error {
+    case usage(String)
+    case responseRefused(CoreStatus)
+    case drainFailed(DrainState, CoreStatus)
+}
+
+let args = Array(CommandLine.arguments.dropFirst())
+guard let mode = args.first, ["http1", "http2", "http3", "multi"].contains(mode),
+      args.count == (mode == "http1" ? 1 : 2) else {
+    throw SampleError.usage("Usage: Server http1 | Server <http2|http3|multi> <certificate-directory>")
+}
+
+let address = "127.0.0.1"
+let port: UInt16 = mode == "http1" ? 8080 : 8443
+let listener: HttpListener
+if mode == "http1" {
+    listener = .standalone(protocol: .http11, address: address, port: port)
+} else {
+    let certificates = URL(fileURLWithPath: args[1], isDirectory: true)
+    let tls = TlsOptions(
+        credentialID: "sample", generation: 1,
+        certificateChainFile: certificates.appendingPathComponent("server.pem").path,
+        privateKeyFile: certificates.appendingPathComponent("server.key").path)
+    switch mode {
+    case "multi": listener = .multiProtocolListener(tls: tls, address: address, port: port)
+    case "http2": listener = .standalone(protocol: .http2, address: address, port: port, tls: tls)
+    default: listener = .standalone(protocol: .http3, address: address, port: port, tls: tls)
+    }
+}
+
+let helloBinding: UInt64 = 1
+let route = HttpRoute(routeID: 1, bindingID: helloBinding, method: "GET", pattern: "/hello")
+let service = try HttpService(listener: listener, routes: [route])
+defer { try? service.close() }
+try service.start()
+let scheme = mode == "http1" ? "http" : "https"
+print("Listening on \(scheme)://\(address):\(try service.port)/hello")
+
+var remaining = mode == "multi" ? 3 : 1
+let body = Array("hello".utf8)
+let headers = [HttpField("content-type", "text/plain; charset=utf-8")]
+while remaining > 0 {
+    guard let request = try service.take(timeoutMilliseconds: 250),
+          request.kind == .request, request.bindingID == helloBinding else { continue }
+
+    let status = try service.respond(to: request.exchange, status: 200, body: body, headers: headers)
+    if status == .staleExchange { continue }
+    guard status == .ok else { throw SampleError.responseRefused(status) }
+    remaining -= 1
+}
+
+try service.beginDrain()
+let drain = try service.waitDrained(timeoutMilliseconds: 5000)
+try service.stop()
+print("Drain: \(drain.state) (\(drain.status))")
+guard drain.state == .complete else { throw SampleError.drainFailed(drain.state, drain.status) }
+try service.close()
 ```
 
-For the protocol sample on macOS, use `swift run --package-path swift
-Server multi ./http-test-tls` from `protocol-listeners` with the
-certificates at that path. On Linux or Windows, run the built `Server`
-or `Server.exe` with those same arguments. The sample stays up for all 3
-probes.
+From the project directory on macOS, run
+`swift run HelloServer multi ./http-test-tls`. On Linux or Windows, use
+the executable built above with the same arguments.
+[Verify all 3 versions with curl](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md) from another terminal. The application serves `hello` at
+`https://127.0.0.1:8443/hello`. The three requests should report
+`200 1.1`, `200 2` and `200 3`. After the third response, the example begins
+drain and reports whether it completed.
 
-The shared listener serves buffered routes over HTTPS on one TCP and UDP
-port. Start it once and run the 3 probes against the same URL. Use a curl
-build that lists `HTTP2` and `HTTP3` in `curl --version`.
-
-```sh
-for protocol in --http1.1 --http2 --http3-only; do
-  curl --noproxy '*' "$protocol" --cacert ./http-test-tls/ca.pem \
-    --fail --silent --show-error --max-time 10 \
-    --write-out '\n%{http_code} %{http_version}\n' https://127.0.0.1:8443/hello || exit
-done
-```
-
-Each call returns `hello`. The final lines should be `200 1.1`, `200 2`
-and `200 3`. If curl reports `200 1.1` for the second call, check the
-HTTP/2 negotiation. If HTTP/3 times out, check that UDP 8443 reaches
-the server. [Full shared-listener exercise](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md)
+Run one listener mode at a time. For remote clients, allow both TCP and
+UDP on port 8443. Use a supported standalone listener for streaming, SSE,
+WebSockets, mTLS or TLS rotation.
 
 ## Build on the example
 
@@ -237,5 +286,3 @@ client. [Feature and profile guide](https://github.com/phuong-tran/coakka-sample
 - During shutdown keep serving in-flight exchanges while draining. Inspect
   `waitDrained` before calling `stop`. An `.expired` drain reports that the
   deadline elapsed with work outstanding.
-
-Connector 2.3.1 uses Core SDK 2.3.0 (C ABI 10).

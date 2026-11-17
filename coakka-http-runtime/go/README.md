@@ -11,7 +11,7 @@ The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. CoAkka HTTP Runtime is the HTTP product and can
 be adopted independently.
 
-[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran) · [Ko-fi](https://ko-fi.com/phuongnamtran)
 
 ## Requirements
 
@@ -29,6 +29,14 @@ For WSL2, select the Linux row for the architecture reported by Go.
 
 On Windows, put a cgo-compatible compiler for the selected architecture on
 `PATH` or point `CC` to it. Use a directory without spaces for the extracted SDK.
+
+## Read the version
+
+In `2.3.1`, `2.3` is the Core generation and the final `1` is this
+connector's revision on that generation. The revision starts at `1` for
+each connector. A connector-only update can advance to `2.3.2` while using
+the same native SDK and checksums. This release uses Core SDK `2.3.0`
+with C ABI 10. [Version and SDK compatibility](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/docs/versions.md)
 
 ## Install v2.3.1
 
@@ -175,41 +183,60 @@ includes standalone startup and shutdown.
 
 ## Serve all 3 HTTP versions on one port
 
-Use `Builder.MultiProtocolListener` with a certificate chain and private key.
-CoAkka HTTP Runtime accepts HTTP/1.1 and HTTP/2 over TLS on TCP and HTTP/3
-over QUIC on UDP. Both transports use the same address and port. If a
-transport cannot bind, startup releases the other one and returns an error.
+[Generate the local TLS files](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/README.md#prepare-local-tls-files) in the application module. Save this as
+`cmd/multi/main.go`, then run `go run ./cmd/multi` from the module root
+with the SDK environment used above.
 
 ```go
-service, err := coakkahttp.NewBuilder().
-    MultiProtocolListener(coakkahttp.MultiProtocolListener{
-        BindAddress:          "127.0.0.1",
-        Port:                 8443,
-        CredentialGeneration: 1,
-        CredentialID:         "local-server",
-        CertificateChainFile: "server.pem",
-        PrivateKeyFile:       "server.key",
-    }).
-    Get("/ready", func(*coakkahttp.Request) (coakkahttp.Response, error) {
-        return coakkahttp.Text(http.StatusOK, "ready")
-    }).
-    Start()
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+
+	coakkahttp "github.com/phuong-tran/coakka-http-runtime-go/v2"
+)
+
+func main() {
+	if err := serve(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func serve() error {
+	listener := coakkahttp.MultiProtocolListener{
+		BindAddress:          "127.0.0.1",
+		Port:                 8443,
+		CredentialID:         "local-example",
+		CredentialGeneration: 1,
+		CertificateChainFile: "http-test-tls/server.pem",
+		PrivateKeyFile:       "http-test-tls/server.key",
+	}
+	service, err := coakkahttp.NewBuilder().
+		MultiProtocolListener(listener).
+		Get("/hello", func(*coakkahttp.Request) (coakkahttp.Response, error) {
+			return coakkahttp.Text(200, "hello")
+		}).
+		Start()
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Listening on https://127.0.0.1:8443/hello. Press Enter to stop.")
+	_, _ = bufio.NewReader(os.Stdin).ReadString('\n')
+	return service.Close()
+}
 ```
 
-After checking the startup error, call `service.MultiProtocolListenerInfo()`
-to read the address, port and protocols accepting requests. Call
-`service.Close()` to drain and release the service. With a certificate for
-`localhost`, a trusted local CA and a curl build that supports HTTP/2 and
-HTTP/3, send one request in each protocol to `https://localhost:8443/ready`.
-Use `--http1.1`, `--http2` and `--http3-only` respectively with
-`--cacert ca.pem --write-out '\n%{http_version}\n'`. Expect `ready` and
-the version `1.1`, `2`, or `3`.
+Run the [3 curl probes](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md) in another terminal.
+Each request returns `hello` with status 200 and its negotiated HTTP
+version. Press Enter in the server terminal to drain and close.
 
-This SDK profile serves buffered requests and responses over server TLS.
-Use a standalone listener for streaming requests or responses, SSE,
-WebSocket, mTLS, or live route and TLS reconfiguration. The multi-protocol
-API returns a typed unsupported error for profiles or options that Core
-cannot admit, and it never falls back to a subset of the three protocols.
+Use `service.MultiProtocolListenerInfo()` to read the port and the
+protocols the service is admitting. For streaming, SSE, WebSocket, mTLS,
+or live route and TLS changes, use a supported standalone profile.
 
 ## Outbound requests
 

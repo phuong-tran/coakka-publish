@@ -11,7 +11,7 @@ The CoAkka ecosystem provides polyglot tools for distributed applications,
 HTTP services and logging. CoAkka HTTP Runtime is the HTTP product and can
 be adopted independently.
 
-[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
+[CoAkka ecosystem](https://github.com/phuong-tran/coakka-publish#choose-your-product) · [Raspberry Pi 5 benchmarks](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran) · [Ko-fi](https://ko-fi.com/phuongnamtran)
 
 ## Requirements
 
@@ -29,6 +29,14 @@ the JVM that will run your app. Check the architecture with
 | Windows | x64 | `windows-x86_64` |
 
 On WSL2, use the Linux classifier for the JVM running inside WSL2.
+
+## Read the version
+
+In `2.3.1`, `2.3` is the Core generation and the final `1` is this
+connector's revision on that generation. The revision starts at `1` for
+each connector. A connector-only update can advance to `2.3.2` while using
+the same native SDK and checksums. This release uses Core SDK `2.3.0`
+with C ABI 10. [Version and SDK compatibility](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/docs/versions.md)
 
 ## Install 2.3.1
 
@@ -243,31 +251,90 @@ val builder = ServiceBuilder().listener(
 Register routes on `builder`, then start the service. Use
 `ListenerProtocol.HTTP_3` to serve HTTP/3 over UDP. The complete
 [Java](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/Server.java) and [Kotlin](https://github.com/phuong-tran/coakka-samples/tree/main/coakka-http-runtime/protocol-listeners/Server.kt) examples show
-both standalone choices. For all 3 versions on one TLS port, configure the
-same builder with `MultiProtocolListener` before registering buffered routes.
-
-```kotlin
-val builder = ServiceBuilder().multiProtocolListener(
-    MultiProtocolListener(
-        certificateChainFile = "http-test-tls/server.pem",
-        privateKeyFile = "http-test-tls/server.key",
-        credentialId = "local-example",
-        bindAddress = "127.0.0.1",
-        port = 8443,
-    ),
-)
-```
-
-```java
-var builder = new ServiceBuilder().multiProtocolListener(
-    new MultiProtocolListener(
-        "http-test-tls/server.pem", "http-test-tls/server.key",
-        "local-example", 1, "127.0.0.1", 8443
-    )
-);
-```
+both standalone choices.
 
 [HTTP/1.1](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http1.md) · [HTTP/2](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http2.md) · [HTTP/3](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/http3.md) · [All 3 on one port](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md)
+
+## Serve all 3 HTTP versions on one port
+
+[Generate the local TLS files](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/README.md#prepare-local-tls-files) in your application directory. Use the same
+JVM JAR, Kotlin standard library and native classifier setup as above.
+Set these variables to the absolute paths of the native library directory, the connector JAR and Kotlin standard library JAR.
+
+### Java
+
+Save as `MultiServer.java` in the application directory.
+
+```java
+import coakka.http.MultiProtocolListener;
+import coakka.http.Responses;
+import coakka.http.ServiceBuilder;
+
+public class MultiServer {
+    public static void main(String[] args) throws Exception {
+        var listener = new MultiProtocolListener(
+            "http-test-tls/server.pem", "http-test-tls/server.key",
+            "local-example", 1, "127.0.0.1", 8443
+        );
+        try (var service = new ServiceBuilder()
+                .multiProtocolListener(listener)
+                .get("/hello", request -> Responses.text("hello"))
+                .start()) {
+            System.out.println("Listening on https://127.0.0.1:" + service.getPort() + "/hello");
+            System.out.println("Press Enter to stop.");
+            System.in.read();
+        }
+    }
+}
+```
+
+```sh
+java -Djava.library.path="$native_dir" \
+  -cp "$connector_jar:$kotlin_stdlib" MultiServer.java
+```
+
+### Kotlin
+
+Save as `MultiServer.kt`. The named parameters identify the TLS files,
+credential revision and shared address.
+
+```kotlin
+import coakka.http.Handler
+import coakka.http.MultiProtocolListener
+import coakka.http.Responses
+import coakka.http.ServiceBuilder
+
+fun main() {
+    val listener = MultiProtocolListener(
+        bindAddress = "127.0.0.1",
+        port = 8443,
+        credentialId = "local-example",
+        credentialGeneration = 1,
+        certificateChainFile = "http-test-tls/server.pem",
+        privateKeyFile = "http-test-tls/server.key",
+    )
+    ServiceBuilder()
+        .multiProtocolListener(listener)
+        .get("/hello", Handler { Responses.text("hello") })
+        .start()
+        .use { service ->
+            println("Listening on https://127.0.0.1:${service.port}/hello")
+            println("Press Enter to stop.")
+            readlnOrNull()
+        }
+}
+```
+
+```sh
+kotlinc -jvm-target 17 -cp "$connector_jar:$kotlin_stdlib" MultiServer.kt -d classes
+java -Djava.library.path="$native_dir" \
+  -cp "classes:$connector_jar:$kotlin_stdlib" MultiServerKt
+```
+
+On Windows use `;` between classpath entries. [Verify all 3 versions with curl](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md) in a second
+terminal. Each request returns `hello` with status 200 and its negotiated
+version. Press Enter in the server terminal to close. Use a standalone
+profile for features such as streaming, SSE and WebSocket.
 
 ## API reference
 

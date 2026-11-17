@@ -1,11 +1,11 @@
 # CoAkka HTTP Runtime Packages
 
-HTTP Runtime runs HTTP services and sends outbound requests from C, C++, Go,
+CoAkka HTTP Runtime runs HTTP services and sends outbound requests from C, C++, Go,
 Kotlin, Java, Python, Node.js, Bun, C# and Swift. Each service runs its own instance.
 Application handlers use their language API while the native runtime handles
 HTTP delivery, limits and shutdown.
 
-[HTTP documentation](../docs/coakka-http-runtime/README.md) · [Pi 5 benchmark](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran)
+[HTTP documentation](../docs/coakka-http-runtime/README.md) · [Pi 5 benchmark](https://github.com/phuong-tran/coakka-publish/blob/main/coakka-http-runtime/benchmark/README.md) · [GitHub Sponsors](https://github.com/sponsors/phuong-tran) · [Ko-fi](https://ko-fi.com/phuongnamtran)
 
 **[coakka-http-runtime-test](runtime-test/)** — read and run the public C and C++
 tests against the SDK you install. See how the tests check that requests
@@ -40,8 +40,10 @@ Read `2.0.1` as Core generation `2.0` and connector revision `1`. A connector fi
 ## Connector 2.3.1
 
 The 2.3.1 release is in preparation. The connectors use Core SDK 2.3.0 and
-ABI 10. See the [release notes](docs/release-2.3.1.md), the
-[C# package guide](csharp/README.md) and the [Swift package guide](swift/README.md).
+ABI 10. The final `1` is each connector's first revision on Core 2.3.
+See the [release notes](docs/release-2.3.1.md),
+[the protocol examples](https://github.com/phuong-tran/coakka-samples/blob/main/docs/coakka-http-runtime/guides/http-versions/multi.md) and
+[how to read the version](docs/versions.md).
 
 ## CoAkka HTTP Runtime Inspect
 
