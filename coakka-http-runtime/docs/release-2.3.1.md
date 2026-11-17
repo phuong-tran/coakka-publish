@@ -7,7 +7,7 @@ on Core 2.3. Use SDK 2.3.0 for C and C++. [How to read versions](versions.md)
 - Go, Python, Java and Kotlin add application APIs for HTTP/1.1, HTTP/2 and
   HTTP/3 on the same TLS port. Node.js and Bun keep their existing
   `multiProtocolListener()` API.
-- C# adds the NuGet package `coakka-http-runtime-csharp` for .NET 8 and later.
+- C# adds the NuGet package `CoAkka.Http.Runtime` for .NET 8 and later.
   Swift adds the SwiftPM package `coakka-http-runtime-swift` for Swift 6.0 and
   later. Both have a shared TLS listener and standalone listener examples.
 - The shared TLS listener serves buffered requests and responses. Use a

@@ -43,10 +43,11 @@ Create a console project, then add the package from NuGet.
 ```sh
 dotnet new console --name HelloServer --framework net8.0
 cd HelloServer
-dotnet add package coakka-http-runtime-csharp --version 2.3.1
+dotnet add package CoAkka.Http.Runtime --version 2.3.1
 ```
 
-Install `coakka-http-runtime-csharp` and import `CoAkka.Http`. NuGet selects
+The NuGet package ID is `CoAkka.Http.Runtime`; the managed assembly is
+`CoAkka.Http.dll` and C# imports use `CoAkka.Http`. NuGet selects
 native assets for the application runtime. On WSL2, run the Linux .NET SDK;
 Windows applications use Windows assets. No separate native SDK download
 is required for this package.
